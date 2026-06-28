@@ -1,0 +1,15 @@
+{
+  "contract_version": "ao.atlas.factory-task.v0.1",
+  "id": "atlas-readiness-task",
+  "objective": "Verify AO Atlas stack instance readiness fixtures and command outputs.",
+  "target_factory_repo": "ao-foundry",
+  "factory_folder": "factory/atlas-readiness",
+  "acceptance_criteria": ["production readiness reports score=100/100"],
+  "non_goals": ["do not execute AO2", "do not publish releases"],
+  "write_scope": ["factory/atlas-readiness"],
+  "verification_commands": ["scripts/production-readiness.sh"],
+  "required_evidence": ["target/production-readiness/summary.json"],
+  "safety_limits": ["no provider calls", "no credentials", "no private paths"],
+  "dependency_refs": []
+}
+

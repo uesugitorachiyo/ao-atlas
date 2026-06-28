@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.stack-instance.v0.1",
+  "type": "object",
+  "required": ["contract_version", "id", "state_root", "toolchain_root", "roots"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.stack-instance.v0.1" },
+    "id": { "type": "string" },
+    "state_root": { "type": "string" },
+    "toolchain_root": { "type": "string" },
+    "roots": { "type": "object" }
+  }
+}
+

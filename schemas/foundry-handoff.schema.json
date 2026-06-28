@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.foundry-handoff.v0.1",
+  "type": "object",
+  "required": ["contract_version", "id", "target_instance", "status", "tasks"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.foundry-handoff.v0.1" },
+    "id": { "type": "string" },
+    "target_instance": { "type": "string" },
+    "status": { "const": "ready_for_foundry" },
+    "tasks": { "type": "array" }
+  }
+}
+

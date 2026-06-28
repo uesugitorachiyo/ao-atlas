@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.factory-task.v0.1",
+  "type": "object",
+  "required": ["contract_version", "id", "objective", "target_factory_repo", "factory_folder", "acceptance_criteria", "non_goals", "write_scope", "verification_commands", "required_evidence", "safety_limits"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.factory-task.v0.1" },
+    "id": { "type": "string" },
+    "objective": { "type": "string" },
+    "target_factory_repo": { "type": "string" },
+    "factory_folder": { "type": "string" },
+    "acceptance_criteria": { "type": "array", "items": { "type": "string" } },
+    "non_goals": { "type": "array", "items": { "type": "string" } },
+    "write_scope": { "type": "array", "items": { "type": "string" } },
+    "verification_commands": { "type": "array", "items": { "type": "string" } },
+    "required_evidence": { "type": "array", "items": { "type": "string" } },
+    "safety_limits": { "type": "array", "items": { "type": "string" } },
+    "dependency_refs": { "type": "array", "items": { "type": "string" } }
+  }
+}
+

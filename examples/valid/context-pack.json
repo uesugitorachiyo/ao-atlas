@@ -1,0 +1,17 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "atlas-readiness-context",
+  "task_id": "atlas-readiness-task",
+  "budget_bytes": 4096,
+  "source_refs": [
+    {
+      "ref": "docs/sdd/AO-ATLAS-PRD.md",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "summaries": ["AO Atlas compiles bounded context for factory tasks without copying source repos."],
+  "assumptions": ["Foundry remains the scheduler."],
+  "exclusions": ["No live provider execution."],
+  "missing_context_protocol": "Emit a Blueprint request when objective details are underspecified."
+}
+

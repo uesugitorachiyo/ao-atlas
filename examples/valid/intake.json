@@ -1,0 +1,10 @@
+{
+  "contract_version": "ao.atlas.intake.v0.1",
+  "id": "atlas-intake-demo",
+  "target_instance": "demo-stack",
+  "broad_prompt": "Create a bounded factory task for AO Atlas stack instance readiness validation.",
+  "instruction_refs": ["docs/sdd/AO-ATLAS-PRD.md"],
+  "folder_refs": ["examples/valid"],
+  "constraints": ["public-safe", "no provider calls", "no source repo duplication"]
+}
+

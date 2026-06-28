@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.workgraph.v0.1",
+  "type": "object",
+  "required": ["contract_version", "id", "target_instance", "nodes"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.workgraph.v0.1" },
+    "id": { "type": "string" },
+    "target_instance": { "type": "string" },
+    "nodes": { "type": "array" }
+  }
+}
+

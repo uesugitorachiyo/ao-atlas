@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.stack-instance.v0.1",
+  "id": "demo-stack",
+  "state_root": ".atlas-local/state",
+  "toolchain_root": "../shared-ao-toolchain",
+  "roots": {
+    "mission": ".atlas-local/state/demo-stack/mission",
+    "workgraph": ".atlas-local/state/demo-stack/workgraph",
+    "context": ".atlas-local/state/demo-stack/context",
+    "evidence": ".atlas-local/state/demo-stack/evidence",
+    "worktree": ".atlas-local/state/demo-stack/worktree"
+  }
+}
+

@@ -1,0 +1,9 @@
+.atlas-local/
+.atlas-state/
+target/
+dist/
+bin/
+*.log
+*.tmp
+.DS_Store
+

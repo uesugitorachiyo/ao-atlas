@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.context-pack.v0.1",
+  "type": "object",
+  "required": ["contract_version", "id", "task_id", "budget_bytes", "source_refs", "summaries", "missing_context_protocol"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.context-pack.v0.1" },
+    "id": { "type": "string" },
+    "task_id": { "type": "string" },
+    "budget_bytes": { "type": "integer" },
+    "source_refs": { "type": "array" },
+    "summaries": { "type": "array", "items": { "type": "string" } },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "exclusions": { "type": "array", "items": { "type": "string" } },
+    "missing_context_protocol": { "type": "string" }
+  }
+}
+

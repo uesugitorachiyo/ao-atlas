@@ -1,0 +1,29 @@
+{
+  "contract_version": "ao.atlas.workgraph.v0.1",
+  "id": "bad-workgraph",
+  "target_instance": "demo-stack",
+  "nodes": [
+    {
+      "id": "bad-node",
+      "status": "ready",
+      "dependencies": ["missing-node"],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "bad-task",
+        "objective": "Invalid task.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/bad",
+        "acceptance_criteria": ["must fail"],
+        "non_goals": ["none"],
+        "write_scope": ["factory/bad"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["summary.json"],
+        "safety_limits": ["no provider calls"],
+        "dependency_refs": []
+      }
+    }
+  ]
+}
+

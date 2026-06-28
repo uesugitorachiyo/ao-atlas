@@ -1,0 +1,16 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "bad-context",
+  "task_id": "bad-task",
+  "budget_bytes": 4096,
+  "source_refs": [
+    {
+      "ref": "docs/sdd/AO-ATLAS-PRD.md",
+      "digest": "sha256:not-a-valid-digest"
+    }
+  ],
+  "summaries": ["invalid"],
+  "assumptions": [],
+  "exclusions": [],
+  "missing_context_protocol": "ask Blueprint"
+}

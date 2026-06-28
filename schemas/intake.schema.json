@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.intake.v0.1",
+  "type": "object",
+  "required": ["contract_version", "id", "broad_prompt"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.intake.v0.1" },
+    "id": { "type": "string" },
+    "target_instance": { "type": "string" },
+    "broad_prompt": { "type": "string" },
+    "instruction_refs": { "type": "array", "items": { "type": "string" } },
+    "folder_refs": { "type": "array", "items": { "type": "string" } },
+    "constraints": { "type": "array", "items": { "type": "string" } }
+  }
+}
+

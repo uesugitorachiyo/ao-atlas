@@ -1,0 +1,57 @@
+# AO Atlas
+
+AO Atlas is a local-first stack-instance and workgraph compiler for the AO
+stack. It turns oversized objectives into bounded factory tasks, context packs,
+and Foundry handoff material without duplicating whole AO source trees.
+
+AO Atlas is not a task runner, scheduler, approver, provider client, release
+publisher, or control plane. It prepares public-safe, evidence-bound inputs for
+the rest of the AO stack:
+
+- AO Blueprint owns requirements interview and build authorization.
+- AO Atlas owns oversized objective intake, workgraph/context-pack compilation,
+  stack-instance manifests, and factory-folder materialization models.
+- AO Foundry owns portfolio scheduling and safe next-action selection.
+- AO Forge owns one governed factory run.
+- AO2 executes governed local work.
+- AO Command remains read-only.
+- AO Covenant, Sentinel, Promoter, Arena, and Crucible remain gates.
+
+## Install
+
+```sh
+go build -o bin/atlas ./cmd/atlas
+```
+
+## Public-Safe Defaults
+
+Tracked examples use relative placeholder paths only. Generated instance state
+should live outside this public repo or under ignored local directories such as
+`.atlas-local/`.
+
+AO Atlas v0.1 does not call live providers, push, tag, release, upload, or copy
+source repos.
+
+## Quick Start
+
+```sh
+go run ./cmd/atlas instance init \
+  --id demo-stack \
+  --state-root .atlas-local/state \
+  --toolchain-root ../shared-ao-toolchain \
+  --out .atlas-local/demo-stack.instance.json
+
+go run ./cmd/atlas instance validate --instance examples/valid/stack-instance.json
+go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph.json --json
+go run ./cmd/atlas context-pack validate --pack examples/valid/context-pack.json
+go run ./cmd/atlas foundry handoff emit --workgraph examples/valid/workgraph.json --out .atlas-local/foundry-handoff.json
+```
+
+## Readiness
+
+```sh
+scripts/production-readiness.sh
+```
+
+The readiness gate must report `score=100/100` before v0.1 is considered ready.
+
