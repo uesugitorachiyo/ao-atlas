@@ -1,0 +1,16 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "stress-command-readback-task-context",
+  "task_id": "stress-command-readback-task",
+  "budget_bytes": 2048,
+  "source_refs": [
+    {
+      "ref": "docs/sdd/AO-ATLAS-WORKGRAPH.md",
+      "digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  ],
+  "summaries": ["Bounded context for stress Command readback task."],
+  "assumptions": ["AO Command remains read-only."],
+  "exclusions": ["repository mutation", "provider calls"],
+  "missing_context_protocol": "Emit needs_context run-link before widening scope."
+}

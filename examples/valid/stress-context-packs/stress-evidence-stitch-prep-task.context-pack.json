@@ -1,0 +1,16 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "stress-evidence-stitch-prep-task-context",
+  "task_id": "stress-evidence-stitch-prep-task",
+  "budget_bytes": 2048,
+  "source_refs": [
+    {
+      "ref": "docs/sdd/AO-ATLAS-WORKGRAPH.md",
+      "digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    }
+  ],
+  "summaries": ["Bounded context for stress evidence stitch preparation task."],
+  "assumptions": ["Stitching waits for completed run-link evidence."],
+  "exclusions": ["publishing", "uploading", "release tagging"],
+  "missing_context_protocol": "Emit needs_context run-link before widening scope."
+}

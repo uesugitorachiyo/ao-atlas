@@ -79,6 +79,7 @@ test -s "$OUT/mission-status.json"
 "$BIN" factory materialize --task examples/valid/factory-task.json --out "$OUT/factory-materialization" --dry-run >/dev/null
 test -s "$OUT/factory-materialization/materialization.json"
 "$BIN" workgraph validate --workgraph examples/valid/workgraph.json >/dev/null
+"$BIN" workgraph validate --workgraph examples/valid/workgraph-large-stress.json >/dev/null
 "$BIN" workgraph next --workgraph examples/valid/workgraph.json --json >/dev/null
 "$BIN" workgraph materialize-next --workgraph examples/valid/workgraph.json --out "$OUT/workgraph-next-materialization" --dry-run >/dev/null
 test -s "$OUT/workgraph-next-materialization/materialization.json"
@@ -105,6 +106,8 @@ test -s "$OUT/foundry-import/foundry-import.json"
 "$BIN" foundry import --workgraph examples/valid/workgraph.json --instance examples/valid/stack-instance.json --node readiness-ready --json >/dev/null
 "$BIN" foundry import --workgraph examples/valid/workgraph-multiple-ready.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import-multiple" >/dev/null
 test -s "$OUT/foundry-import-multiple/foundry-import.json"
+"$BIN" foundry import --workgraph examples/valid/workgraph-large-stress.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import-large-stress" >/dev/null
+test -s "$OUT/foundry-import-large-stress/foundry-import.json"
 "$BIN" run-link validate --run-link examples/valid/run-link.json >/dev/null
 "$BIN" run-link attach \
   --task-id atlas-readiness-task \
