@@ -300,6 +300,40 @@ func NextReadyNode(workgraph Workgraph) (WorkgraphNode, bool) {
 	return WorkgraphNode{}, false
 }
 
+func CompleteWorkgraph(workgraph Workgraph, link RunLink) (Workgraph, string, error) {
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return Workgraph{}, "", err
+	}
+	if err := ValidateRunLink(link); err != nil {
+		return Workgraph{}, "", err
+	}
+	if link.Status != "completed" {
+		return Workgraph{}, "", fmt.Errorf("run-link status must be completed")
+	}
+	statusByID := map[string]string{}
+	for _, node := range workgraph.Nodes {
+		statusByID[node.ID] = node.Status
+	}
+	for i, node := range workgraph.Nodes {
+		if node.FactoryTask.ID != link.TaskID {
+			continue
+		}
+		for _, dep := range node.Dependencies {
+			if statusByID[dep] != "completed" {
+				return Workgraph{}, "", fmt.Errorf("matching node dependencies must be completed")
+			}
+		}
+		updated := workgraph
+		updated.Nodes = append([]WorkgraphNode(nil), workgraph.Nodes...)
+		updated.Nodes[i].Status = "completed"
+		if err := ValidateWorkgraph(updated); err != nil {
+			return Workgraph{}, "", err
+		}
+		return updated, node.ID, nil
+	}
+	return Workgraph{}, "", fmt.Errorf("no matching workgraph node for run-link task_id %q", link.TaskID)
+}
+
 func BuildFoundryHandoff(workgraph Workgraph) FoundryHandoff {
 	tasks := []FoundryTaskEntry{}
 	for _, node := range workgraph.Nodes {

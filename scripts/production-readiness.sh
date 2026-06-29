@@ -71,6 +71,8 @@ test -s "$OUT/factory-materialization/materialization.json"
 "$BIN" workgraph next --workgraph examples/valid/workgraph.json --json >/dev/null
 "$BIN" workgraph materialize-next --workgraph examples/valid/workgraph.json --out "$OUT/workgraph-next-materialization" --dry-run >/dev/null
 test -s "$OUT/workgraph-next-materialization/materialization.json"
+"$BIN" workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link.json --out "$OUT/workgraph-completed.json" >/dev/null
+"$BIN" workgraph validate --workgraph "$OUT/workgraph-completed.json" >/dev/null
 "$BIN" workgraph status --workgraph examples/valid/workgraph.json >/dev/null
 "$BIN" context-pack validate --pack examples/valid/context-pack.json >/dev/null
 "$BIN" foundry handoff emit --workgraph examples/valid/workgraph.json --out "$OUT/foundry-handoff.json" >/dev/null
@@ -95,6 +97,22 @@ if "$BIN" workgraph validate --workgraph examples/invalid/workgraph-missing-depe
 fi
 if "$BIN" blueprint-request validate --request examples/invalid/blueprint-request-ready-status.json >/dev/null 2>&1; then
   echo "invalid blueprint request was accepted" >&2
+  exit 1
+fi
+if "$BIN" workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/invalid/run-link-blocked.json --out "$OUT/blocked-completed.json" >/dev/null 2>&1; then
+  echo "blocked run-link completed a workgraph" >&2
+  exit 1
+fi
+if "$BIN" workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/invalid/run-link-missing-node.json --out "$OUT/missing-node-completed.json" >/dev/null 2>&1; then
+  echo "missing-node run-link completed a workgraph" >&2
+  exit 1
+fi
+if "$BIN" workgraph complete --workgraph examples/invalid/workgraph-complete-incomplete-dependency.json --run-link examples/valid/run-link.json --out "$OUT/incomplete-dependency-completed.json" >/dev/null 2>&1; then
+  echo "incomplete dependency completed a workgraph" >&2
+  exit 1
+fi
+if "$BIN" workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link.json --out examples/valid/workgraph.json >/dev/null 2>&1; then
+  echo "same input/output workgraph completion was accepted" >&2
   exit 1
 fi
 pass "invalid-fixtures-rejected"

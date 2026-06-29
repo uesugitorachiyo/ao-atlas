@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -211,6 +212,7 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 	fs := flag.NewFlagSet("workgraph "+args[0], flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
 	path := fs.String("workgraph", "", "workgraph path")
+	runLinkPath := fs.String("run-link", "", "run link path")
 	jsonOut := fs.Bool("json", false, "json output")
 	out := fs.String("out", "", "output directory")
 	dryRun := fs.Bool("dry-run", false, "write a dry-run skeleton without scheduling or executing")
@@ -260,6 +262,25 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 			return err
 		}
 		fmt.Fprintf(stdout, "status=written\nnode=%s\ntask=%s\nmode=%s\nexecutes_work=false\nschedules_work=false\n", node.ID, node.FactoryTask.ID, materialization.Mode)
+	case "complete":
+		if *out == "" {
+			return fmt.Errorf("--out is required")
+		}
+		if samePath(*path, *out) {
+			return fmt.Errorf("refusing to overwrite input workgraph")
+		}
+		link, err := LoadJSON[RunLink](*runLinkPath)
+		if err != nil {
+			return err
+		}
+		completed, nodeID, err := CompleteWorkgraph(workgraph, link)
+		if err != nil {
+			return err
+		}
+		if err := WriteJSON(*out, completed); err != nil {
+			return err
+		}
+		fmt.Fprintf(stdout, "status=written\nnode=%s\ntask=%s\n", nodeID, link.TaskID)
 	default:
 		return fmt.Errorf("unknown workgraph subcommand %q", args[0])
 	}
@@ -458,4 +479,16 @@ func parseEvidenceFlags(values []string) (map[string]string, error) {
 		evidence[key] = path
 	}
 	return evidence, nil
+}
+
+func samePath(left, right string) bool {
+	if strings.TrimSpace(left) == "" || strings.TrimSpace(right) == "" {
+		return false
+	}
+	leftAbs, leftErr := filepath.Abs(left)
+	rightAbs, rightErr := filepath.Abs(right)
+	if leftErr == nil && rightErr == nil {
+		return filepath.Clean(leftAbs) == filepath.Clean(rightAbs)
+	}
+	return filepath.Clean(left) == filepath.Clean(right)
 }

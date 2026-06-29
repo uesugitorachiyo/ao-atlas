@@ -1,0 +1,7 @@
+{
+  "scenario": "workgraph complete must reject output path equal to input workgraph path",
+  "workgraph": "examples/valid/workgraph.json",
+  "run_link": "examples/valid/run-link.json",
+  "out": "examples/valid/workgraph.json",
+  "expected_status": "rejected"
+}
