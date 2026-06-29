@@ -756,6 +756,7 @@ func BuildWorkgraphRepairPlan(workgraph Workgraph, link RunLink) (WorkgraphRepai
 			RequiredEvidence:  append([]string(nil), source.RequiredEvidence...),
 			SafetyLimits:      append(append([]string(nil), source.SafetyLimits...), "repair plan is readback only"),
 			DependencyRefs:    []string{source.ID},
+			ContextPackRefs:   append([]string(nil), source.ContextPackRefs...),
 		}
 		plan := WorkgraphRepairPlan{
 			ContractVersion:     WorkgraphRepairPlanContract,
@@ -763,7 +764,7 @@ func BuildWorkgraphRepairPlan(workgraph Workgraph, link RunLink) (WorkgraphRepai
 			TaskID:              source.ID,
 			Status:              "repair_required",
 			SourceRunLinkStatus: link.Status,
-			Reason:              "run-link did not complete the task; emit a bounded repair task for Foundry scheduling",
+			Reason:              "run-link status " + link.Status + " did not complete the task; emit a bounded repair task for Foundry scheduling",
 			RepairTasks:         []FactoryTask{repair},
 			SchedulesWork:       false,
 			ExecutesWork:        false,

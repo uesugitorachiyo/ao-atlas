@@ -4,7 +4,7 @@
   "task_id": "atlas-readiness-task",
   "status": "repair_required",
   "source_run_link_status": "blocked",
-  "reason": "run-link did not complete the task; emit a bounded repair task for Foundry scheduling",
+  "reason": "run-link status blocked did not complete the task; emit a bounded repair task for Foundry scheduling",
   "repair_tasks": [
     {
       "contract_version": "ao.atlas.factory-task.v0.1",
@@ -18,7 +18,8 @@
       "verification_commands": ["scripts/production-readiness.sh"],
       "required_evidence": ["target/production-readiness/summary.json"],
       "safety_limits": ["no provider calls", "no credentials", "no private paths", "repair plan is readback only"],
-      "dependency_refs": ["atlas-readiness-task"]
+      "dependency_refs": ["atlas-readiness-task"],
+      "context_pack_refs": ["examples/valid/context-pack.json"]
     }
   ],
   "schedules_work": false,

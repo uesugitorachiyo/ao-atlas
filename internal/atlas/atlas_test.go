@@ -721,8 +721,52 @@ func TestWorkgraphRepairPlanEmitsRepairTaskForBlockedRunLink(t *testing.T) {
 	if plan.TaskID != "atlas-readiness-task" || len(plan.RepairTasks) != 1 {
 		t.Fatalf("unexpected repair plan: %#v", plan)
 	}
-	if plan.RepairTasks[0].ID != "repair-atlas-readiness-task" {
+	repair := plan.RepairTasks[0]
+	if repair.ID != "repair-atlas-readiness-task" {
 		t.Fatalf("unexpected repair task: %#v", plan.RepairTasks[0])
+	}
+	if plan.SchedulesWork || plan.ExecutesWork || plan.ApprovesWork {
+		t.Fatalf("repair plan must not claim authority: %#v", plan)
+	}
+	if len(repair.ContextPackRefs) != 1 || repair.ContextPackRefs[0] != "examples/valid/context-pack.json" {
+		t.Fatalf("repair task must preserve source context refs: %#v", repair)
+	}
+	for _, want := range []string{"do not schedule work from Atlas", "do not execute work from Atlas", "do not approve work from Atlas"} {
+		if !containsString(repair.NonGoals, want) {
+			t.Fatalf("repair task missing non-goal %q: %#v", want, repair.NonGoals)
+		}
+	}
+	if !containsString(repair.SafetyLimits, "repair plan is readback only") {
+		t.Fatalf("repair task missing readback-only safety limit: %#v", repair.SafetyLimits)
+	}
+}
+
+func TestWorkgraphRepairPlanEmitsRepairTaskForFailedRunLink(t *testing.T) {
+	plan, err := BuildWorkgraphRepairPlan(loadFixtureWorkgraph(t), loadFixtureRunLink(t, filepath.Join("..", "..", "examples", "valid", "run-link-failed.json")))
+	if err != nil {
+		t.Fatalf("repair plan failed: %v", err)
+	}
+	if err := ValidateWorkgraphRepairPlan(plan); err != nil {
+		t.Fatal(err)
+	}
+	if plan.SourceRunLinkStatus != "failed" || len(plan.RepairTasks) != 1 {
+		t.Fatalf("unexpected failed-run repair plan: %#v", plan)
+	}
+	if !strings.Contains(plan.Reason, "failed") {
+		t.Fatalf("repair plan reason should name source failure status: %s", plan.Reason)
+	}
+}
+
+func TestWorkgraphRepairPlanDemoFixtureValidates(t *testing.T) {
+	plan, err := LoadJSON[WorkgraphRepairPlan](filepath.Join("..", "..", "examples", "valid", "workgraph-repair-plan-blocked-node-demo.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateWorkgraphRepairPlan(plan); err != nil {
+		t.Fatal(err)
+	}
+	if plan.SourceRunLinkStatus != "blocked" || plan.SchedulesWork || plan.ExecutesWork || plan.ApprovesWork {
+		t.Fatalf("demo repair plan must be blocked and authority-free: %#v", plan)
 	}
 }
 
@@ -810,6 +854,33 @@ func TestRunLinkAttachRejectsPrivateEvidencePath(t *testing.T) {
 	if !strings.Contains(out.String(), "private or machine-local path") {
 		t.Fatalf("expected public-safety error, got %s", out.String())
 	}
+}
+
+func loadFixtureWorkgraph(t *testing.T) Workgraph {
+	t.Helper()
+	workgraph, err := LoadJSON[Workgraph](filepath.Join("..", "..", "examples", "valid", "workgraph.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return workgraph
+}
+
+func loadFixtureRunLink(t *testing.T, path string) RunLink {
+	t.Helper()
+	link, err := LoadJSON[RunLink](path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return link
+}
+
+func containsString(values []string, want string) bool {
+	for _, value := range values {
+		if value == want {
+			return true
+		}
+	}
+	return false
 }
 
 func fixtureWorkgraph() Workgraph {
