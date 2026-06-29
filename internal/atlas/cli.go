@@ -554,34 +554,78 @@ func runFoundry(args []string, stdout io.Writer) error {
 		fs := flag.NewFlagSet("foundry import", flag.ContinueOnError)
 		fs.SetOutput(io.Discard)
 		path := fs.String("workgraph", "", "workgraph path")
+		instancePath := fs.String("instance", "", "stack instance path")
+		nodeID := fs.String("node", "", "optional workgraph node id")
 		out := fs.String("out", "", "output directory")
+		jsonOut := fs.Bool("json", false, "json output")
 		if err := fs.Parse(args[1:]); err != nil {
 			return err
 		}
-		if *out == "" {
-			return fmt.Errorf("--out is required")
+		if strings.TrimSpace(*instancePath) == "" {
+			return fmt.Errorf("--instance is required")
 		}
-		if samePath(*path, *out) {
+		if *out == "" && !*jsonOut {
+			return fmt.Errorf("--out or --json is required")
+		}
+		if *out != "" && (samePath(*path, *out) || samePath(*instancePath, *out)) {
 			return fmt.Errorf("refusing to overwrite input artifact")
 		}
 		workgraph, err := LoadJSON[Workgraph](*path)
 		if err != nil {
 			return err
 		}
-		foundryImport, err := BuildFoundryImport(workgraph)
+		instance, err := LoadJSON[Instance](*instancePath)
 		if err != nil {
 			return err
 		}
-		for _, fixture := range foundryImport.Tasks {
-			if err := WriteJSON(filepath.Join(*out, fixture.Path), fixture.Task); err != nil {
-				return err
-			}
-		}
-		manifestPath := filepath.Join(*out, "foundry-import.json")
-		if err := WriteJSON(manifestPath, foundryImport); err != nil {
+		if err := ValidateInstance(instance); err != nil {
 			return err
 		}
-		fmt.Fprintf(stdout, "status=written\nfoundry_import=%s\ntasks=%d\n", manifestPath, len(foundryImport.Tasks))
+		if instance.ID != workgraph.TargetInstance {
+			return fmt.Errorf("stack instance id must match workgraph target_instance")
+		}
+		registry := AtlasRegistry{
+			ContractVersion: AtlasRegistryContract,
+			InstanceID:      instance.ID,
+			ToolchainRoot:   instance.ToolchainRoot,
+			Roots:           instance.Roots,
+			SchedulesWork:   false,
+			ExecutesWork:    false,
+			ApprovesWork:    false,
+		}
+		if _, err := BuildInstanceDoctorReport(instance, registry); err != nil {
+			return err
+		}
+		selected := []string{}
+		if strings.TrimSpace(*nodeID) != "" {
+			selected = append(selected, strings.TrimSpace(*nodeID))
+		}
+		sourceArtifacts, err := sourceArtifactsForPaths(*path, *instancePath)
+		if err != nil {
+			return err
+		}
+		foundryImport, err := BuildFoundryImportForNodes(workgraph, selected, sourceArtifacts)
+		if err != nil {
+			return err
+		}
+		if err := validateFoundryImportContextPacks(foundryImport); err != nil {
+			return err
+		}
+		if *out != "" {
+			for _, fixture := range foundryImport.Tasks {
+				if err := WriteJSON(filepath.Join(*out, fixture.Path), fixture.Task); err != nil {
+					return err
+				}
+			}
+			manifestPath := filepath.Join(*out, "foundry-import.json")
+			if err := WriteJSON(manifestPath, foundryImport); err != nil {
+				return err
+			}
+			fmt.Fprintf(stdout, "status=written\nfoundry_import=%s\ntasks=%d\n", manifestPath, len(foundryImport.Tasks))
+		}
+		if *jsonOut {
+			return printJSON(stdout, foundryImport)
+		}
 		return nil
 	default:
 		return fmt.Errorf("foundry requires handoff emit or import")
@@ -653,6 +697,73 @@ func fileDigest(path string) (string, error) {
 		return "", err
 	}
 	return DigestBytes(data), nil
+}
+
+func sourceArtifactsForPaths(paths ...string) ([]SourceRef, error) {
+	artifacts := []SourceRef{}
+	for _, path := range paths {
+		if strings.TrimSpace(path) == "" {
+			continue
+		}
+		var errs []string
+		checkPublicPath(&errs, "source_artifact", path, true)
+		if err := joinErrors(errs); err != nil {
+			return nil, err
+		}
+		digest, err := fileDigest(path)
+		if err != nil {
+			return nil, err
+		}
+		artifacts = append(artifacts, SourceRef{Ref: filepath.ToSlash(filepath.Clean(path)), Digest: digest})
+	}
+	return artifacts, nil
+}
+
+func validateFoundryImportContextPacks(foundryImport FoundryImport) error {
+	for _, fixture := range foundryImport.Tasks {
+		for _, ref := range fixture.Task.ContextPackRefs {
+			resolved, err := resolveRepoRelativePath(ref)
+			if err != nil {
+				return fmt.Errorf("context pack %s: %w", ref, err)
+			}
+			pack, err := LoadJSON[ContextPack](resolved)
+			if err != nil {
+				return fmt.Errorf("context pack %s: %w", ref, err)
+			}
+			if err := ValidateContextPack(pack, 0); err != nil {
+				return fmt.Errorf("context pack %s: %w", ref, err)
+			}
+			if pack.TaskID != fixture.TaskID {
+				return fmt.Errorf("context pack %s task_id must match %s", ref, fixture.TaskID)
+			}
+		}
+	}
+	return nil
+}
+
+func resolveRepoRelativePath(path string) (string, error) {
+	if _, err := os.Stat(path); err == nil {
+		return path, nil
+	}
+	cwd, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+	for {
+		candidate := filepath.Join(cwd, "go.mod")
+		if _, err := os.Stat(candidate); err == nil {
+			resolved := filepath.Join(cwd, path)
+			if _, err := os.Stat(resolved); err != nil {
+				return "", err
+			}
+			return resolved, nil
+		}
+		parent := filepath.Dir(cwd)
+		if parent == cwd {
+			return "", fmt.Errorf("repo root not found")
+		}
+		cwd = parent
+	}
 }
 
 type stringListFlag []string

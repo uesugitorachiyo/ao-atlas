@@ -107,6 +107,7 @@ type FactoryTask struct {
 	RequiredEvidence  []string `json:"required_evidence"`
 	SafetyLimits      []string `json:"safety_limits"`
 	DependencyRefs    []string `json:"dependency_refs"`
+	ContextPackRefs   []string `json:"context_pack_refs"`
 }
 
 type FactoryMaterialization struct {
@@ -151,6 +152,7 @@ type FoundryImport struct {
 	WorkgraphID     string                     `json:"workgraph_id"`
 	TargetInstance  string                     `json:"target_instance"`
 	Status          string                     `json:"status"`
+	SourceArtifacts []SourceRef                `json:"source_artifacts"`
 	Tasks           []FoundryImportTaskFixture `json:"tasks"`
 	SchedulesWork   bool                       `json:"schedules_work"`
 	ExecutesWork    bool                       `json:"executes_work"`

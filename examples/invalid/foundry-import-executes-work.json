@@ -4,6 +4,12 @@
   "workgraph_id": "atlas-readiness-workgraph",
   "target_instance": "demo-stack",
   "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "examples/valid/workgraph.json",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
   "tasks": [
     {
       "node_id": "readiness-ready",

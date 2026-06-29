@@ -55,6 +55,7 @@ go build -o "$ATLAS_BIN" ./cmd/atlas
 
 "$ATLAS_BIN" foundry import \
   --workgraph examples/valid/workgraph.json \
+  --instance examples/valid/stack-instance.json \
   --out "$IMPORT_DIR" > "$OUT/atlas-foundry-import.txt"
 
 (

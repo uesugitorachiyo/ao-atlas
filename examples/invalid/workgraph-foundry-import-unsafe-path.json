@@ -1,0 +1,29 @@
+{
+  "contract_version": "ao.atlas.workgraph.v0.1",
+  "id": "atlas-unsafe-path-import-workgraph",
+  "target_instance": "demo-stack",
+  "nodes": [
+    {
+      "id": "unsafe-context",
+      "status": "ready",
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "unsafe-context-task",
+        "objective": "Import should fail because the context pack ref is absolute.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/unsafe-context",
+        "acceptance_criteria": ["absolute context refs are rejected"],
+        "non_goals": ["do not schedule work"],
+        "write_scope": ["factory/unsafe-context"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/summary.json"],
+        "safety_limits": ["public-safe paths only"],
+        "dependency_refs": [],
+        "context_pack_refs": ["/absolute/context-pack.json"]
+      }
+    }
+  ]
+}

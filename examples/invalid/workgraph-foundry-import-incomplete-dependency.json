@@ -1,0 +1,51 @@
+{
+  "contract_version": "ao.atlas.workgraph.v0.1",
+  "id": "atlas-incomplete-dependency-import-workgraph",
+  "target_instance": "demo-stack",
+  "nodes": [
+    {
+      "id": "dependency",
+      "status": "ready",
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "dependency-task",
+        "objective": "Dependency is not complete.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/dependency",
+        "acceptance_criteria": ["dependency completes first"],
+        "non_goals": ["do not schedule work"],
+        "write_scope": ["factory/dependency"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/summary.json"],
+        "safety_limits": ["public-safe paths only"],
+        "dependency_refs": [],
+        "context_pack_refs": []
+      }
+    },
+    {
+      "id": "blocked-by-dependency",
+      "status": "ready",
+      "dependencies": ["dependency"],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "blocked-by-dependency-task",
+        "objective": "Import should fail because dependency is incomplete.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/blocked-by-dependency",
+        "acceptance_criteria": ["incomplete dependencies are rejected"],
+        "non_goals": ["do not schedule work"],
+        "write_scope": ["factory/blocked-by-dependency"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/summary.json"],
+        "safety_limits": ["public-safe paths only"],
+        "dependency_refs": ["dependency"],
+        "context_pack_refs": []
+      }
+    }
+  ]
+}

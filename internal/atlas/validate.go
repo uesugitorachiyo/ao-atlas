@@ -468,6 +468,7 @@ func ValidateFactoryTask(task FactoryTask) error {
 	checkPublicPath(&errs, "target_factory_repo", task.TargetFactoryRepo, false)
 	checkPublicPath(&errs, "factory_folder", task.FactoryFolder, false)
 	checkPublicStrings(&errs, "write_scope", task.WriteScope, false)
+	checkPublicStrings(&errs, "context_pack_refs", task.ContextPackRefs, true)
 	return joinErrors(errs)
 }
 
@@ -590,6 +591,15 @@ func ValidateFoundryImport(foundryImport FoundryImport) error {
 	requireField(&errs, "target_instance", foundryImport.TargetInstance)
 	if foundryImport.Status != "ready_for_foundry_fixture_import" {
 		errs = append(errs, "status must be ready_for_foundry_fixture_import")
+	}
+	if len(foundryImport.SourceArtifacts) == 0 {
+		errs = append(errs, "source_artifacts must not be empty")
+	}
+	for i, source := range foundryImport.SourceArtifacts {
+		checkPublicPath(&errs, fmt.Sprintf("source_artifacts[%d].ref", i), source.Ref, true)
+		if !digestPattern.MatchString(source.Digest) {
+			errs = append(errs, fmt.Sprintf("source_artifacts[%d].digest must be sha256:<64 hex>", i))
+		}
 	}
 	if len(foundryImport.Tasks) == 0 {
 		errs = append(errs, "tasks must not be empty")
@@ -793,6 +803,10 @@ func BuildFoundryHandoff(workgraph Workgraph) FoundryHandoff {
 }
 
 func BuildFoundryImport(workgraph Workgraph) (FoundryImport, error) {
+	return BuildFoundryImportForNodes(workgraph, nil, nil)
+}
+
+func BuildFoundryImportForNodes(workgraph Workgraph, selectedNodes []string, sourceArtifacts []SourceRef) (FoundryImport, error) {
 	if err := ValidateWorkgraph(workgraph); err != nil {
 		return FoundryImport{}, err
 	}
@@ -800,8 +814,33 @@ func BuildFoundryImport(workgraph Workgraph) (FoundryImport, error) {
 	for _, node := range workgraph.Nodes {
 		statusByID[node.ID] = node.Status
 	}
+	selected := map[string]bool{}
+	for _, nodeID := range selectedNodes {
+		if strings.TrimSpace(nodeID) != "" {
+			selected[nodeID] = true
+		}
+	}
+	for selectedID := range selected {
+		found := false
+		for _, node := range workgraph.Nodes {
+			if node.ID != selectedID {
+				continue
+			}
+			found = true
+			if node.Status != "ready" {
+				return FoundryImport{}, fmt.Errorf("selected node %s must be ready", selectedID)
+			}
+			break
+		}
+		if !found {
+			return FoundryImport{}, fmt.Errorf("selected node %s was not found", selectedID)
+		}
+	}
 	fixtures := []FoundryImportTaskFixture{}
 	for _, node := range workgraph.Nodes {
+		if len(selected) > 0 && !selected[node.ID] {
+			continue
+		}
 		if node.Status != "ready" {
 			continue
 		}
@@ -813,7 +852,7 @@ func BuildFoundryImport(workgraph Workgraph) (FoundryImport, error) {
 			}
 		}
 		if !ready {
-			continue
+			return FoundryImport{}, fmt.Errorf("selected node %s has incomplete dependencies", node.ID)
 		}
 		task := node.FactoryTask
 		fixture := FoundryImportTaskFixture{
@@ -825,12 +864,16 @@ func BuildFoundryImport(workgraph Workgraph) (FoundryImport, error) {
 		}
 		fixtures = append(fixtures, fixture)
 	}
+	if len(sourceArtifacts) == 0 {
+		sourceArtifacts = []SourceRef{{Ref: "generated", Digest: digestFoundryImportSources(workgraph)}}
+	}
 	foundryImport := FoundryImport{
 		ContractVersion: FoundryImportContract,
 		ID:              workgraph.ID + "-foundry-import",
 		WorkgraphID:     workgraph.ID,
 		TargetInstance:  workgraph.TargetInstance,
 		Status:          "ready_for_foundry_fixture_import",
+		SourceArtifacts: sourceArtifacts,
 		Tasks:           fixtures,
 		SchedulesWork:   false,
 		ExecutesWork:    false,
@@ -840,6 +883,11 @@ func BuildFoundryImport(workgraph Workgraph) (FoundryImport, error) {
 		return FoundryImport{}, err
 	}
 	return foundryImport, nil
+}
+
+func digestFoundryImportSources(workgraph Workgraph) string {
+	data, _ := json.Marshal(workgraph)
+	return DigestBytes(data)
 }
 
 func DigestBytes(data []byte) string {
