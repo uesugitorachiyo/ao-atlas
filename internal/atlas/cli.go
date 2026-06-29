@@ -20,6 +20,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		err = runInstance(args[1:], stdout)
 	case "intake":
 		err = runIntake(args[1:], stdout)
+	case "blueprint-request":
+		err = runBlueprintRequest(args[1:], stdout)
 	case "workgraph":
 		err = runWorkgraph(args[1:], stdout)
 	case "factory-task":
@@ -41,7 +43,7 @@ func Run(args []string, stdout, stderr io.Writer) int {
 }
 
 func usage(w io.Writer) {
-	fmt.Fprintln(w, "atlas <instance|intake|workgraph|factory-task|context-pack|foundry|run-link> ...")
+	fmt.Fprintln(w, "atlas <instance|intake|blueprint-request|workgraph|factory-task|context-pack|foundry|run-link> ...")
 }
 
 func runInstance(args []string, stdout io.Writer) error {
@@ -176,6 +178,27 @@ func runIntake(args []string, stdout io.Writer) error {
 		return nil
 	}
 	fmt.Fprintln(stdout, "status=ready")
+	return nil
+}
+
+func runBlueprintRequest(args []string, stdout io.Writer) error {
+	if len(args) == 0 || args[0] != "validate" {
+		return fmt.Errorf("blueprint-request requires validate")
+	}
+	fs := flag.NewFlagSet("blueprint-request validate", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	path := fs.String("request", "", "blueprint request path")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	request, err := LoadJSON[BlueprintRequest](*path)
+	if err != nil {
+		return err
+	}
+	if err := ValidateBlueprintRequest(request); err != nil {
+		return err
+	}
+	fmt.Fprintln(stdout, "status=valid")
 	return nil
 }
 

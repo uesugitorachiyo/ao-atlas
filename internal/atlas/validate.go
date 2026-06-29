@@ -98,6 +98,20 @@ func ValidateIntake(intake Intake) (BlueprintRequest, error) {
 	return BlueprintRequest{}, joinErrors(errs)
 }
 
+func ValidateBlueprintRequest(request BlueprintRequest) error {
+	var errs []string
+	requireContract(&errs, "blueprint_request", request.ContractVersion, BlueprintRequestContract)
+	requireField(&errs, "intake_id", request.IntakeID)
+	if request.Status != "blueprint_required" {
+		errs = append(errs, "status must be blueprint_required")
+	}
+	requireList(&errs, "missing", request.Missing)
+	requireField(&errs, "reason", request.Reason)
+	checkPublicStrings(&errs, "missing", request.Missing, true)
+	checkPublicPath(&errs, "reason", request.Reason, true)
+	return joinErrors(errs)
+}
+
 func ValidateWorkgraph(workgraph Workgraph) error {
 	var errs []string
 	requireContract(&errs, "workgraph", workgraph.ContractVersion, WorkgraphContract)

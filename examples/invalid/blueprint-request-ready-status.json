@@ -1,0 +1,9 @@
+{
+  "contract_version": "ao.atlas.blueprint-request.v0.1",
+  "intake_id": "atlas-intake-underspecified-demo",
+  "status": "ready",
+  "missing": [
+    "constraints"
+  ],
+  "reason": "This invalid fixture must be rejected because Blueprint requests cannot mark intake ready."
+}

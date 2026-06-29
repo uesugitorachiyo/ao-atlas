@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.blueprint-request.v0.1",
+  "type": "object",
+  "required": ["contract_version", "intake_id", "status", "missing", "reason"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.blueprint-request.v0.1" },
+    "intake_id": { "type": "string", "minLength": 1 },
+    "status": { "const": "blueprint_required" },
+    "missing": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "reason": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": false
+}

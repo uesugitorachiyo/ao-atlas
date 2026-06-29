@@ -1,0 +1,11 @@
+{
+  "contract_version": "ao.atlas.blueprint-request.v0.1",
+  "intake_id": "atlas-intake-underspecified-demo",
+  "status": "blueprint_required",
+  "missing": [
+    "target_instance",
+    "broad_prompt_detail",
+    "constraints"
+  ],
+  "reason": "AO Atlas cannot compile underspecified intake into a ready workgraph without AO Blueprint clarification."
+}

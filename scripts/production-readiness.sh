@@ -38,6 +38,7 @@ required_files=(
   docs/sdd/AO-ATLAS-SDD-HANDOFF.md
   schemas/stack-instance.schema.json
   schemas/intake.schema.json
+  schemas/blueprint-request.schema.json
   schemas/workgraph.schema.json
   schemas/factory-task.schema.json
   schemas/context-pack.schema.json
@@ -56,6 +57,7 @@ pass "json-syntax"
 
 "$BIN" instance validate --instance examples/valid/stack-instance.json >/dev/null
 "$BIN" intake validate --intake examples/valid/intake.json >/dev/null
+"$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" factory-task validate --task examples/valid/factory-task.json >/dev/null
 "$BIN" workgraph validate --workgraph examples/valid/workgraph.json >/dev/null
 "$BIN" workgraph next --workgraph examples/valid/workgraph.json --json >/dev/null
@@ -71,6 +73,10 @@ if "$BIN" context-pack validate --pack examples/invalid/context-pack-bad-digest.
 fi
 if "$BIN" workgraph validate --workgraph examples/invalid/workgraph-missing-dependency.json >/dev/null 2>&1; then
   echo "invalid workgraph was accepted" >&2
+  exit 1
+fi
+if "$BIN" blueprint-request validate --request examples/invalid/blueprint-request-ready-status.json >/dev/null 2>&1; then
+  echo "invalid blueprint request was accepted" >&2
   exit 1
 fi
 pass "invalid-fixtures-rejected"
