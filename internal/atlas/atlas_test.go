@@ -75,6 +75,63 @@ func TestContextPackRejectsAbsoluteLocalPath(t *testing.T) {
 	}
 }
 
+func TestContextPackRepackWritesBoundedPackForNeedsContext(t *testing.T) {
+	dir := t.TempDir()
+	outPath := filepath.Join(dir, "context-pack.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"context-pack", "repack",
+		"--task", filepath.Join("..", "..", "examples", "valid", "factory-task.json"),
+		"--run-link", filepath.Join("..", "..", "examples", "valid", "run-link-needs-context.json"),
+		"--source-ref", "docs/sdd/AO-ATLAS-CONTEXT-PACKS.md",
+		"--source-digest", "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		"--budget", "4096",
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("repack failed: %s", out.String())
+	}
+	pack, err := LoadJSON[ContextPack](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateContextPack(pack, 0); err != nil {
+		t.Fatal(err)
+	}
+	if pack.TaskID != "atlas-readiness-task" || len(pack.SourceRefs) != 1 {
+		t.Fatalf("unexpected context pack: %#v", pack)
+	}
+}
+
+func TestContextPackRepackRejectsCompletedRunLink(t *testing.T) {
+	assertContextPackRepackFails(t, filepath.Join("..", "..", "examples", "valid", "run-link.json"), "blocked or failed")
+}
+
+func TestContextPackRepackRejectsBlockedRunLinkWithoutNeedsContext(t *testing.T) {
+	assertContextPackRepackFails(t, filepath.Join("..", "..", "examples", "invalid", "run-link-blocked.json"), "needs_context")
+}
+
+func assertContextPackRepackFails(t *testing.T, runLinkPath, want string) {
+	t.Helper()
+	dir := t.TempDir()
+	var out bytes.Buffer
+	code := Run([]string{
+		"context-pack", "repack",
+		"--task", filepath.Join("..", "..", "examples", "valid", "factory-task.json"),
+		"--run-link", runLinkPath,
+		"--source-ref", "docs/sdd/AO-ATLAS-CONTEXT-PACKS.md",
+		"--source-digest", "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		"--budget", "4096",
+		"--out", filepath.Join(dir, "context-pack.json"),
+	}, &out, &out)
+	if code == 0 {
+		t.Fatalf("expected context-pack repack to fail for %s", runLinkPath)
+	}
+	if !strings.Contains(out.String(), want) {
+		t.Fatalf("expected error containing %q, got %s", want, out.String())
+	}
+}
+
 func TestWorkgraphNextSkipsBlockedAndDependencyIncomplete(t *testing.T) {
 	wg := fixtureWorkgraph()
 	node, ok := NextReadyNode(wg)

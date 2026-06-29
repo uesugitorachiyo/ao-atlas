@@ -259,6 +259,39 @@ func ValidateContextPack(pack ContextPack, budgetOverride int) error {
 	return joinErrors(errs)
 }
 
+func BuildContextRepack(task FactoryTask, link RunLink, sourceRef, sourceDigest string, budget int) (ContextPack, error) {
+	if err := ValidateFactoryTask(task); err != nil {
+		return ContextPack{}, err
+	}
+	if err := ValidateRunLink(link); err != nil {
+		return ContextPack{}, err
+	}
+	if task.ID != link.TaskID {
+		return ContextPack{}, fmt.Errorf("run-link task_id must match factory task id")
+	}
+	if !oneOf(link.Status, "blocked", "failed") {
+		return ContextPack{}, fmt.Errorf("run-link status must be blocked or failed")
+	}
+	if strings.TrimSpace(link.Evidence["needs_context"]) == "" {
+		return ContextPack{}, fmt.Errorf("run-link evidence must include needs_context")
+	}
+	pack := ContextPack{
+		ContractVersion: ContextPackContract,
+		ID:              task.ID + "-context-repack",
+		TaskID:          task.ID,
+		BudgetBytes:     budget,
+		SourceRefs:      []SourceRef{{Ref: sourceRef, Digest: sourceDigest}},
+		Summaries:       []string{"Repacked bounded context requested by a needs_context run-link."},
+		Assumptions:     []string{"Only referenced public-safe sources are included."},
+		Exclusions:      []string{"whole source repositories", "private local state", "credentials", "provider transcripts"},
+		MissingProtocol: "Ask AO Blueprint or the operator for missing requirements before widening scope.",
+	}
+	if err := ValidateContextPack(pack, 0); err != nil {
+		return ContextPack{}, err
+	}
+	return pack, nil
+}
+
 func ValidateFoundryHandoff(handoff FoundryHandoff) error {
 	var errs []string
 	requireContract(&errs, "foundry_handoff", handoff.ContractVersion, FoundryHandoffContract)

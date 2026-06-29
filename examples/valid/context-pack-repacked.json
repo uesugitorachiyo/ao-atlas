@@ -1,0 +1,16 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "atlas-readiness-task-context-repack",
+  "task_id": "atlas-readiness-task",
+  "budget_bytes": 4096,
+  "source_refs": [
+    {
+      "ref": "docs/sdd/AO-ATLAS-CONTEXT-PACKS.md",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "summaries": ["Repacked bounded context requested by a needs_context run-link."],
+  "assumptions": ["Only referenced public-safe sources are included."],
+  "exclusions": ["whole source repositories", "private local state", "credentials", "provider transcripts"],
+  "missing_context_protocol": "Ask AO Blueprint or the operator for missing requirements before widening scope."
+}
