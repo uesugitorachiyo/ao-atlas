@@ -10,6 +10,6 @@
   "verification_commands": ["scripts/production-readiness.sh"],
   "required_evidence": ["target/production-readiness/summary.json"],
   "safety_limits": ["no provider calls", "no credentials", "no private paths"],
-  "dependency_refs": []
+  "dependency_refs": [],
+  "context_pack_refs": ["examples/valid/context-pack.json"]
 }
-

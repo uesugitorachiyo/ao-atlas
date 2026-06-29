@@ -26,6 +26,10 @@ AO Atlas v0.1 is eligible for a stable tag or release candidate only when:
   parity mismatch, non-ignored instance state, copied stack roots, or Atlas
   authority claims;
 - AO Foundry validates the emitted `ao.atlas.foundry-import.v0.1` packet;
+- Foundry import generation records source artifact digests, preserves
+  context-pack refs, supports single-node and multi-node ready imports, and
+  fails closed on blocked nodes, incomplete dependencies, missing context
+  packs, unsafe paths, or authority claims;
 - AO Foundry emits `ao.foundry.atlas-readback.v0.1` for the completed Atlas
   run link;
 - both AO Atlas and AO Foundry are clean on synced `main`.

@@ -100,8 +100,11 @@ test -s "$OUT/workgraph-repair-plan-failed.json"
   --out "$OUT/context-pack-repacked.json" >/dev/null
 "$BIN" context-pack validate --pack "$OUT/context-pack-repacked.json" >/dev/null
 "$BIN" foundry handoff emit --workgraph examples/valid/workgraph.json --out "$OUT/foundry-handoff.json" >/dev/null
-"$BIN" foundry import --workgraph examples/valid/workgraph.json --out "$OUT/foundry-import" >/dev/null
+"$BIN" foundry import --workgraph examples/valid/workgraph.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import" >/dev/null
 test -s "$OUT/foundry-import/foundry-import.json"
+"$BIN" foundry import --workgraph examples/valid/workgraph.json --instance examples/valid/stack-instance.json --node readiness-ready --json >/dev/null
+"$BIN" foundry import --workgraph examples/valid/workgraph-multiple-ready.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import-multiple" >/dev/null
+test -s "$OUT/foundry-import-multiple/foundry-import.json"
 "$BIN" run-link validate --run-link examples/valid/run-link.json >/dev/null
 "$BIN" run-link attach \
   --task-id atlas-readiness-task \
@@ -169,8 +172,24 @@ if "$BIN" context-pack repack --task examples/valid/factory-task.json --run-link
   echo "blocked run-link without needs_context emitted a context repack" >&2
   exit 1
 fi
-if "$BIN" foundry import --workgraph examples/valid/workgraph.json --out examples/valid/workgraph.json >/dev/null 2>&1; then
+if "$BIN" foundry import --workgraph examples/valid/workgraph.json --instance examples/valid/stack-instance.json --out examples/valid/workgraph.json >/dev/null 2>&1; then
   echo "same input/output foundry import was accepted" >&2
+  exit 1
+fi
+if "$BIN" foundry import --workgraph examples/invalid/workgraph-foundry-import-blocked-node.json --instance examples/valid/stack-instance.json --node blocked-node --out "$OUT/foundry-import-blocked" >/dev/null 2>&1; then
+  echo "blocked node foundry import was accepted" >&2
+  exit 1
+fi
+if "$BIN" foundry import --workgraph examples/invalid/workgraph-foundry-import-incomplete-dependency.json --instance examples/valid/stack-instance.json --node blocked-by-dependency --out "$OUT/foundry-import-incomplete-dependency" >/dev/null 2>&1; then
+  echo "incomplete dependency foundry import was accepted" >&2
+  exit 1
+fi
+if "$BIN" foundry import --workgraph examples/invalid/workgraph-foundry-import-missing-context.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import-missing-context" >/dev/null 2>&1; then
+  echo "missing context pack foundry import was accepted" >&2
+  exit 1
+fi
+if "$BIN" foundry import --workgraph examples/invalid/workgraph-foundry-import-unsafe-path.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import-unsafe-path" >/dev/null 2>&1; then
+  echo "unsafe path foundry import was accepted" >&2
   exit 1
 fi
 pass "invalid-fixtures-rejected"

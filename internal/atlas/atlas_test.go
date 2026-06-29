@@ -395,7 +395,12 @@ func TestFoundryImportWritesTaskFixturesForReadyNodes(t *testing.T) {
 	dir := t.TempDir()
 	outDir := filepath.Join(dir, "foundry-import")
 	var out bytes.Buffer
-	code := Run([]string{"foundry", "import", "--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"), "--out", outDir}, &out, &out)
+	code := Run([]string{
+		"foundry", "import",
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--out", outDir,
+	}, &out, &out)
 	if code != 0 {
 		t.Fatalf("foundry import failed: %s", out.String())
 	}
@@ -412,11 +417,41 @@ func TestFoundryImportWritesTaskFixturesForReadyNodes(t *testing.T) {
 	if manifest.Tasks[0].TaskID != "atlas-readiness-task" {
 		t.Fatalf("unexpected task fixture: %#v", manifest.Tasks[0])
 	}
+	if len(manifest.SourceArtifacts) != 2 {
+		t.Fatalf("expected workgraph and instance source artifacts, got %#v", manifest.SourceArtifacts)
+	}
+	if len(manifest.Tasks[0].Task.ContextPackRefs) == 0 {
+		t.Fatalf("expected context pack refs to be preserved: %#v", manifest.Tasks[0].Task)
+	}
 	if _, err := os.Stat(filepath.Join(outDir, manifest.Tasks[0].Path)); err != nil {
 		t.Fatal(err)
 	}
 	if manifest.SchedulesWork || manifest.ExecutesWork || manifest.ApprovesWork {
 		t.Fatalf("foundry import must be fixture-only readback: %#v", manifest)
+	}
+}
+
+func TestFoundryImportJSONSelectsSingleReadyNode(t *testing.T) {
+	var out bytes.Buffer
+	code := Run([]string{
+		"foundry", "import",
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--node", "readiness-ready",
+		"--json",
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("foundry import json failed: %s", out.String())
+	}
+	var manifest FoundryImport
+	if err := json.Unmarshal(out.Bytes(), &manifest); err != nil {
+		t.Fatalf("foundry import did not emit json: %v\n%s", err, out.String())
+	}
+	if len(manifest.Tasks) != 1 || manifest.Tasks[0].NodeID != "readiness-ready" {
+		t.Fatalf("expected selected ready node only, got %#v", manifest.Tasks)
+	}
+	if manifest.SchedulesWork || manifest.ExecutesWork || manifest.ApprovesWork {
+		t.Fatalf("foundry import must not claim authority: %#v", manifest)
 	}
 }
 
@@ -434,10 +469,69 @@ func TestFoundryImportRejectsNoReadyNodes(t *testing.T) {
 	}
 }
 
+func TestFoundryImportRejectsBlockedSelectedNode(t *testing.T) {
+	dir := t.TempDir()
+	var out bytes.Buffer
+	code := Run([]string{
+		"foundry", "import",
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--node", "contracts-ready",
+		"--out", filepath.Join(dir, "foundry-import"),
+	}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected completed selected node to fail")
+	}
+	if !strings.Contains(out.String(), "selected node") {
+		t.Fatalf("expected selected node error, got %s", out.String())
+	}
+}
+
+func TestFoundryImportRejectsMissingContextPack(t *testing.T) {
+	workgraph := fixtureWorkgraph()
+	workgraph.TargetInstance = "demo-stack"
+	workgraph.Nodes = []WorkgraphNode{{
+		ID:           "task-ready",
+		Status:       "ready",
+		Dependencies: []string{},
+		FactoryTask: FactoryTask{
+			ContractVersion:   FactoryTaskContract,
+			ID:                "missing-context-task",
+			Objective:         "Import should fail without referenced context pack.",
+			TargetFactoryRepo: "ao-foundry",
+			FactoryFolder:     "factory/missing-context",
+			Acceptance:        []string{"context pack exists"},
+			NonGoals:          []string{"do not execute"},
+			WriteScope:        []string{"factory/missing-context"},
+			Verification:      []string{"go test ./..."},
+			RequiredEvidence:  []string{"summary.json"},
+			SafetyLimits:      []string{"public-safe only"},
+			ContextPackRefs:   []string{"examples/valid/not-present.context-pack.json"},
+		},
+	}}
+	workgraphPath := filepath.Join("..", "..", "target", "test-workgraph-missing-context.json")
+	if err := WriteJSON(workgraphPath, workgraph); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{
+		"foundry", "import",
+		"--workgraph", workgraphPath,
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--out", filepath.Join("..", "..", "target", "test-foundry-import-missing-context"),
+	}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected missing context pack to fail")
+	}
+	if !strings.Contains(out.String(), "context pack") {
+		t.Fatalf("expected context pack error, got %s", out.String())
+	}
+}
+
 func TestFoundryImportRejectsSameInputAndOutputPath(t *testing.T) {
 	var out bytes.Buffer
 	path := filepath.Join("..", "..", "examples", "valid", "workgraph.json")
-	code := Run([]string{"foundry", "import", "--workgraph", path, "--out", path}, &out, &out)
+	code := Run([]string{"foundry", "import", "--workgraph", path, "--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"), "--out", path}, &out, &out)
 	if code == 0 {
 		t.Fatal("expected same input/output path to fail")
 	}
@@ -475,6 +569,7 @@ func TestFoundryRoundtripSmokeValidatesFoundryImport(t *testing.T) {
 	for _, want := range []string{
 		"foundry import",
 		"--workgraph examples/valid/workgraph.json",
+		"--instance examples/valid/stack-instance.json",
 		"foundry atlas import validate",
 		"foundry_import_validation",
 		"foundry atlas readback",

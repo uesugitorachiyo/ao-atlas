@@ -1,0 +1,64 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "atlas-multi-ready-workgraph-foundry-import",
+  "workgraph_id": "atlas-multi-ready-workgraph",
+  "target_instance": "demo-stack",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "examples/valid/workgraph-multiple-ready.json",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "ref": "examples/valid/stack-instance.json",
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "readiness-ready",
+      "task_id": "atlas-readiness-task",
+      "path": "tasks/atlas-readiness-task.json",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "atlas-readiness-task",
+        "objective": "Verify AO Atlas stack instance readiness fixtures and command outputs.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/atlas-readiness",
+        "acceptance_criteria": ["production readiness reports score=100/100"],
+        "non_goals": ["do not execute AO2", "do not publish releases"],
+        "write_scope": ["factory/atlas-readiness"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/summary.json"],
+        "safety_limits": ["no provider calls", "no credentials", "no private paths"],
+        "dependency_refs": ["contracts-ready"],
+        "context_pack_refs": ["examples/valid/context-pack.json"]
+      },
+      "task_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    },
+    {
+      "node_id": "doctor-ready",
+      "task_id": "atlas-doctor-task",
+      "path": "tasks/atlas-doctor-task.json",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "atlas-doctor-task",
+        "objective": "Verify AO Atlas instance doctor reports ready state.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/atlas-doctor",
+        "acceptance_criteria": ["instance doctor emits ready report"],
+        "non_goals": ["do not schedule work from Atlas"],
+        "write_scope": ["factory/atlas-doctor"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/instance-doctor.json"],
+        "safety_limits": ["public-safe paths only", "no provider calls"],
+        "dependency_refs": ["contracts-ready"],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

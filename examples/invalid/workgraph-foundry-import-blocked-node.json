@@ -1,0 +1,29 @@
+{
+  "contract_version": "ao.atlas.workgraph.v0.1",
+  "id": "atlas-blocked-import-workgraph",
+  "target_instance": "demo-stack",
+  "nodes": [
+    {
+      "id": "blocked-node",
+      "status": "blocked",
+      "dependencies": [],
+      "blockers": ["Blueprint clarification required"],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "blocked-task",
+        "objective": "This task must not be imported while blocked.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/blocked",
+        "acceptance_criteria": ["blocked nodes are rejected"],
+        "non_goals": ["do not schedule work"],
+        "write_scope": ["factory/blocked"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/summary.json"],
+        "safety_limits": ["public-safe paths only"],
+        "dependency_refs": [],
+        "context_pack_refs": []
+      }
+    }
+  ]
+}

@@ -21,7 +21,8 @@
         "verification_commands": ["scripts/production-readiness.sh"],
         "required_evidence": ["target/production-readiness/summary.json"],
         "safety_limits": ["no provider calls", "public-safe paths only"],
-        "dependency_refs": []
+        "dependency_refs": [],
+        "context_pack_refs": []
       }
     },
     {
@@ -42,7 +43,8 @@
         "verification_commands": ["scripts/production-readiness.sh"],
         "required_evidence": ["target/production-readiness/summary.json"],
         "safety_limits": ["no provider calls", "no credentials", "no private paths"],
-        "dependency_refs": ["contracts-ready"]
+        "dependency_refs": ["contracts-ready"],
+        "context_pack_refs": ["examples/valid/context-pack.json"]
       }
     }
   ]

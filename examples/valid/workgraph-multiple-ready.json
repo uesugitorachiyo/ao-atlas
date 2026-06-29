@@ -1,6 +1,6 @@
 {
   "contract_version": "ao.atlas.workgraph.v0.1",
-  "id": "atlas-readiness-workgraph",
+  "id": "atlas-multi-ready-workgraph",
   "target_instance": "demo-stack",
   "nodes": [
     {
@@ -45,6 +45,28 @@
         "safety_limits": ["no provider calls", "no credentials", "no private paths"],
         "dependency_refs": ["contracts-ready"],
         "context_pack_refs": ["examples/valid/context-pack.json"]
+      }
+    },
+    {
+      "id": "doctor-ready",
+      "status": "ready",
+      "dependencies": ["contracts-ready"],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "atlas-doctor-task",
+        "objective": "Verify AO Atlas instance doctor reports ready state.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/atlas-doctor",
+        "acceptance_criteria": ["instance doctor emits ready report"],
+        "non_goals": ["do not schedule work from Atlas"],
+        "write_scope": ["factory/atlas-doctor"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/instance-doctor.json"],
+        "safety_limits": ["public-safe paths only", "no provider calls"],
+        "dependency_refs": ["contracts-ready"],
+        "context_pack_refs": []
       }
     }
   ]

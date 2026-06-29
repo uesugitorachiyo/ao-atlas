@@ -15,7 +15,7 @@
     "verification_commands": { "type": "array", "items": { "type": "string" } },
     "required_evidence": { "type": "array", "items": { "type": "string" } },
     "safety_limits": { "type": "array", "items": { "type": "string" } },
-    "dependency_refs": { "type": "array", "items": { "type": "string" } }
+    "dependency_refs": { "type": "array", "items": { "type": "string" } },
+    "context_pack_refs": { "type": "array", "items": { "type": "string" } }
   }
 }
-

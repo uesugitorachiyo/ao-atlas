@@ -11,12 +11,16 @@ CLI:
 
 ```sh
 atlas foundry handoff emit --workgraph <path> --out <path>
-atlas foundry import --workgraph <path> --out <dir>
+atlas foundry import --workgraph <path> --instance <path> --out <dir> [--node <id>] [--json]
 ```
 
 `foundry import` writes a manifest plus one task fixture per dependency-ready
-workgraph node. The output is local fixture material for Foundry import tests or
-operator review. Atlas still does not schedule or execute the tasks.
+workgraph node, or one selected ready node when `--node` is provided. The
+manifest records the source workgraph and stack-instance paths with sha256
+digests, preserves context-pack refs, and keeps `schedules_work=false`,
+`executes_work=false`, and `approves_work=false`. The output is local fixture
+material for Foundry import tests or operator review. Atlas still does not
+schedule, execute, approve, publish, call providers, or mutate sibling repos.
 
 Cross-repo fixture smoke:
 
