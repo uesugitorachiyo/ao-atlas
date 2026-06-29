@@ -1,0 +1,11 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "authority-docs-single-live-task",
+  "status": "completed",
+  "evidence": {
+    "live_rehearsal": "evidence/public/docs-single-live-readback.json",
+    "rollback": "evidence/public/docs-single-rollback-proof.json",
+    "ci": "evidence/public/docs-single-ci-pass.json"
+  },
+  "digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+}

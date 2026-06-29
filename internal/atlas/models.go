@@ -42,19 +42,31 @@ type Intake struct {
 }
 
 type MissionStatus struct {
-	ContractVersion       string            `json:"contract_version"`
-	IntakeID              string            `json:"intake_id"`
-	WorkgraphID           string            `json:"workgraph_id"`
-	TargetInstance        string            `json:"target_instance"`
-	CompletionStatus      string            `json:"completion_status"`
-	NodeCounts            map[string]int    `json:"node_counts"`
-	RunLinks              map[string]string `json:"run_links"`
-	MissingContextPacks   []string          `json:"missing_context_packs"`
-	MissingHandoffs       []string          `json:"missing_handoffs"`
-	NextRecommendedAction string            `json:"next_recommended_action"`
-	NextActions           []string          `json:"next_actions"`
-	SchedulesWork         bool              `json:"schedules_work"`
-	ExecutesWork          bool              `json:"executes_work"`
+	ContractVersion       string                 `json:"contract_version"`
+	IntakeID              string                 `json:"intake_id"`
+	WorkgraphID           string                 `json:"workgraph_id"`
+	TargetInstance        string                 `json:"target_instance"`
+	CompletionStatus      string                 `json:"completion_status"`
+	NodeCounts            map[string]int         `json:"node_counts"`
+	RunLinks              map[string]string      `json:"run_links"`
+	MissingContextPacks   []string               `json:"missing_context_packs"`
+	MissingHandoffs       []string               `json:"missing_handoffs"`
+	NextRecommendedAction string                 `json:"next_recommended_action"`
+	NextActions           []string               `json:"next_actions"`
+	AuthorityLadder       *AuthorityLadderStatus `json:"authority_ladder,omitempty"`
+	SchedulesWork         bool                   `json:"schedules_work"`
+	ExecutesWork          bool                   `json:"executes_work"`
+}
+
+type AuthorityLadderStatus struct {
+	CurrentClass        string            `json:"current_class"`
+	NextClass           string            `json:"next_class"`
+	ProvenLiveClasses   []string          `json:"proven_live_classes"`
+	DryRunReadyClasses  []string          `json:"dry_run_ready_classes"`
+	Blockers            []string          `json:"blockers"`
+	RequiredEvidence    []string          `json:"required_evidence"`
+	DeniedHigherClasses map[string]string `json:"denied_higher_classes"`
+	DoNotAdvanceGates   []string          `json:"do_not_advance_gates"`
 }
 
 type BlueprintRequest struct {

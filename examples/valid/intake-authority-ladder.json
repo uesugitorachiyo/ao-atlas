@@ -1,0 +1,13 @@
+{
+  "contract_version": "ao.atlas.intake.v0.1",
+  "id": "authority-ladder-intake",
+  "target_instance": "demo-stack",
+  "broad_prompt": "Advance governed AO mutation authority through bounded evidence gates without granting execution authority.",
+  "instruction_refs": ["docs/sdd/AO-ATLAS-WORKGRAPH.md"],
+  "folder_refs": ["examples/valid/workgraph-authority-ladder.json"],
+  "constraints": [
+    "Atlas emits classification and readback only",
+    "higher mutation classes remain denied until lower live rehearsals complete",
+    "private evidence stays in ignored local folders"
+  ]
+}
