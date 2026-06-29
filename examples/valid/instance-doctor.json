@@ -6,8 +6,16 @@
     "instance": "passed",
     "registry_parity": "passed",
     "ignored_local_state": "passed",
-    "worktree_hygiene": "passed"
+    "worktree_hygiene": "passed",
+    "shared_toolchain": "passed",
+    "authority_boundary": "passed"
   },
+  "first_failing_check": "",
+  "blocking_next_actions": [],
+  "maintenance_suggestions": [
+    "Keep generated instance state under ignored Atlas local roots."
+  ],
   "schedules_work": false,
-  "executes_work": false
+  "executes_work": false,
+  "approves_work": false
 }

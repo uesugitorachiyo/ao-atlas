@@ -22,7 +22,10 @@ stable identifiers, non-empty required fields, and public-safe paths.
 
 `ao.atlas.instance-doctor.v0.1` records stack-instance hygiene readback:
 instance validation, generated registry parity, ignored local state placement,
-and bounded worktree roots. The doctor does not schedule or execute work.
+bounded worktree roots, shared-toolchain use, and authority boundaries. The
+doctor reports `ready`, `blocked`, or `failed`, including the first failing
+check and blocking next actions. It does not schedule, execute, approve,
+publish, call providers, or mutate sibling repositories.
 
 `ao.atlas.mission-status.v0.1` summarizes intake, workgraph node state, run-link
 state, completion status, and next readback actions. It is status readback only

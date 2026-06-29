@@ -2,6 +2,7 @@ package atlas
 
 import (
 	"bytes"
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -94,6 +95,26 @@ func TestInstanceDoctorValidatesRootsAndRegistryParity(t *testing.T) {
 	}
 }
 
+func TestInstanceDoctorJSONWithoutRegistry(t *testing.T) {
+	dir := t.TempDir()
+	instancePath := filepath.Join(dir, "instance.json")
+	var out bytes.Buffer
+	if code := Run([]string{"instance", "init", "--id", "demo", "--state-root", ".atlas-local/state", "--toolchain-root", "../toolchain", "--out", instancePath}, &out, &out); code != 0 {
+		t.Fatalf("init failed: %s", out.String())
+	}
+	out.Reset()
+	if code := Run([]string{"instance", "doctor", "--instance", instancePath, "--json"}, &out, &out); code != 0 {
+		t.Fatalf("doctor json failed: %s", out.String())
+	}
+	var report InstanceDoctorReport
+	if err := json.Unmarshal(out.Bytes(), &report); err != nil {
+		t.Fatalf("doctor did not emit json: %v\n%s", err, out.String())
+	}
+	if report.Status != "ready" || report.FirstFailingCheck != "" || report.ApprovesWork {
+		t.Fatalf("unexpected doctor json report: %#v", report)
+	}
+}
+
 func TestInstanceDoctorRejectsRegistryParityMismatch(t *testing.T) {
 	dir := t.TempDir()
 	instancePath := filepath.Join(dir, "instance.json")
@@ -118,6 +139,26 @@ func TestInstanceDoctorRejectsRegistryParityMismatch(t *testing.T) {
 	}
 	if !strings.Contains(out.String(), "registry instance_id") {
 		t.Fatalf("expected registry parity error, got %s", out.String())
+	}
+}
+
+func TestInstanceDoctorRejectsAuthorityClaims(t *testing.T) {
+	instance := DefaultInstance("demo", ".atlas-local/state", "../toolchain")
+	registry := AtlasRegistry{
+		ContractVersion: AtlasRegistryContract,
+		InstanceID:      "demo",
+		ToolchainRoot:   "../toolchain",
+		Roots:           instance.Roots,
+		SchedulesWork:   true,
+		ExecutesWork:    false,
+		ApprovesWork:    false,
+	}
+	report, err := BuildInstanceDoctorReport(instance, registry)
+	if err == nil {
+		t.Fatal("expected authority claim to fail")
+	}
+	if report.Status != "failed" || report.FirstFailingCheck != "authority_boundary" {
+		t.Fatalf("unexpected failed report: %#v", report)
 	}
 }
 
