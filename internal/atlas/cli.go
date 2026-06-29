@@ -21,6 +21,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		err = runInstance(args[1:], stdout)
 	case "intake":
 		err = runIntake(args[1:], stdout)
+	case "mission":
+		err = runMission(args[1:], stdout)
 	case "blueprint-request":
 		err = runBlueprintRequest(args[1:], stdout)
 	case "workgraph":
@@ -46,7 +48,7 @@ func Run(args []string, stdout, stderr io.Writer) int {
 }
 
 func usage(w io.Writer) {
-	fmt.Fprintln(w, "atlas <instance|intake|blueprint-request|workgraph|factory-task|factory|context-pack|foundry|run-link> ...")
+	fmt.Fprintln(w, "atlas <instance|intake|mission|blueprint-request|workgraph|factory-task|factory|context-pack|foundry|run-link> ...")
 }
 
 func runInstance(args []string, stdout io.Writer) error {
@@ -216,6 +218,56 @@ func runIntake(args []string, stdout io.Writer) error {
 		return nil
 	}
 	fmt.Fprintln(stdout, "status=ready")
+	return nil
+}
+
+func runMission(args []string, stdout io.Writer) error {
+	if len(args) == 0 || args[0] != "status" {
+		return fmt.Errorf("mission requires status")
+	}
+	fs := flag.NewFlagSet("mission status", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	intakePath := fs.String("intake", "", "intake path")
+	workgraphPath := fs.String("workgraph", "", "workgraph path")
+	runLinkFlags := stringListFlag{}
+	fs.Var(&runLinkFlags, "run-link", "run link path")
+	out := fs.String("out", "", "output path")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	if *out == "" {
+		return fmt.Errorf("--out is required")
+	}
+	if samePath(*intakePath, *out) || samePath(*workgraphPath, *out) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	intake, err := LoadJSON[Intake](*intakePath)
+	if err != nil {
+		return err
+	}
+	workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+	if err != nil {
+		return err
+	}
+	links := []RunLink{}
+	for _, path := range runLinkFlags {
+		if samePath(path, *out) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+		link, err := LoadJSON[RunLink](path)
+		if err != nil {
+			return err
+		}
+		links = append(links, link)
+	}
+	status, err := BuildMissionStatus(intake, workgraph, links)
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(*out, status); err != nil {
+		return err
+	}
+	fmt.Fprintf(stdout, "status=%s\nintake=%s\nworkgraph=%s\n", status.CompletionStatus, status.IntakeID, status.WorkgraphID)
 	return nil
 }
 

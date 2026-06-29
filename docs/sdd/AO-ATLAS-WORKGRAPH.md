@@ -30,3 +30,12 @@ completed run link, public-safe evidence, and completed dependencies.
 `workgraph repair-plan` emits a bounded repair task when a matching run link is
 blocked or failed. It writes a repair-plan artifact only; Atlas still does not
 schedule, execute, approve, publish, upload, or call providers.
+
+Mission status readback:
+
+```sh
+atlas mission status --intake <path> --workgraph <path> --run-link <path> --out <path>
+```
+
+Mission status summarizes intake, workgraph node counts, run-link statuses,
+completion state, and next readback actions without mutating source artifacts.

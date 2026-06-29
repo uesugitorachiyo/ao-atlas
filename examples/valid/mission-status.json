@@ -1,0 +1,18 @@
+{
+  "contract_version": "ao.atlas.mission-status.v0.1",
+  "intake_id": "atlas-intake-demo",
+  "workgraph_id": "atlas-readiness-workgraph",
+  "target_instance": "demo-stack",
+  "completion_status": "completed",
+  "node_counts": {
+    "ready": 0,
+    "blocked": 0,
+    "completed": 2
+  },
+  "run_links": {
+    "atlas-readiness-task": "completed"
+  },
+  "next_actions": ["record completion readback and keep artifacts public-safe"],
+  "schedules_work": false,
+  "executes_work": false
+}
