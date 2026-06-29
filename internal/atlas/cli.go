@@ -212,6 +212,8 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 	fs.SetOutput(io.Discard)
 	path := fs.String("workgraph", "", "workgraph path")
 	jsonOut := fs.Bool("json", false, "json output")
+	out := fs.String("out", "", "output directory")
+	dryRun := fs.Bool("dry-run", false, "write a dry-run skeleton without scheduling or executing")
 	if err := fs.Parse(args[1:]); err != nil {
 		return err
 	}
@@ -244,6 +246,20 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 			return printJSON(stdout, counts)
 		}
 		fmt.Fprintf(stdout, "ready=%d\nblocked=%d\ncompleted=%d\n", counts["ready"], counts["blocked"], counts["completed"])
+	case "materialize-next":
+		if !*dryRun {
+			return fmt.Errorf("--dry-run is required for v0.1 workgraph materialization")
+		}
+		node, ok := NextReadyNode(workgraph)
+		if !ok {
+			fmt.Fprintln(stdout, "status=no_ready_task")
+			return nil
+		}
+		materialization, err := MaterializeFactoryDryRun(node.FactoryTask, *out)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(stdout, "status=written\nnode=%s\ntask=%s\nmode=%s\nexecutes_work=false\nschedules_work=false\n", node.ID, node.FactoryTask.ID, materialization.Mode)
 	default:
 		return fmt.Errorf("unknown workgraph subcommand %q", args[0])
 	}
