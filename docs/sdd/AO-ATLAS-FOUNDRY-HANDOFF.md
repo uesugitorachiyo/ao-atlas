@@ -22,6 +22,14 @@ digests, preserves context-pack refs, and keeps `schedules_work=false`,
 material for Foundry import tests or operator review. Atlas still does not
 schedule, execute, approve, publish, call providers, or mutate sibling repos.
 
+When the source workgraph represents the first tiny docs-only live mutation
+class, the import material remains non-authoritative. It may carry task
+objective, docs-only write scope, acceptance criteria, context-pack refs,
+dependency refs, and required evidence into Foundry, but Covenant approval,
+Foundry approval gate, Forge guard, AO2 patch packet, Sentinel verdict,
+Promoter boundary, rollback rehearsal, Command readback, and exact operator
+approval decide whether a later docs-only PR rehearsal can proceed.
+
 Cross-repo fixture smoke:
 
 ```sh
