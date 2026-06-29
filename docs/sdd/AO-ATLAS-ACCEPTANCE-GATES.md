@@ -22,6 +22,8 @@ AO Atlas v0.1 is eligible for a stable tag or release candidate only when:
 - the roundtrip summary records `schedules_work=false`, `executes_work=false`,
   and `approves_work=false`;
 - AO Foundry validates the emitted `ao.atlas.foundry-import.v0.1` packet;
+- AO Foundry emits `ao.foundry.atlas-readback.v0.1` for the completed Atlas
+  run link;
 - both AO Atlas and AO Foundry are clean on synced `main`.
 
 The checkpoint is a readiness decision, not a release action. Tags, releases,
