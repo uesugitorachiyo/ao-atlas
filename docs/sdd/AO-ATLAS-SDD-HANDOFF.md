@@ -18,10 +18,10 @@ the AO stack.
 - `atlas factory-task validate`
 - `atlas context-pack validate`
 - `atlas foundry handoff emit`
+- `atlas foundry import`
 - `atlas run-link validate`
 
 ## Closure Rule
 
 Do not close v0.1 unless `scripts/production-readiness.sh` reports
 `score=100/100`.
-

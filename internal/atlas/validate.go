@@ -25,6 +25,7 @@ const (
 	FactoryMaterializationContract = "ao.atlas.factory-materialization.v0.1"
 	ContextPackContract            = "ao.atlas.context-pack.v0.1"
 	FoundryHandoffContract         = "ao.atlas.foundry-handoff.v0.1"
+	FoundryImportContract          = "ao.atlas.foundry-import.v0.1"
 	RunLinkContract                = "ao.atlas.run-link.v0.1"
 	BlueprintRequestContract       = "ao.atlas.blueprint-request.v0.1"
 )
@@ -480,6 +481,54 @@ func ValidateFoundryHandoff(handoff FoundryHandoff) error {
 	return joinErrors(errs)
 }
 
+func ValidateFoundryImport(foundryImport FoundryImport) error {
+	var errs []string
+	requireContract(&errs, "foundry_import", foundryImport.ContractVersion, FoundryImportContract)
+	requireField(&errs, "id", foundryImport.ID)
+	requireField(&errs, "workgraph_id", foundryImport.WorkgraphID)
+	requireField(&errs, "target_instance", foundryImport.TargetInstance)
+	if foundryImport.Status != "ready_for_foundry_fixture_import" {
+		errs = append(errs, "status must be ready_for_foundry_fixture_import")
+	}
+	if len(foundryImport.Tasks) == 0 {
+		errs = append(errs, "tasks must not be empty")
+	}
+	if foundryImport.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if foundryImport.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if foundryImport.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	seenPaths := map[string]bool{}
+	for i, fixture := range foundryImport.Tasks {
+		prefix := fmt.Sprintf("tasks[%d]", i)
+		requireField(&errs, prefix+".node_id", fixture.NodeID)
+		requireField(&errs, prefix+".task_id", fixture.TaskID)
+		requireField(&errs, prefix+".path", fixture.Path)
+		checkPublicPath(&errs, prefix+".path", fixture.Path, true)
+		if strings.Contains(filepath.Clean(fixture.Path), "..") {
+			errs = append(errs, prefix+".path must stay inside the import output")
+		}
+		if seenPaths[fixture.Path] {
+			errs = append(errs, prefix+".path must be unique")
+		}
+		seenPaths[fixture.Path] = true
+		if !digestPattern.MatchString(fixture.TaskHash) {
+			errs = append(errs, prefix+".task_digest must be sha256:<64 hex>")
+		}
+		if err := ValidateFactoryTask(fixture.Task); err != nil {
+			errs = append(errs, prefix+".task: "+err.Error())
+		}
+		if fixture.TaskID != fixture.Task.ID {
+			errs = append(errs, prefix+".task_id must match task.id")
+		}
+	}
+	return joinErrors(errs)
+}
+
 func ValidateRunLink(link RunLink) error {
 	var errs []string
 	requireContract(&errs, "run_link", link.ContractVersion, RunLinkContract)
@@ -642,9 +691,67 @@ func BuildFoundryHandoff(workgraph Workgraph) FoundryHandoff {
 	}
 }
 
+func BuildFoundryImport(workgraph Workgraph) (FoundryImport, error) {
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return FoundryImport{}, err
+	}
+	statusByID := map[string]string{}
+	for _, node := range workgraph.Nodes {
+		statusByID[node.ID] = node.Status
+	}
+	fixtures := []FoundryImportTaskFixture{}
+	for _, node := range workgraph.Nodes {
+		if node.Status != "ready" {
+			continue
+		}
+		ready := true
+		for _, dep := range node.Dependencies {
+			if statusByID[dep] != "completed" {
+				ready = false
+				break
+			}
+		}
+		if !ready {
+			continue
+		}
+		task := node.FactoryTask
+		fixture := FoundryImportTaskFixture{
+			NodeID:   node.ID,
+			TaskID:   task.ID,
+			Path:     filepath.ToSlash(filepath.Join("tasks", task.ID+".json")),
+			Task:     task,
+			TaskHash: digestFactoryTask(task),
+		}
+		fixtures = append(fixtures, fixture)
+	}
+	foundryImport := FoundryImport{
+		ContractVersion: FoundryImportContract,
+		ID:              workgraph.ID + "-foundry-import",
+		WorkgraphID:     workgraph.ID,
+		TargetInstance:  workgraph.TargetInstance,
+		Status:          "ready_for_foundry_fixture_import",
+		Tasks:           fixtures,
+		SchedulesWork:   false,
+		ExecutesWork:    false,
+		ApprovesWork:    false,
+	}
+	if err := ValidateFoundryImport(foundryImport); err != nil {
+		return FoundryImport{}, err
+	}
+	return foundryImport, nil
+}
+
 func DigestBytes(data []byte) string {
 	sum := sha256.Sum256(data)
 	return "sha256:" + hex.EncodeToString(sum[:])
+}
+
+func digestFactoryTask(task FactoryTask) string {
+	data, err := json.Marshal(task)
+	if err != nil {
+		return ""
+	}
+	return DigestBytes(data)
 }
 
 func requireContract(errs *[]string, name, got, want string) {

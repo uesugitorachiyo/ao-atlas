@@ -53,6 +53,7 @@ required_files=(
   schemas/factory-materialization.schema.json
   schemas/context-pack.schema.json
   schemas/foundry-handoff.schema.json
+  schemas/foundry-import.schema.json
   schemas/run-link.schema.json
 )
 for file in "${required_files[@]}"; do
@@ -97,6 +98,8 @@ test -s "$OUT/workgraph-repair-plan-failed.json"
   --out "$OUT/context-pack-repacked.json" >/dev/null
 "$BIN" context-pack validate --pack "$OUT/context-pack-repacked.json" >/dev/null
 "$BIN" foundry handoff emit --workgraph examples/valid/workgraph.json --out "$OUT/foundry-handoff.json" >/dev/null
+"$BIN" foundry import --workgraph examples/valid/workgraph.json --out "$OUT/foundry-import" >/dev/null
+test -s "$OUT/foundry-import/foundry-import.json"
 "$BIN" run-link validate --run-link examples/valid/run-link.json >/dev/null
 "$BIN" run-link attach \
   --task-id atlas-readiness-task \
@@ -154,6 +157,10 @@ if "$BIN" context-pack repack --task examples/valid/factory-task.json --run-link
 fi
 if "$BIN" context-pack repack --task examples/valid/factory-task.json --run-link examples/invalid/run-link-blocked.json --source-ref docs/sdd/AO-ATLAS-CONTEXT-PACKS.md --source-digest sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa --budget 4096 --out "$OUT/missing-context-repack.json" >/dev/null 2>&1; then
   echo "blocked run-link without needs_context emitted a context repack" >&2
+  exit 1
+fi
+if "$BIN" foundry import --workgraph examples/valid/workgraph.json --out examples/valid/workgraph.json >/dev/null 2>&1; then
+  echo "same input/output foundry import was accepted" >&2
   exit 1
 fi
 pass "invalid-fixtures-rejected"

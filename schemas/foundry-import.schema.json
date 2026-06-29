@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.foundry-import.v0.1",
+  "type": "object",
+  "required": ["contract_version", "id", "workgraph_id", "target_instance", "status", "tasks", "schedules_work", "executes_work", "approves_work"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.foundry-import.v0.1" },
+    "id": { "type": "string", "minLength": 1 },
+    "workgraph_id": { "type": "string", "minLength": 1 },
+    "target_instance": { "type": "string", "minLength": 1 },
+    "status": { "const": "ready_for_foundry_fixture_import" },
+    "tasks": { "type": "array", "minItems": 1 },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false }
+  }
+}
