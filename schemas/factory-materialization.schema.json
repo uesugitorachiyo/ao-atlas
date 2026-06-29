@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.factory-materialization.v0.1",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "task_id",
+    "mode",
+    "output_root",
+    "files",
+    "executes_work",
+    "schedules_work",
+    "task_digest"
+  ],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.factory-materialization.v0.1" },
+    "task_id": { "type": "string", "minLength": 1 },
+    "mode": { "const": "dry_run" },
+    "output_root": { "const": "selected-output-directory" },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "executes_work": { "const": false },
+    "schedules_work": { "const": false },
+    "task_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  },
+  "additionalProperties": false
+}

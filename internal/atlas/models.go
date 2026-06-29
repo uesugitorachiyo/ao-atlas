@@ -57,6 +57,17 @@ type FactoryTask struct {
 	DependencyRefs    []string `json:"dependency_refs"`
 }
 
+type FactoryMaterialization struct {
+	ContractVersion string   `json:"contract_version"`
+	TaskID          string   `json:"task_id"`
+	Mode            string   `json:"mode"`
+	OutputRoot      string   `json:"output_root"`
+	Files           []string `json:"files"`
+	ExecutesWork    bool     `json:"executes_work"`
+	SchedulesWork   bool     `json:"schedules_work"`
+	TaskDigest      string   `json:"task_digest"`
+}
+
 type ContextPack struct {
 	ContractVersion string      `json:"contract_version"`
 	ID              string      `json:"id"`
