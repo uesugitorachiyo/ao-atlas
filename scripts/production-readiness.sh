@@ -69,6 +69,7 @@ pass "json-syntax"
 "$BIN" instance validate --instance examples/valid/stack-instance.json >/dev/null
 "$BIN" instance doctor --instance examples/valid/stack-instance.json --registry examples/valid/atlas-registry.json --out "$OUT/instance-doctor.json" >/dev/null
 test -s "$OUT/instance-doctor.json"
+"$BIN" instance doctor --instance examples/valid/stack-instance.json --json >/dev/null
 "$BIN" intake validate --intake examples/valid/intake.json >/dev/null
 "$BIN" mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out "$OUT/mission-status.json" >/dev/null
 test -s "$OUT/mission-status.json"
@@ -117,6 +118,14 @@ if "$BIN" context-pack validate --pack examples/invalid/context-pack-bad-digest.
 fi
 if "$BIN" instance doctor --instance examples/valid/stack-instance.json --registry examples/invalid/atlas-registry-parity-mismatch.json --out "$OUT/instance-doctor-mismatch.json" >/dev/null 2>&1; then
   echo "instance doctor accepted registry parity mismatch" >&2
+  exit 1
+fi
+if "$BIN" instance doctor --instance examples/invalid/stack-instance-public-state-root.json --registry examples/valid/atlas-registry.json --out "$OUT/instance-doctor-public-state-root.json" >/dev/null 2>&1; then
+  echo "instance doctor accepted public tracked state root" >&2
+  exit 1
+fi
+if "$BIN" instance doctor --instance examples/valid/stack-instance.json --registry examples/invalid/atlas-registry-claims-authority.json --out "$OUT/instance-doctor-authority-claim.json" >/dev/null 2>&1; then
+  echo "instance doctor accepted Atlas scheduling authority claim" >&2
   exit 1
 fi
 if "$BIN" workgraph validate --workgraph examples/invalid/workgraph-missing-dependency.json >/dev/null 2>&1; then

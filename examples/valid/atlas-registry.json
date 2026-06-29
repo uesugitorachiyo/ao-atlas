@@ -10,5 +10,6 @@
     "worktree": ".atlas-local/state/demo-stack/worktree"
   },
   "schedules_work": false,
-  "executes_work": false
+  "executes_work": false,
+  "approves_work": false
 }

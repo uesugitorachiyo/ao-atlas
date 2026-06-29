@@ -29,6 +29,12 @@ Tracked examples use relative placeholder paths only. Generated instance state
 should live outside this public repo or under ignored local directories such as
 `.atlas-local/`.
 
+`atlas instance doctor` inspects stack-instance hygiene without scheduling or
+executing work. It validates ignored local state roots, generated registry
+parity, shared-toolchain use, worktree bounds, and `schedules_work=false`,
+`executes_work=false`, `approves_work=false`. When `--registry` is omitted, the
+doctor compares against the registry Atlas would emit from the instance.
+
 AO Atlas v0.1 does not call live providers, push, tag, release, upload, or copy
 source repos.
 
@@ -43,6 +49,7 @@ go run ./cmd/atlas instance init \
 
 go run ./cmd/atlas instance validate --instance examples/valid/stack-instance.json
 go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json --registry examples/valid/atlas-registry.json --out .atlas-local/instance-doctor.json
+go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json --json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out .atlas-local/mission-status.json
 go run ./cmd/atlas blueprint-request validate --request examples/valid/blueprint-request.json
 go run ./cmd/atlas factory materialize --task examples/valid/factory-task.json --out .atlas-local/factory-materialization --dry-run

@@ -119,6 +119,7 @@ func runInstance(args []string, stdout io.Writer) error {
 			Roots:           instance.Roots,
 			SchedulesWork:   false,
 			ExecutesWork:    false,
+			ApprovesWork:    false,
 		}
 		if err := ValidateAtlasRegistry(registry); err != nil {
 			return err
@@ -154,6 +155,7 @@ func runInstance(args []string, stdout io.Writer) error {
 		path := fs.String("instance", "", "instance path")
 		registryPath := fs.String("registry", "", "registry path")
 		out := fs.String("out", "", "output path")
+		jsonOut := fs.Bool("json", false, "json output")
 		if err := fs.Parse(args[1:]); err != nil {
 			return err
 		}
@@ -161,25 +163,38 @@ func runInstance(args []string, stdout io.Writer) error {
 		if err != nil {
 			return err
 		}
-		registry, err := LoadJSON[AtlasRegistry](*registryPath)
-		if err != nil {
-			return err
+		registry := AtlasRegistry{
+			ContractVersion: AtlasRegistryContract,
+			InstanceID:      instance.ID,
+			ToolchainRoot:   instance.ToolchainRoot,
+			Roots:           instance.Roots,
+			SchedulesWork:   false,
+			ExecutesWork:    false,
+			ApprovesWork:    false,
+		}
+		if strings.TrimSpace(*registryPath) != "" {
+			registry, err = LoadJSON[AtlasRegistry](*registryPath)
+			if err != nil {
+				return err
+			}
 		}
 		report, err := BuildInstanceDoctorReport(instance, registry)
-		if err != nil {
-			return err
+		if *out != "" {
+			if samePath(*path, *out) || (strings.TrimSpace(*registryPath) != "" && samePath(*registryPath, *out)) {
+				return fmt.Errorf("refusing to overwrite input artifact")
+			}
+			if writeErr := WriteJSON(*out, report); writeErr != nil {
+				return writeErr
+			}
 		}
-		if *out == "" {
-			return fmt.Errorf("--out is required")
+		if *jsonOut {
+			if printErr := printJSON(stdout, report); printErr != nil {
+				return printErr
+			}
+		} else {
+			fmt.Fprintf(stdout, "status=%s\ninstance=%s\n", report.Status, report.InstanceID)
 		}
-		if samePath(*path, *out) || samePath(*registryPath, *out) {
-			return fmt.Errorf("refusing to overwrite input artifact")
-		}
-		if err := WriteJSON(*out, report); err != nil {
-			return err
-		}
-		fmt.Fprintf(stdout, "status=ready\ninstance=%s\n", report.InstanceID)
-		return nil
+		return err
 	default:
 		return fmt.Errorf("unknown instance subcommand %q", args[0])
 	}

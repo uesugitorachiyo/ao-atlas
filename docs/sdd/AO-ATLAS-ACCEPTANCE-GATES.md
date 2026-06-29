@@ -21,6 +21,10 @@ AO Atlas v0.1 is eligible for a stable tag or release candidate only when:
 - `scripts/atlas-foundry-roundtrip-smoke.sh` reports `status=ready`;
 - the roundtrip summary records `schedules_work=false`, `executes_work=false`,
   and `approves_work=false`;
+- instance doctor reports preserve `schedules_work=false`,
+  `executes_work=false`, and `approves_work=false`, and fail closed on registry
+  parity mismatch, non-ignored instance state, copied stack roots, or Atlas
+  authority claims;
 - AO Foundry validates the emitted `ao.atlas.foundry-import.v0.1` packet;
 - AO Foundry emits `ao.foundry.atlas-readback.v0.1` for the completed Atlas
   run link;

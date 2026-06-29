@@ -2,24 +2,54 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "ao.atlas.instance-doctor.v0.1",
   "type": "object",
-  "required": ["contract_version", "instance_id", "status", "checks", "schedules_work", "executes_work"],
+  "required": [
+    "contract_version",
+    "instance_id",
+    "status",
+    "checks",
+    "first_failing_check",
+    "blocking_next_actions",
+    "maintenance_suggestions",
+    "schedules_work",
+    "executes_work",
+    "approves_work"
+  ],
   "properties": {
     "contract_version": { "const": "ao.atlas.instance-doctor.v0.1" },
     "instance_id": { "type": "string", "minLength": 1 },
-    "status": { "const": "ready" },
+    "status": { "enum": ["ready", "blocked", "failed"] },
     "checks": {
       "type": "object",
-      "required": ["instance", "registry_parity", "ignored_local_state", "worktree_hygiene"],
+      "required": [
+        "instance",
+        "registry_parity",
+        "ignored_local_state",
+        "worktree_hygiene",
+        "shared_toolchain",
+        "authority_boundary"
+      ],
       "properties": {
-        "instance": { "const": "passed" },
-        "registry_parity": { "const": "passed" },
-        "ignored_local_state": { "const": "passed" },
-        "worktree_hygiene": { "const": "passed" }
+        "instance": { "enum": ["passed", "failed"] },
+        "registry_parity": { "enum": ["passed", "failed"] },
+        "ignored_local_state": { "enum": ["passed", "failed"] },
+        "worktree_hygiene": { "enum": ["passed", "failed"] },
+        "shared_toolchain": { "enum": ["passed", "failed"] },
+        "authority_boundary": { "enum": ["passed", "failed"] }
       },
       "additionalProperties": false
     },
+    "first_failing_check": { "type": "string" },
+    "blocking_next_actions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "maintenance_suggestions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
     "schedules_work": { "const": false },
-    "executes_work": { "const": false }
+    "executes_work": { "const": false },
+    "approves_work": { "const": false }
   },
   "additionalProperties": false
 }

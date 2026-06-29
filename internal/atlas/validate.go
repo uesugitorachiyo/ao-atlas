@@ -92,6 +92,9 @@ func ValidateAtlasRegistry(registry AtlasRegistry) error {
 	if registry.ExecutesWork {
 		errs = append(errs, "executes_work must be false")
 	}
+	if registry.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
 	return joinErrors(errs)
 }
 
@@ -99,66 +102,132 @@ func ValidateInstanceDoctorReport(report InstanceDoctorReport) error {
 	var errs []string
 	requireContract(&errs, "instance_doctor", report.ContractVersion, InstanceDoctorContract)
 	requireField(&errs, "instance_id", report.InstanceID)
-	if report.Status != "ready" {
-		errs = append(errs, "status must be ready")
+	if !oneOf(report.Status, "ready", "blocked", "failed") {
+		errs = append(errs, "status must be ready, blocked, or failed")
 	}
-	required := []string{"instance", "registry_parity", "ignored_local_state", "worktree_hygiene"}
+	required := []string{"instance", "registry_parity", "ignored_local_state", "worktree_hygiene", "shared_toolchain", "authority_boundary"}
 	for _, key := range required {
-		if report.Checks[key] != "passed" {
-			errs = append(errs, "checks."+key+" must be passed")
+		if strings.TrimSpace(report.Checks[key]) == "" {
+			errs = append(errs, "checks."+key+" must be present")
 		}
 	}
+	if report.Status == "ready" {
+		for _, key := range required {
+			if report.Checks[key] != "passed" {
+				errs = append(errs, "checks."+key+" must be passed when status is ready")
+			}
+		}
+		if strings.TrimSpace(report.FirstFailingCheck) != "" {
+			errs = append(errs, "first_failing_check must be empty when status is ready")
+		}
+		if len(report.BlockingNextActions) != 0 {
+			errs = append(errs, "blocking_next_actions must be empty when status is ready")
+		}
+	} else {
+		requireField(&errs, "first_failing_check", report.FirstFailingCheck)
+		requireList(&errs, "blocking_next_actions", report.BlockingNextActions)
+	}
+	checkPublicStrings(&errs, "blocking_next_actions", report.BlockingNextActions, true)
+	checkPublicStrings(&errs, "maintenance_suggestions", report.MaintenanceSuggestions, true)
 	if report.SchedulesWork {
 		errs = append(errs, "schedules_work must be false")
 	}
 	if report.ExecutesWork {
 		errs = append(errs, "executes_work must be false")
 	}
+	if report.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
 	return joinErrors(errs)
 }
 
 func BuildInstanceDoctorReport(instance Instance, registry AtlasRegistry) (InstanceDoctorReport, error) {
+	report := diagnoseInstanceDoctor(instance, registry)
+	if err := ValidateInstanceDoctorReport(report); err != nil {
+		return report, err
+	}
+	if report.Status != "ready" {
+		return report, errors.New(report.BlockingNextActions[0])
+	}
+	return report, nil
+}
+
+func diagnoseInstanceDoctor(instance Instance, registry AtlasRegistry) InstanceDoctorReport {
+	report := InstanceDoctorReport{
+		ContractVersion:        InstanceDoctorContract,
+		InstanceID:             firstNonEmpty(instance.ID, registry.InstanceID, "unknown-instance"),
+		Status:                 "ready",
+		Checks:                 map[string]string{},
+		BlockingNextActions:    []string{},
+		MaintenanceSuggestions: []string{},
+		SchedulesWork:          false,
+		ExecutesWork:           false,
+		ApprovesWork:           false,
+	}
+	fail := func(check, message string) {
+		report.Checks[check] = "failed"
+		if report.FirstFailingCheck == "" {
+			report.FirstFailingCheck = check
+			report.BlockingNextActions = append(report.BlockingNextActions, message)
+		}
+		report.Status = "failed"
+	}
 	if err := ValidateInstance(instance); err != nil {
-		return InstanceDoctorReport{}, err
+		fail("instance", err.Error())
+	} else {
+		report.Checks["instance"] = "passed"
 	}
 	if err := ValidateAtlasRegistry(registry); err != nil {
-		return InstanceDoctorReport{}, err
+		if registry.SchedulesWork || registry.ExecutesWork || registry.ApprovesWork {
+			fail("authority_boundary", err.Error())
+		} else {
+			fail("registry_parity", err.Error())
+		}
 	}
-	if registry.InstanceID != instance.ID {
-		return InstanceDoctorReport{}, fmt.Errorf("registry instance_id must match instance id")
+	if report.Checks["authority_boundary"] == "" {
+		report.Checks["authority_boundary"] = "passed"
 	}
-	if registry.ToolchainRoot != instance.ToolchainRoot {
-		return InstanceDoctorReport{}, fmt.Errorf("registry toolchain_root must match instance toolchain_root")
-	}
-	for key, value := range instance.Roots {
-		if registry.Roots[key] != value {
-			return InstanceDoctorReport{}, fmt.Errorf("registry roots.%s must match instance roots.%s", key, key)
+	if report.Checks["registry_parity"] == "" {
+		if registry.InstanceID != instance.ID {
+			fail("registry_parity", "registry instance_id must match instance id")
+		}
+		if registry.ToolchainRoot != instance.ToolchainRoot {
+			fail("registry_parity", "registry toolchain_root must match instance toolchain_root")
+		}
+		for key, value := range instance.Roots {
+			if registry.Roots[key] != value {
+				fail("registry_parity", fmt.Sprintf("registry roots.%s must match instance roots.%s", key, key))
+			}
+		}
+		if report.Checks["registry_parity"] == "" {
+			report.Checks["registry_parity"] = "passed"
 		}
 	}
 	if !strings.HasPrefix(instance.StateRoot, ".atlas-local/") && !strings.HasPrefix(instance.StateRoot, ".atlas-state/") {
-		return InstanceDoctorReport{}, fmt.Errorf("state_root must be under ignored Atlas local state")
+		fail("ignored_local_state", "state_root must be under ignored Atlas local state")
+	} else if !rootsUnderStateRoot(instance) {
+		fail("ignored_local_state", "mission/workgraph/context/evidence/worktree roots must remain under state_root")
+	} else {
+		report.Checks["ignored_local_state"] = "passed"
 	}
 	worktree := strings.TrimSpace(instance.Roots["worktree"])
 	if worktree == "" || worktree == "." || worktree == ".." {
-		return InstanceDoctorReport{}, fmt.Errorf("worktree root must be a bounded instance path")
+		fail("worktree_hygiene", "worktree root must be a bounded instance path")
+	} else {
+		report.Checks["worktree_hygiene"] = "passed"
 	}
-	report := InstanceDoctorReport{
-		ContractVersion: InstanceDoctorContract,
-		InstanceID:      instance.ID,
-		Status:          "ready",
-		Checks: map[string]string{
-			"instance":            "passed",
-			"registry_parity":     "passed",
-			"ignored_local_state": "passed",
-			"worktree_hygiene":    "passed",
-		},
-		SchedulesWork: false,
-		ExecutesWork:  false,
+	if strings.HasPrefix(instance.ToolchainRoot, ".atlas-local/") ||
+		strings.HasPrefix(instance.ToolchainRoot, ".atlas-state/") ||
+		instance.ToolchainRoot == instance.StateRoot ||
+		instance.ToolchainRoot == worktree {
+		fail("shared_toolchain", "toolchain_root must point to a shared AO toolchain, not copied instance state")
+	} else {
+		report.Checks["shared_toolchain"] = "passed"
 	}
-	if err := ValidateInstanceDoctorReport(report); err != nil {
-		return InstanceDoctorReport{}, err
+	if report.Status == "ready" {
+		report.MaintenanceSuggestions = append(report.MaintenanceSuggestions, "Keep generated instance state under ignored Atlas local roots.")
 	}
-	return report, nil
+	return report
 }
 
 func ValidateIntake(intake Intake) (BlueprintRequest, error) {
@@ -861,6 +930,29 @@ func DefaultInstance(id, stateRoot, toolchainRoot string) Instance {
 			"worktree":  root("worktree"),
 		},
 	}
+}
+
+func firstNonEmpty(values ...string) string {
+	for _, value := range values {
+		if strings.TrimSpace(value) != "" {
+			return value
+		}
+	}
+	return ""
+}
+
+func rootsUnderStateRoot(instance Instance) bool {
+	stateRoot := strings.TrimSuffix(filepath.ToSlash(filepath.Clean(instance.StateRoot)), "/")
+	if stateRoot == "." || stateRoot == "" {
+		return false
+	}
+	for _, key := range []string{"mission", "workgraph", "context", "evidence", "worktree"} {
+		root := filepath.ToSlash(filepath.Clean(instance.Roots[key]))
+		if root != stateRoot && !strings.HasPrefix(root, stateRoot+"/") {
+			return false
+		}
+	}
+	return true
 }
 
 func digestRunLink(link RunLink) string {
