@@ -567,6 +567,18 @@ func uniqueStrings(values []string) []string {
 	return result
 }
 
+func equalStringSlices(left, right []string) bool {
+	if len(left) != len(right) {
+		return false
+	}
+	for i := range left {
+		if left[i] != right[i] {
+			return false
+		}
+	}
+	return true
+}
+
 func ValidateBlueprintRequest(request BlueprintRequest) error {
 	var errs []string
 	requireContract(&errs, "blueprint_request", request.ContractVersion, BlueprintRequestContract)
@@ -728,8 +740,34 @@ func ValidateFactoryTask(task FactoryTask) error {
 	requireList(&errs, "safety_limits", task.SafetyLimits)
 	checkPublicPath(&errs, "target_factory_repo", task.TargetFactoryRepo, false)
 	checkPublicPath(&errs, "factory_folder", task.FactoryFolder, false)
+	if strings.TrimSpace(task.MutationClass) != "" && !requiredMutationClassNames()[task.MutationClass] {
+		errs = append(errs, "mutation_class must be one of the required mutation classes")
+	}
 	checkPublicStrings(&errs, "write_scope", task.WriteScope, false)
+	checkPublicStrings(&errs, "required_gates", task.RequiredGates, true)
+	checkPublicStrings(&errs, "rollback_scope", task.RollbackScope, true)
 	checkPublicStrings(&errs, "context_pack_refs", task.ContextPackRefs, true)
+	checkPublicPath(&errs, "authority_boundary", task.AuthorityBoundary, true)
+	return joinErrors(errs)
+}
+
+func ValidateFoundryReadyTaskAuthorityMetadata(task FactoryTask) error {
+	var errs []string
+	if strings.TrimSpace(task.MutationClass) == "" {
+		errs = append(errs, "mutation_class must not be empty")
+	} else if !requiredMutationClassNames()[task.MutationClass] {
+		errs = append(errs, "mutation_class must be one of the required mutation classes")
+	}
+	requireList(&errs, "write_scope", task.WriteScope)
+	requireList(&errs, "rollback_scope", task.RollbackScope)
+	requireList(&errs, "required_gates", task.RequiredGates)
+	requireList(&errs, "required_evidence", task.RequiredEvidence)
+	requireField(&errs, "authority_boundary", task.AuthorityBoundary)
+	checkPublicStrings(&errs, "write_scope", task.WriteScope, true)
+	checkPublicStrings(&errs, "rollback_scope", task.RollbackScope, true)
+	checkPublicStrings(&errs, "required_gates", task.RequiredGates, true)
+	checkPublicStrings(&errs, "required_evidence", task.RequiredEvidence, true)
+	checkPublicPath(&errs, "authority_boundary", task.AuthorityBoundary, true)
 	return joinErrors(errs)
 }
 
@@ -884,7 +922,19 @@ func ValidateFoundryImport(foundryImport FoundryImport) error {
 		requireField(&errs, prefix+".node_id", fixture.NodeID)
 		requireField(&errs, prefix+".task_id", fixture.TaskID)
 		requireField(&errs, prefix+".path", fixture.Path)
+		requireField(&errs, prefix+".mutation_class", fixture.MutationClass)
+		requireList(&errs, prefix+".write_scope", fixture.WriteScope)
+		requireList(&errs, prefix+".rollback_scope", fixture.RollbackScope)
+		requireList(&errs, prefix+".required_gates", fixture.RequiredGates)
+		requireList(&errs, prefix+".required_evidence", fixture.RequiredEvidence)
+		requireField(&errs, prefix+".authority_boundary", fixture.AuthorityBoundary)
 		checkPublicPath(&errs, prefix+".path", fixture.Path, true)
+		checkPublicPath(&errs, prefix+".mutation_class", fixture.MutationClass, true)
+		checkPublicStrings(&errs, prefix+".write_scope", fixture.WriteScope, true)
+		checkPublicStrings(&errs, prefix+".rollback_scope", fixture.RollbackScope, true)
+		checkPublicStrings(&errs, prefix+".required_gates", fixture.RequiredGates, true)
+		checkPublicStrings(&errs, prefix+".required_evidence", fixture.RequiredEvidence, true)
+		checkPublicPath(&errs, prefix+".authority_boundary", fixture.AuthorityBoundary, true)
 		if strings.Contains(filepath.Clean(fixture.Path), "..") {
 			errs = append(errs, prefix+".path must stay inside the import output")
 		}
@@ -898,8 +948,29 @@ func ValidateFoundryImport(foundryImport FoundryImport) error {
 		if err := ValidateFactoryTask(fixture.Task); err != nil {
 			errs = append(errs, prefix+".task: "+err.Error())
 		}
+		if err := ValidateFoundryReadyTaskAuthorityMetadata(fixture.Task); err != nil {
+			errs = append(errs, prefix+".task authority metadata: "+err.Error())
+		}
 		if fixture.TaskID != fixture.Task.ID {
 			errs = append(errs, prefix+".task_id must match task.id")
+		}
+		if fixture.MutationClass != fixture.Task.MutationClass {
+			errs = append(errs, prefix+".mutation_class must match task.mutation_class")
+		}
+		if !equalStringSlices(fixture.WriteScope, fixture.Task.WriteScope) {
+			errs = append(errs, prefix+".write_scope must match task.write_scope")
+		}
+		if !equalStringSlices(fixture.RollbackScope, fixture.Task.RollbackScope) {
+			errs = append(errs, prefix+".rollback_scope must match task.rollback_scope")
+		}
+		if !equalStringSlices(fixture.RequiredGates, fixture.Task.RequiredGates) {
+			errs = append(errs, prefix+".required_gates must match task.required_gates")
+		}
+		if !equalStringSlices(fixture.RequiredEvidence, fixture.Task.RequiredEvidence) {
+			errs = append(errs, prefix+".required_evidence must match task.required_evidence")
+		}
+		if fixture.AuthorityBoundary != fixture.Task.AuthorityBoundary {
+			errs = append(errs, prefix+".authority_boundary must match task.authority_boundary")
 		}
 	}
 	return joinErrors(errs)
@@ -1121,12 +1192,21 @@ func BuildFoundryImportForNodes(workgraph Workgraph, selectedNodes []string, sou
 			return FoundryImport{}, fmt.Errorf("selected node %s has incomplete dependencies", node.ID)
 		}
 		task := node.FactoryTask
+		if err := ValidateFoundryReadyTaskAuthorityMetadata(task); err != nil {
+			return FoundryImport{}, fmt.Errorf("ready node %s authority metadata: %w", node.ID, err)
+		}
 		fixture := FoundryImportTaskFixture{
-			NodeID:   node.ID,
-			TaskID:   task.ID,
-			Path:     filepath.ToSlash(filepath.Join("tasks", task.ID+".json")),
-			Task:     task,
-			TaskHash: digestFactoryTask(task),
+			NodeID:            node.ID,
+			TaskID:            task.ID,
+			Path:              filepath.ToSlash(filepath.Join("tasks", task.ID+".json")),
+			MutationClass:     task.MutationClass,
+			WriteScope:        append([]string(nil), task.WriteScope...),
+			RollbackScope:     append([]string(nil), task.RollbackScope...),
+			RequiredGates:     append([]string(nil), task.RequiredGates...),
+			RequiredEvidence:  append([]string(nil), task.RequiredEvidence...),
+			AuthorityBoundary: task.AuthorityBoundary,
+			Task:              task,
+			TaskHash:          digestFactoryTask(task),
 		}
 		fixtures = append(fixtures, fixture)
 	}

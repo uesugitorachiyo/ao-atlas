@@ -58,6 +58,9 @@ go build -o "$ATLAS_BIN" ./cmd/atlas
   --instance examples/valid/stack-instance.json \
   --out "$IMPORT_DIR" > "$OUT/atlas-foundry-import.txt"
 
+grep -q '"mutation_class"' "$IMPORT_PACKET"
+grep -q '"authority_boundary"' "$IMPORT_PACKET"
+
 (
   cd "$FOUNDRY_ROOT"
   go run ./cmd/foundry registry validate \

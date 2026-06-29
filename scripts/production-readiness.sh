@@ -49,6 +49,7 @@ required_files=(
   schemas/blueprint-request.schema.json
   schemas/workgraph.schema.json
   schemas/workgraph-repair-plan.schema.json
+  schemas/mutation-classes.schema.json
   schemas/factory-task.schema.json
   schemas/factory-materialization.schema.json
   schemas/context-pack.schema.json
@@ -75,6 +76,7 @@ test -s "$OUT/instance-doctor.json"
 test -s "$OUT/mission-status.json"
 "$BIN" mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-needs-context.json --json >/dev/null
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
+"$BIN" mutation-classes validate --model examples/valid/mutation-classes.json >/dev/null
 "$BIN" factory-task validate --task examples/valid/factory-task.json >/dev/null
 "$BIN" factory materialize --task examples/valid/factory-task.json --out "$OUT/factory-materialization" --dry-run >/dev/null
 test -s "$OUT/factory-materialization/materialization.json"
@@ -193,6 +195,14 @@ if "$BIN" foundry import --workgraph examples/invalid/workgraph-foundry-import-m
 fi
 if "$BIN" foundry import --workgraph examples/invalid/workgraph-foundry-import-unsafe-path.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import-unsafe-path" >/dev/null 2>&1; then
   echo "unsafe path foundry import was accepted" >&2
+  exit 1
+fi
+if "$BIN" foundry import --workgraph examples/invalid/workgraph-foundry-import-missing-mutation-class.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import-missing-mutation-class" >/dev/null 2>&1; then
+  echo "missing mutation class foundry import was accepted" >&2
+  exit 1
+fi
+if "$BIN" foundry import --workgraph examples/invalid/workgraph-foundry-import-missing-required-gates.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import-missing-required-gates" >/dev/null 2>&1; then
+  echo "missing required gates foundry import was accepted" >&2
   exit 1
 fi
 pass "invalid-fixtures-rejected"

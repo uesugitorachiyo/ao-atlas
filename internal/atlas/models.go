@@ -132,12 +132,16 @@ type FactoryTask struct {
 	Objective         string   `json:"objective"`
 	TargetFactoryRepo string   `json:"target_factory_repo"`
 	FactoryFolder     string   `json:"factory_folder"`
+	MutationClass     string   `json:"mutation_class,omitempty"`
 	Acceptance        []string `json:"acceptance_criteria"`
 	NonGoals          []string `json:"non_goals"`
 	WriteScope        []string `json:"write_scope"`
+	RequiredGates     []string `json:"required_gates,omitempty"`
+	RollbackScope     []string `json:"rollback_scope,omitempty"`
 	Verification      []string `json:"verification_commands"`
 	RequiredEvidence  []string `json:"required_evidence"`
 	SafetyLimits      []string `json:"safety_limits"`
+	AuthorityBoundary string   `json:"authority_boundary,omitempty"`
 	DependencyRefs    []string `json:"dependency_refs"`
 	ContextPackRefs   []string `json:"context_pack_refs"`
 }
@@ -193,11 +197,17 @@ type FoundryImport struct {
 }
 
 type FoundryImportTaskFixture struct {
-	NodeID   string      `json:"node_id"`
-	TaskID   string      `json:"task_id"`
-	Path     string      `json:"path"`
-	Task     FactoryTask `json:"task"`
-	TaskHash string      `json:"task_digest"`
+	NodeID            string      `json:"node_id"`
+	TaskID            string      `json:"task_id"`
+	Path              string      `json:"path"`
+	MutationClass     string      `json:"mutation_class"`
+	WriteScope        []string    `json:"write_scope"`
+	RollbackScope     []string    `json:"rollback_scope"`
+	RequiredGates     []string    `json:"required_gates"`
+	RequiredEvidence  []string    `json:"required_evidence"`
+	AuthorityBoundary string      `json:"authority_boundary"`
+	Task              FactoryTask `json:"task"`
+	TaskHash          string      `json:"task_digest"`
 }
 
 type FoundryTaskEntry struct {
