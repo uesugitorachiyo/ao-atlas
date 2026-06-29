@@ -1,0 +1,79 @@
+{
+  "contract_version": "ao.atlas.mutation-classes.v0.1",
+  "id": "ao-stack-authority-ladder-mutation-classes",
+  "classes": [
+    {
+      "name": "docs_only_single_file",
+      "allowed_paths": ["README.md", "docs/**/*.md"],
+      "forbidden_paths": ["cmd/**", "internal/**", "schemas/**", "go.mod", "go.sum", ".github/**", "**/*_test.go"],
+      "max_files": 1,
+      "required_gates": ["atlas_classification", "covenant_class_ticket", "sentinel_no_hold", "command_readback"],
+      "rollback_requirements": ["inverse_patch", "post_rollback_readback"],
+      "ci_requirements": ["local_docs_validation", "clean_main_ci"],
+      "promotion_requirements": ["completed_live_docs_single_file_rehearsal", "promoter_no_active_hold"]
+    },
+    {
+      "name": "docs_only_multi_file",
+      "allowed_paths": ["README.md", "docs/**/*.md"],
+      "forbidden_paths": ["cmd/**", "internal/**", "schemas/**", "go.mod", "go.sum", ".github/**", "**/*_test.go"],
+      "max_files": 2,
+      "required_gates": ["atlas_classification", "covenant_class_ticket", "foundry_class_gate", "sentinel_no_hold", "promoter_class_readiness", "command_readback"],
+      "rollback_requirements": ["inverse_patch", "rollback_dry_run", "post_rollback_readback"],
+      "ci_requirements": ["local_docs_validation", "pull_request_ci", "clean_main_ci"],
+      "promotion_requirements": ["completed_live_docs_multi_file_rehearsal", "rollback_proof", "promoter_no_active_hold"]
+    },
+    {
+      "name": "docs_config_only",
+      "allowed_paths": ["README.md", "docs/**/*.md", ".github/*.md", ".github/ISSUE_TEMPLATE/**/*.md", ".github/PULL_REQUEST_TEMPLATE.md"],
+      "forbidden_paths": ["cmd/**", "internal/**", "schemas/**", "go.mod", "go.sum", "**/*_test.go", ".github/workflows/**"],
+      "max_files": 3,
+      "required_gates": ["atlas_classification", "covenant_class_ticket", "foundry_class_gate", "sentinel_no_hold", "command_readback"],
+      "rollback_requirements": ["inverse_patch", "config_readback", "post_rollback_readback"],
+      "ci_requirements": ["local_docs_validation", "pull_request_ci", "clean_main_ci"],
+      "promotion_requirements": ["completed_docs_config_dry_run", "promoter_no_active_hold"]
+    },
+    {
+      "name": "test_only",
+      "allowed_paths": ["**/*_test.go", "tests/**", "testdata/**"],
+      "forbidden_paths": ["cmd/**", "internal/**/*.go", "!internal/**/*_test.go", "schemas/**", "go.mod", "go.sum", ".github/**"],
+      "max_files": 1,
+      "required_gates": ["atlas_classification", "covenant_class_ticket", "foundry_class_gate", "sentinel_coverage_no_hold", "promoter_test_only_ready", "command_readback"],
+      "rollback_requirements": ["inverse_patch", "test_readback", "post_rollback_readback"],
+      "ci_requirements": ["targeted_tests", "full_test_suite", "pull_request_ci", "clean_main_ci"],
+      "promotion_requirements": ["completed_live_test_only_rehearsal", "rollback_proof", "promoter_no_active_hold"]
+    },
+    {
+      "name": "low_risk_code",
+      "allowed_paths": ["cmd/**", "internal/**"],
+      "forbidden_paths": ["go.mod", "go.sum", ".github/**", "schemas/**", "scripts/**"],
+      "max_files": 2,
+      "required_gates": ["atlas_classification", "test_only_success", "covenant_class_ticket", "foundry_class_gate", "sentinel_no_hold", "promoter_low_risk_ready", "command_readback"],
+      "rollback_requirements": ["inverse_patch", "rollback_patch_applies", "post_rollback_readback"],
+      "ci_requirements": ["targeted_tests", "full_test_suite", "pull_request_ci", "clean_main_ci"],
+      "promotion_requirements": ["completed_live_low_risk_code_rehearsal", "rollback_proof", "promoter_no_active_hold"]
+    },
+    {
+      "name": "multi_repo_low_risk",
+      "allowed_paths": ["repo:ao-atlas:docs/**", "repo:ao-foundry:docs/**", "repo:ao-command:docs/**", "repo:*:**/*_test.go"],
+      "forbidden_paths": ["repo:*:.github/workflows/**", "repo:*:go.mod", "repo:*:go.sum", "repo:*:secrets/**"],
+      "max_files": 4,
+      "required_gates": ["atlas_cross_repo_classification", "per_repo_covenant_ticket", "foundry_serial_execution_gate", "sentinel_no_hold_per_repo", "promoter_multi_repo_ready", "command_repo_readback"],
+      "rollback_requirements": ["per_repo_inverse_patch", "dependency_ordered_rollback", "post_rollback_readback_per_repo"],
+      "ci_requirements": ["per_repo_targeted_tests", "per_repo_pull_request_ci", "clean_main_ci_per_repo"],
+      "promotion_requirements": ["completed_multi_repo_live_rehearsal", "rollback_proof_per_repo", "no_active_holds"]
+    },
+    {
+      "name": "complex_repo_mutation",
+      "allowed_paths": ["repo:*:cmd/**", "repo:*:internal/**", "repo:*:schemas/**", "repo:*:tests/**", "repo:*:docs/**"],
+      "forbidden_paths": ["repo:*:secrets/**", "repo:*:.env*", "repo:*:.github/workflows/**", "repo:*:excluded/**", "repo:*:tmp/**"],
+      "max_files": 12,
+      "required_gates": ["atlas_complex_workgraph", "context_repack", "repair_plan", "all_lower_classes_live_rehearsed", "covenant_class_ticket", "foundry_class_gate", "sentinel_no_hold", "promoter_complex_ready", "command_readback"],
+      "rollback_requirements": ["full_inverse_patch_set", "rollback_dry_run", "readback_after_rollback", "promotion_evidence_retained"],
+      "ci_requirements": ["targeted_tests", "full_test_suite", "pull_request_ci", "clean_main_ci", "post_merge_readback"],
+      "promotion_requirements": ["completed_complex_dry_run", "lower_class_live_evidence", "rollback_proof", "no_active_holds", "promoter_explicit_complex_promotion"]
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

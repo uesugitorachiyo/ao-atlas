@@ -611,6 +611,95 @@ func TestFoundryImportRejectsExecutionAuthority(t *testing.T) {
 	}
 }
 
+func TestMutationClassModelFixtureDefinesAllAuthorityFreeClasses(t *testing.T) {
+	model, err := LoadJSON[MutationClassModel](filepath.Join("..", "..", "examples", "valid", "mutation-classes.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateMutationClassModel(model); err != nil {
+		t.Fatal(err)
+	}
+	if model.SchedulesWork || model.ExecutesWork || model.ApprovesWork {
+		t.Fatalf("mutation class model must classify only, got authority flags: %#v", model)
+	}
+	want := []string{
+		"docs_only_single_file",
+		"docs_only_multi_file",
+		"docs_config_only",
+		"test_only",
+		"low_risk_code",
+		"multi_repo_low_risk",
+		"complex_repo_mutation",
+	}
+	if len(model.Classes) != len(want) {
+		t.Fatalf("expected %d mutation classes, got %d", len(want), len(model.Classes))
+	}
+	for _, name := range want {
+		class, ok := mutationClassByName(model, name)
+		if !ok {
+			t.Fatalf("missing mutation class %s", name)
+		}
+		if len(class.AllowedPaths) == 0 || len(class.ForbiddenPaths) == 0 {
+			t.Fatalf("%s must define allowed and forbidden paths: %#v", name, class)
+		}
+		if class.MaxFiles <= 0 {
+			t.Fatalf("%s must define positive max_files: %#v", name, class)
+		}
+		if len(class.RequiredGates) == 0 || len(class.RollbackRequirements) == 0 || len(class.CIRequirements) == 0 || len(class.PromotionRequirements) == 0 {
+			t.Fatalf("%s must define gates, rollback, CI, and promotion requirements: %#v", name, class)
+		}
+	}
+	docsMulti, _ := mutationClassByName(model, "docs_only_multi_file")
+	if docsMulti.MaxFiles != 2 {
+		t.Fatalf("docs_only_multi_file should remain bounded to two files until proven live, got %d", docsMulti.MaxFiles)
+	}
+	complex, _ := mutationClassByName(model, "complex_repo_mutation")
+	if !containsString(complex.RequiredGates, "all_lower_classes_live_rehearsed") {
+		t.Fatalf("complex mutation must be denied until all lower live rehearsals are proven: %#v", complex.RequiredGates)
+	}
+}
+
+func TestMutationClassModelRejectsAuthorityClaims(t *testing.T) {
+	model, err := LoadJSON[MutationClassModel](filepath.Join("..", "..", "examples", "invalid", "mutation-classes-claims-authority.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateMutationClassModel(model); err == nil || !strings.Contains(err.Error(), "executes_work") {
+		t.Fatalf("expected executes_work authority rejection, got %v", err)
+	}
+}
+
+func TestMutationClassModelRejectsMissingRollback(t *testing.T) {
+	model, err := LoadJSON[MutationClassModel](filepath.Join("..", "..", "examples", "invalid", "mutation-classes-missing-rollback.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateMutationClassModel(model); err == nil || !strings.Contains(err.Error(), "rollback_requirements") {
+		t.Fatalf("expected rollback requirement rejection, got %v", err)
+	}
+}
+
+func TestMutationClassModelRejectsMissingRequiredClass(t *testing.T) {
+	model, err := LoadJSON[MutationClassModel](filepath.Join("..", "..", "examples", "invalid", "mutation-classes-missing-class.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateMutationClassModel(model); err == nil || !strings.Contains(err.Error(), "complex_repo_mutation") {
+		t.Fatalf("expected missing class rejection, got %v", err)
+	}
+}
+
+func TestMutationClassModelValidateCommand(t *testing.T) {
+	var out bytes.Buffer
+	code := Run([]string{"mutation-classes", "validate", "--model", filepath.Join("..", "..", "examples", "valid", "mutation-classes.json")}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mutation-classes validate failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "status=valid") {
+		t.Fatalf("expected valid status, got %s", out.String())
+	}
+}
+
 func TestFoundryRoundtripSmokeValidatesFoundryImport(t *testing.T) {
 	script, err := os.ReadFile(filepath.Join("..", "..", "scripts", "atlas-foundry-roundtrip-smoke.sh"))
 	if err != nil {
@@ -932,6 +1021,15 @@ func containsString(values []string, want string) bool {
 		}
 	}
 	return false
+}
+
+func mutationClassByName(model MutationClassModel, name string) (MutationClassDefinition, bool) {
+	for _, class := range model.Classes {
+		if class.Name == name {
+			return class, true
+		}
+	}
+	return MutationClassDefinition{}, false
 }
 
 func fixtureWorkgraph() Workgraph {
