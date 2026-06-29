@@ -18,6 +18,7 @@ const (
 	AtlasRegistryContract          = "ao.atlas.foundry-registry.v0.1"
 	InstanceDoctorContract         = "ao.atlas.instance-doctor.v0.1"
 	IntakeContract                 = "ao.atlas.intake.v0.1"
+	MissionStatusContract          = "ao.atlas.mission-status.v0.1"
 	WorkgraphContract              = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract    = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract            = "ao.atlas.factory-task.v0.1"
@@ -185,6 +186,86 @@ func ValidateIntake(intake Intake) (BlueprintRequest, error) {
 		}, joinErrors(errs)
 	}
 	return BlueprintRequest{}, joinErrors(errs)
+}
+
+func ValidateMissionStatus(status MissionStatus) error {
+	var errs []string
+	requireContract(&errs, "mission_status", status.ContractVersion, MissionStatusContract)
+	requireField(&errs, "intake_id", status.IntakeID)
+	requireField(&errs, "workgraph_id", status.WorkgraphID)
+	requireField(&errs, "target_instance", status.TargetInstance)
+	if !oneOf(status.CompletionStatus, "completed", "blocked", "in_progress") {
+		errs = append(errs, "completion_status must be completed, blocked, or in_progress")
+	}
+	for _, key := range []string{"ready", "blocked", "completed"} {
+		if _, ok := status.NodeCounts[key]; !ok {
+			errs = append(errs, "node_counts."+key+" must be present")
+		}
+	}
+	if len(status.NextActions) == 0 {
+		errs = append(errs, "next_actions must not be empty")
+	}
+	checkPublicStrings(&errs, "next_actions", status.NextActions, true)
+	if status.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if status.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	return joinErrors(errs)
+}
+
+func BuildMissionStatus(intake Intake, workgraph Workgraph, links []RunLink) (MissionStatus, error) {
+	if _, err := ValidateIntake(intake); err != nil {
+		return MissionStatus{}, err
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return MissionStatus{}, err
+	}
+	nodeCounts := map[string]int{"ready": 0, "blocked": 0, "completed": 0}
+	for _, node := range workgraph.Nodes {
+		nodeCounts[node.Status]++
+	}
+	runLinks := map[string]string{}
+	anyBlocked := false
+	anyIncomplete := false
+	for _, link := range links {
+		if err := ValidateRunLink(link); err != nil {
+			return MissionStatus{}, err
+		}
+		runLinks[link.TaskID] = link.Status
+		if oneOf(link.Status, "blocked", "failed") {
+			anyBlocked = true
+		}
+		if link.Status != "completed" {
+			anyIncomplete = true
+		}
+	}
+	completion := "in_progress"
+	nextActions := []string{"continue ready factory tasks through Foundry"}
+	if anyBlocked || nodeCounts["blocked"] > 0 {
+		completion = "blocked"
+		nextActions = []string{"emit repair plan or context repack for blocked task"}
+	} else if nodeCounts["ready"] == 0 && !anyIncomplete {
+		completion = "completed"
+		nextActions = []string{"record completion readback and keep artifacts public-safe"}
+	}
+	status := MissionStatus{
+		ContractVersion:  MissionStatusContract,
+		IntakeID:         intake.ID,
+		WorkgraphID:      workgraph.ID,
+		TargetInstance:   workgraph.TargetInstance,
+		CompletionStatus: completion,
+		NodeCounts:       nodeCounts,
+		RunLinks:         runLinks,
+		NextActions:      nextActions,
+		SchedulesWork:    false,
+		ExecutesWork:     false,
+	}
+	if err := ValidateMissionStatus(status); err != nil {
+		return MissionStatus{}, err
+	}
+	return status, nil
 }
 
 func ValidateBlueprintRequest(request BlueprintRequest) error {

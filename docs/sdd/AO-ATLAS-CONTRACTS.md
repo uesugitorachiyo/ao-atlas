@@ -6,6 +6,7 @@ v0.1 contract names:
 - `ao.atlas.foundry-registry.v0.1`
 - `ao.atlas.instance-doctor.v0.1`
 - `ao.atlas.intake.v0.1`
+- `ao.atlas.mission-status.v0.1`
 - `ao.atlas.blueprint-request.v0.1`
 - `ao.atlas.workgraph.v0.1`
 - `ao.atlas.workgraph-repair-plan.v0.1`
@@ -21,6 +22,10 @@ stable identifiers, non-empty required fields, and public-safe paths.
 `ao.atlas.instance-doctor.v0.1` records stack-instance hygiene readback:
 instance validation, generated registry parity, ignored local state placement,
 and bounded worktree roots. The doctor does not schedule or execute work.
+
+`ao.atlas.mission-status.v0.1` summarizes intake, workgraph node state, run-link
+state, completion status, and next readback actions. It is status readback only
+and does not schedule or execute work.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,

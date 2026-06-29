@@ -45,6 +45,7 @@ required_files=(
   schemas/atlas-registry.schema.json
   schemas/instance-doctor.schema.json
   schemas/intake.schema.json
+  schemas/mission-status.schema.json
   schemas/blueprint-request.schema.json
   schemas/workgraph.schema.json
   schemas/workgraph-repair-plan.schema.json
@@ -68,6 +69,8 @@ pass "json-syntax"
 "$BIN" instance doctor --instance examples/valid/stack-instance.json --registry examples/valid/atlas-registry.json --out "$OUT/instance-doctor.json" >/dev/null
 test -s "$OUT/instance-doctor.json"
 "$BIN" intake validate --intake examples/valid/intake.json >/dev/null
+"$BIN" mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out "$OUT/mission-status.json" >/dev/null
+test -s "$OUT/mission-status.json"
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" factory-task validate --task examples/valid/factory-task.json >/dev/null
 "$BIN" factory materialize --task examples/valid/factory-task.json --out "$OUT/factory-materialization" --dry-run >/dev/null

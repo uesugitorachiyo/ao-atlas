@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.mission-status.v0.1",
+  "type": "object",
+  "required": ["contract_version", "intake_id", "workgraph_id", "target_instance", "completion_status", "node_counts", "run_links", "next_actions", "schedules_work", "executes_work"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.mission-status.v0.1" },
+    "intake_id": { "type": "string", "minLength": 1 },
+    "workgraph_id": { "type": "string", "minLength": 1 },
+    "target_instance": { "type": "string", "minLength": 1 },
+    "completion_status": { "enum": ["completed", "blocked", "in_progress"] },
+    "node_counts": {
+      "type": "object",
+      "required": ["ready", "blocked", "completed"],
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
+    "run_links": {
+      "type": "object",
+      "additionalProperties": { "enum": ["planned", "running", "completed", "blocked", "failed"] }
+    },
+    "next_actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false }
+  },
+  "additionalProperties": false
+}

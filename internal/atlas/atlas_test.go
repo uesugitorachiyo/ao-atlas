@@ -101,6 +101,58 @@ func TestIntakeUnderspecifiedEmitsBlueprintRequest(t *testing.T) {
 	}
 }
 
+func TestMissionStatusSummarizesIntakeWorkgraphAndRunLinks(t *testing.T) {
+	dir := t.TempDir()
+	outPath := filepath.Join(dir, "mission-status.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "status",
+		"--intake", filepath.Join("..", "..", "examples", "valid", "intake.json"),
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph-completed.json"),
+		"--run-link", filepath.Join("..", "..", "examples", "valid", "run-link.json"),
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission status failed: %s", out.String())
+	}
+	status, err := LoadJSON[MissionStatus](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateMissionStatus(status); err != nil {
+		t.Fatal(err)
+	}
+	if status.IntakeID != "atlas-intake-demo" || status.WorkgraphID != "atlas-readiness-workgraph" {
+		t.Fatalf("unexpected mission status: %#v", status)
+	}
+	if status.CompletionStatus != "completed" || status.NodeCounts["completed"] != 2 {
+		t.Fatalf("expected completed mission status, got %#v", status)
+	}
+}
+
+func TestMissionStatusReportsBlockedWhenRunLinkBlocked(t *testing.T) {
+	dir := t.TempDir()
+	outPath := filepath.Join(dir, "mission-status.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "status",
+		"--intake", filepath.Join("..", "..", "examples", "valid", "intake.json"),
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--run-link", filepath.Join("..", "..", "examples", "invalid", "run-link-blocked.json"),
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission status failed: %s", out.String())
+	}
+	status, err := LoadJSON[MissionStatus](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if status.CompletionStatus != "blocked" {
+		t.Fatalf("expected blocked mission status, got %#v", status)
+	}
+}
+
 func TestBlueprintRequestFixtureIsValidAndPublicSafe(t *testing.T) {
 	request, err := LoadJSON[BlueprintRequest](filepath.Join("..", "..", "examples", "valid", "blueprint-request.json"))
 	if err != nil {
