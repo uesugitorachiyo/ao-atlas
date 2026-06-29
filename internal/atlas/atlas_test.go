@@ -30,6 +30,60 @@ func TestInstanceInitValidateAndRegistry(t *testing.T) {
 	}
 }
 
+func TestInstanceDoctorValidatesRootsAndRegistryParity(t *testing.T) {
+	dir := t.TempDir()
+	instancePath := filepath.Join(dir, "instance.json")
+	registryPath := filepath.Join(dir, "registry.json")
+	doctorPath := filepath.Join(dir, "doctor.json")
+	var out bytes.Buffer
+	if code := Run([]string{"instance", "init", "--id", "demo", "--state-root", ".atlas-local/state", "--toolchain-root", "../toolchain", "--out", instancePath}, &out, &out); code != 0 {
+		t.Fatalf("init failed: %s", out.String())
+	}
+	if code := Run([]string{"instance", "registry", "emit", "--instance", instancePath, "--out", registryPath}, &out, &out); code != 0 {
+		t.Fatalf("registry failed: %s", out.String())
+	}
+	if code := Run([]string{"instance", "doctor", "--instance", instancePath, "--registry", registryPath, "--out", doctorPath}, &out, &out); code != 0 {
+		t.Fatalf("doctor failed: %s", out.String())
+	}
+	report, err := LoadJSON[InstanceDoctorReport](doctorPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateInstanceDoctorReport(report); err != nil {
+		t.Fatal(err)
+	}
+	if report.Status != "ready" || report.InstanceID != "demo" {
+		t.Fatalf("unexpected doctor report: %#v", report)
+	}
+}
+
+func TestInstanceDoctorRejectsRegistryParityMismatch(t *testing.T) {
+	dir := t.TempDir()
+	instancePath := filepath.Join(dir, "instance.json")
+	registryPath := filepath.Join(dir, "registry.json")
+	var out bytes.Buffer
+	if code := Run([]string{"instance", "init", "--id", "demo", "--state-root", ".atlas-local/state", "--toolchain-root", "../toolchain", "--out", instancePath}, &out, &out); code != 0 {
+		t.Fatalf("init failed: %s", out.String())
+	}
+	if err := WriteJSON(registryPath, AtlasRegistry{
+		ContractVersion: "ao.atlas.foundry-registry.v0.1",
+		InstanceID:      "other-demo",
+		ToolchainRoot:   "../toolchain",
+		Roots:           map[string]string{"mission": ".atlas-local/state/demo/mission"},
+		SchedulesWork:   false,
+		ExecutesWork:    false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	code := Run([]string{"instance", "doctor", "--instance", instancePath, "--registry", registryPath, "--out", filepath.Join(dir, "doctor.json")}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected registry parity mismatch to fail")
+	}
+	if !strings.Contains(out.String(), "registry instance_id") {
+		t.Fatalf("expected registry parity error, got %s", out.String())
+	}
+}
+
 func TestIntakeUnderspecifiedEmitsBlueprintRequest(t *testing.T) {
 	intake := Intake{ContractVersion: IntakeContract, ID: "short", BroadPrompt: "fix it"}
 	request, err := ValidateIntake(intake)

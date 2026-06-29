@@ -110,13 +110,16 @@ func runInstance(args []string, stdout io.Writer) error {
 		if err := ValidateInstance(instance); err != nil {
 			return err
 		}
-		registry := map[string]any{
-			"contract_version": "ao.atlas.foundry-registry.v0.1",
-			"instance_id":      instance.ID,
-			"toolchain_root":   instance.ToolchainRoot,
-			"roots":            instance.Roots,
-			"schedules_work":   false,
-			"executes_work":    false,
+		registry := AtlasRegistry{
+			ContractVersion: AtlasRegistryContract,
+			InstanceID:      instance.ID,
+			ToolchainRoot:   instance.ToolchainRoot,
+			Roots:           instance.Roots,
+			SchedulesWork:   false,
+			ExecutesWork:    false,
+		}
+		if err := ValidateAtlasRegistry(registry); err != nil {
+			return err
 		}
 		if err := WriteJSON(*out, registry); err != nil {
 			return err
@@ -142,6 +145,38 @@ func runInstance(args []string, stdout io.Writer) error {
 			return printJSON(stdout, instance)
 		}
 		fmt.Fprintf(stdout, "id=%s\nstate_root=%s\ntoolchain_root=%s\n", instance.ID, instance.StateRoot, instance.ToolchainRoot)
+		return nil
+	case "doctor":
+		fs := flag.NewFlagSet("instance doctor", flag.ContinueOnError)
+		fs.SetOutput(io.Discard)
+		path := fs.String("instance", "", "instance path")
+		registryPath := fs.String("registry", "", "registry path")
+		out := fs.String("out", "", "output path")
+		if err := fs.Parse(args[1:]); err != nil {
+			return err
+		}
+		instance, err := LoadJSON[Instance](*path)
+		if err != nil {
+			return err
+		}
+		registry, err := LoadJSON[AtlasRegistry](*registryPath)
+		if err != nil {
+			return err
+		}
+		report, err := BuildInstanceDoctorReport(instance, registry)
+		if err != nil {
+			return err
+		}
+		if *out == "" {
+			return fmt.Errorf("--out is required")
+		}
+		if samePath(*path, *out) || samePath(*registryPath, *out) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+		if err := WriteJSON(*out, report); err != nil {
+			return err
+		}
+		fmt.Fprintf(stdout, "status=ready\ninstance=%s\n", report.InstanceID)
 		return nil
 	default:
 		return fmt.Errorf("unknown instance subcommand %q", args[0])

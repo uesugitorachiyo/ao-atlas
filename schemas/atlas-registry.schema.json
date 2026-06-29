@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.foundry-registry.v0.1",
+  "type": "object",
+  "required": ["contract_version", "instance_id", "toolchain_root", "roots", "schedules_work", "executes_work"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.foundry-registry.v0.1" },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "toolchain_root": { "type": "string", "minLength": 1 },
+    "roots": {
+      "type": "object",
+      "required": ["mission", "workgraph", "context", "evidence", "worktree"],
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false }
+  },
+  "additionalProperties": false
+}

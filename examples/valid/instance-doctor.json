@@ -1,0 +1,13 @@
+{
+  "contract_version": "ao.atlas.instance-doctor.v0.1",
+  "instance_id": "demo-stack",
+  "status": "ready",
+  "checks": {
+    "instance": "passed",
+    "registry_parity": "passed",
+    "ignored_local_state": "passed",
+    "worktree_hygiene": "passed"
+  },
+  "schedules_work": false,
+  "executes_work": false
+}

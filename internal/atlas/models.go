@@ -8,6 +8,24 @@ type Instance struct {
 	Roots           map[string]string `json:"roots"`
 }
 
+type AtlasRegistry struct {
+	ContractVersion string            `json:"contract_version"`
+	InstanceID      string            `json:"instance_id"`
+	ToolchainRoot   string            `json:"toolchain_root"`
+	Roots           map[string]string `json:"roots"`
+	SchedulesWork   bool              `json:"schedules_work"`
+	ExecutesWork    bool              `json:"executes_work"`
+}
+
+type InstanceDoctorReport struct {
+	ContractVersion string            `json:"contract_version"`
+	InstanceID      string            `json:"instance_id"`
+	Status          string            `json:"status"`
+	Checks          map[string]string `json:"checks"`
+	SchedulesWork   bool              `json:"schedules_work"`
+	ExecutesWork    bool              `json:"executes_work"`
+}
+
 type Intake struct {
 	ContractVersion string   `json:"contract_version"`
 	ID              string   `json:"id"`

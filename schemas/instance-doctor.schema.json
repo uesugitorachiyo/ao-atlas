@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.instance-doctor.v0.1",
+  "type": "object",
+  "required": ["contract_version", "instance_id", "status", "checks", "schedules_work", "executes_work"],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.instance-doctor.v0.1" },
+    "instance_id": { "type": "string", "minLength": 1 },
+    "status": { "const": "ready" },
+    "checks": {
+      "type": "object",
+      "required": ["instance", "registry_parity", "ignored_local_state", "worktree_hygiene"],
+      "properties": {
+        "instance": { "const": "passed" },
+        "registry_parity": { "const": "passed" },
+        "ignored_local_state": { "const": "passed" },
+        "worktree_hygiene": { "const": "passed" }
+      },
+      "additionalProperties": false
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false }
+  },
+  "additionalProperties": false
+}
