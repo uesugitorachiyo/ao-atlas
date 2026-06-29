@@ -24,8 +24,9 @@ Cross-repo fixture smoke:
 scripts/atlas-foundry-roundtrip-smoke.sh
 ```
 
-The smoke emits an Atlas Foundry handoff, asks a sibling AO Foundry checkout to
-validate the public `atlas-demo` registry fixture, and records the returned
+The smoke emits an Atlas Foundry handoff and a Foundry import packet, asks a
+sibling AO Foundry checkout to validate the public `atlas-demo` registry fixture
+and the `ao.atlas.foundry-import.v0.1` packet, then records the returned
 validation evidence as an Atlas run link. It is fixture-only readback: no
 scheduling, execution, approval, provider calls, publication, or repository
 mutation.
