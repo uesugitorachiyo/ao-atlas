@@ -23,6 +23,11 @@ pass "go-vet"
 go build -o "$BIN" ./cmd/atlas
 pass "go-build"
 
+for script in scripts/*.sh; do
+  bash -n "$script"
+done
+pass "script-syntax"
+
 required_files=(
   README.md
   LICENSE

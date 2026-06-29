@@ -51,6 +51,13 @@ go run ./cmd/atlas foundry handoff emit --workgraph examples/valid/workgraph.jso
 go run ./cmd/atlas run-link attach --task-id atlas-readiness-task --status completed --evidence ao2=evidence/ao2/atlas-readiness.json --out .atlas-local/run-link.json
 ```
 
+With a sibling AO Foundry checkout, Atlas can run the fixture-only handoff
+readback smoke:
+
+```sh
+scripts/atlas-foundry-roundtrip-smoke.sh
+```
+
 If intake is underspecified, Atlas emits a Blueprint request instead of marking
 work ready. The request is a clarification artifact only; AO Blueprint still
 owns requirements interview and build authorization.
