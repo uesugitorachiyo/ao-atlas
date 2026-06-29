@@ -218,6 +218,50 @@ func TestWorkgraphCompleteRejectsSameInputAndOutputPath(t *testing.T) {
 	}
 }
 
+func TestWorkgraphRepairPlanEmitsRepairTaskForBlockedRunLink(t *testing.T) {
+	dir := t.TempDir()
+	outPath := filepath.Join(dir, "repair-plan.json")
+	var out bytes.Buffer
+	code := Run([]string{"workgraph", "repair-plan", "--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"), "--run-link", filepath.Join("..", "..", "examples", "invalid", "run-link-blocked.json"), "--out", outPath}, &out, &out)
+	if code != 0 {
+		t.Fatalf("repair-plan failed: %s", out.String())
+	}
+	plan, err := LoadJSON[WorkgraphRepairPlan](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateWorkgraphRepairPlan(plan); err != nil {
+		t.Fatal(err)
+	}
+	if plan.TaskID != "atlas-readiness-task" || len(plan.RepairTasks) != 1 {
+		t.Fatalf("unexpected repair plan: %#v", plan)
+	}
+	if plan.RepairTasks[0].ID != "repair-atlas-readiness-task" {
+		t.Fatalf("unexpected repair task: %#v", plan.RepairTasks[0])
+	}
+}
+
+func TestWorkgraphRepairPlanRejectsCompletedRunLink(t *testing.T) {
+	assertWorkgraphRepairPlanFails(t, filepath.Join("..", "..", "examples", "valid", "run-link.json"), "blocked or failed")
+}
+
+func TestWorkgraphRepairPlanRejectsMissingNode(t *testing.T) {
+	assertWorkgraphRepairPlanFails(t, filepath.Join("..", "..", "examples", "invalid", "run-link-missing-node-blocked.json"), "matching")
+}
+
+func assertWorkgraphRepairPlanFails(t *testing.T, runLinkPath, want string) {
+	t.Helper()
+	dir := t.TempDir()
+	var out bytes.Buffer
+	code := Run([]string{"workgraph", "repair-plan", "--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"), "--run-link", runLinkPath, "--out", filepath.Join(dir, "repair-plan.json")}, &out, &out)
+	if code == 0 {
+		t.Fatalf("expected repair-plan to fail for %s", runLinkPath)
+	}
+	if !strings.Contains(out.String(), want) {
+		t.Fatalf("expected error containing %q, got %s", want, out.String())
+	}
+}
+
 func assertWorkgraphCompleteFails(t *testing.T, workgraphPath, runLinkPath, want string) {
 	t.Helper()
 	dir := t.TempDir()

@@ -17,6 +17,7 @@ const (
 	InstanceContract               = "ao.atlas.stack-instance.v0.1"
 	IntakeContract                 = "ao.atlas.intake.v0.1"
 	WorkgraphContract              = "ao.atlas.workgraph.v0.1"
+	WorkgraphRepairPlanContract    = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract            = "ao.atlas.factory-task.v0.1"
 	FactoryMaterializationContract = "ao.atlas.factory-materialization.v0.1"
 	ContextPackContract            = "ao.atlas.context-pack.v0.1"
@@ -149,6 +150,38 @@ func ValidateWorkgraph(workgraph Workgraph) error {
 	return joinErrors(errs)
 }
 
+func ValidateWorkgraphRepairPlan(plan WorkgraphRepairPlan) error {
+	var errs []string
+	requireContract(&errs, "workgraph_repair_plan", plan.ContractVersion, WorkgraphRepairPlanContract)
+	requireField(&errs, "id", plan.ID)
+	requireField(&errs, "task_id", plan.TaskID)
+	if plan.Status != "repair_required" {
+		errs = append(errs, "status must be repair_required")
+	}
+	if !oneOf(plan.SourceRunLinkStatus, "blocked", "failed") {
+		errs = append(errs, "source_run_link_status must be blocked or failed")
+	}
+	requireField(&errs, "reason", plan.Reason)
+	if len(plan.RepairTasks) == 0 {
+		errs = append(errs, "repair_tasks must not be empty")
+	}
+	for i, task := range plan.RepairTasks {
+		if err := ValidateFactoryTask(task); err != nil {
+			errs = append(errs, fmt.Sprintf("repair_tasks[%d]: %s", i, err.Error()))
+		}
+	}
+	if plan.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if plan.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if plan.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	return joinErrors(errs)
+}
+
 func ValidateFactoryTask(task FactoryTask) error {
 	var errs []string
 	requireContract(&errs, "factory_task", task.ContractVersion, FactoryTaskContract)
@@ -250,8 +283,8 @@ func ValidateRunLink(link RunLink) error {
 	var errs []string
 	requireContract(&errs, "run_link", link.ContractVersion, RunLinkContract)
 	requireField(&errs, "task_id", link.TaskID)
-	if !oneOf(link.Status, "planned", "running", "completed", "blocked") {
-		errs = append(errs, "status must be planned, running, completed, or blocked")
+	if !oneOf(link.Status, "planned", "running", "completed", "blocked", "failed") {
+		errs = append(errs, "status must be planned, running, completed, blocked, or failed")
 	}
 	if len(link.Evidence) == 0 {
 		errs = append(errs, "evidence must not be empty")
@@ -332,6 +365,55 @@ func CompleteWorkgraph(workgraph Workgraph, link RunLink) (Workgraph, string, er
 		return updated, node.ID, nil
 	}
 	return Workgraph{}, "", fmt.Errorf("no matching workgraph node for run-link task_id %q", link.TaskID)
+}
+
+func BuildWorkgraphRepairPlan(workgraph Workgraph, link RunLink) (WorkgraphRepairPlan, error) {
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return WorkgraphRepairPlan{}, err
+	}
+	if err := ValidateRunLink(link); err != nil {
+		return WorkgraphRepairPlan{}, err
+	}
+	if !oneOf(link.Status, "blocked", "failed") {
+		return WorkgraphRepairPlan{}, fmt.Errorf("run-link status must be blocked or failed")
+	}
+	for _, node := range workgraph.Nodes {
+		if node.FactoryTask.ID != link.TaskID {
+			continue
+		}
+		source := node.FactoryTask
+		repair := FactoryTask{
+			ContractVersion:   FactoryTaskContract,
+			ID:                "repair-" + source.ID,
+			Objective:         "Repair blocked Atlas factory task: " + source.Objective,
+			TargetFactoryRepo: source.TargetFactoryRepo,
+			FactoryFolder:     source.FactoryFolder + "-repair",
+			Acceptance:        []string{"a follow-up run-link for " + source.ID + " validates with status completed"},
+			NonGoals:          []string{"do not schedule work from Atlas", "do not execute work from Atlas", "do not approve work from Atlas"},
+			WriteScope:        append([]string(nil), source.WriteScope...),
+			Verification:      append([]string(nil), source.Verification...),
+			RequiredEvidence:  append([]string(nil), source.RequiredEvidence...),
+			SafetyLimits:      append(append([]string(nil), source.SafetyLimits...), "repair plan is readback only"),
+			DependencyRefs:    []string{source.ID},
+		}
+		plan := WorkgraphRepairPlan{
+			ContractVersion:     WorkgraphRepairPlanContract,
+			ID:                  workgraph.ID + "-" + source.ID + "-repair-plan",
+			TaskID:              source.ID,
+			Status:              "repair_required",
+			SourceRunLinkStatus: link.Status,
+			Reason:              "run-link did not complete the task; emit a bounded repair task for Foundry scheduling",
+			RepairTasks:         []FactoryTask{repair},
+			SchedulesWork:       false,
+			ExecutesWork:        false,
+			ApprovesWork:        false,
+		}
+		if err := ValidateWorkgraphRepairPlan(plan); err != nil {
+			return WorkgraphRepairPlan{}, err
+		}
+		return plan, nil
+	}
+	return WorkgraphRepairPlan{}, fmt.Errorf("no matching workgraph node for run-link task_id %q", link.TaskID)
 }
 
 func BuildFoundryHandoff(workgraph Workgraph) FoundryHandoff {

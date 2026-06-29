@@ -45,6 +45,7 @@ required_files=(
   schemas/intake.schema.json
   schemas/blueprint-request.schema.json
   schemas/workgraph.schema.json
+  schemas/workgraph-repair-plan.schema.json
   schemas/factory-task.schema.json
   schemas/factory-materialization.schema.json
   schemas/context-pack.schema.json
@@ -73,6 +74,10 @@ test -s "$OUT/factory-materialization/materialization.json"
 test -s "$OUT/workgraph-next-materialization/materialization.json"
 "$BIN" workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link.json --out "$OUT/workgraph-completed.json" >/dev/null
 "$BIN" workgraph validate --workgraph "$OUT/workgraph-completed.json" >/dev/null
+"$BIN" workgraph repair-plan --workgraph examples/valid/workgraph.json --run-link examples/invalid/run-link-blocked.json --out "$OUT/workgraph-repair-plan-blocked.json" >/dev/null
+test -s "$OUT/workgraph-repair-plan-blocked.json"
+"$BIN" workgraph repair-plan --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-failed.json --out "$OUT/workgraph-repair-plan-failed.json" >/dev/null
+test -s "$OUT/workgraph-repair-plan-failed.json"
 "$BIN" workgraph status --workgraph examples/valid/workgraph.json >/dev/null
 "$BIN" context-pack validate --pack examples/valid/context-pack.json >/dev/null
 "$BIN" foundry handoff emit --workgraph examples/valid/workgraph.json --out "$OUT/foundry-handoff.json" >/dev/null
@@ -113,6 +118,14 @@ if "$BIN" workgraph complete --workgraph examples/invalid/workgraph-complete-inc
 fi
 if "$BIN" workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link.json --out examples/valid/workgraph.json >/dev/null 2>&1; then
   echo "same input/output workgraph completion was accepted" >&2
+  exit 1
+fi
+if "$BIN" workgraph repair-plan --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link.json --out "$OUT/completed-repair-plan.json" >/dev/null 2>&1; then
+  echo "completed run-link emitted a repair plan" >&2
+  exit 1
+fi
+if "$BIN" workgraph repair-plan --workgraph examples/valid/workgraph.json --run-link examples/invalid/run-link-missing-node-blocked.json --out "$OUT/missing-node-repair-plan.json" >/dev/null 2>&1; then
+  echo "missing-node run-link emitted a repair plan" >&2
   exit 1
 fi
 pass "invalid-fixtures-rejected"

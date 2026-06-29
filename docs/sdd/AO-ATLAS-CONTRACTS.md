@@ -6,6 +6,7 @@ v0.1 contract names:
 - `ao.atlas.intake.v0.1`
 - `ao.atlas.blueprint-request.v0.1`
 - `ao.atlas.workgraph.v0.1`
+- `ao.atlas.workgraph-repair-plan.v0.1`
 - `ao.atlas.factory-task.v0.1`
 - `ao.atlas.factory-materialization.v0.1`
 - `ao.atlas.context-pack.v0.1`
@@ -29,5 +30,9 @@ files, the task digest, and explicit `executes_work=false` /
 after Foundry, Forge, or AO2 work has produced artifacts. `run-link attach`
 computes a digest over the task id, status, and evidence map. A run link is
 readback evidence only; it is not approval, scheduling authority, or execution.
+
+`ao.atlas.workgraph-repair-plan.v0.1` records bounded repair tasks when a
+matching run link is blocked or failed. It is advisory readback for Foundry
+scheduling and carries explicit no-schedule, no-execute, and no-approval flags.
 
 Schemas live in `schemas/`. The CLI validators are the normative v0.1 gate.

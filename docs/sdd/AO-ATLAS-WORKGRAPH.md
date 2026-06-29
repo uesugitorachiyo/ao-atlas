@@ -11,6 +11,7 @@ atlas workgraph validate --workgraph <path>
 atlas workgraph next --workgraph <path> --json
 atlas workgraph materialize-next --workgraph <path> --out <dir> --dry-run
 atlas workgraph complete --workgraph <path> --run-link <path> --out <path>
+atlas workgraph repair-plan --workgraph <path> --run-link <path> --out <path>
 atlas workgraph status --workgraph <path>
 ```
 
@@ -25,3 +26,7 @@ does not schedule, execute, approve, publish, upload, or call providers.
 workgraph and run link, marks only the matching factory-task node completed in a
 new output workgraph, and refuses to overwrite the input. Completion requires a
 completed run link, public-safe evidence, and completed dependencies.
+
+`workgraph repair-plan` emits a bounded repair task when a matching run link is
+blocked or failed. It writes a repair-plan artifact only; Atlas still does not
+schedule, execute, approve, publish, upload, or call providers.

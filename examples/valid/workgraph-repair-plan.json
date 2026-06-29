@@ -1,0 +1,27 @@
+{
+  "contract_version": "ao.atlas.workgraph-repair-plan.v0.1",
+  "id": "atlas-readiness-workgraph-atlas-readiness-task-repair-plan",
+  "task_id": "atlas-readiness-task",
+  "status": "repair_required",
+  "source_run_link_status": "blocked",
+  "reason": "run-link did not complete the task; emit a bounded repair task for Foundry scheduling",
+  "repair_tasks": [
+    {
+      "contract_version": "ao.atlas.factory-task.v0.1",
+      "id": "repair-atlas-readiness-task",
+      "objective": "Repair blocked Atlas factory task: Verify AO Atlas stack instance readiness fixtures and command outputs.",
+      "target_factory_repo": "ao-foundry",
+      "factory_folder": "factory/atlas-readiness-repair",
+      "acceptance_criteria": ["a follow-up run-link for atlas-readiness-task validates with status completed"],
+      "non_goals": ["do not schedule work from Atlas", "do not execute work from Atlas", "do not approve work from Atlas"],
+      "write_scope": ["factory/atlas-readiness"],
+      "verification_commands": ["scripts/production-readiness.sh"],
+      "required_evidence": ["target/production-readiness/summary.json"],
+      "safety_limits": ["no provider calls", "no credentials", "no private paths", "repair plan is readback only"],
+      "dependency_refs": ["atlas-readiness-task"]
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
