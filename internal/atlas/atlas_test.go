@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -28,6 +29,42 @@ func TestInstanceInitValidateAndRegistry(t *testing.T) {
 	if _, err := os.Stat(registryPath); err != nil {
 		t.Fatal(err)
 	}
+}
+
+func TestProductionReadinessOpsWorkflowRunsAtlasReadinessGate(t *testing.T) {
+	root := repoRoot(t)
+	workflowPath := filepath.Join(root, ".github", "workflows", "production-readiness-ops.yml")
+	content, err := os.ReadFile(workflowPath)
+	if err != nil {
+		t.Fatalf("read production-readiness-ops workflow: %v", err)
+	}
+	workflow := string(content)
+	for _, want := range []string{
+		"name: Production Readiness Ops",
+		"workflow_dispatch:",
+		"contents: read",
+		"actions/checkout@v7",
+		"actions/setup-go@v6",
+		"scripts/production-readiness.sh",
+	} {
+		if !strings.Contains(workflow, want) {
+			t.Fatalf("production-readiness-ops workflow missing %q", want)
+		}
+	}
+	for _, forbidden := range []string{"gh release", "git push", "upload-artifact", "OPENAI_" + "API_KEY", "ANTHROPIC_" + "API_KEY"} {
+		if strings.Contains(workflow, forbidden) {
+			t.Fatalf("production-readiness-ops workflow contains forbidden capability %q", forbidden)
+		}
+	}
+}
+
+func repoRoot(t *testing.T) string {
+	t.Helper()
+	_, file, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("runtime caller unavailable")
+	}
+	return filepath.Clean(filepath.Join(filepath.Dir(file), "..", ".."))
 }
 
 func TestInstanceDoctorValidatesRootsAndRegistryParity(t *testing.T) {
