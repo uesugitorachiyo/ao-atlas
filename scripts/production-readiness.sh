@@ -41,6 +41,7 @@ required_files=(
   schemas/blueprint-request.schema.json
   schemas/workgraph.schema.json
   schemas/factory-task.schema.json
+  schemas/factory-materialization.schema.json
   schemas/context-pack.schema.json
   schemas/foundry-handoff.schema.json
   schemas/run-link.schema.json
@@ -59,6 +60,8 @@ pass "json-syntax"
 "$BIN" intake validate --intake examples/valid/intake.json >/dev/null
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" factory-task validate --task examples/valid/factory-task.json >/dev/null
+"$BIN" factory materialize --task examples/valid/factory-task.json --out "$OUT/factory-materialization" --dry-run >/dev/null
+test -s "$OUT/factory-materialization/materialization.json"
 "$BIN" workgraph validate --workgraph examples/valid/workgraph.json >/dev/null
 "$BIN" workgraph next --workgraph examples/valid/workgraph.json --json >/dev/null
 "$BIN" workgraph status --workgraph examples/valid/workgraph.json >/dev/null

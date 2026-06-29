@@ -14,14 +14,15 @@ import (
 )
 
 const (
-	InstanceContract         = "ao.atlas.stack-instance.v0.1"
-	IntakeContract           = "ao.atlas.intake.v0.1"
-	WorkgraphContract        = "ao.atlas.workgraph.v0.1"
-	FactoryTaskContract      = "ao.atlas.factory-task.v0.1"
-	ContextPackContract      = "ao.atlas.context-pack.v0.1"
-	FoundryHandoffContract   = "ao.atlas.foundry-handoff.v0.1"
-	RunLinkContract          = "ao.atlas.run-link.v0.1"
-	BlueprintRequestContract = "ao.atlas.blueprint-request.v0.1"
+	InstanceContract               = "ao.atlas.stack-instance.v0.1"
+	IntakeContract                 = "ao.atlas.intake.v0.1"
+	WorkgraphContract              = "ao.atlas.workgraph.v0.1"
+	FactoryTaskContract            = "ao.atlas.factory-task.v0.1"
+	FactoryMaterializationContract = "ao.atlas.factory-materialization.v0.1"
+	ContextPackContract            = "ao.atlas.context-pack.v0.1"
+	FoundryHandoffContract         = "ao.atlas.foundry-handoff.v0.1"
+	RunLinkContract                = "ao.atlas.run-link.v0.1"
+	BlueprintRequestContract       = "ao.atlas.blueprint-request.v0.1"
 )
 
 var digestPattern = regexp.MustCompile(`^sha256:[0-9a-f]{64}$`)
@@ -164,6 +165,31 @@ func ValidateFactoryTask(task FactoryTask) error {
 	checkPublicPath(&errs, "target_factory_repo", task.TargetFactoryRepo, false)
 	checkPublicPath(&errs, "factory_folder", task.FactoryFolder, false)
 	checkPublicStrings(&errs, "write_scope", task.WriteScope, false)
+	return joinErrors(errs)
+}
+
+func ValidateFactoryMaterialization(materialization FactoryMaterialization) error {
+	var errs []string
+	requireContract(&errs, "factory_materialization", materialization.ContractVersion, FactoryMaterializationContract)
+	requireField(&errs, "task_id", materialization.TaskID)
+	if materialization.Mode != "dry_run" {
+		errs = append(errs, "mode must be dry_run")
+	}
+	requireField(&errs, "output_root", materialization.OutputRoot)
+	if strings.ContainsAny(materialization.OutputRoot, `/\`) {
+		errs = append(errs, "output_root must not record a local path")
+	}
+	requireList(&errs, "files", materialization.Files)
+	checkPublicStrings(&errs, "files", materialization.Files, true)
+	if materialization.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if materialization.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if !digestPattern.MatchString(materialization.TaskDigest) {
+		errs = append(errs, "task_digest must be sha256:<64 hex>")
+	}
 	return joinErrors(errs)
 }
 

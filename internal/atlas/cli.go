@@ -26,6 +26,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		err = runWorkgraph(args[1:], stdout)
 	case "factory-task":
 		err = runFactoryTask(args[1:], stdout)
+	case "factory":
+		err = runFactory(args[1:], stdout)
 	case "context-pack":
 		err = runContextPack(args[1:], stdout)
 	case "foundry":
@@ -43,7 +45,7 @@ func Run(args []string, stdout, stderr io.Writer) int {
 }
 
 func usage(w io.Writer) {
-	fmt.Fprintln(w, "atlas <instance|intake|blueprint-request|workgraph|factory-task|context-pack|foundry|run-link> ...")
+	fmt.Fprintln(w, "atlas <instance|intake|blueprint-request|workgraph|factory-task|factory|context-pack|foundry|run-link> ...")
 }
 
 func runInstance(args []string, stdout io.Writer) error {
@@ -266,6 +268,33 @@ func runFactoryTask(args []string, stdout io.Writer) error {
 		return err
 	}
 	fmt.Fprintln(stdout, "status=valid")
+	return nil
+}
+
+func runFactory(args []string, stdout io.Writer) error {
+	if len(args) == 0 || args[0] != "materialize" {
+		return fmt.Errorf("factory requires materialize")
+	}
+	fs := flag.NewFlagSet("factory materialize", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	path := fs.String("task", "", "factory task path")
+	out := fs.String("out", "", "output directory")
+	dryRun := fs.Bool("dry-run", false, "write a dry-run skeleton without scheduling or executing")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	if !*dryRun {
+		return fmt.Errorf("--dry-run is required for v0.1 factory materialization")
+	}
+	task, err := LoadJSON[FactoryTask](*path)
+	if err != nil {
+		return err
+	}
+	materialization, err := MaterializeFactoryDryRun(task, *out)
+	if err != nil {
+		return err
+	}
+	fmt.Fprintf(stdout, "status=written\nmode=%s\nexecutes_work=false\nschedules_work=false\n", materialization.Mode)
 	return nil
 }
 

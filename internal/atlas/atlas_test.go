@@ -97,6 +97,43 @@ func TestFoundryHandoffUsesReadyTasksOnly(t *testing.T) {
 	}
 }
 
+func TestFactoryMaterializeDryRunWritesBoundedSkeleton(t *testing.T) {
+	dir := t.TempDir()
+	outDir := filepath.Join(dir, "factory-materialization")
+	var out bytes.Buffer
+	code := Run([]string{"factory", "materialize", "--task", filepath.Join("..", "..", "examples", "valid", "factory-task.json"), "--out", outDir, "--dry-run"}, &out, &out)
+	if code != 0 {
+		t.Fatalf("materialize failed: %s", out.String())
+	}
+	for _, rel := range []string{"README.md", "task.json", "verification.txt", "materialization.json", filepath.Join("evidence", "README.md"), filepath.Join("context", "README.md")} {
+		if _, err := os.Stat(filepath.Join(outDir, rel)); err != nil {
+			t.Fatalf("expected %s: %v", rel, err)
+		}
+	}
+	manifest, err := LoadJSON[FactoryMaterialization](filepath.Join(outDir, "materialization.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if manifest.Mode != "dry_run" || manifest.ExecutesWork {
+		t.Fatalf("unexpected materialization manifest: %#v", manifest)
+	}
+	if strings.Contains(manifest.OutputRoot, string(os.PathSeparator)) {
+		t.Fatalf("manifest must not record local output path: %#v", manifest)
+	}
+}
+
+func TestFactoryMaterializeRequiresDryRun(t *testing.T) {
+	dir := t.TempDir()
+	var out bytes.Buffer
+	code := Run([]string{"factory", "materialize", "--task", filepath.Join("..", "..", "examples", "valid", "factory-task.json"), "--out", filepath.Join(dir, "factory-materialization")}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected materialize without --dry-run to fail")
+	}
+	if !strings.Contains(out.String(), "--dry-run") {
+		t.Fatalf("expected dry-run error, got %s", out.String())
+	}
+}
+
 func fixtureWorkgraph() Workgraph {
 	baseTask := FactoryTask{
 		ContractVersion:   FactoryTaskContract,
