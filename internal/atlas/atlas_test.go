@@ -700,6 +700,76 @@ func TestMutationClassModelValidateCommand(t *testing.T) {
 	}
 }
 
+func TestAuthorityLadderWorkgraphFixtureModelsGovernedEscalation(t *testing.T) {
+	workgraph, err := LoadJSON[Workgraph](filepath.Join("..", "..", "examples", "valid", "workgraph-authority-ladder.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		t.Fatal(err)
+	}
+	if len(workgraph.Nodes) < 16 {
+		t.Fatalf("authority ladder fixture must be large enough to model escalation, got %d nodes", len(workgraph.Nodes))
+	}
+	counts := map[string]int{"ready": 0, "blocked": 0, "completed": 0}
+	for _, node := range workgraph.Nodes {
+		counts[node.Status]++
+	}
+	if counts["completed"] < 1 || counts["ready"] < 2 || counts["blocked"] < 8 {
+		t.Fatalf("authority ladder must include completed, ready, and blocked states, got %#v", counts)
+	}
+	for _, want := range []string{"repair", "repack", "sentinel", "promoter", "command"} {
+		if !workgraphHasNodeContaining(workgraph, want) {
+			t.Fatalf("authority ladder fixture missing %s node", want)
+		}
+	}
+	if !workgraphHasSafetyLimitContaining(workgraph, "do_not_advance") {
+		t.Fatalf("authority ladder fixture must encode do-not-advance gates")
+	}
+}
+
+func TestMissionStatusReportsAuthorityLadderReadback(t *testing.T) {
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "status",
+		"--intake", filepath.Join("..", "..", "examples", "valid", "intake-authority-ladder.json"),
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph-authority-ladder.json"),
+		"--run-link", filepath.Join("..", "..", "examples", "valid", "run-link-authority-ladder-docs-single.json"),
+		"--json",
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission status authority ladder failed: %s", out.String())
+	}
+	var status MissionStatus
+	if err := json.Unmarshal(out.Bytes(), &status); err != nil {
+		t.Fatalf("mission status did not emit json: %v\n%s", err, out.String())
+	}
+	if err := ValidateMissionStatus(status); err != nil {
+		t.Fatal(err)
+	}
+	if status.AuthorityLadder == nil {
+		t.Fatalf("expected authority ladder readback, got %#v", status)
+	}
+	if status.AuthorityLadder.CurrentClass != "docs_only_single_file" {
+		t.Fatalf("expected current class docs_only_single_file, got %#v", status.AuthorityLadder)
+	}
+	if status.AuthorityLadder.NextClass != "docs_only_multi_file" {
+		t.Fatalf("expected next class docs_only_multi_file, got %#v", status.AuthorityLadder)
+	}
+	if !containsString(status.AuthorityLadder.ProvenLiveClasses, "docs_only_single_file") {
+		t.Fatalf("expected docs-only single-file live evidence, got %#v", status.AuthorityLadder.ProvenLiveClasses)
+	}
+	if !containsString(status.AuthorityLadder.RequiredEvidence, "sentinel_no_hold:docs_only_multi_file") {
+		t.Fatalf("expected Sentinel evidence requirement for docs_only_multi_file, got %#v", status.AuthorityLadder.RequiredEvidence)
+	}
+	if len(status.AuthorityLadder.Blockers) == 0 || !stringSliceContains(status.AuthorityLadder.Blockers, "docs_only_multi_file") {
+		t.Fatalf("expected docs_only_multi_file blockers, got %#v", status.AuthorityLadder.Blockers)
+	}
+	if status.AuthorityLadder.DeniedHigherClasses["complex_repo_mutation"] == "" {
+		t.Fatalf("expected complex mutation denial reason, got %#v", status.AuthorityLadder.DeniedHigherClasses)
+	}
+}
+
 func TestFoundryRoundtripSmokeValidatesFoundryImport(t *testing.T) {
 	script, err := os.ReadFile(filepath.Join("..", "..", "scripts", "atlas-foundry-roundtrip-smoke.sh"))
 	if err != nil {
@@ -1030,6 +1100,33 @@ func mutationClassByName(model MutationClassModel, name string) (MutationClassDe
 		}
 	}
 	return MutationClassDefinition{}, false
+}
+
+func workgraphHasNodeContaining(workgraph Workgraph, marker string) bool {
+	for _, node := range workgraph.Nodes {
+		if strings.Contains(node.ID, marker) {
+			return true
+		}
+	}
+	return false
+}
+
+func workgraphHasSafetyLimitContaining(workgraph Workgraph, marker string) bool {
+	for _, node := range workgraph.Nodes {
+		if stringSliceContains(node.FactoryTask.SafetyLimits, marker) {
+			return true
+		}
+	}
+	return false
+}
+
+func stringSliceContains(values []string, marker string) bool {
+	for _, value := range values {
+		if strings.Contains(value, marker) {
+			return true
+		}
+	}
+	return false
 }
 
 func fixtureWorkgraph() Workgraph {

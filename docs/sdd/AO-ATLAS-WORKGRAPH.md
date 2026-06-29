@@ -46,7 +46,20 @@ Mission status summarizes intake, workgraph node counts including failed count,
 missing context packs, missing Foundry handoffs, run-link completion state, and
 the next recommended Atlas action without mutating source artifacts.
 
+For the authority-ladder workgraph, mission status also includes an
+`authority_ladder` readback. It reports the current proven live mutation class,
+the next unproven class, blockers, required evidence, denied higher classes,
+and do-not-advance gates. This readback is descriptive only; Atlas still does
+not grant tickets, schedule work, apply patches, or mark a class safe to
+execute.
+
 The public `examples/valid/workgraph-large-stress.json` fixture is the larger
 sequencing demonstration. It contains 12 factory nodes across completed, ready,
 blocked, and stitch states, preserves bounded context-pack refs, and imports
 only dependency-ready nodes into Foundry-compatible material.
+
+The public `examples/valid/workgraph-authority-ladder.json` fixture models the
+path from the first docs-only live rehearsal toward complex repository mutation.
+It includes repair nodes, context repack nodes, Sentinel/Promoter/Command
+evidence nodes, blocked states, dependency gates, and explicit do-not-advance
+limits so higher classes remain denied until their evidence exists.
