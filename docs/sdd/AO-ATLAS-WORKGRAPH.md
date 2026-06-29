@@ -10,6 +10,7 @@ CLI:
 atlas workgraph validate --workgraph <path>
 atlas workgraph next --workgraph <path> --json
 atlas workgraph materialize-next --workgraph <path> --out <dir> --dry-run
+atlas workgraph complete --workgraph <path> --run-link <path> --out <path>
 atlas workgraph status --workgraph <path>
 ```
 
@@ -19,3 +20,8 @@ Blocked nodes must explain their blockers.
 `workgraph materialize-next --dry-run` selects that same next ready node and
 writes a bounded factory skeleton through the factory materialization path. It
 does not schedule, execute, approve, publish, upload, or call providers.
+
+`workgraph complete` is explicit file-to-file completion. It reads an existing
+workgraph and run link, marks only the matching factory-task node completed in a
+new output workgraph, and refuses to overwrite the input. Completion requires a
+completed run link, public-safe evidence, and completed dependencies.

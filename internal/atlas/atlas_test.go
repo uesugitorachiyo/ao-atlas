@@ -166,6 +166,71 @@ func TestWorkgraphMaterializeNextRequiresDryRun(t *testing.T) {
 	}
 }
 
+func TestWorkgraphCompleteWritesNewCompletedWorkgraph(t *testing.T) {
+	dir := t.TempDir()
+	outPath := filepath.Join(dir, "workgraph-completed.json")
+	var out bytes.Buffer
+	inputPath := filepath.Join("..", "..", "examples", "valid", "workgraph.json")
+	code := Run([]string{"workgraph", "complete", "--workgraph", inputPath, "--run-link", filepath.Join("..", "..", "examples", "valid", "run-link.json"), "--out", outPath}, &out, &out)
+	if code != 0 {
+		t.Fatalf("complete failed: %s", out.String())
+	}
+	completed, err := LoadJSON[Workgraph](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if completed.Nodes[1].Status != "completed" {
+		t.Fatalf("expected completed node, got %#v", completed.Nodes[1])
+	}
+	original, err := LoadJSON[Workgraph](inputPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if original.Nodes[1].Status != "ready" {
+		t.Fatalf("input workgraph was modified: %#v", original.Nodes[1])
+	}
+	if !strings.Contains(out.String(), "node=readiness-ready") {
+		t.Fatalf("expected node readback, got %s", out.String())
+	}
+}
+
+func TestWorkgraphCompleteRejectsBlockedRunLink(t *testing.T) {
+	assertWorkgraphCompleteFails(t, filepath.Join("..", "..", "examples", "valid", "workgraph.json"), filepath.Join("..", "..", "examples", "invalid", "run-link-blocked.json"), "completed")
+}
+
+func TestWorkgraphCompleteRejectsMissingNode(t *testing.T) {
+	assertWorkgraphCompleteFails(t, filepath.Join("..", "..", "examples", "valid", "workgraph.json"), filepath.Join("..", "..", "examples", "invalid", "run-link-missing-node.json"), "matching")
+}
+
+func TestWorkgraphCompleteRejectsIncompleteDependency(t *testing.T) {
+	assertWorkgraphCompleteFails(t, filepath.Join("..", "..", "examples", "invalid", "workgraph-complete-incomplete-dependency.json"), filepath.Join("..", "..", "examples", "valid", "run-link.json"), "dependencies")
+}
+
+func TestWorkgraphCompleteRejectsSameInputAndOutputPath(t *testing.T) {
+	var out bytes.Buffer
+	path := filepath.Join("..", "..", "examples", "valid", "workgraph.json")
+	code := Run([]string{"workgraph", "complete", "--workgraph", path, "--run-link", filepath.Join("..", "..", "examples", "valid", "run-link.json"), "--out", path}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected same input/output path to fail")
+	}
+	if !strings.Contains(out.String(), "overwrite input") {
+		t.Fatalf("expected overwrite error, got %s", out.String())
+	}
+}
+
+func assertWorkgraphCompleteFails(t *testing.T, workgraphPath, runLinkPath, want string) {
+	t.Helper()
+	dir := t.TempDir()
+	var out bytes.Buffer
+	code := Run([]string{"workgraph", "complete", "--workgraph", workgraphPath, "--run-link", runLinkPath, "--out", filepath.Join(dir, "completed.json")}, &out, &out)
+	if code == 0 {
+		t.Fatalf("expected complete to fail for %s", runLinkPath)
+	}
+	if !strings.Contains(out.String(), want) {
+		t.Fatalf("expected error containing %q, got %s", want, out.String())
+	}
+}
+
 func TestRunLinkAttachWritesDigestBoundPublicSafeLink(t *testing.T) {
 	dir := t.TempDir()
 	outPath := filepath.Join(dir, "run-link.json")

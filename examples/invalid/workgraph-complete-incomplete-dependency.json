@@ -1,0 +1,49 @@
+{
+  "contract_version": "ao.atlas.workgraph.v0.1",
+  "id": "atlas-readiness-workgraph-incomplete-dependency",
+  "target_instance": "demo-stack",
+  "nodes": [
+    {
+      "id": "contracts-ready",
+      "status": "ready",
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "contracts-ready-task",
+        "objective": "Confirm AO Atlas v0.1 contracts exist and validate.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/atlas-contracts",
+        "acceptance_criteria": ["all contract fixtures validate"],
+        "non_goals": ["do not execute downstream work"],
+        "write_scope": ["factory/atlas-contracts"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/summary.json"],
+        "safety_limits": ["no provider calls", "public-safe paths only"],
+        "dependency_refs": []
+      }
+    },
+    {
+      "id": "readiness-ready",
+      "status": "ready",
+      "dependencies": ["contracts-ready"],
+      "blockers": [],
+      "stitch_task": true,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "atlas-readiness-task",
+        "objective": "Verify AO Atlas stack instance readiness fixtures and command outputs.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/atlas-readiness",
+        "acceptance_criteria": ["production readiness reports score=100/100"],
+        "non_goals": ["do not execute AO2", "do not publish releases"],
+        "write_scope": ["factory/atlas-readiness"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/summary.json"],
+        "safety_limits": ["no provider calls", "no credentials", "no private paths"],
+        "dependency_refs": ["contracts-ready"]
+      }
+    }
+  ]
+}
