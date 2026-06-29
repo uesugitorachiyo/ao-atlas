@@ -42,6 +42,8 @@ required_files=(
   docs/sdd/AO-ATLAS-ACCEPTANCE-GATES.md
   docs/sdd/AO-ATLAS-SDD-HANDOFF.md
   schemas/stack-instance.schema.json
+  schemas/atlas-registry.schema.json
+  schemas/instance-doctor.schema.json
   schemas/intake.schema.json
   schemas/blueprint-request.schema.json
   schemas/workgraph.schema.json
@@ -63,6 +65,8 @@ done
 pass "json-syntax"
 
 "$BIN" instance validate --instance examples/valid/stack-instance.json >/dev/null
+"$BIN" instance doctor --instance examples/valid/stack-instance.json --registry examples/valid/atlas-registry.json --out "$OUT/instance-doctor.json" >/dev/null
+test -s "$OUT/instance-doctor.json"
 "$BIN" intake validate --intake examples/valid/intake.json >/dev/null
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" factory-task validate --task examples/valid/factory-task.json >/dev/null
@@ -103,6 +107,10 @@ pass "valid-fixtures"
 
 if "$BIN" context-pack validate --pack examples/invalid/context-pack-bad-digest.json >/dev/null 2>&1; then
   echo "invalid context pack was accepted" >&2
+  exit 1
+fi
+if "$BIN" instance doctor --instance examples/valid/stack-instance.json --registry examples/invalid/atlas-registry-parity-mismatch.json --out "$OUT/instance-doctor-mismatch.json" >/dev/null 2>&1; then
+  echo "instance doctor accepted registry parity mismatch" >&2
   exit 1
 fi
 if "$BIN" workgraph validate --workgraph examples/invalid/workgraph-missing-dependency.json >/dev/null 2>&1; then

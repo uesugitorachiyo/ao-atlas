@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.foundry-registry.v0.1",
+  "instance_id": "demo-stack",
+  "toolchain_root": "../shared-ao-toolchain",
+  "roots": {
+    "mission": ".atlas-local/state/demo-stack/mission",
+    "workgraph": ".atlas-local/state/demo-stack/workgraph",
+    "context": ".atlas-local/state/demo-stack/context",
+    "evidence": ".atlas-local/state/demo-stack/evidence",
+    "worktree": ".atlas-local/state/demo-stack/worktree"
+  },
+  "schedules_work": false,
+  "executes_work": false
+}

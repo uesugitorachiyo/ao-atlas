@@ -42,6 +42,7 @@ go run ./cmd/atlas instance init \
   --out .atlas-local/demo-stack.instance.json
 
 go run ./cmd/atlas instance validate --instance examples/valid/stack-instance.json
+go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json --registry examples/valid/atlas-registry.json --out .atlas-local/instance-doctor.json
 go run ./cmd/atlas blueprint-request validate --request examples/valid/blueprint-request.json
 go run ./cmd/atlas factory materialize --task examples/valid/factory-task.json --out .atlas-local/factory-materialization --dry-run
 go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph.json --json

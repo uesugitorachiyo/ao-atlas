@@ -3,6 +3,8 @@
 v0.1 contract names:
 
 - `ao.atlas.stack-instance.v0.1`
+- `ao.atlas.foundry-registry.v0.1`
+- `ao.atlas.instance-doctor.v0.1`
 - `ao.atlas.intake.v0.1`
 - `ao.atlas.blueprint-request.v0.1`
 - `ao.atlas.workgraph.v0.1`
@@ -15,6 +17,10 @@ v0.1 contract names:
 
 All contracts are JSON. Validation requires explicit `contract_version` values,
 stable identifiers, non-empty required fields, and public-safe paths.
+
+`ao.atlas.instance-doctor.v0.1` records stack-instance hygiene readback:
+instance validation, generated registry parity, ignored local state placement,
+and bounded worktree roots. The doctor does not schedule or execute work.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,

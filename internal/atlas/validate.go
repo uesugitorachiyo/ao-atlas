@@ -15,6 +15,8 @@ import (
 
 const (
 	InstanceContract               = "ao.atlas.stack-instance.v0.1"
+	AtlasRegistryContract          = "ao.atlas.foundry-registry.v0.1"
+	InstanceDoctorContract         = "ao.atlas.instance-doctor.v0.1"
 	IntakeContract                 = "ao.atlas.intake.v0.1"
 	WorkgraphContract              = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract    = "ao.atlas.workgraph-repair-plan.v0.1"
@@ -70,6 +72,91 @@ func ValidateInstance(instance Instance) error {
 	checkPublicPath(&errs, "state_root", instance.StateRoot, false)
 	checkPublicPath(&errs, "toolchain_root", instance.ToolchainRoot, false)
 	return joinErrors(errs)
+}
+
+func ValidateAtlasRegistry(registry AtlasRegistry) error {
+	var errs []string
+	requireContract(&errs, "atlas_registry", registry.ContractVersion, AtlasRegistryContract)
+	requireField(&errs, "instance_id", registry.InstanceID)
+	requireField(&errs, "toolchain_root", registry.ToolchainRoot)
+	if len(registry.Roots) == 0 {
+		errs = append(errs, "roots must not be empty")
+	}
+	checkPublicPathMap(&errs, registry.Roots)
+	checkPublicPath(&errs, "toolchain_root", registry.ToolchainRoot, false)
+	if registry.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if registry.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	return joinErrors(errs)
+}
+
+func ValidateInstanceDoctorReport(report InstanceDoctorReport) error {
+	var errs []string
+	requireContract(&errs, "instance_doctor", report.ContractVersion, InstanceDoctorContract)
+	requireField(&errs, "instance_id", report.InstanceID)
+	if report.Status != "ready" {
+		errs = append(errs, "status must be ready")
+	}
+	required := []string{"instance", "registry_parity", "ignored_local_state", "worktree_hygiene"}
+	for _, key := range required {
+		if report.Checks[key] != "passed" {
+			errs = append(errs, "checks."+key+" must be passed")
+		}
+	}
+	if report.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if report.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	return joinErrors(errs)
+}
+
+func BuildInstanceDoctorReport(instance Instance, registry AtlasRegistry) (InstanceDoctorReport, error) {
+	if err := ValidateInstance(instance); err != nil {
+		return InstanceDoctorReport{}, err
+	}
+	if err := ValidateAtlasRegistry(registry); err != nil {
+		return InstanceDoctorReport{}, err
+	}
+	if registry.InstanceID != instance.ID {
+		return InstanceDoctorReport{}, fmt.Errorf("registry instance_id must match instance id")
+	}
+	if registry.ToolchainRoot != instance.ToolchainRoot {
+		return InstanceDoctorReport{}, fmt.Errorf("registry toolchain_root must match instance toolchain_root")
+	}
+	for key, value := range instance.Roots {
+		if registry.Roots[key] != value {
+			return InstanceDoctorReport{}, fmt.Errorf("registry roots.%s must match instance roots.%s", key, key)
+		}
+	}
+	if !strings.HasPrefix(instance.StateRoot, ".atlas-local/") && !strings.HasPrefix(instance.StateRoot, ".atlas-state/") {
+		return InstanceDoctorReport{}, fmt.Errorf("state_root must be under ignored Atlas local state")
+	}
+	worktree := strings.TrimSpace(instance.Roots["worktree"])
+	if worktree == "" || worktree == "." || worktree == ".." {
+		return InstanceDoctorReport{}, fmt.Errorf("worktree root must be a bounded instance path")
+	}
+	report := InstanceDoctorReport{
+		ContractVersion: InstanceDoctorContract,
+		InstanceID:      instance.ID,
+		Status:          "ready",
+		Checks: map[string]string{
+			"instance":            "passed",
+			"registry_parity":     "passed",
+			"ignored_local_state": "passed",
+			"worktree_hygiene":    "passed",
+		},
+		SchedulesWork: false,
+		ExecutesWork:  false,
+	}
+	if err := ValidateInstanceDoctorReport(report); err != nil {
+		return InstanceDoctorReport{}, err
+	}
+	return report, nil
 }
 
 func ValidateIntake(intake Intake) (BlueprintRequest, error) {
