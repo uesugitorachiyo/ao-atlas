@@ -260,6 +260,81 @@ func TestFoundryHandoffUsesReadyTasksOnly(t *testing.T) {
 	}
 }
 
+func TestFoundryImportWritesTaskFixturesForReadyNodes(t *testing.T) {
+	dir := t.TempDir()
+	outDir := filepath.Join(dir, "foundry-import")
+	var out bytes.Buffer
+	code := Run([]string{"foundry", "import", "--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"), "--out", outDir}, &out, &out)
+	if code != 0 {
+		t.Fatalf("foundry import failed: %s", out.String())
+	}
+	manifest, err := LoadJSON[FoundryImport](filepath.Join(outDir, "foundry-import.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateFoundryImport(manifest); err != nil {
+		t.Fatal(err)
+	}
+	if len(manifest.Tasks) != 1 {
+		t.Fatalf("expected one dependency-ready task fixture, got %#v", manifest.Tasks)
+	}
+	if manifest.Tasks[0].TaskID != "atlas-readiness-task" {
+		t.Fatalf("unexpected task fixture: %#v", manifest.Tasks[0])
+	}
+	if _, err := os.Stat(filepath.Join(outDir, manifest.Tasks[0].Path)); err != nil {
+		t.Fatal(err)
+	}
+	if manifest.SchedulesWork || manifest.ExecutesWork || manifest.ApprovesWork {
+		t.Fatalf("foundry import must be fixture-only readback: %#v", manifest)
+	}
+}
+
+func TestFoundryImportRejectsNoReadyNodes(t *testing.T) {
+	wg := fixtureWorkgraph()
+	for i := range wg.Nodes {
+		if wg.Nodes[i].Status == "ready" {
+			wg.Nodes[i].Status = "blocked"
+			wg.Nodes[i].Blockers = []string{"not ready"}
+		}
+	}
+	_, err := BuildFoundryImport(wg)
+	if err == nil || !strings.Contains(err.Error(), "tasks must not be empty") {
+		t.Fatalf("expected no ready tasks rejection, got %v", err)
+	}
+}
+
+func TestFoundryImportRejectsSameInputAndOutputPath(t *testing.T) {
+	var out bytes.Buffer
+	path := filepath.Join("..", "..", "examples", "valid", "workgraph.json")
+	code := Run([]string{"foundry", "import", "--workgraph", path, "--out", path}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected same input/output path to fail")
+	}
+	if !strings.Contains(out.String(), "overwrite input") {
+		t.Fatalf("expected overwrite error, got %s", out.String())
+	}
+}
+
+func TestFoundryImportFixtureIsValid(t *testing.T) {
+	foundryImport, err := LoadJSON[FoundryImport](filepath.Join("..", "..", "examples", "valid", "foundry-import.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateFoundryImport(foundryImport); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestFoundryImportRejectsExecutionAuthority(t *testing.T) {
+	foundryImport, err := LoadJSON[FoundryImport](filepath.Join("..", "..", "examples", "invalid", "foundry-import-executes-work.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateFoundryImport(foundryImport); err == nil || !strings.Contains(err.Error(), "executes_work") {
+		t.Fatalf("expected executes_work rejection, got %v", err)
+	}
+}
+
 func TestFactoryMaterializeDryRunWritesBoundedSkeleton(t *testing.T) {
 	dir := t.TempDir()
 	outDir := filepath.Join(dir, "factory-materialization")

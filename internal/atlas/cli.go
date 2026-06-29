@@ -504,32 +504,70 @@ func runContextPack(args []string, stdout io.Writer) error {
 }
 
 func runFoundry(args []string, stdout io.Writer) error {
-	if len(args) < 2 || strings.Join(args[:2], " ") != "handoff emit" {
-		return fmt.Errorf("foundry requires handoff emit")
+	if len(args) == 0 {
+		return fmt.Errorf("foundry requires subcommand")
 	}
-	fs := flag.NewFlagSet("foundry handoff emit", flag.ContinueOnError)
-	fs.SetOutput(io.Discard)
-	path := fs.String("workgraph", "", "workgraph path")
-	out := fs.String("out", "", "output path")
-	if err := fs.Parse(args[2:]); err != nil {
-		return err
+	switch {
+	case len(args) >= 2 && strings.Join(args[:2], " ") == "handoff emit":
+		fs := flag.NewFlagSet("foundry handoff emit", flag.ContinueOnError)
+		fs.SetOutput(io.Discard)
+		path := fs.String("workgraph", "", "workgraph path")
+		out := fs.String("out", "", "output path")
+		if err := fs.Parse(args[2:]); err != nil {
+			return err
+		}
+		workgraph, err := LoadJSON[Workgraph](*path)
+		if err != nil {
+			return err
+		}
+		if err := ValidateWorkgraph(workgraph); err != nil {
+			return err
+		}
+		handoff := BuildFoundryHandoff(workgraph)
+		if err := ValidateFoundryHandoff(handoff); err != nil {
+			return err
+		}
+		if err := WriteJSON(*out, handoff); err != nil {
+			return err
+		}
+		fmt.Fprintf(stdout, "status=written\nhandoff=%s\n", *out)
+		return nil
+	case args[0] == "import":
+		fs := flag.NewFlagSet("foundry import", flag.ContinueOnError)
+		fs.SetOutput(io.Discard)
+		path := fs.String("workgraph", "", "workgraph path")
+		out := fs.String("out", "", "output directory")
+		if err := fs.Parse(args[1:]); err != nil {
+			return err
+		}
+		if *out == "" {
+			return fmt.Errorf("--out is required")
+		}
+		if samePath(*path, *out) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+		workgraph, err := LoadJSON[Workgraph](*path)
+		if err != nil {
+			return err
+		}
+		foundryImport, err := BuildFoundryImport(workgraph)
+		if err != nil {
+			return err
+		}
+		for _, fixture := range foundryImport.Tasks {
+			if err := WriteJSON(filepath.Join(*out, fixture.Path), fixture.Task); err != nil {
+				return err
+			}
+		}
+		manifestPath := filepath.Join(*out, "foundry-import.json")
+		if err := WriteJSON(manifestPath, foundryImport); err != nil {
+			return err
+		}
+		fmt.Fprintf(stdout, "status=written\nfoundry_import=%s\ntasks=%d\n", manifestPath, len(foundryImport.Tasks))
+		return nil
+	default:
+		return fmt.Errorf("foundry requires handoff emit or import")
 	}
-	workgraph, err := LoadJSON[Workgraph](*path)
-	if err != nil {
-		return err
-	}
-	if err := ValidateWorkgraph(workgraph); err != nil {
-		return err
-	}
-	handoff := BuildFoundryHandoff(workgraph)
-	if err := ValidateFoundryHandoff(handoff); err != nil {
-		return err
-	}
-	if err := WriteJSON(*out, handoff); err != nil {
-		return err
-	}
-	fmt.Fprintf(stdout, "status=written\nhandoff=%s\n", *out)
-	return nil
 }
 
 func runRunLink(args []string, stdout io.Writer) error {

@@ -137,6 +137,26 @@ type FoundryHandoff struct {
 	Tasks           []FoundryTaskEntry `json:"tasks"`
 }
 
+type FoundryImport struct {
+	ContractVersion string                     `json:"contract_version"`
+	ID              string                     `json:"id"`
+	WorkgraphID     string                     `json:"workgraph_id"`
+	TargetInstance  string                     `json:"target_instance"`
+	Status          string                     `json:"status"`
+	Tasks           []FoundryImportTaskFixture `json:"tasks"`
+	SchedulesWork   bool                       `json:"schedules_work"`
+	ExecutesWork    bool                       `json:"executes_work"`
+	ApprovesWork    bool                       `json:"approves_work"`
+}
+
+type FoundryImportTaskFixture struct {
+	NodeID   string      `json:"node_id"`
+	TaskID   string      `json:"task_id"`
+	Path     string      `json:"path"`
+	Task     FactoryTask `json:"task"`
+	TaskHash string      `json:"task_digest"`
+}
+
 type FoundryTaskEntry struct {
 	ID                string   `json:"id"`
 	Objective         string   `json:"objective"`

@@ -14,6 +14,7 @@ v0.1 contract names:
 - `ao.atlas.factory-materialization.v0.1`
 - `ao.atlas.context-pack.v0.1`
 - `ao.atlas.foundry-handoff.v0.1`
+- `ao.atlas.foundry-import.v0.1`
 - `ao.atlas.run-link.v0.1`
 
 All contracts are JSON. Validation requires explicit `contract_version` values,
@@ -45,5 +46,9 @@ readback evidence only; it is not approval, scheduling authority, or execution.
 `ao.atlas.workgraph-repair-plan.v0.1` records bounded repair tasks when a
 matching run link is blocked or failed. It is advisory readback for Foundry
 scheduling and carries explicit no-schedule, no-execute, and no-approval flags.
+
+`ao.atlas.foundry-import.v0.1` records fixture files emitted from dependency-ready
+Atlas workgraph nodes. It is a Foundry import packet only: it does not schedule,
+execute, approve, mutate sibling repositories, or call providers.
 
 Schemas live in `schemas/`. The CLI validators are the normative v0.1 gate.
