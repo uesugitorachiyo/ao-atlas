@@ -64,6 +64,8 @@ pass "json-syntax"
 test -s "$OUT/factory-materialization/materialization.json"
 "$BIN" workgraph validate --workgraph examples/valid/workgraph.json >/dev/null
 "$BIN" workgraph next --workgraph examples/valid/workgraph.json --json >/dev/null
+"$BIN" workgraph materialize-next --workgraph examples/valid/workgraph.json --out "$OUT/workgraph-next-materialization" --dry-run >/dev/null
+test -s "$OUT/workgraph-next-materialization/materialization.json"
 "$BIN" workgraph status --workgraph examples/valid/workgraph.json >/dev/null
 "$BIN" context-pack validate --pack examples/valid/context-pack.json >/dev/null
 "$BIN" foundry handoff emit --workgraph examples/valid/workgraph.json --out "$OUT/foundry-handoff.json" >/dev/null

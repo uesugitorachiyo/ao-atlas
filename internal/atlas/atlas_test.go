@@ -134,6 +134,38 @@ func TestFactoryMaterializeRequiresDryRun(t *testing.T) {
 	}
 }
 
+func TestWorkgraphMaterializeNextDryRunUsesNextReadyTask(t *testing.T) {
+	dir := t.TempDir()
+	outDir := filepath.Join(dir, "next-materialization")
+	var out bytes.Buffer
+	code := Run([]string{"workgraph", "materialize-next", "--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"), "--out", outDir, "--dry-run"}, &out, &out)
+	if code != 0 {
+		t.Fatalf("materialize-next failed: %s", out.String())
+	}
+	manifest, err := LoadJSON[FactoryMaterialization](filepath.Join(outDir, "materialization.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if manifest.TaskID != "atlas-readiness-task" {
+		t.Fatalf("expected atlas-readiness-task, got %s", manifest.TaskID)
+	}
+	if !strings.Contains(out.String(), "node=readiness-ready") {
+		t.Fatalf("expected node readback, got %s", out.String())
+	}
+}
+
+func TestWorkgraphMaterializeNextRequiresDryRun(t *testing.T) {
+	dir := t.TempDir()
+	var out bytes.Buffer
+	code := Run([]string{"workgraph", "materialize-next", "--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"), "--out", filepath.Join(dir, "next-materialization")}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected materialize-next without --dry-run to fail")
+	}
+	if !strings.Contains(out.String(), "--dry-run") {
+		t.Fatalf("expected dry-run error, got %s", out.String())
+	}
+}
+
 func fixtureWorkgraph() Workgraph {
 	baseTask := FactoryTask{
 		ContractVersion:   FactoryTaskContract,
