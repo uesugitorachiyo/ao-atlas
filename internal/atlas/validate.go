@@ -527,6 +527,9 @@ func ValidateContextPack(pack ContextPack, budgetOverride int) error {
 	checkPublicStrings(&errs, "summaries", pack.Summaries, true)
 	checkPublicStrings(&errs, "assumptions", pack.Assumptions, true)
 	checkPublicStrings(&errs, "exclusions", pack.Exclusions, true)
+	if strings.TrimSpace(pack.MissingContextReason) != "" {
+		checkPublicPath(&errs, "missing_context_reason", pack.MissingContextReason, false)
+	}
 	return joinErrors(errs)
 }
 
@@ -547,15 +550,16 @@ func BuildContextRepack(task FactoryTask, link RunLink, sourceRef, sourceDigest 
 		return ContextPack{}, fmt.Errorf("run-link evidence must include needs_context")
 	}
 	pack := ContextPack{
-		ContractVersion: ContextPackContract,
-		ID:              task.ID + "-context-repack",
-		TaskID:          task.ID,
-		BudgetBytes:     budget,
-		SourceRefs:      []SourceRef{{Ref: sourceRef, Digest: sourceDigest}},
-		Summaries:       []string{"Repacked bounded context requested by a needs_context run-link."},
-		Assumptions:     []string{"Only referenced public-safe sources are included."},
-		Exclusions:      []string{"whole source repositories", "private local state", "credentials", "provider transcripts"},
-		MissingProtocol: "Ask AO Blueprint or the operator for missing requirements before widening scope.",
+		ContractVersion:      ContextPackContract,
+		ID:                   task.ID + "-context-repack",
+		TaskID:               task.ID,
+		BudgetBytes:          budget,
+		SourceRefs:           []SourceRef{{Ref: sourceRef, Digest: sourceDigest}},
+		Summaries:            []string{"Repacked bounded context requested by a needs_context run-link."},
+		Assumptions:          []string{"Only referenced public-safe sources are included."},
+		Exclusions:           []string{"whole source repositories", "private local state", "credentials", "provider transcripts"},
+		MissingContextReason: "run-link evidence needs_context=" + link.Evidence["needs_context"],
+		MissingProtocol:      "Ask AO Blueprint or the operator for missing requirements before widening scope.",
 	}
 	if err := ValidateContextPack(pack, 0); err != nil {
 		return ContextPack{}, err

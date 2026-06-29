@@ -122,15 +122,16 @@ type FactoryMaterialization struct {
 }
 
 type ContextPack struct {
-	ContractVersion string      `json:"contract_version"`
-	ID              string      `json:"id"`
-	TaskID          string      `json:"task_id"`
-	BudgetBytes     int         `json:"budget_bytes"`
-	SourceRefs      []SourceRef `json:"source_refs"`
-	Summaries       []string    `json:"summaries"`
-	Assumptions     []string    `json:"assumptions"`
-	Exclusions      []string    `json:"exclusions"`
-	MissingProtocol string      `json:"missing_context_protocol"`
+	ContractVersion      string      `json:"contract_version"`
+	ID                   string      `json:"id"`
+	TaskID               string      `json:"task_id"`
+	BudgetBytes          int         `json:"budget_bytes"`
+	SourceRefs           []SourceRef `json:"source_refs"`
+	Summaries            []string    `json:"summaries"`
+	Assumptions          []string    `json:"assumptions"`
+	Exclusions           []string    `json:"exclusions"`
+	MissingContextReason string      `json:"missing_context_reason,omitempty"`
+	MissingProtocol      string      `json:"missing_context_protocol"`
 }
 
 type SourceRef struct {

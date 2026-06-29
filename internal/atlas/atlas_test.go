@@ -338,6 +338,25 @@ func TestContextPackRepackWritesBoundedPackForNeedsContext(t *testing.T) {
 	if pack.TaskID != "atlas-readiness-task" || len(pack.SourceRefs) != 1 {
 		t.Fatalf("unexpected context pack: %#v", pack)
 	}
+	if pack.MissingContextReason == "" || !strings.Contains(pack.MissingContextReason, "needs_context") {
+		t.Fatalf("repacked context pack must include missing context reason: %#v", pack)
+	}
+	if len(pack.Assumptions) == 0 || len(pack.Exclusions) == 0 {
+		t.Fatalf("repacked context pack must include assumptions and exclusions: %#v", pack)
+	}
+}
+
+func TestContextPackRepackDemoFixtureValidates(t *testing.T) {
+	pack, err := LoadJSON[ContextPack](filepath.Join("..", "..", "examples", "valid", "context-pack-needs-context-repack-demo.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateContextPack(pack, 0); err != nil {
+		t.Fatal(err)
+	}
+	if pack.MissingContextReason == "" || !strings.Contains(pack.MissingContextReason, "needs_context") {
+		t.Fatalf("demo fixture must include missing context reason: %#v", pack)
+	}
 }
 
 func TestContextPackRepackRejectsCompletedRunLink(t *testing.T) {

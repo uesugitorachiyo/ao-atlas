@@ -12,7 +12,7 @@
     "summaries": { "type": "array", "items": { "type": "string" } },
     "assumptions": { "type": "array", "items": { "type": "string" } },
     "exclusions": { "type": "array", "items": { "type": "string" } },
+    "missing_context_reason": { "type": "string" },
     "missing_context_protocol": { "type": "string" }
   }
 }
-
