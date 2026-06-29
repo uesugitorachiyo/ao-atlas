@@ -28,3 +28,10 @@ providers. Repack records `missing_context_reason` so the next factory run can
 see why the context changed without reading the whole prior mission. The public
 `examples/valid/context-pack-needs-context-repack-demo.json` fixture shows the
 needs-context repack shape.
+
+For docs-only live mutation preparation, a context pack can bound the evidence
+that a downstream factory run may inspect. It must not embed private local paths,
+credential material, whole repository dumps, or live-execution permission. A
+context pack is context evidence only; it is never a Covenant approval ticket,
+Foundry execution gate, Forge guard, AO2 patch authorization, Sentinel verdict,
+Promoter boundary, or AO Command operator approval.
