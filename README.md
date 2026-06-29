@@ -72,6 +72,9 @@ owns requirements interview and build authorization.
 
 ```sh
 scripts/production-readiness.sh
+scripts/atlas-foundry-roundtrip-smoke.sh
 ```
 
 The readiness gate must report `score=100/100` before v0.1 is considered ready.
+Before a stable tag or release candidate, also run the sibling Foundry
+roundtrip smoke so the Atlas -> Foundry boundary is proven end to end.

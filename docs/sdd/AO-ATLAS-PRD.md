@@ -31,3 +31,8 @@ material. It does not copy source repos and does not become a scheduler.
 v0.1 is ready only when the production-readiness gate reports `score=100/100`
 and all tracked fixtures remain public-safe.
 
+Stable tag or release-candidate eligibility additionally requires the
+fixture-only Atlas -> Foundry roundtrip smoke to pass against a sibling AO
+Foundry checkout. That smoke proves Foundry can validate the emitted
+`ao.atlas.foundry-import.v0.1` packet without granting scheduling, execution,
+approval, provider, publication, or sibling-repository mutation authority.

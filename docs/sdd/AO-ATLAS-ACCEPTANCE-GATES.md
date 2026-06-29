@@ -13,3 +13,16 @@ Production readiness requires:
 
 The readiness script prints `score=100/100` only after every gate passes.
 
+## Release Candidate Checkpoint
+
+AO Atlas v0.1 is eligible for a stable tag or release candidate only when:
+
+- `scripts/production-readiness.sh` reports `score=100/100`;
+- `scripts/atlas-foundry-roundtrip-smoke.sh` reports `status=ready`;
+- the roundtrip summary records `schedules_work=false`, `executes_work=false`,
+  and `approves_work=false`;
+- AO Foundry validates the emitted `ao.atlas.foundry-import.v0.1` packet;
+- both AO Atlas and AO Foundry are clean on synced `main`.
+
+The checkpoint is a readiness decision, not a release action. Tags, releases,
+uploads, or publication require explicit operator intent.
