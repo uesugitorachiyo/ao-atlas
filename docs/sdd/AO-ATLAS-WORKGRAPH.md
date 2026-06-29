@@ -29,7 +29,12 @@ completed run link, public-safe evidence, and completed dependencies.
 
 `workgraph repair-plan` emits a bounded repair task when a matching run link is
 blocked or failed. It writes a repair-plan artifact only; Atlas still does not
-schedule, execute, approve, publish, upload, or call providers.
+schedule, execute, approve, publish, upload, or call providers. The repair task
+preserves the source task's write scope, verification commands, required
+evidence, dependency refs, and context-pack refs so Foundry can schedule a
+bounded follow-up without re-expanding the whole mission. The public
+`examples/valid/workgraph-repair-plan-blocked-node-demo.json` fixture is the
+blocked-node demo for this path.
 
 Mission status readback:
 

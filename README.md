@@ -76,6 +76,13 @@ If intake is underspecified, Atlas emits a Blueprint request instead of marking
 work ready. The request is a clarification artifact only; AO Blueprint still
 owns requirements interview and build authorization.
 
+The committed
+`examples/valid/workgraph-repair-plan-blocked-node-demo.json` fixture shows the
+blocked-node repair output shape. It preserves the source task's context-pack
+refs while keeping `schedules_work=false`, `executes_work=false`, and
+`approves_work=false`; Atlas emits repair material only and does not schedule or
+execute it.
+
 ## Readiness
 
 ```sh
