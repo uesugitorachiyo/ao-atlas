@@ -27,6 +27,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		err = runBlueprintRequest(args[1:], stdout)
 	case "workgraph":
 		err = runWorkgraph(args[1:], stdout)
+	case "mutation-classes":
+		err = runMutationClasses(args[1:], stdout)
 	case "factory-task":
 		err = runFactoryTask(args[1:], stdout)
 	case "factory":
@@ -48,7 +50,7 @@ func Run(args []string, stdout, stderr io.Writer) int {
 }
 
 func usage(w io.Writer) {
-	fmt.Fprintln(w, "atlas <instance|intake|mission|blueprint-request|workgraph|factory-task|factory|context-pack|foundry|run-link> ...")
+	fmt.Fprintln(w, "atlas <instance|intake|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link> ...")
 }
 
 func runInstance(args []string, stdout io.Writer) error {
@@ -408,6 +410,27 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 	default:
 		return fmt.Errorf("unknown workgraph subcommand %q", args[0])
 	}
+	return nil
+}
+
+func runMutationClasses(args []string, stdout io.Writer) error {
+	if len(args) == 0 || args[0] != "validate" {
+		return fmt.Errorf("mutation-classes requires validate")
+	}
+	fs := flag.NewFlagSet("mutation-classes validate", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	path := fs.String("model", "", "mutation class model path")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	model, err := LoadJSON[MutationClassModel](*path)
+	if err != nil {
+		return err
+	}
+	if err := ValidateMutationClassModel(model); err != nil {
+		return err
+	}
+	fmt.Fprintln(stdout, "status=valid")
 	return nil
 }
 

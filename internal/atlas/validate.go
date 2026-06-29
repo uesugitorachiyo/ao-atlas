@@ -28,6 +28,7 @@ const (
 	FoundryImportContract          = "ao.atlas.foundry-import.v0.1"
 	RunLinkContract                = "ao.atlas.run-link.v0.1"
 	BlueprintRequestContract       = "ao.atlas.blueprint-request.v0.1"
+	MutationClassModelContract     = "ao.atlas.mutation-classes.v0.1"
 )
 
 var digestPattern = regexp.MustCompile(`^sha256:[0-9a-f]{64}$`)
@@ -450,6 +451,70 @@ func ValidateWorkgraphRepairPlan(plan WorkgraphRepairPlan) error {
 		errs = append(errs, "approves_work must be false")
 	}
 	return joinErrors(errs)
+}
+
+func ValidateMutationClassModel(model MutationClassModel) error {
+	var errs []string
+	requireContract(&errs, "mutation_class_model", model.ContractVersion, MutationClassModelContract)
+	requireField(&errs, "id", model.ID)
+	if len(model.Classes) == 0 {
+		errs = append(errs, "classes must not be empty")
+	}
+	if model.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if model.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if model.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	required := requiredMutationClassNames()
+	seen := map[string]bool{}
+	for i, class := range model.Classes {
+		prefix := fmt.Sprintf("classes[%d]", i)
+		requireField(&errs, prefix+".name", class.Name)
+		if !required[class.Name] {
+			errs = append(errs, prefix+".name must be one of the required mutation classes")
+		}
+		if seen[class.Name] {
+			errs = append(errs, prefix+".name must be unique")
+		}
+		seen[class.Name] = true
+		requireList(&errs, prefix+".allowed_paths", class.AllowedPaths)
+		requireList(&errs, prefix+".forbidden_paths", class.ForbiddenPaths)
+		if class.MaxFiles <= 0 {
+			errs = append(errs, prefix+".max_files must be positive")
+		}
+		requireList(&errs, prefix+".required_gates", class.RequiredGates)
+		requireList(&errs, prefix+".rollback_requirements", class.RollbackRequirements)
+		requireList(&errs, prefix+".ci_requirements", class.CIRequirements)
+		requireList(&errs, prefix+".promotion_requirements", class.PromotionRequirements)
+		checkPublicStrings(&errs, prefix+".allowed_paths", class.AllowedPaths, true)
+		checkPublicStrings(&errs, prefix+".forbidden_paths", class.ForbiddenPaths, true)
+		checkPublicStrings(&errs, prefix+".required_gates", class.RequiredGates, true)
+		checkPublicStrings(&errs, prefix+".rollback_requirements", class.RollbackRequirements, true)
+		checkPublicStrings(&errs, prefix+".ci_requirements", class.CIRequirements, true)
+		checkPublicStrings(&errs, prefix+".promotion_requirements", class.PromotionRequirements, true)
+	}
+	for name := range required {
+		if !seen[name] {
+			errs = append(errs, "classes must include "+name)
+		}
+	}
+	return joinErrors(errs)
+}
+
+func requiredMutationClassNames() map[string]bool {
+	return map[string]bool{
+		"docs_only_single_file": true,
+		"docs_only_multi_file":  true,
+		"docs_config_only":      true,
+		"test_only":             true,
+		"low_risk_code":         true,
+		"multi_repo_low_risk":   true,
+		"complex_repo_mutation": true,
+	}
 }
 
 func ValidateFactoryTask(task FactoryTask) error {

@@ -1,0 +1,79 @@
+{
+  "contract_version": "ao.atlas.mutation-classes.v0.1",
+  "id": "invalid-authority-claim",
+  "classes": [
+    {
+      "name": "docs_only_single_file",
+      "allowed_paths": ["README.md"],
+      "forbidden_paths": ["cmd/**"],
+      "max_files": 1,
+      "required_gates": ["atlas_classification"],
+      "rollback_requirements": ["inverse_patch"],
+      "ci_requirements": ["pull_request_ci"],
+      "promotion_requirements": ["promoter_no_active_hold"]
+    },
+    {
+      "name": "docs_only_multi_file",
+      "allowed_paths": ["docs/**/*.md"],
+      "forbidden_paths": ["internal/**"],
+      "max_files": 2,
+      "required_gates": ["atlas_classification"],
+      "rollback_requirements": ["inverse_patch"],
+      "ci_requirements": ["pull_request_ci"],
+      "promotion_requirements": ["promoter_no_active_hold"]
+    },
+    {
+      "name": "docs_config_only",
+      "allowed_paths": [".github/*.md"],
+      "forbidden_paths": [".github/workflows/**"],
+      "max_files": 3,
+      "required_gates": ["atlas_classification"],
+      "rollback_requirements": ["inverse_patch"],
+      "ci_requirements": ["pull_request_ci"],
+      "promotion_requirements": ["promoter_no_active_hold"]
+    },
+    {
+      "name": "test_only",
+      "allowed_paths": ["**/*_test.go"],
+      "forbidden_paths": ["internal/**/*.go"],
+      "max_files": 1,
+      "required_gates": ["atlas_classification"],
+      "rollback_requirements": ["inverse_patch"],
+      "ci_requirements": ["full_test_suite"],
+      "promotion_requirements": ["promoter_no_active_hold"]
+    },
+    {
+      "name": "low_risk_code",
+      "allowed_paths": ["internal/**"],
+      "forbidden_paths": [".github/**"],
+      "max_files": 2,
+      "required_gates": ["atlas_classification"],
+      "rollback_requirements": ["inverse_patch"],
+      "ci_requirements": ["full_test_suite"],
+      "promotion_requirements": ["promoter_no_active_hold"]
+    },
+    {
+      "name": "multi_repo_low_risk",
+      "allowed_paths": ["repo:*:docs/**"],
+      "forbidden_paths": ["repo:*:secrets/**"],
+      "max_files": 4,
+      "required_gates": ["atlas_classification"],
+      "rollback_requirements": ["per_repo_inverse_patch"],
+      "ci_requirements": ["per_repo_pull_request_ci"],
+      "promotion_requirements": ["promoter_no_active_hold"]
+    },
+    {
+      "name": "complex_repo_mutation",
+      "allowed_paths": ["repo:*:internal/**"],
+      "forbidden_paths": ["repo:*:secrets/**"],
+      "max_files": 12,
+      "required_gates": ["all_lower_classes_live_rehearsed"],
+      "rollback_requirements": ["full_inverse_patch_set"],
+      "ci_requirements": ["full_test_suite"],
+      "promotion_requirements": ["promoter_explicit_complex_promotion"]
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": true,
+  "approves_work": false
+}

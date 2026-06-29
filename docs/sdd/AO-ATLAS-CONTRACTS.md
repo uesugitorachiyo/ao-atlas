@@ -16,6 +16,7 @@ v0.1 contract names:
 - `ao.atlas.foundry-handoff.v0.1`
 - `ao.atlas.foundry-import.v0.1`
 - `ao.atlas.run-link.v0.1`
+- `ao.atlas.mutation-classes.v0.1`
 
 All contracts are JSON. Validation requires explicit `contract_version` values,
 stable identifiers, non-empty required fields, and public-safe paths.
@@ -50,6 +51,13 @@ readback evidence only; it is not approval, scheduling authority, or execution.
 `ao.atlas.workgraph-repair-plan.v0.1` records bounded repair tasks when a
 matching run link is blocked or failed. It is advisory readback for Foundry
 scheduling and carries explicit no-schedule, no-execute, and no-approval flags.
+
+`ao.atlas.mutation-classes.v0.1` records the authority ladder classification
+model for live mutation classes. Each class defines allowed paths, forbidden
+paths, maximum file count, required gates, rollback requirements, CI
+requirements, and promotion requirements. The model is classification readback
+only: it carries `schedules_work=false`, `executes_work=false`, and
+`approves_work=false`, and it does not grant or consume authority tickets.
 
 `ao.atlas.foundry-import.v0.1` records fixture files emitted from dependency-ready
 Atlas workgraph nodes. It is a Foundry import packet only: it does not schedule,

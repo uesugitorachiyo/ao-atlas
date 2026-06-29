@@ -94,6 +94,26 @@ type WorkgraphRepairPlan struct {
 	ApprovesWork        bool          `json:"approves_work"`
 }
 
+type MutationClassModel struct {
+	ContractVersion string                    `json:"contract_version"`
+	ID              string                    `json:"id"`
+	Classes         []MutationClassDefinition `json:"classes"`
+	SchedulesWork   bool                      `json:"schedules_work"`
+	ExecutesWork    bool                      `json:"executes_work"`
+	ApprovesWork    bool                      `json:"approves_work"`
+}
+
+type MutationClassDefinition struct {
+	Name                  string   `json:"name"`
+	AllowedPaths          []string `json:"allowed_paths"`
+	ForbiddenPaths        []string `json:"forbidden_paths"`
+	MaxFiles              int      `json:"max_files"`
+	RequiredGates         []string `json:"required_gates"`
+	RollbackRequirements  []string `json:"rollback_requirements"`
+	CIRequirements        []string `json:"ci_requirements"`
+	PromotionRequirements []string `json:"promotion_requirements"`
+}
+
 type FactoryTask struct {
 	ContractVersion   string   `json:"contract_version"`
 	ID                string   `json:"id"`
