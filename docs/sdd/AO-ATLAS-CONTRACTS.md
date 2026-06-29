@@ -25,4 +25,9 @@ created from a validated factory task. The manifest records relative generated
 files, the task digest, and explicit `executes_work=false` /
 `schedules_work=false` boundaries. It must not record the local output path.
 
+`ao.atlas.run-link.v0.1` records public-safe evidence paths for a factory task
+after Foundry, Forge, or AO2 work has produced artifacts. `run-link attach`
+computes a digest over the task id, status, and evidence map. A run link is
+readback evidence only; it is not approval, scheduling authority, or execution.
+
 Schemas live in `schemas/`. The CLI validators are the normative v0.1 gate.

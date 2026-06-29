@@ -5,10 +5,14 @@
   "required": ["contract_version", "task_id", "status", "evidence", "digest"],
   "properties": {
     "contract_version": { "const": "ao.atlas.run-link.v0.1" },
-    "task_id": { "type": "string" },
-    "status": { "type": "string" },
-    "evidence": { "type": "object" },
-    "digest": { "type": "string" }
-  }
+    "task_id": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["planned", "running", "completed", "blocked"] },
+    "evidence": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  },
+  "additionalProperties": false
 }
-

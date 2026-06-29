@@ -48,6 +48,7 @@ go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph.json --js
 go run ./cmd/atlas workgraph materialize-next --workgraph examples/valid/workgraph.json --out .atlas-local/workgraph-next-materialization --dry-run
 go run ./cmd/atlas context-pack validate --pack examples/valid/context-pack.json
 go run ./cmd/atlas foundry handoff emit --workgraph examples/valid/workgraph.json --out .atlas-local/foundry-handoff.json
+go run ./cmd/atlas run-link attach --task-id atlas-readiness-task --status completed --evidence ao2=evidence/ao2/atlas-readiness.json --out .atlas-local/run-link.json
 ```
 
 If intake is underspecified, Atlas emits a Blueprint request instead of marking
