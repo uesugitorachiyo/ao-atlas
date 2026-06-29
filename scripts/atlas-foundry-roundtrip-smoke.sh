@@ -44,6 +44,7 @@ IMPORT_PACKET="$IMPORT_DIR/foundry-import.json"
 FOUNDRY_VALIDATE="$OUT/foundry-registry-validate.txt"
 FOUNDRY_IMPORT_VALIDATE="$OUT/foundry-import-validate.txt"
 RUN_LINK="$OUT/run-link.json"
+FOUNDRY_READBACK="$OUT/foundry-atlas-readback.json"
 SUMMARY="$OUT/summary.json"
 
 go build -o "$ATLAS_BIN" ./cmd/atlas
@@ -79,6 +80,14 @@ go build -o "$ATLAS_BIN" ./cmd/atlas
 
 "$ATLAS_BIN" run-link validate --run-link "$RUN_LINK" > "$OUT/run-link-validate.txt"
 
+(
+  cd "$FOUNDRY_ROOT"
+  go run ./cmd/foundry atlas readback \
+    --import "$ROOT/$IMPORT_PACKET" \
+    --run-link "$ROOT/$RUN_LINK" \
+    --out "$ROOT/$FOUNDRY_READBACK"
+) > "$OUT/foundry-atlas-readback.txt"
+
 cat > "$SUMMARY" <<JSON
 {
   "schema_version": "ao.atlas.foundry-roundtrip-smoke.v0.1",
@@ -89,6 +98,7 @@ cat > "$SUMMARY" <<JSON
   "foundry_validation": "$FOUNDRY_VALIDATE",
   "foundry_import_validation": "$FOUNDRY_IMPORT_VALIDATE",
   "run_link": "$RUN_LINK",
+  "foundry_readback": "$FOUNDRY_READBACK",
   "schedules_work": false,
   "executes_work": false,
   "approves_work": false

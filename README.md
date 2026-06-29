@@ -57,8 +57,8 @@ go run ./cmd/atlas foundry import --workgraph examples/valid/workgraph.json --ou
 go run ./cmd/atlas run-link attach --task-id atlas-readiness-task --status completed --evidence ao2=evidence/ao2/atlas-readiness.json --out .atlas-local/run-link.json
 ```
 
-With a sibling AO Foundry checkout, Atlas can run the fixture-only handoff and
-Foundry import readback smoke:
+With a sibling AO Foundry checkout, Atlas can run the fixture-only handoff,
+Foundry import validation, and Foundry observer-readback smoke:
 
 ```sh
 scripts/atlas-foundry-roundtrip-smoke.sh

@@ -346,6 +346,9 @@ func TestFoundryRoundtripSmokeValidatesFoundryImport(t *testing.T) {
 		"--workgraph examples/valid/workgraph.json",
 		"foundry atlas import validate",
 		"foundry_import_validation",
+		"foundry atlas readback",
+		"FOUNDRY_READBACK",
+		"foundry_readback",
 	} {
 		if !strings.Contains(text, want) {
 			t.Fatalf("roundtrip smoke missing %q", want)
