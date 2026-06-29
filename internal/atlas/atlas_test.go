@@ -450,6 +450,38 @@ func TestFoundryImportWritesTaskFixturesForReadyNodes(t *testing.T) {
 	}
 }
 
+func TestLargeWorkgraphStressFixtureValidatesAndImportsReadyNodes(t *testing.T) {
+	workgraph, err := LoadJSON[Workgraph](filepath.Join("..", "..", "examples", "valid", "workgraph-large-stress.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		t.Fatal(err)
+	}
+	counts := map[string]int{"ready": 0, "blocked": 0, "completed": 0}
+	contextRefs := 0
+	for _, node := range workgraph.Nodes {
+		counts[node.Status]++
+		contextRefs += len(node.FactoryTask.ContextPackRefs)
+	}
+	if len(workgraph.Nodes) != 12 || counts["completed"] != 4 || counts["ready"] != 5 || counts["blocked"] != 3 {
+		t.Fatalf("unexpected stress fixture counts: nodes=%d counts=%#v", len(workgraph.Nodes), counts)
+	}
+	if contextRefs < 8 {
+		t.Fatalf("expected stress fixture to exercise context-pack refs, got %d", contextRefs)
+	}
+	importManifest, err := BuildFoundryImport(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(importManifest.Tasks) != 5 {
+		t.Fatalf("expected five dependency-ready import tasks, got %#v", importManifest.Tasks)
+	}
+	if importManifest.SchedulesWork || importManifest.ExecutesWork || importManifest.ApprovesWork {
+		t.Fatalf("stress import must remain authority-free: %#v", importManifest)
+	}
+}
+
 func TestFoundryImportJSONSelectsSingleReadyNode(t *testing.T) {
 	var out bytes.Buffer
 	code := Run([]string{

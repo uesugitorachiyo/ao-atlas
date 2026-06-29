@@ -55,6 +55,7 @@ go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgrap
 go run ./cmd/atlas blueprint-request validate --request examples/valid/blueprint-request.json
 go run ./cmd/atlas factory materialize --task examples/valid/factory-task.json --out .atlas-local/factory-materialization --dry-run
 go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph.json --json
+go run ./cmd/atlas workgraph validate --workgraph examples/valid/workgraph-large-stress.json
 go run ./cmd/atlas workgraph materialize-next --workgraph examples/valid/workgraph.json --out .atlas-local/workgraph-next-materialization --dry-run
 go run ./cmd/atlas workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link.json --out .atlas-local/workgraph-completed.json
 go run ./cmd/atlas workgraph repair-plan --workgraph examples/valid/workgraph.json --run-link examples/invalid/run-link-blocked.json --out .atlas-local/workgraph-repair-plan.json
@@ -88,6 +89,11 @@ The committed
 needs-context repack output shape. It carries source refs and digests,
 assumptions, exclusions, and `missing_context_reason` so the next factory run
 knows why the bounded context was regenerated.
+
+The committed `examples/valid/workgraph-large-stress.json` fixture exercises a
+larger 12-node mission with completed, ready, blocked, and stitch nodes. It is
+used by production readiness to prove sequencing, context-pack refs, and
+Foundry-import behavior without duplicating AO stack folders.
 
 ## Readiness
 

@@ -1,0 +1,271 @@
+{
+  "contract_version": "ao.atlas.workgraph.v0.1",
+  "id": "atlas-large-workgraph-stress",
+  "target_instance": "demo-stack",
+  "nodes": [
+    {
+      "id": "foundation-contracts",
+      "status": "completed",
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-foundation-contracts-task",
+        "objective": "Confirm shared contracts for the stress workgraph.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/stress/foundation-contracts",
+        "acceptance_criteria": ["contract fixtures validate"],
+        "non_goals": ["do not execute product work"],
+        "write_scope": ["factory/stress/foundation-contracts"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/production-readiness/summary.json"],
+        "safety_limits": ["no provider calls", "public-safe paths only"],
+        "dependency_refs": [],
+        "context_pack_refs": ["examples/valid/stress-context-packs/stress-repo-scan-task.context-pack.json"]
+      }
+    },
+    {
+      "id": "foundation-atlas",
+      "status": "completed",
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-foundation-atlas-task",
+        "objective": "Confirm Atlas import fixtures are ready.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/stress/foundation-atlas",
+        "acceptance_criteria": ["Atlas import fixture validates"],
+        "non_goals": ["do not schedule work"],
+        "write_scope": ["factory/stress/foundation-atlas"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["target/stress/foundation-atlas.json"],
+        "safety_limits": ["no credentials", "no private paths"],
+        "dependency_refs": [],
+        "context_pack_refs": ["examples/valid/stress-context-packs/stress-pulse-split-task.context-pack.json"]
+      }
+    },
+    {
+      "id": "foundation-command",
+      "status": "completed",
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-foundation-command-task",
+        "objective": "Confirm Command readback fixture is ready.",
+        "target_factory_repo": "ao-command",
+        "factory_folder": "factory/stress/foundation-command",
+        "acceptance_criteria": ["Command readback fixture validates"],
+        "non_goals": ["do not mutate repositories"],
+        "write_scope": ["factory/stress/foundation-command"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["target/stress/foundation-command.json"],
+        "safety_limits": ["read-only operator surface"],
+        "dependency_refs": [],
+        "context_pack_refs": ["examples/valid/stress-context-packs/stress-command-readback-task.context-pack.json"]
+      }
+    },
+    {
+      "id": "foundation-evidence",
+      "status": "completed",
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-foundation-evidence-task",
+        "objective": "Confirm evidence paths are public-safe.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/stress/foundation-evidence",
+        "acceptance_criteria": ["public-safety scan passes"],
+        "non_goals": ["do not upload artifacts"],
+        "write_scope": ["factory/stress/foundation-evidence"],
+        "verification_commands": ["git diff --check"],
+        "required_evidence": ["target/stress/foundation-evidence.json"],
+        "safety_limits": ["public-safe paths only"],
+        "dependency_refs": [],
+        "context_pack_refs": ["examples/valid/stress-context-packs/stress-atlas-import-task.context-pack.json"]
+      }
+    },
+    {
+      "id": "repo-scan-ready",
+      "status": "ready",
+      "dependencies": ["foundation-contracts"],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-repo-scan-task",
+        "objective": "Scan the refactor target modules and summarize bounded scope.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/stress/repo-scan",
+        "acceptance_criteria": ["bounded scope summary exists"],
+        "non_goals": ["do not refactor code"],
+        "write_scope": ["factory/stress/repo-scan"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["target/stress/repo-scan.json"],
+        "safety_limits": ["no provider calls"],
+        "dependency_refs": ["foundation-contracts"],
+        "context_pack_refs": ["examples/valid/stress-context-packs/stress-repo-scan-task.context-pack.json"]
+      }
+    },
+    {
+      "id": "pulse-split-ready",
+      "status": "ready",
+      "dependencies": ["foundation-contracts"],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-pulse-split-task",
+        "objective": "Prepare a Pulse runner module split as a bounded factory task.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/stress/pulse-split",
+        "acceptance_criteria": ["module split plan validates"],
+        "non_goals": ["do not start overnight automation"],
+        "write_scope": ["factory/stress/pulse-split"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["target/stress/pulse-split.json"],
+        "safety_limits": ["no live PR mutation"],
+        "dependency_refs": ["foundation-contracts"],
+        "context_pack_refs": ["examples/valid/stress-context-packs/stress-pulse-split-task.context-pack.json"]
+      }
+    },
+    {
+      "id": "command-readback-ready",
+      "status": "ready",
+      "dependencies": ["foundation-command"],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-command-readback-task",
+        "objective": "Prepare Command readback coverage for the stress path.",
+        "target_factory_repo": "ao-command",
+        "factory_folder": "factory/stress/command-readback",
+        "acceptance_criteria": ["readback output reports operator_mode=read_only"],
+        "non_goals": ["do not mutate repositories"],
+        "write_scope": ["factory/stress/command-readback"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["target/stress/command-readback.json"],
+        "safety_limits": ["read-only output only"],
+        "dependency_refs": ["foundation-command"],
+        "context_pack_refs": ["examples/valid/stress-context-packs/stress-command-readback-task.context-pack.json"]
+      }
+    },
+    {
+      "id": "atlas-import-ready",
+      "status": "ready",
+      "dependencies": ["foundation-atlas"],
+      "blockers": [],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-atlas-import-task",
+        "objective": "Prepare Foundry import material for the stress path.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/stress/atlas-import",
+        "acceptance_criteria": ["Foundry import material validates"],
+        "non_goals": ["do not schedule work"],
+        "write_scope": ["factory/stress/atlas-import"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/stress/atlas-import.json"],
+        "safety_limits": ["compile material only"],
+        "dependency_refs": ["foundation-atlas"],
+        "context_pack_refs": ["examples/valid/stress-context-packs/stress-atlas-import-task.context-pack.json"]
+      }
+    },
+    {
+      "id": "evidence-stitch-prep-ready",
+      "status": "ready",
+      "dependencies": ["foundation-evidence"],
+      "blockers": [],
+      "stitch_task": true,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-evidence-stitch-prep-task",
+        "objective": "Prepare evidence stitching for completed stress slices.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/stress/evidence-stitch-prep",
+        "acceptance_criteria": ["stitch prep evidence exists"],
+        "non_goals": ["do not publish releases"],
+        "write_scope": ["factory/stress/evidence-stitch-prep"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["target/stress/evidence-stitch-prep.json"],
+        "safety_limits": ["dry-run only"],
+        "dependency_refs": ["foundation-evidence"],
+        "context_pack_refs": ["examples/valid/stress-context-packs/stress-evidence-stitch-prep-task.context-pack.json"]
+      }
+    },
+    {
+      "id": "blueprint-clarification-blocked",
+      "status": "blocked",
+      "dependencies": ["repo-scan-ready"],
+      "blockers": ["Blueprint clarification required before expanding write scope"],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-blueprint-clarification-task",
+        "objective": "Wait for Blueprint clarification before widening scope.",
+        "target_factory_repo": "ao-blueprint",
+        "factory_folder": "factory/stress/blueprint-clarification",
+        "acceptance_criteria": ["Blueprint request is answered"],
+        "non_goals": ["do not proceed as ready"],
+        "write_scope": ["factory/stress/blueprint-clarification"],
+        "verification_commands": ["echo blueprint-blocked"],
+        "required_evidence": ["target/stress/blueprint-clarification.json"],
+        "safety_limits": ["blocked until authorization"],
+        "dependency_refs": ["repo-scan-ready"],
+        "context_pack_refs": ["examples/valid/context-pack.json"]
+      }
+    },
+    {
+      "id": "context-repack-blocked",
+      "status": "blocked",
+      "dependencies": ["command-readback-ready"],
+      "blockers": ["needs_context run-link must be repacked before this node can run"],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-context-repack-task",
+        "objective": "Wait for needs_context repack before continuing.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/stress/context-repack",
+        "acceptance_criteria": ["context repack fixture validates"],
+        "non_goals": ["do not widen context automatically"],
+        "write_scope": ["factory/stress/context-repack"],
+        "verification_commands": ["scripts/production-readiness.sh"],
+        "required_evidence": ["target/stress/context-repack.json"],
+        "safety_limits": ["bounded context only"],
+        "dependency_refs": ["command-readback-ready"],
+        "context_pack_refs": ["examples/valid/context-pack-needs-context-repack-demo.json"]
+      }
+    },
+    {
+      "id": "final-stitch-blocked",
+      "status": "blocked",
+      "dependencies": ["pulse-split-ready", "atlas-import-ready", "evidence-stitch-prep-ready"],
+      "blockers": ["ready tasks need completed run-link evidence before final stitch"],
+      "stitch_task": true,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "stress-final-stitch-task",
+        "objective": "Stitch completed stress slices after run-link evidence exists.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/stress/final-stitch",
+        "acceptance_criteria": ["all upstream run-links are completed"],
+        "non_goals": ["do not bypass blocked dependencies"],
+        "write_scope": ["factory/stress/final-stitch"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["target/stress/final-stitch.json"],
+        "safety_limits": ["stitch only after evidence"],
+        "dependency_refs": ["pulse-split-ready", "atlas-import-ready", "evidence-stitch-prep-ready"],
+        "context_pack_refs": ["examples/valid/context-pack.json"]
+      }
+    }
+  ]
+}

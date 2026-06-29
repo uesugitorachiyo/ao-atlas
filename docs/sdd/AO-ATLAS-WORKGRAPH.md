@@ -45,3 +45,8 @@ atlas mission status --intake <path> --workgraph <path> [--run-link <path>...] [
 Mission status summarizes intake, workgraph node counts including failed count,
 missing context packs, missing Foundry handoffs, run-link completion state, and
 the next recommended Atlas action without mutating source artifacts.
+
+The public `examples/valid/workgraph-large-stress.json` fixture is the larger
+sequencing demonstration. It contains 12 factory nodes across completed, ready,
+blocked, and stitch states, preserves bounded context-pack refs, and imports
+only dependency-ready nodes into Foundry-compatible material.

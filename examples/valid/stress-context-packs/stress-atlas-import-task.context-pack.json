@@ -1,0 +1,16 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "stress-atlas-import-task-context",
+  "task_id": "stress-atlas-import-task",
+  "budget_bytes": 2048,
+  "source_refs": [
+    {
+      "ref": "docs/sdd/AO-ATLAS-WORKGRAPH.md",
+      "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+    }
+  ],
+  "summaries": ["Bounded context for stress Atlas import task."],
+  "assumptions": ["Atlas compiles import material only."],
+  "exclusions": ["scheduling", "execution", "approval"],
+  "missing_context_protocol": "Emit needs_context run-link before widening scope."
+}
