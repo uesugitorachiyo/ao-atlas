@@ -442,6 +442,15 @@ func TestFoundryImportWritesTaskFixturesForReadyNodes(t *testing.T) {
 	if len(manifest.Tasks[0].Task.ContextPackRefs) == 0 {
 		t.Fatalf("expected context pack refs to be preserved: %#v", manifest.Tasks[0].Task)
 	}
+	if manifest.Tasks[0].MutationClass != "docs_only_single_file" {
+		t.Fatalf("expected mutation class metadata, got %#v", manifest.Tasks[0])
+	}
+	if !containsString(manifest.Tasks[0].RequiredGates, "atlas_classification") {
+		t.Fatalf("expected required gates metadata, got %#v", manifest.Tasks[0].RequiredGates)
+	}
+	if len(manifest.Tasks[0].RollbackScope) == 0 || manifest.Tasks[0].AuthorityBoundary == "" {
+		t.Fatalf("expected rollback scope and authority boundary metadata, got %#v", manifest.Tasks[0])
+	}
 	if _, err := os.Stat(filepath.Join(outDir, manifest.Tasks[0].Path)); err != nil {
 		t.Fatal(err)
 	}
@@ -551,12 +560,16 @@ func TestFoundryImportRejectsMissingContextPack(t *testing.T) {
 			Objective:         "Import should fail without referenced context pack.",
 			TargetFactoryRepo: "ao-foundry",
 			FactoryFolder:     "factory/missing-context",
+			MutationClass:     "docs_only_single_file",
 			Acceptance:        []string{"context pack exists"},
 			NonGoals:          []string{"do not execute"},
 			WriteScope:        []string{"factory/missing-context"},
+			RequiredGates:     []string{"atlas_classification"},
+			RollbackScope:     []string{"factory/missing-context"},
 			Verification:      []string{"go test ./..."},
 			RequiredEvidence:  []string{"summary.json"},
 			SafetyLimits:      []string{"public-safe only"},
+			AuthorityBoundary: "atlas_classification_only",
 			ContextPackRefs:   []string{"examples/valid/not-present.context-pack.json"},
 		},
 	}}
@@ -576,6 +589,28 @@ func TestFoundryImportRejectsMissingContextPack(t *testing.T) {
 	}
 	if !strings.Contains(out.String(), "context pack") {
 		t.Fatalf("expected context pack error, got %s", out.String())
+	}
+}
+
+func TestFoundryImportRejectsReadyNodeMissingMutationClass(t *testing.T) {
+	workgraph, err := LoadJSON[Workgraph](filepath.Join("..", "..", "examples", "invalid", "workgraph-foundry-import-missing-mutation-class.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = BuildFoundryImport(workgraph)
+	if err == nil || !strings.Contains(err.Error(), "mutation_class") {
+		t.Fatalf("expected missing mutation_class rejection, got %v", err)
+	}
+}
+
+func TestFoundryImportRejectsReadyNodeMissingRequiredGates(t *testing.T) {
+	workgraph, err := LoadJSON[Workgraph](filepath.Join("..", "..", "examples", "invalid", "workgraph-foundry-import-missing-required-gates.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = BuildFoundryImport(workgraph)
+	if err == nil || !strings.Contains(err.Error(), "required_gates") {
+		t.Fatalf("expected missing required_gates rejection, got %v", err)
 	}
 }
 
@@ -782,6 +817,8 @@ func TestFoundryRoundtripSmokeValidatesFoundryImport(t *testing.T) {
 		"--instance examples/valid/stack-instance.json",
 		"foundry atlas import validate",
 		"foundry_import_validation",
+		"mutation_class",
+		"authority_boundary",
 		"foundry atlas readback",
 		"FOUNDRY_READBACK",
 		"foundry_readback",
@@ -1136,12 +1173,16 @@ func fixtureWorkgraph() Workgraph {
 		Objective:         "Create bounded AO Atlas task material.",
 		TargetFactoryRepo: "ao-foundry",
 		FactoryFolder:     "factory/atlas-demo",
+		MutationClass:     "docs_only_single_file",
 		Acceptance:        []string{"evidence exists"},
 		NonGoals:          []string{"do not execute"},
 		WriteScope:        []string{"factory/atlas-demo"},
+		RequiredGates:     []string{"atlas_classification"},
+		RollbackScope:     []string{"factory/atlas-demo"},
 		Verification:      []string{"go test ./..."},
 		RequiredEvidence:  []string{"summary.json"},
 		SafetyLimits:      []string{"no provider calls"},
+		AuthorityBoundary: "atlas_classification_only",
 	}
 	return Workgraph{
 		ContractVersion: WorkgraphContract,

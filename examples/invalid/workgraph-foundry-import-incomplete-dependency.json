@@ -15,12 +15,16 @@
         "objective": "Dependency is not complete.",
         "target_factory_repo": "ao-foundry",
         "factory_folder": "factory/dependency",
+        "mutation_class": "docs_only_single_file",
         "acceptance_criteria": ["dependency completes first"],
         "non_goals": ["do not schedule work"],
         "write_scope": ["factory/dependency"],
+        "required_gates": ["atlas_classification"],
+        "rollback_scope": ["factory/dependency"],
         "verification_commands": ["scripts/production-readiness.sh"],
         "required_evidence": ["target/production-readiness/summary.json"],
         "safety_limits": ["public-safe paths only"],
+        "authority_boundary": "atlas_classification_only",
         "dependency_refs": [],
         "context_pack_refs": []
       }
@@ -37,12 +41,16 @@
         "objective": "Import should fail because dependency is incomplete.",
         "target_factory_repo": "ao-foundry",
         "factory_folder": "factory/blocked-by-dependency",
+        "mutation_class": "docs_only_single_file",
         "acceptance_criteria": ["incomplete dependencies are rejected"],
         "non_goals": ["do not schedule work"],
         "write_scope": ["factory/blocked-by-dependency"],
+        "required_gates": ["atlas_classification"],
+        "rollback_scope": ["factory/blocked-by-dependency"],
         "verification_commands": ["scripts/production-readiness.sh"],
         "required_evidence": ["target/production-readiness/summary.json"],
         "safety_limits": ["public-safe paths only"],
+        "authority_boundary": "atlas_classification_only",
         "dependency_refs": ["dependency"],
         "context_pack_refs": []
       }

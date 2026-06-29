@@ -1,32 +1,31 @@
 {
   "contract_version": "ao.atlas.workgraph.v0.1",
-  "id": "atlas-missing-context-import-workgraph",
+  "id": "atlas-missing-mutation-class-import-workgraph",
   "target_instance": "demo-stack",
   "nodes": [
     {
-      "id": "missing-context",
+      "id": "missing-mutation-class",
       "status": "ready",
       "dependencies": [],
       "blockers": [],
       "stitch_task": false,
       "factory_task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
-        "id": "missing-context-task",
-        "objective": "Import should fail because a referenced context pack is absent.",
+        "id": "missing-mutation-class-task",
+        "objective": "Import should fail because mutation class is absent.",
         "target_factory_repo": "ao-foundry",
-        "factory_folder": "factory/missing-context",
-        "mutation_class": "docs_only_single_file",
-        "acceptance_criteria": ["context pack exists before import"],
+        "factory_folder": "factory/missing-mutation-class",
+        "acceptance_criteria": ["mutation class is required"],
         "non_goals": ["do not schedule work"],
-        "write_scope": ["factory/missing-context"],
+        "write_scope": ["factory/missing-mutation-class"],
         "required_gates": ["atlas_classification"],
-        "rollback_scope": ["factory/missing-context"],
+        "rollback_scope": ["factory/missing-mutation-class"],
         "verification_commands": ["scripts/production-readiness.sh"],
         "required_evidence": ["target/production-readiness/summary.json"],
         "safety_limits": ["public-safe paths only"],
         "authority_boundary": "atlas_classification_only",
         "dependency_refs": [],
-        "context_pack_refs": ["examples/valid/not-present.context-pack.json"]
+        "context_pack_refs": []
       }
     }
   ]

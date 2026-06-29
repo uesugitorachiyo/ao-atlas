@@ -59,8 +59,12 @@ requirements, and promotion requirements. The model is classification readback
 only: it carries `schedules_work=false`, `executes_work=false`, and
 `approves_work=false`, and it does not grant or consume authority tickets.
 
-`ao.atlas.foundry-import.v0.1` records fixture files emitted from dependency-ready
-Atlas workgraph nodes. It is a Foundry import packet only: it does not schedule,
-execute, approve, mutate sibling repositories, or call providers.
+`ao.atlas.foundry-import.v0.1` records fixture files emitted from
+dependency-ready Atlas workgraph nodes. Each imported task carries
+`mutation_class`, `write_scope`, `rollback_scope`, `required_gates`,
+`required_evidence`, and `authority_boundary` so Foundry can fail closed before
+requesting any downstream authority. It is a Foundry import packet only: it
+does not schedule, execute, approve, mutate sibling repositories, or call
+providers.
 
 Schemas live in `schemas/`. The CLI validators are the normative v0.1 gate.
