@@ -247,13 +247,11 @@ func runMission(args []string, stdout io.Writer) error {
 	runLinkFlags := stringListFlag{}
 	fs.Var(&runLinkFlags, "run-link", "run link path")
 	out := fs.String("out", "", "output path")
+	jsonOut := fs.Bool("json", false, "json output")
 	if err := fs.Parse(args[1:]); err != nil {
 		return err
 	}
-	if *out == "" {
-		return fmt.Errorf("--out is required")
-	}
-	if samePath(*intakePath, *out) || samePath(*workgraphPath, *out) {
+	if *out != "" && (samePath(*intakePath, *out) || samePath(*workgraphPath, *out)) {
 		return fmt.Errorf("refusing to overwrite input artifact")
 	}
 	intake, err := LoadJSON[Intake](*intakePath)
@@ -266,7 +264,7 @@ func runMission(args []string, stdout io.Writer) error {
 	}
 	links := []RunLink{}
 	for _, path := range runLinkFlags {
-		if samePath(path, *out) {
+		if *out != "" && samePath(path, *out) {
 			return fmt.Errorf("refusing to overwrite input artifact")
 		}
 		link, err := LoadJSON[RunLink](path)
@@ -279,8 +277,13 @@ func runMission(args []string, stdout io.Writer) error {
 	if err != nil {
 		return err
 	}
-	if err := WriteJSON(*out, status); err != nil {
-		return err
+	if *out != "" {
+		if err := WriteJSON(*out, status); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, status)
 	}
 	fmt.Fprintf(stdout, "status=%s\nintake=%s\nworkgraph=%s\n", status.CompletionStatus, status.IntakeID, status.WorkgraphID)
 	return nil

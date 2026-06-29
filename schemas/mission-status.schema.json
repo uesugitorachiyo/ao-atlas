@@ -2,7 +2,21 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "ao.atlas.mission-status.v0.1",
   "type": "object",
-  "required": ["contract_version", "intake_id", "workgraph_id", "target_instance", "completion_status", "node_counts", "run_links", "next_actions", "schedules_work", "executes_work"],
+  "required": [
+    "contract_version",
+    "intake_id",
+    "workgraph_id",
+    "target_instance",
+    "completion_status",
+    "node_counts",
+    "run_links",
+    "missing_context_packs",
+    "missing_handoffs",
+    "next_recommended_action",
+    "next_actions",
+    "schedules_work",
+    "executes_work"
+  ],
   "properties": {
     "contract_version": { "const": "ao.atlas.mission-status.v0.1" },
     "intake_id": { "type": "string", "minLength": 1 },
@@ -11,13 +25,22 @@
     "completion_status": { "enum": ["completed", "blocked", "in_progress"] },
     "node_counts": {
       "type": "object",
-      "required": ["ready", "blocked", "completed"],
+      "required": ["ready", "blocked", "completed", "failed"],
       "additionalProperties": { "type": "integer", "minimum": 0 }
     },
     "run_links": {
       "type": "object",
       "additionalProperties": { "enum": ["planned", "running", "completed", "blocked", "failed"] }
     },
+    "missing_context_packs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "missing_handoffs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "next_recommended_action": { "type": "string", "minLength": 1 },
     "next_actions": {
       "type": "array",
       "minItems": 1,

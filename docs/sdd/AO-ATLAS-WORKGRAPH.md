@@ -34,8 +34,9 @@ schedule, execute, approve, publish, upload, or call providers.
 Mission status readback:
 
 ```sh
-atlas mission status --intake <path> --workgraph <path> --run-link <path> --out <path>
+atlas mission status --intake <path> --workgraph <path> [--run-link <path>...] [--json] [--out <path>]
 ```
 
-Mission status summarizes intake, workgraph node counts, run-link statuses,
-completion state, and next readback actions without mutating source artifacts.
+Mission status summarizes intake, workgraph node counts including failed count,
+missing context packs, missing Foundry handoffs, run-link completion state, and
+the next recommended Atlas action without mutating source artifacts.

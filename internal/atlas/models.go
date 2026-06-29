@@ -42,16 +42,19 @@ type Intake struct {
 }
 
 type MissionStatus struct {
-	ContractVersion  string            `json:"contract_version"`
-	IntakeID         string            `json:"intake_id"`
-	WorkgraphID      string            `json:"workgraph_id"`
-	TargetInstance   string            `json:"target_instance"`
-	CompletionStatus string            `json:"completion_status"`
-	NodeCounts       map[string]int    `json:"node_counts"`
-	RunLinks         map[string]string `json:"run_links"`
-	NextActions      []string          `json:"next_actions"`
-	SchedulesWork    bool              `json:"schedules_work"`
-	ExecutesWork     bool              `json:"executes_work"`
+	ContractVersion       string            `json:"contract_version"`
+	IntakeID              string            `json:"intake_id"`
+	WorkgraphID           string            `json:"workgraph_id"`
+	TargetInstance        string            `json:"target_instance"`
+	CompletionStatus      string            `json:"completion_status"`
+	NodeCounts            map[string]int    `json:"node_counts"`
+	RunLinks              map[string]string `json:"run_links"`
+	MissingContextPacks   []string          `json:"missing_context_packs"`
+	MissingHandoffs       []string          `json:"missing_handoffs"`
+	NextRecommendedAction string            `json:"next_recommended_action"`
+	NextActions           []string          `json:"next_actions"`
+	SchedulesWork         bool              `json:"schedules_work"`
+	ExecutesWork          bool              `json:"executes_work"`
 }
 
 type BlueprintRequest struct {

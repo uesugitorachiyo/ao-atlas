@@ -267,11 +267,15 @@ func ValidateMissionStatus(status MissionStatus) error {
 	if !oneOf(status.CompletionStatus, "completed", "blocked", "in_progress") {
 		errs = append(errs, "completion_status must be completed, blocked, or in_progress")
 	}
-	for _, key := range []string{"ready", "blocked", "completed"} {
+	for _, key := range []string{"ready", "blocked", "completed", "failed"} {
 		if _, ok := status.NodeCounts[key]; !ok {
 			errs = append(errs, "node_counts."+key+" must be present")
 		}
 	}
+	checkPublicStrings(&errs, "missing_context_packs", status.MissingContextPacks, true)
+	checkPublicStrings(&errs, "missing_handoffs", status.MissingHandoffs, true)
+	requireField(&errs, "next_recommended_action", status.NextRecommendedAction)
+	checkPublicPath(&errs, "next_recommended_action", status.NextRecommendedAction, true)
 	if len(status.NextActions) == 0 {
 		errs = append(errs, "next_actions must not be empty")
 	}
@@ -292,11 +296,16 @@ func BuildMissionStatus(intake Intake, workgraph Workgraph, links []RunLink) (Mi
 	if err := ValidateWorkgraph(workgraph); err != nil {
 		return MissionStatus{}, err
 	}
-	nodeCounts := map[string]int{"ready": 0, "blocked": 0, "completed": 0}
+	nodeCounts := map[string]int{"ready": 0, "blocked": 0, "completed": 0, "failed": 0}
+	readyTaskIDs := []string{}
 	for _, node := range workgraph.Nodes {
 		nodeCounts[node.Status]++
+		if node.Status == "ready" {
+			readyTaskIDs = append(readyTaskIDs, node.FactoryTask.ID)
+		}
 	}
 	runLinks := map[string]string{}
+	missingContextPacks := []string{}
 	anyBlocked := false
 	anyIncomplete := false
 	for _, link := range links {
@@ -307,30 +316,53 @@ func BuildMissionStatus(intake Intake, workgraph Workgraph, links []RunLink) (Mi
 		if oneOf(link.Status, "blocked", "failed") {
 			anyBlocked = true
 		}
+		if link.Status == "blocked" && strings.TrimSpace(link.Evidence["needs_context"]) != "" {
+			missingContextPacks = append(missingContextPacks, link.TaskID)
+		}
 		if link.Status != "completed" {
 			anyIncomplete = true
 		}
 	}
+	missingHandoffs := []string{}
+	for _, taskID := range readyTaskIDs {
+		if _, ok := runLinks[taskID]; !ok {
+			missingHandoffs = append(missingHandoffs, taskID)
+		}
+	}
 	completion := "in_progress"
+	nextRecommendedAction := "handoff ready factory task to Foundry"
 	nextActions := []string{"continue ready factory tasks through Foundry"}
 	if anyBlocked || nodeCounts["blocked"] > 0 {
 		completion = "blocked"
-		nextActions = []string{"emit repair plan or context repack for blocked task"}
+		if len(missingContextPacks) > 0 {
+			nextRecommendedAction = "repack missing context before Foundry handoff"
+			nextActions = []string{"emit context pack repack for needs_context run-link"}
+		} else {
+			nextRecommendedAction = "emit repair plan for blocked task"
+			nextActions = []string{"emit repair plan or context repack for blocked task"}
+		}
 	} else if nodeCounts["ready"] == 0 && !anyIncomplete {
 		completion = "completed"
+		nextRecommendedAction = "record completion readback"
 		nextActions = []string{"record completion readback and keep artifacts public-safe"}
+	} else if len(missingHandoffs) > 0 {
+		nextRecommendedAction = "emit Foundry handoff for ready nodes"
+		nextActions = []string{"emit Foundry handoff/import material for ready nodes"}
 	}
 	status := MissionStatus{
-		ContractVersion:  MissionStatusContract,
-		IntakeID:         intake.ID,
-		WorkgraphID:      workgraph.ID,
-		TargetInstance:   workgraph.TargetInstance,
-		CompletionStatus: completion,
-		NodeCounts:       nodeCounts,
-		RunLinks:         runLinks,
-		NextActions:      nextActions,
-		SchedulesWork:    false,
-		ExecutesWork:     false,
+		ContractVersion:       MissionStatusContract,
+		IntakeID:              intake.ID,
+		WorkgraphID:           workgraph.ID,
+		TargetInstance:        workgraph.TargetInstance,
+		CompletionStatus:      completion,
+		NodeCounts:            nodeCounts,
+		RunLinks:              runLinks,
+		MissingContextPacks:   missingContextPacks,
+		MissingHandoffs:       missingHandoffs,
+		NextRecommendedAction: nextRecommendedAction,
+		NextActions:           nextActions,
+		SchedulesWork:         false,
+		ExecutesWork:          false,
 	}
 	if err := ValidateMissionStatus(status); err != nil {
 		return MissionStatus{}, err
