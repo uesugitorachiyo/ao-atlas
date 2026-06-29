@@ -166,6 +166,58 @@ func TestWorkgraphMaterializeNextRequiresDryRun(t *testing.T) {
 	}
 }
 
+func TestRunLinkAttachWritesDigestBoundPublicSafeLink(t *testing.T) {
+	dir := t.TempDir()
+	outPath := filepath.Join(dir, "run-link.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"run-link", "attach",
+		"--task-id", "atlas-readiness-task",
+		"--status", "completed",
+		"--evidence", "foundry=evidence/foundry/atlas-readiness.json",
+		"--evidence", "forge=evidence/forge/atlas-readiness.json",
+		"--evidence", "ao2=evidence/ao2/atlas-readiness.json",
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("run-link attach failed: %s", out.String())
+	}
+	link, err := LoadJSON[RunLink](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateRunLink(link); err != nil {
+		t.Fatal(err)
+	}
+	if link.TaskID != "atlas-readiness-task" || link.Status != "completed" {
+		t.Fatalf("unexpected run link: %#v", link)
+	}
+	if link.Evidence["ao2"] != "evidence/ao2/atlas-readiness.json" {
+		t.Fatalf("expected ao2 evidence path, got %#v", link.Evidence)
+	}
+	if !strings.HasPrefix(link.Digest, "sha256:") || link.Digest == "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" {
+		t.Fatalf("expected computed digest, got %s", link.Digest)
+	}
+}
+
+func TestRunLinkAttachRejectsPrivateEvidencePath(t *testing.T) {
+	dir := t.TempDir()
+	var out bytes.Buffer
+	code := Run([]string{
+		"run-link", "attach",
+		"--task-id", "atlas-readiness-task",
+		"--status", "completed",
+		"--evidence", "ao2=/" + "Users/example/private.json",
+		"--out", filepath.Join(dir, "run-link.json"),
+	}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected private evidence path to fail")
+	}
+	if !strings.Contains(out.String(), "private or machine-local path") {
+		t.Fatalf("expected public-safety error, got %s", out.String())
+	}
+}
+
 func fixtureWorkgraph() Workgraph {
 	baseTask := FactoryTask{
 		ContractVersion:   FactoryTaskContract,

@@ -366,24 +366,56 @@ func runFoundry(args []string, stdout io.Writer) error {
 }
 
 func runRunLink(args []string, stdout io.Writer) error {
-	if len(args) == 0 || args[0] != "validate" {
-		return fmt.Errorf("run-link requires validate")
+	if len(args) == 0 {
+		return fmt.Errorf("run-link requires subcommand")
 	}
-	fs := flag.NewFlagSet("run-link validate", flag.ContinueOnError)
-	fs.SetOutput(io.Discard)
-	path := fs.String("run-link", "", "run link path")
-	if err := fs.Parse(args[1:]); err != nil {
-		return err
+	switch args[0] {
+	case "validate":
+		fs := flag.NewFlagSet("run-link validate", flag.ContinueOnError)
+		fs.SetOutput(io.Discard)
+		path := fs.String("run-link", "", "run link path")
+		if err := fs.Parse(args[1:]); err != nil {
+			return err
+		}
+		link, err := LoadJSON[RunLink](*path)
+		if err != nil {
+			return err
+		}
+		if err := ValidateRunLink(link); err != nil {
+			return err
+		}
+		fmt.Fprintln(stdout, "status=valid")
+		return nil
+	case "attach":
+		fs := flag.NewFlagSet("run-link attach", flag.ContinueOnError)
+		fs.SetOutput(io.Discard)
+		taskID := fs.String("task-id", "", "task id")
+		status := fs.String("status", "completed", "task completion status")
+		out := fs.String("out", "", "output path")
+		evidenceFlags := stringListFlag{}
+		fs.Var(&evidenceFlags, "evidence", "evidence link as key=path")
+		if err := fs.Parse(args[1:]); err != nil {
+			return err
+		}
+		evidence, err := parseEvidenceFlags(evidenceFlags)
+		if err != nil {
+			return err
+		}
+		link, err := BuildRunLink(*taskID, *status, evidence)
+		if err != nil {
+			return err
+		}
+		if *out == "" {
+			return fmt.Errorf("--out is required")
+		}
+		if err := WriteJSON(*out, link); err != nil {
+			return err
+		}
+		fmt.Fprintf(stdout, "status=written\ntask=%s\ndigest=%s\n", link.TaskID, link.Digest)
+		return nil
+	default:
+		return fmt.Errorf("unknown run-link subcommand %q", args[0])
 	}
-	link, err := LoadJSON[RunLink](*path)
-	if err != nil {
-		return err
-	}
-	if err := ValidateRunLink(link); err != nil {
-		return err
-	}
-	fmt.Fprintln(stdout, "status=valid")
-	return nil
 }
 
 func printJSON(w io.Writer, value any) error {
@@ -398,4 +430,32 @@ func fileDigest(path string) (string, error) {
 		return "", err
 	}
 	return DigestBytes(data), nil
+}
+
+type stringListFlag []string
+
+func (f *stringListFlag) String() string {
+	return strings.Join(*f, ",")
+}
+
+func (f *stringListFlag) Set(value string) error {
+	*f = append(*f, value)
+	return nil
+}
+
+func parseEvidenceFlags(values []string) (map[string]string, error) {
+	evidence := map[string]string{}
+	for _, value := range values {
+		key, path, ok := strings.Cut(value, "=")
+		if !ok {
+			return nil, fmt.Errorf("--evidence must use key=path")
+		}
+		key = strings.TrimSpace(key)
+		path = strings.TrimSpace(path)
+		if key == "" || path == "" {
+			return nil, fmt.Errorf("--evidence must use non-empty key=path")
+		}
+		evidence[key] = path
+	}
+	return evidence, nil
 }

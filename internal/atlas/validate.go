@@ -256,11 +256,25 @@ func ValidateRunLink(link RunLink) error {
 	if len(link.Evidence) == 0 {
 		errs = append(errs, "evidence must not be empty")
 	}
-	checkPublicPathMap(&errs, link.Evidence)
+	checkPublicPathMapStrict(&errs, link.Evidence)
 	if !digestPattern.MatchString(link.Digest) {
 		errs = append(errs, "digest must be sha256:<64 hex>")
 	}
 	return joinErrors(errs)
+}
+
+func BuildRunLink(taskID, status string, evidence map[string]string) (RunLink, error) {
+	link := RunLink{
+		ContractVersion: RunLinkContract,
+		TaskID:          taskID,
+		Status:          status,
+		Evidence:        evidence,
+	}
+	link.Digest = digestRunLink(link)
+	if err := ValidateRunLink(link); err != nil {
+		return RunLink{}, err
+	}
+	return link, nil
 }
 
 func NextReadyNode(workgraph Workgraph) (WorkgraphNode, bool) {
@@ -345,6 +359,13 @@ func checkPublicPathMap(errs *[]string, values map[string]string) {
 	}
 }
 
+func checkPublicPathMapStrict(errs *[]string, values map[string]string) {
+	for key, value := range values {
+		requireField(errs, key, value)
+		checkPublicPath(errs, key, value, true)
+	}
+}
+
 func checkPublicStrings(errs *[]string, field string, values []string, rejectAbsolute bool) {
 	for i, value := range values {
 		checkPublicPath(errs, fmt.Sprintf("%s[%d]", field, i), value, rejectAbsolute)
@@ -416,4 +437,20 @@ func DefaultInstance(id, stateRoot, toolchainRoot string) Instance {
 			"worktree":  root("worktree"),
 		},
 	}
+}
+
+func digestRunLink(link RunLink) string {
+	payload := struct {
+		ContractVersion string            `json:"contract_version"`
+		TaskID          string            `json:"task_id"`
+		Status          string            `json:"status"`
+		Evidence        map[string]string `json:"evidence"`
+	}{
+		ContractVersion: link.ContractVersion,
+		TaskID:          link.TaskID,
+		Status:          link.Status,
+		Evidence:        link.Evidence,
+	}
+	data, _ := json.Marshal(payload)
+	return DigestBytes(data)
 }

@@ -70,6 +70,14 @@ test -s "$OUT/workgraph-next-materialization/materialization.json"
 "$BIN" context-pack validate --pack examples/valid/context-pack.json >/dev/null
 "$BIN" foundry handoff emit --workgraph examples/valid/workgraph.json --out "$OUT/foundry-handoff.json" >/dev/null
 "$BIN" run-link validate --run-link examples/valid/run-link.json >/dev/null
+"$BIN" run-link attach \
+  --task-id atlas-readiness-task \
+  --status completed \
+  --evidence foundry=evidence/foundry/atlas-readiness.json \
+  --evidence forge=evidence/forge/atlas-readiness.json \
+  --evidence ao2=evidence/ao2/atlas-readiness.json \
+  --out "$OUT/run-link-attached.json" >/dev/null
+"$BIN" run-link validate --run-link "$OUT/run-link-attached.json" >/dev/null
 pass "valid-fixtures"
 
 if "$BIN" context-pack validate --pack examples/invalid/context-pack-bad-digest.json >/dev/null 2>&1; then
