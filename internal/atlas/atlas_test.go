@@ -335,6 +335,24 @@ func TestFoundryImportRejectsExecutionAuthority(t *testing.T) {
 	}
 }
 
+func TestFoundryRoundtripSmokeValidatesFoundryImport(t *testing.T) {
+	script, err := os.ReadFile(filepath.Join("..", "..", "scripts", "atlas-foundry-roundtrip-smoke.sh"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	text := string(script)
+	for _, want := range []string{
+		"foundry import",
+		"--workgraph examples/valid/workgraph.json",
+		"foundry atlas import validate",
+		"foundry_import_validation",
+	} {
+		if !strings.Contains(text, want) {
+			t.Fatalf("roundtrip smoke missing %q", want)
+		}
+	}
+}
+
 func TestFactoryMaterializeDryRunWritesBoundedSkeleton(t *testing.T) {
 	dir := t.TempDir()
 	outDir := filepath.Join(dir, "factory-materialization")
