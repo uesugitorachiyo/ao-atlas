@@ -7,11 +7,15 @@
   "node_counts": {
     "ready": 0,
     "blocked": 0,
-    "completed": 2
+    "completed": 2,
+    "failed": 0
   },
   "run_links": {
     "atlas-readiness-task": "completed"
   },
+  "missing_context_packs": [],
+  "missing_handoffs": [],
+  "next_recommended_action": "record completion readback",
   "next_actions": ["record completion readback and keep artifacts public-safe"],
   "schedules_work": false,
   "executes_work": false

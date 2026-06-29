@@ -28,8 +28,9 @@ check and blocking next actions. It does not schedule, execute, approve,
 publish, call providers, or mutate sibling repositories.
 
 `ao.atlas.mission-status.v0.1` summarizes intake, workgraph node state, run-link
-state, completion status, and next readback actions. It is status readback only
-and does not schedule or execute work.
+state, missing context packs, missing Foundry handoffs, completion status, and
+next readback actions. It is status readback only and does not schedule or
+execute work.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,

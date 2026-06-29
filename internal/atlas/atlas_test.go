@@ -231,6 +231,59 @@ func TestMissionStatusReportsBlockedWhenRunLinkBlocked(t *testing.T) {
 	}
 }
 
+func TestMissionStatusJSONReportsMissingContextAndHandoffs(t *testing.T) {
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "status",
+		"--intake", filepath.Join("..", "..", "examples", "valid", "intake.json"),
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--run-link", filepath.Join("..", "..", "examples", "valid", "run-link-needs-context.json"),
+		"--json",
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission status json failed: %s", out.String())
+	}
+	var status MissionStatus
+	if err := json.Unmarshal(out.Bytes(), &status); err != nil {
+		t.Fatalf("mission status did not emit json: %v\n%s", err, out.String())
+	}
+	if status.CompletionStatus != "blocked" {
+		t.Fatalf("expected blocked mission status, got %#v", status)
+	}
+	if len(status.MissingContextPacks) != 1 || status.MissingContextPacks[0] != "atlas-readiness-task" {
+		t.Fatalf("expected missing context pack for run link, got %#v", status.MissingContextPacks)
+	}
+	if len(status.MissingHandoffs) != 0 {
+		t.Fatalf("did not expect missing handoff when run-link exists, got %#v", status.MissingHandoffs)
+	}
+	if status.NextRecommendedAction != "repack missing context before Foundry handoff" {
+		t.Fatalf("unexpected next recommended action: %#v", status.NextRecommendedAction)
+	}
+}
+
+func TestMissionStatusJSONReportsMissingHandoffs(t *testing.T) {
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "status",
+		"--intake", filepath.Join("..", "..", "examples", "valid", "intake.json"),
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--json",
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission status json failed: %s", out.String())
+	}
+	var status MissionStatus
+	if err := json.Unmarshal(out.Bytes(), &status); err != nil {
+		t.Fatalf("mission status did not emit json: %v\n%s", err, out.String())
+	}
+	if len(status.MissingHandoffs) != 1 || status.MissingHandoffs[0] != "atlas-readiness-task" {
+		t.Fatalf("expected missing handoff for ready node, got %#v", status.MissingHandoffs)
+	}
+	if status.NextRecommendedAction != "emit Foundry handoff for ready nodes" {
+		t.Fatalf("unexpected next recommended action: %#v", status.NextRecommendedAction)
+	}
+}
+
 func TestBlueprintRequestFixtureIsValidAndPublicSafe(t *testing.T) {
 	request, err := LoadJSON[BlueprintRequest](filepath.Join("..", "..", "examples", "valid", "blueprint-request.json"))
 	if err != nil {

@@ -51,6 +51,7 @@ go run ./cmd/atlas instance validate --instance examples/valid/stack-instance.js
 go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json --registry examples/valid/atlas-registry.json --out .atlas-local/instance-doctor.json
 go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json --json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out .atlas-local/mission-status.json
+go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-needs-context.json --json
 go run ./cmd/atlas blueprint-request validate --request examples/valid/blueprint-request.json
 go run ./cmd/atlas factory materialize --task examples/valid/factory-task.json --out .atlas-local/factory-materialization --dry-run
 go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph.json --json

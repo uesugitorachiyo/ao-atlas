@@ -73,6 +73,7 @@ test -s "$OUT/instance-doctor.json"
 "$BIN" intake validate --intake examples/valid/intake.json >/dev/null
 "$BIN" mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out "$OUT/mission-status.json" >/dev/null
 test -s "$OUT/mission-status.json"
+"$BIN" mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-needs-context.json --json >/dev/null
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" factory-task validate --task examples/valid/factory-task.json >/dev/null
 "$BIN" factory materialize --task examples/valid/factory-task.json --out "$OUT/factory-materialization" --dry-run >/dev/null
