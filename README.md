@@ -83,6 +83,12 @@ refs while keeping `schedules_work=false`, `executes_work=false`, and
 `approves_work=false`; Atlas emits repair material only and does not schedule or
 execute it.
 
+The committed
+`examples/valid/context-pack-needs-context-repack-demo.json` fixture shows the
+needs-context repack output shape. It carries source refs and digests,
+assumptions, exclusions, and `missing_context_reason` so the next factory run
+knows why the bounded context was regenerated.
+
 ## Readiness
 
 ```sh

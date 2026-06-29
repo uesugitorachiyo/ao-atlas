@@ -9,9 +9,18 @@
       "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     }
   ],
-  "summaries": ["Repacked bounded context requested by a needs_context run-link."],
-  "assumptions": ["Only referenced public-safe sources are included."],
-  "exclusions": ["whole source repositories", "private local state", "credentials", "provider transcripts"],
+  "summaries": [
+    "Repacked bounded context requested by a needs_context run-link."
+  ],
+  "assumptions": [
+    "Only referenced public-safe sources are included."
+  ],
+  "exclusions": [
+    "whole source repositories",
+    "private local state",
+    "credentials",
+    "provider transcripts"
+  ],
   "missing_context_reason": "run-link evidence needs_context=evidence/foundry/atlas-readiness-needs-context.json",
   "missing_context_protocol": "Ask AO Blueprint or the operator for missing requirements before widening scope."
 }
