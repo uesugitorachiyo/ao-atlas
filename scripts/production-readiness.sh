@@ -80,6 +80,15 @@ test -s "$OUT/workgraph-repair-plan-blocked.json"
 test -s "$OUT/workgraph-repair-plan-failed.json"
 "$BIN" workgraph status --workgraph examples/valid/workgraph.json >/dev/null
 "$BIN" context-pack validate --pack examples/valid/context-pack.json >/dev/null
+"$BIN" context-pack validate --pack examples/valid/context-pack-repacked.json >/dev/null
+"$BIN" context-pack repack \
+  --task examples/valid/factory-task.json \
+  --run-link examples/valid/run-link-needs-context.json \
+  --source-ref docs/sdd/AO-ATLAS-CONTEXT-PACKS.md \
+  --source-digest sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa \
+  --budget 4096 \
+  --out "$OUT/context-pack-repacked.json" >/dev/null
+"$BIN" context-pack validate --pack "$OUT/context-pack-repacked.json" >/dev/null
 "$BIN" foundry handoff emit --workgraph examples/valid/workgraph.json --out "$OUT/foundry-handoff.json" >/dev/null
 "$BIN" run-link validate --run-link examples/valid/run-link.json >/dev/null
 "$BIN" run-link attach \
@@ -126,6 +135,14 @@ if "$BIN" workgraph repair-plan --workgraph examples/valid/workgraph.json --run-
 fi
 if "$BIN" workgraph repair-plan --workgraph examples/valid/workgraph.json --run-link examples/invalid/run-link-missing-node-blocked.json --out "$OUT/missing-node-repair-plan.json" >/dev/null 2>&1; then
   echo "missing-node run-link emitted a repair plan" >&2
+  exit 1
+fi
+if "$BIN" context-pack repack --task examples/valid/factory-task.json --run-link examples/valid/run-link.json --source-ref docs/sdd/AO-ATLAS-CONTEXT-PACKS.md --source-digest sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa --budget 4096 --out "$OUT/completed-context-repack.json" >/dev/null 2>&1; then
+  echo "completed run-link emitted a context repack" >&2
+  exit 1
+fi
+if "$BIN" context-pack repack --task examples/valid/factory-task.json --run-link examples/invalid/run-link-blocked.json --source-ref docs/sdd/AO-ATLAS-CONTEXT-PACKS.md --source-digest sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa --budget 4096 --out "$OUT/missing-context-repack.json" >/dev/null 2>&1; then
+  echo "blocked run-link without needs_context emitted a context repack" >&2
   exit 1
 fi
 pass "invalid-fixtures-rejected"

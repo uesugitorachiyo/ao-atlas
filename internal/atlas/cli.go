@@ -355,25 +355,65 @@ func runFactory(args []string, stdout io.Writer) error {
 }
 
 func runContextPack(args []string, stdout io.Writer) error {
-	if len(args) == 0 || args[0] != "validate" {
-		return fmt.Errorf("context-pack requires validate")
+	if len(args) == 0 {
+		return fmt.Errorf("context-pack requires subcommand")
 	}
-	fs := flag.NewFlagSet("context-pack validate", flag.ContinueOnError)
-	fs.SetOutput(io.Discard)
-	path := fs.String("pack", "", "context pack path")
-	budget := fs.Int("budget", 0, "override budget")
-	if err := fs.Parse(args[1:]); err != nil {
-		return err
+	switch args[0] {
+	case "validate":
+		fs := flag.NewFlagSet("context-pack validate", flag.ContinueOnError)
+		fs.SetOutput(io.Discard)
+		path := fs.String("pack", "", "context pack path")
+		budget := fs.Int("budget", 0, "override budget")
+		if err := fs.Parse(args[1:]); err != nil {
+			return err
+		}
+		pack, err := LoadJSON[ContextPack](*path)
+		if err != nil {
+			return err
+		}
+		if err := ValidateContextPack(pack, *budget); err != nil {
+			return err
+		}
+		fmt.Fprintln(stdout, "status=valid")
+		return nil
+	case "repack":
+		fs := flag.NewFlagSet("context-pack repack", flag.ContinueOnError)
+		fs.SetOutput(io.Discard)
+		taskPath := fs.String("task", "", "factory task path")
+		runLinkPath := fs.String("run-link", "", "run link path")
+		sourceRef := fs.String("source-ref", "", "public-safe source reference")
+		sourceDigest := fs.String("source-digest", "", "source digest")
+		budget := fs.Int("budget", 4096, "context budget bytes")
+		out := fs.String("out", "", "output path")
+		if err := fs.Parse(args[1:]); err != nil {
+			return err
+		}
+		if *out == "" {
+			return fmt.Errorf("--out is required")
+		}
+		if samePath(*taskPath, *out) || samePath(*runLinkPath, *out) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+		task, err := LoadJSON[FactoryTask](*taskPath)
+		if err != nil {
+			return err
+		}
+		link, err := LoadJSON[RunLink](*runLinkPath)
+		if err != nil {
+			return err
+		}
+		pack, err := BuildContextRepack(task, link, *sourceRef, *sourceDigest, *budget)
+		if err != nil {
+			return err
+		}
+		if err := WriteJSON(*out, pack); err != nil {
+			return err
+		}
+		fmt.Fprintf(stdout, "status=written\ncontext_pack=%s\ntask=%s\n", *out, pack.TaskID)
+		return nil
+	default:
+		return fmt.Errorf("unknown context-pack subcommand %q", args[0])
 	}
-	pack, err := LoadJSON[ContextPack](*path)
-	if err != nil {
-		return err
-	}
-	if err := ValidateContextPack(pack, *budget); err != nil {
-		return err
-	}
-	fmt.Fprintln(stdout, "status=valid")
-	return nil
 }
 
 func runFoundry(args []string, stdout io.Writer) error {
