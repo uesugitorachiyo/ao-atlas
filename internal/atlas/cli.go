@@ -281,6 +281,25 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 			return err
 		}
 		fmt.Fprintf(stdout, "status=written\nnode=%s\ntask=%s\n", nodeID, link.TaskID)
+	case "repair-plan":
+		if *out == "" {
+			return fmt.Errorf("--out is required")
+		}
+		if samePath(*path, *out) || samePath(*runLinkPath, *out) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+		link, err := LoadJSON[RunLink](*runLinkPath)
+		if err != nil {
+			return err
+		}
+		plan, err := BuildWorkgraphRepairPlan(workgraph, link)
+		if err != nil {
+			return err
+		}
+		if err := WriteJSON(*out, plan); err != nil {
+			return err
+		}
+		fmt.Fprintf(stdout, "status=written\ntask=%s\nrepair_tasks=%d\n", plan.TaskID, len(plan.RepairTasks))
 	default:
 		return fmt.Errorf("unknown workgraph subcommand %q", args[0])
 	}

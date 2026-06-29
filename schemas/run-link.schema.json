@@ -6,7 +6,7 @@
   "properties": {
     "contract_version": { "const": "ao.atlas.run-link.v0.1" },
     "task_id": { "type": "string", "minLength": 1 },
-    "status": { "enum": ["planned", "running", "completed", "blocked"] },
+    "status": { "enum": ["planned", "running", "completed", "blocked", "failed"] },
     "evidence": {
       "type": "object",
       "minProperties": 1,

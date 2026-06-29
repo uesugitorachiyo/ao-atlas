@@ -1,0 +1,9 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "atlas-readiness-task",
+  "status": "failed",
+  "evidence": {
+    "foundry": "evidence/foundry/atlas-readiness-failed.json"
+  },
+  "digest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+}
