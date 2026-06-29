@@ -42,10 +42,15 @@ go run ./cmd/atlas instance init \
   --out .atlas-local/demo-stack.instance.json
 
 go run ./cmd/atlas instance validate --instance examples/valid/stack-instance.json
+go run ./cmd/atlas blueprint-request validate --request examples/valid/blueprint-request.json
 go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph.json --json
 go run ./cmd/atlas context-pack validate --pack examples/valid/context-pack.json
 go run ./cmd/atlas foundry handoff emit --workgraph examples/valid/workgraph.json --out .atlas-local/foundry-handoff.json
 ```
+
+If intake is underspecified, Atlas emits a Blueprint request instead of marking
+work ready. The request is a clarification artifact only; AO Blueprint still
+owns requirements interview and build authorization.
 
 ## Readiness
 
@@ -54,4 +59,3 @@ scripts/production-readiness.sh
 ```
 
 The readiness gate must report `score=100/100` before v0.1 is considered ready.
-

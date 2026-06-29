@@ -42,6 +42,22 @@ func TestIntakeUnderspecifiedEmitsBlueprintRequest(t *testing.T) {
 	if len(request.Missing) == 0 {
 		t.Fatal("expected missing fields")
 	}
+	if err := ValidateBlueprintRequest(request); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestBlueprintRequestFixtureIsValidAndPublicSafe(t *testing.T) {
+	request, err := LoadJSON[BlueprintRequest](filepath.Join("..", "..", "examples", "valid", "blueprint-request.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateBlueprintRequest(request); err != nil {
+		t.Fatal(err)
+	}
+	if request.Status != "blueprint_required" {
+		t.Fatalf("expected blueprint_required, got %s", request.Status)
+	}
 }
 
 func TestContextPackRejectsAbsoluteLocalPath(t *testing.T) {
