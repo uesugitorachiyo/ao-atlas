@@ -874,6 +874,70 @@ func TestFoundryImportRejectsReadyNodeMissingRequiredGates(t *testing.T) {
 	}
 }
 
+func TestComplexExecutableNodeEvidenceRejectsCandidateSafeToExecuteFalse(t *testing.T) {
+	workgraph := complexNodeEvidenceWorkgraph("complex-docs-intake")
+	foundryImport := complexNodeEvidenceImport("complex-docs-intake", "safe_to_execute:true")
+	candidate := complexNodeEvidenceCandidate("complex-docs-intake", false)
+	rollback := complexNodeEvidenceRollback("complex-docs-intake", true)
+	summary := map[string]any{"first_safe_node": "complex-docs-intake"}
+
+	err := ValidateComplexExecutableNodeEvidence(workgraph, foundryImport, candidate, rollback, summary)
+	if err == nil || !strings.Contains(err.Error(), "candidate record safe_to_execute must be true") {
+		t.Fatalf("expected candidate safe_to_execute rejection, got %v", err)
+	}
+}
+
+func TestComplexExecutableNodeEvidenceRejectsRollbackSafeToExecuteFalse(t *testing.T) {
+	workgraph := complexNodeEvidenceWorkgraph("complex-docs-intake")
+	foundryImport := complexNodeEvidenceImport("complex-docs-intake", "safe_to_execute:true")
+	candidate := complexNodeEvidenceCandidate("complex-docs-intake", true)
+	rollback := complexNodeEvidenceRollback("complex-docs-intake", false)
+	summary := map[string]any{"first_safe_node": "complex-docs-intake"}
+
+	err := ValidateComplexExecutableNodeEvidence(workgraph, foundryImport, candidate, rollback, summary)
+	if err == nil || !strings.Contains(err.Error(), "rollback record safe_to_execute must be true") {
+		t.Fatalf("expected rollback safe_to_execute rejection, got %v", err)
+	}
+}
+
+func TestComplexExecutableNodeEvidenceRejectsReadyNodeImportMismatch(t *testing.T) {
+	workgraph := complexNodeEvidenceWorkgraph("complex-docs-intake")
+	foundryImport := complexNodeEvidenceImport("complex-next-node", "safe_to_execute:true")
+	candidate := complexNodeEvidenceCandidate("complex-docs-intake", true)
+	rollback := complexNodeEvidenceRollback("complex-docs-intake", true)
+	summary := map[string]any{"first_safe_node": "complex-docs-intake"}
+
+	err := ValidateComplexExecutableNodeEvidence(workgraph, foundryImport, candidate, rollback, summary)
+	if err == nil || !strings.Contains(err.Error(), "foundry import node_id must match ready node") {
+		t.Fatalf("expected import mismatch rejection, got %v", err)
+	}
+}
+
+func TestComplexExecutableNodeEvidenceRejectsConcurrentExecutableNodes(t *testing.T) {
+	workgraph := complexNodeEvidenceWorkgraph("complex-docs-intake", "complex-next-node")
+	foundryImport := complexNodeEvidenceImport("complex-docs-intake", "safe_to_execute:true")
+	candidate := complexNodeEvidenceCandidate("complex-docs-intake", true)
+	rollback := complexNodeEvidenceRollback("complex-docs-intake", true)
+	summary := map[string]any{"first_safe_node": "complex-docs-intake"}
+
+	err := ValidateComplexExecutableNodeEvidence(workgraph, foundryImport, candidate, rollback, summary)
+	if err == nil || !strings.Contains(err.Error(), "exactly one ready executable node is allowed") {
+		t.Fatalf("expected concurrent executable node rejection, got %v", err)
+	}
+}
+
+func TestComplexExecutableNodeEvidenceAcceptsOneBoundSafeNode(t *testing.T) {
+	workgraph := complexNodeEvidenceWorkgraph("complex-docs-intake")
+	foundryImport := complexNodeEvidenceImport("complex-docs-intake", "safe_to_execute:true")
+	candidate := complexNodeEvidenceCandidate("complex-docs-intake", true)
+	rollback := complexNodeEvidenceRollback("complex-docs-intake", true)
+	summary := map[string]any{"first_safe_node": "complex-docs-intake"}
+
+	if err := ValidateComplexExecutableNodeEvidence(workgraph, foundryImport, candidate, rollback, summary); err != nil {
+		t.Fatalf("expected safe node evidence to validate: %v", err)
+	}
+}
+
 func TestFoundryImportRejectsSameInputAndOutputPath(t *testing.T) {
 	var out bytes.Buffer
 	path := filepath.Join("..", "..", "examples", "valid", "workgraph.json")
@@ -1641,6 +1705,102 @@ func loadFixtureRunLink(t *testing.T, path string) RunLink {
 		t.Fatal(err)
 	}
 	return link
+}
+
+func complexNodeEvidenceWorkgraph(readyNodes ...string) Workgraph {
+	ready := map[string]bool{}
+	for _, nodeID := range readyNodes {
+		ready[nodeID] = true
+	}
+	nodes := make([]WorkgraphNode, 0, 2)
+	for _, nodeID := range []string{"complex-docs-intake", "complex-next-node"} {
+		status := "blocked"
+		blockers := []string{"dependency evidence not complete"}
+		if ready[nodeID] {
+			status = "ready"
+			blockers = nil
+		}
+		nodes = append(nodes, WorkgraphNode{
+			ID:           nodeID,
+			Status:       status,
+			FactoryTask:  complexNodeEvidenceTask(nodeID, "safe_to_execute:true"),
+			Dependencies: nil,
+			Blockers:     blockers,
+		})
+	}
+	return Workgraph{
+		ContractVersion: WorkgraphContract,
+		ID:              "complex-rehearsal-test",
+		TargetInstance:  "ao-stack",
+		Nodes:           nodes,
+	}
+}
+
+func complexNodeEvidenceImport(nodeID, safeEvidence string) FoundryImport {
+	task := complexNodeEvidenceTask(nodeID, safeEvidence)
+	return FoundryImport{
+		ContractVersion: FoundryImportContract,
+		ID:              "complex-rehearsal-test-foundry-import",
+		WorkgraphID:     "complex-rehearsal-test",
+		TargetInstance:  "ao-stack",
+		Status:          "ready_for_foundry_fixture_import",
+		SourceArtifacts: []SourceRef{{Ref: "examples/valid/workgraph.json", Digest: "sha256:0000000000000000000000000000000000000000000000000000000000000000"}},
+		Tasks: []FoundryImportTaskFixture{{
+			NodeID:            nodeID,
+			TaskID:            task.ID,
+			Path:              "tasks/" + task.ID + ".json",
+			MutationClass:     task.MutationClass,
+			WriteScope:        task.WriteScope,
+			RollbackScope:     task.RollbackScope,
+			RequiredGates:     task.RequiredGates,
+			RequiredEvidence:  task.RequiredEvidence,
+			AuthorityBoundary: task.AuthorityBoundary,
+			Task:              task,
+			TaskHash:          digestFactoryTask(task),
+		}},
+	}
+}
+
+func complexNodeEvidenceTask(nodeID, safeEvidence string) FactoryTask {
+	taskID := nodeID + "-task"
+	return FactoryTask{
+		ContractVersion:   FactoryTaskContract,
+		ID:                taskID,
+		Objective:         "Prepare a bounded complex repo mutation rehearsal node for Foundry gate evaluation.",
+		TargetFactoryRepo: "ao-atlas",
+		FactoryFolder:     "factory/complex-repo-mutation-rehearsal/" + nodeID,
+		MutationClass:     "complex_repo_mutation",
+		Acceptance:        []string{"node evidence is internally consistent"},
+		NonGoals:          []string{"do not execute live mutation from Atlas"},
+		WriteScope:        []string{"factory/complex-repo-mutation-rehearsal/" + nodeID},
+		RequiredGates:     []string{"atlas_complex_node_gate", "rollback_record_ready"},
+		RollbackScope:     []string{"factory/complex-repo-mutation-rehearsal/" + nodeID},
+		Verification:      []string{"go test ./..."},
+		RequiredEvidence:  []string{"candidate_record", "rollback_record", safeEvidence},
+		SafetyLimits:      []string{"Atlas emits evidence only; Foundry controls execution"},
+		AuthorityBoundary: "atlas_evidence_only_foundry_executes",
+		ContextPackRefs:   []string{"examples/valid/context-pack.json"},
+	}
+}
+
+func complexNodeEvidenceCandidate(nodeID string, safe bool) map[string]any {
+	return map[string]any{
+		"node_id":          nodeID,
+		"task_id":          nodeID + "-task",
+		"status":           "ready",
+		"executable_ready": true,
+		"safe_to_execute":  safe,
+		"required_gates":   []any{"atlas_complex_node_gate", "rollback_record_ready"},
+	}
+}
+
+func complexNodeEvidenceRollback(nodeID string, safe bool) map[string]any {
+	return map[string]any{
+		"node_id":         nodeID,
+		"task_id":         nodeID + "-task",
+		"status":          "ready",
+		"safe_to_execute": safe,
+	}
 }
 
 func containsString(values []string, want string) bool {
