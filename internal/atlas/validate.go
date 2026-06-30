@@ -559,8 +559,8 @@ func orderedEvidence(values map[string]bool) []string {
 }
 
 func uniqueStrings(values []string) []string {
-	seen := map[string]bool{}
-	result := []string{}
+	seen := make(map[string]bool, len(values))
+	result := make([]string, 0, len(values))
 	for _, value := range values {
 		if seen[value] {
 			continue
