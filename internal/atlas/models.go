@@ -126,6 +126,31 @@ type MutationClassDefinition struct {
 	PromotionRequirements []string `json:"promotion_requirements"`
 }
 
+type LowRiskCodeDenialAudit struct {
+	SchemaVersion                    string   `json:"schema_version"`
+	Status                           string   `json:"status"`
+	MutationClass                    string   `json:"mutation_class"`
+	CurrentProvenLiveClass           string   `json:"current_proven_live_class"`
+	NextDeniedClass                  string   `json:"next_denied_class"`
+	SafeToRequest                    bool     `json:"safe_to_request"`
+	SafeToExecute                    bool     `json:"safe_to_execute"`
+	MissingPolicyEvidence            []string `json:"missing_policy_evidence"`
+	MissingRollbackEvidence          []string `json:"missing_rollback_evidence"`
+	MissingSentinelPromoterEvidence  []string `json:"missing_sentinel_promoter_evidence"`
+	SentinelState                    string   `json:"sentinel_state"`
+	PromoterState                    string   `json:"promoter_state"`
+	CIRequirements                   []string `json:"ci_requirements"`
+	ExactNextAction                  string   `json:"exact_next_action"`
+	DenialReason                     string   `json:"denial_reason"`
+	SchedulesWork                    bool     `json:"schedules_work"`
+	ExecutesWork                     bool     `json:"executes_work"`
+	ApprovesWork                     bool     `json:"approves_work"`
+	MutatesRepositories              bool     `json:"mutates_repositories"`
+	CallsProviders                   bool     `json:"calls_providers"`
+	ReleaseOrPublishAllowed          bool     `json:"release_or_publish_allowed"`
+	FullyUnsupervisedMutationClaimed bool     `json:"fully_unsupervised_mutation_claimed"`
+}
+
 type FactoryTask struct {
 	ContractVersion   string   `json:"contract_version"`
 	ID                string   `json:"id"`

@@ -30,6 +30,7 @@ const (
 	RunLinkContract                = "ao.atlas.run-link.v0.1"
 	BlueprintRequestContract       = "ao.atlas.blueprint-request.v0.1"
 	MutationClassModelContract     = "ao.atlas.mutation-classes.v0.1"
+	LowRiskCodeDenialAuditContract = "ao.atlas.low-risk-code-denial-audit.v0.1"
 )
 
 var digestPattern = regexp.MustCompile(`^sha256:[0-9a-f]{64}$`)
@@ -725,6 +726,82 @@ func requiredMutationClassNames() map[string]bool {
 	}
 }
 
+func ValidateLowRiskCodeDenialAudit(audit LowRiskCodeDenialAudit) error {
+	var errs []string
+	requireContract(&errs, "low_risk_code_denial_audit", audit.SchemaVersion, LowRiskCodeDenialAuditContract)
+	if audit.Status != "blocked" {
+		errs = append(errs, "status must be blocked")
+	}
+	if audit.MutationClass != "low_risk_code" {
+		errs = append(errs, "mutation_class must be low_risk_code")
+	}
+	if audit.CurrentProvenLiveClass != "test_only" {
+		errs = append(errs, "current_proven_live_class must be test_only")
+	}
+	if audit.NextDeniedClass != "low_risk_code" {
+		errs = append(errs, "next_denied_class must be low_risk_code")
+	}
+	if !audit.SafeToRequest {
+		errs = append(errs, "safe_to_request must be true for dry-run continuation")
+	}
+	if audit.SafeToExecute {
+		errs = append(errs, "safe_to_execute must be false")
+	}
+	requireList(&errs, "missing_policy_evidence", audit.MissingPolicyEvidence)
+	requireList(&errs, "missing_rollback_evidence", audit.MissingRollbackEvidence)
+	requireList(&errs, "missing_sentinel_promoter_evidence", audit.MissingSentinelPromoterEvidence)
+	requireList(&errs, "ci_requirements", audit.CIRequirements)
+	requireField(&errs, "sentinel_state", audit.SentinelState)
+	requireField(&errs, "promoter_state", audit.PromoterState)
+	requireField(&errs, "exact_next_action", audit.ExactNextAction)
+	requireField(&errs, "denial_reason", audit.DenialReason)
+	for _, want := range []struct {
+		field  string
+		values []string
+		item   string
+	}{
+		{"missing_policy_evidence", audit.MissingPolicyEvidence, "policy:low_risk_code_live_promotion"},
+		{"missing_policy_evidence", audit.MissingPolicyEvidence, "command_readback:low_risk_code_live"},
+		{"missing_rollback_evidence", audit.MissingRollbackEvidence, "rollback_proof:low_risk_code_live"},
+		{"missing_sentinel_promoter_evidence", audit.MissingSentinelPromoterEvidence, "sentinel_clear:low_risk_code_live"},
+		{"missing_sentinel_promoter_evidence", audit.MissingSentinelPromoterEvidence, "promoter_promotion:low_risk_code_live"},
+		{"ci_requirements", audit.CIRequirements, "ci_passed:low_risk_code_live"},
+	} {
+		if !containsValue(want.values, want.item) {
+			errs = append(errs, want.field+" must include "+want.item)
+		}
+	}
+	if audit.ExactNextAction != "build_low_risk_code_promotion_prerequisites" {
+		errs = append(errs, "exact_next_action must be build_low_risk_code_promotion_prerequisites")
+	}
+	if audit.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if audit.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if audit.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	if audit.MutatesRepositories {
+		errs = append(errs, "mutates_repositories must be false")
+	}
+	if audit.CallsProviders {
+		errs = append(errs, "calls_providers must be false")
+	}
+	if audit.ReleaseOrPublishAllowed {
+		errs = append(errs, "release_or_publish_allowed must be false")
+	}
+	if audit.FullyUnsupervisedMutationClaimed {
+		errs = append(errs, "fully_unsupervised_mutation_claimed must be false")
+	}
+	checkPublicStrings(&errs, "missing_policy_evidence", audit.MissingPolicyEvidence, true)
+	checkPublicStrings(&errs, "missing_rollback_evidence", audit.MissingRollbackEvidence, true)
+	checkPublicStrings(&errs, "missing_sentinel_promoter_evidence", audit.MissingSentinelPromoterEvidence, true)
+	checkPublicStrings(&errs, "ci_requirements", audit.CIRequirements, true)
+	return joinErrors(errs)
+}
+
 func ValidateFactoryTask(task FactoryTask) error {
 	var errs []string
 	requireContract(&errs, "factory_task", task.ContractVersion, FactoryTaskContract)
@@ -1322,6 +1399,15 @@ func checkPublicPath(errs *[]string, field, value string, rejectAbsolute bool) {
 func oneOf(value string, allowed ...string) bool {
 	for _, item := range allowed {
 		if value == item {
+			return true
+		}
+	}
+	return false
+}
+
+func containsValue(values []string, want string) bool {
+	for _, value := range values {
+		if value == want {
 			return true
 		}
 	}
