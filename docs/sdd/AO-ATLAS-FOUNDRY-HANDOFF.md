@@ -14,17 +14,27 @@ atlas foundry handoff emit --workgraph <path> --out <path>
 atlas foundry import --workgraph <path> --instance <path> --out <dir> [--node <id>] [--json]
 ```
 
-`foundry import` writes a manifest plus one task fixture per dependency-ready
-workgraph node, or one selected ready node when `--node` is provided. The
+Ready `blueprint import` output and direct `foundry import` output both write
+a manifest plus one task fixture per dependency-ready workgraph node, or one
+selected ready node when `--node` is provided. They also write
+`foundry-continuation-handoff.json` and `foundry-continuation-prompt.md`. The
 manifest records the source workgraph and stack-instance paths with sha256
 digests, preserves context-pack refs, and carries authority-ladder metadata for
 each ready node: `mutation_class`, `write_scope`, `rollback_scope`,
-`required_gates`, `required_evidence`, and `authority_boundary`. Atlas rejects
-Foundry import for ready nodes that lack mutation class or required gate
-metadata. The manifest keeps `schedules_work=false`, `executes_work=false`,
-and `approves_work=false`. The output is local fixture material for Foundry
-import tests or operator review. Atlas still does not schedule, execute,
-approve, publish, call providers, or mutate sibling repos.
+`required_gates`, `required_evidence`, and `authority_boundary`. The
+continuation handoff records the AO Foundry target folder, `codex --yolo`
+command, full paste-ready Foundry prompt, source artifact paths, first safe
+node, node counts, class boundary, stop conditions, and hard safety
+prohibitions. Atlas rejects Foundry import for ready nodes that lack mutation
+class or required gate metadata. The manifest and continuation handoff keep
+`schedules_work=false`, `executes_work=false`, and `approves_work=false`.
+Atlas still does not schedule, execute, approve, publish, call providers, or
+mutate sibling repos.
+
+Atlas first-phase completion reports must cite the continuation prompt path and
+the exact operator action: move to the AO Foundry checkout, run
+`codex --yolo`, and paste the generated prompt. Reports must not use an
+inspection-only read command as the primary next action for Foundry.
 
 When the source workgraph represents the first tiny docs-only live mutation
 class, the import material remains non-authoritative. It may carry task

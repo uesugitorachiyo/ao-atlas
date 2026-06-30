@@ -104,6 +104,11 @@ func runBlueprint(args []string, stdout io.Writer) error {
 		}
 	} else {
 		fmt.Fprintf(stdout, "status=%s\nblueprint_import=%s\nready_for_foundry=%t\n", result.Record.Status, filepath.ToSlash(filepath.Join(*outDir, "blueprint-import.json")), result.Record.ReadyForFoundry)
+		if result.Record.ReadyForFoundry {
+			handoffPath := filepath.ToSlash(filepath.Join(*outDir, "foundry-import", "foundry-continuation-handoff.json"))
+			promptPath := filepath.ToSlash(filepath.Join(*outDir, "foundry-import", "foundry-continuation-prompt.md"))
+			fmt.Fprintf(stdout, "foundry_continuation_handoff=%s\nfoundry_continuation_prompt=%s\nnext_recommended_action=%s\nMove to %s\nRun %s\nPaste this prompt\n", handoffPath, promptPath, result.Handoff.NextRecommendedAction, result.Handoff.TargetFolder, result.Handoff.Command)
+		}
 	}
 	return err
 }
@@ -635,6 +640,9 @@ func runFoundry(args []string, stdout io.Writer) error {
 		instancePath := fs.String("instance", "", "stack instance path")
 		nodeID := fs.String("node", "", "optional workgraph node id")
 		out := fs.String("out", "", "output directory")
+		blueprintPackPath := fs.String("blueprint-pack", "", "optional Blueprint pack path for Foundry continuation handoff")
+		atlasImportPath := fs.String("atlas-import", "", "optional Atlas import path for Foundry continuation handoff")
+		missionContinuationPath := fs.String("mission-continuation", "", "optional mission continuation evidence path for Foundry continuation handoff")
 		jsonOut := fs.Bool("json", false, "json output")
 		if err := fs.Parse(args[1:]); err != nil {
 			return err
@@ -699,7 +707,25 @@ func runFoundry(args []string, stdout io.Writer) error {
 			if err := WriteJSON(manifestPath, foundryImport); err != nil {
 				return err
 			}
-			fmt.Fprintf(stdout, "status=written\nfoundry_import=%s\ntasks=%d\n", manifestPath, len(foundryImport.Tasks))
+			continuation, err := BuildFoundryContinuationHandoff(workgraph, foundryImport, FoundryContinuationHandoffInputs{
+				BlueprintPackPath:               *blueprintPackPath,
+				AtlasImportPath:                 *atlasImportPath,
+				WorkgraphPath:                   *path,
+				FoundryImportPath:               manifestPath,
+				MissionContinuationEvidencePath: *missionContinuationPath,
+			})
+			if err != nil {
+				return err
+			}
+			continuationPath := filepath.Join(*out, "foundry-continuation-handoff.json")
+			if err := WriteJSON(continuationPath, continuation); err != nil {
+				return err
+			}
+			promptPath := filepath.Join(*out, "foundry-continuation-prompt.md")
+			if err := WriteFoundryContinuationPrompt(promptPath, continuation); err != nil {
+				return err
+			}
+			fmt.Fprintf(stdout, "status=written\nfoundry_import=%s\nfoundry_continuation_handoff=%s\nfoundry_continuation_prompt=%s\ntasks=%d\nnext_recommended_action=%s\nMove to %s\nRun %s\nPaste this prompt\n", manifestPath, continuationPath, promptPath, len(foundryImport.Tasks), continuation.NextRecommendedAction, continuation.TargetFolder, continuation.Command)
 		}
 		if *jsonOut {
 			return printJSON(stdout, foundryImport)

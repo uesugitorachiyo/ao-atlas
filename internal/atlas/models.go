@@ -138,30 +138,31 @@ type BlueprintCandidateSelection struct {
 }
 
 type BlueprintImport struct {
-	ContractVersion         string                      `json:"contract_version"`
-	ID                      string                      `json:"id"`
-	ProjectID               string                      `json:"project_id"`
-	Status                  string                      `json:"status"`
-	Reason                  string                      `json:"reason"`
-	BlueprintPack           SourceRef                   `json:"blueprint_pack"`
-	BuildAuthorization      SourceRef                   `json:"build_authorization,omitempty"`
-	TargetInstance          string                      `json:"target_instance"`
-	WorkgraphID             string                      `json:"workgraph_id,omitempty"`
-	MutationClass           string                      `json:"mutation_class,omitempty"`
-	CandidateSelection      BlueprintCandidateSelection `json:"candidate_selection,omitempty"`
-	DownstreamFoundryImport SourceRef                   `json:"downstream_foundry_import,omitempty"`
-	Digests                 map[string]string           `json:"digests"`
-	SafetyLimits            []string                    `json:"safety_limits"`
-	BlockingNextActions     []string                    `json:"blocking_next_actions,omitempty"`
-	ReadyForFoundry         bool                        `json:"ready_for_foundry"`
-	SafeToExecute           bool                        `json:"safe_to_execute"`
-	LiveExecutionProven     bool                        `json:"live_execution_proven"`
-	SchedulesWork           bool                        `json:"schedules_work"`
-	ExecutesWork            bool                        `json:"executes_work"`
-	ApprovesWork            bool                        `json:"approves_work"`
-	MutatesRepositories     bool                        `json:"mutates_repositories"`
-	CallsProviders          bool                        `json:"calls_providers"`
-	ReleaseOrPublishAllowed bool                        `json:"release_or_publish_allowed"`
+	ContractVersion                      string                      `json:"contract_version"`
+	ID                                   string                      `json:"id"`
+	ProjectID                            string                      `json:"project_id"`
+	Status                               string                      `json:"status"`
+	Reason                               string                      `json:"reason"`
+	BlueprintPack                        SourceRef                   `json:"blueprint_pack"`
+	BuildAuthorization                   SourceRef                   `json:"build_authorization,omitempty"`
+	TargetInstance                       string                      `json:"target_instance"`
+	WorkgraphID                          string                      `json:"workgraph_id,omitempty"`
+	MutationClass                        string                      `json:"mutation_class,omitempty"`
+	CandidateSelection                   BlueprintCandidateSelection `json:"candidate_selection,omitempty"`
+	DownstreamFoundryImport              SourceRef                   `json:"downstream_foundry_import,omitempty"`
+	DownstreamFoundryContinuationHandoff SourceRef                   `json:"downstream_foundry_continuation_handoff,omitempty"`
+	Digests                              map[string]string           `json:"digests"`
+	SafetyLimits                         []string                    `json:"safety_limits"`
+	BlockingNextActions                  []string                    `json:"blocking_next_actions,omitempty"`
+	ReadyForFoundry                      bool                        `json:"ready_for_foundry"`
+	SafeToExecute                        bool                        `json:"safe_to_execute"`
+	LiveExecutionProven                  bool                        `json:"live_execution_proven"`
+	SchedulesWork                        bool                        `json:"schedules_work"`
+	ExecutesWork                         bool                        `json:"executes_work"`
+	ApprovesWork                         bool                        `json:"approves_work"`
+	MutatesRepositories                  bool                        `json:"mutates_repositories"`
+	CallsProviders                       bool                        `json:"calls_providers"`
+	ReleaseOrPublishAllowed              bool                        `json:"release_or_publish_allowed"`
 }
 
 type BlueprintImportPaths struct {
@@ -181,6 +182,7 @@ type BlueprintImportResult struct {
 	ContextPacks  []ContextPack
 	Workgraph     Workgraph
 	FoundryImport FoundryImport
+	Handoff       FoundryContinuationHandoff
 }
 
 type Workgraph struct {
@@ -325,6 +327,31 @@ type FoundryImport struct {
 	SchedulesWork   bool                       `json:"schedules_work"`
 	ExecutesWork    bool                       `json:"executes_work"`
 	ApprovesWork    bool                       `json:"approves_work"`
+}
+
+type FoundryContinuationHandoff struct {
+	ContractVersion                 string   `json:"contract_version"`
+	ID                              string   `json:"id"`
+	TargetFolder                    string   `json:"target_folder"`
+	Command                         string   `json:"command"`
+	NextRecommendedAction           string   `json:"next_recommended_action"`
+	Prompt                          string   `json:"prompt"`
+	BlueprintPackPath               string   `json:"blueprint_pack_path"`
+	AtlasImportPath                 string   `json:"atlas_import_path"`
+	WorkgraphPath                   string   `json:"workgraph_path"`
+	FoundryImportPath               string   `json:"foundry_import_path"`
+	MissionContinuationEvidencePath string   `json:"mission_continuation_evidence_path,omitempty"`
+	FirstSafeNode                   string   `json:"first_safe_node"`
+	TotalNodeCount                  int      `json:"total_node_count"`
+	CompletedNodeCount              int      `json:"completed_node_count"`
+	BlockedNodeCount                int      `json:"blocked_node_count"`
+	ReadyNodeCount                  int      `json:"ready_node_count"`
+	ClassBoundary                   string   `json:"class_boundary"`
+	StopConditions                  []string `json:"stop_conditions"`
+	SafetyProhibitions              []string `json:"safety_prohibitions"`
+	SchedulesWork                   bool     `json:"schedules_work"`
+	ExecutesWork                    bool     `json:"executes_work"`
+	ApprovesWork                    bool     `json:"approves_work"`
 }
 
 type FoundryImportTaskFixture struct {

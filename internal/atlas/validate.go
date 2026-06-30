@@ -27,6 +27,7 @@ const (
 	ContextPackContract                 = "ao.atlas.context-pack.v0.1"
 	FoundryHandoffContract              = "ao.atlas.foundry-handoff.v0.1"
 	FoundryImportContract               = "ao.atlas.foundry-import.v0.1"
+	FoundryContinuationHandoffContract  = "ao.atlas.foundry-continuation-handoff.v0.1"
 	RunLinkContract                     = "ao.atlas.run-link.v0.1"
 	BlueprintRequestContract            = "ao.atlas.blueprint-request.v0.1"
 	BlueprintImportContract             = "ao.atlas.blueprint-import.v0.1"
@@ -1056,6 +1057,60 @@ func ValidateFoundryImport(foundryImport FoundryImport) error {
 	return joinErrors(errs)
 }
 
+func ValidateFoundryContinuationHandoff(handoff FoundryContinuationHandoff) error {
+	var errs []string
+	requireContract(&errs, "foundry_continuation_handoff", handoff.ContractVersion, FoundryContinuationHandoffContract)
+	requireField(&errs, "id", handoff.ID)
+	requireField(&errs, "target_folder", handoff.TargetFolder)
+	requireField(&errs, "command", handoff.Command)
+	requireField(&errs, "next_recommended_action", handoff.NextRecommendedAction)
+	requireField(&errs, "prompt", handoff.Prompt)
+	requireField(&errs, "blueprint_pack_path", handoff.BlueprintPackPath)
+	requireField(&errs, "atlas_import_path", handoff.AtlasImportPath)
+	requireField(&errs, "workgraph_path", handoff.WorkgraphPath)
+	requireField(&errs, "foundry_import_path", handoff.FoundryImportPath)
+	requireField(&errs, "first_safe_node", handoff.FirstSafeNode)
+	requireField(&errs, "class_boundary", handoff.ClassBoundary)
+	requireList(&errs, "stop_conditions", handoff.StopConditions)
+	requireList(&errs, "safety_prohibitions", handoff.SafetyProhibitions)
+	if handoff.Command != "codex --yolo" {
+		errs = append(errs, "command must be codex --yolo")
+	}
+	for _, required := range []string{
+		"Move to AO Foundry",
+		"Run codex --yolo",
+		"Paste this prompt",
+		"do not stop after import validation",
+		"do not stop after one gate artifact",
+		"do not stop after one node",
+		"Continue until all generated slices/tasks/nodes are consumed or a true hard blocker remains",
+		"Atlas must not execute live mutation",
+	} {
+		if !strings.Contains(handoff.Prompt, required) {
+			errs = append(errs, "prompt must include "+required)
+		}
+	}
+	if strings.Contains(handoff.NextRecommendedAction, "cat ") {
+		errs = append(errs, "next_recommended_action must not use cat as the primary action")
+	}
+	if handoff.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if handoff.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if handoff.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	if handoff.TotalNodeCount < 1 {
+		errs = append(errs, "total_node_count must be positive")
+	}
+	if handoff.ReadyNodeCount < 1 {
+		errs = append(errs, "ready_node_count must be positive")
+	}
+	return joinErrors(errs)
+}
+
 func ValidateRunLink(link RunLink) error {
 	var errs []string
 	requireContract(&errs, "run_link", link.ContractVersion, RunLinkContract)
@@ -1223,6 +1278,80 @@ func BuildFoundryImport(workgraph Workgraph) (FoundryImport, error) {
 	return BuildFoundryImportForNodes(workgraph, nil, nil)
 }
 
+type FoundryContinuationHandoffInputs struct {
+	BlueprintPackPath               string
+	AtlasImportPath                 string
+	WorkgraphPath                   string
+	FoundryImportPath               string
+	MissionContinuationEvidencePath string
+}
+
+func BuildFoundryContinuationHandoff(workgraph Workgraph, foundryImport FoundryImport, inputs FoundryContinuationHandoffInputs) (FoundryContinuationHandoff, error) {
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return FoundryContinuationHandoff{}, err
+	}
+	if err := ValidateFoundryImport(foundryImport); err != nil {
+		return FoundryContinuationHandoff{}, err
+	}
+	firstSafeNode := ""
+	if len(foundryImport.Tasks) > 0 {
+		firstSafeNode = foundryImport.Tasks[0].NodeID
+	}
+	counts := map[string]int{}
+	for _, node := range workgraph.Nodes {
+		counts[node.Status]++
+	}
+	classBoundary := foundryContinuationClassBoundary(foundryImport)
+	handoff := FoundryContinuationHandoff{
+		ContractVersion:                 FoundryContinuationHandoffContract,
+		ID:                              foundryImport.ID + "-continuation-handoff",
+		TargetFolder:                    foundryContinuationTargetFolder(),
+		Command:                         "codex --yolo",
+		BlueprintPackPath:               slashOrNotProvided(inputs.BlueprintPackPath),
+		AtlasImportPath:                 slashOrNotProvided(inputs.AtlasImportPath),
+		WorkgraphPath:                   slashOrNotProvided(inputs.WorkgraphPath),
+		FoundryImportPath:               slashOrNotProvided(inputs.FoundryImportPath),
+		MissionContinuationEvidencePath: slashOrNotProvided(inputs.MissionContinuationEvidencePath),
+		FirstSafeNode:                   firstSafeNode,
+		TotalNodeCount:                  len(workgraph.Nodes),
+		CompletedNodeCount:              counts["completed"],
+		BlockedNodeCount:                counts["blocked"],
+		ReadyNodeCount:                  counts["ready"],
+		ClassBoundary:                   classBoundary,
+		StopConditions: []string{
+			"done",
+			"final denial",
+			"hard blocker",
+			"CI failure",
+			"unsafe scope drift",
+			"kill switch",
+		},
+		SafetyProhibitions: []string{
+			"Atlas must not execute live mutation",
+			"no direct main mutation",
+			"no release deploy publish upload tag provider call credential use dependency update auth policy widening secret env exposure or config expansion",
+			"do not claim fully_unsupervised_complex_mutation or RSI is proven",
+			"do not claim complex_repo_mutation is live-proven unless downstream evidence proves it",
+		},
+		SchedulesWork: false,
+		ExecutesWork:  false,
+		ApprovesWork:  false,
+	}
+	handoff.NextRecommendedAction = "Move to " + handoff.TargetFolder + "; Run codex --yolo; Paste this prompt"
+	handoff.Prompt = buildFoundryContinuationPrompt(handoff)
+	if err := ValidateFoundryContinuationHandoff(handoff); err != nil {
+		return FoundryContinuationHandoff{}, err
+	}
+	return handoff, nil
+}
+
+func WriteFoundryContinuationPrompt(path string, handoff FoundryContinuationHandoff) error {
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		return err
+	}
+	return os.WriteFile(path, []byte(foundryContinuationPromptMarkdown(handoff)), 0o644)
+}
+
 func BuildFoundryImportForNodes(workgraph Workgraph, selectedNodes []string, sourceArtifacts []SourceRef) (FoundryImport, error) {
 	if err := ValidateWorkgraph(workgraph); err != nil {
 		return FoundryImport{}, err
@@ -1309,6 +1438,92 @@ func BuildFoundryImportForNodes(workgraph Workgraph, selectedNodes []string, sou
 		return FoundryImport{}, err
 	}
 	return foundryImport, nil
+}
+
+func foundryContinuationTargetFolder() string {
+	return strings.Join([]string{"", "Users", "torachiyouesugi", "Documents", "public", "ao-foundry"}, "/")
+}
+
+func slashOrNotProvided(path string) string {
+	if strings.TrimSpace(path) == "" {
+		return "not_provided"
+	}
+	return filepath.ToSlash(path)
+}
+
+func foundryContinuationClassBoundary(foundryImport FoundryImport) string {
+	classes := map[string]bool{}
+	for _, task := range foundryImport.Tasks {
+		if strings.TrimSpace(task.MutationClass) != "" {
+			classes[task.MutationClass] = true
+		}
+	}
+	if len(classes) == 0 {
+		return "Atlas import only; Foundry must preserve Atlas no-execution boundary"
+	}
+	names := make([]string, 0, len(classes))
+	for name := range classes {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+	return "Atlas import only for " + strings.Join(names, ", ") + "; Foundry must preserve Atlas no-execution boundary"
+}
+
+func buildFoundryContinuationPrompt(handoff FoundryContinuationHandoff) string {
+	var b strings.Builder
+	b.WriteString("You are AO Foundry. Continue from the AO Atlas first-phase handoff.\n\n")
+	b.WriteString("Source artifacts:\n")
+	b.WriteString("- Blueprint pack: " + handoff.BlueprintPackPath + "\n")
+	b.WriteString("- Atlas import: " + handoff.AtlasImportPath + "\n")
+	b.WriteString("- Atlas workgraph: " + handoff.WorkgraphPath + "\n")
+	b.WriteString("- Foundry import: " + handoff.FoundryImportPath + "\n")
+	if handoff.MissionContinuationEvidencePath != "not_provided" {
+		b.WriteString("- Mission continuation evidence: " + handoff.MissionContinuationEvidencePath + "\n")
+	}
+	b.WriteString("\nCurrent Atlas readback:\n")
+	b.WriteString(fmt.Sprintf("- first safe node: %s\n", handoff.FirstSafeNode))
+	b.WriteString(fmt.Sprintf("- total nodes: %d\n", handoff.TotalNodeCount))
+	b.WriteString(fmt.Sprintf("- completed nodes: %d\n", handoff.CompletedNodeCount))
+	b.WriteString(fmt.Sprintf("- ready nodes: %d\n", handoff.ReadyNodeCount))
+	b.WriteString(fmt.Sprintf("- blocked nodes: %d\n", handoff.BlockedNodeCount))
+	b.WriteString("- class boundary: " + handoff.ClassBoundary + "\n\n")
+	b.WriteString("Required continuation behavior:\n")
+	b.WriteString("- Move to AO Foundry.\n")
+	b.WriteString("- Run codex --yolo.\n")
+	b.WriteString("- Paste this prompt.\n")
+	b.WriteString("- Import and validate the Foundry import.\n")
+	b.WriteString("- do not stop after import validation.\n")
+	b.WriteString("- do not stop after one gate artifact.\n")
+	b.WriteString("- do not stop after one node.\n")
+	b.WriteString("- Continue until all generated slices/tasks/nodes are consumed or a true hard blocker remains.\n")
+	b.WriteString("- If evidence/schema/readback support is missing and can be safely implemented, implement it with PR/CI/merge.\n\n")
+	b.WriteString("Hard safety prohibitions:\n")
+	for _, prohibition := range handoff.SafetyProhibitions {
+		b.WriteString("- " + prohibition + "\n")
+	}
+	b.WriteString("- fully_unsupervised_complex_mutation remains denied.\n")
+	b.WriteString("- RSI remains denied.\n\n")
+	b.WriteString("Stop conditions:\n")
+	for _, condition := range handoff.StopConditions {
+		b.WriteString("- " + condition + "\n")
+	}
+	b.WriteString("\nStop only on done, final denial, hard blocker, CI failure, unsafe scope drift, or kill switch.\n")
+	return b.String()
+}
+
+func foundryContinuationPromptMarkdown(handoff FoundryContinuationHandoff) string {
+	var b strings.Builder
+	b.WriteString("# AO Foundry Continuation Handoff\n\n")
+	b.WriteString("Move to AO Foundry:\n\n")
+	b.WriteString("```sh\n")
+	b.WriteString("cd " + handoff.TargetFolder + "\n")
+	b.WriteString("codex --yolo\n")
+	b.WriteString("```\n\n")
+	b.WriteString("Paste this prompt:\n\n")
+	b.WriteString("```text\n")
+	b.WriteString(handoff.Prompt)
+	b.WriteString("```\n")
+	return b.String()
 }
 
 func digestFoundryImportSources(workgraph Workgraph) string {

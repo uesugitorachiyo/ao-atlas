@@ -57,6 +57,7 @@ required_files=(
   schemas/context-pack.schema.json
   schemas/foundry-handoff.schema.json
   schemas/foundry-import.schema.json
+  schemas/foundry-continuation-handoff.schema.json
   schemas/run-link.schema.json
 )
 for file in "${required_files[@]}"; do
@@ -87,6 +88,11 @@ test -s "$OUT/mission-status.json"
 test -s "$OUT/blueprint-import-low-risk-code/blueprint-import.json"
 test -s "$OUT/blueprint-import-low-risk-code/workgraph.json"
 test -s "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-import.json"
+test -s "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-handoff.json"
+test -s "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
+grep -q "Move to AO Foundry" "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
+grep -q "Run codex --yolo" "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
+grep -q "Paste this prompt" "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
 "$BIN" mutation-classes validate --model examples/valid/mutation-classes.json >/dev/null
 "$BIN" factory-task validate --task examples/valid/factory-task.json >/dev/null
 "$BIN" factory materialize --task examples/valid/factory-task.json --out "$OUT/factory-materialization" --dry-run >/dev/null
@@ -116,6 +122,16 @@ test -s "$OUT/workgraph-repair-plan-failed.json"
 "$BIN" foundry handoff emit --workgraph examples/valid/workgraph.json --out "$OUT/foundry-handoff.json" >/dev/null
 "$BIN" foundry import --workgraph examples/valid/workgraph.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import" >/dev/null
 test -s "$OUT/foundry-import/foundry-import.json"
+test -s "$OUT/foundry-import/foundry-continuation-handoff.json"
+test -s "$OUT/foundry-import/foundry-continuation-prompt.md"
+grep -q "Move to AO Foundry" "$OUT/foundry-import/foundry-continuation-prompt.md"
+grep -q "Run codex --yolo" "$OUT/foundry-import/foundry-continuation-prompt.md"
+grep -q "Paste this prompt" "$OUT/foundry-import/foundry-continuation-prompt.md"
+grep -q "Stop only on done, final denial, hard blocker, CI failure, unsafe scope drift, or kill switch." "$OUT/foundry-import/foundry-continuation-prompt.md"
+if grep -Eq 'cat .*(foundry-import|foundry-continuation)' "$OUT/foundry-import/foundry-continuation-prompt.md"; then
+  echo "Foundry continuation prompt used inspection-only cat action" >&2
+  exit 1
+fi
 "$BIN" foundry import --workgraph examples/valid/workgraph.json --instance examples/valid/stack-instance.json --node readiness-ready --json >/dev/null
 "$BIN" foundry import --workgraph examples/valid/workgraph-multiple-ready.json --instance examples/valid/stack-instance.json --out "$OUT/foundry-import-multiple" >/dev/null
 test -s "$OUT/foundry-import-multiple/foundry-import.json"
