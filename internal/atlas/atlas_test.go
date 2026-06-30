@@ -915,6 +915,45 @@ func TestMissionStatusReportsLowRiskDryRunReadinessWithoutLiveExecution(t *testi
 	}
 }
 
+func TestLowRiskCodeDenialAuditExplainsBlockedExecution(t *testing.T) {
+	audit, err := LoadJSON[LowRiskCodeDenialAudit](filepath.Join("..", "..", "examples", "valid", "low-risk-code-denial-audit.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateLowRiskCodeDenialAudit(audit); err != nil {
+		t.Fatal(err)
+	}
+	if audit.MutationClass != "low_risk_code" ||
+		audit.CurrentProvenLiveClass != "test_only" ||
+		audit.NextDeniedClass != "low_risk_code" ||
+		audit.SafeToExecute {
+		t.Fatalf("unexpected low-risk denial audit boundary: %#v", audit)
+	}
+	for _, want := range []string{
+		"policy:low_risk_code_live_promotion",
+		"rollback_proof:low_risk_code_live",
+		"sentinel_clear:low_risk_code_live",
+		"promoter_promotion:low_risk_code_live",
+		"command_readback:low_risk_code_live",
+		"ci_passed:low_risk_code_live",
+	} {
+		if !containsString(audit.MissingPolicyEvidence, want) &&
+			!containsString(audit.MissingRollbackEvidence, want) &&
+			!containsString(audit.MissingSentinelPromoterEvidence, want) &&
+			!containsString(audit.CIRequirements, want) {
+			t.Fatalf("low-risk denial audit missing %s: %#v", want, audit)
+		}
+	}
+	if audit.SentinelState != "missing_live_no_hold" ||
+		audit.PromoterState != "missing_live_promotion" ||
+		audit.ExactNextAction != "build_low_risk_code_promotion_prerequisites" {
+		t.Fatalf("low-risk denial audit states/next action drifted: %#v", audit)
+	}
+	if audit.SchedulesWork || audit.ExecutesWork || audit.ApprovesWork {
+		t.Fatalf("Atlas denial audit must remain read-only: %#v", audit)
+	}
+}
+
 func TestMissionStatusReportsMultiRepoLowRiskDryRunReadinessWithoutLiveExecution(t *testing.T) {
 	var out bytes.Buffer
 	code := Run([]string{

@@ -117,3 +117,10 @@ scripts/atlas-foundry-roundtrip-smoke.sh
 The readiness gate must report `score=100/100` before v0.1 is considered ready.
 Before a stable tag or release candidate, also run the sibling Foundry
 roundtrip smoke so the Atlas -> Foundry boundary is proven end to end.
+
+`examples/valid/low-risk-code-denial-audit.json` is the read-only Atlas audit
+for the current authority boundary: `test_only` is the highest proven live
+class, `low_risk_code` may be requested for dry-run/readback work, and live
+code execution remains denied until exact policy promotion, rollback proof,
+Sentinel clear verdict, Promoter promotion, Command readback, and PR CI evidence
+exist for the class.
