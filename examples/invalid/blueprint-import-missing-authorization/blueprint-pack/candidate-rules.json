@@ -1,0 +1,21 @@
+{
+  "schema_version": "ao.atlas.blueprint-candidate-rules.v0.1",
+  "project_id": "missing-authorization",
+  "target_instance": "demo-stack",
+  "workgraph_id": "missing-authorization-workgraph",
+  "candidate_id": "missing-authorization-candidate",
+  "mutation_class": "low_risk_code",
+  "target_factory_repo": "ao-foundry",
+  "factory_folder": "factory/missing-authorization",
+  "objective": "Prove missing authorization blocks Atlas import.",
+  "acceptance_criteria": ["blueprint-request is emitted"],
+  "non_goals": ["do not execute live code mutation"],
+  "write_scope": ["internal/atlas/validate.go"],
+  "rollback_scope": ["internal/atlas/validate.go"],
+  "required_gates": ["atlas_blueprint_import"],
+  "verification_commands": ["go test ./..."],
+  "required_evidence": ["blueprint_pack:ready", "mutation_class:low_risk_code"],
+  "safety_limits": ["safe_to_execute:false", "do_not_advance:low_risk_code_live_execution_denied"],
+  "authority_boundary": "atlas_compile_only",
+  "context_refs": ["implementation-spec.md", "quality-profile.md", "candidate-rules.json"]
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "ao.foundry.task.v0.1",
+  "task_id": "low-risk-code-rehearsal",
+  "source": "ao-blueprint",
+  "authorization_required": true,
+  "next_action": "compile-through-ao-atlas",
+  "exit_condition": "Atlas emits digest-bound Foundry import material and live execution remains blocked"
+}

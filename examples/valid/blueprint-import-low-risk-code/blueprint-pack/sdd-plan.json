@@ -1,0 +1,19 @@
+{
+  "schema": "ao2.sdd-plan.v1",
+  "project_id": "low-risk-code-rehearsal",
+  "title": "Blueprint Atlas Foundry low_risk_code rehearsal",
+  "objective": "Compile a low_risk_code rehearsal plan through Atlas before Foundry gates.",
+  "slices": [
+    {
+      "id": "SLICE-001",
+      "title": "Atlas import contract",
+      "acceptance": ["Atlas emits a digest-bound import record"]
+    },
+    {
+      "id": "SLICE-002",
+      "title": "Foundry import material",
+      "acceptance": ["Foundry import validates without scheduling or executing work"]
+    }
+  ],
+  "stop_condition": "Foundry import is ready for readback while low_risk_code live execution remains blocked"
+}

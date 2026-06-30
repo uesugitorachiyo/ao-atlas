@@ -77,6 +77,111 @@ type BlueprintRequest struct {
 	Reason          string   `json:"reason"`
 }
 
+type BlueprintBuildAuthorization struct {
+	SchemaVersion       string   `json:"schema"`
+	ProjectID           string   `json:"project_id"`
+	Status              string   `json:"status"`
+	Score               int      `json:"score"`
+	ApprovedByUser      bool     `json:"approved_by_user"`
+	BlockingAssumptions []string `json:"blocking_assumptions"`
+	NextAllowedAction   string   `json:"next_allowed_action"`
+	Scope               string   `json:"scope,omitempty"`
+	MutationClass       string   `json:"mutation_class,omitempty"`
+	BlueprintPackDigest string   `json:"blueprint_pack_digest,omitempty"`
+	ExpiresAtUTC        string   `json:"expires_at_utc,omitempty"`
+}
+
+type BlueprintCandidateRules struct {
+	SchemaVersion     string   `json:"schema_version"`
+	ProjectID         string   `json:"project_id"`
+	TargetInstance    string   `json:"target_instance"`
+	WorkgraphID       string   `json:"workgraph_id"`
+	CandidateID       string   `json:"candidate_id"`
+	MutationClass     string   `json:"mutation_class"`
+	TargetFactoryRepo string   `json:"target_factory_repo"`
+	FactoryFolder     string   `json:"factory_folder"`
+	Objective         string   `json:"objective"`
+	Acceptance        []string `json:"acceptance_criteria"`
+	NonGoals          []string `json:"non_goals"`
+	WriteScope        []string `json:"write_scope"`
+	RollbackScope     []string `json:"rollback_scope"`
+	RequiredGates     []string `json:"required_gates"`
+	Verification      []string `json:"verification_commands"`
+	RequiredEvidence  []string `json:"required_evidence"`
+	SafetyLimits      []string `json:"safety_limits"`
+	AuthorityBoundary string   `json:"authority_boundary"`
+	ContextRefs       []string `json:"context_refs"`
+	DependencyRefs    []string `json:"dependency_refs,omitempty"`
+}
+
+type BlueprintCandidateSelection struct {
+	ContractVersion     string            `json:"contract_version"`
+	ID                  string            `json:"id"`
+	ProjectID           string            `json:"project_id"`
+	Status              string            `json:"status"`
+	SelectedCandidateID string            `json:"selected_candidate_id"`
+	MutationClass       string            `json:"mutation_class"`
+	TargetFactoryRepo   string            `json:"target_factory_repo"`
+	WorkgraphID         string            `json:"workgraph_id"`
+	NodeID              string            `json:"node_id"`
+	TaskID              string            `json:"task_id"`
+	RequiredGates       []string          `json:"required_gates"`
+	RequiredEvidence    []string          `json:"required_evidence"`
+	SafetyLimits        []string          `json:"safety_limits"`
+	Digests             map[string]string `json:"digests"`
+	SchedulesWork       bool              `json:"schedules_work"`
+	ExecutesWork        bool              `json:"executes_work"`
+	ApprovesWork        bool              `json:"approves_work"`
+	MutatesRepositories bool              `json:"mutates_repositories"`
+	SafeToExecute       bool              `json:"safe_to_execute"`
+	LiveExecutionProven bool              `json:"live_execution_proven"`
+}
+
+type BlueprintImport struct {
+	ContractVersion         string                      `json:"contract_version"`
+	ID                      string                      `json:"id"`
+	ProjectID               string                      `json:"project_id"`
+	Status                  string                      `json:"status"`
+	Reason                  string                      `json:"reason"`
+	BlueprintPack           SourceRef                   `json:"blueprint_pack"`
+	BuildAuthorization      SourceRef                   `json:"build_authorization,omitempty"`
+	TargetInstance          string                      `json:"target_instance"`
+	WorkgraphID             string                      `json:"workgraph_id,omitempty"`
+	MutationClass           string                      `json:"mutation_class,omitempty"`
+	CandidateSelection      BlueprintCandidateSelection `json:"candidate_selection,omitempty"`
+	DownstreamFoundryImport SourceRef                   `json:"downstream_foundry_import,omitempty"`
+	Digests                 map[string]string           `json:"digests"`
+	SafetyLimits            []string                    `json:"safety_limits"`
+	BlockingNextActions     []string                    `json:"blocking_next_actions,omitempty"`
+	ReadyForFoundry         bool                        `json:"ready_for_foundry"`
+	SafeToExecute           bool                        `json:"safe_to_execute"`
+	LiveExecutionProven     bool                        `json:"live_execution_proven"`
+	SchedulesWork           bool                        `json:"schedules_work"`
+	ExecutesWork            bool                        `json:"executes_work"`
+	ApprovesWork            bool                        `json:"approves_work"`
+	MutatesRepositories     bool                        `json:"mutates_repositories"`
+	CallsProviders          bool                        `json:"calls_providers"`
+	ReleaseOrPublishAllowed bool                        `json:"release_or_publish_allowed"`
+}
+
+type BlueprintImportPaths struct {
+	PackPath            string
+	AuthorizationPath   string
+	InstancePath        string
+	MutationClassesPath string
+	OutDir              string
+}
+
+type BlueprintImportResult struct {
+	Record        BlueprintImport
+	Request       BlueprintRequest
+	Intake        Intake
+	Candidate     BlueprintCandidateSelection
+	ContextPacks  []ContextPack
+	Workgraph     Workgraph
+	FoundryImport FoundryImport
+}
+
 type Workgraph struct {
 	ContractVersion string          `json:"contract_version"`
 	ID              string          `json:"id"`

@@ -1,0 +1,12 @@
+{
+  "schema": "ao.blueprint.build-authorization.v0.1",
+  "project_id": "low-risk-code-rehearsal",
+  "status": "ready",
+  "score": 100,
+  "approved_by_user": true,
+  "blocking_assumptions": [],
+  "next_allowed_action": "ao-atlas",
+  "scope": "low_risk_code_dry_run",
+  "mutation_class": "low_risk_code",
+  "expires_at_utc": "2099-12-31T23:59:59Z"
+}
