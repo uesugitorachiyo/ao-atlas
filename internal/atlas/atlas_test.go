@@ -688,6 +688,18 @@ func TestMutationClassModelFixtureDefinesAllAuthorityFreeClasses(t *testing.T) {
 	if docsMulti.MaxFiles != 2 {
 		t.Fatalf("docs_only_multi_file should remain bounded to two files until proven live, got %d", docsMulti.MaxFiles)
 	}
+	testOnly, _ := mutationClassByName(model, "test_only")
+	if testOnly.MaxFiles != 1 {
+		t.Fatalf("test_only should remain bounded to one file until proven live, got %d", testOnly.MaxFiles)
+	}
+	for _, want := range []string{"**/*_test.go", "tests/**", "testdata/**"} {
+		if !containsString(testOnly.AllowedPaths, want) {
+			t.Fatalf("test_only allowed paths missing %s: %#v", want, testOnly.AllowedPaths)
+		}
+	}
+	if !containsString(testOnly.RequiredGates, "sentinel_coverage_no_hold") {
+		t.Fatalf("test_only must require Sentinel coverage no-hold: %#v", testOnly.RequiredGates)
+	}
 	complex, _ := mutationClassByName(model, "complex_repo_mutation")
 	if !containsString(complex.RequiredGates, "all_lower_classes_live_rehearsed") {
 		t.Fatalf("complex mutation must be denied until all lower live rehearsals are proven: %#v", complex.RequiredGates)
