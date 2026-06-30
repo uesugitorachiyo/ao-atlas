@@ -4,6 +4,22 @@ AO Atlas is a local-first stack-instance and workgraph compiler for the AO
 stack. It turns oversized objectives into bounded factory tasks, context packs,
 and Foundry handoff material without duplicating whole AO source trees.
 
+## AO Stack Architecture
+
+This repository is part of the AO agent orchestration stack. Start with the
+central architecture guide at
+[uesugitorachiyo/ao-architecture](https://github.com/uesugitorachiyo/ao-architecture);
+the AO Atlas-specific architecture page is
+[ao-atlas](https://github.com/uesugitorachiyo/ao-architecture/tree/main/ao-atlas).
+
+Canonical upstream intake is AO Blueprint -> AO Atlas -> AO Foundry. Blueprint
+owns requirements interview and build authorization. Atlas compiles authorized
+oversized objectives into stack instances, workgraphs, context packs,
+candidate-selection records, Foundry handoff material, and run-link readback.
+Foundry validates those artifacts and decides whether a ready item should be
+delegated, but it does not treat raw operator ideas or underspecified Atlas
+material as implementation-ready work.
+
 AO Atlas is not a task runner, scheduler, approver, provider client, release
 publisher, or control plane. It prepares public-safe, evidence-bound inputs for
 the rest of the AO stack:
@@ -30,16 +46,6 @@ evidence may feed the later Covenant, Foundry, Forge, AO2, Sentinel, Promoter,
 and Command approval chain, but Atlas does not grant mutation authority, mark
 work safe to execute, create branches, apply patches, publish, release, or
 widen the approved scope.
-
-For oversized, mutation-class, live-mutation ladder, and long-running work, the
-canonical intake path is AO Blueprint -> AO Atlas -> AO Foundry. Blueprint does
-not hand these classes directly to Foundry. Atlas must first import the
-Blueprint pack and build authorization, bind their digests to the implementation
-spec, quality profile, candidate rules, mutation class, context packs,
-workgraph, candidate-selection record, and downstream Foundry import. If
-Blueprint authorization is missing, blocked, stale, digest-mismatched, or not
-scoped to the requested work, Atlas emits a Blueprint request/blocked artifact
-instead of ready workgraph material.
 
 ## Install
 
