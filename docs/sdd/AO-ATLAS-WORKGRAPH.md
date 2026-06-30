@@ -68,6 +68,11 @@ ladder with a `multi_repo_low_risk` dry-run design. It records dependency order,
 per-repo rollback scope for Atlas, Foundry, and Command, and do-not-advance
 gates; it does not claim low-risk-code live evidence or multi-repo execution
 authority.
+The `workgraph-complex-repo-mutation-rehearsal.json` fixture models the
+dry-run complex rehearsal itself with twelve complex-class nodes, including
+context repack, dependency gates, rollback, repair, Sentinel, Promoter,
+Command, CI, packet, and live-denial gates. It remains classification-only and
+denies complex live execution until every lower class has live evidence.
 
 `docs_only_multi_file` is the next live rehearsal after the proven
 `docs_only_single_file` class. Atlas represents it as classification and
