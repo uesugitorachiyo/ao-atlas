@@ -203,6 +203,14 @@ func TestBlueprintImportCompilesLowRiskCodePackIntoAtlasAndFoundryMaterial(t *te
 	if code != 0 {
 		t.Fatalf("blueprint import failed: %s", out.String())
 	}
+	targetFolder := strings.Join([]string{"", "Users", "torachiyouesugi", "Documents", "public", "ao-foundry"}, "/")
+	if !strings.Contains(out.String(), "foundry_continuation_prompt="+filepath.ToSlash(filepath.Join(outDir, "foundry-import", "foundry-continuation-prompt.md"))) ||
+		!strings.Contains(out.String(), "Move to "+targetFolder) ||
+		!strings.Contains(out.String(), "Run codex --yolo") ||
+		!strings.Contains(out.String(), "Paste this prompt") ||
+		strings.Contains(out.String(), "cat ") {
+		t.Fatalf("blueprint import output did not report operator-ready continuation action:\n%s", out.String())
+	}
 	record := mustLoadJSON[BlueprintImport](t, filepath.Join(outDir, "blueprint-import.json"))
 	if record.Status != "ready" || record.MutationClass != "low_risk_code" || record.LiveExecutionProven {
 		t.Fatalf("unexpected import record: %#v", record)
@@ -220,6 +228,7 @@ func TestBlueprintImportCompilesLowRiskCodePackIntoAtlasAndFoundryMaterial(t *te
 		"candidate_selection",
 		"workgraph",
 		"downstream_foundry_import",
+		"downstream_foundry_continuation_handoff",
 	} {
 		if record.Digests[key] == "" {
 			t.Fatalf("record missing digest binding %q: %#v", key, record.Digests)
@@ -234,12 +243,33 @@ func TestBlueprintImportCompilesLowRiskCodePackIntoAtlasAndFoundryMaterial(t *te
 	if _, err := os.Stat(filepath.Join(outDir, "candidate-selection.json")); err != nil {
 		t.Fatal(err)
 	}
+	if record.DownstreamFoundryContinuationHandoff.Ref != "foundry-import/foundry-continuation-handoff.json" {
+		t.Fatalf("missing continuation handoff ref: %#v", record.DownstreamFoundryContinuationHandoff)
+	}
 	foundryImport := mustLoadJSON[FoundryImport](t, filepath.Join(outDir, "foundry-import", "foundry-import.json"))
 	if err := ValidateFoundryImport(foundryImport); err != nil {
 		t.Fatal(err)
 	}
 	if foundryImport.Tasks[0].MutationClass != "low_risk_code" {
 		t.Fatalf("unexpected Foundry import mutation class: %#v", foundryImport.Tasks[0])
+	}
+	handoff := mustLoadJSON[FoundryContinuationHandoff](t, filepath.Join(outDir, "foundry-import", "foundry-continuation-handoff.json"))
+	if err := ValidateFoundryContinuationHandoff(handoff); err != nil {
+		t.Fatal(err)
+	}
+	promptPath := filepath.Join(outDir, "foundry-import", "foundry-continuation-prompt.md")
+	promptBytes, err := os.ReadFile(promptPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	prompt := string(promptBytes)
+	for _, want := range []string{"Move to AO Foundry", "Run codex --yolo", "Paste this prompt"} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("blueprint import continuation prompt missing %q:\n%s", want, prompt)
+		}
+	}
+	if strings.Contains(prompt, "cat ") {
+		t.Fatalf("blueprint import continuation prompt must not use cat as the primary next action:\n%s", prompt)
 	}
 }
 
@@ -653,6 +683,101 @@ func TestFoundryImportWritesTaskFixturesForReadyNodes(t *testing.T) {
 	}
 	if manifest.SchedulesWork || manifest.ExecutesWork || manifest.ApprovesWork {
 		t.Fatalf("foundry import must be fixture-only readback: %#v", manifest)
+	}
+}
+
+func TestFoundryImportWritesContinuationHandoffPrompt(t *testing.T) {
+	dir := t.TempDir()
+	outDir := filepath.Join(dir, "foundry-import")
+	workgraphPath := filepath.Join("..", "..", "examples", "valid", "workgraph.json")
+	instancePath := filepath.Join("..", "..", "examples", "valid", "stack-instance.json")
+	blueprintPackPath := filepath.Join("..", "ao-blueprint", "excluded", "fully_unsupervised_complex_mutation-readiness-blueprint")
+	atlasImportPath := filepath.Join(".atlas-local", "fully-unsupervised-readiness", "blueprint-import", "blueprint-import.json")
+	missionEvidencePath := filepath.Join(".atlas-local", "fully-unsupervised-readiness", "atlas-first-phase", "mission-continuation-evidence.json")
+	targetFolder := strings.Join([]string{"", "Users", "torachiyouesugi", "Documents", "public", "ao-foundry"}, "/")
+	var out bytes.Buffer
+	code := Run([]string{
+		"foundry", "import",
+		"--workgraph", workgraphPath,
+		"--instance", instancePath,
+		"--out", outDir,
+		"--blueprint-pack", blueprintPackPath,
+		"--atlas-import", atlasImportPath,
+		"--mission-continuation", missionEvidencePath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("foundry import failed: %s", out.String())
+	}
+	handoffPath := filepath.Join(outDir, "foundry-continuation-handoff.json")
+	promptPath := filepath.Join(outDir, "foundry-continuation-prompt.md")
+	handoff, err := LoadJSON[FoundryContinuationHandoff](handoffPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateFoundryContinuationHandoff(handoff); err != nil {
+		t.Fatal(err)
+	}
+	if handoff.TargetFolder != targetFolder {
+		t.Fatalf("unexpected target folder: %q", handoff.TargetFolder)
+	}
+	if handoff.Command != "codex --yolo" {
+		t.Fatalf("unexpected command: %q", handoff.Command)
+	}
+	if handoff.FoundryImportPath != filepath.ToSlash(filepath.Join(outDir, "foundry-import.json")) {
+		t.Fatalf("unexpected foundry import path: %q", handoff.FoundryImportPath)
+	}
+	if handoff.BlueprintPackPath != filepath.ToSlash(blueprintPackPath) ||
+		handoff.AtlasImportPath != filepath.ToSlash(atlasImportPath) ||
+		handoff.WorkgraphPath != filepath.ToSlash(workgraphPath) ||
+		handoff.MissionContinuationEvidencePath != filepath.ToSlash(missionEvidencePath) {
+		t.Fatalf("handoff did not preserve source artifact paths: %#v", handoff)
+	}
+	if handoff.FirstSafeNode != "readiness-ready" || handoff.TotalNodeCount != 2 {
+		t.Fatalf("unexpected node readback: %#v", handoff)
+	}
+	if handoff.ReadyNodeCount != 1 || handoff.CompletedNodeCount != 1 || handoff.BlockedNodeCount != 0 {
+		t.Fatalf("unexpected node counts: %#v", handoff)
+	}
+	for _, want := range []string{
+		"Move to AO Foundry",
+		"Run codex --yolo",
+		"Paste this prompt",
+		"do not stop after import validation",
+		"do not stop after one gate artifact",
+		"do not stop after one node",
+		"Continue until all generated slices/tasks/nodes are consumed or a true hard blocker remains",
+		"Atlas must not execute live mutation",
+		"fully_unsupervised_complex_mutation remains denied",
+		"RSI remains denied",
+		filepath.ToSlash(blueprintPackPath),
+		filepath.ToSlash(workgraphPath),
+		filepath.ToSlash(filepath.Join(outDir, "foundry-import.json")),
+		"Stop only on done, final denial, hard blocker, CI failure, unsafe scope drift, or kill switch.",
+	} {
+		if !strings.Contains(handoff.Prompt, want) {
+			t.Fatalf("handoff prompt missing %q:\n%s", want, handoff.Prompt)
+		}
+	}
+	promptBytes, err := os.ReadFile(promptPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	prompt := string(promptBytes)
+	for _, want := range []string{"Move to AO Foundry", "Run codex --yolo", "Paste this prompt"} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("prompt artifact missing %q:\n%s", want, prompt)
+		}
+	}
+	if strings.Contains(prompt, "cat "+filepath.Join(outDir, "foundry-import.json")) ||
+		strings.Contains(handoff.NextRecommendedAction, "cat ") {
+		t.Fatalf("continuation handoff must not use cat as the primary next action: %#v\n%s", handoff, prompt)
+	}
+	if !strings.Contains(out.String(), "foundry_continuation_prompt="+promptPath) ||
+		!strings.Contains(out.String(), "Run codex --yolo") ||
+		!strings.Contains(out.String(), "Paste this prompt") ||
+		strings.Contains(out.String(), "cat ") ||
+		!strings.Contains(out.String(), "Move to "+targetFolder) {
+		t.Fatalf("CLI output did not report operator-ready continuation action:\n%s", out.String())
 	}
 }
 

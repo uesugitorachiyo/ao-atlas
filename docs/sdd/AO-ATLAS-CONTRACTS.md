@@ -15,6 +15,7 @@ v0.1 contract names:
 - `ao.atlas.context-pack.v0.1`
 - `ao.atlas.foundry-handoff.v0.1`
 - `ao.atlas.foundry-import.v0.1`
+- `ao.atlas.foundry-continuation-handoff.v0.1`
 - `ao.atlas.run-link.v0.1`
 - `ao.atlas.mutation-classes.v0.1`
 
@@ -66,5 +67,13 @@ dependency-ready Atlas workgraph nodes. Each imported task carries
 requesting any downstream authority. It is a Foundry import packet only: it
 does not schedule, execute, approve, mutate sibling repositories, or call
 providers.
+
+`ao.atlas.foundry-continuation-handoff.v0.1` records the operator-ready
+handoff that accompanies a Foundry import. It includes the AO Foundry target
+folder, `codex --yolo` command, full paste-ready prompt, source artifact paths,
+first safe node, node counts, class boundary, stop conditions, and hard safety
+prohibitions. It preserves the Atlas no-execution boundary and replaces
+inspection-only next actions with an executable continuation instruction for
+the operator.
 
 Schemas live in `schemas/`. The CLI validators are the normative v0.1 gate.

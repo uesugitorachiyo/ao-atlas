@@ -98,6 +98,13 @@ go run ./cmd/atlas foundry import --workgraph examples/valid/workgraph.json --in
 go run ./cmd/atlas run-link attach --task-id atlas-readiness-task --status completed --evidence ao2=evidence/ao2/atlas-readiness.json --out .atlas-local/run-link.json
 ```
 
+Ready `blueprint import` output and direct `foundry import` output both write
+Foundry import material plus an operator-ready continuation handoff:
+`foundry-continuation-handoff.json` and `foundry-continuation-prompt.md`.
+Atlas final reports should direct the operator to move to the AO Foundry
+checkout, run `codex --yolo`, and paste the generated prompt. The next action
+is not an inspection-only command against the import file.
+
 With a sibling AO Foundry checkout, Atlas can run the fixture-only handoff,
 Foundry import validation, and Foundry observer-readback smoke:
 

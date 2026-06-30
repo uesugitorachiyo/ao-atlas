@@ -50,11 +50,18 @@ func ValidateBlueprintImport(record BlueprintImport) error {
 		if !digestPattern.MatchString(record.DownstreamFoundryImport.Digest) {
 			errs = append(errs, "downstream_foundry_import.digest must be sha256:<64 hex>")
 		}
+		requireField(&errs, "downstream_foundry_continuation_handoff.ref", record.DownstreamFoundryContinuationHandoff.Ref)
+		if !digestPattern.MatchString(record.DownstreamFoundryContinuationHandoff.Digest) {
+			errs = append(errs, "downstream_foundry_continuation_handoff.digest must be sha256:<64 hex>")
+		}
 		if record.CandidateSelection.ContractVersion != BlueprintCandidateSelectionContract {
 			errs = append(errs, "candidate_selection contract_version must be "+BlueprintCandidateSelectionContract)
 		}
 		if record.Digests["downstream_foundry_import"] == "" {
 			errs = append(errs, "digests.downstream_foundry_import must not be empty when ready")
+		}
+		if record.Digests["downstream_foundry_continuation_handoff"] == "" {
+			errs = append(errs, "digests.downstream_foundry_continuation_handoff must not be empty when ready")
 		}
 	} else {
 		if record.ReadyForFoundry {
@@ -89,6 +96,7 @@ func ValidateBlueprintImport(record BlueprintImport) error {
 	checkPublicPath(&errs, "blueprint_pack.ref", record.BlueprintPack.Ref, true)
 	checkPublicPath(&errs, "build_authorization.ref", record.BuildAuthorization.Ref, true)
 	checkPublicPath(&errs, "downstream_foundry_import.ref", record.DownstreamFoundryImport.Ref, true)
+	checkPublicPath(&errs, "downstream_foundry_continuation_handoff.ref", record.DownstreamFoundryContinuationHandoff.Ref, true)
 	checkPublicStrings(&errs, "safety_limits", record.SafetyLimits, true)
 	checkPublicStrings(&errs, "blocking_next_actions", record.BlockingNextActions, true)
 	return joinErrors(errs)
@@ -307,16 +315,27 @@ func BuildBlueprintImport(paths BlueprintImportPaths) (BlueprintImportResult, er
 		return result, err
 	}
 	digests["downstream_foundry_import"] = digestValue(foundryImport)
+	handoff, err := BuildFoundryContinuationHandoff(workgraph, foundryImport, FoundryContinuationHandoffInputs{
+		BlueprintPackPath: publicArtifactRef(paths.PackPath),
+		AtlasImportPath:   "blueprint-import.json",
+		WorkgraphPath:     "workgraph.json",
+		FoundryImportPath: "foundry-import/foundry-import.json",
+	})
+	if err != nil {
+		return result, err
+	}
+	digests["downstream_foundry_continuation_handoff"] = digestValue(handoff)
 	record.Status = "ready"
 	record.Reason = "Blueprint authorization is ready and Atlas compiled digest-bound Foundry import material."
 	record.CandidateSelection = candidate
 	record.DownstreamFoundryImport = SourceRef{Ref: "foundry-import/foundry-import.json", Digest: digests["downstream_foundry_import"]}
+	record.DownstreamFoundryContinuationHandoff = SourceRef{Ref: "foundry-import/foundry-continuation-handoff.json", Digest: digests["downstream_foundry_continuation_handoff"]}
 	record.Digests = digests
 	record.ReadyForFoundry = true
 	if err := ValidateBlueprintImport(record); err != nil {
 		return result, err
 	}
-	if err := writeBlueprintReadyArtifacts(paths.OutDir, record, intake, candidate, contextPack, workgraph, foundryImport); err != nil {
+	if err := writeBlueprintReadyArtifacts(paths.OutDir, record, intake, candidate, contextPack, workgraph, foundryImport, handoff); err != nil {
 		return result, err
 	}
 	result.Record = record
@@ -325,6 +344,7 @@ func BuildBlueprintImport(paths BlueprintImportPaths) (BlueprintImportResult, er
 	result.ContextPacks = []ContextPack{contextPack}
 	result.Workgraph = workgraph
 	result.FoundryImport = foundryImport
+	result.Handoff = handoff
 	return result, nil
 }
 
@@ -494,7 +514,7 @@ func writeBlueprintBlockedArtifacts(outDir string, record BlueprintImport, reque
 	return WriteJSON(filepath.Join(outDir, "blueprint-request.json"), request)
 }
 
-func writeBlueprintReadyArtifacts(outDir string, record BlueprintImport, intake Intake, candidate BlueprintCandidateSelection, contextPack ContextPack, workgraph Workgraph, foundryImport FoundryImport) error {
+func writeBlueprintReadyArtifacts(outDir string, record BlueprintImport, intake Intake, candidate BlueprintCandidateSelection, contextPack ContextPack, workgraph Workgraph, foundryImport FoundryImport, handoff FoundryContinuationHandoff) error {
 	if err := WriteJSON(filepath.Join(outDir, "intake.json"), intake); err != nil {
 		return err
 	}
@@ -513,6 +533,12 @@ func writeBlueprintReadyArtifacts(outDir string, record BlueprintImport, intake 
 		}
 	}
 	if err := WriteJSON(filepath.Join(outDir, "foundry-import", "foundry-import.json"), foundryImport); err != nil {
+		return err
+	}
+	if err := WriteJSON(filepath.Join(outDir, "foundry-import", "foundry-continuation-handoff.json"), handoff); err != nil {
+		return err
+	}
+	if err := WriteFoundryContinuationPrompt(filepath.Join(outDir, "foundry-import", "foundry-continuation-prompt.md"), handoff); err != nil {
 		return err
 	}
 	return WriteJSON(filepath.Join(outDir, "blueprint-import.json"), record)

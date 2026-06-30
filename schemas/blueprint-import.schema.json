@@ -32,6 +32,7 @@
     "workgraph_id": { "type": "string" },
     "mutation_class": { "type": "string" },
     "downstream_foundry_import": { "$ref": "#/$defs/source_ref" },
+    "downstream_foundry_continuation_handoff": { "$ref": "#/$defs/source_ref" },
     "digests": {
       "type": "object",
       "additionalProperties": { "pattern": "^sha256:[0-9a-f]{64}$" }
