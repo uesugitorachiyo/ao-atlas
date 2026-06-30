@@ -988,6 +988,9 @@ func TestMissionStatusReportsMultiRepoLowRiskDryRunReadinessWithoutLiveExecution
 	}
 	for _, want := range []string{
 		"dry_run:multi_repo_low_risk",
+		"ordered_pr_dependency:ao-atlas:first",
+		"ordered_pr_dependency:ao-foundry:after:ao-atlas",
+		"ordered_pr_dependency:ao-command:after:ao-foundry",
 		"per_repo_rollback:ao-atlas",
 		"per_repo_rollback:ao-foundry",
 		"per_repo_rollback:ao-command",

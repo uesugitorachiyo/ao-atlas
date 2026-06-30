@@ -64,10 +64,11 @@ It includes repair nodes, context repack nodes, Sentinel/Promoter/Command
 evidence nodes, blocked states, dependency gates, and explicit do-not-advance
 limits so higher classes remain denied until their evidence exists.
 The `workgraph-authority-ladder-multi-repo-dry-run.json` fixture extends the
-ladder with a `multi_repo_low_risk` dry-run design. It records dependency order,
-per-repo rollback scope for Atlas, Foundry, and Command, and do-not-advance
-gates; it does not claim low-risk-code live evidence or multi-repo execution
-authority.
+ladder with a `multi_repo_low_risk` dry-run design. It records ordered PR
+dependencies (`ao-atlas` first, `ao-foundry` after `ao-atlas`, `ao-command`
+after `ao-foundry`), per-repo rollback scope for Atlas, Foundry, and Command,
+and do-not-advance gates; it does not claim low-risk-code live evidence or
+multi-repo execution authority.
 The `workgraph-complex-repo-mutation-rehearsal.json` fixture models the
 dry-run complex rehearsal itself with twelve complex-class nodes, including
 context repack, dependency gates, rollback, repair, Sentinel, Promoter,
