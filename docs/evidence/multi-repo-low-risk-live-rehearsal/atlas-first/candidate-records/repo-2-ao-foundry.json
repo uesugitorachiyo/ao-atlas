@@ -1,0 +1,49 @@
+{
+  "schema": "ao.atlas.repo-candidate-record.v0.1",
+  "node_id": "repo-2",
+  "status": "planned_blocked_until_repo_one_evidence",
+  "repo": "ao-foundry",
+  "base_branch": "main",
+  "base_commit": "1b2f2dab19f9081adea24de9af3a9a719cb18144",
+  "work_branch": "codex/multi-repo-low-risk-rehearsal-repo-2",
+  "mutation_class": "multi_repo_low_risk",
+  "proposed_scope": "test_only",
+  "exact_files": [
+    "internal/cli/cli_test.go"
+  ],
+  "change_intent": "Add or tighten one deterministic AO Foundry Atlas import/readback validation test after repo one has merged cleanly.",
+  "why_tiny": "One existing test file, no production code, no dependency update, no generated artifact, no workflow/config change.",
+  "denied_surface_checklist": {
+    "shared_policy": false,
+    "shared_auth": false,
+    "shared_provider": false,
+    "shared_release": false,
+    "shared_deploy": false,
+    "shared_config": false,
+    "shared_secret": false,
+    "dependency_updates": false,
+    "public_claim_broadening": false,
+    "concurrent_mutation": false,
+    "direct_main_mutation": false
+  },
+  "local_verification_commands": [
+    "go test ./internal/cli -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/foundry ./cmd/ao"
+  ],
+  "ci_requirements": [
+    "ao-foundry pull request CI must pass",
+    "ao-foundry active-stack/readiness checks must pass if this node later becomes active"
+  ],
+  "rollback_record": "docs/evidence/multi-repo-low-risk-live-rehearsal/atlas-first/rollback-records/repo-2-ao-foundry.json",
+  "blocked_by": [
+    "repo-1-merged-evidence-recorded"
+  ],
+  "foundry_import_allowed": false,
+  "safe_to_execute": false,
+  "live_execution_proven": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

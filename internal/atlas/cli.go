@@ -62,6 +62,7 @@ func runBlueprint(args []string, stdout io.Writer) error {
 	fs := flag.NewFlagSet("blueprint import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
 	packPath := fs.String("pack", "", "AO Blueprint pack directory")
+	candidateRulesPath := fs.String("candidate-rules", "", "Atlas-owned candidate rules path")
 	authorizationPath := fs.String("authorization", "", "AO Blueprint build authorization packet")
 	instancePath := fs.String("instance", "", "Atlas stack instance path")
 	mutationClassesPath := fs.String("mutation-classes", "", "Atlas mutation class model path")
@@ -91,6 +92,7 @@ func runBlueprint(args []string, stdout io.Writer) error {
 	}
 	result, err := BuildBlueprintImport(BlueprintImportPaths{
 		PackPath:            *packPath,
+		CandidateRulesPath:  *candidateRulesPath,
 		AuthorizationPath:   *authorizationPath,
 		InstancePath:        *instancePath,
 		MutationClassesPath: *mutationClassesPath,

@@ -169,6 +169,9 @@ func BuildBlueprintImport(paths BlueprintImportPaths) (BlueprintImportResult, er
 
 	var rules BlueprintCandidateRules
 	rulesPath := filepath.Join(paths.PackPath, "candidate-rules.json")
+	if strings.TrimSpace(paths.CandidateRulesPath) != "" {
+		rulesPath = paths.CandidateRulesPath
+	}
 	if err := readJSONIfPossible(rulesPath, &rules); err != nil {
 		missing = append(missing, "candidate_rules")
 		blockers = append(blockers, "add candidate-rules.json to the Blueprint pack")
@@ -266,7 +269,7 @@ func BuildBlueprintImport(paths BlueprintImportPaths) (BlueprintImportResult, er
 	}
 
 	intake := buildBlueprintIntake(rules)
-	contextPack, err := buildBlueprintContextPack(paths.PackPath, rules, digests)
+	contextPack, err := buildBlueprintContextPack(paths.PackPath, paths.CandidateRulesPath, rules, digests)
 	if err != nil {
 		return result, err
 	}
@@ -392,11 +395,12 @@ func buildBlueprintIntake(rules BlueprintCandidateRules) Intake {
 	}
 }
 
-func buildBlueprintContextPack(packPath string, rules BlueprintCandidateRules, digests map[string]string) (ContextPack, error) {
+func buildBlueprintContextPack(packPath, candidateRulesPath string, rules BlueprintCandidateRules, digests map[string]string) (ContextPack, error) {
 	sourceRefs := []SourceRef{}
 	for _, ref := range rules.ContextRefs {
 		key := contextDigestKey(ref)
 		digest := digests[key]
+		sourceRef := filepath.ToSlash(ref)
 		if digest == "" {
 			path := filepath.Join(packPath, ref)
 			var err error
@@ -405,7 +409,10 @@ func buildBlueprintContextPack(packPath string, rules BlueprintCandidateRules, d
 				return ContextPack{}, fmt.Errorf("context ref %s: %w", ref, err)
 			}
 		}
-		sourceRefs = append(sourceRefs, SourceRef{Ref: filepath.ToSlash(ref), Digest: digest})
+		if key == "candidate_rules" && strings.TrimSpace(candidateRulesPath) != "" {
+			sourceRef = publicArtifactRef(candidateRulesPath)
+		}
+		sourceRefs = append(sourceRefs, SourceRef{Ref: sourceRef, Digest: digest})
 	}
 	pack := ContextPack{
 		ContractVersion: ContextPackContract,

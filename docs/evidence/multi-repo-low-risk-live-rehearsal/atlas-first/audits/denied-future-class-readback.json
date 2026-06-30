@@ -1,0 +1,39 @@
+{
+  "schema": "ao.atlas.denied-future-class-readback.v0.1",
+  "status": "denied",
+  "highest_proven_live_class": "low_risk_code",
+  "classes": [
+    {
+      "class": "multi_repo_low_risk",
+      "state": "denied_for_live_execution",
+      "reason": "not live-proven until serialized repo-one and repo-two rehearsal completes with evidence"
+    },
+    {
+      "class": "complex_repo_mutation",
+      "state": "denied",
+      "reason": "requires lower-class live evidence and complex workgraph gates not present"
+    },
+    {
+      "class": "fully_unsupervised_complex_mutation",
+      "state": "denied",
+      "reason": "no authority exists for unsupervised complex mutation"
+    },
+    {
+      "class": "rsi",
+      "state": "denied",
+      "reason": "no RSI execution or promotion authority exists"
+    }
+  ],
+  "public_wording_required": [
+    "low_risk_code is live-proven",
+    "multi_repo_low_risk is not live-proven until the governed two-repo rehearsal completes with evidence",
+    "complex_repo_mutation remains denied",
+    "fully unsupervised complex repository mutation remains denied",
+    "RSI remains denied"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

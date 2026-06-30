@@ -1,0 +1,8 @@
+{
+  "schema": "ao.promoter.no-promotion-verdict.v0.1",
+  "status": "no_promotion",
+  "class": "multi_repo_low_risk",
+  "reason": "Repo one alone cannot promote multi_repo_low_risk; both serialized repo nodes must complete with evidence.",
+  "promotion_allowed": false,
+  "live_execution_proven": false
+}

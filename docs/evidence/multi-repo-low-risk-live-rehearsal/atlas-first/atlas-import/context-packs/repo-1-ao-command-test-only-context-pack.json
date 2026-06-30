@@ -1,0 +1,58 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "repo-1-ao-command-test-only-context-pack",
+  "task_id": "repo-1-ao-command-test-only-task",
+  "budget_bytes": 8192,
+  "source_refs": [
+    {
+      "ref": "implementation-spec.md",
+      "digest": "sha256:b42024aae040df698dc2addee9ba22f8ff22eee29d8adaf800000e09393e3002"
+    },
+    {
+      "ref": "quality-profile.md",
+      "digest": "sha256:1b39895ce1f875993d522c3d1b137788d36420de5bef5dea1ed913989a113a4a"
+    },
+    {
+      "ref": "docs/evidence/multi-repo-low-risk-live-rehearsal/atlas-first/candidate-rules/repo-1-candidate-rules.json",
+      "digest": "sha256:97f31f87c288c31f49c9d3ea0c8324c99920dc840213df10f923891cf276b402"
+    },
+    {
+      "ref": "candidate-selection.md",
+      "digest": "sha256:1b556c51cb536d86c4c13c97949f3852a1fc9be49d653cc22ddf6823cf0299d4"
+    },
+    {
+      "ref": "authority-boundaries.md",
+      "digest": "sha256:003de9756da944184046de437530e983daa5b9ac7c9ac2ae7a6391bc708ca4d1"
+    },
+    {
+      "ref": "gate-evidence.md",
+      "digest": "sha256:76a7b731b863ce51df1d2b2be69f009e7bf85ec236fe74708d2424570fdfa3b7"
+    },
+    {
+      "ref": "rollback-and-holds.md",
+      "digest": "sha256:fa3aa99a75493dd318c6991993e8e2fef840c02932be9f82cdd54f9944e6142d"
+    },
+    {
+      "ref": "public-claims.md",
+      "digest": "sha256:a007d2d562cde28bd20500c92a587fc2e4ab7c8516d592aa175e072ee2964c75"
+    },
+    {
+      "ref": "downstream-handoff-prompt.md",
+      "digest": "sha256:7bdc31707ca08578b409535b8fe76723aa0047ccb308729176865369d43f0a43"
+    }
+  ],
+  "summaries": [
+    "Blueprint pack is authorized for Atlas compile into Foundry import material.",
+    "Mutation class multi_repo_low_risk remains dry-run/readback only."
+  ],
+  "assumptions": [
+    "AO Blueprint owns requirements authorization.",
+    "AO Atlas does not schedule or execute work."
+  ],
+  "exclusions": [
+    "live code mutation",
+    "provider calls",
+    "private local paths outside excluded placeholders"
+  ],
+  "missing_context_protocol": "Return to AO Blueprint for missing requirements or authorization before widening scope."
+}

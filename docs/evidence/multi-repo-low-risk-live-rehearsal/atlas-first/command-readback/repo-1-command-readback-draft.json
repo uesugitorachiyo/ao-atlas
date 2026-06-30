@@ -1,0 +1,42 @@
+{
+  "schema": "ao.command.repo-command-readback-draft.v0.1",
+  "status": "draft_blocked",
+  "active_node": "repo-1",
+  "repo": "ao-command",
+  "branch": "codex/multi-repo-low-risk-rehearsal-repo-1",
+  "expected_file_effects": [
+    "internal/cli/cli_test.go only"
+  ],
+  "expected_network_effects": [
+    "git fetch/push and pull request operations only after gates true"
+  ],
+  "commands": [
+    {
+      "command": "go test ./internal/cli -count=1",
+      "expected": "targeted tests pass",
+      "timeout": "2m",
+      "stop_condition": "nonzero exit"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "expected": "full tests pass",
+      "timeout": "5m",
+      "stop_condition": "nonzero exit"
+    },
+    {
+      "command": "go vet ./...",
+      "expected": "vet passes",
+      "timeout": "5m",
+      "stop_condition": "nonzero exit"
+    },
+    {
+      "command": "go build ./cmd/ao-command",
+      "expected": "build succeeds",
+      "timeout": "2m",
+      "stop_condition": "nonzero exit"
+    }
+  ],
+  "safe_to_execute": false,
+  "executes_work": false,
+  "schedules_work": false
+}

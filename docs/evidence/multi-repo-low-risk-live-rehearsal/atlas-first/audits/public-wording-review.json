@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.public-wording-review.v0.1",
+  "status": "passed",
+  "allowed": [
+    "low_risk_code is live-proven",
+    "multi_repo_low_risk is not live-proven until the governed two-repo rehearsal completes with evidence",
+    "complex_repo_mutation remains denied",
+    "fully unsupervised complex repository mutation remains denied",
+    "RSI remains denied"
+  ],
+  "denied": [
+    "multi_repo_low_risk is live-proven",
+    "AO can mutate multiple repositories concurrently",
+    "AO proved complex repository mutation",
+    "AO proved fully unsupervised complex mutation",
+    "AO proved RSI",
+    "Blueprint authorized live multi-repo execution"
+  ],
+  "multi_repo_low_risk_live_proven": false
+}

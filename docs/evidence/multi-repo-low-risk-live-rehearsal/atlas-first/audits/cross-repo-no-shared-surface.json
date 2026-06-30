@@ -1,0 +1,38 @@
+{
+  "schema": "ao.atlas.cross-repo-no-shared-surface-audit.v0.1",
+  "status": "passed_for_planning",
+  "repo_one": "ao-command",
+  "repo_two": "ao-foundry",
+  "repo_one_scope": [
+    "internal/cli/cli_test.go"
+  ],
+  "repo_two_scope": [
+    "internal/cli/cli_test.go"
+  ],
+  "shared_forbidden_surfaces": {
+    "policy": false,
+    "auth": false,
+    "provider": false,
+    "release": false,
+    "deploy": false,
+    "config": false,
+    "secret": false,
+    "dependency": false,
+    "public_claim": false,
+    "workflow": false,
+    "generated_artifacts": false
+  },
+  "sequencing": {
+    "concurrent_mutation_allowed": false,
+    "dependency_edge": "repo-1 -> repo-2",
+    "stop_gate": "repo-1-merged-evidence-recorded",
+    "repo_two_import_allowed_now": false,
+    "repo_two_execution_allowed_now": false
+  },
+  "result": "No shared forbidden surface identified for planned test-only scopes. Repo two remains blocked until repo one merges cleanly and evidence is recorded.",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

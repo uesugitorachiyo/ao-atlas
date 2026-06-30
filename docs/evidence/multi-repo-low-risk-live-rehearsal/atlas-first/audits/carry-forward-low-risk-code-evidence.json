@@ -1,0 +1,44 @@
+{
+  "schema": "ao.atlas.carry-forward-evidence-audit.v0.1",
+  "status": "ready_to_request_next_class",
+  "audited_at": "2026-06-30",
+  "current_repo": "ao-atlas",
+  "current_branch": "codex/atlas-multi-repo-low-risk-rehearsal",
+  "current_head": "af3b8c457f329b3c9819b90b8d87f5e67426a855",
+  "proven_live_class": "low_risk_code",
+  "proof": {
+    "repo": "ao-atlas",
+    "pull_request": "#37",
+    "merge_commit": "a6aee5621dd367a7169f099a87050f1cbd0f88da",
+    "changed_files": [
+      "internal/atlas/validate.go"
+    ],
+    "verification": [
+      "go test ./internal/atlas -count=1",
+      "go test ./... -count=1",
+      "git diff --check",
+      "CI production readiness on macOS, Ubuntu, and Windows"
+    ],
+    "merge_commit_present_locally": true,
+    "merge_commit_on_main": true
+  },
+  "sufficient_to_request": [
+    "single tiny code mutation completed through governed PR path",
+    "verification and CI evidence recorded",
+    "changed surface avoided policy, auth, provider, release, deploy, config, secrets, dependency, and public claim surfaces"
+  ],
+  "not_sufficient_to_execute_multi_repo": [
+    "multi_repo_low_risk adds cross-repo sequencing risk",
+    "multi_repo_low_risk adds rollback coordination risk",
+    "multi_repo_low_risk adds evidence correlation risk",
+    "multi_repo_low_risk adds public-claim broadening risk",
+    "fresh per-repo gates and stop gate are required"
+  ],
+  "safe_to_request": true,
+  "safe_to_execute": false,
+  "live_execution_proven_for_multi_repo_low_risk": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

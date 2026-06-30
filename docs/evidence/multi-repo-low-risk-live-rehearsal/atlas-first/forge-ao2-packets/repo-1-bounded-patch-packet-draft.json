@@ -1,0 +1,54 @@
+{
+  "schema": "ao.forge-ao2.bounded-patch-packet-draft.v0.1",
+  "status": "draft_blocked_until_gates_true",
+  "active_node": "repo-1",
+  "repo": "ao-command",
+  "relative_working_directory": ".",
+  "base_branch": "main",
+  "work_branch": "codex/multi-repo-low-risk-rehearsal-repo-1",
+  "patch_intent": "test-only change in internal/cli/cli_test.go",
+  "allowed_commands": [
+    "git checkout -b codex/multi-repo-low-risk-rehearsal-repo-1",
+    "go test ./internal/cli -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/ao-command",
+    "gh pr create --draft"
+  ],
+  "denied_commands": [
+    "git push --force",
+    "git checkout main -- internal/cli/cli_test.go",
+    "git tag",
+    "gh release create",
+    "go get",
+    "go mod tidy",
+    "deploy",
+    "publish",
+    "provider calls"
+  ],
+  "verification_commands": [
+    "go test ./internal/cli -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/ao-command"
+  ],
+  "branch_cleanup_command": "git push origin --delete codex/multi-repo-low-risk-rehearsal-repo-1 && git branch -d codex/multi-repo-low-risk-rehearsal-repo-1",
+  "rollback_commands": [
+    "git revert <merge-commit> on governed revert branch",
+    "go test ./internal/cli -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/ao-command"
+  ],
+  "stop_conditions": [
+    "any gate missing or not exact safe_to_execute=true",
+    "repo state differs from readback",
+    "CI fails or is pending",
+    "repo two requested early",
+    "scope changes beyond internal/cli/cli_test.go"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
