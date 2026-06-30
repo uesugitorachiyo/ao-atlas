@@ -491,6 +491,69 @@ func TestLargeWorkgraphStressFixtureValidatesAndImportsReadyNodes(t *testing.T) 
 	}
 }
 
+func TestComplexRepoMutationRehearsalFixtureModelsSafeDryRunLadder(t *testing.T) {
+	workgraph, err := LoadJSON[Workgraph](filepath.Join("..", "..", "examples", "valid", "workgraph-complex-repo-mutation-rehearsal.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		t.Fatal(err)
+	}
+	if len(workgraph.Nodes) != 14 {
+		t.Fatalf("complex rehearsal should model 14 governed nodes, got %d", len(workgraph.Nodes))
+	}
+	nodes := map[string]WorkgraphNode{}
+	for _, node := range workgraph.Nodes {
+		nodes[node.ID] = node
+		if node.FactoryTask.MutationClass != "complex_repo_mutation" {
+			t.Fatalf("complex rehearsal node %s must stay complex_repo_mutation, got %q", node.ID, node.FactoryTask.MutationClass)
+		}
+		if node.FactoryTask.AuthorityBoundary != "atlas_classification_only" {
+			t.Fatalf("complex rehearsal node %s must remain classification-only: %#v", node.ID, node.FactoryTask)
+		}
+		if !containsString(node.FactoryTask.SafetyLimits, "do_not_advance:complex_repo_mutation_live_execution_denied") &&
+			node.ID != "complex-dependency-gate-blocked" &&
+			node.ID != "complex-sentinel-hold-gate-blocked" &&
+			node.ID != "complex-promoter-promotion-gate-blocked" &&
+			node.ID != "complex-command-readback-blocked" &&
+			node.ID != "complex-ci-gate-blocked" {
+			t.Fatalf("complex rehearsal node %s must preserve live-execution denial safety: %#v", node.ID, node.FactoryTask.SafetyLimits)
+		}
+	}
+	decomposition := nodes["complex-low-risk-decomposition-ready"]
+	if decomposition.Status != "ready" ||
+		!containsString(decomposition.FactoryTask.RequiredGates, "low_risk_decomposition") ||
+		!containsString(decomposition.FactoryTask.RequiredEvidence, "low_risk_decomposition:complex_repo_mutation") {
+		t.Fatalf("complex rehearsal must include low-risk decomposition node: %#v", decomposition)
+	}
+	rollbackGraph := nodes["complex-rollback-graph-blocked"]
+	if rollbackGraph.Status != "blocked" ||
+		!containsString(rollbackGraph.FactoryTask.RequiredGates, "rollback_graph") ||
+		!containsString(rollbackGraph.FactoryTask.RequiredEvidence, "rollback_graph:complex_repo_mutation") {
+		t.Fatalf("complex rehearsal must include rollback graph node: %#v", rollbackGraph)
+	}
+	if !containsString(nodes["complex-dependency-gate-blocked"].Dependencies, "complex-low-risk-decomposition-ready") {
+		t.Fatalf("dependency gate must wait on low-risk decomposition: %#v", nodes["complex-dependency-gate-blocked"].Dependencies)
+	}
+	if !containsString(nodes["complex-repair-plan-blocked"].Dependencies, "complex-rollback-graph-blocked") {
+		t.Fatalf("repair plan must wait on rollback graph: %#v", nodes["complex-repair-plan-blocked"].Dependencies)
+	}
+	next, ok := NextReadyNode(workgraph)
+	if !ok || next.ID != "complex-intake-ready" {
+		t.Fatalf("complex rehearsal should expose only the first safe ready node, got ok=%t node=%#v", ok, next)
+	}
+	importManifest, err := BuildFoundryImportForNodes(workgraph, []string{"complex-intake-ready"}, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(importManifest.Tasks) != 1 || importManifest.Tasks[0].NodeID != "complex-intake-ready" {
+		t.Fatalf("complex rehearsal import must select one dependency-safe node, got %#v", importManifest.Tasks)
+	}
+	if importManifest.SchedulesWork || importManifest.ExecutesWork || importManifest.ApprovesWork {
+		t.Fatalf("complex rehearsal import must remain readback-only: %#v", importManifest)
+	}
+}
+
 func TestFoundryImportJSONSelectsSingleReadyNode(t *testing.T) {
 	var out bytes.Buffer
 	code := Run([]string{

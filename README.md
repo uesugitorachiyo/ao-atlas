@@ -124,3 +124,7 @@ class, `low_risk_code` may be requested for dry-run/readback work, and live
 code execution remains denied until exact policy promotion, rollback proof,
 Sentinel clear verdict, Promoter promotion, Command readback, and PR CI evidence
 exist for the class.
+`examples/valid/workgraph-complex-repo-mutation-rehearsal.json` remains
+dry-run only. It now records low-risk decomposition and rollback graph nodes
+before repair and promotion gates, while still exposing only the first
+dependency-safe ready node to Foundry import.

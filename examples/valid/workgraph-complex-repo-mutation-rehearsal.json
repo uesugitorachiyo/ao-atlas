@@ -56,9 +56,35 @@
       }
     },
     {
+      "id": "complex-low-risk-decomposition-ready",
+      "status": "ready",
+      "dependencies": ["complex-context-repack-ready"],
+      "blockers": [],
+      "stitch_task": true,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "complex-low-risk-decomposition-task",
+        "objective": "Decompose complex_repo_mutation into ordered low-risk candidate nodes before any complex patch packet can advance.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/complex-rehearsal/low-risk-decomposition",
+        "mutation_class": "complex_repo_mutation",
+        "acceptance_criteria": ["complex work is split into dependency-ordered low-risk candidates with explicit denied live authority"],
+        "non_goals": ["do not execute decomposed code changes", "do not skip lower-class live evidence"],
+        "write_scope": ["factory/complex-rehearsal/low-risk-decomposition"],
+        "required_gates": ["low_risk_decomposition", "atlas_classification", "all_lower_classes_live_rehearsed"],
+        "rollback_scope": ["factory/complex-rehearsal/low-risk-decomposition"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["mutation_class:complex_repo_mutation", "low_risk_decomposition:complex_repo_mutation", "all_lower_classes_live_rehearsed"],
+        "safety_limits": ["do_not_advance:low_risk_decomposition_missing", "do_not_advance:complex_repo_mutation_live_execution_denied"],
+        "authority_boundary": "atlas_classification_only",
+        "dependency_refs": ["complex-context-repack-task"],
+        "context_pack_refs": []
+      }
+    },
+    {
       "id": "complex-dependency-gate-blocked",
       "status": "blocked",
-      "dependencies": ["complex-context-repack-ready"],
+      "dependencies": ["complex-low-risk-decomposition-ready"],
       "blockers": ["dependency gate waits for every lower mutation class to have completed live rehearsal evidence"],
       "stitch_task": false,
       "factory_task": {
@@ -77,7 +103,7 @@
         "required_evidence": ["mutation_class:complex_repo_mutation", "all_lower_classes_live_rehearsed", "dependency_gate:complex_repo_mutation"],
         "safety_limits": ["do_not_advance:lower_live_evidence_missing"],
         "authority_boundary": "atlas_classification_only",
-        "dependency_refs": ["complex-context-repack-task"],
+        "dependency_refs": ["complex-low-risk-decomposition-task"],
         "context_pack_refs": []
       }
     },
@@ -134,9 +160,35 @@
       }
     },
     {
-      "id": "complex-repair-plan-blocked",
+      "id": "complex-rollback-graph-blocked",
       "status": "blocked",
       "dependencies": ["complex-rollback-plan-blocked"],
+      "blockers": ["rollback graph waits for per-node rollback edges and reverse dependency order"],
+      "stitch_task": false,
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "complex-rollback-graph-task",
+        "objective": "Require a rollback graph that maps every decomposed complex node to a reverse-order rollback proof.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/complex-rehearsal/rollback-graph",
+        "mutation_class": "complex_repo_mutation",
+        "acceptance_criteria": ["rollback graph covers every low-risk decomposition node and preserves dependency order"],
+        "non_goals": ["do not run rollback against live repositories"],
+        "write_scope": ["factory/complex-rehearsal/rollback-graph"],
+        "required_gates": ["rollback_graph", "rollback_plan", "dependency_order"],
+        "rollback_scope": ["factory/complex-rehearsal/rollback-graph"],
+        "verification_commands": ["go test ./..."],
+        "required_evidence": ["mutation_class:complex_repo_mutation", "rollback_graph:complex_repo_mutation", "rollback_plan:complex_repo_mutation", "all_lower_classes_live_rehearsed"],
+        "safety_limits": ["do_not_advance:rollback_graph_missing", "do_not_advance:complex_repo_mutation_live_execution_denied"],
+        "authority_boundary": "atlas_classification_only",
+        "dependency_refs": ["complex-rollback-plan-task"],
+        "context_pack_refs": []
+      }
+    },
+    {
+      "id": "complex-repair-plan-blocked",
+      "status": "blocked",
+      "dependencies": ["complex-rollback-graph-blocked"],
       "blockers": ["repair plan waits for failed complex dry-run evidence and must preserve exact scope"],
       "stitch_task": false,
       "factory_task": {
@@ -155,7 +207,7 @@
         "required_evidence": ["mutation_class:complex_repo_mutation", "repair_plan:complex_repo_mutation", "rollback_plan:complex_repo_mutation"],
         "safety_limits": ["do_not_advance:repair_plan_missing", "do_not_advance:complex_repo_mutation_live_execution_denied"],
         "authority_boundary": "atlas_classification_only",
-        "dependency_refs": ["complex-rollback-plan-task"],
+        "dependency_refs": ["complex-rollback-graph-task"],
         "context_pack_refs": []
       }
     },
