@@ -63,3 +63,11 @@ path from the first docs-only live rehearsal toward complex repository mutation.
 It includes repair nodes, context repack nodes, Sentinel/Promoter/Command
 evidence nodes, blocked states, dependency gates, and explicit do-not-advance
 limits so higher classes remain denied until their evidence exists.
+
+`docs_only_multi_file` is the next live rehearsal after the proven
+`docs_only_single_file` class. Atlas represents it as classification and
+workgraph evidence only: no more than two documentation files, exact write and
+rollback scope, CI evidence, Sentinel no-hold readback, Promoter readiness, and
+Command readback must exist before downstream tools can request execution. The
+test-only, code, multi-repo, complex, and fully unsupervised classes remain
+denied until their lower-class live evidence is recorded.
