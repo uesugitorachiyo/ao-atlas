@@ -915,6 +915,63 @@ func TestMissionStatusReportsLowRiskDryRunReadinessWithoutLiveExecution(t *testi
 	}
 }
 
+func TestMissionStatusReportsMultiRepoLowRiskDryRunReadinessWithoutLiveExecution(t *testing.T) {
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "status",
+		"--intake", filepath.Join("..", "..", "examples", "valid", "intake-authority-ladder.json"),
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph-authority-ladder-multi-repo-dry-run.json"),
+		"--run-link", filepath.Join("..", "..", "examples", "valid", "run-link-authority-ladder-docs-single.json"),
+		"--run-link", filepath.Join("..", "..", "examples", "valid", "run-link-authority-ladder-docs-multi.json"),
+		"--json",
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission status multi-repo dry run failed: %s", out.String())
+	}
+	var status MissionStatus
+	if err := json.Unmarshal(out.Bytes(), &status); err != nil {
+		t.Fatalf("mission status did not emit json: %v\n%s", err, out.String())
+	}
+	if err := ValidateMissionStatus(status); err != nil {
+		t.Fatal(err)
+	}
+	if status.AuthorityLadder == nil {
+		t.Fatalf("expected authority ladder readback, got %#v", status)
+	}
+	if status.AuthorityLadder.CurrentClass != "test_only" {
+		t.Fatalf("expected current class test_only until low-risk live evidence exists, got %#v", status.AuthorityLadder)
+	}
+	if status.AuthorityLadder.NextClass != "low_risk_code" {
+		t.Fatalf("expected next live class low_risk_code, got %#v", status.AuthorityLadder)
+	}
+	if !containsString(status.AuthorityLadder.DryRunReadyClasses, "multi_repo_low_risk") {
+		t.Fatalf("expected multi_repo_low_risk dry-run readiness, got %#v", status.AuthorityLadder.DryRunReadyClasses)
+	}
+	for _, want := range []string{
+		"dry_run:multi_repo_low_risk",
+		"per_repo_rollback:ao-atlas",
+		"per_repo_rollback:ao-foundry",
+		"per_repo_rollback:ao-command",
+		"command_readback:multi_repo_low_risk",
+		"prevent_concurrent_unsafe_execution",
+	} {
+		if !containsString(status.AuthorityLadder.RequiredEvidence, want) {
+			t.Fatalf("expected required evidence %s, got %#v", want, status.AuthorityLadder.RequiredEvidence)
+		}
+	}
+	if !containsString(status.AuthorityLadder.DoNotAdvanceGates, "do_not_advance:low_risk_code_live_execution_denied") ||
+		!containsString(status.AuthorityLadder.DoNotAdvanceGates, "do_not_advance:multi_repo_low_risk_live_execution_denied") {
+		t.Fatalf("expected do-not-advance gates for live code and multi-repo execution, got %#v", status.AuthorityLadder.DoNotAdvanceGates)
+	}
+	if status.SchedulesWork || status.ExecutesWork {
+		t.Fatalf("multi-repo dry-run readback must remain non-mutating: %#v", status)
+	}
+	if status.AuthorityLadder.DeniedHigherClasses["multi_repo_low_risk"] == "" ||
+		status.AuthorityLadder.DeniedHigherClasses["complex_repo_mutation"] == "" {
+		t.Fatalf("expected multi-repo and complex classes to remain denied for live execution, got %#v", status.AuthorityLadder.DeniedHigherClasses)
+	}
+}
+
 func TestFoundryRoundtripSmokeValidatesFoundryImport(t *testing.T) {
 	script, err := os.ReadFile(filepath.Join("..", "..", "scripts", "atlas-foundry-roundtrip-smoke.sh"))
 	if err != nil {
