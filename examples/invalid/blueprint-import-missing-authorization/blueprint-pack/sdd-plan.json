@@ -1,0 +1,14 @@
+{
+  "schema": "ao2.sdd-plan.v1",
+  "project_id": "missing-authorization",
+  "title": "Missing authorization fixture",
+  "objective": "Prove Atlas blocks without Blueprint build authorization.",
+  "slices": [
+    {
+      "id": "SLICE-001",
+      "title": "Blocked import",
+      "acceptance": ["blueprint-request is emitted"]
+    }
+  ],
+  "stop_condition": "Atlas refuses to emit ready workgraph material"
+}

@@ -21,6 +21,8 @@ func Run(args []string, stdout, stderr io.Writer) int {
 		err = runInstance(args[1:], stdout)
 	case "intake":
 		err = runIntake(args[1:], stdout)
+	case "blueprint":
+		err = runBlueprint(args[1:], stdout)
 	case "mission":
 		err = runMission(args[1:], stdout)
 	case "blueprint-request":
@@ -50,7 +52,58 @@ func Run(args []string, stdout, stderr io.Writer) int {
 }
 
 func usage(w io.Writer) {
-	fmt.Fprintln(w, "atlas <instance|intake|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link> ...")
+	fmt.Fprintln(w, "atlas <instance|intake|blueprint|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link> ...")
+}
+
+func runBlueprint(args []string, stdout io.Writer) error {
+	if len(args) == 0 || args[0] != "import" {
+		return fmt.Errorf("blueprint requires import")
+	}
+	fs := flag.NewFlagSet("blueprint import", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	packPath := fs.String("pack", "", "AO Blueprint pack directory")
+	authorizationPath := fs.String("authorization", "", "AO Blueprint build authorization packet")
+	instancePath := fs.String("instance", "", "Atlas stack instance path")
+	mutationClassesPath := fs.String("mutation-classes", "", "Atlas mutation class model path")
+	outDir := fs.String("out", "", "output directory")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*packPath) == "" {
+		return fmt.Errorf("--pack is required")
+	}
+	if strings.TrimSpace(*instancePath) == "" {
+		return fmt.Errorf("--instance is required")
+	}
+	if strings.TrimSpace(*mutationClassesPath) == "" {
+		return fmt.Errorf("--mutation-classes is required")
+	}
+	if strings.TrimSpace(*outDir) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if *outDir != "" {
+		for _, input := range []string{*packPath, *authorizationPath, *instancePath, *mutationClassesPath} {
+			if samePath(input, *outDir) {
+				return fmt.Errorf("refusing to overwrite input artifact")
+			}
+		}
+	}
+	result, err := BuildBlueprintImport(BlueprintImportPaths{
+		PackPath:            *packPath,
+		AuthorizationPath:   *authorizationPath,
+		InstancePath:        *instancePath,
+		MutationClassesPath: *mutationClassesPath,
+		OutDir:              *outDir,
+	})
+	if *jsonOut {
+		if printErr := printJSON(stdout, result.Record); printErr != nil {
+			return printErr
+		}
+	} else {
+		fmt.Fprintf(stdout, "status=%s\nblueprint_import=%s\nready_for_foundry=%t\n", result.Record.Status, filepath.ToSlash(filepath.Join(*outDir, "blueprint-import.json")), result.Record.ReadyForFoundry)
+	}
+	return err
 }
 
 func runInstance(args []string, stdout io.Writer) error {

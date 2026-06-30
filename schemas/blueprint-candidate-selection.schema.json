@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.blueprint-candidate-selection.v0.1",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "id",
+    "project_id",
+    "status",
+    "selected_candidate_id",
+    "mutation_class",
+    "target_factory_repo",
+    "workgraph_id",
+    "node_id",
+    "task_id",
+    "required_gates",
+    "required_evidence",
+    "safety_limits",
+    "digests",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "mutates_repositories",
+    "safe_to_execute",
+    "live_execution_proven"
+  ],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.blueprint-candidate-selection.v0.1" },
+    "id": { "type": "string", "minLength": 1 },
+    "project_id": { "type": "string", "minLength": 1 },
+    "status": { "const": "ready" },
+    "selected_candidate_id": { "type": "string", "minLength": 1 },
+    "mutation_class": {
+      "enum": [
+        "docs_only_single_file",
+        "docs_only_multi_file",
+        "docs_config_only",
+        "test_only",
+        "low_risk_code",
+        "multi_repo_low_risk",
+        "complex_repo_mutation"
+      ]
+    },
+    "target_factory_repo": { "type": "string", "minLength": 1 },
+    "workgraph_id": { "type": "string", "minLength": 1 },
+    "node_id": { "type": "string", "minLength": 1 },
+    "task_id": { "type": "string", "minLength": 1 },
+    "required_gates": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "required_evidence": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "safety_limits": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "digests": {
+      "type": "object",
+      "additionalProperties": { "pattern": "^sha256:[0-9a-f]{64}$" }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "mutates_repositories": { "const": false },
+    "safe_to_execute": { "const": false },
+    "live_execution_proven": { "const": false }
+  }
+}

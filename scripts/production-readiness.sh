@@ -47,6 +47,8 @@ required_files=(
   schemas/intake.schema.json
   schemas/mission-status.schema.json
   schemas/blueprint-request.schema.json
+  schemas/blueprint-import.schema.json
+  schemas/blueprint-candidate-selection.schema.json
   schemas/workgraph.schema.json
   schemas/workgraph-repair-plan.schema.json
   schemas/mutation-classes.schema.json
@@ -76,6 +78,15 @@ test -s "$OUT/instance-doctor.json"
 test -s "$OUT/mission-status.json"
 "$BIN" mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-needs-context.json --json >/dev/null
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
+"$BIN" blueprint import \
+  --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack \
+  --authorization examples/valid/blueprint-import-low-risk-code/build-authorization.json \
+  --instance examples/valid/stack-instance.json \
+  --mutation-classes examples/valid/mutation-classes.json \
+  --out "$OUT/blueprint-import-low-risk-code" >/dev/null
+test -s "$OUT/blueprint-import-low-risk-code/blueprint-import.json"
+test -s "$OUT/blueprint-import-low-risk-code/workgraph.json"
+test -s "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-import.json"
 "$BIN" mutation-classes validate --model examples/valid/mutation-classes.json >/dev/null
 "$BIN" factory-task validate --task examples/valid/factory-task.json >/dev/null
 "$BIN" factory materialize --task examples/valid/factory-task.json --out "$OUT/factory-materialization" --dry-run >/dev/null
@@ -145,6 +156,11 @@ if "$BIN" blueprint-request validate --request examples/invalid/blueprint-reques
   echo "invalid blueprint request was accepted" >&2
   exit 1
 fi
+if "$BIN" blueprint import --pack examples/invalid/blueprint-import-missing-authorization/blueprint-pack --instance examples/valid/stack-instance.json --mutation-classes examples/valid/mutation-classes.json --out "$OUT/blueprint-import-missing-auth" >/dev/null 2>&1; then
+  echo "missing Blueprint authorization emitted ready import material" >&2
+  exit 1
+fi
+test -s "$OUT/blueprint-import-missing-auth/blueprint-request.json"
 if "$BIN" workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/invalid/run-link-blocked.json --out "$OUT/blocked-completed.json" >/dev/null 2>&1; then
   echo "blocked run-link completed a workgraph" >&2
   exit 1

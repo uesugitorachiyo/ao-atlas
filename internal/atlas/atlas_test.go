@@ -68,6 +68,15 @@ func repoRoot(t *testing.T) string {
 	return filepath.Clean(filepath.Join(filepath.Dir(file), "..", ".."))
 }
 
+func mustLoadJSON[T any](t *testing.T, path string) T {
+	t.Helper()
+	value, err := LoadJSON[T](path)
+	if err != nil {
+		t.Fatalf("load JSON %s: %v", path, err)
+	}
+	return value
+}
+
 func TestInstanceDoctorValidatesRootsAndRegistryParity(t *testing.T) {
 	dir := t.TempDir()
 	instancePath := filepath.Join(dir, "instance.json")
@@ -176,6 +185,118 @@ func TestIntakeUnderspecifiedEmitsBlueprintRequest(t *testing.T) {
 	}
 	if err := ValidateBlueprintRequest(request); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestBlueprintImportCompilesLowRiskCodePackIntoAtlasAndFoundryMaterial(t *testing.T) {
+	dir := t.TempDir()
+	outDir := filepath.Join(dir, "import")
+	var out bytes.Buffer
+	code := Run([]string{
+		"blueprint", "import",
+		"--pack", filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "blueprint-pack"),
+		"--authorization", filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "build-authorization.json"),
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--mutation-classes", filepath.Join("..", "..", "examples", "valid", "mutation-classes.json"),
+		"--out", outDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("blueprint import failed: %s", out.String())
+	}
+	record := mustLoadJSON[BlueprintImport](t, filepath.Join(outDir, "blueprint-import.json"))
+	if record.Status != "ready" || record.MutationClass != "low_risk_code" || record.LiveExecutionProven {
+		t.Fatalf("unexpected import record: %#v", record)
+	}
+	if record.ReadyForFoundry != true || record.SafeToExecute != false || record.MutatesRepositories {
+		t.Fatalf("unexpected authority flags: %#v", record)
+	}
+	for _, key := range []string{
+		"blueprint_pack",
+		"build_authorization",
+		"implementation_spec",
+		"quality_profile",
+		"candidate_rules",
+		"mutation_class_model",
+		"candidate_selection",
+		"workgraph",
+		"downstream_foundry_import",
+	} {
+		if record.Digests[key] == "" {
+			t.Fatalf("record missing digest binding %q: %#v", key, record.Digests)
+		}
+	}
+	if !containsValue(record.SafetyLimits, "do_not_advance:low_risk_code_live_execution_denied") {
+		t.Fatalf("low_risk_code import must deny live execution: %#v", record.SafetyLimits)
+	}
+	if _, err := os.Stat(filepath.Join(outDir, "workgraph.json")); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := os.Stat(filepath.Join(outDir, "candidate-selection.json")); err != nil {
+		t.Fatal(err)
+	}
+	foundryImport := mustLoadJSON[FoundryImport](t, filepath.Join(outDir, "foundry-import", "foundry-import.json"))
+	if err := ValidateFoundryImport(foundryImport); err != nil {
+		t.Fatal(err)
+	}
+	if foundryImport.Tasks[0].MutationClass != "low_risk_code" {
+		t.Fatalf("unexpected Foundry import mutation class: %#v", foundryImport.Tasks[0])
+	}
+}
+
+func TestBlueprintImportBlocksWithoutAuthorization(t *testing.T) {
+	dir := t.TempDir()
+	outDir := filepath.Join(dir, "blocked")
+	var out bytes.Buffer
+	code := Run([]string{
+		"blueprint", "import",
+		"--pack", filepath.Join("..", "..", "examples", "invalid", "blueprint-import-missing-authorization", "blueprint-pack"),
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--mutation-classes", filepath.Join("..", "..", "examples", "valid", "mutation-classes.json"),
+		"--out", outDir,
+	}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected missing authorization to fail closed")
+	}
+	record := mustLoadJSON[BlueprintImport](t, filepath.Join(outDir, "blueprint-import.json"))
+	if record.Status != "blocked" || record.ReadyForFoundry || record.SafeToExecute {
+		t.Fatalf("unexpected blocked import record: %#v", record)
+	}
+	request := mustLoadJSON[BlueprintRequest](t, filepath.Join(outDir, "blueprint-request.json"))
+	if request.Status != "blueprint_required" || !containsValue(request.Missing, "build_authorization") {
+		t.Fatalf("unexpected request: %#v", request)
+	}
+	if _, err := os.Stat(filepath.Join(outDir, "workgraph.json")); !os.IsNotExist(err) {
+		t.Fatalf("blocked import must not write ready workgraph: %v", err)
+	}
+}
+
+func TestBlueprintImportBlocksStaleAuthorization(t *testing.T) {
+	dir := t.TempDir()
+	authPath := filepath.Join(dir, "expired-authorization.json")
+	auth := mustLoadJSON[map[string]any](t, filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "build-authorization.json"))
+	auth["expires_at_utc"] = "2000-01-01T00:00:00Z"
+	if err := WriteJSON(authPath, auth); err != nil {
+		t.Fatal(err)
+	}
+	outDir := filepath.Join(dir, "blocked")
+	var out bytes.Buffer
+	code := Run([]string{
+		"blueprint", "import",
+		"--pack", filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "blueprint-pack"),
+		"--authorization", authPath,
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--mutation-classes", filepath.Join("..", "..", "examples", "valid", "mutation-classes.json"),
+		"--out", outDir,
+	}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected stale authorization to fail closed")
+	}
+	request := mustLoadJSON[BlueprintRequest](t, filepath.Join(outDir, "blueprint-request.json"))
+	if !containsValue(request.Missing, "build_authorization_freshness") {
+		t.Fatalf("expected stale authorization blocker, got %#v", request.Missing)
+	}
+	if _, err := os.Stat(filepath.Join(outDir, "foundry-import", "foundry-import.json")); !os.IsNotExist(err) {
+		t.Fatalf("blocked import must not write Foundry import: %v", err)
 	}
 }
 

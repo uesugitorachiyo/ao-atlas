@@ -10,7 +10,8 @@ the rest of the AO stack:
 
 - AO Blueprint owns requirements interview and build authorization.
 - AO Atlas owns oversized objective intake, workgraph/context-pack compilation,
-  stack-instance manifests, and factory-folder materialization models.
+  stack-instance manifests, Blueprint import compilation, and factory-folder
+  materialization models.
 - AO Foundry owns portfolio scheduling and safe next-action selection.
 - AO Forge owns one governed factory run.
 - AO2 executes governed local work.
@@ -29,6 +30,16 @@ evidence may feed the later Covenant, Foundry, Forge, AO2, Sentinel, Promoter,
 and Command approval chain, but Atlas does not grant mutation authority, mark
 work safe to execute, create branches, apply patches, publish, release, or
 widen the approved scope.
+
+For oversized, mutation-class, live-mutation ladder, and long-running work, the
+canonical intake path is AO Blueprint -> AO Atlas -> AO Foundry. Blueprint does
+not hand these classes directly to Foundry. Atlas must first import the
+Blueprint pack and build authorization, bind their digests to the implementation
+spec, quality profile, candidate rules, mutation class, context packs,
+workgraph, candidate-selection record, and downstream Foundry import. If
+Blueprint authorization is missing, blocked, stale, digest-mismatched, or not
+scoped to the requested work, Atlas emits a Blueprint request/blocked artifact
+instead of ready workgraph material.
 
 ## Install
 
@@ -66,6 +77,7 @@ go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out .atlas-local/mission-status.json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-needs-context.json --json
 go run ./cmd/atlas blueprint-request validate --request examples/valid/blueprint-request.json
+go run ./cmd/atlas blueprint import --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack --authorization examples/valid/blueprint-import-low-risk-code/build-authorization.json --instance examples/valid/stack-instance.json --mutation-classes examples/valid/mutation-classes.json --out .atlas-local/blueprint-import-low-risk-code
 go run ./cmd/atlas mutation-classes validate --model examples/valid/mutation-classes.json
 go run ./cmd/atlas factory materialize --task examples/valid/factory-task.json --out .atlas-local/factory-materialization --dry-run
 go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph.json --json

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.blueprint-import.v0.1",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "id",
+    "project_id",
+    "status",
+    "reason",
+    "blueprint_pack",
+    "digests",
+    "ready_for_foundry",
+    "safe_to_execute",
+    "live_execution_proven",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "mutates_repositories",
+    "calls_providers",
+    "release_or_publish_allowed"
+  ],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.blueprint-import.v0.1" },
+    "id": { "type": "string", "minLength": 1 },
+    "project_id": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["ready", "blocked"] },
+    "reason": { "type": "string", "minLength": 1 },
+    "blueprint_pack": { "$ref": "#/$defs/source_ref" },
+    "build_authorization": { "$ref": "#/$defs/source_ref" },
+    "target_instance": { "type": "string" },
+    "workgraph_id": { "type": "string" },
+    "mutation_class": { "type": "string" },
+    "downstream_foundry_import": { "$ref": "#/$defs/source_ref" },
+    "digests": {
+      "type": "object",
+      "additionalProperties": { "pattern": "^sha256:[0-9a-f]{64}$" }
+    },
+    "safety_limits": { "type": "array", "items": { "type": "string" } },
+    "blocking_next_actions": { "type": "array", "items": { "type": "string" } },
+    "ready_for_foundry": { "type": "boolean" },
+    "safe_to_execute": { "const": false },
+    "live_execution_proven": { "const": false },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "mutates_repositories": { "const": false },
+    "calls_providers": { "const": false },
+    "release_or_publish_allowed": { "const": false }
+  },
+  "$defs": {
+    "source_ref": {
+      "type": "object",
+      "required": ["ref", "digest"],
+      "properties": {
+        "ref": { "type": "string", "minLength": 1 },
+        "digest": { "pattern": "^sha256:[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
