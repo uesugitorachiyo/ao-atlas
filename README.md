@@ -17,16 +17,18 @@ the rest of the AO stack:
 - AO Command remains read-only.
 - AO Covenant, Sentinel, Promoter, Arena, and Crucible remain gates.
 
-For the docs-only live mutation classes, AO Atlas can decompose the oversized
-objective, compile bounded context packs, and emit Foundry import or run-link
-evidence. The governed live ladder has now proven `docs_only_multi_file` through
-a docs-only PR rehearsal. The next designed rung is the `test_only` dry-run
-chain: at most one test file in later live rehearsal, with tests-only write
-scope, rollback plan, Sentinel coverage no-hold evidence, Promoter readiness,
-Command readback, and clean CI. That evidence may feed the later Covenant,
-Foundry, Forge, AO2, Sentinel, Promoter, and Command approval chain, but Atlas
-does not grant mutation authority, mark work safe to execute, create branches,
-apply patches, publish, release, or widen the approved scope.
+For the governed live mutation ladder, AO Atlas can decompose oversized
+objectives, compile bounded context packs, and emit Foundry import or run-link
+evidence. The highest proven live class is now `test_only`: docs-only live
+rehearsals and one bounded test-only live rehearsal are merged evidence. The
+next denied rung is `low_risk_code`; Atlas can classify and read back the
+missing evidence for dry-run/request work, but live code execution remains
+denied until exact policy promotion, rollback proof, Sentinel clear verdict,
+Promoter promotion, Command readback, and clean PR CI evidence exist. That
+evidence may feed the later Covenant, Foundry, Forge, AO2, Sentinel, Promoter,
+and Command approval chain, but Atlas does not grant mutation authority, mark
+work safe to execute, create branches, apply patches, publish, release, or
+widen the approved scope.
 
 ## Install
 
