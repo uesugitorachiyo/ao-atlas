@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.transition-request-audit.v0.1",
+  "status": "request_only",
+  "from_class": "low_risk_code",
+  "to_class": "multi_repo_low_risk",
+  "highest_proven_live_class": "low_risk_code",
+  "next_denied_class": "multi_repo_low_risk",
+  "reason_sufficient_to_request": "The merged low_risk_code proof shows AO can carry one tiny code change through governed PR, verification, CI, and merge without forbidden surfaces.",
+  "reason_not_auto_execute": "The next class requires serialized cross-repo coordination, per-repo rollback, fresh Foundry/Covenant/Forge/AO2/Sentinel/Promoter/Command gates, and repo-two locking before any live mutation.",
+  "required_before_execution": [
+    "Covenant exact-scope ticket safe_to_execute=true for active repo",
+    "Foundry per-repo class and sequencing gates safe_to_execute=true",
+    "Forge/AO2 bounded patch packet",
+    "Sentinel hold release for active repo",
+    "Promoter no-promotion verdict",
+    "Command readback matching approved commands",
+    "CI and branch cleanup evidence",
+    "operator exact-scope approval"
+  ],
+  "safe_to_request": true,
+  "safe_to_execute": false,
+  "multi_repo_low_risk_live_proven": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

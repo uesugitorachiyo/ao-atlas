@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "repo-1",
+  "repo": "ao-command",
+  "status": "ready_for_planning_only",
+  "before_merge": [
+    "stop command execution",
+    "preserve Foundry, Command, Sentinel, Promoter, CI, and rollback logs",
+    "close pull request if opened",
+    "delete branch codex/multi-repo-low-risk-rehearsal-repo-1 through governed git path",
+    "record no promotion"
+  ],
+  "after_merge": [
+    "open a governed revert pull request for internal/cli/cli_test.go",
+    "run go test ./internal/cli -count=1",
+    "run go test ./... -count=1",
+    "run go vet ./...",
+    "run go build ./cmd/ao-command",
+    "merge revert only through existing gates"
+  ],
+  "post_rollback_readback": [
+    "Command readback records repo one reverted or held",
+    "Sentinel hold remains or is reasserted",
+    "Promoter records no multi_repo_low_risk promotion"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

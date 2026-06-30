@@ -1,0 +1,49 @@
+{
+  "schema": "ao.covenant.exact-scope-live-code-authority.v0.1",
+  "authority_class": "multi_repo_low_risk",
+  "safe_to_execute": false,
+  "active_node": "repo-1",
+  "repo": "ao-command",
+  "base_branch": "main",
+  "work_branch": "codex/multi-repo-low-risk-rehearsal-repo-1",
+  "pull_request_required": true,
+  "direct_main_mutation_allowed": false,
+  "concurrent_mutation_allowed": false,
+  "candidate_files": [
+    "internal/cli/cli_test.go"
+  ],
+  "change_size": "test-only",
+  "max_repos": 2,
+  "repo_two_locked_until": "repo-1-merged-evidence-recorded",
+  "denied_surfaces": [
+    "shared_policy",
+    "shared_auth",
+    "shared_provider",
+    "shared_release",
+    "shared_deploy",
+    "shared_config",
+    "shared_secret",
+    "dependency_updates",
+    "public_claim_broadening",
+    "complex_mutation",
+    "fully_unsupervised_complex_mutation",
+    "rsi"
+  ],
+  "required_verdicts": [
+    "atlas_blueprint_import",
+    "foundry_per_repo_class_gate",
+    "foundry_cross_repo_sequencing_gate",
+    "branch_cleanup_gate",
+    "ci_gate",
+    "rollback_gate",
+    "sentinel_hold_clear_gate",
+    "promoter_no_promotion_gate",
+    "command_readback_gate",
+    "operator_exact_scope_approval"
+  ],
+  "rollback": {
+    "before_merge": "close pull request and delete branch",
+    "after_merge": "revert through a governed pull request"
+  },
+  "expiry": "one active repo node window"
+}

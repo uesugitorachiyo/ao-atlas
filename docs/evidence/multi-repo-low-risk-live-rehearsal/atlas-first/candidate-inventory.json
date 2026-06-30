@@ -1,0 +1,103 @@
+{
+  "schema": "ao.atlas.candidate-inventory.v0.1",
+  "status": "selected",
+  "selection_rules": [
+    "two repos maximum",
+    "tiny code or test-only changes",
+    "serialized execution only",
+    "no shared policy/auth/provider/release/deploy/config/secret surfaces",
+    "no dependency updates",
+    "no public claim broadening",
+    "per-repo rollback required"
+  ],
+  "selected_repo_one": "ao-command",
+  "planned_repo_two": "ao-foundry",
+  "repos": [
+    {
+      "repo": "ao-command",
+      "decision": "selected_repo_one",
+      "reason": "existing test-only CLI surface, PR CI present, no forbidden shared surface",
+      "candidate_file": "internal/cli/cli_test.go"
+    },
+    {
+      "repo": "ao-foundry",
+      "decision": "planned_repo_two_blocked",
+      "reason": "existing test-only CLI surface, PR CI present, can remain blocked behind repo-one evidence",
+      "candidate_file": "internal/cli/cli_test.go"
+    },
+    {
+      "repo": "ao-atlas",
+      "decision": "rejected_for_candidate",
+      "reason": "Atlas is producing governance artifacts in this phase; selecting it would blur control-plane evidence with downstream live mutation"
+    },
+    {
+      "repo": "ao-blueprint",
+      "decision": "rejected_for_candidate",
+      "reason": "Blueprint is source-of-truth authorization owner; live rehearsal should not mutate authorization pack owner"
+    },
+    {
+      "repo": "ao-covenant",
+      "decision": "rejected_for_candidate",
+      "reason": "policy authority surface is too sensitive for first multi-repo rehearsal"
+    },
+    {
+      "repo": "ao-forge",
+      "decision": "rejected_for_candidate",
+      "reason": "bounded patch enforcement surface is downstream gate-critical and broader than safest pair"
+    },
+    {
+      "repo": "ao-sentinel",
+      "decision": "rejected_for_candidate",
+      "reason": "hold authority surface is gate-critical; avoid mutating Sentinel during first multi-repo request"
+    },
+    {
+      "repo": "ao-promoter",
+      "decision": "rejected_for_candidate",
+      "reason": "promotion authority surface is gate-critical; avoid mutating Promoter during proof request"
+    },
+    {
+      "repo": "ao-arena",
+      "decision": "rejected_for_candidate",
+      "reason": "not needed for Atlas to Foundry governed rehearsal path"
+    },
+    {
+      "repo": "ao-crucible",
+      "decision": "rejected_for_candidate",
+      "reason": "not needed for Atlas to Foundry governed rehearsal path"
+    },
+    {
+      "repo": "ao-architecture",
+      "decision": "rejected_for_candidate",
+      "reason": "no Go test-only surface and no PR CI evidence in local inventory"
+    },
+    {
+      "repo": "ao-conductor",
+      "decision": "rejected_for_candidate",
+      "reason": "non-Go orchestration surface and workflow/config adjacency increase risk"
+    },
+    {
+      "repo": "ao-control-plane",
+      "decision": "rejected_for_candidate",
+      "reason": "control-plane surface is denied for first low-risk cross-repo mutation"
+    },
+    {
+      "repo": "ao-operator",
+      "decision": "rejected_for_candidate",
+      "reason": "operator-facing surface is out of scope"
+    },
+    {
+      "repo": "ao-runtime",
+      "decision": "rejected_for_candidate",
+      "reason": "runtime surface is too broad and workflow/config adjacent"
+    },
+    {
+      "repo": "ao-covenant-stub-20260617",
+      "decision": "rejected_for_candidate",
+      "reason": "local stub has no upstream and is not a safe governed repo candidate"
+    }
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

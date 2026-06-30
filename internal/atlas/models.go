@@ -166,6 +166,7 @@ type BlueprintImport struct {
 
 type BlueprintImportPaths struct {
 	PackPath            string
+	CandidateRulesPath  string
 	AuthorizationPath   string
 	InstancePath        string
 	MutationClassesPath string

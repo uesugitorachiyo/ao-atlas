@@ -1,0 +1,42 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "repo-2-ao-foundry-test-only-context-pack",
+  "task_id": "repo-2-ao-foundry-test-only-task",
+  "budget_bytes": 8192,
+  "source_refs": [
+    {
+      "ref": "implementation-spec.md",
+      "digest": "sha256:b42024aae040df698dc2addee9ba22f8ff22eee29d8adaf800000e09393e3002"
+    },
+    {
+      "ref": "candidate-selection.md",
+      "digest": "sha256:1b556c51cb536d86c4c13c97949f3852a1fc9be49d653cc22ddf6823cf0299d4"
+    },
+    {
+      "ref": "gate-evidence.md",
+      "digest": "sha256:76a7b731b863ce51df1d2b2be69f009e7bf85ec236fe74708d2424570fdfa3b7"
+    },
+    {
+      "ref": "docs/evidence/multi-repo-low-risk-live-rehearsal/atlas-first/candidate-records/repo-2-ao-foundry.json",
+      "digest": "sha256:ab1fdd46918e2c476efb41968400713bb649aecbc3c09801b8a97c4580efc998"
+    },
+    {
+      "ref": "docs/evidence/multi-repo-low-risk-live-rehearsal/atlas-first/rollback-records/repo-2-ao-foundry.json",
+      "digest": "sha256:e8eb0b01be59f38ba6d6123d3ad4e9289be07cee4e52904810f4f0577323dd87"
+    }
+  ],
+  "summaries": [
+    "Repo two is planned only and remains blocked until repo one merges cleanly with evidence recorded.",
+    "The planned AO Foundry scope is one existing test file and no shared forbidden surface."
+  ],
+  "assumptions": [
+    "Repo one evidence will be evaluated before any repo two import or execution.",
+    "AO Atlas does not schedule or execute repo two work."
+  ],
+  "exclusions": [
+    "live repo mutation",
+    "repo two Foundry import before stop gate",
+    "shared policy, auth, provider, release, deploy, config, secret, dependency, or public-claim surfaces"
+  ],
+  "missing_context_protocol": "Keep repo two blocked and return to AO Atlas if repo-one merge evidence is missing, stale, or ambiguous."
+}

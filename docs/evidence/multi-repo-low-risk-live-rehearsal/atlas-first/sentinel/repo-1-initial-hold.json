@@ -1,0 +1,9 @@
+{
+  "schema": "ao.sentinel.repo-node-verdict.v0.1",
+  "status": "hold",
+  "active_node": "repo-1",
+  "repo": "ao-command",
+  "reason": "Atlas-first phase has not received exact downstream safe_to_execute=true gates.",
+  "release_allowed": false,
+  "safe_to_execute": false
+}

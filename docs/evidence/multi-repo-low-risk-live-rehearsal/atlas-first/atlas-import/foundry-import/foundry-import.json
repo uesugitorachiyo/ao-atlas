@@ -1,0 +1,161 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "multi-repo-low-risk-live-rehearsal-workgraph-foundry-import",
+  "workgraph_id": "multi-repo-low-risk-live-rehearsal-workgraph",
+  "target_instance": "demo-stack",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "excluded/local-artifacts/multi_repo_low_risk-live-rehearsal-blueprint",
+      "digest": "sha256:882fdfd19510ac1ec1dad6eec280c84df7f943b18346c54d7dbe79dad3e84036"
+    },
+    {
+      "ref": "excluded/local-artifacts/build-authorization.json",
+      "digest": "sha256:81760ca1c266f77d57c457851dc11bd9fd0b44feaeddeacdc7b6372c2d24e673"
+    },
+    {
+      "ref": "candidate-selection.json",
+      "digest": "sha256:3883c0b0d03dbf58f2f09c9602ea89ab11e2e1e3fd938ac05684bc7203bb27cf"
+    },
+    {
+      "ref": "context-packs/repo-1-ao-command-test-only-context-pack.json",
+      "digest": "sha256:5979555a222a866aeb6b1baf7e23d327faf5aee101c3e52b646ae8a2a45a12a9"
+    },
+    {
+      "ref": "workgraph.json",
+      "digest": "sha256:b987f5010b05095f692fe8f39f97abb84d839ebf7051970345614d3a1653397d"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "repo-1-ao-command-test-only-node",
+      "task_id": "repo-1-ao-command-test-only-task",
+      "path": "tasks/repo-1-ao-command-test-only-task.json",
+      "mutation_class": "multi_repo_low_risk",
+      "write_scope": [
+        "repo:ao-command:internal/cli/cli_test.go"
+      ],
+      "rollback_scope": [
+        "repo:ao-command:internal/cli/cli_test.go"
+      ],
+      "required_gates": [
+        "atlas_blueprint_import",
+        "atlas_cross_repo_classification",
+        "per_repo_covenant_ticket",
+        "foundry_per_repo_class_gate",
+        "foundry_serial_execution_gate",
+        "foundry_cross_repo_sequencing_gate",
+        "branch_cleanup_gate",
+        "ci_gate",
+        "rollback_gate",
+        "sentinel_hold_clear_gate",
+        "promoter_no_promotion_gate",
+        "command_repo_readback",
+        "operator_exact_scope_approval"
+      ],
+      "required_evidence": [
+        "blueprint_pack:ready",
+        "blueprint_authorization:ao-atlas",
+        "low_risk_code:live_proven",
+        "multi_repo_low_risk:denied_until_rehearsal_complete",
+        "repo_one:ao-command",
+        "repo_two:blocked_until_repo_one_merge_evidence",
+        "cross_repo_no_shared_surface",
+        "foundry_import:repo_1_only",
+        "covenant:safe_to_execute_true_required_later",
+        "sentinel:hold_or_clear_required_later",
+        "promoter:no_promotion_required_later",
+        "command_readback:required_later",
+        "ci:required_later"
+      ],
+      "authority_boundary": "atlas_compile_and_foundry_import_for_repo_one_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "repo-1-ao-command-test-only-task",
+        "objective": "Prepare repo one for the first governed multi_repo_low_risk rehearsal as a tiny test-only AO Command change, with live execution denied until all downstream gates return exact safe_to_execute=true.",
+        "target_factory_repo": "ao-command",
+        "factory_folder": "factory/multi-repo-low-risk/repo-1-ao-command",
+        "mutation_class": "multi_repo_low_risk",
+        "acceptance_criteria": [
+          "Atlas import is ready and digest-bound to the Blueprint pack and verified authorization",
+          "Foundry import contains only repo-1",
+          "repo-2 remains blocked until repo-1 merges and evidence is recorded",
+          "safe_to_execute remains false in Atlas artifacts"
+        ],
+        "non_goals": [
+          "do not execute live repo mutation",
+          "do not import repo two into Foundry",
+          "do not claim multi_repo_low_risk is live-proven",
+          "do not touch shared policy, auth, provider, release, deploy, config, secret, dependency, or public-claim surfaces"
+        ],
+        "write_scope": [
+          "repo:ao-command:internal/cli/cli_test.go"
+        ],
+        "required_gates": [
+          "atlas_blueprint_import",
+          "atlas_cross_repo_classification",
+          "per_repo_covenant_ticket",
+          "foundry_per_repo_class_gate",
+          "foundry_serial_execution_gate",
+          "foundry_cross_repo_sequencing_gate",
+          "branch_cleanup_gate",
+          "ci_gate",
+          "rollback_gate",
+          "sentinel_hold_clear_gate",
+          "promoter_no_promotion_gate",
+          "command_repo_readback",
+          "operator_exact_scope_approval"
+        ],
+        "rollback_scope": [
+          "repo:ao-command:internal/cli/cli_test.go"
+        ],
+        "verification_commands": [
+          "go test ./internal/cli -count=1",
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/ao-command"
+        ],
+        "required_evidence": [
+          "blueprint_pack:ready",
+          "blueprint_authorization:ao-atlas",
+          "low_risk_code:live_proven",
+          "multi_repo_low_risk:denied_until_rehearsal_complete",
+          "repo_one:ao-command",
+          "repo_two:blocked_until_repo_one_merge_evidence",
+          "cross_repo_no_shared_surface",
+          "foundry_import:repo_1_only",
+          "covenant:safe_to_execute_true_required_later",
+          "sentinel:hold_or_clear_required_later",
+          "promoter:no_promotion_required_later",
+          "command_readback:required_later",
+          "ci:required_later"
+        ],
+        "safety_limits": [
+          "safe_to_execute:false",
+          "live_execution_proven:false",
+          "max_repos:2",
+          "serialized_repo_execution_only",
+          "repo_2_locked_until:repo-1-merged-evidence-recorded",
+          "foundry_import_scope:repo-1-only",
+          "deny:concurrent_mutation",
+          "deny:dependency_updates",
+          "deny:public_claim_broadening",
+          "deny:complex_repo_mutation",
+          "deny:fully_unsupervised_complex_mutation",
+          "deny:rsi"
+        ],
+        "authority_boundary": "atlas_compile_and_foundry_import_for_repo_one_only",
+        "dependency_refs": [
+          "repo-2 blocked by stop gate repo-1-merged-evidence-recorded"
+        ],
+        "context_pack_refs": [
+          "context-packs/repo-1-ao-command-test-only-context-pack.json"
+        ]
+      },
+      "task_digest": "sha256:ca6d6143cca5b790a43ba24b9d35adf8f81c2706f296551af39da8a7ba79868b"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.final-execution-decision.v0.1",
+  "status": "blocked_before_live_mutation",
+  "repo_one_ready_for_foundry_gates": true,
+  "repo_one_safe_to_execute": false,
+  "repo_two_blocked": true,
+  "multi_repo_low_risk_live_proven": false,
+  "reason": "Atlas compiled repo-one import and two-node plan only. Live mutation remains denied until Foundry and downstream gates return exact safe_to_execute=true for repo one.",
+  "next_recommended_folder": "ao-foundry",
+  "next_recommended_command": "go run ./cmd/foundry atlas import validate --import ../ao-atlas/docs/evidence/multi-repo-low-risk-live-rehearsal/atlas-first/foundry-import/foundry-import.json"
+}

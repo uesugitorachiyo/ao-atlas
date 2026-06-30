@@ -243,6 +243,40 @@ func TestBlueprintImportCompilesLowRiskCodePackIntoAtlasAndFoundryMaterial(t *te
 	}
 }
 
+func TestBlueprintImportAcceptsExternalCandidateRules(t *testing.T) {
+	dir := t.TempDir()
+	sourcePack := filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "blueprint-pack")
+	packPath := filepath.Join(dir, "blueprint-pack")
+	copyDirExcept(t, sourcePack, packPath, "candidate-rules.json")
+	candidateRulesPath := filepath.Join(sourcePack, "candidate-rules.json")
+	outDir := filepath.Join(dir, "import")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"blueprint", "import",
+		"--pack", packPath,
+		"--candidate-rules", candidateRulesPath,
+		"--authorization", filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "build-authorization.json"),
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--mutation-classes", filepath.Join("..", "..", "examples", "valid", "mutation-classes.json"),
+		"--out", outDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("blueprint import failed: %s", out.String())
+	}
+	record := mustLoadJSON[BlueprintImport](t, filepath.Join(outDir, "blueprint-import.json"))
+	if record.Status != "ready" || record.Digests["candidate_rules"] == "" {
+		t.Fatalf("external candidate rules were not compiled: %#v", record)
+	}
+	if record.BlueprintPack.Digest != record.Digests["blueprint_pack"] {
+		t.Fatalf("blueprint pack digest must stay bound to the source pack: %#v", record.Digests)
+	}
+	pack := mustLoadJSON[ContextPack](t, filepath.Join(outDir, "context-packs", "low-risk-code-rehearsal-candidate-context-pack.json"))
+	if !contextPackHasSourceRef(pack, publicArtifactRef(candidateRulesPath)) {
+		t.Fatalf("context pack must preserve external candidate rules ref, got %#v", pack.SourceRefs)
+	}
+}
+
 func TestBlueprintImportBlocksWithoutAuthorization(t *testing.T) {
 	dir := t.TempDir()
 	outDir := filepath.Join(dir, "blocked")
@@ -268,6 +302,48 @@ func TestBlueprintImportBlocksWithoutAuthorization(t *testing.T) {
 	if _, err := os.Stat(filepath.Join(outDir, "workgraph.json")); !os.IsNotExist(err) {
 		t.Fatalf("blocked import must not write ready workgraph: %v", err)
 	}
+}
+
+func copyDirExcept(t *testing.T, src, dst, excludedBase string) {
+	t.Helper()
+	if err := filepath.WalkDir(src, func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		rel, err := filepath.Rel(src, path)
+		if err != nil {
+			return err
+		}
+		if rel == "." {
+			return os.MkdirAll(dst, 0o755)
+		}
+		if filepath.Base(path) == excludedBase {
+			if entry.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		target := filepath.Join(dst, rel)
+		if entry.IsDir() {
+			return os.MkdirAll(target, 0o755)
+		}
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(target, data, 0o644)
+	}); err != nil {
+		t.Fatalf("copy fixture pack: %v", err)
+	}
+}
+
+func contextPackHasSourceRef(pack ContextPack, want string) bool {
+	for _, ref := range pack.SourceRefs {
+		if ref.Ref == want {
+			return true
+		}
+	}
+	return false
 }
 
 func TestBlueprintImportBlocksStaleAuthorization(t *testing.T) {

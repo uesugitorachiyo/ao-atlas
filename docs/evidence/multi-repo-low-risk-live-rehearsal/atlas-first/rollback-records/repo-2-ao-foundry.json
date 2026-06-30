@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "repo-2",
+  "repo": "ao-foundry",
+  "status": "planned_blocked",
+  "before_merge": [
+    "no repo-two branch may be created before repo-one stop gate clears",
+    "if later opened, stop command execution",
+    "preserve logs and readback",
+    "close pull request if opened",
+    "delete branch codex/multi-repo-low-risk-rehearsal-repo-2 through governed git path",
+    "record no promotion"
+  ],
+  "after_merge": [
+    "open a governed revert pull request for internal/cli/cli_test.go",
+    "run go test ./internal/cli -count=1",
+    "run go test ./... -count=1",
+    "run go vet ./...",
+    "run go build ./cmd/foundry ./cmd/ao",
+    "run active-stack/readiness checks",
+    "merge revert only through existing gates"
+  ],
+  "post_rollback_readback": [
+    "Command readback records repo two reverted or held",
+    "Sentinel hold remains or is reasserted",
+    "Promoter withdraws any incomplete multi_repo_low_risk proof claim"
+  ],
+  "blocked_by": [
+    "repo-1-merged-evidence-recorded"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

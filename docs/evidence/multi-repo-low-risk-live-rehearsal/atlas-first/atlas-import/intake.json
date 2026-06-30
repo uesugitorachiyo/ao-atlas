@@ -1,0 +1,29 @@
+{
+  "contract_version": "ao.atlas.intake.v0.1",
+  "id": "multi_repo_low_risk-live-rehearsal-blueprint-intake",
+  "target_instance": "demo-stack",
+  "broad_prompt": "Prepare repo one for the first governed multi_repo_low_risk rehearsal as a tiny test-only AO Command change, with live execution denied until all downstream gates return exact safe_to_execute=true. The work must pass through AO Atlas before AO Foundry gates and must remain dry-run readback only.",
+  "instruction_refs": [
+    "implementation-spec.md",
+    "quality-profile.md",
+    "candidate-rules.json"
+  ],
+  "folder_refs": [
+    "excluded/"
+  ],
+  "constraints": [
+    "Blueprint -\u003e Atlas -\u003e Foundry is mandatory",
+    "safe_to_execute:false",
+    "live_execution_proven:false",
+    "max_repos:2",
+    "serialized_repo_execution_only",
+    "repo_2_locked_until:repo-1-merged-evidence-recorded",
+    "foundry_import_scope:repo-1-only",
+    "deny:concurrent_mutation",
+    "deny:dependency_updates",
+    "deny:public_claim_broadening",
+    "deny:complex_repo_mutation",
+    "deny:fully_unsupervised_complex_mutation",
+    "deny:rsi"
+  ]
+}
