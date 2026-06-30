@@ -69,5 +69,12 @@ limits so higher classes remain denied until their evidence exists.
 workgraph evidence only: no more than two documentation files, exact write and
 rollback scope, CI evidence, Sentinel no-hold readback, Promoter readiness, and
 Command readback must exist before downstream tools can request execution. The
-test-only, code, multi-repo, complex, and fully unsupervised classes remain
-denied until their lower-class live evidence is recorded.
+code, multi-repo, complex, and fully unsupervised classes remain denied until
+their lower-class live evidence is recorded.
+
+After `docs_only_multi_file` live evidence is recorded, Atlas can expose a
+`test_only` dry-run chain. That chain is not live execution authority: it only
+classifies tests-only write scope, rollback scope, required CI, Sentinel
+coverage no-hold readback, Promoter readiness, and Command readback. The
+test-only live rehearsal remains blocked until every gate reports ready, and
+production code paths remain out of scope.
