@@ -938,6 +938,40 @@ func TestComplexExecutableNodeEvidenceAcceptsOneBoundSafeNode(t *testing.T) {
 	}
 }
 
+func TestComplexMissionContinuationRepairsNextBlockedNodeAfterCompletedDependency(t *testing.T) {
+	workgraph := complexMissionContinuationWorkgraph()
+	runLink := RunLink{
+		ContractVersion: RunLinkContract,
+		TaskID:          "complex-docs-intake-task",
+		Status:          "completed",
+		Evidence:        map[string]string{"pr": "https://github.com/uesugitorachiyo/ao-atlas/pull/41", "ci": "passed"},
+		Digest:          "sha256:f6fe6e812f8793c5cb352b43bd24c15fa4bdead147e48d6b3ff3191b16941b22",
+	}
+
+	continued, active, ok, err := RepairNextComplexMissionNode(workgraph, runLink)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !ok || active.ID != "complex-test-scope" {
+		t.Fatalf("expected complex-test-scope to become active, got ok=%t node=%#v", ok, active)
+	}
+	nodes := workgraphNodesByID(continued)
+	if nodes["complex-docs-intake"].Status != "completed" {
+		t.Fatalf("completed run-link must complete docs node: %#v", nodes["complex-docs-intake"])
+	}
+	testScope := nodes["complex-test-scope"]
+	if testScope.Status != "ready" || len(testScope.Blockers) != 0 {
+		t.Fatalf("repairable test-scope node must be ready with no blockers: %#v", testScope)
+	}
+	if !containsString(testScope.FactoryTask.RequiredEvidence, "safe_to_execute:true") ||
+		containsString(testScope.FactoryTask.RequiredEvidence, "safe_to_execute:false") {
+		t.Fatalf("repairable node must bind safe_to_execute:true only: %#v", testScope.FactoryTask.RequiredEvidence)
+	}
+	if ready := readyNodeIDs(continued); len(ready) != 1 || ready[0] != "complex-test-scope" {
+		t.Fatalf("continuation must expose exactly one ready node, got %#v", ready)
+	}
+}
+
 func TestFoundryImportRejectsSameInputAndOutputPath(t *testing.T) {
 	var out bytes.Buffer
 	path := filepath.Join("..", "..", "examples", "valid", "workgraph.json")
@@ -1801,6 +1835,54 @@ func complexNodeEvidenceRollback(nodeID string, safe bool) map[string]any {
 		"status":          "ready",
 		"safe_to_execute": safe,
 	}
+}
+
+func complexMissionContinuationWorkgraph() Workgraph {
+	return Workgraph{
+		ContractVersion: WorkgraphContract,
+		ID:              "complex-rehearsal-continuation-test",
+		TargetInstance:  "ao-stack",
+		Nodes: []WorkgraphNode{
+			{
+				ID:           "complex-docs-intake",
+				Status:       "ready",
+				FactoryTask:  complexNodeEvidenceTask("complex-docs-intake", "safe_to_execute:true"),
+				Dependencies: nil,
+			},
+			{
+				ID:           "complex-test-scope",
+				Status:       "blocked",
+				FactoryTask:  complexNodeEvidenceTask("complex-test-scope", "safe_to_execute:false"),
+				Dependencies: []string{"complex-docs-intake"},
+				Blockers:     []string{"test-only node waits for dependency stop gate"},
+			},
+			{
+				ID:           "complex-low-risk-code-scope",
+				Status:       "blocked",
+				FactoryTask:  complexNodeEvidenceTask("complex-low-risk-code-scope", "safe_to_execute:false"),
+				Dependencies: []string{"complex-test-scope"},
+				Blockers:     []string{"low-risk code node waits for dependency stop gate"},
+			},
+		},
+	}
+}
+
+func workgraphNodesByID(workgraph Workgraph) map[string]WorkgraphNode {
+	nodes := map[string]WorkgraphNode{}
+	for _, node := range workgraph.Nodes {
+		nodes[node.ID] = node
+	}
+	return nodes
+}
+
+func readyNodeIDs(workgraph Workgraph) []string {
+	ids := []string{}
+	for _, node := range workgraph.Nodes {
+		if node.Status == "ready" {
+			ids = append(ids, node.ID)
+		}
+	}
+	return ids
 }
 
 func containsString(values []string, want string) bool {
