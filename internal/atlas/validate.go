@@ -502,11 +502,11 @@ func mutationClassOrder() []string {
 	return []string{
 		"docs_only_single_file",
 		"docs_only_multi_file",
-		"docs_config_only",
 		"test_only",
 		"low_risk_code",
 		"multi_repo_low_risk",
 		"complex_repo_mutation",
+		"docs_config_only",
 	}
 }
 

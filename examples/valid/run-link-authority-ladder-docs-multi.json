@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "authority-docs-multi-live-task",
+  "status": "completed",
+  "evidence": {
+    "live_rehearsal": "evidence/public/docs-multi-live-readback.json",
+    "rollback": "evidence/public/docs-multi-rollback-proof.json",
+    "ci": "evidence/public/docs-multi-ci-pass.json",
+    "sentinel": "evidence/public/docs-multi-sentinel-clear.json",
+    "promoter": "evidence/public/docs-multi-promoter-ready.json",
+    "command": "evidence/public/docs-multi-command-readback.json"
+  },
+  "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+}
