@@ -17,12 +17,15 @@ the rest of the AO stack:
 - AO Command remains read-only.
 - AO Covenant, Sentinel, Promoter, Arena, and Crucible remain gates.
 
-For the first tiny docs-only live mutation class, AO Atlas can decompose the
-oversized objective, compile bounded context packs, and emit Foundry import or
-run-link evidence. That evidence may feed the later Covenant, Foundry, Forge,
-AO2, Sentinel, Promoter, and Command approval chain, but Atlas does not grant
-mutation authority, mark work safe to execute, create branches, apply patches,
-publish, release, or widen the approved docs-only scope.
+For the docs-only live mutation classes, AO Atlas can decompose the oversized
+objective, compile bounded context packs, and emit Foundry import or run-link
+evidence. The next governed live rehearsal is `docs_only_multi_file`: at most
+two documentation files, with rollback proof, Sentinel no-hold evidence,
+Promoter promotion readiness, Command readback, and clean CI. That evidence may
+feed the later Covenant, Foundry, Forge, AO2, Sentinel, Promoter, and Command
+approval chain, but Atlas does not grant mutation authority, mark work safe to
+execute, create branches, apply patches, publish, release, or widen the
+approved docs-only scope.
 
 ## Install
 
