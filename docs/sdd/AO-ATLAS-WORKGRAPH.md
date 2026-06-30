@@ -63,6 +63,11 @@ path from the first docs-only live rehearsal toward complex repository mutation.
 It includes repair nodes, context repack nodes, Sentinel/Promoter/Command
 evidence nodes, blocked states, dependency gates, and explicit do-not-advance
 limits so higher classes remain denied until their evidence exists.
+The `workgraph-authority-ladder-multi-repo-dry-run.json` fixture extends the
+ladder with a `multi_repo_low_risk` dry-run design. It records dependency order,
+per-repo rollback scope for Atlas, Foundry, and Command, and do-not-advance
+gates; it does not claim low-risk-code live evidence or multi-repo execution
+authority.
 
 `docs_only_multi_file` is the next live rehearsal after the proven
 `docs_only_single_file` class. Atlas represents it as classification and
