@@ -972,6 +972,59 @@ func TestMissionStatusReportsMultiRepoLowRiskDryRunReadinessWithoutLiveExecution
 	}
 }
 
+func TestComplexRepoMutationRehearsalWorkgraphStaysDryRunUntilLowerLiveEvidence(t *testing.T) {
+	workgraph, err := LoadJSON[Workgraph](filepath.Join("..", "..", "examples", "valid", "workgraph-complex-repo-mutation-rehearsal.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		t.Fatal(err)
+	}
+	if len(workgraph.Nodes) < 12 {
+		t.Fatalf("complex rehearsal must have at least 12 nodes, got %d", len(workgraph.Nodes))
+	}
+	for _, want := range []string{
+		"context-repack",
+		"repair-plan",
+		"blocked",
+		"dependency-gate",
+		"promotion-gate",
+		"sentinel",
+		"promoter",
+		"command",
+	} {
+		if !workgraphHasNodeContaining(workgraph, want) {
+			t.Fatalf("complex rehearsal fixture missing %s node", want)
+		}
+	}
+	for _, want := range []string{
+		"all_lower_classes_live_rehearsed",
+		"rollback_plan:complex_repo_mutation",
+		"sentinel_no_hold:complex_repo_mutation",
+		"promoter_ready:complex_repo_mutation",
+		"command_readback:complex_repo_mutation",
+	} {
+		if !workgraphHasRequiredEvidence(workgraph, want) {
+			t.Fatalf("complex rehearsal fixture missing required evidence %s", want)
+		}
+	}
+	if !workgraphHasSafetyLimitContaining(workgraph, "do_not_advance:complex_repo_mutation_live_execution_denied") ||
+		!workgraphHasSafetyLimitContaining(workgraph, "do_not_advance:fully_unsupervised_complex_repo_mutation_denied") {
+		t.Fatalf("complex rehearsal must keep live and fully unsupervised execution denied")
+	}
+	for _, node := range workgraph.Nodes {
+		if node.FactoryTask.MutationClass != "complex_repo_mutation" {
+			t.Fatalf("complex rehearsal node %s has wrong class %s", node.ID, node.FactoryTask.MutationClass)
+		}
+		if node.Status == "completed" && containsString(node.FactoryTask.RequiredEvidence, "live_rehearsal:complex_repo_mutation") {
+			t.Fatalf("complex rehearsal must not claim live complex evidence: %#v", node)
+		}
+		if node.FactoryTask.AuthorityBoundary != "atlas_classification_only" {
+			t.Fatalf("Atlas complex rehearsal must remain classification-only: %#v", node.FactoryTask)
+		}
+	}
+}
+
 func TestFoundryRoundtripSmokeValidatesFoundryImport(t *testing.T) {
 	script, err := os.ReadFile(filepath.Join("..", "..", "scripts", "atlas-foundry-roundtrip-smoke.sh"))
 	if err != nil {
@@ -1309,6 +1362,15 @@ func mutationClassByName(model MutationClassModel, name string) (MutationClassDe
 func workgraphHasNodeContaining(workgraph Workgraph, marker string) bool {
 	for _, node := range workgraph.Nodes {
 		if strings.Contains(node.ID, marker) {
+			return true
+		}
+	}
+	return false
+}
+
+func workgraphHasRequiredEvidence(workgraph Workgraph, evidence string) bool {
+	for _, node := range workgraph.Nodes {
+		if containsString(node.FactoryTask.RequiredEvidence, evidence) {
 			return true
 		}
 	}
