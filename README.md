@@ -37,10 +37,10 @@ the rest of the AO stack:
 For the governed live mutation ladder, AO Atlas can decompose oversized
 objectives, compile bounded context packs, and emit Foundry import or run-link
 evidence. The highest proven live class is now
-`fully_unsupervised_complex_mutation`: docs-only, test-only, low-risk code,
-multi-repo low-risk, governed complex mutation, and the 26-node fully
-unsupervised complex first non-planning rehearsal are merged evidence. The next
-denied class is `RSI`.
+`bounded_rsi_self_improvement_application`: docs-only, test-only, low-risk
+code, multi-repo low-risk, governed complex mutation, the 26-node fully
+unsupervised complex first non-planning rehearsal, and bounded RSI evidence
+rehearsal are prior evidence. The next denied class is `broad_RSI`.
 
 Atlas also holds the 32-node bounded RSI evidence workgraph as evidence for
 `bounded_rsi_evidence_rehearsal`. That workgraph supports the final bounded
@@ -51,6 +51,13 @@ evidence may feed the Covenant, Foundry, Forge, AO2, Sentinel, Promoter, and
 Command approval chain, but Atlas does not grant mutation authority, mark work
 safe to execute, create branches, apply patches, publish, release, or widen the
 approved scope.
+
+Atlas also holds the 36-node bounded RSI self-improvement application workgraph.
+That workgraph supports only `bounded_rsi_self_improvement_application` for the
+exact private readback/eval rubric rehearsal. It does not prove broad RSI, does
+not authorize unrestricted self-modification, does not allow hidden instruction
+mutation, and does not expand policy/auth/secret/provider/deploy/release/config/
+dependency authority or policy-changing autonomy.
 
 ## Install
 
