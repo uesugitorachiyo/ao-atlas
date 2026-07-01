@@ -37,12 +37,13 @@ the rest of the AO stack:
 For the governed live mutation ladder, AO Atlas can decompose oversized
 objectives, compile bounded context packs, and emit Foundry import or run-link
 evidence. The highest proven live class is now
-`public_safe_causal_review_evidence_selection_guidance`: docs-only, test-only,
+`public_safe_guided_evidence_application_four_attempts`: docs-only, test-only,
 low-risk code, multi-repo low-risk, governed complex mutation, the 26-node fully
 unsupervised complex first non-planning rehearsal, bounded RSI evidence
 rehearsal, bounded RSI self-improvement application, conservative public
 readback evidence, bounded public evidence expansion, and intermediate
-causal-review evidence are prior evidence. The next denied class is `broad_RSI`.
+causal-review evidence, evidence-selection guidance, and guided evidence
+application are prior evidence. The next denied class is `broad_RSI`.
 
 Atlas also holds the 32-node bounded RSI evidence workgraph as evidence for
 `bounded_rsi_evidence_rehearsal`. That workgraph supports the final bounded
@@ -209,8 +210,20 @@ evidence under `docs/evidence/recursive-improvement-evidence-selection-guidance/
 The approved public wording is exactly: "AO has public-safe causal-review
 evidence that prior bounded evidence can guide later evidence-selection and
 blocker prioritization under independent review gates; stronger
+recursive-improvement wording and broad_RSI remain denied." This remains prior
+evidence. Stronger recursive-improvement wording remains denied, `broad_RSI`
+remains denied, unrestricted self-modification remains denied, hidden
+instruction mutation remains denied, and policy-changing autonomy remains
+denied.
+
+`public_safe_guided_evidence_application_four_attempts` is proven from AO Foundry
+PR #193, commit `4ec509fd64d1fc1ea41ea7f22aae900ba79e09a1`, with tracked public
+evidence under `docs/evidence/recursive-improvement-guided-evidence-application/`.
+The approved public wording is exactly: "AO has public-safe guided
+evidence-application evidence showing causal-review guidance can select and
+prioritize later bounded evidence attempts under independent gates; stronger
 recursive-improvement wording and broad_RSI remain denied." The highest proven
-live class is `public_safe_causal_review_evidence_selection_guidance` and the
+live class is `public_safe_guided_evidence_application_four_attempts` and the
 next denied class is `broad_RSI`. Stronger recursive-improvement wording
 remains denied, `broad_RSI` remains denied, unrestricted self-modification
 remains denied, hidden instruction mutation remains denied, and policy-changing
