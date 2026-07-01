@@ -37,7 +37,7 @@ the rest of the AO stack:
 For the governed live mutation ladder, AO Atlas can decompose oversized
 objectives, compile bounded context packs, and emit Foundry import or run-link
 evidence. The highest proven live class is now
-`exact_safe_public_claim_wording_conservative_readback_evidence`: docs-only,
+`public_safe_bounded_improvement_evidence_expansion_four_attempts`: docs-only,
 test-only, low-risk code, multi-repo low-risk, governed complex mutation, the
 26-node fully unsupervised complex first non-planning rehearsal, bounded RSI
 evidence rehearsal, and bounded RSI self-improvement application are prior
@@ -68,6 +68,13 @@ recursive-improvement claims remain denied." Atlas treats this as conservative
 readback evidence only; it does not prove `broad_RSI`, stronger
 recursive-improvement claims, unrestricted self-modification, hidden instruction
 mutation, or policy-changing autonomy.
+
+Atlas also recognizes the public-safe bounded improvement evidence expansion closure:
+`public_safe_bounded_improvement_evidence_expansion_four_attempts`. It tracks four
+public-safe bounded evidence expansion attempts with reproducibility runbooks and
+keeps stronger recursive-improvement wording, `broad_RSI`, unrestricted
+self-modification, hidden instruction mutation, and policy-changing autonomy
+denied.
 
 ## Install
 
@@ -177,3 +184,15 @@ exist for the class.
 dry-run only. It now records low-risk decomposition and rollback graph nodes
 before repair and promotion gates, while still exposing only the first
 dependency-safe ready node to Foundry import.
+
+`public_safe_bounded_improvement_evidence_expansion_four_attempts` is now proven from AO Foundry PR #181, commit
+`d31b6f2247780867c3c72dbda5abb7377f3a1b3e`, with tracked public evidence under
+`docs/evidence/recursive-improvement-public-evidence-expansion/`. Four
+public-safe bounded evidence expansion attempts are tracked with reproducibility
+runbooks: release/readiness evidence quality (`0.68` -> `0.91`), security/public-
+safety scan quality (`0.64` -> `0.90`), operator readback UX (`0.62` -> `0.88`),
+and cross-repo evidence linking (`0.60` -> `0.87`). The highest proven live class
+is `public_safe_bounded_improvement_evidence_expansion_four_attempts` and the next denied class is `broad_RSI`. Stronger
+recursive-improvement wording remains denied, `broad_RSI` remains denied,
+unrestricted self-modification remains denied, hidden instruction mutation
+remains denied, and policy-changing autonomy remains denied.
