@@ -37,10 +37,11 @@ the rest of the AO stack:
 For the governed live mutation ladder, AO Atlas can decompose oversized
 objectives, compile bounded context packs, and emit Foundry import or run-link
 evidence. The highest proven live class is now
-`bounded_rsi_self_improvement_application`: docs-only, test-only, low-risk
-code, multi-repo low-risk, governed complex mutation, the 26-node fully
-unsupervised complex first non-planning rehearsal, and bounded RSI evidence
-rehearsal are prior evidence. The next denied class is `broad_RSI`.
+`exact_safe_public_claim_wording_conservative_readback_evidence`: docs-only,
+test-only, low-risk code, multi-repo low-risk, governed complex mutation, the
+26-node fully unsupervised complex first non-planning rehearsal, bounded RSI
+evidence rehearsal, and bounded RSI self-improvement application are prior
+evidence. The next denied class is `broad_RSI`.
 
 Atlas also holds the 32-node bounded RSI evidence workgraph as evidence for
 `bounded_rsi_evidence_rehearsal`. That workgraph supports the final bounded
@@ -58,6 +59,15 @@ exact private readback/eval rubric rehearsal. It does not prove broad RSI, does
 not authorize unrestricted self-modification, does not allow hidden instruction
 mutation, and does not expand policy/auth/secret/provider/deploy/release/config/
 dependency authority or policy-changing autonomy.
+
+Atlas also recognizes the later exact safe public claim wording closure:
+`exact_safe_public_claim_wording_conservative_readback_evidence`. The approved
+public wording is exactly: "AO has public-safe tracked readback evidence for
+bounded improvement-claim review and retraction rehearsal; stronger
+recursive-improvement claims remain denied." Atlas treats this as conservative
+readback evidence only; it does not prove `broad_RSI`, stronger
+recursive-improvement claims, unrestricted self-modification, hidden instruction
+mutation, or policy-changing autonomy.
 
 ## Install
 
