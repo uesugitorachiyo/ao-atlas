@@ -740,6 +740,26 @@ func TestBlueprintReadyRecordLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintReadyMaterialLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_ready_material.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint ready material module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func buildBlueprintReadyMaterial(",
+		"buildBlueprintContextPack(",
+		"buildBlueprintWorkgraph(",
+		"buildBlueprintCandidateSelection(",
+		"buildBlueprintDownstreamFoundry(",
+		"buildBlueprintReadyRecord(",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated ready material module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""

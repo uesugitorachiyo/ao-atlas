@@ -84,46 +84,16 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 		return artifacts, fmt.Errorf("blueprint import blocked: %s", strings.Join(record.BlockingNextActions, "; "))
 	}
 
-	intake := buildBlueprintIntake(rules)
-	contextPack, err := buildBlueprintContextPack(paths.PackPath, paths.CandidateRulesPath, rules, digests)
-	if err != nil {
-		return artifacts, err
-	}
-	task := buildBlueprintFactoryTask(rules, contextPack)
-	workgraph, err := buildBlueprintWorkgraph(rules, task)
-	if err != nil {
-		return artifacts, err
-	}
-	digests["context_pack"] = digestValue(contextPack)
-	digests["workgraph"] = digestValue(workgraph)
-	candidate := buildBlueprintCandidateSelection(rules, workgraph.Nodes[0], digests)
-	digests["candidate_selection"] = digestValue(candidate)
-
-	sourceArtifacts := buildBlueprintFoundrySourceArtifacts(paths, contextPack, packDigest, authDigest, digests)
-	downstreamFoundry, err := buildBlueprintDownstreamFoundry(workgraph, sourceArtifacts, paths)
-	if err != nil {
-		return artifacts, err
-	}
-	foundryImport := downstreamFoundry.FoundryImport
-	handoff := downstreamFoundry.Handoff
-	digests["downstream_foundry_import"] = digestValue(foundryImport)
-	digests["downstream_foundry_continuation_handoff"] = digestValue(handoff)
-	record, err = buildBlueprintReadyRecord(blueprintReadyRecordInputs{
-		Record:        record,
-		Candidate:     candidate,
-		Digests:       digests,
-		FoundryDigest: digests["downstream_foundry_import"],
-		HandoffDigest: digests["downstream_foundry_continuation_handoff"],
+	readyArtifacts, err := buildBlueprintReadyMaterial(blueprintReadyMaterialInputs{
+		Paths:      paths,
+		Record:     record,
+		Rules:      rules,
+		Digests:    digests,
+		PackDigest: packDigest,
+		AuthDigest: authDigest,
 	})
 	if err != nil {
 		return artifacts, err
 	}
-	artifacts.Record = record
-	artifacts.Intake = intake
-	artifacts.Candidate = candidate
-	artifacts.ContextPacks = []ContextPack{contextPack}
-	artifacts.Workgraph = workgraph
-	artifacts.FoundryImport = foundryImport
-	artifacts.Handoff = handoff
-	return artifacts, nil
+	return readyArtifacts, nil
 }
