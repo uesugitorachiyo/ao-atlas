@@ -939,6 +939,24 @@ func TestFoundryContinuationHandoffRejectsBlockedImportNode(t *testing.T) {
 	}
 }
 
+func TestFoundryContinuationPromptImplementationLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("foundry_handoff.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Foundry handoff module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func BuildFoundryHandoff(",
+		"func BuildFoundryContinuationHandoff(",
+		"func WriteFoundryContinuationPrompt(",
+		"func buildFoundryContinuationPrompt(",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated handoff module missing %q", want)
+		}
+	}
+}
+
 func TestFoundryContinuationHandoffRejectsImportTaskMismatch(t *testing.T) {
 	workgraph := fixtureWorkgraph()
 	foundryImport, err := BuildFoundryImportForNodes(workgraph, []string{"task-ready"}, nil)
