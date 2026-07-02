@@ -760,6 +760,27 @@ func TestBlueprintReadyMaterialLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintSourceLoadingLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_source_loading.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint source loading module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func loadBlueprintCompileSources(",
+		"loadBlueprintCandidateRules(",
+		"loadBlueprintRequiredArtifacts(",
+		"loadBlueprintInstance(",
+		"loadBlueprintMutationModel(",
+		"loadBlueprintAuthorization(",
+		"blueprint_pack",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated source loading module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
