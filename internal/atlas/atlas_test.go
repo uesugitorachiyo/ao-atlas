@@ -820,6 +820,24 @@ func TestBlueprintBlockedCompileLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintCompilerContractLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_compiler_contract.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint compiler contract module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"type BlueprintCompileInputs struct",
+		"Paths BlueprintImportPaths",
+		"type BlueprintCompiler struct",
+		"Inputs BlueprintCompileInputs",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated compiler contract module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
