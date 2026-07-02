@@ -1,10 +1,5 @@
 package atlas
 
-import (
-	"fmt"
-	"strings"
-)
-
 type BlueprintCompileInputs struct {
 	Paths BlueprintImportPaths
 }
@@ -30,11 +25,8 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	record = sourceLoad.Record
 
 	if len(sourceLoad.Missing) > 0 {
-		blockedRequest := buildBlueprintBlockedRequest(record, sourceLoad.Missing, sourceLoad.Blockers)
-		record = blockedRequest.Record
-		artifacts.Record = blockedRequest.Record
-		artifacts.Request = blockedRequest.Request
-		return artifacts, fmt.Errorf("blueprint import blocked: %s", strings.Join(record.BlockingNextActions, "; "))
+		artifacts = buildBlueprintBlockedCompileArtifacts(artifacts, record, sourceLoad)
+		return artifacts, blueprintBlockedCompileError(artifacts.Record)
 	}
 
 	readyArtifacts, err := buildBlueprintReadyMaterial(blueprintReadyMaterialInputs{

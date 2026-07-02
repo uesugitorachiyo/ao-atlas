@@ -800,6 +800,26 @@ func TestBlueprintCompileArtifactsLiveInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintBlockedCompileLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_blocked_compile.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint blocked compile module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func buildBlueprintBlockedCompileArtifacts(",
+		"buildBlueprintBlockedRequest(",
+		"artifacts.Record = blockedRequest.Record",
+		"artifacts.Request = blockedRequest.Request",
+		"func blueprintBlockedCompileError(",
+		"blueprint import blocked:",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated blocked compile module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
