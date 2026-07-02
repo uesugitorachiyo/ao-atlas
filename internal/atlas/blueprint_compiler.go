@@ -2,7 +2,6 @@ package atlas
 
 import (
 	"fmt"
-	"path/filepath"
 	"strings"
 )
 
@@ -59,18 +58,9 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	missing = append(missing, rulesResult.Missing...)
 	blockers = append(blockers, rulesResult.Blockers...)
 
-	for name, path := range map[string]string{
-		"implementation_spec": filepath.Join(paths.PackPath, "implementation-spec.md"),
-		"quality_profile":     filepath.Join(paths.PackPath, "quality-profile.md"),
-	} {
-		digest, err := digestFile(path)
-		if err != nil {
-			missing = append(missing, name)
-			blockers = append(blockers, "add "+filepath.Base(path)+" to the Blueprint pack")
-			continue
-		}
-		digests[name] = digest
-	}
+	requiredResult := loadBlueprintRequiredArtifacts(paths, digests)
+	missing = append(missing, requiredResult.Missing...)
+	blockers = append(blockers, requiredResult.Blockers...)
 
 	var instance Instance
 	if err := readJSONIfPossible(paths.InstancePath, &instance); err != nil {
