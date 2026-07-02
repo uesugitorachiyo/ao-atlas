@@ -37,15 +37,15 @@ the rest of the AO stack:
 For the governed live mutation ladder, AO Atlas can decompose oversized
 objectives, compile bounded context packs, and emit Foundry import or run-link
 evidence. The highest proven live class is now
-`public_safe_unrestricted_self_modification_readiness_boundary_map`: docs-only, test-only,
+`public_safe_unrestricted_self_modification_sandbox_containment_rehearsal`: docs-only, test-only,
 low-risk code, multi-repo low-risk, governed complex mutation, the 26-node fully
 unsupervised complex first non-planning rehearsal, bounded RSI evidence
 rehearsal, bounded RSI self-improvement application, conservative public
 readback evidence, bounded public evidence expansion, and intermediate
 causal-review evidence, evidence-selection guidance, and guided evidence
 application and governed public-safe broad_RSI campaign completion are prior
-evidence. The current class is proven only for public-safe readiness-boundary
-evidence for evaluating unrestricted self-modification. The next denied class is
+evidence. The current class is proven only for public-safe sandbox containment evidence for
+dry-run self-change proposal evaluation. The next denied class is
 `unrestricted_self_modification`.
 
 Atlas also holds the 32-node bounded RSI evidence workgraph as evidence for
@@ -288,18 +288,18 @@ recursive-improvement claims.
 
 This does not prove unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, policy/auth/secret/provider/deploy/release/config/dependency expansion, release/deploy/publish/upload/tag/provider calls, credential use, direct main mutation, concurrent mutation, or any unrestricted RSI claim.
 
-## Unrestricted Self-Modification Readiness Boundary Readback
+## Unrestricted Self-Modification Sandbox Containment Readback
 
-`public_safe_unrestricted_self_modification_readiness_boundary_map` is proven
-from AO Foundry PR #215, commit
-`e5ed75361554b1c90518c0e0df10b18adec77e5f`, with tracked public evidence under
-`docs/evidence/unrestricted-self-modification-readiness-boundary/`. The approved
-public wording is exactly: "AO has public-safe readiness-boundary evidence for
-evaluating unrestricted self-modification; unrestricted self-modification,
+`public_safe_unrestricted_self_modification_sandbox_containment_rehearsal` is proven
+from AO Foundry PR #216, commit
+`7881613065de48f2547833a9ecc9a9011b55a96a`, with tracked public evidence under
+`docs/evidence/unrestricted-self-modification-sandbox-containment/`. The approved
+public wording is exactly: "AO has public-safe sandbox containment evidence for
+dry-run self-change proposal evaluation; unrestricted self-modification,
 hidden instruction mutation, policy-changing autonomy, and forbidden surface
 expansion remain denied." Campaign completion for `broad_RSI` remains prior
 evidence; Atlas now reads back
-`highest_proven_live_class=public_safe_unrestricted_self_modification_readiness_boundary_map`
+`highest_proven_live_class=public_safe_unrestricted_self_modification_sandbox_containment_rehearsal`
 and `next_denied_class=unrestricted_self_modification`.
 
 This does not prove unrestricted self-modification, hidden instruction mutation,
