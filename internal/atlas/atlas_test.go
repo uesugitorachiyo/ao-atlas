@@ -433,6 +433,23 @@ func TestBlueprintReadyArtifactWriterLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintAuthorizationReadinessLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_authorization.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint authorization module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func validateBlueprintAuthorization(",
+		"func mutationModelIncludes(",
+		"time.Parse(time.RFC3339",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated authorization module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
