@@ -469,6 +469,24 @@ func TestBlueprintImportInputValidationLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintImportCompilationLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_import_compilation.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint import compilation module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func compileBlueprintImportArtifacts(",
+		"BlueprintCompiler{Inputs: BlueprintCompileInputs{Paths: paths}}.Compile()",
+		"blueprintCompileArtifactsToResult(artifacts)",
+		"CompileErr error",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated import compilation module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintAuthorizationReadinessLivesInDedicatedModule(t *testing.T) {
 	module, err := os.ReadFile("blueprint_authorization.go")
 	if err != nil {
