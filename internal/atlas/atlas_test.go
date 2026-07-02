@@ -559,6 +559,24 @@ func TestBlueprintCompileStateLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintCandidateRulesLoaderLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_candidate_rules_loader.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint candidate rules loader module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func loadBlueprintCandidateRules(",
+		"candidate-rules.json",
+		"readJSONIfPossible(rulesPath, &rules)",
+		"ValidateBlueprintCandidateRules(rules)",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated candidate rules loader module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
