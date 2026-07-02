@@ -505,6 +505,24 @@ func TestBlueprintImportValidationLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintCandidateRulesValidationLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_candidate_rules_validation.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint candidate rules validation module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func ValidateBlueprintCandidateRules(",
+		"mutation_class must be one of the required mutation classes",
+		"checkPublicStrings(&errs, \"required_evidence\"",
+		"checkPublicStrings(&errs, \"context_refs\"",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated candidate rules validation module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
