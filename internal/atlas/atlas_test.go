@@ -577,6 +577,24 @@ func TestBlueprintCandidateRulesLoaderLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintRequiredArtifactsLiveInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_required_artifacts.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint required artifacts module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func loadBlueprintRequiredArtifacts(",
+		"implementation-spec.md",
+		"quality-profile.md",
+		"digestFile(path)",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated required artifacts module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
