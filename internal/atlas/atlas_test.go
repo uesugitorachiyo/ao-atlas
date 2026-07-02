@@ -541,6 +541,24 @@ func TestBlueprintBlockedArtifactWriterLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintCompileStateLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_compile_state.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint compile state module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func newBlockedBlueprintCompileState(",
+		"digestDirectory(paths.PackPath)",
+		"missing-blueprint-pack:",
+		"BlueprintImport{",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated compile state module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
