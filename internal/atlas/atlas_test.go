@@ -468,6 +468,25 @@ func TestBlueprintArtifactBuildersLiveInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintSourceUtilitiesLiveInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_sources.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint sources module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func readJSONIfPossible(",
+		"func digestFile(",
+		"func digestDirectory(",
+		"func publicArtifactRef(",
+		"func copyStringMap(",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated source utilities module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
