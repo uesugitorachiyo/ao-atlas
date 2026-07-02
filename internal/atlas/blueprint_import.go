@@ -1,14 +1,9 @@
 package atlas
 
-import (
-	"errors"
-	"strings"
-)
-
 func BuildBlueprintImport(paths BlueprintImportPaths) (BlueprintImportResult, error) {
 	result := BlueprintImportResult{}
-	if strings.TrimSpace(paths.OutDir) == "" {
-		return result, errors.New("--out is required")
+	if err := validateBlueprintImportInputs(paths); err != nil {
+		return result, err
 	}
 	artifacts, compileErr := BlueprintCompiler{Inputs: BlueprintCompileInputs{Paths: paths}}.Compile()
 	result = blueprintCompileArtifactsToResult(artifacts)
