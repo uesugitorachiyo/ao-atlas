@@ -21,14 +21,7 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 		return artifacts, blueprintBlockedCompileError(artifacts.Record)
 	}
 
-	readyArtifacts, err := buildBlueprintReadyMaterial(blueprintReadyMaterialInputs{
-		Paths:      paths,
-		Record:     record,
-		Rules:      sourceLoad.Rules,
-		Digests:    digests,
-		PackDigest: packDigest,
-		AuthDigest: sourceLoad.AuthDigest,
-	})
+	readyArtifacts, err := buildBlueprintReadyCompileArtifacts(paths, record, digests, packDigest, sourceLoad)
 	if err != nil {
 		return artifacts, err
 	}
