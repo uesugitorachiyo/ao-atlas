@@ -62,19 +62,9 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	missing = append(missing, requiredResult.Missing...)
 	blockers = append(blockers, requiredResult.Blockers...)
 
-	var instance Instance
-	if err := readJSONIfPossible(paths.InstancePath, &instance); err != nil {
-		missing = append(missing, "stack_instance")
-		blockers = append(blockers, "provide an AO Atlas stack instance")
-	} else if err := ValidateInstance(instance); err != nil {
-		missing = append(missing, "stack_instance")
-		blockers = append(blockers, "repair stack instance: "+err.Error())
-	} else if rules.TargetInstance != "" && instance.ID != rules.TargetInstance {
-		missing = append(missing, "stack_instance_scope")
-		blockers = append(blockers, "stack instance id must match candidate target_instance")
-	} else if digest, err := digestFile(paths.InstancePath); err == nil {
-		digests["stack_instance"] = digest
-	}
+	instanceResult := loadBlueprintInstance(paths, rules, digests)
+	missing = append(missing, instanceResult.Missing...)
+	blockers = append(blockers, instanceResult.Blockers...)
 
 	var mutationModel MutationClassModel
 	if err := readJSONIfPossible(paths.MutationClassesPath, &mutationModel); err != nil {

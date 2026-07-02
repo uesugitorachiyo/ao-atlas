@@ -595,6 +595,24 @@ func TestBlueprintRequiredArtifactsLiveInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintInstanceLoaderLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_instance_loader.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint instance loader module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func loadBlueprintInstance(",
+		"readJSONIfPossible(paths.InstancePath, &instance)",
+		"ValidateInstance(instance)",
+		"stack instance id must match candidate target_instance",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated instance loader module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
