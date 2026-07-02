@@ -781,6 +781,34 @@ func TestFoundryImportWritesContinuationHandoffPrompt(t *testing.T) {
 	}
 }
 
+func TestFoundryContinuationHandoffRejectsBlockedImportNode(t *testing.T) {
+	workgraph := fixtureWorkgraph()
+	foundryImport, err := BuildFoundryImportForNodes(workgraph, []string{"task-ready"}, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	foundryImport.Tasks[0].NodeID = "task-blocked"
+
+	_, err = BuildFoundryContinuationHandoff(workgraph, foundryImport, FoundryContinuationHandoffInputs{})
+	if err == nil || !strings.Contains(err.Error(), "foundry import node_id must reference a ready workgraph node") {
+		t.Fatalf("expected blocked import node rejection, got %v", err)
+	}
+}
+
+func TestFoundryContinuationHandoffRejectsImportTaskMismatch(t *testing.T) {
+	workgraph := fixtureWorkgraph()
+	foundryImport, err := BuildFoundryImportForNodes(workgraph, []string{"task-ready"}, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	workgraph.Nodes[1].FactoryTask.ID = "renamed-ready-task"
+
+	_, err = BuildFoundryContinuationHandoff(workgraph, foundryImport, FoundryContinuationHandoffInputs{})
+	if err == nil || !strings.Contains(err.Error(), "foundry import task_id must match ready workgraph node task") {
+		t.Fatalf("expected import task mismatch rejection, got %v", err)
+	}
+}
+
 func TestLargeWorkgraphStressFixtureValidatesAndImportsReadyNodes(t *testing.T) {
 	workgraph, err := LoadJSON[Workgraph](filepath.Join("..", "..", "examples", "valid", "workgraph-large-stress.json"))
 	if err != nil {
