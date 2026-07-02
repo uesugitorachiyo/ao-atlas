@@ -613,6 +613,24 @@ func TestBlueprintInstanceLoaderLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintMutationModelLoaderLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_mutation_model_loader.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint mutation model loader module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func loadBlueprintMutationModel(",
+		"readJSONIfPossible(paths.MutationClassesPath, &mutationModel)",
+		"ValidateMutationClassModel(mutationModel)",
+		"mutation class model must include ",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated mutation model loader module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""

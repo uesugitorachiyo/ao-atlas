@@ -66,19 +66,9 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	missing = append(missing, instanceResult.Missing...)
 	blockers = append(blockers, instanceResult.Blockers...)
 
-	var mutationModel MutationClassModel
-	if err := readJSONIfPossible(paths.MutationClassesPath, &mutationModel); err != nil {
-		missing = append(missing, "mutation_class_model")
-		blockers = append(blockers, "provide the AO Atlas mutation class model")
-	} else if err := ValidateMutationClassModel(mutationModel); err != nil {
-		missing = append(missing, "mutation_class_model")
-		blockers = append(blockers, "repair mutation class model: "+err.Error())
-	} else if !mutationModelIncludes(mutationModel, rules.MutationClass) {
-		missing = append(missing, "mutation_class_scope")
-		blockers = append(blockers, "mutation class model must include "+rules.MutationClass)
-	} else if digest, err := digestFile(paths.MutationClassesPath); err == nil {
-		digests["mutation_class_model"] = digest
-	}
+	mutationModelResult := loadBlueprintMutationModel(paths, rules, digests)
+	missing = append(missing, mutationModelResult.Missing...)
+	blockers = append(blockers, mutationModelResult.Blockers...)
 
 	var authorization BlueprintBuildAuthorization
 	authDigest := ""
