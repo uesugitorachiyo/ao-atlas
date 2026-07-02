@@ -326,13 +326,9 @@ func BuildMissionStatus(intake Intake, workgraph Workgraph, links []RunLink) (Mi
 	if err := ValidateWorkgraph(workgraph); err != nil {
 		return MissionStatus{}, err
 	}
-	nodeCounts := map[string]int{"ready": 0, "blocked": 0, "completed": 0, "failed": 0}
-	readyTaskIDs := []string{}
-	for _, node := range workgraph.Nodes {
-		nodeCounts[node.Status]++
-		if node.Status == "ready" {
-			readyTaskIDs = append(readyTaskIDs, node.FactoryTask.ID)
-		}
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		return MissionStatus{}, err
 	}
 	runLinks := map[string]string{}
 	missingContextPacks := []string{}
@@ -353,16 +349,11 @@ func BuildMissionStatus(intake Intake, workgraph Workgraph, links []RunLink) (Mi
 			anyIncomplete = true
 		}
 	}
-	missingHandoffs := []string{}
-	for _, taskID := range readyTaskIDs {
-		if _, ok := runLinks[taskID]; !ok {
-			missingHandoffs = append(missingHandoffs, taskID)
-		}
-	}
+	missingHandoffs := state.MissingHandoffs(runLinks)
 	completion := "in_progress"
 	nextRecommendedAction := "handoff ready factory task to Foundry"
 	nextActions := []string{"continue ready factory tasks through Foundry"}
-	if anyBlocked || nodeCounts["blocked"] > 0 {
+	if anyBlocked || state.NodeCounts["blocked"] > 0 {
 		completion = "blocked"
 		if len(missingContextPacks) > 0 {
 			nextRecommendedAction = "repack missing context before Foundry handoff"
@@ -371,7 +362,7 @@ func BuildMissionStatus(intake Intake, workgraph Workgraph, links []RunLink) (Mi
 			nextRecommendedAction = "emit repair plan for blocked task"
 			nextActions = []string{"emit repair plan or context repack for blocked task"}
 		}
-	} else if nodeCounts["ready"] == 0 && !anyIncomplete {
+	} else if state.NodeCounts["ready"] == 0 && !anyIncomplete {
 		completion = "completed"
 		nextRecommendedAction = "record completion readback"
 		nextActions = []string{"record completion readback and keep artifacts public-safe"}
@@ -385,7 +376,7 @@ func BuildMissionStatus(intake Intake, workgraph Workgraph, links []RunLink) (Mi
 		WorkgraphID:           workgraph.ID,
 		TargetInstance:        workgraph.TargetInstance,
 		CompletionStatus:      completion,
-		NodeCounts:            nodeCounts,
+		NodeCounts:            state.NodeCounts,
 		RunLinks:              runLinks,
 		MissingContextPacks:   missingContextPacks,
 		MissingHandoffs:       missingHandoffs,
@@ -1143,60 +1134,19 @@ func BuildRunLink(taskID, status string, evidence map[string]string) (RunLink, e
 }
 
 func NextReadyNode(workgraph Workgraph) (WorkgraphNode, bool) {
-	statusByID := map[string]string{}
-	for _, node := range workgraph.Nodes {
-		statusByID[node.ID] = node.Status
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		return WorkgraphNode{}, false
 	}
-	for _, node := range workgraph.Nodes {
-		if node.Status != "ready" {
-			continue
-		}
-		ok := true
-		for _, dep := range node.Dependencies {
-			if statusByID[dep] != "completed" {
-				ok = false
-				break
-			}
-		}
-		if ok {
-			return node, true
-		}
-	}
-	return WorkgraphNode{}, false
+	return state.NextReadyNode()
 }
 
 func CompleteWorkgraph(workgraph Workgraph, link RunLink) (Workgraph, string, error) {
-	if err := ValidateWorkgraph(workgraph); err != nil {
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
 		return Workgraph{}, "", err
 	}
-	if err := ValidateRunLink(link); err != nil {
-		return Workgraph{}, "", err
-	}
-	if link.Status != "completed" {
-		return Workgraph{}, "", fmt.Errorf("run-link status must be completed")
-	}
-	statusByID := map[string]string{}
-	for _, node := range workgraph.Nodes {
-		statusByID[node.ID] = node.Status
-	}
-	for i, node := range workgraph.Nodes {
-		if node.FactoryTask.ID != link.TaskID {
-			continue
-		}
-		for _, dep := range node.Dependencies {
-			if statusByID[dep] != "completed" {
-				return Workgraph{}, "", fmt.Errorf("matching node dependencies must be completed")
-			}
-		}
-		updated := workgraph
-		updated.Nodes = append([]WorkgraphNode(nil), workgraph.Nodes...)
-		updated.Nodes[i].Status = "completed"
-		if err := ValidateWorkgraph(updated); err != nil {
-			return Workgraph{}, "", err
-		}
-		return updated, node.ID, nil
-	}
-	return Workgraph{}, "", fmt.Errorf("no matching workgraph node for run-link task_id %q", link.TaskID)
+	return state.CompleteWithRunLink(link)
 }
 
 func BuildWorkgraphRepairPlan(workgraph Workgraph, link RunLink) (WorkgraphRepairPlan, error) {

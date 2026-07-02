@@ -511,6 +511,81 @@ func TestMissionStatusJSONReportsMissingHandoffs(t *testing.T) {
 	}
 }
 
+func TestWorkgraphStateCountsAndExecutableReadiness(t *testing.T) {
+	workgraph := fixtureWorkgraph()
+
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if state.NodeCounts["completed"] != 1 || state.NodeCounts["ready"] != 2 || state.NodeCounts["blocked"] != 1 {
+		t.Fatalf("unexpected node counts: %#v", state.NodeCounts)
+	}
+	blocked, ok := state.NodeState("task-blocked")
+	if !ok {
+		t.Fatal("expected task-blocked node state")
+	}
+	if blocked.ExecutableReady || blocked.DependenciesComplete {
+		t.Fatalf("blocked node must not be executable-ready: %#v", blocked)
+	}
+	if got := state.ExecutableReadyNodeIDs; len(got) != 2 || got[0] != "task-ready" || got[1] != "task-ready-2" {
+		t.Fatalf("expected dependency-ready nodes in workgraph order, got %#v", got)
+	}
+}
+
+func TestWorkgraphStateSkipsReadyNodeWithIncompleteDependency(t *testing.T) {
+	workgraph := fixtureWorkgraph()
+	workgraph.Nodes[1].Dependencies = []string{"task-blocked"}
+
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+	taskReady, ok := state.NodeState("task-ready")
+	if !ok {
+		t.Fatal("expected task-ready node state")
+	}
+	if taskReady.DependenciesComplete || taskReady.ExecutableReady {
+		t.Fatalf("ready node with incomplete dependency must not be executable-ready: %#v", taskReady)
+	}
+	next, ok := state.NextReadyNode()
+	if !ok || next.ID != "task-ready-2" {
+		t.Fatalf("expected next dependency-ready node task-ready-2, got ok=%t node=%#v", ok, next)
+	}
+}
+
+func TestWorkgraphStateCompletesExactlyOneDependencyReadyNode(t *testing.T) {
+	workgraph := fixtureWorkgraph()
+	link := RunLink{
+		ContractVersion: RunLinkContract,
+		TaskID:          "factory-task",
+		Status:          "completed",
+		Evidence:        map[string]string{"pr": "https://github.com/uesugitorachiyo/ao-atlas/pull/121"},
+		Digest:          "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+	}
+
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+	completed, nodeID, err := state.CompleteWithRunLink(link)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if nodeID != "task-ready" {
+		t.Fatalf("expected first dependency-ready matching node to complete, got %s", nodeID)
+	}
+	nodes := workgraphNodesByID(completed)
+	if nodes["task-ready"].Status != "completed" {
+		t.Fatalf("matching ready node must be completed: %#v", nodes["task-ready"])
+	}
+	if nodes["done"].Status != "completed" || nodes["task-ready-2"].Status != "ready" {
+		t.Fatalf("completion must affect exactly one node, got %#v", nodes)
+	}
+}
+
 func TestBlueprintRequestFixtureIsValidAndPublicSafe(t *testing.T) {
 	request, err := LoadJSON[BlueprintRequest](filepath.Join("..", "..", "examples", "valid", "blueprint-request.json"))
 	if err != nil {
