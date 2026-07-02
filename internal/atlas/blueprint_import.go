@@ -5,10 +5,9 @@ func BuildBlueprintImport(paths BlueprintImportPaths) (BlueprintImportResult, er
 	if err := validateBlueprintImportInputs(paths); err != nil {
 		return result, err
 	}
-	artifacts, compileErr := BlueprintCompiler{Inputs: BlueprintCompileInputs{Paths: paths}}.Compile()
-	result = blueprintCompileArtifactsToResult(artifacts)
-	if err := persistBlueprintImportArtifacts(paths, artifacts, compileErr); err != nil {
-		return result, err
+	compilation := compileBlueprintImportArtifacts(paths)
+	if err := persistBlueprintImportArtifacts(paths, compilation.Artifacts, compilation.CompileErr); err != nil {
+		return compilation.Result, err
 	}
-	return result, nil
+	return compilation.Result, nil
 }
