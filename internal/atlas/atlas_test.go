@@ -450,6 +450,24 @@ func TestBlueprintAuthorizationReadinessLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintArtifactBuildersLiveInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_artifact_builders.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint artifact builders module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func buildBlueprintIntake(",
+		"func buildBlueprintContextPack(",
+		"func buildBlueprintFactoryTask(",
+		"func buildBlueprintCandidateSelection(",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated artifact builders module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
