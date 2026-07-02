@@ -416,6 +416,23 @@ func TestBlueprintImportBlocksStaleAuthorization(t *testing.T) {
 	}
 }
 
+func TestBlueprintReadyArtifactWriterLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_ready_artifacts.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint ready artifact module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func writeBlueprintReadyArtifacts(",
+		"func writeBlueprintFoundryImportArtifacts(",
+		"WriteFoundryContinuationPrompt(",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated ready artifact module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
