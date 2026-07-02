@@ -53,28 +53,11 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 		blockers = append(blockers, "provide a readable AO Blueprint pack")
 	}
 
-	var rules BlueprintCandidateRules
-	rulesPath := filepath.Join(paths.PackPath, "candidate-rules.json")
-	if strings.TrimSpace(paths.CandidateRulesPath) != "" {
-		rulesPath = paths.CandidateRulesPath
-	}
-	if err := readJSONIfPossible(rulesPath, &rules); err != nil {
-		missing = append(missing, "candidate_rules")
-		blockers = append(blockers, "add candidate-rules.json to the Blueprint pack")
-	} else if err := ValidateBlueprintCandidateRules(rules); err != nil {
-		missing = append(missing, "candidate_rules")
-		blockers = append(blockers, "repair candidate-rules.json: "+err.Error())
-	} else {
-		record.ID = rules.WorkgraphID + "-blueprint-import"
-		record.ProjectID = rules.ProjectID
-		record.TargetInstance = rules.TargetInstance
-		record.WorkgraphID = rules.WorkgraphID
-		record.MutationClass = rules.MutationClass
-		record.SafetyLimits = append([]string(nil), rules.SafetyLimits...)
-		if digest, err := digestFile(rulesPath); err == nil {
-			digests["candidate_rules"] = digest
-		}
-	}
+	rulesResult := loadBlueprintCandidateRules(paths, record, digests)
+	rules := rulesResult.Rules
+	record = rulesResult.Record
+	missing = append(missing, rulesResult.Missing...)
+	blockers = append(blockers, rulesResult.Blockers...)
 
 	for name, path := range map[string]string{
 		"implementation_spec": filepath.Join(paths.PackPath, "implementation-spec.md"),
