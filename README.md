@@ -37,15 +37,16 @@ the rest of the AO stack:
 For the governed live mutation ladder, AO Atlas can decompose oversized
 objectives, compile bounded context packs, and emit Foundry import or run-link
 evidence. The highest proven live class is now
-`public_safe_broad_RSI_governed_campaign_segment_07_evidence`: docs-only, test-only,
+`public_safe_unrestricted_self_modification_readiness_boundary_map`: docs-only, test-only,
 low-risk code, multi-repo low-risk, governed complex mutation, the 26-node fully
 unsupervised complex first non-planning rehearsal, bounded RSI evidence
 rehearsal, bounded RSI self-improvement application, conservative public
 readback evidence, bounded public evidence expansion, and intermediate
 causal-review evidence, evidence-selection guidance, and guided evidence
-application are prior evidence. The current class is proven only for public-safe
-segment-07 campaign evidence and readback alignment. The next denied class is
-`broad_RSI`.
+application and governed public-safe broad_RSI campaign completion are prior
+evidence. The current class is proven only for public-safe readiness-boundary
+evidence for evaluating unrestricted self-modification. The next denied class is
+`unrestricted_self_modification`.
 
 Atlas also holds the 32-node bounded RSI evidence workgraph as evidence for
 `bounded_rsi_evidence_rehearsal`. That workgraph supports the final bounded
@@ -286,3 +287,24 @@ recursive-improvement claims.
 `broad_RSI` is proven from AO Foundry PR #211, commit `630edc70905db745380edd1072e04b546dcccfe3`, with tracked public evidence under `docs/evidence/broad-rsi-ten-day-campaign-segment-08/`. The approved public wording is exactly: "AO has proven governed broad_RSI for public claim publication across the AO stack public-safe 10-day evidence campaign; unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied." Campaign completion is `2800 / 2800` nodes. `Atlas` reads back `highest_proven_live_class=broad_RSI` and `next_denied_class=unrestricted_self_modification`.
 
 This does not prove unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, policy/auth/secret/provider/deploy/release/config/dependency expansion, release/deploy/publish/upload/tag/provider calls, credential use, direct main mutation, concurrent mutation, or any unrestricted RSI claim.
+
+## Unrestricted Self-Modification Readiness Boundary Readback
+
+`public_safe_unrestricted_self_modification_readiness_boundary_map` is proven
+from AO Foundry PR #215, commit
+`e5ed75361554b1c90518c0e0df10b18adec77e5f`, with tracked public evidence under
+`docs/evidence/unrestricted-self-modification-readiness-boundary/`. The approved
+public wording is exactly: "AO has public-safe readiness-boundary evidence for
+evaluating unrestricted self-modification; unrestricted self-modification,
+hidden instruction mutation, policy-changing autonomy, and forbidden surface
+expansion remain denied." Campaign completion for `broad_RSI` remains prior
+evidence; Atlas now reads back
+`highest_proven_live_class=public_safe_unrestricted_self_modification_readiness_boundary_map`
+and `next_denied_class=unrestricted_self_modification`.
+
+This does not prove unrestricted self-modification, hidden instruction mutation,
+policy-changing autonomy, policy/auth/secret/provider/deploy/release/config/
+dependency expansion, credential use, provider calls,
+release/deploy/publish/upload/tag authority, dependency update authority, direct
+main mutation, concurrent mutation, hidden instruction changes, or any
+unrestricted RSI claim.
