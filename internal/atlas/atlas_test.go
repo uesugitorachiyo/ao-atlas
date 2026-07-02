@@ -376,6 +376,16 @@ func contextPackHasSourceRef(pack ContextPack, want string) bool {
 	return false
 }
 
+func blueprintCompilerValidPaths(outDir string) BlueprintImportPaths {
+	return BlueprintImportPaths{
+		PackPath:            filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "blueprint-pack"),
+		AuthorizationPath:   filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "build-authorization.json"),
+		InstancePath:        filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		MutationClassesPath: filepath.Join("..", "..", "examples", "valid", "mutation-classes.json"),
+		OutDir:              outDir,
+	}
+}
+
 func TestBlueprintImportBlocksStaleAuthorization(t *testing.T) {
 	dir := t.TempDir()
 	authPath := filepath.Join(dir, "expired-authorization.json")
@@ -403,6 +413,65 @@ func TestBlueprintImportBlocksStaleAuthorization(t *testing.T) {
 	}
 	if _, err := os.Stat(filepath.Join(outDir, "foundry-import", "foundry-import.json")); !os.IsNotExist(err) {
 		t.Fatalf("blocked import must not write Foundry import: %v", err)
+	}
+}
+
+func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
+	paths := blueprintCompilerValidPaths("")
+	paths.AuthorizationPath = ""
+
+	artifacts, err := BlueprintCompiler{Inputs: BlueprintCompileInputs{Paths: paths}}.Compile()
+	if err == nil || !strings.Contains(err.Error(), "blueprint import blocked") {
+		t.Fatalf("expected blocked compiler result, got err=%v artifacts=%#v", err, artifacts)
+	}
+	if artifacts.Record.Status != "blocked" || artifacts.Record.ReadyForFoundry || artifacts.Record.SafeToExecute {
+		t.Fatalf("unexpected blocked compiler record: %#v", artifacts.Record)
+	}
+	if artifacts.Request.Status != "blueprint_required" || !containsValue(artifacts.Request.Missing, "build_authorization") {
+		t.Fatalf("unexpected blocked compiler request: %#v", artifacts.Request)
+	}
+	if artifacts.Workgraph.ID != "" || artifacts.FoundryImport.ID != "" || artifacts.Handoff.ID != "" {
+		t.Fatalf("blocked compiler must not emit ready artifacts: %#v", artifacts)
+	}
+}
+
+func TestBlueprintCompilerReadyArtifactsRemainNoExecution(t *testing.T) {
+	artifacts, err := BlueprintCompiler{Inputs: BlueprintCompileInputs{Paths: blueprintCompilerValidPaths("")}}.Compile()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if artifacts.Record.Status != "ready" || !artifacts.Record.ReadyForFoundry {
+		t.Fatalf("expected ready compiler record: %#v", artifacts.Record)
+	}
+	if artifacts.Record.SafeToExecute || artifacts.Record.SchedulesWork || artifacts.Record.ExecutesWork ||
+		artifacts.Record.ApprovesWork || artifacts.Record.MutatesRepositories || artifacts.Record.CallsProviders ||
+		artifacts.Record.ReleaseOrPublishAllowed {
+		t.Fatalf("compiled Blueprint material must remain Atlas no-execution only: %#v", artifacts.Record)
+	}
+	if artifacts.FoundryImport.ID == "" || len(artifacts.FoundryImport.Tasks) != 1 {
+		t.Fatalf("compiler must emit downstream Foundry import material: %#v", artifacts.FoundryImport)
+	}
+	if artifacts.Handoff.ID == "" || !strings.Contains(artifacts.Handoff.Prompt, "Paste this prompt") {
+		t.Fatalf("compiler must emit operator-ready Foundry continuation handoff: %#v", artifacts.Handoff)
+	}
+}
+
+func TestBlueprintCompilerPreservesExternalCandidateRulesRef(t *testing.T) {
+	dir := t.TempDir()
+	sourcePack := filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "blueprint-pack")
+	packPath := filepath.Join(dir, "blueprint-pack")
+	copyDirExcept(t, sourcePack, packPath, "candidate-rules.json")
+	candidateRulesPath := filepath.Join(sourcePack, "candidate-rules.json")
+	paths := blueprintCompilerValidPaths("")
+	paths.PackPath = packPath
+	paths.CandidateRulesPath = candidateRulesPath
+
+	artifacts, err := BlueprintCompiler{Inputs: BlueprintCompileInputs{Paths: paths}}.Compile()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(artifacts.ContextPacks) != 1 || !contextPackHasSourceRef(artifacts.ContextPacks[0], publicArtifactRef(candidateRulesPath)) {
+		t.Fatalf("compiler must preserve external candidate-rules ref, got %#v", artifacts.ContextPacks)
 	}
 }
 

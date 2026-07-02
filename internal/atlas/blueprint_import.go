@@ -145,206 +145,23 @@ func BuildBlueprintImport(paths BlueprintImportPaths) (BlueprintImportResult, er
 	if strings.TrimSpace(paths.OutDir) == "" {
 		return result, errors.New("--out is required")
 	}
-	packDigest, packErr := digestDirectory(paths.PackPath)
-	if packErr != nil {
-		packDigest = DigestBytes([]byte("missing-blueprint-pack:" + paths.PackPath))
-	}
-	digests := map[string]string{"blueprint_pack": packDigest}
-	record := BlueprintImport{
-		ContractVersion:         BlueprintImportContract,
-		ID:                      "blueprint-import-blocked",
-		ProjectID:               "unknown-project",
-		Status:                  "blocked",
-		Reason:                  "AO Atlas cannot compile Blueprint material until authorization and candidate rules are ready.",
-		BlueprintPack:           SourceRef{Ref: publicArtifactRef(paths.PackPath), Digest: packDigest},
-		Digests:                 digests,
-		ReadyForFoundry:         false,
-		SafeToExecute:           false,
-		LiveExecutionProven:     false,
-		SchedulesWork:           false,
-		ExecutesWork:            false,
-		ApprovesWork:            false,
-		MutatesRepositories:     false,
-		CallsProviders:          false,
-		ReleaseOrPublishAllowed: false,
-	}
-	missing := []string{}
-	blockers := []string{}
-	if packErr != nil {
-		missing = append(missing, "blueprint_pack")
-		blockers = append(blockers, "provide a readable AO Blueprint pack")
-	}
-
-	var rules BlueprintCandidateRules
-	rulesPath := filepath.Join(paths.PackPath, "candidate-rules.json")
-	if strings.TrimSpace(paths.CandidateRulesPath) != "" {
-		rulesPath = paths.CandidateRulesPath
-	}
-	if err := readJSONIfPossible(rulesPath, &rules); err != nil {
-		missing = append(missing, "candidate_rules")
-		blockers = append(blockers, "add candidate-rules.json to the Blueprint pack")
-	} else if err := ValidateBlueprintCandidateRules(rules); err != nil {
-		missing = append(missing, "candidate_rules")
-		blockers = append(blockers, "repair candidate-rules.json: "+err.Error())
-	} else {
-		record.ID = rules.WorkgraphID + "-blueprint-import"
-		record.ProjectID = rules.ProjectID
-		record.TargetInstance = rules.TargetInstance
-		record.WorkgraphID = rules.WorkgraphID
-		record.MutationClass = rules.MutationClass
-		record.SafetyLimits = append([]string(nil), rules.SafetyLimits...)
-		if digest, err := digestFile(rulesPath); err == nil {
-			digests["candidate_rules"] = digest
-		}
-	}
-
-	for name, path := range map[string]string{
-		"implementation_spec": filepath.Join(paths.PackPath, "implementation-spec.md"),
-		"quality_profile":     filepath.Join(paths.PackPath, "quality-profile.md"),
-	} {
-		digest, err := digestFile(path)
-		if err != nil {
-			missing = append(missing, name)
-			blockers = append(blockers, "add "+filepath.Base(path)+" to the Blueprint pack")
-			continue
-		}
-		digests[name] = digest
-	}
-
-	var instance Instance
-	if err := readJSONIfPossible(paths.InstancePath, &instance); err != nil {
-		missing = append(missing, "stack_instance")
-		blockers = append(blockers, "provide an AO Atlas stack instance")
-	} else if err := ValidateInstance(instance); err != nil {
-		missing = append(missing, "stack_instance")
-		blockers = append(blockers, "repair stack instance: "+err.Error())
-	} else if rules.TargetInstance != "" && instance.ID != rules.TargetInstance {
-		missing = append(missing, "stack_instance_scope")
-		blockers = append(blockers, "stack instance id must match candidate target_instance")
-	} else if digest, err := digestFile(paths.InstancePath); err == nil {
-		digests["stack_instance"] = digest
-	}
-
-	var mutationModel MutationClassModel
-	if err := readJSONIfPossible(paths.MutationClassesPath, &mutationModel); err != nil {
-		missing = append(missing, "mutation_class_model")
-		blockers = append(blockers, "provide the AO Atlas mutation class model")
-	} else if err := ValidateMutationClassModel(mutationModel); err != nil {
-		missing = append(missing, "mutation_class_model")
-		blockers = append(blockers, "repair mutation class model: "+err.Error())
-	} else if !mutationModelIncludes(mutationModel, rules.MutationClass) {
-		missing = append(missing, "mutation_class_scope")
-		blockers = append(blockers, "mutation class model must include "+rules.MutationClass)
-	} else if digest, err := digestFile(paths.MutationClassesPath); err == nil {
-		digests["mutation_class_model"] = digest
-	}
-
-	var authorization BlueprintBuildAuthorization
-	authDigest := ""
-	if strings.TrimSpace(paths.AuthorizationPath) == "" {
-		missing = append(missing, "build_authorization")
-		blockers = append(blockers, "provide AO Blueprint build authorization")
-	} else if err := readJSONIfPossible(paths.AuthorizationPath, &authorization); err != nil {
-		missing = append(missing, "build_authorization")
-		blockers = append(blockers, "provide readable AO Blueprint build authorization")
-	} else {
-		authDigest, _ = digestFile(paths.AuthorizationPath)
-		digests["build_authorization"] = authDigest
-		record.BuildAuthorization = SourceRef{Ref: publicArtifactRef(paths.AuthorizationPath), Digest: authDigest}
-		authMissing, authBlockers := validateBlueprintAuthorization(authorization, rules, packDigest)
-		missing = append(missing, authMissing...)
-		blockers = append(blockers, authBlockers...)
-	}
-
-	if len(missing) > 0 {
-		request := BlueprintRequest{
-			ContractVersion: BlueprintRequestContract,
-			IntakeID:        firstNonEmpty(record.ProjectID, "blueprint-import") + "-intake",
-			Status:          "blueprint_required",
-			Missing:         uniqueStrings(missing),
-			Reason:          "AO Atlas cannot emit a ready workgraph until Blueprint authorization is present, current, digest-bound, and scoped to this work.",
-		}
-		record.BlockingNextActions = uniqueStrings(blockers)
-		if len(record.BlockingNextActions) == 0 {
-			record.BlockingNextActions = []string{"return to AO Blueprint for build authorization"}
-		}
-		if err := writeBlueprintBlockedArtifacts(paths.OutDir, record, request); err != nil {
+	artifacts, compileErr := BlueprintCompiler{Inputs: BlueprintCompileInputs{Paths: paths}}.Compile()
+	result = blueprintCompileArtifactsToResult(artifacts)
+	if artifacts.Record.Status == "blocked" {
+		if err := writeBlueprintBlockedArtifacts(paths.OutDir, artifacts.Record, artifacts.Request); err != nil {
 			return result, err
 		}
-		result.Record = record
-		result.Request = request
-		return result, fmt.Errorf("blueprint import blocked: %s", strings.Join(record.BlockingNextActions, "; "))
+		return result, compileErr
 	}
-
-	intake := buildBlueprintIntake(rules)
-	contextPack, err := buildBlueprintContextPack(paths.PackPath, paths.CandidateRulesPath, rules, digests)
-	if err != nil {
+	if compileErr != nil {
+		return result, compileErr
+	}
+	if len(artifacts.ContextPacks) != 1 {
+		return result, fmt.Errorf("blueprint compiler must emit exactly one context pack")
+	}
+	if err := writeBlueprintReadyArtifacts(paths.OutDir, artifacts.Record, artifacts.Intake, artifacts.Candidate, artifacts.ContextPacks[0], artifacts.Workgraph, artifacts.FoundryImport, artifacts.Handoff); err != nil {
 		return result, err
 	}
-	task := buildBlueprintFactoryTask(rules, contextPack)
-	workgraph := Workgraph{
-		ContractVersion: WorkgraphContract,
-		ID:              rules.WorkgraphID,
-		TargetInstance:  rules.TargetInstance,
-		Nodes: []WorkgraphNode{{
-			ID:           rules.CandidateID + "-node",
-			Status:       "ready",
-			FactoryTask:  task,
-			Dependencies: []string{},
-			Blockers:     []string{},
-			StitchTask:   false,
-		}},
-	}
-	if err := ValidateWorkgraph(workgraph); err != nil {
-		return result, err
-	}
-	digests["context_pack"] = digestValue(contextPack)
-	digests["workgraph"] = digestValue(workgraph)
-	candidate := buildBlueprintCandidateSelection(rules, workgraph.Nodes[0], digests)
-	digests["candidate_selection"] = digestValue(candidate)
-
-	sourceArtifacts := []SourceRef{
-		{Ref: publicArtifactRef(paths.PackPath), Digest: packDigest},
-		{Ref: publicArtifactRef(paths.AuthorizationPath), Digest: authDigest},
-		{Ref: "candidate-selection.json", Digest: digests["candidate_selection"]},
-		{Ref: "context-packs/" + contextPack.ID + ".json", Digest: digests["context_pack"]},
-		{Ref: "workgraph.json", Digest: digests["workgraph"]},
-	}
-	foundryImport, err := BuildFoundryImportForNodes(workgraph, nil, sourceArtifacts)
-	if err != nil {
-		return result, err
-	}
-	digests["downstream_foundry_import"] = digestValue(foundryImport)
-	handoff, err := BuildFoundryContinuationHandoff(workgraph, foundryImport, FoundryContinuationHandoffInputs{
-		BlueprintPackPath: publicArtifactRef(paths.PackPath),
-		AtlasImportPath:   "blueprint-import.json",
-		WorkgraphPath:     "workgraph.json",
-		FoundryImportPath: "foundry-import/foundry-import.json",
-	})
-	if err != nil {
-		return result, err
-	}
-	digests["downstream_foundry_continuation_handoff"] = digestValue(handoff)
-	record.Status = "ready"
-	record.Reason = "Blueprint authorization is ready and Atlas compiled digest-bound Foundry import material."
-	record.CandidateSelection = candidate
-	record.DownstreamFoundryImport = SourceRef{Ref: "foundry-import/foundry-import.json", Digest: digests["downstream_foundry_import"]}
-	record.DownstreamFoundryContinuationHandoff = SourceRef{Ref: "foundry-import/foundry-continuation-handoff.json", Digest: digests["downstream_foundry_continuation_handoff"]}
-	record.Digests = digests
-	record.ReadyForFoundry = true
-	if err := ValidateBlueprintImport(record); err != nil {
-		return result, err
-	}
-	if err := writeBlueprintReadyArtifacts(paths.OutDir, record, intake, candidate, contextPack, workgraph, foundryImport, handoff); err != nil {
-		return result, err
-	}
-	result.Record = record
-	result.Intake = intake
-	result.Candidate = candidate
-	result.ContextPacks = []ContextPack{contextPack}
-	result.Workgraph = workgraph
-	result.FoundryImport = foundryImport
-	result.Handoff = handoff
 	return result, nil
 }
 
