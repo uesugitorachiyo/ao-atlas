@@ -721,6 +721,25 @@ func TestBlueprintDownstreamFoundryLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintReadyRecordLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_ready_record.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint ready record module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func buildBlueprintReadyRecord(",
+		"record.Status = \"ready\"",
+		"record.DownstreamFoundryImport = SourceRef{Ref: \"foundry-import/foundry-import.json\"",
+		"record.ReadyForFoundry = true",
+		"ValidateBlueprintImport(record)",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated ready record module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
