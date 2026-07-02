@@ -781,6 +781,25 @@ func TestBlueprintSourceLoadingLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintCompileArtifactsLiveInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_compile_artifacts.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint compile artifacts module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"type BlueprintCompileArtifacts struct",
+		"func blueprintCompileArtifactsToResult(",
+		"Record:        artifacts.Record",
+		"FoundryImport: artifacts.FoundryImport",
+		"Handoff:       artifacts.Handoff",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated compile artifacts module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
