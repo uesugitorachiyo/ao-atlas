@@ -32,13 +32,13 @@ func (b FoundryContinuationHandoffBuilder) Build() (FoundryContinuationHandoff, 
 	if err := ValidateFoundryImportMatchesWorkgraph(b.Workgraph, b.FoundryImport); err != nil {
 		return FoundryContinuationHandoff{}, err
 	}
+	state, err := BuildWorkgraphState(b.Workgraph)
+	if err != nil {
+		return FoundryContinuationHandoff{}, err
+	}
 	firstSafeNode := ""
 	if len(b.FoundryImport.Tasks) > 0 {
 		firstSafeNode = b.FoundryImport.Tasks[0].NodeID
-	}
-	counts := map[string]int{}
-	for _, node := range b.Workgraph.Nodes {
-		counts[node.Status]++
 	}
 	classBoundary := foundryContinuationClassBoundary(b.FoundryImport)
 	handoff := FoundryContinuationHandoff{
@@ -53,9 +53,9 @@ func (b FoundryContinuationHandoffBuilder) Build() (FoundryContinuationHandoff, 
 		MissionContinuationEvidencePath: slashOrNotProvided(b.Inputs.MissionContinuationEvidencePath),
 		FirstSafeNode:                   firstSafeNode,
 		TotalNodeCount:                  len(b.Workgraph.Nodes),
-		CompletedNodeCount:              counts["completed"],
-		BlockedNodeCount:                counts["blocked"],
-		ReadyNodeCount:                  counts["ready"],
+		CompletedNodeCount:              state.NodeCounts["completed"],
+		BlockedNodeCount:                state.NodeCounts["blocked"],
+		ReadyNodeCount:                  state.NodeCounts["ready"],
 		ClassBoundary:                   classBoundary,
 		StopConditions: []string{
 			"done",
