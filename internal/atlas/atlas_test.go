@@ -433,6 +433,25 @@ func TestBlueprintReadyArtifactWriterLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintImportPersistenceLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_import_persistence.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint import persistence module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func persistBlueprintImportArtifacts(",
+		"writeBlueprintBlockedArtifacts(",
+		"return compileErr",
+		"blueprint compiler must emit exactly one context pack",
+		"writeBlueprintReadyArtifacts(",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated import persistence module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintAuthorizationReadinessLivesInDedicatedModule(t *testing.T) {
 	module, err := os.ReadFile("blueprint_authorization.go")
 	if err != nil {
