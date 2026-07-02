@@ -3,6 +3,9 @@ package atlas
 import (
 	"bytes"
 	"encoding/json"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -75,6 +78,43 @@ func mustLoadJSON[T any](t *testing.T, path string) T {
 		t.Fatalf("load JSON %s: %v", path, err)
 	}
 	return value
+}
+
+func assertDedicatedModuleContains(t *testing.T, fileName, moduleName string, expected []string) {
+	t.Helper()
+	module, err := os.ReadFile(fileName)
+	if err != nil {
+		t.Fatalf("expected dedicated %s module: %v", moduleName, err)
+	}
+	content := string(module)
+	for _, want := range expected {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated %s module missing %q", moduleName, want)
+		}
+	}
+}
+
+func TestDedicatedModuleAssertionHelperLivesInAtlasTest(t *testing.T) {
+	fileSet := token.NewFileSet()
+	parsed, err := parser.ParseFile(fileSet, "atlas_test.go", nil, 0)
+	if err != nil {
+		t.Fatalf("parse atlas test source: %v", err)
+	}
+	helperFound := false
+	ast.Inspect(parsed, func(node ast.Node) bool {
+		fn, ok := node.(*ast.FuncDecl)
+		if !ok || fn.Name == nil {
+			return true
+		}
+		if fn.Name.Name == "assertDedicatedModuleContains" {
+			helperFound = true
+			return false
+		}
+		return true
+	})
+	if !helperFound {
+		t.Fatal("expected shared dedicated module assertion helper")
+	}
 }
 
 func TestInstanceDoctorValidatesRootsAndRegistryParity(t *testing.T) {
@@ -417,410 +457,207 @@ func TestBlueprintImportBlocksStaleAuthorization(t *testing.T) {
 }
 
 func TestBlueprintReadyArtifactWriterLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_ready_artifacts.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint ready artifact module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_ready_artifacts.go", "Blueprint ready artifact", []string{
 		"func writeBlueprintReadyArtifacts(",
 		"func writeBlueprintFoundryImportArtifacts(",
 		"WriteFoundryContinuationPrompt(",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated ready artifact module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintImportPersistenceLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_import_persistence.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint import persistence module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_import_persistence.go", "Blueprint import persistence", []string{
 		"func persistBlueprintImportArtifacts(",
 		"writeBlueprintBlockedArtifacts(",
 		"return compileErr",
 		"blueprint compiler must emit exactly one context pack",
 		"writeBlueprintReadyArtifacts(",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated import persistence module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintImportInputValidationLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_import_input_validation.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint import input validation module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_import_input_validation.go", "Blueprint import input validation", []string{
 		"func validateBlueprintImportInputs(",
 		"strings.TrimSpace(paths.OutDir)",
 		"errors.New(\"--out is required\")",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated import input validation module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintImportCompilationLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_import_compilation.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint import compilation module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_import_compilation.go", "Blueprint import compilation", []string{
 		"func compileBlueprintImportArtifacts(",
 		"BlueprintCompiler{Inputs: BlueprintCompileInputs{Paths: paths}}.Compile()",
 		"blueprintCompileArtifactsToResult(artifacts)",
 		"CompileErr error",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated import compilation module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintAuthorizationReadinessLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_authorization.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint authorization module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_authorization.go", "Blueprint authorization", []string{
 		"func validateBlueprintAuthorization(",
 		"func mutationModelIncludes(",
 		"time.Parse(time.RFC3339",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated authorization module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintArtifactBuildersLiveInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_artifact_builders.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint artifact builders module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_artifact_builders.go", "Blueprint artifact builders", []string{
 		"func buildBlueprintIntake(",
 		"func buildBlueprintContextPack(",
 		"func buildBlueprintFactoryTask(",
 		"func buildBlueprintCandidateSelection(",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated artifact builders module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintSourceUtilitiesLiveInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_sources.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint sources module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_sources.go", "Blueprint sources", []string{
 		"func readJSONIfPossible(",
 		"func digestFile(",
 		"func digestDirectory(",
 		"func publicArtifactRef(",
 		"func copyStringMap(",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated source utilities module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintImportValidationLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_import_validation.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint import validation module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_import_validation.go", "Blueprint import validation", []string{
 		"func ValidateBlueprintImport(",
 		"ready_for_foundry must be true when status is ready",
 		"safe_to_execute must be false",
 		"release_or_publish_allowed must be false",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated import validation module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintCandidateRulesValidationLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_candidate_rules_validation.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint candidate rules validation module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_candidate_rules_validation.go", "Blueprint candidate rules validation", []string{
 		"func ValidateBlueprintCandidateRules(",
 		"mutation_class must be one of the required mutation classes",
 		"checkPublicStrings(&errs, \"required_evidence\"",
 		"checkPublicStrings(&errs, \"context_refs\"",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated candidate rules validation module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintBlockedArtifactWriterLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_blocked_artifacts.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint blocked artifact module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_blocked_artifacts.go", "Blueprint blocked artifact", []string{
 		"func writeBlueprintBlockedArtifacts(",
 		"ValidateBlueprintRequest(request)",
 		"ValidateBlueprintImport(record)",
 		"blueprint-request.json",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated blocked artifact module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintCompileStateLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_compile_state.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint compile state module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_compile_state.go", "Blueprint compile state", []string{
 		"func newBlockedBlueprintCompileState(",
 		"digestDirectory(paths.PackPath)",
 		"missing-blueprint-pack:",
 		"BlueprintImport{",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated compile state module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintCandidateRulesLoaderLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_candidate_rules_loader.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint candidate rules loader module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_candidate_rules_loader.go", "Blueprint candidate rules loader", []string{
 		"func loadBlueprintCandidateRules(",
 		"candidate-rules.json",
 		"readJSONIfPossible(rulesPath, &rules)",
 		"ValidateBlueprintCandidateRules(rules)",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated candidate rules loader module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintRequiredArtifactsLiveInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_required_artifacts.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint required artifacts module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_required_artifacts.go", "Blueprint required artifacts", []string{
 		"func loadBlueprintRequiredArtifacts(",
 		"implementation-spec.md",
 		"quality-profile.md",
 		"digestFile(path)",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated required artifacts module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintInstanceLoaderLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_instance_loader.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint instance loader module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_instance_loader.go", "Blueprint instance loader", []string{
 		"func loadBlueprintInstance(",
 		"readJSONIfPossible(paths.InstancePath, &instance)",
 		"ValidateInstance(instance)",
 		"stack instance id must match candidate target_instance",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated instance loader module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintMutationModelLoaderLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_mutation_model_loader.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint mutation model loader module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_mutation_model_loader.go", "Blueprint mutation model loader", []string{
 		"func loadBlueprintMutationModel(",
 		"readJSONIfPossible(paths.MutationClassesPath, &mutationModel)",
 		"ValidateMutationClassModel(mutationModel)",
 		"mutation class model must include ",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated mutation model loader module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintAuthorizationLoaderLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_authorization_loader.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint authorization loader module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_authorization_loader.go", "Blueprint authorization loader", []string{
 		"func loadBlueprintAuthorization(",
 		"readJSONIfPossible(paths.AuthorizationPath, &authorization)",
 		"validateBlueprintAuthorization(authorization, rules, packDigest)",
 		"record.BuildAuthorization = SourceRef{Ref: publicArtifactRef(paths.AuthorizationPath), Digest: authDigest}",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated authorization loader module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintBlockedRequestLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_blocked_request.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint blocked request module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_blocked_request.go", "Blueprint blocked request", []string{
 		"func buildBlueprintBlockedRequest(",
 		"Status:          \"blueprint_required\"",
 		"record.BlockingNextActions = uniqueStrings(blockers)",
 		"return to AO Blueprint for build authorization",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated blocked request module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintWorkgraphBuilderLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_workgraph_builder.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint workgraph builder module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_workgraph_builder.go", "Blueprint workgraph builder", []string{
 		"func buildBlueprintWorkgraph(",
 		"ContractVersion: WorkgraphContract",
 		"FactoryTask:  task",
 		"ValidateWorkgraph(workgraph)",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated workgraph builder module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintFoundrySourcesLiveInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_foundry_sources.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint Foundry sources module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_foundry_sources.go", "Blueprint Foundry sources", []string{
 		"func buildBlueprintFoundrySourceArtifacts(",
 		"candidate-selection.json",
 		"context-packs/\" + contextPack.ID + \".json",
 		"workgraph.json",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated Foundry sources module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintDownstreamFoundryLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_downstream_foundry.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint downstream Foundry module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_downstream_foundry.go", "Blueprint downstream Foundry", []string{
 		"func buildBlueprintDownstreamFoundry(",
 		"BuildFoundryImportForNodes(workgraph, nil, sourceArtifacts)",
 		"BuildFoundryContinuationHandoff(workgraph, foundryImport",
 		"FoundryImportPath: \"foundry-import/foundry-import.json\"",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated downstream Foundry module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintReadyRecordLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_ready_record.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint ready record module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_ready_record.go", "Blueprint ready record", []string{
 		"func buildBlueprintReadyRecord(",
 		"record.Status = \"ready\"",
 		"record.DownstreamFoundryImport = SourceRef{Ref: \"foundry-import/foundry-import.json\"",
 		"record.ReadyForFoundry = true",
 		"ValidateBlueprintImport(record)",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated ready record module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintReadyMaterialLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_ready_material.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint ready material module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_ready_material.go", "Blueprint ready material", []string{
 		"func buildBlueprintReadyMaterial(",
 		"buildBlueprintContextPack(",
 		"buildBlueprintWorkgraph(",
 		"buildBlueprintCandidateSelection(",
 		"buildBlueprintDownstreamFoundry(",
 		"buildBlueprintReadyRecord(",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated ready material module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintSourceLoadingLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_source_loading.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint source loading module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_source_loading.go", "Blueprint source loading", []string{
 		"func loadBlueprintCompileSources(",
 		"loadBlueprintCandidateRules(",
 		"loadBlueprintRequiredArtifacts(",
@@ -828,87 +665,47 @@ func TestBlueprintSourceLoadingLivesInDedicatedModule(t *testing.T) {
 		"loadBlueprintMutationModel(",
 		"loadBlueprintAuthorization(",
 		"blueprint_pack",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated source loading module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintCompileArtifactsLiveInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_compile_artifacts.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint compile artifacts module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_compile_artifacts.go", "Blueprint compile artifacts", []string{
 		"type BlueprintCompileArtifacts struct",
 		"func blueprintCompileArtifactsToResult(",
 		"Record:        artifacts.Record",
 		"FoundryImport: artifacts.FoundryImport",
 		"Handoff:       artifacts.Handoff",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated compile artifacts module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintBlockedCompileLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_blocked_compile.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint blocked compile module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_blocked_compile.go", "Blueprint blocked compile", []string{
 		"func buildBlueprintBlockedCompileArtifacts(",
 		"buildBlueprintBlockedRequest(",
 		"artifacts.Record = blockedRequest.Record",
 		"artifacts.Request = blockedRequest.Request",
 		"func blueprintBlockedCompileError(",
 		"blueprint import blocked:",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated blocked compile module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintCompilerContractLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_compiler_contract.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint compiler contract module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_compiler_contract.go", "Blueprint compiler contract", []string{
 		"type BlueprintCompileInputs struct",
 		"Paths BlueprintImportPaths",
 		"type BlueprintCompiler struct",
 		"Inputs BlueprintCompileInputs",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated compiler contract module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintReadyCompileLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("blueprint_ready_compile.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Blueprint ready compile module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "blueprint_ready_compile.go", "Blueprint ready compile", []string{
 		"func buildBlueprintReadyCompileArtifacts(",
 		"buildBlueprintReadyMaterial(",
 		"Rules:      sourceLoad.Rules",
 		"AuthDigest: sourceLoad.AuthDigest",
 		"return buildBlueprintReadyMaterial(",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated ready compile module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
@@ -1435,21 +1232,12 @@ func TestFoundryContinuationHandoffRejectsBlockedImportNode(t *testing.T) {
 }
 
 func TestFoundryContinuationPromptImplementationLivesInDedicatedModule(t *testing.T) {
-	module, err := os.ReadFile("foundry_handoff.go")
-	if err != nil {
-		t.Fatalf("expected dedicated Foundry handoff module: %v", err)
-	}
-	content := string(module)
-	for _, want := range []string{
+	assertDedicatedModuleContains(t, "foundry_handoff.go", "Foundry handoff", []string{
 		"func BuildFoundryHandoff(",
 		"func BuildFoundryContinuationHandoff(",
 		"func WriteFoundryContinuationPrompt(",
 		"func buildFoundryContinuationPrompt(",
-	} {
-		if !strings.Contains(content, want) {
-			t.Fatalf("dedicated handoff module missing %q", want)
-		}
-	}
+	})
 }
 
 func TestFoundryContinuationHandoffRejectsImportTaskMismatch(t *testing.T) {
