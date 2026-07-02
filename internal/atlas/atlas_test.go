@@ -703,6 +703,24 @@ func TestBlueprintFoundrySourcesLiveInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintDownstreamFoundryLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_downstream_foundry.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint downstream Foundry module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func buildBlueprintDownstreamFoundry(",
+		"BuildFoundryImportForNodes(workgraph, nil, sourceArtifacts)",
+		"BuildFoundryContinuationHandoff(workgraph, foundryImport",
+		"FoundryImportPath: \"foundry-import/foundry-import.json\"",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated downstream Foundry module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""

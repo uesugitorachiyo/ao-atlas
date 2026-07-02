@@ -100,20 +100,13 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	digests["candidate_selection"] = digestValue(candidate)
 
 	sourceArtifacts := buildBlueprintFoundrySourceArtifacts(paths, contextPack, packDigest, authDigest, digests)
-	foundryImport, err := BuildFoundryImportForNodes(workgraph, nil, sourceArtifacts)
+	downstreamFoundry, err := buildBlueprintDownstreamFoundry(workgraph, sourceArtifacts, paths)
 	if err != nil {
 		return artifacts, err
 	}
+	foundryImport := downstreamFoundry.FoundryImport
+	handoff := downstreamFoundry.Handoff
 	digests["downstream_foundry_import"] = digestValue(foundryImport)
-	handoff, err := BuildFoundryContinuationHandoff(workgraph, foundryImport, FoundryContinuationHandoffInputs{
-		BlueprintPackPath: publicArtifactRef(paths.PackPath),
-		AtlasImportPath:   "blueprint-import.json",
-		WorkgraphPath:     "workgraph.json",
-		FoundryImportPath: "foundry-import/foundry-import.json",
-	})
-	if err != nil {
-		return artifacts, err
-	}
 	digests["downstream_foundry_continuation_handoff"] = digestValue(handoff)
 	record.Status = "ready"
 	record.Reason = "Blueprint authorization is ready and Atlas compiled digest-bound Foundry import material."
