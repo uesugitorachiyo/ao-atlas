@@ -44,40 +44,17 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	record := state.Record
 	digests := state.Digests
 	packDigest := state.PackDigest
-	packErr := state.PackErr
-	missing := []string{}
-	blockers := []string{}
-	if packErr != nil {
-		missing = append(missing, "blueprint_pack")
-		blockers = append(blockers, "provide a readable AO Blueprint pack")
-	}
+	sourceLoad := loadBlueprintCompileSources(blueprintCompileSourceInputs{
+		Paths:      paths,
+		Record:     record,
+		Digests:    digests,
+		PackDigest: packDigest,
+		PackErr:    state.PackErr,
+	})
+	record = sourceLoad.Record
 
-	rulesResult := loadBlueprintCandidateRules(paths, record, digests)
-	rules := rulesResult.Rules
-	record = rulesResult.Record
-	missing = append(missing, rulesResult.Missing...)
-	blockers = append(blockers, rulesResult.Blockers...)
-
-	requiredResult := loadBlueprintRequiredArtifacts(paths, digests)
-	missing = append(missing, requiredResult.Missing...)
-	blockers = append(blockers, requiredResult.Blockers...)
-
-	instanceResult := loadBlueprintInstance(paths, rules, digests)
-	missing = append(missing, instanceResult.Missing...)
-	blockers = append(blockers, instanceResult.Blockers...)
-
-	mutationModelResult := loadBlueprintMutationModel(paths, rules, digests)
-	missing = append(missing, mutationModelResult.Missing...)
-	blockers = append(blockers, mutationModelResult.Blockers...)
-
-	authorizationResult := loadBlueprintAuthorization(paths, record, rules, packDigest, digests)
-	record = authorizationResult.Record
-	authDigest := authorizationResult.AuthDigest
-	missing = append(missing, authorizationResult.Missing...)
-	blockers = append(blockers, authorizationResult.Blockers...)
-
-	if len(missing) > 0 {
-		blockedRequest := buildBlueprintBlockedRequest(record, missing, blockers)
+	if len(sourceLoad.Missing) > 0 {
+		blockedRequest := buildBlueprintBlockedRequest(record, sourceLoad.Missing, sourceLoad.Blockers)
 		record = blockedRequest.Record
 		artifacts.Record = blockedRequest.Record
 		artifacts.Request = blockedRequest.Request
@@ -87,10 +64,10 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	readyArtifacts, err := buildBlueprintReadyMaterial(blueprintReadyMaterialInputs{
 		Paths:      paths,
 		Record:     record,
-		Rules:      rules,
+		Rules:      sourceLoad.Rules,
 		Digests:    digests,
 		PackDigest: packDigest,
-		AuthDigest: authDigest,
+		AuthDigest: sourceLoad.AuthDigest,
 	})
 	if err != nil {
 		return artifacts, err
