@@ -5,20 +5,38 @@ import (
 	"strings"
 )
 
+type ComplexExecutableNodeEvidence struct {
+	Workgraph     Workgraph
+	FoundryImport FoundryImport
+	Candidate     map[string]any
+	Rollback      map[string]any
+	Summary       map[string]any
+}
+
 // ValidateComplexExecutableNodeEvidence checks the Atlas-owned handoff envelope
 // for the first executable complex_repo_mutation node. It is intentionally
 // stricter than generic workgraph/import validation because a selected node must
 // have matching candidate, rollback, and import execution evidence.
 func ValidateComplexExecutableNodeEvidence(workgraph Workgraph, foundryImport FoundryImport, candidate map[string]any, rollback map[string]any, summary map[string]any) error {
-	if err := ValidateWorkgraph(workgraph); err != nil {
+	return ValidateComplexExecutableNodeConsistency(ComplexExecutableNodeEvidence{
+		Workgraph:     workgraph,
+		FoundryImport: foundryImport,
+		Candidate:     candidate,
+		Rollback:      rollback,
+		Summary:       summary,
+	})
+}
+
+func ValidateComplexExecutableNodeConsistency(evidence ComplexExecutableNodeEvidence) error {
+	if err := ValidateWorkgraph(evidence.Workgraph); err != nil {
 		return err
 	}
-	if err := ValidateFoundryImport(foundryImport); err != nil {
+	if err := ValidateFoundryImport(evidence.FoundryImport); err != nil {
 		return err
 	}
 
 	readyNodes := make([]WorkgraphNode, 0, 1)
-	for _, node := range workgraph.Nodes {
+	for _, node := range evidence.Workgraph.Nodes {
 		if node.Status == "ready" {
 			readyNodes = append(readyNodes, node)
 		}
@@ -37,15 +55,18 @@ func ValidateComplexExecutableNodeEvidence(workgraph Workgraph, foundryImport Fo
 		return fmt.Errorf("ready node must bind safe_to_execute:true")
 	}
 
-	if len(foundryImport.Tasks) != 1 {
+	if len(evidence.FoundryImport.Tasks) != 1 {
 		return fmt.Errorf("foundry import must contain exactly one selected node")
 	}
-	importTask := foundryImport.Tasks[0]
+	importTask := evidence.FoundryImport.Tasks[0]
 	if importTask.NodeID != readyNode.ID {
 		return fmt.Errorf("foundry import node_id must match ready node")
 	}
 	if importTask.TaskID != readyNode.FactoryTask.ID {
 		return fmt.Errorf("foundry import task_id must match ready node task")
+	}
+	if err := ValidateFoundryImportMatchesWorkgraph(evidence.Workgraph, evidence.FoundryImport); err != nil {
+		return err
 	}
 	if containsValue(importTask.RequiredEvidence, "safe_to_execute:false") ||
 		containsValue(importTask.Task.RequiredEvidence, "safe_to_execute:false") {
@@ -56,13 +77,13 @@ func ValidateComplexExecutableNodeEvidence(workgraph Workgraph, foundryImport Fo
 		return fmt.Errorf("foundry import must bind safe_to_execute:true")
 	}
 
-	if err := validateComplexCandidateEvidence(candidate, readyNode); err != nil {
+	if err := validateComplexCandidateEvidence(evidence.Candidate, readyNode); err != nil {
 		return err
 	}
-	if err := validateComplexRollbackEvidence(rollback, readyNode); err != nil {
+	if err := validateComplexRollbackEvidence(evidence.Rollback, readyNode); err != nil {
 		return err
 	}
-	if firstSafeNode := complexEvidenceString(summary, "first_safe_node"); firstSafeNode != "" && firstSafeNode != readyNode.ID {
+	if firstSafeNode := complexEvidenceString(evidence.Summary, "first_safe_node"); firstSafeNode != "" && firstSafeNode != readyNode.ID {
 		return fmt.Errorf("first_safe_node must match ready node")
 	}
 	return nil

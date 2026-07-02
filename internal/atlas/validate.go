@@ -1275,7 +1275,7 @@ func BuildFoundryHandoff(workgraph Workgraph) FoundryHandoff {
 }
 
 func BuildFoundryImport(workgraph Workgraph) (FoundryImport, error) {
-	return BuildFoundryImportForNodes(workgraph, nil, nil)
+	return FoundryImportBuilder{Workgraph: workgraph}.Build()
 }
 
 type FoundryContinuationHandoffInputs struct {
@@ -1287,62 +1287,11 @@ type FoundryContinuationHandoffInputs struct {
 }
 
 func BuildFoundryContinuationHandoff(workgraph Workgraph, foundryImport FoundryImport, inputs FoundryContinuationHandoffInputs) (FoundryContinuationHandoff, error) {
-	if err := ValidateWorkgraph(workgraph); err != nil {
-		return FoundryContinuationHandoff{}, err
-	}
-	if err := ValidateFoundryImport(foundryImport); err != nil {
-		return FoundryContinuationHandoff{}, err
-	}
-	firstSafeNode := ""
-	if len(foundryImport.Tasks) > 0 {
-		firstSafeNode = foundryImport.Tasks[0].NodeID
-	}
-	counts := map[string]int{}
-	for _, node := range workgraph.Nodes {
-		counts[node.Status]++
-	}
-	classBoundary := foundryContinuationClassBoundary(foundryImport)
-	handoff := FoundryContinuationHandoff{
-		ContractVersion:                 FoundryContinuationHandoffContract,
-		ID:                              foundryImport.ID + "-continuation-handoff",
-		TargetFolder:                    foundryContinuationTargetFolder(),
-		Command:                         "codex --yolo",
-		BlueprintPackPath:               slashOrNotProvided(inputs.BlueprintPackPath),
-		AtlasImportPath:                 slashOrNotProvided(inputs.AtlasImportPath),
-		WorkgraphPath:                   slashOrNotProvided(inputs.WorkgraphPath),
-		FoundryImportPath:               slashOrNotProvided(inputs.FoundryImportPath),
-		MissionContinuationEvidencePath: slashOrNotProvided(inputs.MissionContinuationEvidencePath),
-		FirstSafeNode:                   firstSafeNode,
-		TotalNodeCount:                  len(workgraph.Nodes),
-		CompletedNodeCount:              counts["completed"],
-		BlockedNodeCount:                counts["blocked"],
-		ReadyNodeCount:                  counts["ready"],
-		ClassBoundary:                   classBoundary,
-		StopConditions: []string{
-			"done",
-			"final denial",
-			"hard blocker",
-			"CI failure",
-			"unsafe scope drift",
-			"kill switch",
-		},
-		SafetyProhibitions: []string{
-			"Atlas must not execute live mutation",
-			"no direct main mutation",
-			"no release deploy publish upload tag provider call credential use dependency update auth policy widening secret env exposure or config expansion",
-			"do not claim fully_unsupervised_complex_mutation or RSI is proven",
-			"do not claim complex_repo_mutation is live-proven unless downstream evidence proves it",
-		},
-		SchedulesWork: false,
-		ExecutesWork:  false,
-		ApprovesWork:  false,
-	}
-	handoff.NextRecommendedAction = "Move to " + handoff.TargetFolder + "; Run codex --yolo; Paste this prompt"
-	handoff.Prompt = buildFoundryContinuationPrompt(handoff)
-	if err := ValidateFoundryContinuationHandoff(handoff); err != nil {
-		return FoundryContinuationHandoff{}, err
-	}
-	return handoff, nil
+	return FoundryContinuationHandoffBuilder{
+		Workgraph:     workgraph,
+		FoundryImport: foundryImport,
+		Inputs:        inputs,
+	}.Build()
 }
 
 func WriteFoundryContinuationPrompt(path string, handoff FoundryContinuationHandoff) error {
@@ -1353,6 +1302,14 @@ func WriteFoundryContinuationPrompt(path string, handoff FoundryContinuationHand
 }
 
 func BuildFoundryImportForNodes(workgraph Workgraph, selectedNodes []string, sourceArtifacts []SourceRef) (FoundryImport, error) {
+	return FoundryImportBuilder{
+		Workgraph:       workgraph,
+		SelectedNodes:   selectedNodes,
+		SourceArtifacts: sourceArtifacts,
+	}.Build()
+}
+
+func buildFoundryImportForNodes(workgraph Workgraph, selectedNodes []string, sourceArtifacts []SourceRef) (FoundryImport, error) {
 	if err := ValidateWorkgraph(workgraph); err != nil {
 		return FoundryImport{}, err
 	}
