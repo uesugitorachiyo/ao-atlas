@@ -649,6 +649,24 @@ func TestBlueprintAuthorizationLoaderLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintBlockedRequestLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_blocked_request.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint blocked request module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func buildBlueprintBlockedRequest(",
+		"Status:          \"blueprint_required\"",
+		"record.BlockingNextActions = uniqueStrings(blockers)",
+		"return to AO Blueprint for build authorization",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated blocked request module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
