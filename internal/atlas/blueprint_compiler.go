@@ -108,14 +108,14 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	handoff := downstreamFoundry.Handoff
 	digests["downstream_foundry_import"] = digestValue(foundryImport)
 	digests["downstream_foundry_continuation_handoff"] = digestValue(handoff)
-	record.Status = "ready"
-	record.Reason = "Blueprint authorization is ready and Atlas compiled digest-bound Foundry import material."
-	record.CandidateSelection = candidate
-	record.DownstreamFoundryImport = SourceRef{Ref: "foundry-import/foundry-import.json", Digest: digests["downstream_foundry_import"]}
-	record.DownstreamFoundryContinuationHandoff = SourceRef{Ref: "foundry-import/foundry-continuation-handoff.json", Digest: digests["downstream_foundry_continuation_handoff"]}
-	record.Digests = digests
-	record.ReadyForFoundry = true
-	if err := ValidateBlueprintImport(record); err != nil {
+	record, err = buildBlueprintReadyRecord(blueprintReadyRecordInputs{
+		Record:        record,
+		Candidate:     candidate,
+		Digests:       digests,
+		FoundryDigest: digests["downstream_foundry_import"],
+		HandoffDigest: digests["downstream_foundry_continuation_handoff"],
+	})
+	if err != nil {
 		return artifacts, err
 	}
 	artifacts.Record = record
