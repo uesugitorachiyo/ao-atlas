@@ -70,22 +70,11 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	missing = append(missing, mutationModelResult.Missing...)
 	blockers = append(blockers, mutationModelResult.Blockers...)
 
-	var authorization BlueprintBuildAuthorization
-	authDigest := ""
-	if strings.TrimSpace(paths.AuthorizationPath) == "" {
-		missing = append(missing, "build_authorization")
-		blockers = append(blockers, "provide AO Blueprint build authorization")
-	} else if err := readJSONIfPossible(paths.AuthorizationPath, &authorization); err != nil {
-		missing = append(missing, "build_authorization")
-		blockers = append(blockers, "provide readable AO Blueprint build authorization")
-	} else {
-		authDigest, _ = digestFile(paths.AuthorizationPath)
-		digests["build_authorization"] = authDigest
-		record.BuildAuthorization = SourceRef{Ref: publicArtifactRef(paths.AuthorizationPath), Digest: authDigest}
-		authMissing, authBlockers := validateBlueprintAuthorization(authorization, rules, packDigest)
-		missing = append(missing, authMissing...)
-		blockers = append(blockers, authBlockers...)
-	}
+	authorizationResult := loadBlueprintAuthorization(paths, record, rules, packDigest, digests)
+	record = authorizationResult.Record
+	authDigest := authorizationResult.AuthDigest
+	missing = append(missing, authorizationResult.Missing...)
+	blockers = append(blockers, authorizationResult.Blockers...)
 
 	if len(missing) > 0 {
 		request := BlueprintRequest{

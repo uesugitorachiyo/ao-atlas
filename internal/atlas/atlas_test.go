@@ -631,6 +631,24 @@ func TestBlueprintMutationModelLoaderLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintAuthorizationLoaderLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_authorization_loader.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint authorization loader module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func loadBlueprintAuthorization(",
+		"readJSONIfPossible(paths.AuthorizationPath, &authorization)",
+		"validateBlueprintAuthorization(authorization, rules, packDigest)",
+		"record.BuildAuthorization = SourceRef{Ref: publicArtifactRef(paths.AuthorizationPath), Digest: authDigest}",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated authorization loader module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
