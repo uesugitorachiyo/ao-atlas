@@ -40,30 +40,12 @@ func blueprintCompileArtifactsToResult(artifacts BlueprintCompileArtifacts) Blue
 
 func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	paths := compiler.Inputs.Paths
-	artifacts := BlueprintCompileArtifacts{}
-	packDigest, packErr := digestDirectory(paths.PackPath)
-	if packErr != nil {
-		packDigest = DigestBytes([]byte("missing-blueprint-pack:" + paths.PackPath))
-	}
-	digests := map[string]string{"blueprint_pack": packDigest}
-	record := BlueprintImport{
-		ContractVersion:         BlueprintImportContract,
-		ID:                      "blueprint-import-blocked",
-		ProjectID:               "unknown-project",
-		Status:                  "blocked",
-		Reason:                  "AO Atlas cannot compile Blueprint material until authorization and candidate rules are ready.",
-		BlueprintPack:           SourceRef{Ref: publicArtifactRef(paths.PackPath), Digest: packDigest},
-		Digests:                 digests,
-		ReadyForFoundry:         false,
-		SafeToExecute:           false,
-		LiveExecutionProven:     false,
-		SchedulesWork:           false,
-		ExecutesWork:            false,
-		ApprovesWork:            false,
-		MutatesRepositories:     false,
-		CallsProviders:          false,
-		ReleaseOrPublishAllowed: false,
-	}
+	state := newBlockedBlueprintCompileState(paths)
+	artifacts := state.Artifacts
+	record := state.Record
+	digests := state.Digests
+	packDigest := state.PackDigest
+	packErr := state.PackErr
 	missing := []string{}
 	blockers := []string{}
 	if packErr != nil {
