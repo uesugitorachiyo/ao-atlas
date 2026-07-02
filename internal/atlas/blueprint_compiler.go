@@ -1,13 +1,5 @@
 package atlas
 
-type BlueprintCompileInputs struct {
-	Paths BlueprintImportPaths
-}
-
-type BlueprintCompiler struct {
-	Inputs BlueprintCompileInputs
-}
-
 func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	paths := compiler.Inputs.Paths
 	state := newBlockedBlueprintCompileState(paths)
