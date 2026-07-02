@@ -117,6 +117,16 @@ func TestDedicatedModuleAssertionHelperLivesInAtlasTest(t *testing.T) {
 	}
 }
 
+func TestWorkgraphCLILivesInDedicatedModule(t *testing.T) {
+	assertDedicatedModuleContains(t, "cli_workgraph.go", "Workgraph CLI", []string{
+		"func runWorkgraph(",
+		"case \"materialize-next\":",
+		"case \"complete\":",
+		"case \"repair-plan\":",
+		"BuildWorkgraphRepairPlan(workgraph, link)",
+	})
+}
+
 func TestInstanceDoctorValidatesRootsAndRegistryParity(t *testing.T) {
 	dir := t.TempDir()
 	instancePath := filepath.Join(dir, "instance.json")
