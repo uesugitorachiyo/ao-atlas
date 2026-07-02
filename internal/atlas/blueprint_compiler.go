@@ -77,19 +77,10 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	blockers = append(blockers, authorizationResult.Blockers...)
 
 	if len(missing) > 0 {
-		request := BlueprintRequest{
-			ContractVersion: BlueprintRequestContract,
-			IntakeID:        firstNonEmpty(record.ProjectID, "blueprint-import") + "-intake",
-			Status:          "blueprint_required",
-			Missing:         uniqueStrings(missing),
-			Reason:          "AO Atlas cannot emit a ready workgraph until Blueprint authorization is present, current, digest-bound, and scoped to this work.",
-		}
-		record.BlockingNextActions = uniqueStrings(blockers)
-		if len(record.BlockingNextActions) == 0 {
-			record.BlockingNextActions = []string{"return to AO Blueprint for build authorization"}
-		}
-		artifacts.Record = record
-		artifacts.Request = request
+		blockedRequest := buildBlueprintBlockedRequest(record, missing, blockers)
+		record = blockedRequest.Record
+		artifacts.Record = blockedRequest.Record
+		artifacts.Request = blockedRequest.Request
 		return artifacts, fmt.Errorf("blueprint import blocked: %s", strings.Join(record.BlockingNextActions, "; "))
 	}
 
