@@ -487,6 +487,24 @@ func TestBlueprintSourceUtilitiesLiveInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintImportValidationLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_import_validation.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint import validation module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func ValidateBlueprintImport(",
+		"ready_for_foundry must be true when status is ready",
+		"safe_to_execute must be false",
+		"release_or_publish_allowed must be false",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated import validation module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
