@@ -452,6 +452,23 @@ func TestBlueprintImportPersistenceLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintImportInputValidationLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_import_input_validation.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint import input validation module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func validateBlueprintImportInputs(",
+		"strings.TrimSpace(paths.OutDir)",
+		"errors.New(\"--out is required\")",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated import input validation module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintAuthorizationReadinessLivesInDedicatedModule(t *testing.T) {
 	module, err := os.ReadFile("blueprint_authorization.go")
 	if err != nil {
