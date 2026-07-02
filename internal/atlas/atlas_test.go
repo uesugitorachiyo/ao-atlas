@@ -667,6 +667,24 @@ func TestBlueprintBlockedRequestLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintWorkgraphBuilderLivesInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_workgraph_builder.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint workgraph builder module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func buildBlueprintWorkgraph(",
+		"ContractVersion: WorkgraphContract",
+		"FactoryTask:  task",
+		"ValidateWorkgraph(workgraph)",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated workgraph builder module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""

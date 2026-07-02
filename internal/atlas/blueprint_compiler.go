@@ -90,20 +90,8 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 		return artifacts, err
 	}
 	task := buildBlueprintFactoryTask(rules, contextPack)
-	workgraph := Workgraph{
-		ContractVersion: WorkgraphContract,
-		ID:              rules.WorkgraphID,
-		TargetInstance:  rules.TargetInstance,
-		Nodes: []WorkgraphNode{{
-			ID:           rules.CandidateID + "-node",
-			Status:       "ready",
-			FactoryTask:  task,
-			Dependencies: []string{},
-			Blockers:     []string{},
-			StitchTask:   false,
-		}},
-	}
-	if err := ValidateWorkgraph(workgraph); err != nil {
+	workgraph, err := buildBlueprintWorkgraph(rules, task)
+	if err != nil {
 		return artifacts, err
 	}
 	digests["context_pack"] = digestValue(contextPack)
