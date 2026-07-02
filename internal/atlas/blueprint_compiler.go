@@ -99,13 +99,7 @@ func (compiler BlueprintCompiler) Compile() (BlueprintCompileArtifacts, error) {
 	candidate := buildBlueprintCandidateSelection(rules, workgraph.Nodes[0], digests)
 	digests["candidate_selection"] = digestValue(candidate)
 
-	sourceArtifacts := []SourceRef{
-		{Ref: publicArtifactRef(paths.PackPath), Digest: packDigest},
-		{Ref: publicArtifactRef(paths.AuthorizationPath), Digest: authDigest},
-		{Ref: "candidate-selection.json", Digest: digests["candidate_selection"]},
-		{Ref: "context-packs/" + contextPack.ID + ".json", Digest: digests["context_pack"]},
-		{Ref: "workgraph.json", Digest: digests["workgraph"]},
-	}
+	sourceArtifacts := buildBlueprintFoundrySourceArtifacts(paths, contextPack, packDigest, authDigest, digests)
 	foundryImport, err := BuildFoundryImportForNodes(workgraph, nil, sourceArtifacts)
 	if err != nil {
 		return artifacts, err

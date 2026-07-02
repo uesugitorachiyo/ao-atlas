@@ -685,6 +685,24 @@ func TestBlueprintWorkgraphBuilderLivesInDedicatedModule(t *testing.T) {
 	}
 }
 
+func TestBlueprintFoundrySourcesLiveInDedicatedModule(t *testing.T) {
+	module, err := os.ReadFile("blueprint_foundry_sources.go")
+	if err != nil {
+		t.Fatalf("expected dedicated Blueprint Foundry sources module: %v", err)
+	}
+	content := string(module)
+	for _, want := range []string{
+		"func buildBlueprintFoundrySourceArtifacts(",
+		"candidate-selection.json",
+		"context-packs/\" + contextPack.ID + \".json",
+		"workgraph.json",
+	} {
+		if !strings.Contains(content, want) {
+			t.Fatalf("dedicated Foundry sources module missing %q", want)
+		}
+	}
+}
+
 func TestBlueprintCompilerBlocksWithoutAuthorizationWithoutReadyArtifacts(t *testing.T) {
 	paths := blueprintCompilerValidPaths("")
 	paths.AuthorizationPath = ""
