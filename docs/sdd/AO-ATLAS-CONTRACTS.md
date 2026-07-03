@@ -39,7 +39,9 @@ execute work.
 `ao.atlas.ao-mission-import.v0.1` binds AO Mission record, AO Command
 mission-status, and AO Mission artifact-manifest readbacks before Atlas compiles
 mission context into workgraphs. It carries source artifact digests and rejects
-any scheduling, execution, approval, or repository-mutation authority claim.
+any scheduling, execution, approval, or repository-mutation authority claim. If
+the artifact manifest includes artifact refs, Atlas verifies each referenced
+file against its declared `sha256:` digest and blocks the import on mismatch.
 
 `ao.atlas.ao-mission-workgraph-metadata.v0.1` binds an AO Mission import to a
 validated Atlas workgraph. It records the mission id, workgraph id, target

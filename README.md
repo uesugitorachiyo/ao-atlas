@@ -156,6 +156,9 @@ owns requirements interview and build authorization.
 
 `atlas mission import` binds AO Mission record, AO Command mission-status, and
 AO Mission artifact-manifest readbacks into `ao.atlas.ao-mission-import.v0.1`.
+When an artifact manifest contains `artifact_refs`, Atlas resolves each ref and
+verifies the declared `sha256:` digest before emitting the import record. A
+digest mismatch blocks the import and grants no execution authority.
 It rejects any imported readback that claims scheduling, execution, approval, or
 repository mutation authority. The import is context for Atlas compilation only;
 it is not a Foundry execution grant.

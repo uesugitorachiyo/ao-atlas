@@ -2,6 +2,7 @@ package atlas
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 )
@@ -38,6 +39,9 @@ func BuildAOMissionImport(recordPath, commandStatusPath, artifactManifestPath st
 		if value, ok := manifest[field].(bool); ok && value {
 			return AOMissionImport{}, fmt.Errorf("artifact manifest %s must be false", field)
 		}
+	}
+	if err := validateAOMissionManifestRefs(manifest, artifactManifestPath); err != nil {
+		return AOMissionImport{}, err
 	}
 	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath)
 	if err != nil {
@@ -160,4 +164,60 @@ func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPat
 		sources = append(sources, AOMissionSourceArtifact{Name: input.name, Path: filepath.ToSlash(input.path), SHA256: digest})
 	}
 	return sources, nil
+}
+
+func validateAOMissionManifestRefs(manifest map[string]any, manifestPath string) error {
+	refs, ok := manifest["artifact_refs"].([]any)
+	if !ok {
+		return nil
+	}
+	for i, raw := range refs {
+		ref, ok := raw.(map[string]any)
+		if !ok {
+			return fmt.Errorf("artifact manifest artifact_refs[%d] must be an object", i)
+		}
+		path, _ := ref["ref"].(string)
+		if path == "" {
+			path, _ = ref["path"].(string)
+		}
+		want, _ := ref["digest"].(string)
+		if want == "" {
+			want, _ = ref["sha256"].(string)
+		}
+		if strings.TrimSpace(path) == "" || strings.TrimSpace(want) == "" {
+			return fmt.Errorf("artifact manifest artifact_refs[%d] requires ref/path and digest/sha256", i)
+		}
+		if !strings.HasPrefix(want, "sha256:") {
+			return fmt.Errorf("artifact manifest artifact_refs[%d] digest must start with sha256:", i)
+		}
+		actualPath, err := resolveAOMissionManifestRef(manifestPath, path)
+		if err != nil {
+			return fmt.Errorf("artifact manifest ref %q: %w", path, err)
+		}
+		got, err := digestFile(actualPath)
+		if err != nil {
+			return fmt.Errorf("artifact manifest ref %q: %w", path, err)
+		}
+		if got != want {
+			return fmt.Errorf("artifact manifest ref %q digest mismatch", path)
+		}
+	}
+	return nil
+}
+
+func resolveAOMissionManifestRef(manifestPath, ref string) (string, error) {
+	if filepath.IsAbs(ref) {
+		if _, err := os.Stat(ref); err != nil {
+			return "", err
+		}
+		return ref, nil
+	}
+	if _, err := os.Stat(ref); err == nil {
+		return ref, nil
+	}
+	candidate := filepath.Join(filepath.Dir(manifestPath), ref)
+	if _, err := os.Stat(candidate); err != nil {
+		return "", err
+	}
+	return candidate, nil
 }
