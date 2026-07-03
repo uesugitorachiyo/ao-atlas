@@ -3,6 +3,7 @@ package atlas
 import (
 	"fmt"
 	"path/filepath"
+	"strings"
 )
 
 func BuildAOMissionImport(recordPath, commandStatusPath, artifactManifestPath string) (AOMissionImport, error) {
@@ -101,6 +102,36 @@ func BuildAOMissionWorkgraphMetadata(importPath, workgraphPath string) (AOMissio
 		ExecutesWork:  false,
 		ApprovesWork:  false,
 	}, nil
+}
+
+func ValidateAOMissionWorkgraphMetadata(metadata AOMissionWorkgraphMetadata, workgraph Workgraph) error {
+	if metadata.ContractVersion != AOMissionWorkgraphMetadataContract {
+		return fmt.Errorf("invalid AO Mission workgraph metadata contract_version")
+	}
+	if strings.TrimSpace(metadata.MissionID) == "" {
+		return fmt.Errorf("AO Mission workgraph metadata requires mission_id")
+	}
+	if metadata.WorkgraphID != workgraph.ID {
+		return fmt.Errorf("AO Mission workgraph metadata workgraph_id must match workgraph")
+	}
+	if metadata.TargetInstance != workgraph.TargetInstance {
+		return fmt.Errorf("AO Mission workgraph metadata target_instance must match workgraph")
+	}
+	if metadata.SafeToExecute || metadata.SchedulesWork || metadata.ExecutesWork || metadata.ApprovesWork {
+		return fmt.Errorf("AO Mission workgraph metadata must not claim execution, scheduling, or approval authority")
+	}
+	if metadata.NodeCounts["total"] != len(workgraph.Nodes) {
+		return fmt.Errorf("AO Mission workgraph metadata node_counts.total must match workgraph")
+	}
+	for _, node := range workgraph.Nodes {
+		if metadata.NodeCounts[node.Status] == 0 {
+			return fmt.Errorf("AO Mission workgraph metadata missing node_counts for status %q", node.Status)
+		}
+	}
+	if len(metadata.SourceArtifacts) == 0 {
+		return fmt.Errorf("AO Mission workgraph metadata requires source_artifacts")
+	}
+	return nil
 }
 
 func aoMissionWorkgraphNodeCounts(workgraph Workgraph) map[string]int {

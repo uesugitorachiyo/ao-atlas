@@ -11,7 +11,7 @@ CLI:
 
 ```sh
 atlas foundry handoff emit --workgraph <path> --out <path>
-atlas foundry import --workgraph <path> --instance <path> --out <dir> [--node <id>] [--json]
+atlas foundry import --workgraph <path> --instance <path> --out <dir> [--node <id>] [--ao-mission-metadata <path>] [--json]
 ```
 
 Ready `blueprint import` output and direct `foundry import` output both write
@@ -19,7 +19,10 @@ a manifest plus one task fixture per dependency-ready workgraph node, or one
 selected ready node when `--node` is provided. They also write
 `foundry-continuation-handoff.json` and `foundry-continuation-prompt.md`. The
 manifest records the source workgraph and stack-instance paths with sha256
-digests, preserves context-pack refs, and carries authority-ladder metadata for
+digests. When `--ao-mission-metadata` is supplied, Atlas validates that the
+metadata matches the workgraph and does not claim scheduling, execution, or
+approval authority before adding it as a digest-bound source artifact. The
+manifest preserves context-pack refs and carries authority-ladder metadata for
 each ready node: `mutation_class`, `write_scope`, `rollback_scope`,
 `required_gates`, `required_evidence`, and `authority_boundary`. The
 continuation handoff records the AO Foundry target folder, `codex --yolo`

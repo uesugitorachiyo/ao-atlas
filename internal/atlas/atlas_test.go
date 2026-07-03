@@ -1231,6 +1231,62 @@ func TestFoundryImportWritesTaskFixturesForReadyNodes(t *testing.T) {
 	}
 }
 
+func TestFoundryImportIncludesAOMissionMetadataSourceArtifact(t *testing.T) {
+	dir := t.TempDir()
+	metadataDir := filepath.Join("..", "..", ".atlas-local", "test-ao-mission-metadata")
+	if err := os.MkdirAll(metadataDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(filepath.Join("..", "..", ".atlas-local", "test-ao-mission-metadata"))
+	metadataPath := filepath.Join(metadataDir, "ao-mission-workgraph-metadata.json")
+	if err := WriteJSON(metadataPath, AOMissionWorkgraphMetadata{
+		ContractVersion: AOMissionWorkgraphMetadataContract,
+		MissionID:       "mission-demo",
+		WorkgraphID:     "atlas-readiness-workgraph",
+		TargetInstance:  "demo-stack",
+		CurrentRoute:    "ao-atlas",
+		NodeCounts:      map[string]int{"total": 2, "completed": 1, "ready": 1},
+		SourceArtifacts: map[string]string{
+			"ao_mission_import": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+			"workgraph":         "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+		},
+		SafeToExecute: false,
+		SchedulesWork: false,
+		ExecutesWork:  false,
+		ApprovesWork:  false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	outDir := filepath.Join(dir, "foundry-import")
+	var out bytes.Buffer
+	code := Run([]string{
+		"foundry", "import",
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--ao-mission-metadata", metadataPath,
+		"--out", outDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("foundry import failed: %s", out.String())
+	}
+	manifest, err := LoadJSON[FoundryImport](filepath.Join(outDir, "foundry-import.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var found bool
+	for _, source := range manifest.SourceArtifacts {
+		if source.Ref == filepath.ToSlash(metadataPath) && strings.HasPrefix(source.Digest, "sha256:") {
+			found = true
+		}
+	}
+	if !found {
+		t.Fatalf("AO Mission metadata source artifact missing: %#v", manifest.SourceArtifacts)
+	}
+	if manifest.ExecutesWork || manifest.ApprovesWork || manifest.SchedulesWork {
+		t.Fatalf("foundry import widened authority: %#v", manifest)
+	}
+}
+
 func TestFoundryImportWritesContinuationHandoffPrompt(t *testing.T) {
 	dir := t.TempDir()
 	outDir := filepath.Join(dir, "foundry-import")
