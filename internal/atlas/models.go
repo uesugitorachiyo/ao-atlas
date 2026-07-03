@@ -71,6 +71,21 @@ type AOMissionImport struct {
 	ApprovesWork    bool                      `json:"approves_work"`
 }
 
+type AOMissionWorkgraphMetadata struct {
+	ContractVersion string            `json:"contract_version"`
+	MissionID       string            `json:"mission_id"`
+	WorkgraphID     string            `json:"workgraph_id"`
+	TargetInstance  string            `json:"target_instance"`
+	CurrentRoute    string            `json:"current_route"`
+	NodeCounts      map[string]int    `json:"node_counts"`
+	SourceArtifacts map[string]string `json:"source_artifacts"`
+	NextAction      string            `json:"next_action"`
+	SafeToExecute   bool              `json:"safe_to_execute"`
+	SchedulesWork   bool              `json:"schedules_work"`
+	ExecutesWork    bool              `json:"executes_work"`
+	ApprovesWork    bool              `json:"approves_work"`
+}
+
 type AOMissionSourceArtifact struct {
 	Name   string `json:"name"`
 	Path   string `json:"path"`

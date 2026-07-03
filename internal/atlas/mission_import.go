@@ -58,6 +58,59 @@ func BuildAOMissionImport(recordPath, commandStatusPath, artifactManifestPath st
 	}, nil
 }
 
+func BuildAOMissionWorkgraphMetadata(importPath, workgraphPath string) (AOMissionWorkgraphMetadata, error) {
+	importRecord, err := LoadJSON[AOMissionImport](importPath)
+	if err != nil {
+		return AOMissionWorkgraphMetadata{}, err
+	}
+	if importRecord.ContractVersion != AOMissionImportContract {
+		return AOMissionWorkgraphMetadata{}, fmt.Errorf("invalid AO Mission import contract_version")
+	}
+	if importRecord.SafeToExecute || importRecord.SchedulesWork || importRecord.ExecutesWork || importRecord.ApprovesWork {
+		return AOMissionWorkgraphMetadata{}, fmt.Errorf("AO Mission import must not claim execution, scheduling, or approval authority")
+	}
+	workgraph, err := LoadJSON[Workgraph](workgraphPath)
+	if err != nil {
+		return AOMissionWorkgraphMetadata{}, err
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return AOMissionWorkgraphMetadata{}, err
+	}
+	importDigest, err := digestFile(importPath)
+	if err != nil {
+		return AOMissionWorkgraphMetadata{}, err
+	}
+	workgraphDigest, err := digestFile(workgraphPath)
+	if err != nil {
+		return AOMissionWorkgraphMetadata{}, err
+	}
+	return AOMissionWorkgraphMetadata{
+		ContractVersion: AOMissionWorkgraphMetadataContract,
+		MissionID:       importRecord.MissionID,
+		WorkgraphID:     workgraph.ID,
+		TargetInstance:  workgraph.TargetInstance,
+		CurrentRoute:    importRecord.CurrentRoute,
+		NodeCounts:      aoMissionWorkgraphNodeCounts(workgraph),
+		SourceArtifacts: map[string]string{
+			"ao_mission_import": importDigest,
+			"workgraph":         workgraphDigest,
+		},
+		NextAction:    "send the first safe Atlas workgraph node to AO Foundry import",
+		SafeToExecute: false,
+		SchedulesWork: false,
+		ExecutesWork:  false,
+		ApprovesWork:  false,
+	}, nil
+}
+
+func aoMissionWorkgraphNodeCounts(workgraph Workgraph) map[string]int {
+	counts := map[string]int{"total": len(workgraph.Nodes)}
+	for _, node := range workgraph.Nodes {
+		counts[node.Status]++
+	}
+	return counts
+}
+
 func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath string) ([]AOMissionSourceArtifact, error) {
 	inputs := []struct {
 		name string

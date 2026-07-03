@@ -871,6 +871,40 @@ func TestMissionImportBindsAOMissionArtifacts(t *testing.T) {
 	}
 }
 
+func TestMissionImportWorkgraphMetadataBindsImportAndWorkgraph(t *testing.T) {
+	dir := t.TempDir()
+	outPath := filepath.Join(dir, "ao-mission-workgraph-metadata.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "workgraph-metadata",
+		"--import", filepath.Join("..", "..", "examples", "valid", "ao-mission-import.json"),
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission workgraph metadata failed: %s", out.String())
+	}
+	metadata, err := LoadJSON[AOMissionWorkgraphMetadata](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if metadata.ContractVersion != AOMissionWorkgraphMetadataContract || metadata.MissionID != "mission-demo" {
+		t.Fatalf("bad metadata: %#v", metadata)
+	}
+	if metadata.WorkgraphID != "atlas-readiness-workgraph" || metadata.TargetInstance != "demo-stack" {
+		t.Fatalf("metadata did not bind workgraph: %#v", metadata)
+	}
+	if metadata.NodeCounts["ready"] != 1 || metadata.NodeCounts["completed"] != 1 || metadata.NodeCounts["total"] != 2 {
+		t.Fatalf("bad node counts: %#v", metadata.NodeCounts)
+	}
+	if metadata.SourceArtifacts["ao_mission_import"] == "" || metadata.SourceArtifacts["workgraph"] == "" {
+		t.Fatalf("missing source digests: %#v", metadata.SourceArtifacts)
+	}
+	if metadata.SafeToExecute || metadata.SchedulesWork || metadata.ExecutesWork || metadata.ApprovesWork {
+		t.Fatalf("metadata widened authority: %#v", metadata)
+	}
+}
+
 func TestMissionStatusReportsBlockedWhenRunLinkBlocked(t *testing.T) {
 	dir := t.TempDir()
 	outPath := filepath.Join(dir, "mission-status.json")

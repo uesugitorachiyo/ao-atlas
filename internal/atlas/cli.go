@@ -300,13 +300,16 @@ func runIntake(args []string, stdout io.Writer) error {
 
 func runMission(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission requires status or import")
+		return fmt.Errorf("mission requires status, import, or workgraph-metadata")
 	}
 	if args[0] == "import" {
 		return runMissionImport(args[1:], stdout)
 	}
+	if args[0] == "workgraph-metadata" {
+		return runMissionWorkgraphMetadata(args[1:], stdout)
+	}
 	if args[0] != "status" {
-		return fmt.Errorf("mission requires status or import")
+		return fmt.Errorf("mission requires status, import, or workgraph-metadata")
 	}
 	fs := flag.NewFlagSet("mission status", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -394,6 +397,45 @@ func runMissionImport(args []string, stdout io.Writer) error {
 		return printJSON(stdout, importRecord)
 	}
 	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nao_mission_import=%s\n", importRecord.Status, importRecord.MissionID, *outPath)
+	return nil
+}
+
+func runMissionWorkgraphMetadata(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission workgraph-metadata", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	importPath := fs.String("import", "", "AO Mission import path")
+	workgraphPath := fs.String("workgraph", "", "Atlas workgraph path")
+	outPath := fs.String("out", "", "output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*importPath) == "" || strings.TrimSpace(*workgraphPath) == "" {
+		return fmt.Errorf("--import and --workgraph are required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if *outPath != "" {
+		for _, input := range []string{*importPath, *workgraphPath} {
+			if samePath(input, *outPath) {
+				return fmt.Errorf("refusing to overwrite input artifact")
+			}
+		}
+	}
+	metadata, err := BuildAOMissionWorkgraphMetadata(*importPath, *workgraphPath)
+	if err != nil {
+		return err
+	}
+	if *outPath != "" {
+		if err := WriteJSON(*outPath, metadata); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, metadata)
+	}
+	fmt.Fprintf(stdout, "status=ready\nmission_id=%s\nworkgraph=%s\nao_mission_workgraph_metadata=%s\n", metadata.MissionID, metadata.WorkgraphID, *outPath)
 	return nil
 }
 
