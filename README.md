@@ -119,6 +119,7 @@ go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json
 go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json --json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out .atlas-local/mission-status.json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-needs-context.json --json
+go run ./cmd/atlas mission import --record examples/valid/ao-mission/mission-record.json --command-status examples/valid/ao-mission/command-status.json --artifact-manifest examples/valid/ao-mission/artifact-manifest.json --out .atlas-local/ao-mission-import.json
 go run ./cmd/atlas blueprint-request validate --request examples/valid/blueprint-request.json
 go run ./cmd/atlas blueprint import --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack --authorization examples/valid/blueprint-import-low-risk-code/build-authorization.json --instance examples/valid/stack-instance.json --mutation-classes examples/valid/mutation-classes.json --out .atlas-local/blueprint-import-low-risk-code
 go run ./cmd/atlas mutation-classes validate --model examples/valid/mutation-classes.json
@@ -152,6 +153,12 @@ scripts/atlas-foundry-roundtrip-smoke.sh
 If intake is underspecified, Atlas emits a Blueprint request instead of marking
 work ready. The request is a clarification artifact only; AO Blueprint still
 owns requirements interview and build authorization.
+
+`atlas mission import` binds AO Mission record, AO Command mission-status, and
+AO Mission artifact-manifest readbacks into `ao.atlas.ao-mission-import.v0.1`.
+It rejects any imported readback that claims scheduling, execution, approval, or
+repository mutation authority. The import is context for Atlas compilation only;
+it is not a Foundry execution grant.
 
 The committed
 `examples/valid/workgraph-repair-plan-blocked-node-demo.json` fixture shows the

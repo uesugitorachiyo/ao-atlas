@@ -806,6 +806,71 @@ func TestMissionStatusSummarizesIntakeWorkgraphAndRunLinks(t *testing.T) {
 	}
 }
 
+func TestMissionImportBindsAOMissionArtifacts(t *testing.T) {
+	dir := t.TempDir()
+	record := filepath.Join(dir, "mission-record.json")
+	status := filepath.Join(dir, "command-status.json")
+	manifest := filepath.Join(dir, "artifact-manifest.json")
+	outPath := filepath.Join(dir, "ao-mission-import.json")
+	if err := WriteJSON(record, map[string]any{
+		"schema":           "ao.mission.record.v0.1",
+		"mission_id":       "mission-demo",
+		"objective_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		"status":           "active",
+		"current_route":    "ao-atlas",
+		"created_at_utc":   "2026-07-03T00:00:00Z",
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(status, map[string]any{
+		"schema":               "ao.command.mission-status.v0.1",
+		"mission_id":           "mission-demo",
+		"status":               "active",
+		"current_route":        "ao-atlas",
+		"safe_to_execute":      false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(manifest, map[string]any{
+		"schema":          "ao.mission.artifact-manifest.v0.1",
+		"mission_id":      "mission-demo",
+		"artifact_refs":   []any{},
+		"manifest_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+		"signature":       "ao-mission-local-digest:sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+		"executes_work":   false,
+		"approves_work":   false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "import",
+		"--record", record,
+		"--command-status", status,
+		"--artifact-manifest", manifest,
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission import failed: %s", out.String())
+	}
+	importRecord, err := LoadJSON[AOMissionImport](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if importRecord.ContractVersion != AOMissionImportContract || importRecord.MissionID != "mission-demo" {
+		t.Fatalf("bad import record: %#v", importRecord)
+	}
+	if importRecord.ExecutesWork || importRecord.ApprovesWork || importRecord.SafeToExecute {
+		t.Fatalf("mission import widened authority: %#v", importRecord)
+	}
+	if len(importRecord.SourceArtifacts) != 3 || importRecord.SourceArtifacts[0].SHA256 == "" {
+		t.Fatalf("missing source digests: %#v", importRecord.SourceArtifacts)
+	}
+}
+
 func TestMissionStatusReportsBlockedWhenRunLinkBlocked(t *testing.T) {
 	dir := t.TempDir()
 	outPath := filepath.Join(dir, "mission-status.json")

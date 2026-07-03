@@ -19,6 +19,7 @@ const (
 	InstanceDoctorContract              = "ao.atlas.instance-doctor.v0.1"
 	IntakeContract                      = "ao.atlas.intake.v0.1"
 	MissionStatusContract               = "ao.atlas.mission-status.v0.1"
+	AOMissionImportContract             = "ao.atlas.ao-mission-import.v0.1"
 	WorkgraphContract                   = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract         = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                 = "ao.atlas.factory-task.v0.1"

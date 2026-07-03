@@ -1,0 +1,28 @@
+{
+  "contract_version": "ao.atlas.ao-mission-import.v0.1",
+  "mission_id": "mission-demo",
+  "status": "running",
+  "current_route": "ao-atlas",
+  "source_artifacts": [
+    {
+      "name": "mission_record",
+      "path": "examples/valid/ao-mission/mission-record.json",
+      "sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "name": "command_status",
+      "path": "examples/valid/ao-mission/command-status.json",
+      "sha256": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "name": "artifact_manifest",
+      "path": "examples/valid/ao-mission/artifact-manifest.json",
+      "sha256": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+    }
+  ],
+  "next_action": "compile AO Mission context into Atlas workgraph before Foundry import",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

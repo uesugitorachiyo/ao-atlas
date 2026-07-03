@@ -299,8 +299,14 @@ func runIntake(args []string, stdout io.Writer) error {
 }
 
 func runMission(args []string, stdout io.Writer) error {
-	if len(args) == 0 || args[0] != "status" {
-		return fmt.Errorf("mission requires status")
+	if len(args) == 0 {
+		return fmt.Errorf("mission requires status or import")
+	}
+	if args[0] == "import" {
+		return runMissionImport(args[1:], stdout)
+	}
+	if args[0] != "status" {
+		return fmt.Errorf("mission requires status or import")
 	}
 	fs := flag.NewFlagSet("mission status", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -348,6 +354,46 @@ func runMission(args []string, stdout io.Writer) error {
 		return printJSON(stdout, status)
 	}
 	fmt.Fprintf(stdout, "status=%s\nintake=%s\nworkgraph=%s\n", status.CompletionStatus, status.IntakeID, status.WorkgraphID)
+	return nil
+}
+
+func runMissionImport(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission import", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	recordPath := fs.String("record", "", "AO Mission record path")
+	commandStatusPath := fs.String("command-status", "", "AO Command mission status path")
+	artifactManifestPath := fs.String("artifact-manifest", "", "AO Mission artifact manifest path")
+	outPath := fs.String("out", "", "output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*recordPath) == "" || strings.TrimSpace(*commandStatusPath) == "" || strings.TrimSpace(*artifactManifestPath) == "" {
+		return fmt.Errorf("--record, --command-status, and --artifact-manifest are required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if *outPath != "" {
+		for _, input := range []string{*recordPath, *commandStatusPath, *artifactManifestPath} {
+			if samePath(input, *outPath) {
+				return fmt.Errorf("refusing to overwrite input artifact")
+			}
+		}
+	}
+	importRecord, err := BuildAOMissionImport(*recordPath, *commandStatusPath, *artifactManifestPath)
+	if err != nil {
+		return err
+	}
+	if *outPath != "" {
+		if err := WriteJSON(*outPath, importRecord); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, importRecord)
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nao_mission_import=%s\n", importRecord.Status, importRecord.MissionID, *outPath)
 	return nil
 }
 
