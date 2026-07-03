@@ -37,7 +37,7 @@ the rest of the AO stack:
 For the governed live mutation ladder, AO Atlas can decompose oversized
 objectives, compile bounded context packs, and emit Foundry import or run-link
 evidence. The highest proven live class is now
-`public_safe_external_execution_authority_readiness_boundary_map`:
+`public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts`:
 docs-only, test-only, low-risk code, multi-repo low-risk, governed complex
 mutation, the 26-node fully unsupervised complex first non-planning rehearsal,
 bounded RSI evidence rehearsal, bounded RSI self-improvement application,
@@ -45,9 +45,7 @@ conservative public readback evidence, bounded public evidence expansion,
 intermediate causal-review evidence, evidence-selection guidance, guided
 evidence application, governed public-safe broad_RSI campaign completion, and
 earlier sandbox-containment and sandbox-boundary evidence are prior evidence. The
-current class is proven only for public-safe external-execution authority
-readiness-boundary evidence across four exact-scope reversible dry-run attempts
-under sandbox containment gates. The next denied class is
+current class is proven only for public-safe bounded sandboxed external-execution authority rehearsal evidence across four exact-scope reversible allowlisted local-command attempts under sandbox containment gates. The next denied class is
 `unrestricted_self_modification`.
 
 Atlas also holds the 32-node bounded RSI evidence workgraph as evidence for
@@ -506,4 +504,28 @@ unrestricted self-modification, direct-main mutation, concurrent mutation,
 hidden instruction mutation, policy-changing autonomy, forbidden surface
 expansion, release/deploy/publish/upload/tag authority, dependency update
 authority, or unrestricted RSI. The next denied class remains
+`unrestricted_self_modification`.
+
+## Bounded Sandboxed External-Execution Authority Rehearsal Readback
+
+AO Atlas reads `public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts` from AO Foundry PR #233, commit
+`ee11d0e8093d357d803e6a5df8c36e5badf46dc6`, with tracked public evidence under
+`docs/evidence/bounded-sandboxed-external-execution-authority-rehearsal/` and
+final rollup
+`docs/evidence/bounded-sandboxed-external-execution-authority-rehearsal/final-rollup.json`.
+The approved public wording is exactly: "AO has public-safe bounded sandboxed external-execution authority rehearsal evidence across four exact-scope reversible allowlisted local-command attempts under sandbox containment gates; provider calls, credential use, sandbox containment bypass, unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, release/deploy/publish/upload/tag authority, dependency updates, direct-main mutation, concurrent mutation, and broad public claims remain denied."
+
+The run completed `720 / 720` nodes. Attempt Q covered allowlisted local command
+sandbox rehearsal quality (`0.79` -> `0.98`), Attempt R covered sandbox
+environment isolation evidence quality (`0.77` -> `0.97`), Attempt S covered
+provider and credential quarantine during sandboxed execution quality (`0.76` ->
+`0.96`), and Attempt T covered kill-switch rollback and retraction evidence
+quality (`0.75` -> `0.95`).
+
+Atlas treats this as evidence/readback only and does not grant execution authority. This does not prove provider-call authority, credential authority,
+sandbox containment bypass, unrestricted self-modification, hidden instruction
+mutation, policy-changing autonomy, forbidden surface expansion,
+release/deploy/publish/upload/tag authority, dependency updates, direct-main
+mutation, concurrent mutation, broad public claims, or unrestricted RSI. The
+highest proven live class is `public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts`; the next denied class is
 `unrestricted_self_modification`.
