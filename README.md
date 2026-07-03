@@ -37,7 +37,7 @@ the rest of the AO stack:
 For the governed live mutation ladder, AO Atlas can decompose oversized
 objectives, compile bounded context packs, and emit Foundry import or run-link
 evidence. The highest proven live class is now
-`public_safe_bounded_sandboxed_external_execution_authority_rehearsal_four_attempts`:
+`public_safe_unrestricted_self_modification_authority_request_dry_run_four_attempts`:
 docs-only, test-only, low-risk code, multi-repo low-risk, governed complex
 mutation, the 26-node fully unsupervised complex first non-planning rehearsal,
 bounded RSI evidence rehearsal, bounded RSI self-improvement application,
@@ -45,7 +45,10 @@ conservative public readback evidence, bounded public evidence expansion,
 intermediate causal-review evidence, evidence-selection guidance, guided
 evidence application, governed public-safe broad_RSI campaign completion, and
 earlier sandbox-containment and sandbox-boundary evidence are prior evidence. The
-current class is proven only for public-safe bounded sandboxed external-execution authority rehearsal evidence across four exact-scope reversible allowlisted local-command attempts under sandbox containment gates. The next denied class is
+current class is proven only for public-safe unrestricted self-modification
+authority-request dry-run evidence across four exact-scope reversible packet,
+denial-ticket, hold, and no-execution readback attempts under contained
+external-command self-change gates. The next denied class is
 `unrestricted_self_modification`.
 
 Atlas also holds the 32-node bounded RSI evidence workgraph as evidence for
@@ -592,6 +595,25 @@ as the current highest proven live class from AO Foundry PR #236, commit
 and final rollup
 `docs/evidence/unrestricted-self-modification-authority-escalation-criteria/final-rollup.json`.
 The approved public wording is exactly: "AO has public-safe unrestricted self-modification authority-escalation criteria evidence across four exact-scope reversible readback and negative-control attempts under contained external-command self-change gates; unrestricted self-modification, sandbox containment bypass authority, real sandbox escape, provider calls, credential use, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, release/deploy/publish/upload/tag authority, dependency updates, direct-main mutation, concurrent mutation, and broad public claims remain denied."
+
+Atlas treats this as evidence/readback only. It does not execute, approve, or
+grant `unrestricted_self_modification`, sandbox containment bypass authority,
+real sandbox escape, provider calls, credential use, hidden instruction
+mutation, policy-changing autonomy, forbidden surface expansion,
+release/deploy/publish/upload/tag authority, dependency updates, direct-main
+mutation, concurrent mutation, broad public claims, or unrestricted RSI. The
+next denied class remains `unrestricted_self_modification`.
+
+## Authority-Request Dry-Run Readback
+
+AO Atlas reads
+`public_safe_unrestricted_self_modification_authority_request_dry_run_four_attempts`
+as the current highest proven live class from AO Foundry PR #237, commit
+`1eda6a0c0fc6a97580e7ef52a94cfae85f41d5f2`, with tracked public evidence under
+`docs/evidence/unrestricted-self-modification-authority-request-dry-run/` and
+final rollup
+`docs/evidence/unrestricted-self-modification-authority-request-dry-run/final-rollup.json`.
+The approved public wording is exactly: "AO has public-safe unrestricted self-modification authority-request dry-run evidence across four exact-scope reversible packet, denial-ticket, hold, and no-execution readback attempts under contained external-command self-change gates; unrestricted self-modification, sandbox containment bypass authority, real sandbox escape, provider calls, credential use, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, release/deploy/publish/upload/tag authority, dependency updates, direct-main mutation, concurrent mutation, and broad public claims remain denied."
 
 Atlas treats this as evidence/readback only. It does not execute, approve, or
 grant `unrestricted_self_modification`, sandbox containment bypass authority,
