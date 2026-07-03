@@ -557,3 +557,27 @@ mutation, concurrent mutation, broad public claims, or unrestricted RSI. The
 highest proven live class is
 `public_safe_contained_external_command_self_change_application_four_attempts`;
 the next denied class is `unrestricted_self_modification`.
+
+## Sandbox Bypass Resistance Evidence Readback
+
+AO Atlas reads `public_safe_sandbox_bypass_resistance_evidence_four_attempts`
+from AO Foundry PR #235, commit
+`322bd8b2ce3b6f8134196d33b0f605e0fe68f938`, with tracked public evidence under
+`docs/evidence/unrestricted-self-modification-sandbox-bypass-resistance/` and
+final rollup
+`docs/evidence/unrestricted-self-modification-sandbox-bypass-resistance/final-rollup.json`.
+The approved public wording is exactly: "AO has public-safe sandbox containment bypass resistance evidence across four exact-scope reversible negative-control attempts under contained external-command self-change gates; unrestricted self-modification, sandbox containment bypass authority, provider calls, credential use, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, release/deploy/publish/upload/tag authority, dependency updates, direct-main mutation, concurrent mutation, and broad public claims remain denied."
+
+The run completed `9000 / 9000` nodes across sandbox bypass negative-control
+readback quality (`0.77` -> `0.97`), allowlist-denial fixture quality (`0.75`
+-> `0.96`), containment-boundary rollback trace quality (`0.74` -> `0.95`),
+and stale-language and public-claim bypass denial quality (`0.73` -> `0.94`).
+
+Atlas treats this as evidence/readback only. It does not execute, approve, or
+grant sandbox containment bypass authority, real sandbox escape, provider calls,
+credential use, direct-main mutation, concurrent mutation, hidden instruction
+mutation, policy-changing autonomy, forbidden surface expansion,
+release/deploy/publish/upload/tag authority, dependency updates, broad public
+claims, unrestricted RSI, or unrestricted self-modification. The highest proven
+live class is `public_safe_sandbox_bypass_resistance_evidence_four_attempts`;
+the next denied class is `unrestricted_self_modification`.
