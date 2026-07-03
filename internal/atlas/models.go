@@ -58,6 +58,25 @@ type MissionStatus struct {
 	ExecutesWork          bool                   `json:"executes_work"`
 }
 
+type AOMissionImport struct {
+	ContractVersion string                    `json:"contract_version"`
+	MissionID       string                    `json:"mission_id"`
+	Status          string                    `json:"status"`
+	CurrentRoute    string                    `json:"current_route"`
+	SourceArtifacts []AOMissionSourceArtifact `json:"source_artifacts"`
+	NextAction      string                    `json:"next_action"`
+	SafeToExecute   bool                      `json:"safe_to_execute"`
+	SchedulesWork   bool                      `json:"schedules_work"`
+	ExecutesWork    bool                      `json:"executes_work"`
+	ApprovesWork    bool                      `json:"approves_work"`
+}
+
+type AOMissionSourceArtifact struct {
+	Name   string `json:"name"`
+	Path   string `json:"path"`
+	SHA256 string `json:"sha256"`
+}
+
 type AuthorityLadderStatus struct {
 	CurrentClass        string            `json:"current_class"`
 	NextClass           string            `json:"next_class"`

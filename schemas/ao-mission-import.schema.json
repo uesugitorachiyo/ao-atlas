@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.ao-mission-import.v0.1",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "mission_id",
+    "status",
+    "current_route",
+    "source_artifacts",
+    "next_action",
+    "safe_to_execute",
+    "schedules_work",
+    "executes_work",
+    "approves_work"
+  ],
+  "properties": {
+    "contract_version": { "const": "ao.atlas.ao-mission-import.v0.1" },
+    "mission_id": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "minLength": 1 },
+    "current_route": { "type": "string", "minLength": 1 },
+    "source_artifacts": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["name", "path", "sha256"],
+        "properties": {
+          "name": { "enum": ["mission_record", "command_status", "artifact_manifest"] },
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "next_action": { "type": "string", "minLength": 1 },
+    "safe_to_execute": { "const": false },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false }
+  },
+  "additionalProperties": false
+}

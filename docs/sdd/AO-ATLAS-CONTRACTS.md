@@ -18,6 +18,7 @@ v0.1 contract names:
 - `ao.atlas.foundry-continuation-handoff.v0.1`
 - `ao.atlas.run-link.v0.1`
 - `ao.atlas.mutation-classes.v0.1`
+- `ao.atlas.ao-mission-import.v0.1`
 
 All contracts are JSON. Validation requires explicit `contract_version` values,
 stable identifiers, non-empty required fields, and public-safe paths.
@@ -33,6 +34,11 @@ publish, call providers, or mutate sibling repositories.
 state, missing context packs, missing Foundry handoffs, completion status, and
 next readback actions. It is status readback only and does not schedule or
 execute work.
+
+`ao.atlas.ao-mission-import.v0.1` binds AO Mission record, AO Command
+mission-status, and AO Mission artifact-manifest readbacks before Atlas compiles
+mission context into workgraphs. It carries source artifact digests and rejects
+any scheduling, execution, approval, or repository-mutation authority claim.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,

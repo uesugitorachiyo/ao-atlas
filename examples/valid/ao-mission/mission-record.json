@@ -1,0 +1,15 @@
+{
+  "schema": "ao.mission.record.v0.1",
+  "mission_id": "mission-demo",
+  "objective": "Compile mission context into Atlas workgraph",
+  "objective_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "status": "running",
+  "created_at_utc": "2026-07-03T00:00:00Z",
+  "updated_at_utc": "2026-07-03T00:01:00Z",
+  "current_route": "ao-atlas",
+  "current_phase": "atlas_import_required",
+  "blockers": [],
+  "exact_next_action": "compile through AO Atlas before AO Foundry",
+  "artifact_refs": [],
+  "steps": []
+}

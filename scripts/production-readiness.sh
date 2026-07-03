@@ -59,6 +59,7 @@ required_files=(
   schemas/foundry-import.schema.json
   schemas/foundry-continuation-handoff.schema.json
   schemas/run-link.schema.json
+  schemas/ao-mission-import.schema.json
 )
 for file in "${required_files[@]}"; do
   test -s "$file"
@@ -78,6 +79,12 @@ test -s "$OUT/instance-doctor.json"
 "$BIN" mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out "$OUT/mission-status.json" >/dev/null
 test -s "$OUT/mission-status.json"
 "$BIN" mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-needs-context.json --json >/dev/null
+"$BIN" mission import \
+  --record examples/valid/ao-mission/mission-record.json \
+  --command-status examples/valid/ao-mission/command-status.json \
+  --artifact-manifest examples/valid/ao-mission/artifact-manifest.json \
+  --out "$OUT/ao-mission-import.json" >/dev/null
+test -s "$OUT/ao-mission-import.json"
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" blueprint import \
   --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack \
