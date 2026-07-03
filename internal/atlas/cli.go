@@ -366,6 +366,7 @@ func runMissionImport(args []string, stdout io.Writer) error {
 	recordPath := fs.String("record", "", "AO Mission record path")
 	commandStatusPath := fs.String("command-status", "", "AO Command mission status path")
 	artifactManifestPath := fs.String("artifact-manifest", "", "AO Mission artifact manifest path")
+	routeHistoryPath := fs.String("route-history", "", "optional AO Mission route history path")
 	outPath := fs.String("out", "", "output path")
 	jsonOut := fs.Bool("json", false, "json output")
 	if err := fs.Parse(args); err != nil {
@@ -378,13 +379,13 @@ func runMissionImport(args []string, stdout io.Writer) error {
 		return fmt.Errorf("--out or --json is required")
 	}
 	if *outPath != "" {
-		for _, input := range []string{*recordPath, *commandStatusPath, *artifactManifestPath} {
+		for _, input := range []string{*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath} {
 			if samePath(input, *outPath) {
 				return fmt.Errorf("refusing to overwrite input artifact")
 			}
 		}
 	}
-	importRecord, err := BuildAOMissionImport(*recordPath, *commandStatusPath, *artifactManifestPath)
+	importRecord, err := BuildAOMissionImportWithRouteHistory(*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath)
 	if err != nil {
 		return err
 	}

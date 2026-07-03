@@ -1,0 +1,15 @@
+[
+  {
+    "schema": "ao.mission.route-decision.v0.1",
+    "mission_id": "mission-demo",
+    "route": "ao-atlas",
+    "reason": "Atlas compiles mission context before Foundry import",
+    "safe_to_request": true,
+    "safe_to_execute": false,
+    "executes_work": false,
+    "approves_work": false,
+    "mutates_repositories": false,
+    "exact_next_action": "AO Atlas compiles Mission provenance and workgraph context",
+    "generated_at_utc": "2026-07-03T00:00:00Z"
+  }
+]

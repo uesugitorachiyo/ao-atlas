@@ -8,6 +8,10 @@ import (
 )
 
 func BuildAOMissionImport(recordPath, commandStatusPath, artifactManifestPath string) (AOMissionImport, error) {
+	return BuildAOMissionImportWithRouteHistory(recordPath, commandStatusPath, artifactManifestPath, "")
+}
+
+func BuildAOMissionImportWithRouteHistory(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath string) (AOMissionImport, error) {
 	var record map[string]any
 	if err := readJSONIfPossible(recordPath, &record); err != nil {
 		return AOMissionImport{}, err
@@ -43,7 +47,12 @@ func BuildAOMissionImport(recordPath, commandStatusPath, artifactManifestPath st
 	if err := validateAOMissionManifestRefs(manifest, artifactManifestPath); err != nil {
 		return AOMissionImport{}, err
 	}
-	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath)
+	if strings.TrimSpace(routeHistoryPath) != "" {
+		if err := validateAOMissionRouteHistory(routeHistoryPath, missionID); err != nil {
+			return AOMissionImport{}, err
+		}
+	}
+	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath)
 	if err != nil {
 		return AOMissionImport{}, err
 	}
@@ -146,7 +155,7 @@ func aoMissionWorkgraphNodeCounts(workgraph Workgraph) map[string]int {
 	return counts
 }
 
-func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath string) ([]AOMissionSourceArtifact, error) {
+func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath string) ([]AOMissionSourceArtifact, error) {
 	inputs := []struct {
 		name string
 		path string
@@ -154,6 +163,12 @@ func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPat
 		{name: "mission_record", path: recordPath},
 		{name: "command_status", path: commandStatusPath},
 		{name: "artifact_manifest", path: artifactManifestPath},
+	}
+	if strings.TrimSpace(routeHistoryPath) != "" {
+		inputs = append(inputs, struct {
+			name string
+			path string
+		}{name: "route_history", path: routeHistoryPath})
 	}
 	sources := make([]AOMissionSourceArtifact, 0, len(inputs))
 	for _, input := range inputs {
@@ -164,6 +179,30 @@ func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPat
 		sources = append(sources, AOMissionSourceArtifact{Name: input.name, Path: filepath.ToSlash(input.path), SHA256: digest})
 	}
 	return sources, nil
+}
+
+func validateAOMissionRouteHistory(path, missionID string) error {
+	var history []map[string]any
+	if err := readJSONIfPossible(path, &history); err != nil {
+		return err
+	}
+	if len(history) == 0 {
+		return fmt.Errorf("route history requires at least one item")
+	}
+	for i, item := range history {
+		if schema, _ := item["schema"].(string); schema != "ao.mission.route-decision.v0.1" {
+			return fmt.Errorf("route history item %d schema must be ao.mission.route-decision.v0.1", i)
+		}
+		if got, _ := item["mission_id"].(string); got != missionID {
+			return fmt.Errorf("route history item %d mission_id mismatch", i)
+		}
+		for _, field := range []string{"safe_to_execute", "executes_work", "approves_work", "mutates_repositories"} {
+			if value, ok := item[field].(bool); ok && value {
+				return fmt.Errorf("route history must not claim execution, approval, or repository mutation authority")
+			}
+		}
+	}
+	return nil
 }
 
 func validateAOMissionManifestRefs(manifest map[string]any, manifestPath string) error {
