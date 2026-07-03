@@ -627,6 +627,7 @@ func runFoundry(args []string, stdout io.Writer) error {
 		instancePath := fs.String("instance", "", "stack instance path")
 		nodeID := fs.String("node", "", "optional workgraph node id")
 		out := fs.String("out", "", "output directory")
+		aoMissionMetadataPath := fs.String("ao-mission-metadata", "", "optional AO Mission workgraph metadata source artifact")
 		blueprintPackPath := fs.String("blueprint-pack", "", "optional Blueprint pack path for Foundry continuation handoff")
 		atlasImportPath := fs.String("atlas-import", "", "optional Atlas import path for Foundry continuation handoff")
 		missionContinuationPath := fs.String("mission-continuation", "", "optional mission continuation evidence path for Foundry continuation handoff")
@@ -640,7 +641,7 @@ func runFoundry(args []string, stdout io.Writer) error {
 		if *out == "" && !*jsonOut {
 			return fmt.Errorf("--out or --json is required")
 		}
-		if *out != "" && (samePath(*path, *out) || samePath(*instancePath, *out)) {
+		if *out != "" && (samePath(*path, *out) || samePath(*instancePath, *out) || samePath(*aoMissionMetadataPath, *out)) {
 			return fmt.Errorf("refusing to overwrite input artifact")
 		}
 		workgraph, err := LoadJSON[Workgraph](*path)
@@ -669,11 +670,20 @@ func runFoundry(args []string, stdout io.Writer) error {
 		if _, err := BuildInstanceDoctorReport(instance, registry); err != nil {
 			return err
 		}
+		if strings.TrimSpace(*aoMissionMetadataPath) != "" {
+			metadata, err := LoadJSON[AOMissionWorkgraphMetadata](*aoMissionMetadataPath)
+			if err != nil {
+				return err
+			}
+			if err := ValidateAOMissionWorkgraphMetadata(metadata, workgraph); err != nil {
+				return err
+			}
+		}
 		selected := []string{}
 		if strings.TrimSpace(*nodeID) != "" {
 			selected = append(selected, strings.TrimSpace(*nodeID))
 		}
-		sourceArtifacts, err := sourceArtifactsForPaths(*path, *instancePath)
+		sourceArtifacts, err := sourceArtifactsForPaths(*path, *instancePath, *aoMissionMetadataPath)
 		if err != nil {
 			return err
 		}
