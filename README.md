@@ -37,7 +37,7 @@ the rest of the AO stack:
 For the governed live mutation ladder, AO Atlas can decompose oversized
 objectives, compile bounded context packs, and emit Foundry import or run-link
 evidence. The highest proven live class is now
-`public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts`:
+`public_safe_external_execution_authority_readiness_boundary_map`:
 docs-only, test-only, low-risk code, multi-repo low-risk, governed complex
 mutation, the 26-node fully unsupervised complex first non-planning rehearsal,
 bounded RSI evidence rehearsal, bounded RSI self-improvement application,
@@ -45,9 +45,9 @@ conservative public readback evidence, bounded public evidence expansion,
 intermediate causal-review evidence, evidence-selection guidance, guided
 evidence application, governed public-safe broad_RSI campaign completion, and
 earlier sandbox-containment and sandbox-boundary evidence are prior evidence. The
-current class is proven only for public-safe external-execution-authority
-boundary fixture evidence across four exact-scope reversible attempts under
-sandbox containment gates. The next denied class is
+current class is proven only for public-safe external-execution authority
+readiness-boundary evidence across four exact-scope reversible dry-run attempts
+under sandbox containment gates. The next denied class is
 `unrestricted_self_modification`.
 
 Atlas also holds the 32-node bounded RSI evidence workgraph as evidence for
@@ -481,6 +481,29 @@ Atlas treats this as evidence/readback only: it does not grant execution authori
 
 ## Sandboxed External-Execution Dry-Run Packet Readback
 
-AO Atlas reads `public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts` as the current highest proven live class from AO Foundry PR #231, commit `18a609f430a9a7e91fc0e62aea4b5789144c9fec`, with tracked public evidence under `docs/evidence/sandboxed-external-execution-dry-run-packet/` and final rollup `docs/evidence/sandboxed-external-execution-dry-run-packet/final-rollup.json`. The approved public wording is exactly: "AO has public-safe sandboxed external-execution dry-run authority packet evidence across four exact-scope reversible attempts under sandbox containment gates; actual external execution authority, provider calls, credential use, sandbox containment bypass, unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied."
+AO Atlas reads `public_safe_sandboxed_external_execution_dry_run_packet_evidence_four_attempts` as a prior proven live class from AO Foundry PR #231, commit `18a609f430a9a7e91fc0e62aea4b5789144c9fec`, with tracked public evidence under `docs/evidence/sandboxed-external-execution-dry-run-packet/` and final rollup `docs/evidence/sandboxed-external-execution-dry-run-packet/final-rollup.json`. The approved public wording is exactly: "AO has public-safe sandboxed external-execution dry-run authority packet evidence across four exact-scope reversible attempts under sandbox containment gates; actual external execution authority, provider calls, credential use, sandbox containment bypass, unrestricted self-modification, hidden instruction mutation, policy-changing autonomy, and forbidden surface expansion remain denied."
 
 Atlas treats this as evidence/readback only: it does not grant actual external execution authority, provider calls, credential use, sandbox containment bypass, unrestricted self-modification, direct-main mutation, concurrent mutation, hidden instruction mutation, policy-changing autonomy, forbidden surface expansion, release/deploy/publish/upload/tag authority, dependency update authority, or unrestricted RSI. The next denied class remains `unrestricted_self_modification`.
+
+## External-Execution Authority Readiness Boundary Readback
+
+AO Atlas reads `public_safe_external_execution_authority_readiness_boundary_map`
+as the current highest proven live class from AO Foundry PR #232, commit
+`b6f409946775bc19a04f5ca25a9aea91b9631707`, with tracked public evidence under
+`docs/evidence/external-execution-authority-readiness-boundary/` and final
+rollup
+`docs/evidence/external-execution-authority-readiness-boundary/final-rollup.json`.
+The approved public wording is exactly: "AO has public-safe external-execution
+authority readiness-boundary evidence across four exact-scope reversible dry-run
+attempts under sandbox containment gates; actual external execution authority,
+provider calls, credential use, sandbox containment bypass, unrestricted
+self-modification, hidden instruction mutation, policy-changing autonomy, and
+forbidden surface expansion remain denied."
+
+Atlas treats this as evidence/readback only: it does not grant actual external
+execution authority, provider calls, credential use, sandbox containment bypass,
+unrestricted self-modification, direct-main mutation, concurrent mutation,
+hidden instruction mutation, policy-changing autonomy, forbidden surface
+expansion, release/deploy/publish/upload/tag authority, dependency update
+authority, or unrestricted RSI. The next denied class remains
+`unrestricted_self_modification`.
