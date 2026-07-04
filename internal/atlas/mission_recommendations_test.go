@@ -103,6 +103,10 @@ func TestRecommendationReadbackSchemaRequiresFoundryDeniedTerminalExamples(t *te
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "foundry_denied_terminal_examples")
 }
 
+func TestRecommendationReadbackSchemaRequiresExactNextActionReadback(t *testing.T) {
+	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "exact_next_action_readback")
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -426,6 +430,15 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 		t.Fatalf("readback must deny final response with exact next node: %#v", readback)
 	}
 	rawReadback := mustLoadJSON[map[string]any](t, filepath.Join(outDir, "recommendation-readback.json"))
+	exactNextActionReadback, ok := rawReadback["exact_next_action_readback"].(map[string]any)
+	if !ok ||
+		exactNextActionReadback["action"] != readback.ExactNextAction ||
+		exactNextActionReadback["next_executable_node"] != readback.FirstExecutableNode ||
+		exactNextActionReadback["return_gate_status"] != readback.ReturnGateStatus ||
+		exactNextActionReadback["final_response_allowed"] != false ||
+		exactNextActionReadback["source"] != "recommendation_readback" {
+		t.Fatalf("readback missing structured exact next action binding: %#v", rawReadback["exact_next_action_readback"])
+	}
 	if rawReadback["final_response_denial_gate"] != "deny_ready_nodes_or_exact_next_action_remain" {
 		t.Fatalf("readback missing final response denial gate: %#v", rawReadback["final_response_denial_gate"])
 	}

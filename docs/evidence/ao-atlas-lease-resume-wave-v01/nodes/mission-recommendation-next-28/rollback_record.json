@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-28",
+  "rollback": [
+    "Revert exact_next_action_readback fields and validation in internal/atlas.",
+    "Revert recommendation-readback schema additions for exact_next_action_readback.",
+    "Revert production-readiness jq checks for exact next action binding.",
+    "Remove node 28 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-28.",
+    "Regenerate root readbacks from node 27 workgraph if this node is reverted before merge."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-28",
+  "field": "exact_next_action_readback",
+  "source": "recommendation_readback",
+  "expected_status": "continuation_required",
+  "completed_nodes_after": 28,
+  "ready_nodes_after": 12,
+  "checkpoint_count_after": 28,
+  "exact_next_action_after": "Emit Foundry import for mission-recommendation-next-29 and execute exactly one active node.",
+  "next_executable_node_after": "mission-recommendation-next-29",
+  "return_gate_status_after": "blocked_ready_nodes_remain",
+  "final_response_allowed_after": false,
+  "summary": "Node 28 binds exact_next_action to the next executable node, return gate, and final-response state so continuation evidence is structured rather than string-only."
+}

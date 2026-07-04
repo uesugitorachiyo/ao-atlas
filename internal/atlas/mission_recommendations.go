@@ -697,6 +697,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		FinalResponseDenialGate:       recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
 		FinalResponseReason:           finalReason,
 		ExactNextAction:               exactNextAction,
+		ExactNextActionReadback:       buildExactNextActionReadback(exactNextAction, firstExecutable, returnGateStatus, finalAllowed),
 		NodeEvidence:                  recommendationNodeEvidence(workgraph),
 		FeatureDepthRecommendations:   featureDepthRecommendationReadback(wave.Tasks, 10),
 		SafetyBoundaries: map[string]bool{
@@ -718,6 +719,21 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		return AtlasRecommendationReadback{}, err
 	}
 	return readback, nil
+}
+
+func buildExactNextActionReadback(action, nextExecutableNode, returnGateStatus string, finalResponseAllowed bool) AtlasExactNextActionReadback {
+	status := "continuation_required"
+	if finalResponseAllowed {
+		status = "ready_for_final_response"
+	}
+	return AtlasExactNextActionReadback{
+		Status:               status,
+		Action:               action,
+		NextExecutableNode:   nextExecutableNode,
+		ReturnGateStatus:     returnGateStatus,
+		FinalResponseAllowed: finalResponseAllowed,
+		Source:               "recommendation_readback",
+	}
 }
 
 func foundryTerminalStatusExamples() []AtlasFoundryTerminalStatusExample {
@@ -981,6 +997,9 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	requireField(&errs, "final_response_denial_gate", readback.FinalResponseDenialGate)
 	requireField(&errs, "final_response_reason", readback.FinalResponseReason)
 	requireField(&errs, "exact_next_action", readback.ExactNextAction)
+	if err := validateExactNextActionReadback(readback); err != nil {
+		errs = append(errs, err.Error())
+	}
 	if readback.FinalResponseAllowed {
 		if readback.FinalResponseDenialGate != "allow_final_response" {
 			errs = append(errs, "final_response_allowed requires final_response_denial_gate=allow_final_response")
@@ -1030,6 +1049,36 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 		requireList(&errs, prefix+".verification_commands", evidence.VerificationCommands)
 	}
 	return joinErrors(errs)
+}
+
+func validateExactNextActionReadback(readback AtlasRecommendationReadback) error {
+	action := readback.ExactNextActionReadback
+	if strings.TrimSpace(action.Status) == "" {
+		return fmt.Errorf("exact_next_action_readback.status is required")
+	}
+	if action.Action != readback.ExactNextAction {
+		return fmt.Errorf("exact_next_action_readback.action must match exact_next_action")
+	}
+	if action.NextExecutableNode != readback.FirstExecutableNode {
+		return fmt.Errorf("exact_next_action_readback.next_executable_node must match first_executable_node")
+	}
+	if action.ReturnGateStatus != readback.ReturnGateStatus {
+		return fmt.Errorf("exact_next_action_readback.return_gate_status must match return_gate_status")
+	}
+	if action.FinalResponseAllowed != readback.FinalResponseAllowed {
+		return fmt.Errorf("exact_next_action_readback.final_response_allowed must match final_response_allowed")
+	}
+	if action.Source != "recommendation_readback" {
+		return fmt.Errorf("exact_next_action_readback.source must be recommendation_readback")
+	}
+	if readback.FinalResponseAllowed {
+		if action.Status != "ready_for_final_response" {
+			return fmt.Errorf("exact_next_action_readback.status must be ready_for_final_response")
+		}
+	} else if action.Status != "continuation_required" {
+		return fmt.Errorf("exact_next_action_readback.status must be continuation_required")
+	}
+	return nil
 }
 
 func validateFoundryTerminalStatusExamples(examples []AtlasFoundryTerminalStatusExample) error {

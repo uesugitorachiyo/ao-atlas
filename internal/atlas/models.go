@@ -236,6 +236,7 @@ type AtlasRecommendationReadback struct {
 	FinalResponseDenialGate       string                              `json:"final_response_denial_gate"`
 	FinalResponseReason           string                              `json:"final_response_reason"`
 	ExactNextAction               string                              `json:"exact_next_action"`
+	ExactNextActionReadback       AtlasExactNextActionReadback        `json:"exact_next_action_readback"`
 	NodeEvidence                  []AtlasRecommendationNodeEvidence   `json:"node_evidence"`
 	FeatureDepthRecommendations   []string                            `json:"feature_depth_recommendations"`
 	SafetyBoundaries              map[string]bool                     `json:"safety_boundaries"`
@@ -261,6 +262,15 @@ type AtlasFoundryDeniedTerminalExample struct {
 	RequiredReadback             string `json:"required_readback"`
 	RSIRemainsDenied             bool   `json:"rsi_remains_denied"`
 	AuthorityAdvanceClaimed      bool   `json:"authority_advance_claimed"`
+}
+
+type AtlasExactNextActionReadback struct {
+	Status               string `json:"status"`
+	Action               string `json:"action"`
+	NextExecutableNode   string `json:"next_executable_node"`
+	ReturnGateStatus     string `json:"return_gate_status"`
+	FinalResponseAllowed bool   `json:"final_response_allowed"`
+	Source               string `json:"source"`
 }
 
 type AtlasRecommendationNodeEvidence struct {
