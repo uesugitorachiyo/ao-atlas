@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-34",
+  "candidate": "atlas-recommendation-blueprint-skip-docs",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "The long-run runbook said Blueprint should be used only for missing requirements or authorization, but it did not explain why ready Atlas-owned tasks should skip Blueprint and route directly through Atlas and Foundry."
+}

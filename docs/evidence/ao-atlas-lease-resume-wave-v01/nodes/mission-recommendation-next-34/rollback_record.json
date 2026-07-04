@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-34",
+  "rollback": [
+    "Revert Blueprint skip wording in docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md.",
+    "Revert Blueprint skip wording in README.md.",
+    "Revert production-readiness grep for ready Atlas-owned tasks skipping Blueprint.",
+    "Remove node 34 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-34.",
+    "Regenerate root readbacks from node 33 workgraph if this node is reverted before merge."
+  ]
+}

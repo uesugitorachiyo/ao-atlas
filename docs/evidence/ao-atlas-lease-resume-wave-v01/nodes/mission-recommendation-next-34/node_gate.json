@@ -1,0 +1,9 @@
+{
+  "status": "cleared",
+  "node_id": "mission-recommendation-next-34",
+  "task_id": "mission-recommendation-next-34-task",
+  "gate": "single executable node selected",
+  "active_node_count": 1,
+  "workgraph_before": "nodes/mission-recommendation-next-33/workgraph-after.json",
+  "summary": "Node 34 was selected as the only executable recommendation node after node 33 completion."
+}

@@ -12,6 +12,15 @@ Use AO Foundry for one bounded implementation node at a time. Atlas may emit a f
 
 Use AO Blueprint only when new requirements, authorization, candidate rules, or scope approval are missing. Do not route ready Atlas-owned tasks through Blueprint just to add ceremony.
 
+Ready Atlas-owned tasks skip Blueprint because the recommendation workgraph
+already contains the bounded task, owner, write scope, safety limits, required
+gates, and digest-bound source evidence. Sending that node back to Blueprint
+would re-ask for requirements that are already present and can stale the route
+history. Atlas should emit the Foundry import for the single executable node,
+Foundry should execute that bounded implementation node, and Blueprint should be
+re-entered only if the node lacks requirements, authorization, candidate rules,
+or scope approval.
+
 Use AO Command for compact readback: completed nodes, ready nodes, blockers, exact next action, and whether final response is allowed.
 
 Use AO Promoter only for a promotion or no-promotion verdict. A recommendation wave does not promote mutation authority by itself.
