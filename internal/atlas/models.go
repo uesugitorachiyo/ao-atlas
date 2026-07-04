@@ -186,6 +186,7 @@ type AtlasRecommendationTask struct {
 	NodeID            string   `json:"node_id"`
 	TaskID            string   `json:"task_id"`
 	MutationClass     string   `json:"mutation_class"`
+	SourceTaskDigest  string   `json:"source_task_digest"`
 	TargetFactoryRepo string   `json:"target_factory_repo"`
 	FactoryFolder     string   `json:"factory_folder"`
 	RequiredGates     []string `json:"required_gates"`

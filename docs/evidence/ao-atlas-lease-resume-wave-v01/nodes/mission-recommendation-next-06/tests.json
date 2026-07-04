@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-06",
+  "red_phase": "Focused recommendation import test failed before implementation because generated tasks lacked source_task_digest.",
+  "green_phase": "Focused recommendation import test passed after generated tasks carried source_task_digest and workgraph nodes required source_task_digest evidence.",
+  "tests": [
+    "TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph",
+    "production-readiness recommendation wave source_task_digest check",
+    "production-readiness recommendation workgraph source_task_digest required evidence check"
+  ]
+}
