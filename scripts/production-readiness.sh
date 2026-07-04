@@ -360,10 +360,11 @@ if "$BIN" blueprint-request validate --request examples/invalid/blueprint-reques
   echo "invalid blueprint request was accepted" >&2
   exit 1
 fi
-if "$BIN" mission recommendations import --recommendations examples/invalid/feature-depth-recommendations-shallow.json --target-instance demo-stack --min-tasks 20 --node-budget 20 --estimated-minutes 90 --out "$OUT/mission-recommendations-shallow" >/dev/null 2>&1; then
+if "$BIN" mission recommendations import --recommendations examples/invalid/feature-depth-recommendations-shallow.json --target-instance demo-stack --min-tasks 20 --node-budget 20 --estimated-minutes 90 --out "$OUT/mission-recommendations-shallow" >"$OUT/mission-recommendations-shallow.out" 2>&1; then
   echo "shallow Feature Depth recommendations were accepted" >&2
   exit 1
 fi
+grep -q "at least 20 tasks" "$OUT/mission-recommendations-shallow.out"
 if "$BIN" mission recommendations import --recommendations examples/invalid/feature-depth-recommendations-unsafe.json --target-instance demo-stack --min-tasks 20 --node-budget 20 --estimated-minutes 90 --out "$OUT/mission-recommendations-unsafe" >/dev/null 2>&1; then
   echo "unsafe Feature Depth recommendations were accepted" >&2
   exit 1
