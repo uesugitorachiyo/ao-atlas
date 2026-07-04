@@ -8,7 +8,7 @@
   "no_promotion_summary": "No mutation authority promotion claimed; RSI remains denied.",
   "next_denied_class": "RSI",
   "reason": "Recommendation wave records no mutation authority promotion; RSI remains denied.",
-  "elapsed_minutes": 103,
+  "elapsed_minutes": 114,
   "min_minutes_met": false,
   "final_response_allowed": false,
   "schedules_work": false,

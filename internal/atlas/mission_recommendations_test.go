@@ -422,6 +422,15 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		rawPromoter["next_denied_class"] != "RSI" {
 		t.Fatalf("promoter readback missing no-promotion summary fields: %#v", rawPromoter)
 	}
+	rawCommand := mustLoadJSON[map[string]any](t, commandPath)
+	binding, ok := rawCommand["command_timeline_binding"].(map[string]any)
+	if !ok ||
+		binding["summary"] != command.CompactTimeline ||
+		binding["first_executable_node"] != resumeReadback.FirstExecutableNode ||
+		binding["exact_next_action"] != resumeReadback.ExactNextAction ||
+		binding["return_gate_status"] != resumeReadback.ReturnGateStatus {
+		t.Fatalf("command readback missing structured timeline binding: %#v", rawCommand)
+	}
 	if command.ElapsedMinutes != 25 || command.FinalResponseAllowed ||
 		promoter.PromotionClaimed || !promoter.RSIRemainsDenied ||
 		foundry.NodeCompletionStatus != "nodes_in_progress" ||
@@ -652,6 +661,12 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
 		!strings.Contains(err.Error(), "foundry rollup completed while recommendation final response is denied") {
 		t.Fatalf("expected stale foundry rollup rejection, got %v", err)
+	}
+	foundry = BuildAtlasRecommendationFoundryRollup(readback)
+	command.CommandTimelineBinding.ExactNextAction = "stale next action"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command timeline binding exact_next_action disagrees") {
+		t.Fatalf("expected stale command timeline binding rejection, got %v", err)
 	}
 }
 

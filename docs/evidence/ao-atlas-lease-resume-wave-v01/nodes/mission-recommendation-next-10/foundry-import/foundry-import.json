@@ -1,0 +1,115 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-mission-long-wave-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-mission-long-wave",
+  "target_instance": "demo-stack",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-09/workgraph-after.json",
+      "digest": "sha256:1ee762f39def82041a445cbb9a4f8d9152bf07b9e551cb3f7aa1e55a4204f85a"
+    },
+    {
+      "ref": "examples/valid/stack-instance.json",
+      "digest": "sha256:833ac56f56cfd8f058a786eb7ced74d9879e157db6510a28867c3e3c46ecf1b6"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-next-10",
+      "task_id": "mission-recommendation-next-10-task",
+      "path": "tasks/mission-recommendation-next-10-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:19f532e9dd6e6c1fc3bc1d6f0da69cf95f7480949cef698bc499685074c9a434",
+        "source_recommendation:next-10",
+        "source_task_digest:sha256:d9316887b0e9e42449c4c316459d9f0974a65e9748f4975ee794bd645c779dd2"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-next-10-task",
+        "objective": "Add Command compact mission timeline binding to Atlas recommendation evidence.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/next-10",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:19f532e9dd6e6c1fc3bc1d6f0da69cf95f7480949cef698bc499685074c9a434",
+          "source_recommendation:next-10",
+          "source_task_digest:sha256:d9316887b0e9e42449c4c316459d9f0974a65e9748f4975ee794bd645c779dd2"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-next-09"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:5a23efeb3cf44e0ddf158f7fae103b569715e4cc949eec9bb8572dc5223eb048"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-10",
+  "red_phase": "Focused resume/closure tests failed before implementation because AtlasRecommendationCommandReadback lacked command_timeline_binding.",
+  "green_phase": "Focused resume/closure tests passed after Command readback emitted command_timeline_binding and closure validation rejected stale binding data.",
+  "tests": [
+    "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+    "TestMissionRecommendationsDetectStaleClosureArtifacts",
+    "production-readiness Command timeline binding jq check"
+  ]
+}

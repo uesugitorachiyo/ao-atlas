@@ -1,0 +1,8 @@
+{
+  "status": "no_promotion",
+  "node_id": "mission-recommendation-next-10",
+  "summary": "No mutation authority promotion claimed; RSI remains denied.",
+  "next_denied_class": "RSI",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true
+}
