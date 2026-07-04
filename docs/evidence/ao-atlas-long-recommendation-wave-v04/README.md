@@ -1,20 +1,23 @@
 # AO Atlas Long-Run Recommendation Wave v04
 
-Status: completed.
+Status: in progress because the 120-minute lease was not met.
 
 This evidence root records a 40-node Atlas recommendation execution wave for `mission-long-wave`. It uses the evidence-bound completion path added in this branch: each node has a fixture-only Foundry import, required gate/readback/checkpoint evidence, a completed run-link, and a post-node workgraph/readback checkpoint.
 
-## Closure
+## Closure Readback
 
 - Total nodes: 40
 - Completed nodes: 40
 - Ready nodes: 0
 - Blocked nodes: 0
 - Failed nodes: 0
-- Final response allowed: true
-- Foundry rollup status: `completed_all_node_run_links_recorded`
-- Promoter status: `no_promotion_recorded`
-- Command status: `compact_timeline_recorded`
+- Elapsed minutes: 22
+- Minimum minutes met: false
+- Lease time status: `minimum_minutes_unmet`
+- Final response allowed: false
+- Foundry rollup status: `in_progress_node_run_links_recorded`
+- Promoter status: `required_not_bound`
+- Command status: `required_not_bound`
 - RSI remains denied.
 
 ## Root Artifacts
@@ -52,4 +55,4 @@ Each node directory under `nodes/mission-recommendation-next-NN/` contains:
 
 ## Exact Next Action
 
-Finish the remote lifecycle for this branch: run full local verification, open the PR, wait for CI, merge through GitHub if checks pass, sync `main`, and delete local and remote `codex/*` branches.
+Generate and execute the next useful Atlas recommendation wave until `elapsed_minutes` meets `supervisor.min_minutes`, or record a true hard blocker.

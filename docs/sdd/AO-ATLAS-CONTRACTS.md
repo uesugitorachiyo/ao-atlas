@@ -64,12 +64,14 @@ RSI.
 
 `ao.atlas.recommendation-readback.v0.1` reconciles a recommendation wave with its
 generated workgraph. It records node counts, executable-ready node count, lease
-health, checkpoint freshness, stale-route decision status, early-return risk,
-exact next action, per-node gate/readback evidence, and the first 10 Feature
-Depth recommendations. Final response is allowed only when no ready, blocked, or
-failed recommendation nodes remain. The readback is evidence only: it does not
-schedule, execute, approve, mutate repositories, call providers, inspect
-credentials, or claim broad RSI.
+timing (`started_at`, `completed_at`, `elapsed_minutes`, `min_minutes_met`, and
+`lease_time_status`), lease health, checkpoint freshness, stale-route decision
+status, early-return risk, exact next action, per-node gate/readback evidence,
+and the first 10 Feature Depth recommendations. Final response is allowed only
+when no ready, blocked, or failed recommendation nodes remain and the elapsed
+lease time meets `supervisor.min_minutes`. The readback is evidence only: it
+does not schedule, execute, approve, mutate repositories, call providers,
+inspect credentials, or claim broad RSI.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,

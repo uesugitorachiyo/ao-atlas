@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 type AtlasRecommendationWaveOptions struct {
@@ -29,9 +30,13 @@ type AtlasRecommendationWaveResult struct {
 }
 
 type AtlasRecommendationReadbackOptions struct {
-	WavePath      string
-	WorkgraphPath string
-	EvidenceRoot  string
+	WavePath        string
+	WorkgraphPath   string
+	EvidenceRoot    string
+	StartedAt       string
+	CompletedAt     string
+	ElapsedMinutes  int
+	LeaseTimingMode string
 }
 
 type AtlasRecommendationCompleteNodeOptions struct {
@@ -469,7 +474,12 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 	if executableReady > 0 {
 		firstExecutable = state.ExecutableReadyNodeIDs[0]
 	}
-	finalAllowed := completed == wave.TotalTasks && ready == 0 && blocked == 0 && failed == 0
+	nodesComplete := completed == wave.TotalTasks && ready == 0 && blocked == 0 && failed == 0
+	leaseTiming, err := buildRecommendationLeaseTiming(wave, options, nodesComplete)
+	if err != nil {
+		return AtlasRecommendationReadback{}, err
+	}
+	finalAllowed := nodesComplete && leaseTiming.MinMinutesMet
 	finalReason := "ready nodes or exact next actions remain"
 	exactNextAction := "Complete dependency chain so the next Atlas recommendation node becomes executable-ready."
 	leaseHealth := "minimum_unmet"
@@ -479,6 +489,16 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		exactNextAction = "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
 		leaseHealth = "all_generated_nodes_complete"
 		earlyReturnRisk = "cleared_no_ready_nodes_remain"
+	} else if nodesComplete && leaseTiming.LeaseTimeStatus == "lease_timing_missing" {
+		finalReason = "minimum lease timing evidence missing"
+		exactNextAction = "Record started_at, completed_at, and elapsed_minutes before evaluating final response for the long-run lease."
+		leaseHealth = "minimum_minutes_timing_missing"
+		earlyReturnRisk = "blocked_final_response_minimum_timing_missing"
+	} else if nodesComplete && !leaseTiming.MinMinutesMet {
+		finalReason = "minimum lease minutes unmet"
+		exactNextAction = "Generate and execute the next useful Atlas recommendation wave until elapsed_minutes meets supervisor.min_minutes, or record a true hard blocker."
+		leaseHealth = "minimum_minutes_unmet_continue_next_wave"
+		earlyReturnRisk = "blocked_final_response_minimum_minutes_unmet"
 	} else if blocked > 0 || failed > 0 {
 		finalReason = "true hard blocker requires exact repair evidence"
 		exactNextAction = "Resolve blocked or failed recommendation node with exact repair evidence."
@@ -546,6 +566,11 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		WorkgraphDigest:           workgraphDigest,
 		EvidenceRoot:              filepath.ToSlash(strings.TrimSpace(options.EvidenceRoot)),
 		Supervisor:                wave.Supervisor,
+		StartedAt:                 leaseTiming.StartedAt,
+		CompletedAt:               leaseTiming.CompletedAt,
+		ElapsedMinutes:            leaseTiming.ElapsedMinutes,
+		MinMinutesMet:             leaseTiming.MinMinutesMet,
+		LeaseTimeStatus:           leaseTiming.LeaseTimeStatus,
 		TotalNodes:                wave.TotalTasks,
 		MinimumNodes:              wave.MinimumTasks,
 		CompletedNodes:            completed,
@@ -596,6 +621,90 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 	return readback, nil
 }
 
+type atlasRecommendationLeaseTiming struct {
+	StartedAt       string
+	CompletedAt     string
+	ElapsedMinutes  int
+	MinMinutesMet   bool
+	LeaseTimeStatus string
+}
+
+func buildRecommendationLeaseTiming(wave AtlasRecommendationWave, options AtlasRecommendationReadbackOptions, nodesComplete bool) (atlasRecommendationLeaseTiming, error) {
+	minMinutes := wave.EstimatedMinutes
+	if wave.Supervisor != nil {
+		minMinutes = wave.Supervisor.MinMinutes
+	}
+	startedAt := strings.TrimSpace(options.StartedAt)
+	completedAt := strings.TrimSpace(options.CompletedAt)
+	elapsedMinutes := options.ElapsedMinutes
+	if elapsedMinutes < 0 {
+		return atlasRecommendationLeaseTiming{}, fmt.Errorf("elapsed_minutes must be non-negative")
+	}
+	var started time.Time
+	var completed time.Time
+	var hasStarted bool
+	var hasCompleted bool
+	if startedAt != "" {
+		parsed, err := time.Parse(time.RFC3339, startedAt)
+		if err != nil {
+			return atlasRecommendationLeaseTiming{}, fmt.Errorf("started_at must be RFC3339: %w", err)
+		}
+		started = parsed
+		hasStarted = true
+	}
+	if completedAt != "" {
+		parsed, err := time.Parse(time.RFC3339, completedAt)
+		if err != nil {
+			return atlasRecommendationLeaseTiming{}, fmt.Errorf("completed_at must be RFC3339: %w", err)
+		}
+		completed = parsed
+		hasCompleted = true
+	}
+	if hasStarted && hasCompleted && completed.Before(started) {
+		return atlasRecommendationLeaseTiming{}, fmt.Errorf("completed_at must be greater than or equal to started_at")
+	}
+	hasTimingEvidence := elapsedMinutes > 0 ||
+		startedAt != "" ||
+		completedAt != "" ||
+		strings.TrimSpace(options.LeaseTimingMode) != ""
+	if elapsedMinutes == 0 && hasStarted && hasCompleted {
+		elapsedMinutes = ceilDurationMinutes(completed.Sub(started))
+	}
+	status := "in_progress_timing_pending"
+	minMinutesMet := false
+	if minMinutes <= 0 {
+		status = "minimum_minutes_not_required"
+		minMinutesMet = true
+	} else if hasTimingEvidence {
+		if elapsedMinutes >= minMinutes {
+			status = "minimum_minutes_met"
+			minMinutesMet = true
+		} else {
+			status = "minimum_minutes_unmet"
+		}
+	} else if nodesComplete {
+		status = "lease_timing_missing"
+	}
+	return atlasRecommendationLeaseTiming{
+		StartedAt:       startedAt,
+		CompletedAt:     completedAt,
+		ElapsedMinutes:  elapsedMinutes,
+		MinMinutesMet:   minMinutesMet,
+		LeaseTimeStatus: status,
+	}, nil
+}
+
+func ceilDurationMinutes(duration time.Duration) int {
+	if duration <= 0 {
+		return 0
+	}
+	minutes := int(duration / time.Minute)
+	if duration%time.Minute != 0 {
+		minutes++
+	}
+	return minutes
+}
+
 func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) error {
 	var errs []string
 	requireContract(&errs, "atlas_recommendation_readback", readback.ContractVersion, AtlasRecommendationReadbackContract)
@@ -621,6 +730,25 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	}
 	if readback.CompletedNodes+readback.ReadyNodes+readback.BlockedNodes+readback.FailedNodes != readback.TotalNodes {
 		errs = append(errs, "node counts must sum to total_nodes")
+	}
+	if readback.ElapsedMinutes < 0 {
+		errs = append(errs, "elapsed_minutes must be non-negative")
+	}
+	requireField(&errs, "lease_time_status", readback.LeaseTimeStatus)
+	if readback.Supervisor != nil && readback.Supervisor.MinMinutes > 0 {
+		if readback.MinMinutesMet && readback.ElapsedMinutes < readback.Supervisor.MinMinutes {
+			errs = append(errs, "min_minutes_met requires elapsed_minutes to meet supervisor.min_minutes")
+		}
+		if readback.FinalResponseAllowed && !readback.MinMinutesMet {
+			errs = append(errs, "final_response_allowed requires min_minutes_met")
+		}
+	}
+	if readback.FinalResponseAllowed {
+		requireField(&errs, "started_at", readback.StartedAt)
+		requireField(&errs, "completed_at", readback.CompletedAt)
+		if readback.ElapsedMinutes == 0 {
+			errs = append(errs, "final_response_allowed requires elapsed_minutes")
+		}
 	}
 	if readback.ExecutableReadyNodes > readback.ReadyNodes {
 		errs = append(errs, "executable_ready_nodes cannot exceed ready_nodes")

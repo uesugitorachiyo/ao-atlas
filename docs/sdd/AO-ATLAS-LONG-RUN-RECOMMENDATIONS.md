@@ -27,7 +27,7 @@ For a long-run recommendation wave, use these defaults unless the operator gives
 - `return_only_when`: all generated nodes are done, the minimum is met with no ready work, or a true hard blocker remains
 - `checkpoint_policy`: after each node or timed interval
 
-Generated recommendations are not completed work. A node counts as completed only after the workgraph advances through a completed run-link with node gate, candidate, rollback, implementation, tests, verification, public-safety, Promoter, Command, Foundry import, and checkpoint evidence.
+Generated recommendations are not completed work. A node counts as completed only after the workgraph advances through a completed run-link with node gate, candidate, rollback, implementation, tests, verification, public-safety, Promoter, Command, Foundry import, and checkpoint evidence. Completing every generated node is still not enough to close a 2-3 hour lease: the authoritative readback must also record `started_at`, `completed_at`, `elapsed_minutes`, `min_minutes_met=true`, and `lease_time_status=minimum_minutes_met`.
 
 ## Execution Pattern
 
@@ -71,10 +71,20 @@ atlas mission recommendations complete-node \
   --out-workgraph docs/evidence/<wave>/nodes/mission-recommendation-next-01/workgraph-after.json \
   --out-readback docs/evidence/<wave>/nodes/mission-recommendation-next-01/recommendation-readback-after.json \
   --out-execution-readback docs/evidence/<wave>/nodes/mission-recommendation-next-01/execution-readback-after.json
+
+atlas mission recommendations readback \
+  --wave docs/evidence/<wave>/recommendation-wave.json \
+  --workgraph docs/evidence/<wave>/recommendation-workgraph.json \
+  --evidence-root docs/evidence/<wave> \
+  --started-at 2026-07-04T07:20:00-07:00 \
+  --completed-at 2026-07-04T09:20:00-07:00 \
+  --elapsed-minutes 120 \
+  --lease-timing-mode actual \
+  --out docs/evidence/<wave>/recommendation-readback.json
 ```
 
 ## Final Report Gate
 
-A final response is allowed only when the authoritative recommendation readback agrees with the execution readback. The counts must match, `ready_nodes` must be zero for a completed wave, and `final_response_allowed` must be true.
+A final response is allowed only when the authoritative recommendation readback agrees with the execution readback. The counts must match, `ready_nodes` must be zero for a completed wave, `elapsed_minutes` must meet or exceed `supervisor.min_minutes`, `min_minutes_met` must be true, and `final_response_allowed` must be true.
 
-If ready nodes remain, report the exact next executable node instead of a final answer.
+If ready nodes remain, report the exact next executable node instead of a final answer. If all nodes are complete but the time lease is missing or short, report the exact timing evidence to record or generate the next useful Atlas recommendation wave instead of a final answer.

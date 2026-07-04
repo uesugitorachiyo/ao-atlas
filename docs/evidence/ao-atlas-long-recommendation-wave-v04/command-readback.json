@@ -1,10 +1,13 @@
 {
   "schema": "ao.atlas.long-recommendation-wave-v04.command-readback.v0.1",
-  "status": "completed",
+  "status": "in_progress",
   "evidence_root": "docs/evidence/ao-atlas-long-recommendation-wave-v04",
   "completed_nodes": 40,
   "ready_nodes": 0,
-  "final_response_allowed": true,
-  "compact_timeline": "40 recommendation nodes completed sequentially through evidence-bound run-links",
-  "next_action": "Finalize PR, CI, merge, and branch cleanup."
+  "elapsed_minutes": 22,
+  "min_minutes_met": false,
+  "lease_time_status": "minimum_minutes_unmet",
+  "final_response_allowed": false,
+  "compact_timeline": "40 recommendation nodes completed sequentially through evidence-bound run-links, but the 120-minute lease was not met",
+  "next_action": "Generate and execute the next useful Atlas recommendation wave until elapsed_minutes meets supervisor.min_minutes, or record a true hard blocker."
 }

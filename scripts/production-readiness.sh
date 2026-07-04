@@ -104,6 +104,34 @@ grep -q "Target 2-3 hours" "$OUT/mission-recommendations/next-recommended-prompt
 "$BIN" mission recommendations readback --wave "$OUT/mission-recommendations/recommendation-wave.json" --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --evidence-root target/production-readiness/mission-recommendations --out "$OUT/mission-recommendations/recommendation-readback-regenerated.json" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-readback-regenerated.json"
 "$BIN" workgraph validate --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
+completed_recommendation_workgraph="$OUT/mission-recommendations/recommendation-workgraph-completed.json"
+jq '.nodes |= map(.status = "completed")' "$OUT/mission-recommendations/recommendation-workgraph.json" >"$completed_recommendation_workgraph"
+"$BIN" mission recommendations readback \
+  --wave "$OUT/mission-recommendations/recommendation-wave.json" \
+  --workgraph "$completed_recommendation_workgraph" \
+  --evidence-root target/production-readiness/mission-recommendations \
+  --elapsed-minutes 22 \
+  --started-at 2026-07-04T07:20:20-07:00 \
+  --completed-at 2026-07-04T07:42:06-07:00 \
+  --lease-timing-mode actual \
+  --out "$OUT/mission-recommendations/recommendation-readback-completed-short.json" >/dev/null
+jq -e '.completed_nodes == 40 and .ready_nodes == 0 and .elapsed_minutes == 22 and .min_minutes_met == false and .lease_time_status == "minimum_minutes_unmet" and .final_response_allowed == false and .final_response_reason == "minimum lease minutes unmet"' "$OUT/mission-recommendations/recommendation-readback-completed-short.json" >/dev/null
+"$BIN" mission recommendations readback \
+  --wave "$OUT/mission-recommendations/recommendation-wave.json" \
+  --workgraph "$completed_recommendation_workgraph" \
+  --evidence-root target/production-readiness/mission-recommendations \
+  --out "$OUT/mission-recommendations/recommendation-readback-completed-missing-timing.json" >/dev/null
+jq -e '.completed_nodes == 40 and .ready_nodes == 0 and .min_minutes_met == false and .lease_time_status == "lease_timing_missing" and .final_response_allowed == false and .final_response_reason == "minimum lease timing evidence missing"' "$OUT/mission-recommendations/recommendation-readback-completed-missing-timing.json" >/dev/null
+"$BIN" mission recommendations readback \
+  --wave "$OUT/mission-recommendations/recommendation-wave.json" \
+  --workgraph "$completed_recommendation_workgraph" \
+  --evidence-root target/production-readiness/mission-recommendations \
+  --elapsed-minutes 120 \
+  --started-at 2026-07-04T07:20:00-07:00 \
+  --completed-at 2026-07-04T09:20:00-07:00 \
+  --lease-timing-mode actual \
+  --out "$OUT/mission-recommendations/recommendation-readback-completed-lease-met.json" >/dev/null
+jq -e '.completed_nodes == 40 and .ready_nodes == 0 and .elapsed_minutes == 120 and .min_minutes_met == true and .lease_time_status == "minimum_minutes_met" and .final_response_allowed == true and .final_response_reason == "all generated nodes complete and no ready nodes remain"' "$OUT/mission-recommendations/recommendation-readback-completed-lease-met.json" >/dev/null
 "$BIN" foundry import --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --instance examples/valid/stack-instance.json --node mission-recommendation-next-01 --out "$OUT/mission-recommendations-foundry-import" >/dev/null
 test -s "$OUT/mission-recommendations-foundry-import/foundry-import.json"
 node_evidence_dir="$OUT/mission-recommendations-node-01-evidence"
@@ -325,6 +353,9 @@ while IFS= read -r execution_readback; do
   recommendation_total="$(jq -r '.total_nodes' "$recommendation_readback")"
   execution_status="$(jq -r '.status' "$execution_readback")"
   recommendation_final_allowed="$(jq -r '.final_response_allowed' "$recommendation_readback")"
+  recommendation_min_minutes_met="$(jq -r '.min_minutes_met // false' "$recommendation_readback")"
+  recommendation_elapsed_minutes="$(jq -r '.elapsed_minutes // 0' "$recommendation_readback")"
+  recommendation_min_minutes="$(jq -r '.supervisor.min_minutes // 0' "$recommendation_readback")"
   if [ "$execution_completed" != "$recommendation_completed" ]; then
     echo "execution readback $execution_readback claims completed_recommendation_nodes=$execution_completed but recommendation readback has completed_nodes=$recommendation_completed" >&2
     exit 1
@@ -336,6 +367,16 @@ while IFS= read -r execution_readback; do
   if [ "$execution_status" = "completed" ] && [ "$recommendation_final_allowed" != "true" ]; then
     echo "execution readback $execution_readback cannot use status=completed while recommendation final_response_allowed is false" >&2
     exit 1
+  fi
+  if [ "$recommendation_final_allowed" = "true" ]; then
+    if [ "$recommendation_min_minutes_met" != "true" ]; then
+      echo "recommendation readback $recommendation_readback allows final response without min_minutes_met=true" >&2
+      exit 1
+    fi
+    if [ "$recommendation_min_minutes" -gt 0 ] && [ "$recommendation_elapsed_minutes" -lt "$recommendation_min_minutes" ]; then
+      echo "recommendation readback $recommendation_readback allows final response with elapsed_minutes=$recommendation_elapsed_minutes below supervisor.min_minutes=$recommendation_min_minutes" >&2
+      exit 1
+    fi
   fi
 done < <(find docs/evidence -name execution-readback.json -type f)
 pass "recommendation-ledger-consistency"

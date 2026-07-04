@@ -1,0 +1,71 @@
+{
+  "schema": "ao.atlas.lease-time-gate-repair.v0.1",
+  "status": "implemented",
+  "mission": "ao-atlas-long-run-lease-enforcement",
+  "root_cause": "AO Atlas recommendation readbacks recorded supervisor.min_minutes but final_response_allowed only checked node counts. A 40/40 completed wave could close after about 22 minutes because elapsed lease time was not part of the final gate.",
+  "repair_summary": [
+    "Added started_at, completed_at, elapsed_minutes, min_minutes_met, and lease_time_status to recommendation readbacks.",
+    "Changed final response gating so completed recommendation nodes require min_minutes_met before closure.",
+    "Added CLI timing flags for recommendation readback and complete-node flows.",
+    "Extended production readiness to reject final-allowed long-run evidence when elapsed_minutes is below supervisor.min_minutes.",
+    "Corrected v04 evidence so 40/40 completed nodes with 22 elapsed minutes remain in progress and final response is denied."
+  ],
+  "corrected_evidence": {
+    "evidence_root": "docs/evidence/ao-atlas-long-recommendation-wave-v04",
+    "recommendation_readback": "docs/evidence/ao-atlas-long-recommendation-wave-v04/recommendation-readback.json",
+    "execution_readback": "docs/evidence/ao-atlas-long-recommendation-wave-v04/execution-readback.json",
+    "command_readback": "docs/evidence/ao-atlas-long-recommendation-wave-v04/command-readback.json",
+    "completed_nodes": 40,
+    "total_nodes": 40,
+    "elapsed_minutes": 22,
+    "supervisor_min_minutes": 120,
+    "min_minutes_met": false,
+    "final_response_allowed": false,
+    "exact_next_action": "Generate and execute the next useful Atlas recommendation wave until elapsed_minutes meets supervisor.min_minutes, or record a true hard blocker."
+  },
+  "tests": [
+    "TestMissionRecommendationsDenyFinalResponseWhenLeaseMinutesUnmet",
+    "TestMissionRecommendationsDenyFinalResponseWhenLeaseTimingMissing",
+    "TestMissionRecommendationsReadbackFinalGateTransitions",
+    "TestProductionReadinessExercisesMissionRecommendationsImport"
+  ],
+  "verification": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "summary": "target/production-readiness/summary.json"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed",
+      "summary": "target/atlas-foundry-roundtrip/summary.json"
+    }
+  ],
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  },
+  "promoter_status": "no_promotion_recorded",
+  "command_status": "compact_repair_readback_recorded",
+  "foundry_rollup": "not_applicable_for_gate_repair_no_new_foundry_node",
+  "next_recommended_prompt": "docs/evidence/ao-atlas-lease-time-gate-v01/next-recommended-prompt.md"
+}
