@@ -62,6 +62,25 @@ func TestProductionReadinessOpsWorkflowRunsAtlasReadinessGate(t *testing.T) {
 	}
 }
 
+func TestProductionReadinessExercisesAOMissionRecoveryProvenance(t *testing.T) {
+	root := repoRoot(t)
+	scriptPath := filepath.Join(root, "scripts", "production-readiness.sh")
+	content, err := os.ReadFile(scriptPath)
+	if err != nil {
+		t.Fatalf("read production readiness script: %v", err)
+	}
+	script := string(content)
+	for _, want := range []string{
+		"--route-history examples/valid/ao-mission/route-history.json",
+		"--scheduler-recovery examples/valid/ao-mission/scheduler-recovery-readback.json",
+		"--ledger-compaction examples/valid/ao-mission/ledger-compaction-readback.json",
+	} {
+		if !strings.Contains(script, want) {
+			t.Fatalf("production readiness script missing AO Mission provenance flag %q", want)
+		}
+	}
+}
+
 func repoRoot(t *testing.T) string {
 	t.Helper()
 	_, file, _, ok := runtime.Caller(0)
