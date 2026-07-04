@@ -399,6 +399,44 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 	}
 }
 
+func TestMissionRecommendationsImportArtifactsAreDigestBound(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	outDir := filepath.Join(dir, "recommendations-out")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--started-at", "2026-07-04T08:00:00-07:00",
+		"--out", outDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	wavePath := filepath.Join(outDir, "recommendation-wave.json")
+	workgraphPath := filepath.Join(outDir, "recommendation-workgraph.json")
+	waveDigest, err := digestFile(wavePath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	workgraphDigest, err := digestFile(workgraphPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	leaseStart := mustLoadJSON[AtlasRecommendationLeaseStart](t, filepath.Join(outDir, "lease-start.json"))
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(outDir, "recommendation-readback.json"))
+	if leaseStart.WaveDigest != waveDigest || leaseStart.WorkgraphDigest != workgraphDigest {
+		t.Fatalf("lease start digests do not bind generated artifacts: lease=%#v wave=%s workgraph=%s", leaseStart, waveDigest, workgraphDigest)
+	}
+	if readback.WaveDigest != waveDigest || readback.WorkgraphDigest != workgraphDigest {
+		t.Fatalf("recommendation readback digests do not bind generated artifacts: readback=%#v wave=%s workgraph=%s", readback, waveDigest, workgraphDigest)
+	}
+}
+
 func TestMissionRecommendationsReadbackCLIMatchesGeneratedArtifacts(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")

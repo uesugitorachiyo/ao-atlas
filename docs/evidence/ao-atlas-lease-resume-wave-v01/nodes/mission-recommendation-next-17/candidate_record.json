@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-17",
+  "candidate": "recommendation-import-artifact-binding-readiness",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Production readiness checked recommendation import artifact presence and counts but did not prove lease-start and readback digest agreement with generated import artifacts."
+}

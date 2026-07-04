@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-17",
+  "summary": "Added regression and production readiness coverage that binds recommendation import readbacks to generated wave/workgraph digests.",
+  "changed_files": [
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh"
+  ]
+}
