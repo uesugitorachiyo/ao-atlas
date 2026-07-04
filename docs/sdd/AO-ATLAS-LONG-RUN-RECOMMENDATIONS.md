@@ -42,6 +42,30 @@ gate, such as `blocked_ready_nodes_remain`,
 `blocked_minimum_minutes_unmet`, or `final_response_allowed`.
 `checkpoint_count` mirrors the completed-node count that has checkpoint evidence.
 
+## Double-Size Operator Requests
+
+When the operator says the last wave was too short, double-size means the next
+Atlas recommendation wave must target the normal 2-3 hour lease, not a 90-minute
+compatibility run. Use a 30-node minimum, a 40-node continue-if-fast target, and
+120-180 minutes unless the operator gives stricter numbers. A 20-node or
+90-minute wave is too small for this path.
+
+Write the next prompt like a long-run correction prompt: include current state,
+problem, goal, minimum work budget, safety boundaries, required routing,
+per-node evidence, verification, final-report gates, and the exact next action.
+The prompt should say that Atlas owns sequencing, Foundry owns one bounded
+implementation node at a time, Blueprint is used only for missing requirements
+or authorization, and Command/Promoter/Sentinel readbacks remain evidence gates.
+
+Do not final after one PR, one CI pass, one Foundry import, one route decision,
+one evidence artifact, or one short batch. If the first 15 nodes finish quickly
+and ready nodes remain, continue into the next useful nodes instead of closing.
+If all generated nodes finish before `elapsed_minutes` reaches 120, generate the
+next useful Atlas-owned wave and preserve the original lease evidence. A final
+answer is allowed only when the authoritative readback has
+`final_response_allowed=true`, no ready nodes remain, and Command, Foundry,
+Promoter, and reconciliation artifacts agree.
+
 ## Execution Pattern
 
 1. Confirm the repo is on a branch, clean enough for the wave, and not mutating `main` directly.

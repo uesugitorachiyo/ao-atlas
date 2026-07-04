@@ -1,0 +1,10 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-15",
+  "summary": "Added double-size operator guidance to the long-run recommendation runbook and README, with production readiness checks to keep the guidance present.",
+  "changed_files": [
+    "docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md",
+    "README.md",
+    "scripts/production-readiness.sh"
+  ]
+}

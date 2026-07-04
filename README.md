@@ -191,6 +191,13 @@ provider, credential, direct-main, release, dependency, policy, auth, config, or
 broad RSI authority. Explicit 20-node/90-minute imports remain available only as
 compatibility coverage for older double-size waves.
 
+When an operator says the prior wave was too short, use the 2-3 hour supervisor
+defaults instead of a 20-node or 90-minute compatibility wave. Preserve the
+lease-start artifact across resumes, execute one Atlas-owned node at a time, and
+do not produce a final response while ready nodes or an exact next action remain.
+The detailed operator runbook is
+`docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md`.
+
 The committed
 `examples/valid/workgraph-repair-plan-blocked-node-demo.json` fixture shows the
 blocked-node repair output shape. It preserves the source task's context-pack

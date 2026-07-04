@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-15",
+  "red_phase": "Coverage gap identified: operator docs could still allow a double-size recovery request to fall back to 20-node or 90-minute compatibility waves.",
+  "green_phase": "Focused docs checks passed after adding a double-size operator section and readiness assertions.",
+  "tests": [
+    "bash -n scripts/production-readiness.sh",
+    "grep Double-Size Operator Requests in long-run runbook",
+    "grep prior wave was too short in README"
+  ]
+}
