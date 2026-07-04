@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-38",
+  "selected_candidate": "production readiness 40-node recommendation workgraph assertion",
+  "owner": "AO Atlas",
+  "assertion_scope": "40-node recommendation workgraph shape",
+  "blueprint_route": "not_required",
+  "summary": "The ready Atlas-owned task already included objective, scope, gates, safety limits, and digest-bound source evidence, so Blueprint was skipped and the 40-node workgraph assertion was implemented directly."
+}
