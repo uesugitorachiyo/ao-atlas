@@ -1,0 +1,12 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-33",
+  "rollback": [
+    "Remove examples/valid/recommendation-wave-long-run-supervisor.json.",
+    "Remove examples/valid/recommendation-lease-start-long-run.json.",
+    "Revert TestRecommendationLongRunSupervisorExamplesCoverLeaseFields.",
+    "Revert production-readiness checks for recommendation long-run examples.",
+    "Remove node 33 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-33.",
+    "Regenerate root readbacks from node 32 workgraph if this node is reverted before merge."
+  ]
+}
