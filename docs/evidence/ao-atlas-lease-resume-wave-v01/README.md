@@ -5,21 +5,21 @@ Status: in progress.
 This evidence root records the first post-repair recommendation wave using the
 persisted lease-start and resume machinery. The wave starts at
 `2026-07-04T08:34:04-07:00`, has a 120-minute minimum, and remains final-denied
-because ready nodes remain and the lease floor is not met.
+because ready nodes remain.
 
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 10
-- Ready nodes: 30
+- Completed nodes: 11
+- Ready nodes: 29
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 114
-- Minimum minutes met: false
+- Elapsed minutes: 126
+- Minimum minutes met: true
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 10
+- Checkpoint count: 11
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-11`
+- Exact next action: emit Foundry import for `mission-recommendation-next-12`
   and execute exactly one active node.
 
 ## Root Artifacts

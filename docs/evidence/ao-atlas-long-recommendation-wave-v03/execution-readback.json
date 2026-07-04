@@ -13,6 +13,23 @@
     "final_response_allowed": false,
     "final_response_reason": "ready nodes or exact next actions remain"
   },
+  "foundry_run_link_readiness_summary": {
+    "status": "pending_first_run_link",
+    "summary": "0/40 Foundry run-links recorded; ready_nodes=40; next_executable_node=mission-recommendation-next-01",
+    "completed_run_links": 0,
+    "required_run_links": 40,
+    "missing_run_links": 40,
+    "ready_nodes": 40,
+    "next_executable_node": "mission-recommendation-next-01",
+    "checkpoint_count": 0,
+    "final_response_allowed": false
+  },
+  "source_artifacts": [
+    {
+      "ref": "foundry_run_link_readiness_summary",
+      "digest": "sha256:c7d92f3aed23caacce8658060a057641cbffbc5deb65aec7a33883d3784ffb9f"
+    }
+  ],
   "implemented_bindings": [
     "mission recommendations readback CLI",
     "recommendation-readback contract model",
@@ -25,6 +42,7 @@
     "Foundry completed/promoted/denied/blocked terminal status normalization",
     "Promoter no-promotion summary",
     "Command compact timeline summary",
+    "Foundry run-link readiness source artifact",
     "per-node gate, candidate, rollback, tests, verification, public-safety, Promoter, and Command evidence readback",
     "production readiness coverage for generated and regenerated readbacks",
     "operator docs for readback regeneration"

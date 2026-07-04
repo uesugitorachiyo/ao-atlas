@@ -1445,6 +1445,34 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 	if strings.TrimSpace(readback.ReturnGateStatus) != "" && execution.GeneratedWorkgraph.CheckpointCount != readback.CheckpointCount {
 		errs = append(errs, "generated_workgraph.checkpoint_count must match recommendation readback checkpoint_count")
 	}
+	requireField(&errs, "foundry_run_link_readiness_summary.status", execution.FoundryRunLinkReadinessSummary.Status)
+	requireField(&errs, "foundry_run_link_readiness_summary.summary", execution.FoundryRunLinkReadinessSummary.Summary)
+	if execution.FoundryRunLinkReadinessSummary.CompletedRunLinks != readback.CompletedNodes {
+		errs = append(errs, "foundry run-link readiness completed_run_links must match recommendation readback completed_nodes")
+	}
+	if execution.FoundryRunLinkReadinessSummary.RequiredRunLinks != readback.TotalNodes {
+		errs = append(errs, "foundry run-link readiness required_run_links must match recommendation readback total_nodes")
+	}
+	if execution.FoundryRunLinkReadinessSummary.MissingRunLinks != readback.TotalNodes-readback.CompletedNodes {
+		errs = append(errs, "foundry run-link readiness missing_run_links must match remaining nodes")
+	}
+	if execution.FoundryRunLinkReadinessSummary.ReadyNodes != readback.ReadyNodes {
+		errs = append(errs, "foundry run-link readiness ready_nodes must match recommendation readback ready_nodes")
+	}
+	if execution.FoundryRunLinkReadinessSummary.NextExecutableNode != readback.FirstExecutableNode {
+		errs = append(errs, "foundry run-link readiness next_executable_node must match recommendation readback first_executable_node")
+	}
+	if execution.FoundryRunLinkReadinessSummary.CheckpointCount != readback.CheckpointCount {
+		errs = append(errs, "foundry run-link readiness checkpoint_count must match recommendation readback checkpoint_count")
+	}
+	if execution.FoundryRunLinkReadinessSummary.FinalResponseAllowed != readback.FinalResponseAllowed {
+		errs = append(errs, "foundry run-link readiness final_response_allowed must match recommendation readback final_response_allowed")
+	}
+	if sourceDigest, ok := sourceArtifactDigest(execution.SourceArtifacts, "foundry_run_link_readiness_summary"); !ok {
+		errs = append(errs, "source_artifacts must include foundry_run_link_readiness_summary")
+	} else if sourceDigest != digestValue(execution.FoundryRunLinkReadinessSummary) {
+		errs = append(errs, "foundry_run_link_readiness_summary source artifact digest disagrees")
+	}
 	if execution.Status == "completed" && !readback.FinalResponseAllowed {
 		errs = append(errs, "status completed requires recommendation readback final_response_allowed")
 	}
@@ -1461,6 +1489,27 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 	}
 	if readback.FinalResponseAllowed {
 		status = "completed"
+	}
+	readinessStatus := "pending_first_run_link"
+	if readback.CompletedNodes > 0 {
+		readinessStatus = "partial_run_links_recorded"
+	}
+	if readback.CompletedNodes == readback.TotalNodes && readback.ReadyNodes == 0 && readback.BlockedNodes == 0 && readback.FailedNodes == 0 {
+		readinessStatus = "all_required_run_links_recorded"
+	}
+	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
+		readinessStatus = "blocked_or_failed_run_links_need_repair"
+	}
+	runLinkSummary := AtlasRecommendationFoundryRunLinkReadinessSummary{
+		Status:               readinessStatus,
+		Summary:              fmt.Sprintf("%d/%d Foundry run-links recorded; ready_nodes=%d; next_executable_node=%s", readback.CompletedNodes, readback.TotalNodes, readback.ReadyNodes, readback.FirstExecutableNode),
+		CompletedRunLinks:    readback.CompletedNodes,
+		RequiredRunLinks:     readback.TotalNodes,
+		MissingRunLinks:      readback.TotalNodes - readback.CompletedNodes,
+		ReadyNodes:           readback.ReadyNodes,
+		NextExecutableNode:   readback.FirstExecutableNode,
+		CheckpointCount:      readback.CheckpointCount,
+		FinalResponseAllowed: readback.FinalResponseAllowed,
 	}
 	return AtlasRecommendationExecutionReadback{
 		Schema:                       "ao.atlas.long-recommendation-wave-execution.v0.3",
@@ -1479,7 +1528,20 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 			FinalResponseAllowed: readback.FinalResponseAllowed,
 			FinalResponseReason:  readback.FinalResponseReason,
 		},
+		FoundryRunLinkReadinessSummary: runLinkSummary,
+		SourceArtifacts: []SourceRef{
+			{Ref: "foundry_run_link_readiness_summary", Digest: digestValue(runLinkSummary)},
+		},
 	}
+}
+
+func sourceArtifactDigest(sources []SourceRef, ref string) (string, bool) {
+	for _, source := range sources {
+		if source.Ref == ref {
+			return source.Digest, true
+		}
+	}
+	return "", false
 }
 
 func CompleteAtlasRecommendationNodeWithRunLink(wave AtlasRecommendationWave, workgraph Workgraph, link RunLink, options AtlasRecommendationCompleteNodeOptions) (Workgraph, string, error) {

@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-11",
+  "candidate": "foundry-run-link-readiness-source-artifact",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Atlas execution readbacks tracked generated workgraph state but did not expose Foundry run-link readiness as a digest-bound source artifact. The repair adds a structured readiness summary and source artifact digest."
+}

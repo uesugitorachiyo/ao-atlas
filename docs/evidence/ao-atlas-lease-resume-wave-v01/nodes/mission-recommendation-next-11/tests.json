@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-11",
+  "red_phase": "Focused execution readback tests failed before implementation because Foundry run-link readiness and source_artifacts were missing.",
+  "green_phase": "Focused tests and full go test passed after execution readbacks emitted the readiness summary and digest-bound source artifact.",
+  "tests": [
+    "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+    "TestRecommendationExecutionReadbackRejectsFalseCompletedNodes",
+    "TestRecommendationExecutionReadbackArtifactsStayConsistent",
+    "production-readiness Foundry run-link readiness jq checks"
+  ]
+}
