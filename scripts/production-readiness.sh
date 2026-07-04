@@ -14,6 +14,28 @@ pass() {
   printf 'ok %s\n' "$1"
 }
 
+reject_local_absolute_paths() {
+  local label="$1"
+  shift
+  local patterns=(
+    '/'"Users/"
+    '/'"home/"
+    '/'"tmp/"
+    '/'"private/"
+    "Downloads""/"
+    "file:"'//'
+  )
+  for file in "$@"; do
+    test -s "$file"
+    for pattern in "${patterns[@]}"; do
+      if grep -nF "$pattern" "$file" >/dev/null; then
+        echo "$label contains local absolute path marker '$pattern' in $file" >&2
+        exit 1
+      fi
+    done
+  done
+}
+
 go test ./...
 pass "go-test"
 
@@ -143,6 +165,9 @@ jq -e '.completed_nodes == 40 and .ready_nodes == 0 and .checkpoint_count == 40 
 jq -e 'has("started_at") and has("completed_at")' "$OUT/mission-recommendations/recommendation-readback-completed-lease-met.json" >/dev/null
 "$BIN" foundry import --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --instance examples/valid/stack-instance.json --node mission-recommendation-next-01 --out "$OUT/mission-recommendations-foundry-import" >/dev/null
 test -s "$OUT/mission-recommendations-foundry-import/foundry-import.json"
+reject_local_absolute_paths "mission recommendations Foundry continuation" \
+  "$OUT/mission-recommendations-foundry-import/foundry-continuation-handoff.json" \
+  "$OUT/mission-recommendations-foundry-import/foundry-continuation-prompt.md"
 node_evidence_dir="$OUT/mission-recommendations-node-01-evidence"
 mkdir -p "$node_evidence_dir"
 for key in node_gate candidate_record rollback_record implementation_evidence tests verification sentinel_public_safety promoter_no_promotion command_readback foundry_import checkpoint_bundle; do
@@ -218,6 +243,9 @@ test -s "$OUT/blueprint-import-low-risk-code/workgraph.json"
 test -s "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-import.json"
 test -s "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-handoff.json"
 test -s "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
+reject_local_absolute_paths "Blueprint Foundry continuation" \
+  "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-handoff.json" \
+  "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
 grep -q "Move to AO Foundry" "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
 grep -q "Run codex --yolo" "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
 grep -q "Paste this prompt" "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
@@ -252,6 +280,9 @@ test -s "$OUT/workgraph-repair-plan-failed.json"
 test -s "$OUT/foundry-import/foundry-import.json"
 test -s "$OUT/foundry-import/foundry-continuation-handoff.json"
 test -s "$OUT/foundry-import/foundry-continuation-prompt.md"
+reject_local_absolute_paths "Foundry continuation" \
+  "$OUT/foundry-import/foundry-continuation-handoff.json" \
+  "$OUT/foundry-import/foundry-continuation-prompt.md"
 grep -q "Move to AO Foundry" "$OUT/foundry-import/foundry-continuation-prompt.md"
 grep -q "Run codex --yolo" "$OUT/foundry-import/foundry-continuation-prompt.md"
 grep -q "Paste this prompt" "$OUT/foundry-import/foundry-continuation-prompt.md"

@@ -1,0 +1,16 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-05",
+  "summary": "Generated Foundry continuation handoffs now use ../ao-foundry by default. The Foundry continuation validator rejects machine-local target folders and next actions. Production readiness now scans generated Foundry continuation handoff and prompt artifacts under target before accepting the release gate.",
+  "changed_files": [
+    "internal/atlas/foundry_handoff.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/atlas_test.go",
+    "scripts/production-readiness.sh"
+  ],
+  "generated_artifacts": [
+    "nodes/mission-recommendation-next-05/foundry-import/foundry-import.json",
+    "nodes/mission-recommendation-next-05/foundry-import/foundry-continuation-handoff.json",
+    "nodes/mission-recommendation-next-05/foundry-import/foundry-continuation-prompt.md"
+  ]
+}

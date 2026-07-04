@@ -127,7 +127,7 @@ func WriteFoundryContinuationPrompt(path string, handoff FoundryContinuationHand
 }
 
 func foundryContinuationTargetFolder() string {
-	return strings.Join([]string{"", "Users", "torachiyouesugi", "Documents", "public", "ao-foundry"}, "/")
+	return "../ao-foundry"
 }
 
 func slashOrNotProvided(path string) string {

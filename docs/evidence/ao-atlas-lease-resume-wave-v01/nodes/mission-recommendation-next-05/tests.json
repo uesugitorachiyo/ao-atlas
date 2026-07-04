@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-05",
+  "red_phase": "Focused Foundry continuation tests failed before implementation because generated continuation material still used a machine-local Foundry route.",
+  "green_phase": "Focused Foundry continuation tests passed after the generator emitted ../ao-foundry and validation rejected machine-local route fields.",
+  "tests": [
+    "TestBlueprintImportCompilesLowRiskCodePackIntoAtlasAndFoundryMaterial",
+    "TestFoundryImportWritesContinuationHandoffPrompt",
+    "production-readiness generated Foundry continuation path checks"
+  ]
+}
