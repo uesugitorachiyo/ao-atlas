@@ -1,0 +1,54 @@
+{
+  "schema": "ao.atlas.long-recommendation-wave-execution.v0.2",
+  "status": "implementation_evidence_ready",
+  "mission_id": "mission-long-wave",
+  "evidence_root": "docs/evidence/ao-atlas-long-recommendation-wave-v02",
+  "generated_artifacts": [
+    "recommendation-wave.json",
+    "recommendation-workgraph.json",
+    "next-recommended-prompt.md",
+    "README.md",
+    "execution-readback.json"
+  ],
+  "supervisor": {
+    "min_nodes": 30,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 40,
+    "return_only_when": "all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker",
+    "checkpoint_policy": "after_each_node_or_timed_interval"
+  },
+  "workgraph_readback": {
+    "total_nodes": 40,
+    "ready_nodes": 40,
+    "executable_ready_nodes": 1,
+    "first_executable_node": "mission-recommendation-next-01",
+    "final_response_allowed": false,
+    "final_response_reason": "ready nodes or exact next actions remain"
+  },
+  "evidence_gates": {
+    "node_gate": "recorded_in_each_factory_task",
+    "candidate_record": "recorded_in_each_factory_task",
+    "rollback_record": "recorded_in_each_factory_task",
+    "implementation_evidence": "recorded_by_generated_wave_artifacts",
+    "tests": "covered_by_internal_atlas_regressions",
+    "verification": "go_test_go_vet_go_build_production_readiness_and_atlas_foundry_roundtrip_passed",
+    "sentinel_public_safety_wording": "no_provider_credential_direct_main_release_dependency_policy_auth_config_hidden_instruction_or_broad_rsi_claim",
+    "promoter_readback": "required_not_bound",
+    "command_readback": "required_not_bound",
+    "foundry_import": "first_node_import_covered_by_production_readiness",
+    "rollback_scope": "revert_generated_v02_evidence_and_recommendation_import_changes"
+  },
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  },
+  "exact_next_action": "Use next-recommended-prompt.md to run the generated 2-3 hour AO Atlas wave; do not final-response while ready nodes or exact next actions remain."
+}

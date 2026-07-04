@@ -52,10 +52,14 @@ or granting execution, scheduling, or approval authority.
 `ao.atlas.recommendation-wave.v0.1` binds AO Mission Feature Depth
 Recommendations into Atlas-owned long-run planning. The wave requires a
 digest-bound source recommendation artifact, explicit minimum task count,
-estimated minute budget, and Atlas-owned tasks with gates, verification commands,
-and safety limits. It is planning/readback material only: it does not schedule,
-execute, approve, mutate repositories, call providers, inspect credentials, or
-claim broad RSI.
+estimated minute budget, Atlas-owned tasks with gates, verification commands,
+and safety limits, and a v0.2 long-run supervisor lease. The default lease is a
+30-node minimum, 120-180 minute target, and 40-node continue-if-fast target. The
+wave records `final_response_allowed=false` while ready nodes or exact next
+actions remain and requires Promoter, Command, and public-safety readbacks before
+closure. It is planning/readback material only: it does not schedule, execute,
+approve, mutate repositories, call providers, inspect credentials, or claim broad
+RSI.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,
