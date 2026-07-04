@@ -91,6 +91,10 @@ func TestRecommendationDerivedReadbackSchemasRequireCheckpointFreshnessStatus(t 
 	assertNestedSchemaRequiresField(t, filepath.Join(root, "recommendation-command-readback.schema.json"), "command_timeline_binding", "checkpoint_freshness_status")
 }
 
+func TestRecommendationReconciliationSchemaRequiresStaleRouteDecisionStatus(t *testing.T) {
+	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-reconciliation-packet.schema.json"), "stale_route_decision_status")
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -820,6 +824,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		reconciliation.CheckpointCount != 1 ||
 		reconciliation.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		reconciliation.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		reconciliation.StaleRouteDecisionStatus != resumeReadback.StaleRouteDecisionStatus ||
 		!reconciliation.ArtifactsAgree ||
 		reconciliation.CommandReturnGateStatus != resumeReadback.ReturnGateStatus ||
 		reconciliation.FoundryReturnGateStatus != resumeReadback.ReturnGateStatus ||
@@ -1126,6 +1131,13 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
 		!strings.Contains(err.Error(), "foundry rollup checkpoint_freshness_status disagrees") {
 		t.Fatalf("expected stale foundry checkpoint freshness rejection, got %v", err)
+	}
+	foundry = BuildAtlasRecommendationFoundryRollup(readback)
+	packet := BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.StaleRouteDecisionStatus = "stale_route_decision"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "reconciliation stale_route_decision_status disagrees") {
+		t.Fatalf("expected stale reconciliation route decision rejection, got %v", err)
 	}
 }
 
