@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-13",
+  "summary": "Changed tests and readiness checks only. The regression confirms unsafe authority flags are denied and adds no provider calls, credential inspection, releases, authority promotion, or RSI proof claims.",
+  "forbidden_markers_found": false,
+  "rsi_claimed": false,
+  "provider_calls": false,
+  "credential_inspection": false
+}

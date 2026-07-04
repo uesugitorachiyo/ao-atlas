@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-13",
+  "red_phase": "Coverage gap identified: unsafe Feature Depth rejection did not separately test schedules_work, executes_work, approves_work, and mutates_repositories authority claims.",
+  "green_phase": "Focused unsafe authority-claim tests passed after adding explicit regression variants.",
+  "tests": [
+    "TestMissionRecommendationsRejectShallowAndUnsafeBundles",
+    "TestMissionRecommendationsRejectUnsafeFeatureDepthAuthorityClaims",
+    "production-readiness unsafe Feature Depth error-text check"
+  ]
+}
