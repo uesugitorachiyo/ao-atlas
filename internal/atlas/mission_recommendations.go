@@ -1688,6 +1688,82 @@ func atlasOwnedRecommendationTasks(tasks []AOMissionFeatureDepthTask, limit int)
 	return selected
 }
 
+type AtlasRecommendationResumePromptOptions struct {
+	EvidenceRoot   string
+	LeaseStartPath string
+	WorkgraphPath  string
+	ReadbackPath   string
+}
+
+func BuildAtlasRecommendationResumePrompt(readback AtlasRecommendationReadback, options AtlasRecommendationResumePromptOptions) string {
+	evidenceRoot := strings.TrimSpace(options.EvidenceRoot)
+	if evidenceRoot == "" {
+		evidenceRoot = readback.EvidenceRoot
+	}
+	leaseStartPath := filepath.ToSlash(strings.TrimSpace(options.LeaseStartPath))
+	workgraphPath := filepath.ToSlash(strings.TrimSpace(options.WorkgraphPath))
+	readbackPath := filepath.ToSlash(strings.TrimSpace(options.ReadbackPath))
+	minMinutes := readback.ElapsedMinutes
+	if readback.Supervisor != nil {
+		minMinutes = readback.Supervisor.MinMinutes
+	}
+	nextNode := readback.FirstExecutableNode
+	if strings.TrimSpace(nextNode) == "" {
+		nextNode = "none"
+	}
+
+	var b strings.Builder
+	b.WriteString("You are AO Atlas, continuing the AO Atlas long-run recommendation wave.\n\n")
+	b.WriteString("Do not ask the operator for permission. Do not reset the lease clock. Load and preserve:\n\n")
+	if evidenceRoot != "" {
+		b.WriteString(fmt.Sprintf("- Evidence root: `%s`\n", filepath.ToSlash(evidenceRoot)))
+	}
+	if leaseStartPath != "" {
+		b.WriteString(fmt.Sprintf("- Lease start: `%s`\n", leaseStartPath))
+	}
+	if workgraphPath != "" {
+		b.WriteString(fmt.Sprintf("- Current workgraph: `%s`\n", workgraphPath))
+	}
+	if readbackPath != "" {
+		b.WriteString(fmt.Sprintf("- Current readback: `%s`\n", readbackPath))
+	}
+	b.WriteString("\nCurrent status:\n")
+	b.WriteString(fmt.Sprintf("- Completed nodes: %d / %d\n", readback.CompletedNodes, readback.TotalNodes))
+	b.WriteString(fmt.Sprintf("- Ready nodes: %d\n", readback.ReadyNodes))
+	b.WriteString(fmt.Sprintf("- Elapsed minutes at latest checkpoint: %d\n", readback.ElapsedMinutes))
+	b.WriteString(fmt.Sprintf("- Minimum minutes: %d\n", minMinutes))
+	b.WriteString(fmt.Sprintf("- `min_minutes_met=%t`\n", readback.MinMinutesMet))
+	b.WriteString(fmt.Sprintf("- `final_response_allowed=%t`\n", readback.FinalResponseAllowed))
+	b.WriteString(fmt.Sprintf("- Return gate: `%s`\n", readback.ReturnGateStatus))
+	b.WriteString(fmt.Sprintf("- Checkpoint count: %d\n", readback.CheckpointCount))
+	b.WriteString(fmt.Sprintf("- Next executable node: `%s`\n\n", nextNode))
+	b.WriteString("Goal:\n")
+	b.WriteString("Continue the useful 2-3 hour Atlas-owned hardening wave. Execute exactly one bounded node at a time, preserving the original `started_at` from `lease-start.json`, until all ready work is handled or a true hard blocker remains after safe repair attempts.\n\n")
+	b.WriteString("Exact next action:\n")
+	b.WriteString(fmt.Sprintf("- %s\n\n", readback.ExactNextAction))
+	b.WriteString("Safety boundaries:\n")
+	b.WriteString("- No provider calls.\n")
+	b.WriteString("- No credential or token inspection.\n")
+	b.WriteString("- No direct main mutation.\n")
+	b.WriteString("- No release, deploy, publish, upload, or tag.\n")
+	b.WriteString("- No dependency updates unless separately authorized.\n")
+	b.WriteString("- No auth, policy, or config widening.\n")
+	b.WriteString("- No hidden instruction mutation.\n")
+	b.WriteString("- No broad RSI claim.\n")
+	b.WriteString("- RSI remains denied.\n")
+	b.WriteString("- Keep exactly one executable mutation node active at a time.\n\n")
+	b.WriteString("Verification:\n")
+	b.WriteString("- `go test ./... -count=1`\n")
+	b.WriteString("- `go vet ./...`\n")
+	b.WriteString("- `go build ./cmd/atlas`\n")
+	b.WriteString("- `scripts/production-readiness.sh`\n")
+	b.WriteString("- `scripts/atlas-foundry-roundtrip-smoke.sh`\n")
+	b.WriteString("- Public-safety wording scan over changed docs and evidence.\n\n")
+	b.WriteString("Final response is allowed only when the authoritative recommendation readback has `final_response_allowed=true`, the execution readback agrees, Command and Foundry summaries agree, Promoter records no promotion, verification passes, the repo is clean and synced, and no ready nodes or exact next actions remain.\n")
+	b.WriteString("If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.\n")
+	return b.String()
+}
+
 func buildAtlasRecommendationPrompt(wave AtlasRecommendationWave) string {
 	var b strings.Builder
 	minMinutes := wave.EstimatedMinutes

@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-16",
+  "candidate": "resume-next-prompt-artifact",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "The import path wrote next-recommended-prompt.md, but the resume path refreshed readbacks without writing a new exact continuation prompt artifact."
+}

@@ -525,6 +525,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	promoterPath := filepath.Join(dir, "promoter-readback.json")
 	foundryPath := filepath.Join(dir, "foundry-rollup.json")
 	reconciliationPath := filepath.Join(dir, "reconciliation-packet.json")
+	nextPromptPath := filepath.Join(dir, "next-recommended-prompt.md")
 	out.Reset()
 	code = Run([]string{
 		"mission", "recommendations", "resume",
@@ -539,12 +540,14 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		"--out-promoter-readback", promoterPath,
 		"--out-foundry-rollup", foundryPath,
 		"--out-reconciliation-packet", reconciliationPath,
+		"--out-next-prompt", nextPromptPath,
 	}, &out, &out)
 	if code != 0 {
 		t.Fatalf("resume failed: %s", out.String())
 	}
 	if !strings.Contains(out.String(), "started_at=2026-07-04T08:00:00-07:00") ||
-		!strings.Contains(out.String(), "elapsed_minutes=25") {
+		!strings.Contains(out.String(), "elapsed_minutes=25") ||
+		!strings.Contains(out.String(), "next_recommended_prompt=") {
 		t.Fatalf("resume output did not preserve lease timing: %s", out.String())
 	}
 	resumeReadback := mustLoadJSON[AtlasRecommendationReadback](t, resumeReadbackPath)
@@ -595,6 +598,22 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		reconciliation.FoundryReturnGateStatus != resumeReadback.ReturnGateStatus ||
 		reconciliation.PromotionClaimed {
 		t.Fatalf("bad reconciliation packet: %#v", reconciliation)
+	}
+	nextPrompt, err := os.ReadFile(nextPromptPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{
+		"Current status:",
+		"Completed nodes: 1 / 40",
+		"Next executable node: `mission-recommendation-next-02`",
+		"Exact next action:",
+		"Emit Foundry import for mission-recommendation-next-02 and execute exactly one active node.",
+		"If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.",
+	} {
+		if !strings.Contains(string(nextPrompt), want) {
+			t.Fatalf("resume next prompt missing %q:\n%s", want, string(nextPrompt))
+		}
 	}
 	schemaRoot := filepath.Join(repoRoot(t), "schemas")
 	for _, tc := range []struct {

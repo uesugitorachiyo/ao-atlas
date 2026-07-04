@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-16",
+  "red_phase": "Coverage gap identified: resumed recommendation readbacks did not emit an updated next prompt artifact for the exact next executable node.",
+  "green_phase": "Focused resume test passed after adding --out-next-prompt and prompt content assertions.",
+  "tests": [
+    "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+    "production-readiness resumed next prompt checks"
+  ]
+}

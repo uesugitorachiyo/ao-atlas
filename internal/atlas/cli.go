@@ -641,6 +641,7 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 	outPromoterReadbackPath := fs.String("out-promoter-readback", "", "Promoter no-promotion readback output path")
 	outFoundryRollupPath := fs.String("out-foundry-rollup", "", "Foundry run-link rollup output path")
 	outReconciliationPacketPath := fs.String("out-reconciliation-packet", "", "Atlas recommendation reconciliation packet output path")
+	outNextPromptPath := fs.String("out-next-prompt", "", "updated Atlas continuation prompt output path")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -654,7 +655,7 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 			return fmt.Errorf("%s is required", name)
 		}
 	}
-	for _, out := range []string{*outReadbackPath, *outExecutionReadbackPath, *outCommandReadbackPath, *outPromoterReadbackPath, *outFoundryRollupPath, *outReconciliationPacketPath} {
+	for _, out := range []string{*outReadbackPath, *outExecutionReadbackPath, *outCommandReadbackPath, *outPromoterReadbackPath, *outFoundryRollupPath, *outReconciliationPacketPath, *outNextPromptPath} {
 		if strings.TrimSpace(out) == "" {
 			continue
 		}
@@ -727,7 +728,18 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 			return err
 		}
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nstarted_at=%s\ncompleted_at=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncommand_readback=%s\npromoter_readback=%s\nfoundry_rollup=%s\nreconciliation_packet=%s\n",
+	if strings.TrimSpace(*outNextPromptPath) != "" {
+		prompt := BuildAtlasRecommendationResumePrompt(readback, AtlasRecommendationResumePromptOptions{
+			EvidenceRoot:   *evidenceRoot,
+			LeaseStartPath: *leaseStartPath,
+			WorkgraphPath:  *workgraphPath,
+			ReadbackPath:   *outReadbackPath,
+		})
+		if err := os.WriteFile(*outNextPromptPath, []byte(prompt), 0o644); err != nil {
+			return err
+		}
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nstarted_at=%s\ncompleted_at=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncommand_readback=%s\npromoter_readback=%s\nfoundry_rollup=%s\nreconciliation_packet=%s\nnext_recommended_prompt=%s\n",
 		readback.Status,
 		readback.MissionID,
 		readback.StartedAt,
@@ -745,6 +757,7 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 		filepath.ToSlash(*outPromoterReadbackPath),
 		filepath.ToSlash(*outFoundryRollupPath),
 		filepath.ToSlash(*outReconciliationPacketPath),
+		filepath.ToSlash(*outNextPromptPath),
 	)
 	return nil
 }
