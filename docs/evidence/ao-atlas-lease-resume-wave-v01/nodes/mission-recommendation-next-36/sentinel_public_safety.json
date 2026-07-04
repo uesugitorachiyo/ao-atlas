@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-36",
+  "public_safety_scope": "documentation and evidence only",
+  "forbidden_claims": [
+    "no broad RSI claim",
+    "no provider-call permission",
+    "no credential inspection permission",
+    "no direct-main mutation permission",
+    "no release/deploy/publish/upload/tag permission"
+  ],
+  "summary": "The node clarifies Command readback fields only; RSI remains denied and no AO authority is widened."
+}

@@ -1,0 +1,10 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-36",
+  "checkpoint_policy": "after_each_node_or_timed_interval",
+  "workgraph_after": "nodes/mission-recommendation-next-36/workgraph-after.json",
+  "recommendation_readback_after": "nodes/mission-recommendation-next-36/recommendation-readback-after.json",
+  "execution_readback_after": "nodes/mission-recommendation-next-36/execution-readback-after.json",
+  "checkpoint_readback_after": "nodes/mission-recommendation-next-36/checkpoint-readback-after.json",
+  "summary": "Node 36 completion produced a fresh checkpoint with completed_nodes=36, ready_nodes=4, and next_executable_node=mission-recommendation-next-37."
+}

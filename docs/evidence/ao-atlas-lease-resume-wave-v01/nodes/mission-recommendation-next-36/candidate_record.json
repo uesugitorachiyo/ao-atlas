@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-36",
+  "selected_candidate": "docs-only Command readback requirement clarification",
+  "owner": "AO Atlas",
+  "command_role": "compact gate-bound operator readback",
+  "blueprint_route": "not_required",
+  "summary": "The ready Atlas-owned task already included objective, scope, gates, safety limits, and digest-bound source evidence, so Blueprint was skipped and Command readback requirements were documented directly."
+}

@@ -31,6 +31,14 @@ as a bulk implementation grant.
 
 Use AO Command for compact readback: completed nodes, ready nodes, blockers, exact next action, and whether final response is allowed.
 
+Command readback requirements stay compact and gate-bound: every resumed
+long-run wave must expose completed nodes, ready nodes, blocked and failed node
+counts, lease time status, checkpoint freshness, return gate status, exact next
+action, first executable node, and `final_response_allowed`. Command readback
+must not replace the Atlas workgraph or Foundry run-link evidence; it is the
+operator-facing status packet that proves whether Atlas must continue, repair,
+or finalize.
+
 Use AO Promoter only for a promotion or no-promotion verdict. A recommendation wave does not promote mutation authority by itself.
 
 ## Lease Defaults

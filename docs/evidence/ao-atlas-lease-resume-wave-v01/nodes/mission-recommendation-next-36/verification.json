@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-36",
+  "commands": [
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "output_summary": "status=ready score=100/100"
+    },
+    {
+      "command": "find docs/evidence/ao-atlas-lease-resume-wave-v01 -name '*.json' -print0 | xargs -0 -n1 jq -e . >/dev/null",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed",
+      "output_summary": "cmd/atlas had no test files; internal/atlas passed."
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed",
+      "output_summary": "status=ready mode=fixture_only_readback"
+    }
+  ]
+}
