@@ -823,6 +823,9 @@ func TestMissionStatusSummarizesIntakeWorkgraphAndRunLinks(t *testing.T) {
 	if status.CompletionStatus != "completed" || status.NodeCounts["completed"] != 2 {
 		t.Fatalf("expected completed mission status, got %#v", status)
 	}
+	if !status.FinalResponseAllowed || status.FinalStateReconciliation == nil || status.FinalStateReconciliation.Status != "ready" {
+		t.Fatalf("completed mission should allow final response with reconciliation: %#v", status)
+	}
 }
 
 func TestMissionImportBindsAOMissionArtifacts(t *testing.T) {
@@ -1534,6 +1537,12 @@ func TestMissionStatusJSONReportsMissingHandoffs(t *testing.T) {
 	}
 	if status.NextRecommendedAction != "emit Foundry handoff for ready nodes" {
 		t.Fatalf("unexpected next recommended action: %#v", status.NextRecommendedAction)
+	}
+	if status.FinalResponseAllowed || status.FinalResponseReason == "" {
+		t.Fatalf("final response should be refused while ready nodes or next actions remain: %#v", status)
+	}
+	if status.FinalStateReconciliation == nil || status.FinalStateReconciliation.WorkgraphStatus == "" || status.FinalStateReconciliation.CommandReadbackStatus == "" {
+		t.Fatalf("missing final-state reconciliation packet: %#v", status)
 	}
 }
 
