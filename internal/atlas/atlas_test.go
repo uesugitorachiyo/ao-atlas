@@ -1195,6 +1195,9 @@ func TestMissionImportWorkgraphMetadataBindsImportAndWorkgraph(t *testing.T) {
 	if metadata.SourceArtifacts["ao_mission_import"] == "" || metadata.SourceArtifacts["workgraph"] == "" {
 		t.Fatalf("missing source digests: %#v", metadata.SourceArtifacts)
 	}
+	if metadata.MissionProvenance["route_history"] != 1 || metadata.MissionProvenance["scheduler_recovery"] != 1 || metadata.MissionProvenance["ledger_compaction"] != 1 {
+		t.Fatalf("missing mission provenance summary: %#v", metadata.MissionProvenance)
+	}
 	if metadata.SafeToExecute || metadata.SchedulesWork || metadata.ExecutesWork || metadata.ApprovesWork {
 		t.Fatalf("metadata widened authority: %#v", metadata)
 	}
@@ -1541,6 +1544,13 @@ func TestFoundryImportIncludesAOMissionMetadataSourceArtifact(t *testing.T) {
 		TargetInstance:  "demo-stack",
 		CurrentRoute:    "ao-atlas",
 		NodeCounts:      map[string]int{"total": 2, "completed": 1, "ready": 1},
+		MissionProvenance: map[string]int{
+			"mission_record":     1,
+			"command_status":     1,
+			"artifact_manifest":  1,
+			"scheduler_recovery": 1,
+			"ledger_compaction":  1,
+		},
 		SourceArtifacts: map[string]string{
 			"ao_mission_import": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
 			"workgraph":         "sha256:2222222222222222222222222222222222222222222222222222222222222222",
