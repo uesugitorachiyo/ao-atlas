@@ -90,6 +90,23 @@ type AOMissionWorkgraphMetadata struct {
 	ApprovesWork             bool              `json:"approves_work"`
 }
 
+type AOMissionProvenanceRender struct {
+	ContractVersion          string         `json:"contract_version"`
+	Status                   string         `json:"status"`
+	MissionID                string         `json:"mission_id"`
+	WorkgraphID              string         `json:"workgraph_id"`
+	PrimaryMissionProvenance string         `json:"primary_mission_provenance"`
+	TotalProvenanceSources   int            `json:"total_provenance_sources"`
+	ProvenanceSummary        string         `json:"provenance_summary"`
+	ProvenanceNodes          []string       `json:"provenance_nodes"`
+	MissionProvenance        map[string]int `json:"mission_provenance"`
+	NextAction               string         `json:"next_action"`
+	SafeToExecute            bool           `json:"safe_to_execute"`
+	SchedulesWork            bool           `json:"schedules_work"`
+	ExecutesWork             bool           `json:"executes_work"`
+	ApprovesWork             bool           `json:"approves_work"`
+}
+
 type AOMissionSourceArtifact struct {
 	Name   string `json:"name"`
 	Path   string `json:"path"`

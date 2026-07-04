@@ -300,7 +300,7 @@ func runIntake(args []string, stdout io.Writer) error {
 
 func runMission(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission requires status, import, or workgraph-metadata")
+		return fmt.Errorf("mission requires status, import, workgraph-metadata, or provenance")
 	}
 	if args[0] == "import" {
 		return runMissionImport(args[1:], stdout)
@@ -308,8 +308,11 @@ func runMission(args []string, stdout io.Writer) error {
 	if args[0] == "workgraph-metadata" {
 		return runMissionWorkgraphMetadata(args[1:], stdout)
 	}
+	if args[0] == "provenance" {
+		return runMissionProvenance(args[1:], stdout)
+	}
 	if args[0] != "status" {
-		return fmt.Errorf("mission requires status, import, or workgraph-metadata")
+		return fmt.Errorf("mission requires status, import, workgraph-metadata, or provenance")
 	}
 	fs := flag.NewFlagSet("mission status", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -357,6 +360,47 @@ func runMission(args []string, stdout io.Writer) error {
 		return printJSON(stdout, status)
 	}
 	fmt.Fprintf(stdout, "status=%s\nintake=%s\nworkgraph=%s\n", status.CompletionStatus, status.IntakeID, status.WorkgraphID)
+	return nil
+}
+
+func runMissionProvenance(args []string, stdout io.Writer) error {
+	if len(args) == 0 || args[0] != "render" {
+		return fmt.Errorf("mission provenance requires render")
+	}
+	fs := flag.NewFlagSet("mission provenance render", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	metadataPath := fs.String("metadata", "", "AO Mission workgraph metadata path")
+	outPath := fs.String("out", "", "output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*metadataPath) == "" {
+		return fmt.Errorf("--metadata is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if samePath(*metadataPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	metadata, err := LoadJSON[AOMissionWorkgraphMetadata](*metadataPath)
+	if err != nil {
+		return err
+	}
+	render, err := BuildAOMissionProvenanceRender(metadata)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, render); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, render)
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nprimary_mission_provenance=%s\nprovenance_summary=%s\n", render.Status, render.MissionID, render.PrimaryMissionProvenance, render.ProvenanceSummary)
 	return nil
 }
 
