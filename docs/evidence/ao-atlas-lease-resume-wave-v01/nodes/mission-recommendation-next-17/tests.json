@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-17",
+  "red_phase": "Coverage gap identified: recommendation import artifacts could pass readiness without proving lease-start/readback digest agreement.",
+  "green_phase": "Focused digest-binding test passed and readiness now records recommendation-import-artifact-binding.",
+  "tests": [
+    "TestMissionRecommendationsImportArtifactsAreDigestBound",
+    "production-readiness recommendation-import-artifact-binding"
+  ]
+}
