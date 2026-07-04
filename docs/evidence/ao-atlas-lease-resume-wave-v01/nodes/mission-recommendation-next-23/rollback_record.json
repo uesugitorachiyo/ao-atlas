@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-23",
+  "rollback": [
+    "Revert stale_route_decision_status on AtlasRecommendationReconciliationPacket.",
+    "Revert reconciliation builder and validator checks for stale_route_decision_status.",
+    "Revert recommendation reconciliation schema and production-readiness route-decision assertion.",
+    "Remove node 23 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-23.",
+    "Regenerate root readbacks from node 22 workgraph if this node is reverted before merge."
+  ]
+}

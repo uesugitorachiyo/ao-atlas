@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-23",
+  "summary": "Node 23 checkpoint records stale route decision reconciliation binding and preserves continuation to node 24 because ready nodes remain."
+}

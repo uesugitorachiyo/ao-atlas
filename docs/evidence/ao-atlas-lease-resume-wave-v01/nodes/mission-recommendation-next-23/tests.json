@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-23",
+  "red_test": "go test ./internal/atlas -run 'TestRecommendationReconciliationSchemaRequiresStaleRouteDecisionStatus|TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestMissionRecommendationsDetectStaleClosureArtifacts' -count=1 failed before implementation because AtlasRecommendationReconciliationPacket had no stale_route_decision_status field.",
+  "tests": [
+    "go test ./internal/atlas -run 'TestRecommendationReconciliationSchemaRequiresStaleRouteDecisionStatus|TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestMissionRecommendationsDetectStaleClosureArtifacts' -count=1 passed"
+  ],
+  "summary": "Regression coverage now proves the reconciliation schema requires stale_route_decision_status and stale reconciliation packets are rejected when the route decision drifts from the root readback."
+}

@@ -463,6 +463,7 @@ type AtlasRecommendationReconciliationPacket struct {
 	LeaseTimeStatus              string `json:"lease_time_status"`
 	LeaseHealthStatus            string `json:"lease_health_status"`
 	CheckpointFreshnessStatus    string `json:"checkpoint_freshness_status"`
+	StaleRouteDecisionStatus     string `json:"stale_route_decision_status"`
 	FinalResponseAllowed         bool   `json:"final_response_allowed"`
 	FinalResponseReason          string `json:"final_response_reason"`
 	ExactNextAction              string `json:"exact_next_action"`

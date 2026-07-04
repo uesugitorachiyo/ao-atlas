@@ -1372,6 +1372,7 @@ func BuildAtlasRecommendationReconciliationPacket(readback AtlasRecommendationRe
 		LeaseTimeStatus:              readback.LeaseTimeStatus,
 		LeaseHealthStatus:            readback.LeaseHealthStatus,
 		CheckpointFreshnessStatus:    readback.CheckpointFreshnessStatus,
+		StaleRouteDecisionStatus:     readback.StaleRouteDecisionStatus,
 		FinalResponseAllowed:         readback.FinalResponseAllowed,
 		FinalResponseReason:          readback.FinalResponseReason,
 		ExactNextAction:              readback.ExactNextAction,
@@ -1418,6 +1419,9 @@ func ValidateAtlasRecommendationReconciliationPacket(readback AtlasRecommendatio
 	}
 	if packet.CheckpointFreshnessStatus != readback.CheckpointFreshnessStatus {
 		errs = append(errs, "reconciliation checkpoint_freshness_status disagrees")
+	}
+	if packet.StaleRouteDecisionStatus != readback.StaleRouteDecisionStatus {
+		errs = append(errs, "reconciliation stale_route_decision_status disagrees")
 	}
 	if packet.FinalResponseAllowed != readback.FinalResponseAllowed {
 		errs = append(errs, "reconciliation final_response_allowed disagrees")
