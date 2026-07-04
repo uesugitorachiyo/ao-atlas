@@ -113,12 +113,13 @@ func BuildAOMissionWorkgraphMetadata(importPath, workgraphPath string) (AOMissio
 		return AOMissionWorkgraphMetadata{}, err
 	}
 	return AOMissionWorkgraphMetadata{
-		ContractVersion: AOMissionWorkgraphMetadataContract,
-		MissionID:       importRecord.MissionID,
-		WorkgraphID:     workgraph.ID,
-		TargetInstance:  workgraph.TargetInstance,
-		CurrentRoute:    importRecord.CurrentRoute,
-		NodeCounts:      aoMissionWorkgraphNodeCounts(workgraph),
+		ContractVersion:   AOMissionWorkgraphMetadataContract,
+		MissionID:         importRecord.MissionID,
+		WorkgraphID:       workgraph.ID,
+		TargetInstance:    workgraph.TargetInstance,
+		CurrentRoute:      importRecord.CurrentRoute,
+		NodeCounts:        aoMissionWorkgraphNodeCounts(workgraph),
+		MissionProvenance: aoMissionProvenanceCounts(importRecord),
 		SourceArtifacts: map[string]string{
 			"ao_mission_import": importDigest,
 			"workgraph":         workgraphDigest,
@@ -158,6 +159,9 @@ func ValidateAOMissionWorkgraphMetadata(metadata AOMissionWorkgraphMetadata, wor
 	if len(metadata.SourceArtifacts) == 0 {
 		return fmt.Errorf("AO Mission workgraph metadata requires source_artifacts")
 	}
+	if len(metadata.MissionProvenance) == 0 {
+		return fmt.Errorf("AO Mission workgraph metadata requires mission_provenance")
+	}
 	return nil
 }
 
@@ -165,6 +169,14 @@ func aoMissionWorkgraphNodeCounts(workgraph Workgraph) map[string]int {
 	counts := map[string]int{"total": len(workgraph.Nodes)}
 	for _, node := range workgraph.Nodes {
 		counts[node.Status]++
+	}
+	return counts
+}
+
+func aoMissionProvenanceCounts(importRecord AOMissionImport) map[string]int {
+	counts := map[string]int{}
+	for _, source := range importRecord.SourceArtifacts {
+		counts[source.Name]++
 	}
 	return counts
 }

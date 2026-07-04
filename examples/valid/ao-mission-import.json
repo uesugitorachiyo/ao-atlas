@@ -18,6 +18,21 @@
       "name": "artifact_manifest",
       "path": "examples/valid/ao-mission/artifact-manifest.json",
       "sha256": "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    {
+      "name": "route_history",
+      "path": "examples/valid/ao-mission/route-history.json",
+      "sha256": "sha256:8a622372e5dd428cdbb5d06961675e17389ae5722d2bf99f3489819ed10fd1c5"
+    },
+    {
+      "name": "scheduler_recovery",
+      "path": "examples/valid/ao-mission/scheduler-recovery-readback.json",
+      "sha256": "sha256:a18e5f3a8323b64f5bee5f71067f8166f79b0b9f64b615271946000bf7d5d171"
+    },
+    {
+      "name": "ledger_compaction",
+      "path": "examples/valid/ao-mission/ledger-compaction-readback.json",
+      "sha256": "sha256:495adc6524853437e03ca373b9e330694bd9315fbd36ad74b631c588629d93bd"
     }
   ],
   "next_action": "compile AO Mission context into Atlas workgraph before Foundry import",
