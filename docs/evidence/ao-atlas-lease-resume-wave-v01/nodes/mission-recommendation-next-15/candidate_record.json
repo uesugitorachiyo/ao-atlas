@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-15",
+  "candidate": "double-size-long-run-operator-docs",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Operator docs described 2-3 hour defaults but did not clearly state that double-size recovery requests must avoid 20-node or 90-minute compatibility waves."
+}

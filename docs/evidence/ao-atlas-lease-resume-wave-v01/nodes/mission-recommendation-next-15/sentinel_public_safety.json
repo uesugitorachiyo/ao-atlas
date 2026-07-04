@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-15",
+  "summary": "Changed operator docs and readiness checks only. The guidance preserves no provider calls, no credential inspection, no direct main mutation, no release/deploy/publish/upload/tag, no authority widening, and no RSI proof claim.",
+  "forbidden_markers_found": false,
+  "rsi_claimed": false,
+  "provider_calls": false,
+  "credential_inspection": false
+}

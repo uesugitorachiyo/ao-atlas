@@ -5,20 +5,20 @@ preserve:
 
 - Evidence root: `docs/evidence/ao-atlas-lease-resume-wave-v01`
 - Lease start: `docs/evidence/ao-atlas-lease-resume-wave-v01/lease-start.json`
-- Current workgraph: `docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-14/workgraph-after.json`
+- Current workgraph: `docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-15/workgraph-after.json`
 - Current readback: `docs/evidence/ao-atlas-lease-resume-wave-v01/recommendation-readback.json`
 
 Current status:
-- Completed nodes: 14 / 40
-- Ready nodes: 26
-- Elapsed minutes at latest checkpoint: 162
+- Completed nodes: 15 / 40
+- Ready nodes: 25
+- Elapsed minutes at latest checkpoint: 174
 - Minimum minutes: 120
 - `min_minutes_met=true`
 - `final_response_allowed=false`
 - Return gate: `blocked_ready_nodes_remain`
-- Checkpoint count: 14
+- Checkpoint count: 15
 - Reconciliation packet: `artifacts_agree=true`
-- Next executable node: `mission-recommendation-next-15`
+- Next executable node: `mission-recommendation-next-16`
 
 Goal:
 Continue the useful 2-3 hour Atlas-owned hardening wave. Execute exactly one
@@ -27,7 +27,7 @@ bounded node at a time, preserving the original `started_at` from
 remains after safe repair attempts.
 
 Prioritized next tasks:
-01. Execute `mission-recommendation-next-15` with Foundry import, run-link,
+01. Execute `mission-recommendation-next-16` with Foundry import, run-link,
 checkpoint readback, and resume readbacks.
 02. Add stale Command/Foundry fixture files and a CLI validation command for
 closure artifacts.
