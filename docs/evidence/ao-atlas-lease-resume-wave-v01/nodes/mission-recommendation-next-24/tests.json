@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-24",
+  "red_test": "go test ./internal/atlas -run 'TestMissionRecommendationsImportBuildsDefaultLongRunSupervisorAndReadback|TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt' -count=1 failed before implementation because continuation prompts did not include the concrete early-return risk status.",
+  "tests": [
+    "go test ./internal/atlas -run 'TestMissionRecommendationsImportBuildsDefaultLongRunSupervisorAndReadback|TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt' -count=1 passed"
+  ],
+  "summary": "Prompt tests now prove initial long-run prompts mention early_return_risk_status and continuation prompts include the concrete early-return risk value."
+}

@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-24",
+  "summary": "Node 24 checkpoint records early-return risk prompt wording and preserves continuation to node 25 because ready nodes remain."
+}

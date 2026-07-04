@@ -451,6 +451,7 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 		"Final response only after completion or true hard blocker:",
 		"Target 2-3 hours",
 		"Complete at least 30 bounded implementation/evidence nodes",
+		"`early_return_risk_status`",
 		"If ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response.",
 	} {
 		if !strings.Contains(prompt, want) {
@@ -838,6 +839,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	for _, want := range []string{
 		"Current status:",
 		"Completed nodes: 1 / 40",
+		"Early-return risk: `" + resumeReadback.EarlyReturnRiskStatus + "`",
 		"Next executable node: `mission-recommendation-next-02`",
 		"Exact next action:",
 		"Emit Foundry import for mission-recommendation-next-02 and execute exactly one active node.",
@@ -1497,6 +1499,7 @@ func TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt(t *testing.T) {
 		"Elapsed minutes at latest checkpoint: " + strconv.Itoa(readback.ElapsedMinutes),
 		"`final_response_allowed=" + strconv.FormatBool(readback.FinalResponseAllowed) + "`",
 		"Return gate: `" + readback.ReturnGateStatus + "`",
+		"Early-return risk: `" + readback.EarlyReturnRiskStatus + "`",
 		"Checkpoint count: " + strconv.Itoa(readback.CheckpointCount),
 		"Next executable node: `" + readback.FirstExecutableNode + "`",
 		readback.ExactNextAction,
@@ -1604,6 +1607,8 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"lease_resume_root=\"docs/evidence/ao-atlas-lease-resume-wave-v01\"",
 		"final-synthesis.json",
 		"Current workgraph:",
+		"early_return_risk_status",
+		"Early-return risk:",
 		"do not produce a final response",
 	} {
 		if !strings.Contains(script, want) {
