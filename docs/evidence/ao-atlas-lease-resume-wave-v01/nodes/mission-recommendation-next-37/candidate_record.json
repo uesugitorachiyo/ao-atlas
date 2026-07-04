@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-37",
+  "selected_candidate": "production readiness generated continuation prompt safety scan",
+  "owner": "AO Atlas",
+  "scan_scope": "generated continuation prompts",
+  "blueprint_route": "not_required",
+  "summary": "The ready Atlas-owned task already included objective, scope, gates, safety limits, and digest-bound source evidence, so Blueprint was skipped and continuation prompt safety scanning was implemented directly."
+}
