@@ -29,18 +29,26 @@ For a long-run recommendation wave, use these defaults unless the operator gives
 
 Generated recommendations are not completed work. A node counts as completed only after the workgraph advances through a completed run-link with node gate, candidate, rollback, implementation, tests, verification, public-safety, Promoter, Command, Foundry import, and checkpoint evidence. Completing every generated node is still not enough to close a 2-3 hour lease: the authoritative readback must also record `started_at`, `completed_at`, `elapsed_minutes`, `min_minutes_met=true`, and `lease_time_status=minimum_minutes_met`.
 
+`lease-start.json` is the durable start marker for the wave. Preserve it across
+checkpoint and resume commands so Atlas does not reset the clock when a prompt
+continues in a later session. If a wave completes all nodes before
+`elapsed_minutes` reaches `supervisor.min_minutes`, keep final response denied
+and generate the next useful Atlas-owned wave. Synthetic node evidence can prove
+ledger mechanics, but it cannot satisfy a 2-3 hour lease by itself.
+
 ## Execution Pattern
 
 1. Confirm the repo is on a branch, clean enough for the wave, and not mutating `main` directly.
 2. Import the Mission Feature Depth Recommendations into an Atlas recommendation wave.
-3. Inspect the readback. If `final_response_allowed` is false, do not return final status.
-4. Emit a Foundry import for the first executable node.
-5. Record the required evidence bundle for that node.
-6. Attach a completed run-link to the node.
-7. Run `atlas mission recommendations complete-node`.
-8. Regenerate readback and execution readback.
-9. Repeat from the next executable node until the wave is complete or a hard blocker remains.
-10. Run local verification, open a PR, wait for CI, merge, sync, and remove `codex/*` branches when remote lifecycle is available.
+3. Preserve `lease-start.json`; it is the authoritative `started_at` source for resume.
+4. Inspect the readback. If `final_response_allowed` is false, do not return final status.
+5. Emit a Foundry import for the first executable node.
+6. Record the required evidence bundle for that node.
+7. Attach a completed run-link to the node.
+8. Run `atlas mission recommendations complete-node` with `--lease-start` and `--out-checkpoint-readback`.
+9. Use `atlas mission recommendations resume` when continuing from a checkpoint; it carries the original `started_at` into recommendation, execution, Command, Promoter, and Foundry readbacks.
+10. Repeat from the next executable node until the wave is complete and the lease is met, or a hard blocker remains.
+11. Run local verification, open a PR, wait for CI, merge, sync, and remove `codex/*` branches when remote lifecycle is available.
 
 ## Commands
 
@@ -53,6 +61,7 @@ atlas mission recommendations import \
   --min-minutes 120 \
   --max-minutes 180 \
   --continue-if-fast-target 40 \
+  --started-at 2026-07-04T08:00:00-07:00 \
   --out docs/evidence/<wave>
 
 atlas foundry import \
@@ -68,9 +77,24 @@ atlas mission recommendations complete-node \
   --expected-node mission-recommendation-next-01 \
   --evidence-root . \
   --readback-evidence-root docs/evidence/<wave> \
+  --lease-start docs/evidence/<wave>/lease-start.json \
+  --completed-at 2026-07-04T08:17:00-07:00 \
   --out-workgraph docs/evidence/<wave>/nodes/mission-recommendation-next-01/workgraph-after.json \
   --out-readback docs/evidence/<wave>/nodes/mission-recommendation-next-01/recommendation-readback-after.json \
-  --out-execution-readback docs/evidence/<wave>/nodes/mission-recommendation-next-01/execution-readback-after.json
+  --out-execution-readback docs/evidence/<wave>/nodes/mission-recommendation-next-01/execution-readback-after.json \
+  --out-checkpoint-readback docs/evidence/<wave>/nodes/mission-recommendation-next-01/checkpoint-readback-after.json
+
+atlas mission recommendations resume \
+  --wave docs/evidence/<wave>/recommendation-wave.json \
+  --workgraph docs/evidence/<wave>/nodes/mission-recommendation-next-01/workgraph-after.json \
+  --lease-start docs/evidence/<wave>/lease-start.json \
+  --completed-at 2026-07-04T08:25:00-07:00 \
+  --evidence-root docs/evidence/<wave> \
+  --out-readback docs/evidence/<wave>/recommendation-readback.json \
+  --out-execution-readback docs/evidence/<wave>/execution-readback.json \
+  --out-command-readback docs/evidence/<wave>/command-readback.json \
+  --out-promoter-readback docs/evidence/<wave>/promoter-readback.json \
+  --out-foundry-rollup docs/evidence/<wave>/foundry-rollup.json
 
 atlas mission recommendations readback \
   --wave docs/evidence/<wave>/recommendation-wave.json \

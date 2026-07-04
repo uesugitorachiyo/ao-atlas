@@ -265,6 +265,57 @@ type AtlasRecommendationExecutionReadback struct {
 	GeneratedWorkgraph           AtlasRecommendationGeneratedWorkgraphReadback `json:"generated_workgraph"`
 }
 
+type AtlasRecommendationLeaseStart struct {
+	Schema                 string `json:"schema"`
+	Status                 string `json:"status"`
+	MissionID              string `json:"mission_id"`
+	TargetInstance         string `json:"target_instance"`
+	EvidenceRoot           string `json:"evidence_root,omitempty"`
+	StartedAt              string `json:"started_at"`
+	MinMinutes             int    `json:"min_minutes"`
+	MaxMinutes             int    `json:"max_minutes"`
+	ContinueIfFastTarget   int    `json:"continue_if_fast_target"`
+	CheckpointPolicy       string `json:"checkpoint_policy"`
+	WaveDigest             string `json:"wave_digest"`
+	WorkgraphDigest        string `json:"workgraph_digest"`
+	FinalResponseAllowed   bool   `json:"final_response_allowed"`
+	FinalResponseReason    string `json:"final_response_reason"`
+	SchedulesWork          bool   `json:"schedules_work"`
+	ExecutesWork           bool   `json:"executes_work"`
+	ApprovesWork           bool   `json:"approves_work"`
+	MutatesRepositories    bool   `json:"mutates_repositories"`
+	CallsProviders         bool   `json:"calls_providers"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+}
+
+type AtlasRecommendationCheckpointReadback struct {
+	Schema                    string `json:"schema"`
+	Status                    string `json:"status"`
+	MissionID                 string `json:"mission_id"`
+	EvidenceRoot              string `json:"evidence_root,omitempty"`
+	StartedAt                 string `json:"started_at,omitempty"`
+	CompletedAt               string `json:"completed_at,omitempty"`
+	ElapsedMinutes            int    `json:"elapsed_minutes"`
+	MinMinutes                int    `json:"min_minutes"`
+	MaxMinutes                int    `json:"max_minutes"`
+	MinMinutesMet             bool   `json:"min_minutes_met"`
+	LeaseTimeStatus           string `json:"lease_time_status"`
+	CheckpointFreshnessStatus string `json:"checkpoint_freshness_status"`
+	CompletedNodes            int    `json:"completed_nodes"`
+	ReadyNodes                int    `json:"ready_nodes"`
+	BlockedNodes              int    `json:"blocked_nodes"`
+	FailedNodes               int    `json:"failed_nodes"`
+	TotalNodes                int    `json:"total_nodes"`
+	FirstExecutableNode       string `json:"first_executable_node,omitempty"`
+	FinalResponseAllowed      bool   `json:"final_response_allowed"`
+	FinalResponseReason       string `json:"final_response_reason"`
+	ExactNextAction           string `json:"exact_next_action"`
+	SchedulesWork             bool   `json:"schedules_work"`
+	ExecutesWork              bool   `json:"executes_work"`
+	ApprovesWork              bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance    bool   `json:"claims_authority_advance"`
+}
+
 type AtlasRecommendationGeneratedWorkgraphReadback struct {
 	TotalNodes           int    `json:"total_nodes"`
 	ReadyNodes           int    `json:"ready_nodes"`
@@ -272,6 +323,70 @@ type AtlasRecommendationGeneratedWorkgraphReadback struct {
 	FirstExecutableNode  string `json:"first_executable_node,omitempty"`
 	FinalResponseAllowed bool   `json:"final_response_allowed"`
 	FinalResponseReason  string `json:"final_response_reason,omitempty"`
+}
+
+type AtlasRecommendationCommandReadback struct {
+	Schema                 string `json:"schema"`
+	Status                 string `json:"status"`
+	MissionID              string `json:"mission_id"`
+	EvidenceRoot           string `json:"evidence_root,omitempty"`
+	CompletedNodes         int    `json:"completed_nodes"`
+	ReadyNodes             int    `json:"ready_nodes"`
+	BlockedNodes           int    `json:"blocked_nodes"`
+	FailedNodes            int    `json:"failed_nodes"`
+	TotalNodes             int    `json:"total_nodes"`
+	StartedAt              string `json:"started_at,omitempty"`
+	CompletedAt            string `json:"completed_at,omitempty"`
+	ElapsedMinutes         int    `json:"elapsed_minutes"`
+	MinMinutes             int    `json:"min_minutes"`
+	MinMinutesMet          bool   `json:"min_minutes_met"`
+	LeaseTimeStatus        string `json:"lease_time_status"`
+	NodeCompletionStatus   string `json:"node_completion_status"`
+	FinalResponseAllowed   bool   `json:"final_response_allowed"`
+	FinalResponseReason    string `json:"final_response_reason"`
+	ExactNextAction        string `json:"exact_next_action"`
+	CompactTimeline        string `json:"compact_timeline"`
+	SchedulesWork          bool   `json:"schedules_work"`
+	ExecutesWork           bool   `json:"executes_work"`
+	ApprovesWork           bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+}
+
+type AtlasRecommendationPromoterReadback struct {
+	Schema                 string `json:"schema"`
+	Status                 string `json:"status"`
+	MissionID              string `json:"mission_id"`
+	EvidenceRoot           string `json:"evidence_root,omitempty"`
+	PromotionClaimed       bool   `json:"promotion_claimed"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+	Reason                 string `json:"reason"`
+	ElapsedMinutes         int    `json:"elapsed_minutes"`
+	MinMinutesMet          bool   `json:"min_minutes_met"`
+	FinalResponseAllowed   bool   `json:"final_response_allowed"`
+	SchedulesWork          bool   `json:"schedules_work"`
+	ExecutesWork           bool   `json:"executes_work"`
+	ApprovesWork           bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+}
+
+type AtlasRecommendationFoundryRollup struct {
+	Schema                 string `json:"schema"`
+	Status                 string `json:"status"`
+	MissionID              string `json:"mission_id"`
+	EvidenceRoot           string `json:"evidence_root,omitempty"`
+	CompletedNodes         int    `json:"completed_nodes"`
+	ReadyNodes             int    `json:"ready_nodes"`
+	BlockedNodes           int    `json:"blocked_nodes"`
+	FailedNodes            int    `json:"failed_nodes"`
+	TotalNodes             int    `json:"total_nodes"`
+	NodeCompletionStatus   string `json:"node_completion_status"`
+	LeaseCompletionStatus  string `json:"lease_completion_status"`
+	FinalResponseAllowed   bool   `json:"final_response_allowed"`
+	ExactNextAction        string `json:"exact_next_action"`
+	SchedulesWork          bool   `json:"schedules_work"`
+	ExecutesWork           bool   `json:"executes_work"`
+	ApprovesWork           bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
 }
 
 type AOMissionSourceArtifact struct {
