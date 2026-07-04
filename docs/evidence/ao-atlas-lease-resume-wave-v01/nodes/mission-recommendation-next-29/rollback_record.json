@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-29",
+  "rollback": [
+    "Revert command_timeline_placeholders fields and validation in internal/atlas.",
+    "Revert recommendation-readback schema additions for command_timeline_placeholders.",
+    "Revert production-readiness jq checks for Command timeline placeholders.",
+    "Remove node 29 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-29.",
+    "Regenerate root readbacks from node 28 workgraph if this node is reverted before merge."
+  ]
+}

@@ -690,6 +690,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		PromoterNoPromotionStatus:     promoterNoPromotionStatus,
 		CommandReadbackStatus:         commandReadbackStatus,
 		CommandTimelineStatus:         commandTimelineStatus,
+		CommandTimelinePlaceholders:   commandTimelinePlaceholders(),
 		PublicSafetyScanStatus:        wave.PublicSafetyScanStatus,
 		ReturnGateStatus:              returnGateStatus,
 		CheckpointCount:               completed,
@@ -733,6 +734,32 @@ func buildExactNextActionReadback(action, nextExecutableNode, returnGateStatus s
 		ReturnGateStatus:     returnGateStatus,
 		FinalResponseAllowed: finalResponseAllowed,
 		Source:               "recommendation_readback",
+	}
+}
+
+func commandTimelinePlaceholders() []AtlasCommandTimelinePlaceholder {
+	return []AtlasCommandTimelinePlaceholder{
+		{
+			Slot:                        "checkpoint",
+			Source:                      "recommendation_readback",
+			Status:                      "pending_command_timeline",
+			Summary:                     "Bind completed_nodes, ready_nodes, checkpoint_count, and elapsed_minutes into the compact Command timeline.",
+			RequiredBeforeFinalResponse: true,
+		},
+		{
+			Slot:                        "exact_next_action",
+			Source:                      "recommendation_readback",
+			Status:                      "pending_command_timeline",
+			Summary:                     "Bind exact_next_action and first_executable_node into the compact Command timeline.",
+			RequiredBeforeFinalResponse: true,
+		},
+		{
+			Slot:                        "return_gate",
+			Source:                      "recommendation_readback",
+			Status:                      "pending_command_timeline",
+			Summary:                     "Bind return_gate_status and final_response_allowed into the compact Command timeline.",
+			RequiredBeforeFinalResponse: true,
+		},
 	}
 }
 
@@ -983,6 +1010,9 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	requireField(&errs, "promoter_no_promotion_status", readback.PromoterNoPromotionStatus)
 	requireField(&errs, "command_readback_status", readback.CommandReadbackStatus)
 	requireField(&errs, "command_timeline_status", readback.CommandTimelineStatus)
+	if err := validateCommandTimelinePlaceholders(readback.CommandTimelinePlaceholders); err != nil {
+		errs = append(errs, err.Error())
+	}
 	requireField(&errs, "public_safety_scan_status", readback.PublicSafetyScanStatus)
 	if strings.TrimSpace(readback.ReturnGateStatus) != "" &&
 		!oneOf(readback.ReturnGateStatus, "final_response_allowed", "blocked_hard_blocker", "blocked_lease_timing_missing", "blocked_minimum_minutes_unmet", "blocked_ready_nodes_remain", "blocked_no_executable_ready_node") {
@@ -1077,6 +1107,45 @@ func validateExactNextActionReadback(readback AtlasRecommendationReadback) error
 		}
 	} else if action.Status != "continuation_required" {
 		return fmt.Errorf("exact_next_action_readback.status must be continuation_required")
+	}
+	return nil
+}
+
+func validateCommandTimelinePlaceholders(placeholders []AtlasCommandTimelinePlaceholder) error {
+	required := map[string]bool{
+		"checkpoint":        false,
+		"exact_next_action": false,
+		"return_gate":       false,
+	}
+	if len(placeholders) < len(required) {
+		return fmt.Errorf("command_timeline_placeholders must include checkpoint, exact_next_action, and return_gate")
+	}
+	for _, placeholder := range placeholders {
+		slot := strings.TrimSpace(placeholder.Slot)
+		if _, ok := required[slot]; !ok {
+			return fmt.Errorf("command_timeline_placeholders has unsupported slot %q", placeholder.Slot)
+		}
+		if required[slot] {
+			return fmt.Errorf("command_timeline_placeholders duplicate slot %q", slot)
+		}
+		required[slot] = true
+		if placeholder.Source != "recommendation_readback" {
+			return fmt.Errorf("command_timeline_placeholders.%s source must be recommendation_readback", slot)
+		}
+		if placeholder.Status != "pending_command_timeline" {
+			return fmt.Errorf("command_timeline_placeholders.%s status must be pending_command_timeline", slot)
+		}
+		if strings.TrimSpace(placeholder.Summary) == "" {
+			return fmt.Errorf("command_timeline_placeholders.%s summary is required", slot)
+		}
+		if !placeholder.RequiredBeforeFinalResponse {
+			return fmt.Errorf("command_timeline_placeholders.%s must be required before final response", slot)
+		}
+	}
+	for slot, seen := range required {
+		if !seen {
+			return fmt.Errorf("command_timeline_placeholders missing %s", slot)
+		}
 	}
 	return nil
 }

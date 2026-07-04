@@ -1,0 +1,15 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-29",
+  "summary": "Added compact Command timeline placeholders to recommendation wave readbacks for checkpoint, exact next action, and return gate slots, all sourced from recommendation_readback and required before final response.",
+  "changed_files": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "schemas/recommendation-readback.schema.json",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/recommendation-readback.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/final-synthesis.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/README.md"
+  ]
+}

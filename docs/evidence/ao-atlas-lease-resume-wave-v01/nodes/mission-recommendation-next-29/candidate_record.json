@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-29",
+  "candidate": "atlas-recommendation-command-timeline-placeholders",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Recommendation wave evidence had Command timeline status but did not expose compact timeline placeholders for checkpoint, exact next action, and return gate before Command consumes them."
+}
