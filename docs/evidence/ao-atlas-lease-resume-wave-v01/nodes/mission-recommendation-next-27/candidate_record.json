@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-27",
+  "candidate": "atlas-recommendation-blocked-node-continuation-wording",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Generated Atlas prompts denied final responses while work remained but did not explicitly tell the operator loop how to continue when a node becomes blocked or failed."
+}

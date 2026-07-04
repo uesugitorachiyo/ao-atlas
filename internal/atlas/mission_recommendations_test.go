@@ -500,6 +500,7 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 		"Complete at least 30 bounded implementation/evidence nodes",
 		"`early_return_risk_status`",
 		"If ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response.",
+		"If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.",
 	} {
 		if !strings.Contains(prompt, want) {
 			t.Fatalf("v0.2 prompt missing section %q:\n%s", want, prompt)
@@ -890,6 +891,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		"Next executable node: `mission-recommendation-next-02`",
 		"Exact next action:",
 		"Emit Foundry import for mission-recommendation-next-02 and execute exactly one active node.",
+		"If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.",
 		"If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.",
 	} {
 		if !strings.Contains(string(nextPrompt), want) {

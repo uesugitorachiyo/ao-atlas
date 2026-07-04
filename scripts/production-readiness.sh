@@ -185,6 +185,7 @@ pass "recommendation-import-artifact-binding"
 grep -q "Target 2-3 hours" "$OUT/mission-recommendations/next-recommended-prompt.md"
 grep -q "\`early_return_risk_status\`" "$OUT/mission-recommendations/next-recommended-prompt.md"
 grep -q "If ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response." "$OUT/mission-recommendations/next-recommended-prompt.md"
+grep -q "If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair." "$OUT/mission-recommendations/next-recommended-prompt.md"
 reject_generated_recommendation_prompt_public_safety "$OUT/mission-recommendations/next-recommended-prompt.md"
 pass "recommendation-prompt-public-safety-scan"
 "$BIN" mission recommendations readback --wave "$OUT/mission-recommendations/recommendation-wave.json" --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --evidence-root target/production-readiness/mission-recommendations --out "$OUT/mission-recommendations/recommendation-readback-regenerated.json" >/dev/null
@@ -293,6 +294,7 @@ jq -e '.schema == "ao.atlas.recommendation-foundry-rollup.v0.1" and .node_comple
 jq -e '.schema == "ao.atlas.recommendation-reconciliation-packet.v0.1" and .status == "continuation_required" and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .lease_health_status == "minimum_unmet" and .checkpoint_freshness_status == "fresh_checkpoint_required_after_each_node_or_timed_interval" and .stale_route_decision_status == "fresh_atlas_supervises_foundry_owns_one_active_node" and .command_return_gate_status == "blocked_ready_nodes_remain" and .foundry_return_gate_status == "blocked_ready_nodes_remain" and .artifacts_agree == true and .promotion_claimed == false and .rsi_remains_denied == true and .claims_authority_advance == false' "$OUT/mission-recommendations/reconciliation-packet-resumed.json" >/dev/null
 grep -q "Next executable node: \`mission-recommendation-next-02\`" "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 grep -q "Early-return risk: \`blocked_final_response_ready_nodes_remain\`" "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
+grep -q "If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair." "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 grep -q "If \`ready_nodes > 0\` or \`exact_next_action\` is non-empty, do not produce a final response." "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 reject_generated_recommendation_prompt_public_safety "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 assert_schema_required_fields_present schemas/recommendation-readback.schema.json "$OUT/mission-recommendations/recommendation-readback-resumed.json" "recommendation readback"
@@ -559,6 +561,7 @@ if [ -f "$lease_resume_readback" ]; then
   grep -qF "Checkpoint count: $lease_resume_checkpoint_count" "$lease_resume_prompt"
   grep -qF "Early-return risk: \`blocked_final_response_ready_nodes_remain\`" "$lease_resume_prompt"
   grep -qF "$lease_resume_next_action" "$lease_resume_prompt"
+  grep -qF 'If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.' "$lease_resume_prompt"
   grep -qF 'If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.' "$lease_resume_prompt"
   reject_generated_recommendation_prompt_public_safety "$lease_resume_prompt"
 fi

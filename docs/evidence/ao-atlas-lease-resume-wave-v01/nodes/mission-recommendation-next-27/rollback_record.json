@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-27",
+  "rollback": [
+    "Revert blocked-node continuation wording in Atlas recommendation prompt builders.",
+    "Revert prompt assertions in internal/atlas/mission_recommendations_test.go.",
+    "Revert production-readiness prompt grep additions for blocked-node continuation wording.",
+    "Remove node 27 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-27.",
+    "Regenerate root readbacks from node 26 workgraph if this node is reverted before merge."
+  ]
+}
