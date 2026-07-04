@@ -1,0 +1,21 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-06",
+  "summary": "Added source_task_digest to Atlas recommendation tasks, validated it as a sha256 digest, carried it into each generated workgraph node required evidence entry, updated the recommendation wave schema, and added production readiness checks for wave and workgraph digest-bound source evidence.",
+  "changed_files": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "schemas/recommendation-wave.schema.json",
+    "scripts/production-readiness.sh"
+  ],
+  "repacked_artifacts": [
+    "recommendation-wave.json",
+    "recommendation-workgraph.json",
+    "nodes/mission-recommendation-next-01/workgraph-after.json",
+    "nodes/mission-recommendation-next-02/workgraph-after.json",
+    "nodes/mission-recommendation-next-03/workgraph-after.json",
+    "nodes/mission-recommendation-next-04/workgraph-after.json",
+    "nodes/mission-recommendation-next-05/workgraph-after.json"
+  ]
+}

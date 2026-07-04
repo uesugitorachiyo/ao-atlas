@@ -5,7 +5,7 @@
   "nodes": [
     {
       "id": "mission-recommendation-next-01",
-      "status": "ready",
+      "status": "completed",
       "factory_task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
         "id": "mission-recommendation-next-01-task",
@@ -71,7 +71,7 @@
     },
     {
       "id": "mission-recommendation-next-02",
-      "status": "ready",
+      "status": "completed",
       "factory_task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
         "id": "mission-recommendation-next-02-task",
@@ -141,7 +141,7 @@
     },
     {
       "id": "mission-recommendation-next-03",
-      "status": "ready",
+      "status": "completed",
       "factory_task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
         "id": "mission-recommendation-next-03-task",
@@ -211,7 +211,7 @@
     },
     {
       "id": "mission-recommendation-next-04",
-      "status": "ready",
+      "status": "completed",
       "factory_task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
         "id": "mission-recommendation-next-04-task",
@@ -281,7 +281,7 @@
     },
     {
       "id": "mission-recommendation-next-05",
-      "status": "ready",
+      "status": "completed",
       "factory_task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
         "id": "mission-recommendation-next-05-task",
@@ -351,7 +351,7 @@
     },
     {
       "id": "mission-recommendation-next-06",
-      "status": "ready",
+      "status": "completed",
       "factory_task": {
         "contract_version": "ao.atlas.factory-task.v0.1",
         "id": "mission-recommendation-next-06-task",

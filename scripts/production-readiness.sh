@@ -127,7 +127,9 @@ test -s "$OUT/mission-recommendations/lease-start.json"
 test -s "$OUT/mission-recommendations/recommendation-readback.json"
 test -s "$OUT/mission-recommendations/next-recommended-prompt.md"
 jq -e '.minimum_tasks == 30 and .total_tasks == 40 and .node_budget == 40 and .estimated_minutes == 120 and .supervisor.min_minutes == 120 and .supervisor.max_minutes == 180 and .supervisor.continue_if_fast_target == 40 and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-wave.json" >/dev/null
+jq -e '(.tasks | length) == 40 and all(.tasks[]; (.source_task_digest | test("^sha256:[0-9a-f]{64}$")))' "$OUT/mission-recommendations/recommendation-wave.json" >/dev/null
 jq -e '(.nodes | length) == 40' "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
+jq -e 'all(.nodes[]; any(.factory_task.required_evidence[]; startswith("source_task_digest:sha256:")))' "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
 jq -e '.schema == "ao.atlas.recommendation-lease-start.v0.1" and .started_at == "2026-07-04T08:00:00-07:00" and .min_minutes == 120 and .max_minutes == 180 and .final_response_allowed == false and .schedules_work == false and .executes_work == false and .approves_work == false' "$OUT/mission-recommendations/lease-start.json" >/dev/null
 jq -e '.total_nodes == 40 and .minimum_nodes == 30 and .ready_nodes == 40 and .executable_ready_nodes == 1 and .checkpoint_count == 0 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false and .lease_health_status == "minimum_unmet" and .early_return_risk_status == "blocked_final_response_ready_nodes_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 grep -q "Target 2-3 hours" "$OUT/mission-recommendations/next-recommended-prompt.md"

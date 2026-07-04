@@ -27,6 +27,7 @@
       "node_id": "mission-recommendation-next-01",
       "task_id": "mission-recommendation-next-01-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:050df85064dc750d8249e1dc507514b6cf5246723938cab2e4c00b8e9c880613",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-01",
       "required_gates": [
@@ -63,6 +64,7 @@
       "node_id": "mission-recommendation-next-02",
       "task_id": "mission-recommendation-next-02-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7e64313c55884578466601449ac342557f26bec0d9d1c080f440030b85223f80",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-02",
       "required_gates": [
@@ -99,6 +101,7 @@
       "node_id": "mission-recommendation-next-03",
       "task_id": "mission-recommendation-next-03-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7e0038f3699f65667d5a0627be73a6307115da5812d20a1e2c2c23ec68d8676b",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-03",
       "required_gates": [
@@ -135,6 +138,7 @@
       "node_id": "mission-recommendation-next-04",
       "task_id": "mission-recommendation-next-04-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:422ca7c44ccbeaa952b03dc02c59c56f56ac170064f3a8fa07115aa0be4bb697",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-04",
       "required_gates": [
@@ -171,6 +175,7 @@
       "node_id": "mission-recommendation-next-05",
       "task_id": "mission-recommendation-next-05-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8ec75b0aa12b094832d2b6c86f620ac08901e4e4d4b091fdbf26c0aa3793b1f1",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-05",
       "required_gates": [
@@ -207,6 +212,7 @@
       "node_id": "mission-recommendation-next-06",
       "task_id": "mission-recommendation-next-06-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1507701d2a1ef2417c4f6237e3c33af2e593629ff8b142a572361fa49d79d8c2",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-06",
       "required_gates": [
@@ -243,6 +249,7 @@
       "node_id": "mission-recommendation-next-07",
       "task_id": "mission-recommendation-next-07-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:966ad48363cc54dbcb121482c6cf4dfa0164b0e2031c653ba8a1cdf4156d42c2",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-07",
       "required_gates": [
@@ -279,6 +286,7 @@
       "node_id": "mission-recommendation-next-08",
       "task_id": "mission-recommendation-next-08-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7796359a6a117b07124826ee60047a1ab4fdbf20273b59130a95aa97ab50191e",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-08",
       "required_gates": [
@@ -315,6 +323,7 @@
       "node_id": "mission-recommendation-next-09",
       "task_id": "mission-recommendation-next-09-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:93e173cb09c4f878688bcb442b5161d31b5bdac9c1476cc67d510095fb4c35cd",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-09",
       "required_gates": [
@@ -351,6 +360,7 @@
       "node_id": "mission-recommendation-next-10",
       "task_id": "mission-recommendation-next-10-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:d9316887b0e9e42449c4c316459d9f0974a65e9748f4975ee794bd645c779dd2",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-10",
       "required_gates": [
@@ -387,6 +397,7 @@
       "node_id": "mission-recommendation-next-11",
       "task_id": "mission-recommendation-next-11-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:3e864172220a3a5ae78a351ad703ddf4bbc8dc80bedd85004f7cbda67c58b221",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-11",
       "required_gates": [
@@ -423,6 +434,7 @@
       "node_id": "mission-recommendation-next-12",
       "task_id": "mission-recommendation-next-12-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:cb6d0f759b88b6f9bae5b845f869bc1c885f43ffb52ba1a77f55117d0b517e27",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-12",
       "required_gates": [
@@ -459,6 +471,7 @@
       "node_id": "mission-recommendation-next-13",
       "task_id": "mission-recommendation-next-13-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:349d56c9d02d95fb147b590e8d30465eda18f2eb881cfdb97d81394e6463b7be",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-13",
       "required_gates": [
@@ -495,6 +508,7 @@
       "node_id": "mission-recommendation-next-14",
       "task_id": "mission-recommendation-next-14-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:324047ec91cc89621b57a3bfb57b3efef5a10aaabd6100b8c62b2154629320a4",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-14",
       "required_gates": [
@@ -531,6 +545,7 @@
       "node_id": "mission-recommendation-next-15",
       "task_id": "mission-recommendation-next-15-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1e3e4ff744d4cb492f102ee51705629a522ca0eabf5e4f611045dc5ba5188987",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-15",
       "required_gates": [
@@ -567,6 +582,7 @@
       "node_id": "mission-recommendation-next-16",
       "task_id": "mission-recommendation-next-16-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:daf5a58576142112da00c4fb3e11555982bb8f542461c9cb26bfb05371b80a65",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-16",
       "required_gates": [
@@ -603,6 +619,7 @@
       "node_id": "mission-recommendation-next-17",
       "task_id": "mission-recommendation-next-17-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:80d2d675320dcc469e06c77f11aef52573d2c4d2f485d4210312bec618118246",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-17",
       "required_gates": [
@@ -639,6 +656,7 @@
       "node_id": "mission-recommendation-next-18",
       "task_id": "mission-recommendation-next-18-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7b0345f4b39e7afdfbed1ac87a7c643a8ae1e5f4f1fac713243baa3540f9cae2",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-18",
       "required_gates": [
@@ -675,6 +693,7 @@
       "node_id": "mission-recommendation-next-19",
       "task_id": "mission-recommendation-next-19-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:adca6c5811bd0e20c8a1a0053aa2adc2ed3fc5d13faa3829399b3286f227e27f",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-19",
       "required_gates": [
@@ -711,6 +730,7 @@
       "node_id": "mission-recommendation-next-20",
       "task_id": "mission-recommendation-next-20-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:a8d22e6e214d755b3b0b84ea7bdf2e2fb001a51dd3859fd518e7e911a1aa4387",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-20",
       "required_gates": [
@@ -747,6 +767,7 @@
       "node_id": "mission-recommendation-next-21",
       "task_id": "mission-recommendation-next-21-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:69a90e83e3727684a52c0ea764da70f6421a027d5acea67338d6abfe5dbfc0a9",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-21",
       "required_gates": [
@@ -783,6 +804,7 @@
       "node_id": "mission-recommendation-next-22",
       "task_id": "mission-recommendation-next-22-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:a1c0c51f7c558e89327bd62a814bafd7c788c0f5659159284affe10e28066c86",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-22",
       "required_gates": [
@@ -819,6 +841,7 @@
       "node_id": "mission-recommendation-next-23",
       "task_id": "mission-recommendation-next-23-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:83067ee861e7016f8b34340a121b437fc04a5c404c5c8042ce7e4fa07dba68c6",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-23",
       "required_gates": [
@@ -855,6 +878,7 @@
       "node_id": "mission-recommendation-next-24",
       "task_id": "mission-recommendation-next-24-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:103e9a0b1cca56e07dce49a83976315b38570bccea042526d6a2abf722f5e8e6",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-24",
       "required_gates": [
@@ -891,6 +915,7 @@
       "node_id": "mission-recommendation-next-25",
       "task_id": "mission-recommendation-next-25-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:2748eddeedaf3bd1db7376616dca6b4dac675b5d49e307cf0d89d712b41dba75",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-25",
       "required_gates": [
@@ -927,6 +952,7 @@
       "node_id": "mission-recommendation-next-26",
       "task_id": "mission-recommendation-next-26-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:551c299e3ce48a64a97e9b376634f649d6248edd8b0dcf37b876fb6f8bd35bda",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-26",
       "required_gates": [
@@ -963,6 +989,7 @@
       "node_id": "mission-recommendation-next-27",
       "task_id": "mission-recommendation-next-27-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f18b172897a584b6aa20900a28d36a3be169f1c569fc07d1ff6cd3a62515911e",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-27",
       "required_gates": [
@@ -999,6 +1026,7 @@
       "node_id": "mission-recommendation-next-28",
       "task_id": "mission-recommendation-next-28-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1339b573f85e4ca391d0a8d2a9f1e9cd5dbc0adbe279a8eee818f5d58d0bfef3",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-28",
       "required_gates": [
@@ -1035,6 +1063,7 @@
       "node_id": "mission-recommendation-next-29",
       "task_id": "mission-recommendation-next-29-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b03f2894dd662a170383cb46c92ab8f6e7ccadc4d7f1f6c804b1ee90ba2edb8b",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-29",
       "required_gates": [
@@ -1071,6 +1100,7 @@
       "node_id": "mission-recommendation-next-30",
       "task_id": "mission-recommendation-next-30-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b73d68ba43894d703cf0d950cc2a97f4cd4d4e3397fff29309f7bc7ebb820e81",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-30",
       "required_gates": [
@@ -1107,6 +1137,7 @@
       "node_id": "mission-recommendation-next-31",
       "task_id": "mission-recommendation-next-31-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:189f2e1e13a47f91cefe25ba1a952bbbddd81c8ce8951b8a148a50508b47a5f3",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-31",
       "required_gates": [
@@ -1143,6 +1174,7 @@
       "node_id": "mission-recommendation-next-32",
       "task_id": "mission-recommendation-next-32-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:4367cb0286077b2d094d08a827d4099d32a47a7bfc5fa48c13e05fe9779d989a",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-32",
       "required_gates": [
@@ -1179,6 +1211,7 @@
       "node_id": "mission-recommendation-next-33",
       "task_id": "mission-recommendation-next-33-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f6a049c097dbb63d184a46e3d6cfba8dfd3ab1674dad6b8fb30523bbdc4d57a2",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-33",
       "required_gates": [
@@ -1215,6 +1248,7 @@
       "node_id": "mission-recommendation-next-34",
       "task_id": "mission-recommendation-next-34-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:df54c9f6b70735ba0b5b38c888e599fd3b9a3765967e1c4c3f8da065373c6792",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-34",
       "required_gates": [
@@ -1251,6 +1285,7 @@
       "node_id": "mission-recommendation-next-35",
       "task_id": "mission-recommendation-next-35-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8e5b87f997bbc311ddeee5fb63417e66dd33c203df869d766ef3248d71ba3867",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-35",
       "required_gates": [
@@ -1287,6 +1322,7 @@
       "node_id": "mission-recommendation-next-36",
       "task_id": "mission-recommendation-next-36-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9a4e5a313c100e135c036371d0a815e0ab68c684ce5d58e6c215410d4778a5dd",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-36",
       "required_gates": [
@@ -1323,6 +1359,7 @@
       "node_id": "mission-recommendation-next-37",
       "task_id": "mission-recommendation-next-37-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:42971a0d658a2acabcecf16957272e83869a0823d4d9d0d5fb4f79e5dd4c850c",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-37",
       "required_gates": [
@@ -1359,6 +1396,7 @@
       "node_id": "mission-recommendation-next-38",
       "task_id": "mission-recommendation-next-38-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:ac357b34faa2c4c82cd2e2b499d880e54b8556abbec5a1ce124e0ef33a591d63",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-38",
       "required_gates": [
@@ -1395,6 +1433,7 @@
       "node_id": "mission-recommendation-next-39",
       "task_id": "mission-recommendation-next-39-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:e5be4f66037a15560afa54f2cec9ab0462f923b9d5881af862f29190f01a1225",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-39",
       "required_gates": [
@@ -1431,6 +1470,7 @@
       "node_id": "mission-recommendation-next-40",
       "task_id": "mission-recommendation-next-40-task",
       "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9ee6c3da7219a1eccb082dc8aa63aa65b48ba80c088286beba9f2a0f7f2c8e76",
       "target_factory_repo": "ao-atlas",
       "factory_folder": "factory/ao-atlas-recommendations/next-40",
       "required_gates": [

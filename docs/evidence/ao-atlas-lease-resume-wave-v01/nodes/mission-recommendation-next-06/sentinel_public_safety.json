@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-06",
+  "summary": "Changed source-evidence metadata only. Scans over changed source and evidence found no local path, provider credential, or secret markers.",
+  "forbidden_markers_found": false,
+  "rsi_claimed": false,
+  "provider_calls": false,
+  "credential_inspection": false
+}

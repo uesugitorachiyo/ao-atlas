@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-06",
+  "candidate": "digest-bound-recommendation-node-source-evidence",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Recommendation nodes had a wave-level source digest and source recommendation id, but did not bind each generated node to the digest of its exact Feature Depth task. The candidate repair adds a per-task source digest to the wave and carries it into each generated workgraph task required evidence list."
+}

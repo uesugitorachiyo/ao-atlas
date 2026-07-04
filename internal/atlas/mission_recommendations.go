@@ -134,6 +134,7 @@ func BuildAtlasRecommendationWave(options AtlasRecommendationWaveOptions) (Atlas
 			NodeID:            nodeID,
 			TaskID:            nodeID + "-task",
 			MutationClass:     "low_risk_code",
+			SourceTaskDigest:  digestValue(item),
 			TargetFactoryRepo: "ao-atlas",
 			FactoryFolder:     "factory/ao-atlas-recommendations/" + strings.TrimPrefix(nodeID, "mission-recommendation-"),
 			RequiredGates: []string{
@@ -329,6 +330,9 @@ func ValidateAtlasRecommendationWave(wave AtlasRecommendationWave) error {
 		if task.MutationClass != "low_risk_code" {
 			errs = append(errs, prefix+".mutation_class must be low_risk_code")
 		}
+		if !digestPattern.MatchString(task.SourceTaskDigest) {
+			errs = append(errs, prefix+".source_task_digest must be sha256 digest")
+		}
 		if task.TargetFactoryRepo != "ao-atlas" {
 			errs = append(errs, prefix+".target_factory_repo must be ao-atlas")
 		}
@@ -395,7 +399,7 @@ func BuildAtlasRecommendationWorkgraph(wave AtlasRecommendationWave) (Workgraph,
 				RequiredGates:     append([]string(nil), item.RequiredGates...),
 				RollbackScope:     []string{"revert node-specific Atlas changes and generated evidence"},
 				Verification:      append([]string(nil), item.Verification...),
-				RequiredEvidence:  []string{"source_digest:" + wave.SourceDigest, "source_recommendation:" + item.ID},
+				RequiredEvidence:  []string{"source_digest:" + wave.SourceDigest, "source_recommendation:" + item.ID, "source_task_digest:" + item.SourceTaskDigest},
 				SafetyLimits:      append([]string(nil), item.SafetyLimits...),
 				AuthorityBoundary: "atlas_recommendation_planning_only",
 				DependencyRefs:    append([]string(nil), deps...),

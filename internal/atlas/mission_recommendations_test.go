@@ -8,6 +8,15 @@ import (
 	"testing"
 )
 
+func containsStringPrefix(values []string, prefix string) bool {
+	for _, value := range values {
+		if strings.HasPrefix(value, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -42,6 +51,21 @@ func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing
 	if wave.SafeToExecute || wave.SchedulesWork || wave.ExecutesWork || wave.ApprovesWork {
 		t.Fatalf("recommendation wave widened authority: %#v", wave)
 	}
+	rawWave := mustLoadJSON[map[string]any](t, filepath.Join(outDir, "recommendation-wave.json"))
+	rawTasks, ok := rawWave["tasks"].([]any)
+	if !ok || len(rawTasks) != 20 {
+		t.Fatalf("recommendation wave missing raw tasks: %#v", rawWave["tasks"])
+	}
+	for i, raw := range rawTasks {
+		task, ok := raw.(map[string]any)
+		if !ok {
+			t.Fatalf("task %d is not an object: %#v", i, raw)
+		}
+		digest, ok := task["source_task_digest"].(string)
+		if !ok || !digestPattern.MatchString(digest) {
+			t.Fatalf("task %d missing source_task_digest: %#v", i, task)
+		}
+	}
 	if !strings.Contains(wave.NextRecommendedPrompt, "at least 20 bounded Atlas nodes") ||
 		!strings.Contains(wave.NextRecommendedPrompt, "Return only after") {
 		t.Fatalf("wave missing continuation prompt: %q", wave.NextRecommendedPrompt)
@@ -74,6 +98,9 @@ func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing
 			!containsString(node.FactoryTask.SafetyLimits, "no credential inspection") ||
 			!containsString(node.FactoryTask.SafetyLimits, "no direct main mutation") {
 			t.Fatalf("task %s missing safety limits: %#v", node.FactoryTask.ID, node.FactoryTask.SafetyLimits)
+		}
+		if !containsStringPrefix(node.FactoryTask.RequiredEvidence, "source_task_digest:sha256:") {
+			t.Fatalf("task %s missing digest-bound source evidence: %#v", node.FactoryTask.ID, node.FactoryTask.RequiredEvidence)
 		}
 	}
 	prompt, err := os.ReadFile(filepath.Join(outDir, "next-recommended-prompt.md"))
