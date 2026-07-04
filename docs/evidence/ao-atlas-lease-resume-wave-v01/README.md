@@ -10,16 +10,16 @@ because ready nodes remain.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 11
-- Ready nodes: 29
+- Completed nodes: 12
+- Ready nodes: 28
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 126
+- Elapsed minutes: 138
 - Minimum minutes met: true
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 11
+- Checkpoint count: 12
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-12`
+- Exact next action: emit Foundry import for `mission-recommendation-next-13`
   and execute exactly one active node.
 
 ## Root Artifacts

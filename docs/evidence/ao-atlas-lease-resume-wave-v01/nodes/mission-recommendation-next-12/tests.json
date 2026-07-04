@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-12",
+  "red_phase": "Coverage gap identified: shallow Feature Depth rejection did not separately test low minimum_tasks, too few task entries, and owner-filtered task counts.",
+  "green_phase": "Focused shallow-bundle tests passed after adding the explicit regression variants.",
+  "tests": [
+    "TestMissionRecommendationsRejectShallowAndUnsafeBundles",
+    "TestMissionRecommendationsRejectShallowFeatureDepthVariants",
+    "production-readiness shallow Feature Depth error-text check"
+  ]
+}

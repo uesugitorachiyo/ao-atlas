@@ -147,6 +147,62 @@ func TestMissionRecommendationsRejectShallowAndUnsafeBundles(t *testing.T) {
 	}
 }
 
+func TestMissionRecommendationsRejectShallowFeatureDepthVariants(t *testing.T) {
+	dir := t.TempDir()
+
+	lowMinimumPath := filepath.Join(dir, "low-minimum.json")
+	writeFeatureDepthBundle(t, lowMinimumPath, 20, false)
+	lowMinimum := mustLoadJSON[AOMissionFeatureDepthRecommendations](t, lowMinimumPath)
+	lowMinimum.MinimumTasks = 3
+	if err := WriteJSON(lowMinimumPath, lowMinimum); err != nil {
+		t.Fatal(err)
+	}
+
+	tooFewTasksPath := filepath.Join(dir, "too-few-tasks.json")
+	writeFeatureDepthBundle(t, tooFewTasksPath, 3, false)
+	tooFewTasks := mustLoadJSON[AOMissionFeatureDepthRecommendations](t, tooFewTasksPath)
+	tooFewTasks.MinimumTasks = 20
+	if err := WriteJSON(tooFewTasksPath, tooFewTasks); err != nil {
+		t.Fatal(err)
+	}
+
+	filteredPath := filepath.Join(dir, "owner-filtered.json")
+	writeFeatureDepthBundle(t, filteredPath, 20, false)
+	filtered := mustLoadJSON[AOMissionFeatureDepthRecommendations](t, filteredPath)
+	filtered.Tasks[19].Owner = "ao-foundry"
+	if err := WriteJSON(filteredPath, filtered); err != nil {
+		t.Fatal(err)
+	}
+
+	for _, tc := range []struct {
+		name string
+		path string
+		want string
+	}{
+		{name: "low minimum_tasks", path: lowMinimumPath, want: "minimum_tasks must be at least 20"},
+		{name: "too few task entries", path: tooFewTasksPath, want: "tasks must include at least 20 tasks"},
+		{name: "too few Atlas-owned tasks", path: filteredPath, want: "requires at least 20 tasks"},
+	} {
+		var out bytes.Buffer
+		code := Run([]string{
+			"mission", "recommendations", "import",
+			"--recommendations", tc.path,
+			"--target-instance", "demo-stack",
+			"--min-tasks", "20",
+			"--node-budget", "20",
+			"--continue-if-fast-target", "20",
+			"--estimated-minutes", "90",
+			"--out", filepath.Join(dir, tc.name+"-out"),
+		}, &out, &out)
+		if code == 0 {
+			t.Fatalf("%s bundle was accepted", tc.name)
+		}
+		if !strings.Contains(out.String(), tc.want) {
+			t.Fatalf("%s error missing %q: %s", tc.name, tc.want, out.String())
+		}
+	}
+}
+
 func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")

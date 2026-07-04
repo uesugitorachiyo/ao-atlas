@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-12",
+  "candidate": "shallow-feature-depth-regression-coverage",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Existing coverage rejected one shallow bundle. The repair adds explicit regression coverage for low minimum_tasks, too few task entries, and too few Atlas-owned tasks after owner filtering."
+}
