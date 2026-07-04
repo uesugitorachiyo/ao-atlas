@@ -1,0 +1,738 @@
+{
+  "contract_version": "ao.atlas.recommendation-wave.v0.1",
+  "mission_id": "mission-long-wave",
+  "target_instance": "demo-stack",
+  "status": "ready",
+  "source_digest": "sha256:d823badfc9d710c4ffac457fedbb513031610f269b7d833c39cc915e12798cf2",
+  "minimum_tasks": 20,
+  "total_tasks": 20,
+  "node_budget": 20,
+  "estimated_minutes": 90,
+  "tasks": [
+    {
+      "id": "next-01",
+      "owner": "ao-atlas",
+      "task": "Add Mission recommendation CLI fixtures for lease flags and checkpoint bundle readback.",
+      "node_id": "mission-recommendation-next-01",
+      "task_id": "mission-recommendation-next-01-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-01",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-02",
+      "owner": "ao-atlas",
+      "task": "Expose Mission return gate and checkpoint count in Atlas status readback.",
+      "node_id": "mission-recommendation-next-02",
+      "task_id": "mission-recommendation-next-02-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-02",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-03",
+      "owner": "ao-atlas",
+      "task": "Bind Mission final rollup return-gate fields into Atlas reconciliation packets.",
+      "node_id": "mission-recommendation-next-03",
+      "task_id": "mission-recommendation-next-03-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-03",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-04",
+      "owner": "ao-atlas",
+      "task": "Import Feature Depth Recommendations into Atlas workgraph generation.",
+      "node_id": "mission-recommendation-next-04",
+      "task_id": "mission-recommendation-next-04-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-04",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-05",
+      "owner": "ao-atlas",
+      "task": "Generate a single-executable-node Atlas workgraph from long-run recommendation waves.",
+      "node_id": "mission-recommendation-next-05",
+      "task_id": "mission-recommendation-next-05-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-05",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-06",
+      "owner": "ao-atlas",
+      "task": "Add digest-bound source evidence for each recommendation node.",
+      "node_id": "mission-recommendation-next-06",
+      "task_id": "mission-recommendation-next-06-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-06",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-07",
+      "owner": "ao-atlas",
+      "task": "Strengthen Atlas prompt readback so final responses stay denied while ready work remains.",
+      "node_id": "mission-recommendation-next-07",
+      "task_id": "mission-recommendation-next-07-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-07",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-08",
+      "owner": "ao-atlas",
+      "task": "Add public-safety wording scan evidence for generated recommendation prompts.",
+      "node_id": "mission-recommendation-next-08",
+      "task_id": "mission-recommendation-next-08-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-08",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-09",
+      "owner": "ao-atlas",
+      "task": "Add Promoter no-promotion summary fields to Atlas long-run readbacks.",
+      "node_id": "mission-recommendation-next-09",
+      "task_id": "mission-recommendation-next-09-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-09",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-10",
+      "owner": "ao-atlas",
+      "task": "Add Command compact mission timeline binding to Atlas recommendation evidence.",
+      "node_id": "mission-recommendation-next-10",
+      "task_id": "mission-recommendation-next-10-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-10",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-11",
+      "owner": "ao-atlas",
+      "task": "Record Foundry run-link readiness summary as an Atlas source artifact.",
+      "node_id": "mission-recommendation-next-11",
+      "task_id": "mission-recommendation-next-11-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-11",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-12",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage for rejected shallow Feature Depth bundles.",
+      "node_id": "mission-recommendation-next-12",
+      "task_id": "mission-recommendation-next-12-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-12",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-13",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage for unsafe Feature Depth authority claims.",
+      "node_id": "mission-recommendation-next-13",
+      "task_id": "mission-recommendation-next-13-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-13",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-14",
+      "owner": "ao-atlas",
+      "task": "Add schema coverage for Atlas recommendation wave readbacks.",
+      "node_id": "mission-recommendation-next-14",
+      "task_id": "mission-recommendation-next-14-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-14",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-15",
+      "owner": "ao-atlas",
+      "task": "Add operator docs for double-size AO Atlas long-run task waves.",
+      "node_id": "mission-recommendation-next-15",
+      "task_id": "mission-recommendation-next-15-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-15",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-16",
+      "owner": "ao-atlas",
+      "task": "Add exact next prompt artifact for continuing after the long recommendation wave.",
+      "node_id": "mission-recommendation-next-16",
+      "task_id": "mission-recommendation-next-16-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-16",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-17",
+      "owner": "ao-atlas",
+      "task": "Add production readiness coverage for recommendation import artifacts.",
+      "node_id": "mission-recommendation-next-17",
+      "task_id": "mission-recommendation-next-17-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-17",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-18",
+      "owner": "ao-atlas",
+      "task": "Add Foundry import smoke coverage for the first generated recommendation node.",
+      "node_id": "mission-recommendation-next-18",
+      "task_id": "mission-recommendation-next-18-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-18",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-19",
+      "owner": "ao-atlas",
+      "task": "Add final state evidence comparing recommendation wave, workgraph, and prompt.",
+      "node_id": "mission-recommendation-next-19",
+      "task_id": "mission-recommendation-next-19-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-19",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "next-20",
+      "owner": "ao-atlas",
+      "task": "Run production readiness and public-safety scans for the full long wave.",
+      "node_id": "mission-recommendation-next-20",
+      "task_id": "mission-recommendation-next-20-task",
+      "mutation_class": "low_risk_code",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/next-20",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    }
+  ],
+  "next_recommended_prompt": "You are AO Atlas, continuing the AO Atlas long recommendation wave.\n\nDouble the previous short batch: target about 90 minutes of useful Atlas work.\nExecute at least 20 bounded Atlas nodes from mission mission-long-wave before final response.\nReturn only after all generated nodes complete, at least 20 bounded Atlas nodes complete, or a true hard blocker remains after safe repair attempts.\n\nRequired behavior:\n- Keep exactly one executable mutation node active at a time.\n- Preserve no provider calls, no credential inspection, no direct main mutation, no release/deploy/publish/upload/tag, no dependency updates, no auth/policy/config widening, and no broad RSI claim.\n- For each node, record gate, candidate, rollback, tests, verification, public-safety scan, promoter/no-promotion readback, and command/readback evidence.\n- Run go test ./... -count=1, go vet ./..., go build ./cmd/atlas, scripts/production-readiness.sh, and scripts/atlas-foundry-roundtrip-smoke.sh before completion.\n\nRecommended nodes:\n- next-01: Add Mission recommendation CLI fixtures for lease flags and checkpoint bundle readback.\n- next-02: Expose Mission return gate and checkpoint count in Atlas status readback.\n- next-03: Bind Mission final rollup return-gate fields into Atlas reconciliation packets.\n- next-04: Import Feature Depth Recommendations into Atlas workgraph generation.\n- next-05: Generate a single-executable-node Atlas workgraph from long-run recommendation waves.\n- next-06: Add digest-bound source evidence for each recommendation node.\n- next-07: Strengthen Atlas prompt readback so final responses stay denied while ready work remains.\n- next-08: Add public-safety wording scan evidence for generated recommendation prompts.\n- next-09: Add Promoter no-promotion summary fields to Atlas long-run readbacks.\n- next-10: Add Command compact mission timeline binding to Atlas recommendation evidence.\n- next-11: Record Foundry run-link readiness summary as an Atlas source artifact.\n- next-12: Add regression coverage for rejected shallow Feature Depth bundles.\n- next-13: Add regression coverage for unsafe Feature Depth authority claims.\n- next-14: Add schema coverage for Atlas recommendation wave readbacks.\n- next-15: Add operator docs for double-size AO Atlas long-run task waves.\n- next-16: Add exact next prompt artifact for continuing after the long recommendation wave.\n- next-17: Add production readiness coverage for recommendation import artifacts.\n- next-18: Add Foundry import smoke coverage for the first generated recommendation node.\n- next-19: Add final state evidence comparing recommendation wave, workgraph, and prompt.\n- next-20: Run production readiness and public-safety scans for the full long wave.\n",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

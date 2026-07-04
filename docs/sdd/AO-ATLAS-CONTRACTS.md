@@ -20,6 +20,7 @@ v0.1 contract names:
 - `ao.atlas.mutation-classes.v0.1`
 - `ao.atlas.ao-mission-import.v0.1`
 - `ao.atlas.ao-mission-workgraph-metadata.v0.1`
+- `ao.atlas.recommendation-wave.v0.1`
 
 All contracts are JSON. Validation requires explicit `contract_version` values,
 stable identifiers, non-empty required fields, and public-safe paths.
@@ -47,6 +48,14 @@ file against its declared `sha256:` digest and blocks the import on mismatch.
 validated Atlas workgraph. It records the mission id, workgraph id, target
 instance, node counts, and source digests without changing the workgraph schema
 or granting execution, scheduling, or approval authority.
+
+`ao.atlas.recommendation-wave.v0.1` binds AO Mission Feature Depth
+Recommendations into Atlas-owned long-run planning. The wave requires a
+digest-bound source recommendation artifact, explicit minimum task count,
+estimated minute budget, and Atlas-owned tasks with gates, verification commands,
+and safety limits. It is planning/readback material only: it does not schedule,
+execute, approve, mutate repositories, call providers, inspect credentials, or
+claim broad RSI.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,

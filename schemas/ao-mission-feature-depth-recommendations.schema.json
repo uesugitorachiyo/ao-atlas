@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.mission.feature-depth-recommendations.v0.3",
+  "type": "object",
+  "required": [
+    "schema",
+    "mission_id",
+    "status",
+    "minimum_tasks",
+    "recommendation_count",
+    "tasks",
+    "safe_to_execute",
+    "executes_work",
+    "approves_work"
+  ],
+  "properties": {
+    "schema": { "const": "ao.mission.feature-depth-recommendations.v0.3" },
+    "mission_id": { "type": "string", "minLength": 1 },
+    "status": { "const": "ready" },
+    "minimum_tasks": { "type": "integer", "minimum": 10 },
+    "recommendation_count": { "type": "integer", "minimum": 10 },
+    "tasks": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["id", "owner", "task"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "owner": { "type": "string", "minLength": 1 },
+          "task": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "safe_to_execute": { "const": false },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "mutates_repositories": { "const": false }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "ao.mission.feature-depth-recommendations.v0.3",
+  "mission_id": "mission-shallow",
+  "status": "ready",
+  "minimum_tasks": 3,
+  "recommendation_count": 3,
+  "tasks": [
+    {
+      "id": "next-01",
+      "owner": "ao-atlas",
+      "task": "Add one Atlas task with tests and readback evidence."
+    },
+    {
+      "id": "next-02",
+      "owner": "ao-atlas",
+      "task": "Add another Atlas task with tests and readback evidence."
+    },
+    {
+      "id": "next-03",
+      "owner": "ao-atlas",
+      "task": "Add final Atlas task with tests and readback evidence."
+    }
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

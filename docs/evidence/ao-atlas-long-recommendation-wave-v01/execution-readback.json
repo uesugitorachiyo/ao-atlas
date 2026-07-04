@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.long-recommendation-wave-execution.v0.1",
+  "status": "completed",
+  "mission_id": "mission-long-wave",
+  "completed_nodes": 20,
+  "total_nodes": 20,
+  "estimated_minutes": 90,
+  "generated_artifacts": [
+    "recommendation-wave.json",
+    "recommendation-workgraph.json",
+    "next-recommended-prompt.md"
+  ],
+  "implemented_bindings": [
+    "Mission Feature Depth recommendation import",
+    "Atlas recommendation wave validation",
+    "single-executable-node recommendation workgraph generation",
+    "next recommended prompt generation",
+    "CLI import command",
+    "schema coverage",
+    "valid and invalid fixtures",
+    "production readiness coverage",
+    "Foundry import smoke for first generated node",
+    "public-safe evidence root"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "exact_next_action": "use next-recommended-prompt.md to continue the next AO Atlas wave"
+}

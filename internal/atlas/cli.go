@@ -300,7 +300,7 @@ func runIntake(args []string, stdout io.Writer) error {
 
 func runMission(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission requires status, import, workgraph-metadata, or provenance")
+		return fmt.Errorf("mission requires status, import, workgraph-metadata, provenance, or recommendations")
 	}
 	if args[0] == "import" {
 		return runMissionImport(args[1:], stdout)
@@ -311,8 +311,11 @@ func runMission(args []string, stdout io.Writer) error {
 	if args[0] == "provenance" {
 		return runMissionProvenance(args[1:], stdout)
 	}
+	if args[0] == "recommendations" {
+		return runMissionRecommendations(args[1:], stdout)
+	}
 	if args[0] != "status" {
-		return fmt.Errorf("mission requires status, import, workgraph-metadata, or provenance")
+		return fmt.Errorf("mission requires status, import, workgraph-metadata, provenance, or recommendations")
 	}
 	fs := flag.NewFlagSet("mission status", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -360,6 +363,65 @@ func runMission(args []string, stdout io.Writer) error {
 		return printJSON(stdout, status)
 	}
 	fmt.Fprintf(stdout, "status=%s\nintake=%s\nworkgraph=%s\n", status.CompletionStatus, status.IntakeID, status.WorkgraphID)
+	return nil
+}
+
+func runMissionRecommendations(args []string, stdout io.Writer) error {
+	if len(args) == 0 || args[0] != "import" {
+		return fmt.Errorf("mission recommendations requires import")
+	}
+	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	recommendationsPath := fs.String("recommendations", "", "AO Mission Feature Depth Recommendations path")
+	targetInstance := fs.String("target-instance", "", "Atlas target instance id")
+	minTasks := fs.Int("min-tasks", 20, "minimum Atlas recommendation tasks")
+	nodeBudget := fs.Int("node-budget", 20, "Atlas node budget")
+	estimatedMinutes := fs.Int("estimated-minutes", 90, "estimated long-run minutes")
+	outDir := fs.String("out", "", "output directory")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*recommendationsPath) == "" {
+		return fmt.Errorf("--recommendations is required")
+	}
+	if strings.TrimSpace(*targetInstance) == "" {
+		return fmt.Errorf("--target-instance is required")
+	}
+	if strings.TrimSpace(*outDir) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if *outDir != "" && samePath(*recommendationsPath, *outDir) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: *recommendationsPath,
+		TargetInstance:      *targetInstance,
+		MinTasks:            *minTasks,
+		NodeBudget:          *nodeBudget,
+		EstimatedMinutes:    *estimatedMinutes,
+	})
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outDir) != "" {
+		if err := WriteAtlasRecommendationWaveArtifacts(*outDir, result); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, result.Wave)
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nrecommendation_tasks=%d\nnode_budget=%d\nestimated_minutes=%d\nrecommendation_wave=%s\nrecommendation_workgraph=%s\nnext_recommended_prompt=%s\n",
+		result.Wave.Status,
+		result.Wave.MissionID,
+		result.Wave.TotalTasks,
+		result.Wave.NodeBudget,
+		result.Wave.EstimatedMinutes,
+		filepath.ToSlash(filepath.Join(*outDir, "recommendation-wave.json")),
+		filepath.ToSlash(filepath.Join(*outDir, "recommendation-workgraph.json")),
+		filepath.ToSlash(filepath.Join(*outDir, "next-recommended-prompt.md")),
+	)
 	return nil
 }
 
