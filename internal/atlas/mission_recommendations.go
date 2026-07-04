@@ -1143,6 +1143,8 @@ func BuildAtlasRecommendationPromoterReadback(readback AtlasRecommendationReadba
 		EvidenceRoot:           readback.EvidenceRoot,
 		PromotionClaimed:       false,
 		RSIRemainsDenied:       true,
+		NoPromotionSummary:     "No mutation authority promotion claimed; RSI remains denied.",
+		NextDeniedClass:        "RSI",
 		Reason:                 reason,
 		ElapsedMinutes:         readback.ElapsedMinutes,
 		MinMinutesMet:          readback.MinMinutesMet,
@@ -1243,6 +1245,12 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	}
 	if !promoter.RSIRemainsDenied {
 		errs = append(errs, "promoter readback must keep RSI denied")
+	}
+	if promoter.NoPromotionSummary != "No mutation authority promotion claimed; RSI remains denied." {
+		errs = append(errs, "promoter readback must include no-promotion summary")
+	}
+	if promoter.NextDeniedClass != "RSI" {
+		errs = append(errs, "promoter readback next_denied_class must be RSI")
 	}
 	if command.SchedulesWork || command.ExecutesWork || command.ApprovesWork || command.ClaimsAuthorityAdvance {
 		errs = append(errs, "command readback must not schedule, execute, approve, or claim authority advance")

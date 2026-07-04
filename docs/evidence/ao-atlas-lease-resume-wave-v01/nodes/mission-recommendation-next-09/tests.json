@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-09",
+  "red_phase": "Focused resume/closure test failed before implementation because Promoter readback lacked no_promotion_summary and next_denied_class.",
+  "green_phase": "Focused resume/closure test passed after Promoter readback emitted no_promotion_summary and next_denied_class=RSI.",
+  "tests": [
+    "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+    "production-readiness Promoter summary jq check"
+  ]
+}

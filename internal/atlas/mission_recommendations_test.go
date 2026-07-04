@@ -417,6 +417,11 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	if err := ValidateAtlasRecommendationReconciliationPacket(resumeReadback, command, promoter, foundry, reconciliation); err != nil {
 		t.Fatalf("reconciliation packet should agree with resumed closure artifacts: %v", err)
 	}
+	rawPromoter := mustLoadJSON[map[string]any](t, promoterPath)
+	if rawPromoter["no_promotion_summary"] != "No mutation authority promotion claimed; RSI remains denied." ||
+		rawPromoter["next_denied_class"] != "RSI" {
+		t.Fatalf("promoter readback missing no-promotion summary fields: %#v", rawPromoter)
+	}
 	if command.ElapsedMinutes != 25 || command.FinalResponseAllowed ||
 		promoter.PromotionClaimed || !promoter.RSIRemainsDenied ||
 		foundry.NodeCompletionStatus != "nodes_in_progress" ||
