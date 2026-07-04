@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+  "status": "in_progress",
+  "mission_id": "mission-long-wave",
+  "evidence_root": "docs/evidence/ao-atlas-long-recommendation-wave-v04",
+  "completed_recommendation_nodes": 19,
+  "total_recommendation_nodes": 40,
+  "generated_workgraph": {
+    "total_nodes": 40,
+    "ready_nodes": 21,
+    "executable_ready_nodes": 1,
+    "first_executable_node": "mission-recommendation-next-20",
+    "final_response_allowed": false,
+    "final_response_reason": "ready nodes or exact next actions remain"
+  }
+}

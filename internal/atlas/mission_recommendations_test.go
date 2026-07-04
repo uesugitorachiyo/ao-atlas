@@ -291,6 +291,165 @@ func TestMissionRecommendationsReadbackFinalGateTransitions(t *testing.T) {
 		completedReadback.ExactNextAction != "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks." {
 		t.Fatalf("completed readback must allow closure: %#v", completedReadback)
 	}
+	if completedReadback.FoundryRollupStatus != "completed_all_node_run_links_recorded" ||
+		completedReadback.PromoterReadbackStatus != "no_promotion_recorded" ||
+		completedReadback.PromoterNoPromotionStatus != "recorded_no_promotion_for_recommendation_wave" ||
+		completedReadback.CommandReadbackStatus != "compact_timeline_recorded" ||
+		completedReadback.CommandTimelineStatus != "recorded_compact_timeline_for_completed_wave" {
+		t.Fatalf("completed readback missing closure bindings: %#v", completedReadback)
+	}
+}
+
+func TestRecommendationCompleteNodeRejectsMissingGateEvidence(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	node := result.Workgraph.Nodes[0]
+	link := recommendationRunLink(t, node.FactoryTask.ID, map[string]string{
+		"node_gate": recommendationEvidenceFile(t, "missing-gate", node.ID, "node-gate.json"),
+	})
+
+	_, _, err = CompleteAtlasRecommendationNodeWithRunLink(result.Wave, result.Workgraph, link, AtlasRecommendationCompleteNodeOptions{
+		ExpectedNodeID: node.ID,
+		EvidenceRoot:   repoRoot(t),
+	})
+	if err == nil || !strings.Contains(err.Error(), "missing evidence candidate_record") {
+		t.Fatalf("expected missing candidate record evidence, got %v", err)
+	}
+}
+
+func TestRecommendationCompleteNodeRejectsOutOfOrderRunLink(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	firstNode := result.Workgraph.Nodes[0]
+	secondNode := result.Workgraph.Nodes[1]
+	link := recommendationRunLink(t, secondNode.FactoryTask.ID, recommendationEvidenceFiles(t, "out-of-order", secondNode.ID))
+
+	_, _, err = CompleteAtlasRecommendationNodeWithRunLink(result.Wave, result.Workgraph, link, AtlasRecommendationCompleteNodeOptions{
+		ExpectedNodeID: firstNode.ID,
+		EvidenceRoot:   repoRoot(t),
+	})
+	if err == nil || !strings.Contains(err.Error(), "run-link task_id must match executable node") {
+		t.Fatalf("expected out-of-order rejection, got %v", err)
+	}
+}
+
+func TestRecommendationCompleteNodeAdvancesReadbackAndExecutionLedger(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	firstNode := result.Workgraph.Nodes[0]
+	link := recommendationRunLink(t, firstNode.FactoryTask.ID, recommendationEvidenceFiles(t, "advance", firstNode.ID))
+
+	updated, completedNodeID, err := CompleteAtlasRecommendationNodeWithRunLink(result.Wave, result.Workgraph, link, AtlasRecommendationCompleteNodeOptions{
+		ExpectedNodeID: firstNode.ID,
+		EvidenceRoot:   repoRoot(t),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if completedNodeID != "mission-recommendation-next-01" {
+		t.Fatalf("completed wrong node: %s", completedNodeID)
+	}
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, updated, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.CompletedNodes != 1 ||
+		readback.ReadyNodes != 39 ||
+		readback.FirstExecutableNode != "mission-recommendation-next-02" ||
+		readback.FinalResponseAllowed {
+		t.Fatalf("bad readback after first completion: %#v", readback)
+	}
+	execution := BuildAtlasRecommendationExecutionReadback(readback)
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("execution ledger should match readback: %v", err)
+	}
+	if execution.CompletedRecommendationNodes != 1 || execution.GeneratedWorkgraph.ExecutableReadyNodes != 1 {
+		t.Fatalf("bad execution ledger after first completion: %#v", execution)
+	}
+}
+
+func TestMissionRecommendationsCompleteNodeCLIWritesUpdatedArtifacts(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join(importDir, "recommendation-workgraph.json"))
+	firstNode := workgraph.Nodes[0]
+	link := recommendationRunLink(t, firstNode.FactoryTask.ID, recommendationEvidenceFiles(t, "cli", firstNode.ID))
+	linkPath := filepath.Join(dir, "run-link.json")
+	if err := WriteJSON(linkPath, link); err != nil {
+		t.Fatal(err)
+	}
+	updatedWorkgraphPath := filepath.Join(dir, "updated-workgraph.json")
+	readbackPath := filepath.Join(dir, "updated-readback.json")
+	executionPath := filepath.Join(dir, "updated-execution-readback.json")
+
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "complete-node",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--run-link", linkPath,
+		"--expected-node", firstNode.ID,
+		"--evidence-root", repoRoot(t),
+		"--readback-evidence-root", "docs/evidence/test-wave",
+		"--out-workgraph", updatedWorkgraphPath,
+		"--out-readback", readbackPath,
+		"--out-execution-readback", executionPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("complete-node failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "completed_nodes=1") ||
+		!strings.Contains(out.String(), "next_executable_node=mission-recommendation-next-02") {
+		t.Fatalf("complete-node output missing progress readback: %s", out.String())
+	}
+	updated := mustLoadJSON[Workgraph](t, updatedWorkgraphPath)
+	if updated.Nodes[0].Status != "completed" || updated.Nodes[1].Status != "ready" {
+		t.Fatalf("bad updated workgraph statuses: %#v", updated.Nodes[:2])
+	}
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, readbackPath)
+	if readback.CompletedNodes != 1 || readback.EvidenceRoot != "docs/evidence/test-wave" {
+		t.Fatalf("bad readback artifact: %#v", readback)
+	}
+	execution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, executionPath)
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("bad execution artifact: %v", err)
+	}
 }
 
 func TestMissionRecommendationsReadbackRejectsMismatchedWaveAndWorkgraph(t *testing.T) {
@@ -411,6 +570,8 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"recommendation-workgraph.json",
 		"recommendation-readback.json",
 		"mission recommendations readback",
+		"mission recommendations complete-node",
+		"--out-execution-readback",
 		"completed_recommendation_nodes",
 		"recommendation-ledger-consistency",
 		"next-recommended-prompt.md",
@@ -462,4 +623,48 @@ func completeRecommendationNodes(workgraph Workgraph, count int) Workgraph {
 		}
 	}
 	return updated
+}
+
+func recommendationRunLink(t *testing.T, taskID string, evidence map[string]string) RunLink {
+	t.Helper()
+	link, err := BuildRunLink(taskID, "completed", evidence)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return link
+}
+
+func recommendationEvidenceFiles(t *testing.T, scenario, nodeID string) map[string]string {
+	t.Helper()
+	keys := []string{
+		"node_gate",
+		"candidate_record",
+		"rollback_record",
+		"implementation_evidence",
+		"tests",
+		"verification",
+		"sentinel_public_safety",
+		"promoter_no_promotion",
+		"command_readback",
+		"foundry_import",
+		"checkpoint_bundle",
+	}
+	evidence := map[string]string{}
+	for _, key := range keys {
+		evidence[key] = recommendationEvidenceFile(t, scenario, nodeID, key+".json")
+	}
+	return evidence
+}
+
+func recommendationEvidenceFile(t *testing.T, scenario, nodeID, name string) string {
+	t.Helper()
+	rel := filepath.ToSlash(filepath.Join("target", "recommendation-node-evidence-test", scenario, nodeID, name))
+	abs := filepath.Join(repoRoot(t), rel)
+	if err := os.MkdirAll(filepath.Dir(abs), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(abs, []byte(`{"status":"recorded"}`+"\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	return rel
 }

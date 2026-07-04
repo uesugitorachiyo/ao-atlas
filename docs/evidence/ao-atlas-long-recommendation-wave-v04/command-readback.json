@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.long-recommendation-wave-v04.command-readback.v0.1",
+  "status": "completed",
+  "evidence_root": "docs/evidence/ao-atlas-long-recommendation-wave-v04",
+  "completed_nodes": 40,
+  "ready_nodes": 0,
+  "final_response_allowed": true,
+  "compact_timeline": "40 recommendation nodes completed sequentially through evidence-bound run-links",
+  "next_action": "Finalize PR, CI, merge, and branch cleanup."
+}

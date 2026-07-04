@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "mission-long-wave",
+  "node_id": "mission-recommendation-next-03",
+  "task_id": "mission-recommendation-next-03-task",
+  "evidence_key": "implementation_evidence",
+  "status": "recorded",
+  "objective": "Bind Mission final rollup return-gate fields into Atlas reconciliation packets.",
+  "foundry_import": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-03/foundry-import.json",
+  "checkpoint_bundle": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-03/checkpoint-bundle.json",
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}

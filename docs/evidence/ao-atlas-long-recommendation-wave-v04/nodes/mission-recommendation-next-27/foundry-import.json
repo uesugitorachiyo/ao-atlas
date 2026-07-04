@@ -1,0 +1,113 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-mission-long-wave-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-mission-long-wave",
+  "target_instance": "demo-stack",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-26/workgraph-after.json",
+      "digest": "sha256:3f230795094240df7e97842cb3ab331e63ef0decb5df2dba1f37e29e316a310a"
+    },
+    {
+      "ref": "examples/valid/stack-instance.json",
+      "digest": "sha256:833ac56f56cfd8f058a786eb7ced74d9879e157db6510a28867c3e3c46ecf1b6"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-next-27",
+      "task_id": "mission-recommendation-next-27-task",
+      "path": "tasks/mission-recommendation-next-27-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:19f532e9dd6e6c1fc3bc1d6f0da69cf95f7480949cef698bc499685074c9a434",
+        "source_recommendation:next-27"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-next-27-task",
+        "objective": "Add blocked-node continuation wording to generated Atlas prompts.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/next-27",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:19f532e9dd6e6c1fc3bc1d6f0da69cf95f7480949cef698bc499685074c9a434",
+          "source_recommendation:next-27"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-next-26"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:6a3bf962d4132f51e762268337b1524ba9efa652736865e9452ee4430e38fcf9"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

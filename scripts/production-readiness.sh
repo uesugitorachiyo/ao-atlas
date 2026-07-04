@@ -41,6 +41,7 @@ required_files=(
   docs/sdd/AO-ATLAS-IMPLEMENTATION-SLICES.md
   docs/sdd/AO-ATLAS-ACCEPTANCE-GATES.md
   docs/sdd/AO-ATLAS-SDD-HANDOFF.md
+  docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
   schemas/stack-instance.schema.json
   schemas/atlas-registry.schema.json
   schemas/instance-doctor.schema.json
@@ -105,6 +106,41 @@ test -s "$OUT/mission-recommendations/recommendation-readback-regenerated.json"
 "$BIN" workgraph validate --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
 "$BIN" foundry import --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --instance examples/valid/stack-instance.json --node mission-recommendation-next-01 --out "$OUT/mission-recommendations-foundry-import" >/dev/null
 test -s "$OUT/mission-recommendations-foundry-import/foundry-import.json"
+node_evidence_dir="$OUT/mission-recommendations-node-01-evidence"
+mkdir -p "$node_evidence_dir"
+for key in node_gate candidate_record rollback_record implementation_evidence tests verification sentinel_public_safety promoter_no_promotion command_readback foundry_import checkpoint_bundle; do
+  printf '{"status":"recorded","key":"%s"}\n' "$key" >"$node_evidence_dir/$key.json"
+done
+"$BIN" run-link attach \
+  --task-id mission-recommendation-next-01-task \
+  --status completed \
+  --evidence node_gate="$node_evidence_dir/node_gate.json" \
+  --evidence candidate_record="$node_evidence_dir/candidate_record.json" \
+  --evidence rollback_record="$node_evidence_dir/rollback_record.json" \
+  --evidence implementation_evidence="$node_evidence_dir/implementation_evidence.json" \
+  --evidence tests="$node_evidence_dir/tests.json" \
+  --evidence verification="$node_evidence_dir/verification.json" \
+  --evidence sentinel_public_safety="$node_evidence_dir/sentinel_public_safety.json" \
+  --evidence promoter_no_promotion="$node_evidence_dir/promoter_no_promotion.json" \
+  --evidence command_readback="$node_evidence_dir/command_readback.json" \
+  --evidence foundry_import="$node_evidence_dir/foundry_import.json" \
+  --evidence checkpoint_bundle="$node_evidence_dir/checkpoint_bundle.json" \
+  --out "$OUT/mission-recommendations-node-01-run-link.json" >/dev/null
+"$BIN" mission recommendations complete-node \
+  --wave "$OUT/mission-recommendations/recommendation-wave.json" \
+  --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" \
+  --run-link "$OUT/mission-recommendations-node-01-run-link.json" \
+  --expected-node mission-recommendation-next-01 \
+  --evidence-root . \
+  --readback-evidence-root target/production-readiness/mission-recommendations \
+  --out-workgraph "$OUT/mission-recommendations/recommendation-workgraph-after-node-01.json" \
+  --out-readback "$OUT/mission-recommendations/recommendation-readback-after-node-01.json" \
+  --out-execution-readback "$OUT/mission-recommendations/execution-readback-after-node-01.json" >/dev/null
+test -s "$OUT/mission-recommendations/recommendation-workgraph-after-node-01.json"
+test -s "$OUT/mission-recommendations/recommendation-readback-after-node-01.json"
+test -s "$OUT/mission-recommendations/execution-readback-after-node-01.json"
+jq -e '.completed_nodes == 1 and .ready_nodes == 39 and .first_executable_node == "mission-recommendation-next-02" and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-readback-after-node-01.json" >/dev/null
+jq -e '.completed_recommendation_nodes == 1 and .generated_workgraph.ready_nodes == 39 and .generated_workgraph.executable_ready_nodes == 1 and .generated_workgraph.first_executable_node == "mission-recommendation-next-02" and .generated_workgraph.final_response_allowed == false' "$OUT/mission-recommendations/execution-readback-after-node-01.json" >/dev/null
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" blueprint import \
   --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack \

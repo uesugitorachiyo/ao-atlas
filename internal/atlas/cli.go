@@ -368,13 +368,16 @@ func runMission(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import or readback")
+		return fmt.Errorf("mission recommendations requires import, readback, or complete-node")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
 	}
+	if args[0] == "complete-node" {
+		return runMissionRecommendationsCompleteNode(args[1:], stdout)
+	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import or readback")
+		return fmt.Errorf("mission recommendations requires import, readback, or complete-node")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -454,6 +457,99 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-workgraph.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-readback.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "next-recommended-prompt.md")),
+	)
+	return nil
+}
+
+func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations complete-node", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	wavePath := fs.String("wave", "", "Atlas recommendation wave path")
+	workgraphPath := fs.String("workgraph", "", "Atlas recommendation workgraph path")
+	runLinkPath := fs.String("run-link", "", "completed run-link path")
+	expectedNodeID := fs.String("expected-node", "", "expected executable recommendation node id")
+	evidenceRoot := fs.String("evidence-root", "", "filesystem root used to verify run-link evidence files")
+	readbackEvidenceRoot := fs.String("readback-evidence-root", "", "portable evidence root written into readback")
+	outWorkgraphPath := fs.String("out-workgraph", "", "updated workgraph output path")
+	outReadbackPath := fs.String("out-readback", "", "updated recommendation readback output path")
+	outExecutionReadbackPath := fs.String("out-execution-readback", "", "updated execution readback output path")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	for name, value := range map[string]string{
+		"--wave":          *wavePath,
+		"--workgraph":     *workgraphPath,
+		"--run-link":      *runLinkPath,
+		"--out-workgraph": *outWorkgraphPath,
+		"--out-readback":  *outReadbackPath,
+	} {
+		if strings.TrimSpace(value) == "" {
+			return fmt.Errorf("%s is required", name)
+		}
+	}
+	for _, out := range []string{*outWorkgraphPath, *outReadbackPath, *outExecutionReadbackPath} {
+		if strings.TrimSpace(out) == "" {
+			continue
+		}
+		if samePath(*wavePath, out) || samePath(*workgraphPath, out) || samePath(*runLinkPath, out) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+	}
+	wave, err := LoadJSON[AtlasRecommendationWave](*wavePath)
+	if err != nil {
+		return err
+	}
+	workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+	if err != nil {
+		return err
+	}
+	link, err := LoadJSON[RunLink](*runLinkPath)
+	if err != nil {
+		return err
+	}
+	updated, completedNodeID, err := CompleteAtlasRecommendationNodeWithRunLink(wave, workgraph, link, AtlasRecommendationCompleteNodeOptions{
+		ExpectedNodeID: *expectedNodeID,
+		EvidenceRoot:   *evidenceRoot,
+	})
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(*outWorkgraphPath, updated); err != nil {
+		return err
+	}
+	readback, err := BuildAtlasRecommendationReadback(wave, updated, AtlasRecommendationReadbackOptions{
+		WavePath:      *wavePath,
+		WorkgraphPath: *outWorkgraphPath,
+		EvidenceRoot:  *readbackEvidenceRoot,
+	})
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(*outReadbackPath, readback); err != nil {
+		return err
+	}
+	execution := BuildAtlasRecommendationExecutionReadback(readback)
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outExecutionReadbackPath) != "" {
+		if err := WriteJSON(*outExecutionReadbackPath, execution); err != nil {
+			return err
+		}
+	}
+	nextExecutable := readback.FirstExecutableNode
+	if nextExecutable == "" {
+		nextExecutable = "none"
+	}
+	fmt.Fprintf(stdout, "status=written\ncompleted_node=%s\ncompleted_nodes=%d\nready_nodes=%d\nnext_executable_node=%s\nfinal_response_allowed=%t\nupdated_workgraph=%s\nrecommendation_readback=%s\nexecution_readback=%s\n",
+		completedNodeID,
+		readback.CompletedNodes,
+		readback.ReadyNodes,
+		nextExecutable,
+		readback.FinalResponseAllowed,
+		filepath.ToSlash(*outWorkgraphPath),
+		filepath.ToSlash(*outReadbackPath),
+		filepath.ToSlash(*outExecutionReadbackPath),
 	)
 	return nil
 }
