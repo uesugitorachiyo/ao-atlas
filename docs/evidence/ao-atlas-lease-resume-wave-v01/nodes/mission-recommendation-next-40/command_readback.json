@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "node_id": "mission-recommendation-next-40",
+  "completed_after_node": 40,
+  "ready_nodes_after_node": 0,
+  "final_response_allowed": true,
+  "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
+}

@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-40",
+  "public_safety_scope": "final readback evidence only",
+  "forbidden_claims": [
+    "no broad RSI claim",
+    "no provider-call permission",
+    "no credential inspection permission",
+    "no direct-main mutation permission",
+    "no release/deploy/publish/upload/tag permission"
+  ],
+  "summary": "The final readback closes the recommendation wave only; RSI remains denied and no AO authority is promoted."
+}

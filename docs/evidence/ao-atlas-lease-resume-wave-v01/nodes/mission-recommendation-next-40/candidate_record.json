@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-40",
+  "selected_candidate": "final execution readback for 40-node recommendation wave",
+  "owner": "AO Atlas",
+  "readback_scope": "final execution, Command, Promoter, Foundry, and reconciliation artifacts",
+  "blueprint_route": "not_required",
+  "summary": "The ready Atlas-owned task already included objective, scope, gates, safety limits, and digest-bound source evidence, so Blueprint was skipped and the final execution readback was generated directly."
+}

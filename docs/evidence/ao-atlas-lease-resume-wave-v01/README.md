@@ -1,11 +1,12 @@
 # AO Atlas Lease Resume Wave v01
 
-Status: in progress.
+Status: completed.
 
 This evidence root records the first post-repair recommendation wave using the
 persisted lease-start and resume machinery. The wave starts at
 `2026-07-04T08:34:04-07:00`, has a 120-minute minimum, and remains final-denied
-because ready nodes remain.
+until all ready nodes are complete. The final readback now records all 40 nodes
+complete, no ready nodes remaining, and `final_response_allowed=true`.
 
 ## 2-3 Hour Long-Run Recommendation Wave Evidence
 
@@ -27,30 +28,27 @@ promotion claim.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 39
-- Ready nodes: 1
+- Completed nodes: 40
+- Ready nodes: 0
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 478
+- Elapsed minutes: 491
 - Minimum minutes met: true
-- Lease health status: `minimum_met_continue_if_fast`
+- Lease health status: `all_generated_nodes_complete`
 - Checkpoint freshness status: `fresh_checkpoint_required_after_each_node_or_timed_interval`
 - Stale route decision status: `fresh_atlas_supervises_foundry_owns_one_active_node`
-- Early-return risk status: `blocked_final_response_ready_nodes_remain`
-- Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 39
-- Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-40`
-  and execute exactly one active node.
-- Exact next action readback: `continuation_required`, bound to
-  `mission-recommendation-next-40`, `blocked_ready_nodes_remain`, and
-  `final_response_allowed=false`.
-- Command timeline placeholders: `checkpoint`, `exact_next_action`, and
-  `return_gate` are pending Command timeline slots required before final
-  response.
-- Promoter no-promotion placeholders: `promotion_claim`, `rsi_boundary`, and
-  `authority_advance` are pending Promoter slots required before final
-  response.
+- Early-return risk status: `cleared_no_ready_nodes_remain`
+- Return gate status: `final_response_allowed`
+- Checkpoint count: 40
+- Final response allowed: true
+- Exact next action: finalize AO Atlas long-run wave with Promoter, Command,
+  and public-safety readbacks.
+- Exact next action readback: `finalization_ready`, no next executable node,
+  `final_response_allowed`, and `final_response_allowed=true`.
+- Command readback: completed; `40/40` recommendation nodes complete,
+  `lease_time_status=minimum_minutes_met`, and
+  `final_response_allowed=true`.
+- Promoter readback: no promotion claimed; RSI remains denied.
 - Final-response denial tests: ready recommendation workgraphs now reject stale
   `final_response_allowed` return gates, stale final reasons, and exact-next
   actions that do not name the first executable node.
@@ -83,6 +81,10 @@ promotion claim.
 - Evidence README long-run section: this file now documents the 40-node,
   120-180 minute lease, checkpoint evidence requirements, final-response gate,
   cross-artifact agreement, no-promotion boundary, and RSI-denied boundary.
+- Final execution readback: recommendation, execution, Command, Promoter,
+  Foundry, and reconciliation artifacts now agree on 40/40 complete,
+  ready_nodes=0, checkpoint_count=40, final_response_allowed=true, no authority
+  promotion, and RSI remains denied.
 - Foundry terminal examples: `completed`, `promoted`, `denied`, and `blocked`
   are explicit in the recommendation readback. `promoted` normalizes to
   `completed` only when Promoter and Command agree and RSI remains denied.

@@ -636,16 +636,41 @@ if [ -f "$lease_resume_readback" ]; then
     .return_gate_status == $synthesis[0].return_gate_status and
     .final_response_allowed == $synthesis[0].final_response_allowed and
     .exact_next_action == $synthesis[0].exact_next_action and
-    .final_response_allowed == false and
-    .return_gate_status == "blocked_ready_nodes_remain" and
-    .ready_nodes > 0 and
-    (.exact_next_action | length) > 0
+    (
+      (
+        .final_response_allowed == false and
+        .return_gate_status == "blocked_ready_nodes_remain" and
+        .ready_nodes > 0 and
+        (.exact_next_action | length) > 0
+      ) or (
+        .status == "completed" and
+        .completed_nodes == 40 and
+        .ready_nodes == 0 and
+        .checkpoint_count == 40 and
+        .min_minutes_met == true and
+        .return_gate_status == "final_response_allowed" and
+        .final_response_allowed == true
+      )
+    )
+  ' "$lease_resume_readback" >/dev/null
+  jq -e '
+    .status == "completed" and
+    .total_nodes == 40 and
+    .completed_nodes == 40 and
+    .ready_nodes == 0 and
+    .checkpoint_count == 40 and
+    .min_minutes_met == true and
+    .lease_time_status == "minimum_minutes_met" and
+    .return_gate_status == "final_response_allowed" and
+    .final_response_allowed == true and
+    .exact_next_action == "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
   ' "$lease_resume_readback" >/dev/null
   lease_resume_completed_nodes="$(jq -r '.completed_nodes' "$lease_resume_readback")"
   lease_resume_total_nodes="$(jq -r '.total_nodes' "$lease_resume_readback")"
   lease_resume_ready_nodes="$(jq -r '.ready_nodes' "$lease_resume_readback")"
   lease_resume_elapsed_minutes="$(jq -r '.elapsed_minutes' "$lease_resume_readback")"
   lease_resume_checkpoint_count="$(jq -r '.checkpoint_count' "$lease_resume_readback")"
+  lease_resume_early_return_risk="$(jq -r '.early_return_risk_status' "$lease_resume_readback")"
   lease_resume_next_action="$(jq -r '.exact_next_action' "$lease_resume_readback")"
   lease_resume_node_suffix="$(printf "%02d" "$lease_resume_completed_nodes")"
   lease_resume_workgraph="$lease_resume_root/nodes/mission-recommendation-next-$lease_resume_node_suffix/workgraph-after.json"
@@ -655,7 +680,7 @@ if [ -f "$lease_resume_readback" ]; then
   grep -qF "Ready nodes: $lease_resume_ready_nodes" "$lease_resume_prompt"
   grep -qF "Elapsed minutes at latest checkpoint: $lease_resume_elapsed_minutes" "$lease_resume_prompt"
   grep -qF "Checkpoint count: $lease_resume_checkpoint_count" "$lease_resume_prompt"
-  grep -qF "Early-return risk: \`blocked_final_response_ready_nodes_remain\`" "$lease_resume_prompt"
+  grep -qF "Early-return risk: \`$lease_resume_early_return_risk\`" "$lease_resume_prompt"
   grep -qF "$lease_resume_next_action" "$lease_resume_prompt"
   grep -qF 'If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.' "$lease_resume_prompt"
   grep -qF 'If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.' "$lease_resume_prompt"

@@ -1,0 +1,15 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-40",
+  "summary": "Generated the final execution readback path for the 40-node recommendation wave by adding production-readiness final-state assertions, completing the final node, and refreshing recommendation, execution, Command, Promoter, Foundry, reconciliation, and synthesis artifacts to the final-allowed state.",
+  "changed_files": [
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/recommendation-readback.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/execution-readback.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/command-readback.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/promoter-readback.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/foundry-rollup.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/reconciliation-packet.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/final-synthesis.json"
+  ]
+}

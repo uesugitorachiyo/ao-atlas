@@ -1778,6 +1778,10 @@ func TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt(t *testing.T) {
 	if idx := strings.Index(workgraphRef, "docs/"); idx >= 0 {
 		workgraphRef = workgraphRef[idx:]
 	}
+	nextExecutableNode := readback.FirstExecutableNode
+	if nextExecutableNode == "" {
+		nextExecutableNode = "none"
+	}
 	for _, want := range []string{
 		"Current workgraph: `" + workgraphRef + "`",
 		"Completed nodes: " + strconv.Itoa(readback.CompletedNodes) + " / " + strconv.Itoa(readback.TotalNodes),
@@ -1787,7 +1791,7 @@ func TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt(t *testing.T) {
 		"Return gate: `" + readback.ReturnGateStatus + "`",
 		"Early-return risk: `" + readback.EarlyReturnRiskStatus + "`",
 		"Checkpoint count: " + strconv.Itoa(readback.CheckpointCount),
-		"Next executable node: `" + readback.FirstExecutableNode + "`",
+		"Next executable node: `" + nextExecutableNode + "`",
 		readback.ExactNextAction,
 		"If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.",
 	} {
