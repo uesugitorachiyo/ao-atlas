@@ -3,29 +3,29 @@
   "status": "in_progress",
   "evidence_root": "docs/evidence/ao-atlas-lease-resume-wave-v01",
   "mission_id": "mission-long-wave",
-  "completed_nodes": 29,
+  "completed_nodes": 30,
   "total_nodes": 40,
-  "ready_nodes": 11,
+  "ready_nodes": 10,
   "blocked_nodes": 0,
   "failed_nodes": 0,
   "started_at": "2026-07-04T08:34:04-07:00",
-  "completed_at": "2026-07-04T11:34:04-07:00",
-  "elapsed_minutes": 180,
+  "completed_at": "2026-07-04T14:37:28-07:00",
+  "elapsed_minutes": 364,
   "supervisor_min_minutes": 120,
   "min_minutes_met": true,
   "lease_time_status": "minimum_minutes_met",
-  "lease_health_status": "minimum_unmet",
+  "lease_health_status": "minimum_met_continue_if_fast",
   "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
   "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
   "early_return_risk_status": "blocked_final_response_ready_nodes_remain",
-  "checkpoint_count": 29,
+  "checkpoint_count": 30,
   "return_gate_status": "blocked_ready_nodes_remain",
   "final_response_allowed": false,
-  "exact_next_action": "Emit Foundry import for mission-recommendation-next-30 and execute exactly one active node.",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-next-31 and execute exactly one active node.",
   "exact_next_action_readback": {
     "status": "continuation_required",
-    "action": "Emit Foundry import for mission-recommendation-next-30 and execute exactly one active node.",
-    "next_executable_node": "mission-recommendation-next-30",
+    "action": "Emit Foundry import for mission-recommendation-next-31 and execute exactly one active node.",
+    "next_executable_node": "mission-recommendation-next-31",
     "return_gate_status": "blocked_ready_nodes_remain",
     "final_response_allowed": false,
     "source": "recommendation_readback"
@@ -47,6 +47,26 @@
       "slot": "return_gate",
       "source": "recommendation_readback",
       "status": "pending_command_timeline",
+      "required_before_final_response": true
+    }
+  ],
+  "promoter_no_promotion_placeholders": [
+    {
+      "slot": "promotion_claim",
+      "source": "recommendation_readback",
+      "status": "pending_promoter_no_promotion",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "rsi_boundary",
+      "source": "recommendation_readback",
+      "status": "pending_promoter_no_promotion",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "authority_advance",
+      "source": "recommendation_readback",
+      "status": "pending_promoter_no_promotion",
       "required_before_final_response": true
     }
   ],
@@ -93,7 +113,7 @@
     "foundry_return_gate_status": "blocked_ready_nodes_remain",
     "foundry_node_completion_status": "nodes_in_progress",
     "foundry_lease_completion_status": "minimum_minutes_met",
-    "foundry_lease_health_status": "minimum_unmet",
+    "foundry_lease_health_status": "minimum_met_continue_if_fast",
     "foundry_checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
     "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
     "early_return_risk_status": "blocked_final_response_ready_nodes_remain",

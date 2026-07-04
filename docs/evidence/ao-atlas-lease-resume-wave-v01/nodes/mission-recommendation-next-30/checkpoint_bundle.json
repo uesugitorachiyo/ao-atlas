@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-30",
+  "summary": "Node 30 checkpoint records Promoter no-promotion placeholders and preserves continuation to node 31 because ready nodes remain."
+}

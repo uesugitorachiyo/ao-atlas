@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-30",
+  "rollback": [
+    "Revert promoter_no_promotion_placeholders fields and validation in internal/atlas.",
+    "Revert recommendation-readback schema additions for promoter_no_promotion_placeholders.",
+    "Revert production-readiness jq checks for Promoter no-promotion placeholders.",
+    "Remove node 30 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-30.",
+    "Regenerate root readbacks from node 29 workgraph if this node is reverted before merge."
+  ]
+}

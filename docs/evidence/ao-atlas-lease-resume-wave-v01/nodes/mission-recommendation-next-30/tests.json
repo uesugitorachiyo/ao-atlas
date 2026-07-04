@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-30",
+  "red_test": "go test ./internal/atlas -run 'TestRecommendationReadbackSchemaRequiresPromoterNoPromotionPlaceholders|TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph|TestRecommendationReadbackRejectsMissingPromoterNoPromotionPlaceholders' -count=1 failed before implementation because AtlasRecommendationReadback had no Promoter no-promotion placeholder field.",
+  "tests": [
+    "go test ./internal/atlas -run 'TestRecommendationReadbackSchemaRequiresPromoterNoPromotionPlaceholders|TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph|TestRecommendationReadbackRejectsMissingPromoterNoPromotionPlaceholders' -count=1 passed"
+  ],
+  "summary": "Focused tests now prove the schema requires Promoter no-promotion placeholders, generated readbacks bind promotion/RSI/authority slots, and validation rejects missing or stale placeholder content."
+}

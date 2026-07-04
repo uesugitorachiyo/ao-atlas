@@ -1,0 +1,10 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-30",
+  "slots": [
+    "promotion_claim",
+    "rsi_boundary",
+    "authority_advance"
+  ],
+  "summary": "Recommendation readbacks now expose Promoter no-promotion placeholders required before final response."
+}

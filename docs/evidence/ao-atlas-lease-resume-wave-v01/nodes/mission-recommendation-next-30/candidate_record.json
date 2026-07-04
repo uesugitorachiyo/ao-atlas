@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-30",
+  "candidate": "atlas-recommendation-promoter-no-promotion-placeholders",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Recommendation wave evidence had Promoter no-promotion status but did not expose structured placeholders for promotion_claimed=false, RSI denied, and no authority advance before Promoter consumes them."
+}

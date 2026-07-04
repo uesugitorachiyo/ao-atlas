@@ -10,26 +10,29 @@ because ready nodes remain.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 29
-- Ready nodes: 11
+- Completed nodes: 30
+- Ready nodes: 10
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 180
+- Elapsed minutes: 364
 - Minimum minutes met: true
-- Lease health status: `minimum_unmet`
+- Lease health status: `minimum_met_continue_if_fast`
 - Checkpoint freshness status: `fresh_checkpoint_required_after_each_node_or_timed_interval`
 - Stale route decision status: `fresh_atlas_supervises_foundry_owns_one_active_node`
 - Early-return risk status: `blocked_final_response_ready_nodes_remain`
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 29
+- Checkpoint count: 30
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-30`
+- Exact next action: emit Foundry import for `mission-recommendation-next-31`
   and execute exactly one active node.
 - Exact next action readback: `continuation_required`, bound to
-  `mission-recommendation-next-30`, `blocked_ready_nodes_remain`, and
+  `mission-recommendation-next-31`, `blocked_ready_nodes_remain`, and
   `final_response_allowed=false`.
 - Command timeline placeholders: `checkpoint`, `exact_next_action`, and
   `return_gate` are pending Command timeline slots required before final
+  response.
+- Promoter no-promotion placeholders: `promotion_claim`, `rsi_boundary`, and
+  `authority_advance` are pending Promoter slots required before final
   response.
 - Foundry terminal examples: `completed`, `promoted`, `denied`, and `blocked`
   are explicit in the recommendation readback. `promoted` normalizes to
