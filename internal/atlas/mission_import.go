@@ -17,6 +17,10 @@ func BuildAOMissionImportWithRouteHistory(recordPath, commandStatusPath, artifac
 }
 
 func BuildAOMissionImportWithMissionReadbacks(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath string) (AOMissionImport, error) {
+	return BuildAOMissionImportWithMissionArchive(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, "")
+}
+
+func BuildAOMissionImportWithMissionArchive(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath string) (AOMissionImport, error) {
 	var record map[string]any
 	if err := readJSONIfPossible(recordPath, &record); err != nil {
 		return AOMissionImport{}, err
@@ -67,7 +71,12 @@ func BuildAOMissionImportWithMissionReadbacks(recordPath, commandStatusPath, art
 			return AOMissionImport{}, err
 		}
 	}
-	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath)
+	if strings.TrimSpace(missionArchivePath) != "" {
+		if err := validateAOMissionArchive(missionArchivePath, missionID); err != nil {
+			return AOMissionImport{}, err
+		}
+	}
+	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath)
 	if err != nil {
 		return AOMissionImport{}, err
 	}
@@ -217,7 +226,7 @@ func sortedMissionProvenanceKeys(counts map[string]int) []string {
 	return keys
 }
 
-func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath string) ([]AOMissionSourceArtifact, error) {
+func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath string) ([]AOMissionSourceArtifact, error) {
 	inputs := []struct {
 		name string
 		path string
@@ -244,6 +253,12 @@ func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPat
 			path string
 		}{name: "ledger_compaction", path: ledgerCompactionPath})
 	}
+	if strings.TrimSpace(missionArchivePath) != "" {
+		inputs = append(inputs, struct {
+			name string
+			path string
+		}{name: "mission_archive", path: missionArchivePath})
+	}
 	sources := make([]AOMissionSourceArtifact, 0, len(inputs))
 	for _, input := range inputs {
 		digest, err := digestFile(input.path)
@@ -253,6 +268,28 @@ func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPat
 		sources = append(sources, AOMissionSourceArtifact{Name: input.name, Path: filepath.ToSlash(input.path), SHA256: digest})
 	}
 	return sources, nil
+}
+
+func validateAOMissionArchive(path, missionID string) error {
+	var archive map[string]any
+	if err := readJSONIfPossible(path, &archive); err != nil {
+		return err
+	}
+	if schema, _ := archive["schema"].(string); schema != "ao.mission.archive.v0.1" {
+		return fmt.Errorf("mission archive schema must be ao.mission.archive.v0.1")
+	}
+	if archiveMissionID, _ := archive["mission_id"].(string); archiveMissionID != missionID {
+		return fmt.Errorf("mission archive mission_id mismatch")
+	}
+	if strings.TrimSpace(fmt.Sprint(archive["archive_digest"])) == "" {
+		return fmt.Errorf("mission archive requires archive_digest")
+	}
+	for _, field := range []string{"safe_to_execute", "executes_work", "approves_work", "mutates_repositories"} {
+		if value, ok := archive[field].(bool); ok && value {
+			return fmt.Errorf("mission archive %s must be false", field)
+		}
+	}
+	return nil
 }
 
 func validateAOMissionRouteHistory(path, missionID string) error {

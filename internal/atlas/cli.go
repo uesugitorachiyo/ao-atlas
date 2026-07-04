@@ -369,6 +369,7 @@ func runMissionImport(args []string, stdout io.Writer) error {
 	routeHistoryPath := fs.String("route-history", "", "optional AO Mission route history path")
 	schedulerRecoveryPath := fs.String("scheduler-recovery", "", "optional AO Mission scheduler recovery readback path")
 	ledgerCompactionPath := fs.String("ledger-compaction", "", "optional AO Mission ledger compaction readback path")
+	missionArchivePath := fs.String("mission-archive", "", "optional AO Mission archive path")
 	outPath := fs.String("out", "", "output path")
 	jsonOut := fs.Bool("json", false, "json output")
 	if err := fs.Parse(args); err != nil {
@@ -381,13 +382,13 @@ func runMissionImport(args []string, stdout io.Writer) error {
 		return fmt.Errorf("--out or --json is required")
 	}
 	if *outPath != "" {
-		for _, input := range []string{*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath, *schedulerRecoveryPath, *ledgerCompactionPath} {
+		for _, input := range []string{*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath, *schedulerRecoveryPath, *ledgerCompactionPath, *missionArchivePath} {
 			if samePath(input, *outPath) {
 				return fmt.Errorf("refusing to overwrite input artifact")
 			}
 		}
 	}
-	importRecord, err := BuildAOMissionImportWithMissionReadbacks(*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath, *schedulerRecoveryPath, *ledgerCompactionPath)
+	importRecord, err := BuildAOMissionImportWithMissionArchive(*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath, *schedulerRecoveryPath, *ledgerCompactionPath, *missionArchivePath)
 	if err != nil {
 		return err
 	}

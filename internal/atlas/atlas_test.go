@@ -1048,6 +1048,88 @@ func TestMissionImportBindsRecoveryAndCompactionProvenance(t *testing.T) {
 	}
 }
 
+func TestMissionImportBindsMissionArchiveProvenance(t *testing.T) {
+	dir := t.TempDir()
+	record := filepath.Join(dir, "mission-record.json")
+	status := filepath.Join(dir, "command-status.json")
+	manifest := filepath.Join(dir, "artifact-manifest.json")
+	archive := filepath.Join(dir, "mission-archive.json")
+	outPath := filepath.Join(dir, "ao-mission-import.json")
+	if err := WriteJSON(record, map[string]any{
+		"schema":        "ao.mission.record.v0.1",
+		"mission_id":    "mission-demo",
+		"status":        "active",
+		"current_route": "ao-atlas",
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(status, map[string]any{
+		"schema":               "ao.command.mission-status.v0.1",
+		"mission_id":           "mission-demo",
+		"status":               "active",
+		"current_route":        "ao-atlas",
+		"safe_to_execute":      false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(manifest, map[string]any{
+		"schema":        "ao.mission.artifact-manifest.v0.1",
+		"mission_id":    "mission-demo",
+		"artifact_refs": []any{},
+		"executes_work": false,
+		"approves_work": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(archive, map[string]any{
+		"schema":          "ao.mission.archive.v0.1",
+		"mission_id":      "mission-demo",
+		"artifact_count":  0,
+		"archive_digest":  "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		"safe_to_execute": false,
+		"executes_work":   false,
+		"approves_work":   false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "import",
+		"--record", record,
+		"--command-status", status,
+		"--artifact-manifest", manifest,
+		"--mission-archive", archive,
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission import with archive failed: %s", out.String())
+	}
+	importRecord, err := LoadJSON[AOMissionImport](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(importRecord.SourceArtifacts) != 4 || importRecord.SourceArtifacts[3].Name != "mission_archive" || importRecord.SourceArtifacts[3].SHA256 == "" {
+		t.Fatalf("missing mission archive provenance: %#v", importRecord.SourceArtifacts)
+	}
+	workgraph := filepath.Join("..", "..", "examples", "valid", "workgraph.json")
+	metadata := filepath.Join(dir, "metadata.json")
+	out.Reset()
+	code = Run([]string{"mission", "workgraph-metadata", "--import", outPath, "--workgraph", workgraph, "--out", metadata}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission metadata with archive failed: %s", out.String())
+	}
+	metadataRecord, err := LoadJSON[AOMissionWorkgraphMetadata](metadata)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if metadataRecord.MissionProvenance["mission_archive"] != 1 || !strings.Contains(metadataRecord.ProvenanceDiagnostics, "mission_archive=1") {
+		t.Fatalf("metadata missing mission archive diagnostics: %#v", metadataRecord)
+	}
+}
+
 func TestMissionImportRejectsUnsafeRouteHistory(t *testing.T) {
 	dir := t.TempDir()
 	record := filepath.Join(dir, "mission-record.json")
