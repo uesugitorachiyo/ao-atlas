@@ -367,8 +367,14 @@ func runMission(args []string, stdout io.Writer) error {
 }
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
-	if len(args) == 0 || args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import")
+	if len(args) == 0 {
+		return fmt.Errorf("mission recommendations requires import or readback")
+	}
+	if args[0] == "readback" {
+		return runMissionRecommendationsReadback(args[1:], stdout)
+	}
+	if args[0] != "import" {
+		return fmt.Errorf("mission recommendations requires import or readback")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -434,7 +440,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		maxLeaseMinutes = result.Wave.Supervisor.MaxMinutes
 		continueTarget = result.Wave.Supervisor.ContinueIfFastTarget
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nrecommendation_tasks=%d\nnode_budget=%d\nestimated_minutes=%d\nmin_minutes=%d\nmax_minutes=%d\ncontinue_if_fast_target=%d\nfinal_response_allowed=%t\nrecommendation_wave=%s\nrecommendation_workgraph=%s\nnext_recommended_prompt=%s\n",
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nrecommendation_tasks=%d\nnode_budget=%d\nestimated_minutes=%d\nmin_minutes=%d\nmax_minutes=%d\ncontinue_if_fast_target=%d\nfinal_response_allowed=%t\nrecommendation_wave=%s\nrecommendation_workgraph=%s\nrecommendation_readback=%s\nnext_recommended_prompt=%s\n",
 		result.Wave.Status,
 		result.Wave.MissionID,
 		result.Wave.TotalTasks,
@@ -446,7 +452,70 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		result.Wave.FinalResponseAllowed,
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-wave.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-workgraph.json")),
+		filepath.ToSlash(filepath.Join(*outDir, "recommendation-readback.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "next-recommended-prompt.md")),
+	)
+	return nil
+}
+
+func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations readback", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	wavePath := fs.String("wave", "", "Atlas recommendation wave path")
+	workgraphPath := fs.String("workgraph", "", "Atlas recommendation workgraph path")
+	evidenceRoot := fs.String("evidence-root", "", "relative evidence root")
+	outPath := fs.String("out", "", "output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*wavePath) == "" {
+		return fmt.Errorf("--wave is required")
+	}
+	if strings.TrimSpace(*workgraphPath) == "" {
+		return fmt.Errorf("--workgraph is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if *outPath != "" && (samePath(*wavePath, *outPath) || samePath(*workgraphPath, *outPath)) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	wave, err := LoadJSON[AtlasRecommendationWave](*wavePath)
+	if err != nil {
+		return err
+	}
+	workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+	if err != nil {
+		return err
+	}
+	readback, err := BuildAtlasRecommendationReadback(wave, workgraph, AtlasRecommendationReadbackOptions{
+		WavePath:      *wavePath,
+		WorkgraphPath: *workgraphPath,
+		EvidenceRoot:  *evidenceRoot,
+	})
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, readback); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, readback)
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\n",
+		readback.Status,
+		readback.MissionID,
+		readback.TotalNodes,
+		readback.CompletedNodes,
+		readback.ReadyNodes,
+		readback.ExecutableReadyNodes,
+		readback.LeaseHealthStatus,
+		readback.FinalResponseAllowed,
+		readback.ExactNextAction,
+		filepath.ToSlash(*outPath),
 	)
 	return nil
 }

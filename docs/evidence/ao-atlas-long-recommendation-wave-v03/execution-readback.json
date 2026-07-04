@@ -1,0 +1,53 @@
+{
+  "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+  "status": "completed",
+  "mission_id": "mission-long-wave",
+  "evidence_root": "docs/evidence/ao-atlas-long-recommendation-wave-v03",
+  "completed_recommendation_nodes": 40,
+  "total_recommendation_nodes": 40,
+  "generated_workgraph": {
+    "total_nodes": 40,
+    "ready_nodes": 40,
+    "executable_ready_nodes": 1,
+    "first_executable_node": "mission-recommendation-next-01",
+    "final_response_allowed": false,
+    "final_response_reason": "ready nodes or exact next actions remain"
+  },
+  "implemented_bindings": [
+    "mission recommendations readback CLI",
+    "recommendation-readback contract model",
+    "recommendation-readback schema",
+    "importer-written recommendation-readback artifact",
+    "lease health readback",
+    "checkpoint freshness readback",
+    "stale route decision readback",
+    "early-return risk readback",
+    "Foundry completed/promoted/denied/blocked terminal status normalization",
+    "Promoter no-promotion summary",
+    "Command compact timeline summary",
+    "per-node gate, candidate, rollback, tests, verification, public-safety, Promoter, and Command evidence readback",
+    "production readiness coverage for generated and regenerated readbacks",
+    "operator docs for readback regeneration"
+  ],
+  "verification": {
+    "focused_tests": "go test ./internal/atlas -run TestMissionRecommendations -count=1",
+    "full_tests": "go test ./... -count=1",
+    "vet": "go vet ./...",
+    "build": "go build ./cmd/atlas",
+    "production_readiness": "scripts/production-readiness.sh",
+    "atlas_foundry_roundtrip": "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "status": "full_verification_passed"
+  },
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  },
+  "exact_next_action": "Run full AO Atlas verification, open PR, wait for CI, merge, sync main, and delete codex branches."
+}

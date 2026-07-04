@@ -172,18 +172,23 @@ context for Atlas compilation only; it is not a Foundry execution grant.
 
 `atlas mission recommendations import` turns AO Mission Feature Depth
 Recommendations into an Atlas recommendation wave, a bounded workgraph, and a
-next recommended prompt. For 2-3 hour Atlas work, use `--min-tasks 30`,
-`--node-budget 40`, `--min-minutes 120`, `--max-minutes 180`, and
-`--continue-if-fast-target 40`. With no budget flags, the importer uses that
-same v0.2 long-run supervisor default. The generated workgraph keeps all 40
-nodes ready but dependency-chained, so only the first node is executable-ready
-until downstream evidence completes the prior node. The wave records the
-supervisor lease, checkpoint policy, Promoter/Command/public-safety readback
-requirements, and `final_response_allowed=false` while ready nodes or exact next
-actions remain. It rejects shallow bundles and any recommendation artifact that
-claims execution, scheduling, approval, repository mutation, provider,
-credential, direct-main, release, dependency, policy, auth, config, or broad RSI
-authority. Explicit 20-node/90-minute imports remain available only as
+next recommended prompt plus `recommendation-readback.json`. For 2-3 hour Atlas
+work, use `--min-tasks 30`, `--node-budget 40`, `--min-minutes 120`,
+`--max-minutes 180`, and `--continue-if-fast-target 40`. With no budget flags,
+the importer uses that same v0.2 long-run supervisor default. The generated
+workgraph keeps all 40 nodes ready but dependency-chained, so only the first node
+is executable-ready until downstream evidence completes the prior node. The wave
+records the supervisor lease, checkpoint policy, Promoter/Command/public-safety
+readback requirements, and `final_response_allowed=false` while ready nodes or
+exact next actions remain. The readback reconciles the wave and workgraph into
+node counts, lease health, checkpoint freshness, stale-route decision status,
+early-return risk, per-node evidence, the first 10 Feature Depth
+recommendations, and the exact next action. `atlas mission recommendations
+readback --wave ... --workgraph ... --out ...` regenerates that readback after a
+workgraph changes. The wave rejects shallow bundles and any recommendation
+artifact that claims execution, scheduling, approval, repository mutation,
+provider, credential, direct-main, release, dependency, policy, auth, config, or
+broad RSI authority. Explicit 20-node/90-minute imports remain available only as
 compatibility coverage for older double-size waves.
 
 The committed

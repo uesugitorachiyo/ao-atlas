@@ -21,6 +21,7 @@ v0.1 contract names:
 - `ao.atlas.ao-mission-import.v0.1`
 - `ao.atlas.ao-mission-workgraph-metadata.v0.1`
 - `ao.atlas.recommendation-wave.v0.1`
+- `ao.atlas.recommendation-readback.v0.1`
 
 All contracts are JSON. Validation requires explicit `contract_version` values,
 stable identifiers, non-empty required fields, and public-safe paths.
@@ -60,6 +61,15 @@ actions remain and requires Promoter, Command, and public-safety readbacks befor
 closure. It is planning/readback material only: it does not schedule, execute,
 approve, mutate repositories, call providers, inspect credentials, or claim broad
 RSI.
+
+`ao.atlas.recommendation-readback.v0.1` reconciles a recommendation wave with its
+generated workgraph. It records node counts, executable-ready node count, lease
+health, checkpoint freshness, stale-route decision status, early-return risk,
+exact next action, per-node gate/readback evidence, and the first 10 Feature
+Depth recommendations. Final response is allowed only when no ready, blocked, or
+failed recommendation nodes remain. The readback is evidence only: it does not
+schedule, execute, approve, mutate repositories, call providers, inspect
+credentials, or claim broad RSI.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,

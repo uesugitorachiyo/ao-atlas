@@ -62,6 +62,7 @@ required_files=(
   schemas/ao-mission-import.schema.json
   schemas/ao-mission-feature-depth-recommendations.schema.json
   schemas/recommendation-wave.schema.json
+  schemas/recommendation-readback.schema.json
 )
 for file in "${required_files[@]}"; do
   test -s "$file"
@@ -93,10 +94,14 @@ test -s "$OUT/ao-mission-import.json"
 "$BIN" mission recommendations import --recommendations examples/valid/ao-mission/feature-depth-recommendations.json --target-instance demo-stack --min-tasks 30 --node-budget 40 --min-minutes 120 --max-minutes 180 --continue-if-fast-target 40 --out "$OUT/mission-recommendations" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-wave.json"
 test -s "$OUT/mission-recommendations/recommendation-workgraph.json"
+test -s "$OUT/mission-recommendations/recommendation-readback.json"
 test -s "$OUT/mission-recommendations/next-recommended-prompt.md"
 jq -e '.minimum_tasks == 30 and .total_tasks == 40 and .node_budget == 40 and .estimated_minutes == 120 and .supervisor.min_minutes == 120 and .supervisor.max_minutes == 180 and .supervisor.continue_if_fast_target == 40 and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-wave.json" >/dev/null
 jq -e '(.nodes | length) == 40' "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
+jq -e '.total_nodes == 40 and .minimum_nodes == 30 and .ready_nodes == 40 and .executable_ready_nodes == 1 and .final_response_allowed == false and .lease_health_status == "minimum_unmet" and .early_return_risk_status == "blocked_final_response_ready_nodes_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 grep -q "Target 2-3 hours" "$OUT/mission-recommendations/next-recommended-prompt.md"
+"$BIN" mission recommendations readback --wave "$OUT/mission-recommendations/recommendation-wave.json" --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --evidence-root target/production-readiness/mission-recommendations --out "$OUT/mission-recommendations/recommendation-readback-regenerated.json" >/dev/null
+test -s "$OUT/mission-recommendations/recommendation-readback-regenerated.json"
 "$BIN" workgraph validate --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
 "$BIN" foundry import --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --instance examples/valid/stack-instance.json --node mission-recommendation-next-01 --out "$OUT/mission-recommendations-foundry-import" >/dev/null
 test -s "$OUT/mission-recommendations-foundry-import/foundry-import.json"

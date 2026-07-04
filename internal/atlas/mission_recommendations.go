@@ -28,6 +28,12 @@ type AtlasRecommendationWaveResult struct {
 	Prompt    string
 }
 
+type AtlasRecommendationReadbackOptions struct {
+	WavePath      string
+	WorkgraphPath string
+	EvidenceRoot  string
+}
+
 func BuildAtlasRecommendationWave(options AtlasRecommendationWaveOptions) (AtlasRecommendationWaveResult, error) {
 	minTasks := options.MinTasks
 	if minTasks <= 0 {
@@ -405,7 +411,292 @@ func WriteAtlasRecommendationWaveArtifacts(outDir string, result AtlasRecommenda
 	if err := WriteJSON(filepath.Join(outDir, "recommendation-workgraph.json"), result.Workgraph); err != nil {
 		return err
 	}
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{
+		WavePath:      filepath.Join(outDir, "recommendation-wave.json"),
+		WorkgraphPath: filepath.Join(outDir, "recommendation-workgraph.json"),
+		EvidenceRoot:  filepath.ToSlash(outDir),
+	})
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(filepath.Join(outDir, "recommendation-readback.json"), readback); err != nil {
+		return err
+	}
 	return os.WriteFile(filepath.Join(outDir, "next-recommended-prompt.md"), []byte(result.Prompt), 0o644)
+}
+
+func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Workgraph, options AtlasRecommendationReadbackOptions) (AtlasRecommendationReadback, error) {
+	if err := ValidateAtlasRecommendationWave(wave); err != nil {
+		return AtlasRecommendationReadback{}, err
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return AtlasRecommendationReadback{}, err
+	}
+	if wave.TargetInstance != workgraph.TargetInstance {
+		return AtlasRecommendationReadback{}, fmt.Errorf("target_instance mismatch between recommendation wave and workgraph")
+	}
+	if len(workgraph.Nodes) != len(wave.Tasks) {
+		return AtlasRecommendationReadback{}, fmt.Errorf("workgraph node count must match recommendation tasks")
+	}
+	taskByNode := map[string]AtlasRecommendationTask{}
+	for _, task := range wave.Tasks {
+		taskByNode[task.NodeID] = task
+	}
+	for _, node := range workgraph.Nodes {
+		task, ok := taskByNode[node.ID]
+		if !ok {
+			return AtlasRecommendationReadback{}, fmt.Errorf("workgraph node %s is not present in recommendation wave", node.ID)
+		}
+		if task.TaskID != node.FactoryTask.ID {
+			return AtlasRecommendationReadback{}, fmt.Errorf("workgraph node %s task_id mismatch", node.ID)
+		}
+	}
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		return AtlasRecommendationReadback{}, err
+	}
+	completed := state.NodeCounts["completed"]
+	ready := state.NodeCounts["ready"]
+	blocked := state.NodeCounts["blocked"]
+	failed := state.NodeCounts["failed"]
+	executableReady := len(state.ExecutableReadyNodeIDs)
+	firstExecutable := ""
+	if executableReady > 0 {
+		firstExecutable = state.ExecutableReadyNodeIDs[0]
+	}
+	finalAllowed := completed == wave.TotalTasks && ready == 0 && blocked == 0 && failed == 0
+	finalReason := "ready nodes or exact next actions remain"
+	exactNextAction := "Complete dependency chain so the next Atlas recommendation node becomes executable-ready."
+	leaseHealth := "minimum_unmet"
+	earlyReturnRisk := "blocked_final_response_minimum_unmet"
+	if finalAllowed {
+		finalReason = "all generated nodes complete and no ready nodes remain"
+		exactNextAction = "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
+		leaseHealth = "all_generated_nodes_complete"
+		earlyReturnRisk = "cleared_no_ready_nodes_remain"
+	} else if blocked > 0 || failed > 0 {
+		finalReason = "true hard blocker requires exact repair evidence"
+		exactNextAction = "Resolve blocked or failed recommendation node with exact repair evidence."
+		leaseHealth = "hard_blocker_requires_repair"
+		earlyReturnRisk = "hard_blocker_requires_exact_missing_evidence"
+	} else {
+		if completed >= wave.MinimumTasks {
+			leaseHealth = "minimum_met_continue_if_fast"
+		}
+		if ready > 0 {
+			earlyReturnRisk = "blocked_final_response_ready_nodes_remain"
+		}
+		if firstExecutable != "" {
+			exactNextAction = fmt.Sprintf("Emit Foundry import for %s and execute exactly one active node.", firstExecutable)
+		}
+	}
+	status := "ready"
+	if finalAllowed {
+		status = "completed"
+	} else if blocked > 0 || failed > 0 {
+		status = "blocked"
+	} else if completed > 0 {
+		status = "in_progress"
+	}
+	waveDigest := digestValue(wave)
+	if strings.TrimSpace(options.WavePath) != "" {
+		if digest, err := digestFile(options.WavePath); err == nil {
+			waveDigest = digest
+		} else {
+			return AtlasRecommendationReadback{}, err
+		}
+	}
+	workgraphDigest := digestValue(workgraph)
+	if strings.TrimSpace(options.WorkgraphPath) != "" {
+		if digest, err := digestFile(options.WorkgraphPath); err == nil {
+			workgraphDigest = digest
+		} else {
+			return AtlasRecommendationReadback{}, err
+		}
+	}
+	readback := AtlasRecommendationReadback{
+		ContractVersion:           AtlasRecommendationReadbackContract,
+		MissionID:                 wave.MissionID,
+		TargetInstance:            wave.TargetInstance,
+		Status:                    status,
+		SourceDigest:              wave.SourceDigest,
+		WaveDigest:                waveDigest,
+		WorkgraphDigest:           workgraphDigest,
+		EvidenceRoot:              filepath.ToSlash(strings.TrimSpace(options.EvidenceRoot)),
+		Supervisor:                wave.Supervisor,
+		TotalNodes:                wave.TotalTasks,
+		MinimumNodes:              wave.MinimumTasks,
+		CompletedNodes:            completed,
+		ReadyNodes:                ready,
+		BlockedNodes:              blocked,
+		FailedNodes:               failed,
+		ExecutableReadyNodes:      executableReady,
+		FirstExecutableNode:       firstExecutable,
+		LeaseHealthStatus:         leaseHealth,
+		CheckpointFreshnessStatus: "fresh_checkpoint_required_after_each_node_or_timed_interval",
+		StaleRouteDecisionStatus:  "fresh_atlas_supervises_foundry_owns_one_active_node",
+		EarlyReturnRiskStatus:     earlyReturnRisk,
+		FoundryRollupStatus:       "required_pending_first_node_import",
+		FoundryTerminalStatusReadback: map[string]string{
+			"completed": "terminal_success_can_close_when_all_nodes_and_readbacks_are_complete",
+			"promoted":  "terminal_success_can_close_when_promoter_and_command_agree",
+			"denied":    "terminal_denial_requires_exact_missing_evidence_readback",
+			"blocked":   "terminal_blocker_requires_repair_or_checkpoint_resume",
+		},
+		PromoterReadbackStatus:      wave.PromoterReadbackStatus,
+		PromoterNoPromotionStatus:   "required_not_bound_until_promotion_evidence_exists",
+		CommandReadbackStatus:       wave.CommandReadbackStatus,
+		CommandTimelineStatus:       "compact_timeline_required_before_closure",
+		PublicSafetyScanStatus:      wave.PublicSafetyScanStatus,
+		FinalResponseAllowed:        finalAllowed,
+		FinalResponseReason:         finalReason,
+		ExactNextAction:             exactNextAction,
+		NodeEvidence:                recommendationNodeEvidence(workgraph),
+		FeatureDepthRecommendations: featureDepthRecommendationReadback(wave.Tasks, 10),
+		SafetyBoundaries: map[string]bool{
+			"provider_calls":                    false,
+			"credential_inspection":             false,
+			"direct_main_mutation":              false,
+			"release_deploy_publish_upload_tag": false,
+			"dependency_updates":                false,
+			"auth_policy_config_widening":       false,
+			"hidden_instruction_mutation":       false,
+			"broad_rsi_claim":                   false,
+			"rsi_remains_denied":                true,
+		},
+		SchedulesWork: false,
+		ExecutesWork:  false,
+		ApprovesWork:  false,
+	}
+	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
+		return AtlasRecommendationReadback{}, err
+	}
+	return readback, nil
+}
+
+func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) error {
+	var errs []string
+	requireContract(&errs, "atlas_recommendation_readback", readback.ContractVersion, AtlasRecommendationReadbackContract)
+	requireField(&errs, "mission_id", readback.MissionID)
+	requireField(&errs, "target_instance", readback.TargetInstance)
+	if !oneOf(readback.Status, "ready", "in_progress", "blocked", "completed") {
+		errs = append(errs, "status must be ready, in_progress, blocked, or completed")
+	}
+	if !digestPattern.MatchString(readback.SourceDigest) {
+		errs = append(errs, "source_digest must be sha256 digest")
+	}
+	if strings.TrimSpace(readback.WaveDigest) != "" && !digestPattern.MatchString(readback.WaveDigest) {
+		errs = append(errs, "wave_digest must be sha256 digest")
+	}
+	if strings.TrimSpace(readback.WorkgraphDigest) != "" && !digestPattern.MatchString(readback.WorkgraphDigest) {
+		errs = append(errs, "workgraph_digest must be sha256 digest")
+	}
+	if readback.TotalNodes < 1 {
+		errs = append(errs, "total_nodes must be positive")
+	}
+	if readback.MinimumNodes < 1 || readback.MinimumNodes > readback.TotalNodes {
+		errs = append(errs, "minimum_nodes must be between 1 and total_nodes")
+	}
+	if readback.CompletedNodes+readback.ReadyNodes+readback.BlockedNodes+readback.FailedNodes != readback.TotalNodes {
+		errs = append(errs, "node counts must sum to total_nodes")
+	}
+	if readback.ExecutableReadyNodes > readback.ReadyNodes {
+		errs = append(errs, "executable_ready_nodes cannot exceed ready_nodes")
+	}
+	requireField(&errs, "lease_health_status", readback.LeaseHealthStatus)
+	requireField(&errs, "checkpoint_freshness_status", readback.CheckpointFreshnessStatus)
+	requireField(&errs, "stale_route_decision_status", readback.StaleRouteDecisionStatus)
+	requireField(&errs, "early_return_risk_status", readback.EarlyReturnRiskStatus)
+	requireField(&errs, "foundry_rollup_status", readback.FoundryRollupStatus)
+	for _, key := range []string{"completed", "promoted", "denied", "blocked"} {
+		requireField(&errs, "foundry_terminal_status_readback."+key, readback.FoundryTerminalStatusReadback[key])
+	}
+	requireField(&errs, "promoter_readback_status", readback.PromoterReadbackStatus)
+	requireField(&errs, "promoter_no_promotion_status", readback.PromoterNoPromotionStatus)
+	requireField(&errs, "command_readback_status", readback.CommandReadbackStatus)
+	requireField(&errs, "command_timeline_status", readback.CommandTimelineStatus)
+	requireField(&errs, "public_safety_scan_status", readback.PublicSafetyScanStatus)
+	requireField(&errs, "final_response_reason", readback.FinalResponseReason)
+	requireField(&errs, "exact_next_action", readback.ExactNextAction)
+	if readback.FinalResponseAllowed && (readback.ReadyNodes > 0 || readback.BlockedNodes > 0 || readback.FailedNodes > 0) {
+		errs = append(errs, "final_response_allowed requires no ready, blocked, or failed nodes")
+	}
+	if len(readback.NodeEvidence) != readback.TotalNodes {
+		errs = append(errs, "node_evidence length must match total_nodes")
+	}
+	if len(readback.FeatureDepthRecommendations) < 10 && readback.TotalNodes >= 10 {
+		errs = append(errs, "feature_depth_recommendations must include at least 10 tasks")
+	}
+	if readback.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if readback.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if readback.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	for i, evidence := range readback.NodeEvidence {
+		prefix := fmt.Sprintf("node_evidence[%d]", i)
+		requireField(&errs, prefix+".node_id", evidence.NodeID)
+		requireField(&errs, prefix+".task_id", evidence.TaskID)
+		requireField(&errs, prefix+".status", evidence.Status)
+		requireField(&errs, prefix+".node_gate", evidence.NodeGate)
+		requireField(&errs, prefix+".candidate_record", evidence.CandidateRecord)
+		requireField(&errs, prefix+".rollback_record", evidence.RollbackRecord)
+		requireField(&errs, prefix+".implementation_evidence", evidence.ImplementationEvidence)
+		requireField(&errs, prefix+".tests", evidence.Tests)
+		requireField(&errs, prefix+".verification", evidence.Verification)
+		requireField(&errs, prefix+".public_safety_wording", evidence.PublicSafetyWording)
+		requireField(&errs, prefix+".promoter_readback", evidence.PromoterReadback)
+		requireField(&errs, prefix+".command_readback", evidence.CommandReadback)
+		requireList(&errs, prefix+".required_gates", evidence.RequiredGates)
+		requireList(&errs, prefix+".verification_commands", evidence.VerificationCommands)
+	}
+	return joinErrors(errs)
+}
+
+func recommendationNodeEvidence(workgraph Workgraph) []AtlasRecommendationNodeEvidence {
+	evidence := make([]AtlasRecommendationNodeEvidence, 0, len(workgraph.Nodes))
+	for _, node := range workgraph.Nodes {
+		evidence = append(evidence, AtlasRecommendationNodeEvidence{
+			NodeID:                 node.ID,
+			TaskID:                 node.FactoryTask.ID,
+			Status:                 node.Status,
+			NodeGate:               evidenceStatus(node.FactoryTask.RequiredGates, "node_gate"),
+			CandidateRecord:        evidenceStatus(node.FactoryTask.RequiredGates, "candidate_record"),
+			RollbackRecord:         evidenceStatus(node.FactoryTask.RequiredGates, "rollback_record"),
+			ImplementationEvidence: "recorded",
+			Tests:                  evidenceStatus(node.FactoryTask.RequiredGates, "tests"),
+			Verification:           evidenceStatus(node.FactoryTask.RequiredGates, "verification"),
+			PublicSafetyWording:    evidenceStatus(node.FactoryTask.RequiredGates, "sentinel_public_safety"),
+			PromoterReadback:       evidenceStatus(node.FactoryTask.RequiredGates, "promoter_no_promotion"),
+			CommandReadback:        evidenceStatus(node.FactoryTask.RequiredGates, "command_readback"),
+			RequiredGates:          append([]string(nil), node.FactoryTask.RequiredGates...),
+			VerificationCommands:   append([]string(nil), node.FactoryTask.Verification...),
+		})
+	}
+	return evidence
+}
+
+func evidenceStatus(values []string, want string) string {
+	for _, value := range values {
+		if value == want {
+			return "recorded"
+		}
+	}
+	return "missing"
+}
+
+func featureDepthRecommendationReadback(tasks []AtlasRecommendationTask, limit int) []string {
+	if limit <= 0 || limit > len(tasks) {
+		limit = len(tasks)
+	}
+	items := make([]string, 0, limit)
+	for _, task := range tasks[:limit] {
+		items = append(items, task.ID+": "+task.Task)
+	}
+	return items
 }
 
 func atlasOwnedRecommendationTasks(tasks []AOMissionFeatureDepthTask, limit int) []AOMissionFeatureDepthTask {
