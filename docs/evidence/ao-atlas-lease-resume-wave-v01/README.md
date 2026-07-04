@@ -10,16 +10,16 @@ because ready nodes remain and the lease floor is not met.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 2
-- Ready nodes: 38
+- Completed nodes: 3
+- Ready nodes: 37
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 19
+- Elapsed minutes: 33
 - Minimum minutes met: false
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 2
+- Checkpoint count: 3
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-03`
+- Exact next action: emit Foundry import for `mission-recommendation-next-04`
   and execute exactly one active node.
 
 ## Root Artifacts
@@ -32,6 +32,7 @@ because ready nodes remain and the lease floor is not met.
 - `command-readback.json`: compact Command timeline with elapsed lease status.
 - `promoter-readback.json`: no-promotion readback; RSI remains denied.
 - `foundry-rollup.json`: Foundry node/lease summary.
+- `reconciliation-packet.json`: cross-artifact return-gate agreement packet.
 - `final-synthesis.json`: cross-artifact synthesis and next action.
 
 ## Fixtures

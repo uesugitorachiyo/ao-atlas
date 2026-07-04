@@ -64,6 +64,7 @@ required_files=(
   schemas/ao-mission-feature-depth-recommendations.schema.json
   schemas/recommendation-wave.schema.json
   schemas/recommendation-readback.schema.json
+  schemas/recommendation-reconciliation-packet.schema.json
 )
 for file in "${required_files[@]}"; do
   test -s "$file"
@@ -187,16 +188,19 @@ jq -e '.schema == "ao.atlas.recommendation-checkpoint-readback.v0.1" and .comple
   --out-execution-readback "$OUT/mission-recommendations/execution-readback-resumed.json" \
   --out-command-readback "$OUT/mission-recommendations/command-readback-resumed.json" \
   --out-promoter-readback "$OUT/mission-recommendations/promoter-readback-resumed.json" \
-  --out-foundry-rollup "$OUT/mission-recommendations/foundry-rollup-resumed.json" >/dev/null
+  --out-foundry-rollup "$OUT/mission-recommendations/foundry-rollup-resumed.json" \
+  --out-reconciliation-packet "$OUT/mission-recommendations/reconciliation-packet-resumed.json" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-readback-resumed.json"
 test -s "$OUT/mission-recommendations/execution-readback-resumed.json"
 test -s "$OUT/mission-recommendations/command-readback-resumed.json"
 test -s "$OUT/mission-recommendations/promoter-readback-resumed.json"
 test -s "$OUT/mission-recommendations/foundry-rollup-resumed.json"
+test -s "$OUT/mission-recommendations/reconciliation-packet-resumed.json"
 jq -e '.started_at == "2026-07-04T08:00:00-07:00" and .elapsed_minutes == 25 and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-readback-resumed.json" >/dev/null
-jq -e '.schema == "ao.atlas.recommendation-command-readback.v0.1" and .elapsed_minutes == 25 and .lease_time_status == "minimum_minutes_unmet" and .final_response_allowed == false and .claims_authority_advance == false' "$OUT/mission-recommendations/command-readback-resumed.json" >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-command-readback.v0.1" and .elapsed_minutes == 25 and .lease_time_status == "minimum_minutes_unmet" and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false and .claims_authority_advance == false' "$OUT/mission-recommendations/command-readback-resumed.json" >/dev/null
 jq -e '.schema == "ao.atlas.recommendation-promoter-readback.v0.1" and .promotion_claimed == false and .rsi_remains_denied == true and .claims_authority_advance == false' "$OUT/mission-recommendations/promoter-readback-resumed.json" >/dev/null
-jq -e '.schema == "ao.atlas.recommendation-foundry-rollup.v0.1" and .node_completion_status == "nodes_in_progress" and .lease_completion_status == "minimum_minutes_unmet" and .final_response_allowed == false and .claims_authority_advance == false' "$OUT/mission-recommendations/foundry-rollup-resumed.json" >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-foundry-rollup.v0.1" and .node_completion_status == "nodes_in_progress" and .lease_completion_status == "minimum_minutes_unmet" and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false and .claims_authority_advance == false' "$OUT/mission-recommendations/foundry-rollup-resumed.json" >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-reconciliation-packet.v0.1" and .status == "continuation_required" and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .command_return_gate_status == "blocked_ready_nodes_remain" and .foundry_return_gate_status == "blocked_ready_nodes_remain" and .artifacts_agree == true and .promotion_claimed == false and .rsi_remains_denied == true and .claims_authority_advance == false' "$OUT/mission-recommendations/reconciliation-packet-resumed.json" >/dev/null
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" blueprint import \
   --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack \

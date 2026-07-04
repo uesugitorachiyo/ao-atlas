@@ -100,7 +100,8 @@ atlas mission recommendations resume \
   --out-execution-readback docs/evidence/<wave>/execution-readback.json \
   --out-command-readback docs/evidence/<wave>/command-readback.json \
   --out-promoter-readback docs/evidence/<wave>/promoter-readback.json \
-  --out-foundry-rollup docs/evidence/<wave>/foundry-rollup.json
+  --out-foundry-rollup docs/evidence/<wave>/foundry-rollup.json \
+  --out-reconciliation-packet docs/evidence/<wave>/reconciliation-packet.json
 
 atlas mission recommendations readback \
   --wave docs/evidence/<wave>/recommendation-wave.json \
@@ -115,6 +116,6 @@ atlas mission recommendations readback \
 
 ## Final Report Gate
 
-A final response is allowed only when the authoritative recommendation readback agrees with the execution readback. The counts must match, `ready_nodes` must be zero for a completed wave, `elapsed_minutes` must meet or exceed `supervisor.min_minutes`, `min_minutes_met` must be true, and `final_response_allowed` must be true.
+A final response is allowed only when the authoritative recommendation readback agrees with the execution readback. The counts must match, `ready_nodes` must be zero for a completed wave, `elapsed_minutes` must meet or exceed `supervisor.min_minutes`, `min_minutes_met` must be true, and `final_response_allowed` must be true. The reconciliation packet must also report `artifacts_agree=true` across the recommendation readback, Command readback, Promoter readback, and Foundry rollup.
 
 If ready nodes remain, report the exact next executable node instead of a final answer. If all nodes are complete but the time lease is missing or short, report the exact timing evidence to record or generate the next useful Atlas recommendation wave instead of a final answer.

@@ -348,6 +348,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	commandPath := filepath.Join(dir, "command-readback.json")
 	promoterPath := filepath.Join(dir, "promoter-readback.json")
 	foundryPath := filepath.Join(dir, "foundry-rollup.json")
+	reconciliationPath := filepath.Join(dir, "reconciliation-packet.json")
 	out.Reset()
 	code = Run([]string{
 		"mission", "recommendations", "resume",
@@ -361,6 +362,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		"--out-command-readback", commandPath,
 		"--out-promoter-readback", promoterPath,
 		"--out-foundry-rollup", foundryPath,
+		"--out-reconciliation-packet", reconciliationPath,
 	}, &out, &out)
 	if code != 0 {
 		t.Fatalf("resume failed: %s", out.String())
@@ -376,14 +378,26 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, commandPath)
 	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, promoterPath)
 	foundry := mustLoadJSON[AtlasRecommendationFoundryRollup](t, foundryPath)
+	reconciliation := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, reconciliationPath)
 	if err := ValidateAtlasRecommendationClosureArtifacts(resumeReadback, command, promoter, foundry); err != nil {
 		t.Fatalf("closure artifacts should agree with resumed readback: %v", err)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(resumeReadback, command, promoter, foundry, reconciliation); err != nil {
+		t.Fatalf("reconciliation packet should agree with resumed closure artifacts: %v", err)
 	}
 	if command.ElapsedMinutes != 25 || command.FinalResponseAllowed ||
 		promoter.PromotionClaimed || !promoter.RSIRemainsDenied ||
 		foundry.NodeCompletionStatus != "nodes_in_progress" ||
 		foundry.LeaseCompletionStatus != "minimum_minutes_unmet" {
 		t.Fatalf("bad resume closure artifacts: command=%#v promoter=%#v foundry=%#v", command, promoter, foundry)
+	}
+	if reconciliation.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		reconciliation.CheckpointCount != 1 ||
+		!reconciliation.ArtifactsAgree ||
+		reconciliation.CommandReturnGateStatus != resumeReadback.ReturnGateStatus ||
+		reconciliation.FoundryReturnGateStatus != resumeReadback.ReturnGateStatus ||
+		reconciliation.PromotionClaimed {
+		t.Fatalf("bad reconciliation packet: %#v", reconciliation)
 	}
 }
 
@@ -896,6 +910,9 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"command-readback-resumed.json",
 		"promoter-readback-resumed.json",
 		"foundry-rollup-resumed.json",
+		"reconciliation-packet-resumed.json",
+		"--out-reconciliation-packet",
+		"recommendation-reconciliation-packet.schema.json",
 		"minimum_minutes_unmet",
 		"lease_timing_missing",
 		"minimum_minutes_met",
