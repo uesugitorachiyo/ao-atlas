@@ -1,0 +1,6 @@
+{
+  "status": "selected",
+  "node_id": "mission-recommendation-next-04",
+  "task": "Import Feature Depth Recommendations into Atlas workgraph generation.",
+  "candidate_reason": "Ready node from the active Atlas recommendation workgraph; schema bindings harden the imported recommendation artifact set."
+}

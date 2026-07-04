@@ -64,6 +64,11 @@ required_files=(
   schemas/ao-mission-feature-depth-recommendations.schema.json
   schemas/recommendation-wave.schema.json
   schemas/recommendation-readback.schema.json
+  schemas/recommendation-lease-start.schema.json
+  schemas/recommendation-checkpoint-readback.schema.json
+  schemas/recommendation-command-readback.schema.json
+  schemas/recommendation-promoter-readback.schema.json
+  schemas/recommendation-foundry-rollup.schema.json
   schemas/recommendation-reconciliation-packet.schema.json
 )
 for file in "${required_files[@]}"; do
