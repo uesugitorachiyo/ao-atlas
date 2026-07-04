@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-09",
+  "candidate": "promoter-no-promotion-summary-fields",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Promoter readbacks recorded no promotion and RSI denial as booleans and reason text, but lacked compact summary fields for Command/Promoter readback. The repair adds no_promotion_summary and next_denied_class."
+}
