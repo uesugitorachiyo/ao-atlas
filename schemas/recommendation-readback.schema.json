@@ -25,6 +25,7 @@
     "foundry_rollup_status",
     "foundry_terminal_status_readback",
     "foundry_terminal_status_examples",
+    "foundry_denied_terminal_examples",
     "promoter_readback_status",
     "promoter_no_promotion_status",
     "command_readback_status",
@@ -101,6 +102,40 @@
           "terminal": { "const": true },
           "can_close_mission": { "type": "boolean" },
           "required_readback": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "foundry_denied_terminal_examples": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "denial_reason",
+          "normalized_status",
+          "terminal",
+          "can_close_mission",
+          "requires_exact_missing_evidence",
+          "required_readback",
+          "rsi_remains_denied",
+          "authority_advance_claimed"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "denial_reason": {
+            "enum": [
+              "missing_node_evidence",
+              "missing_stop_gate_evidence",
+              "forbidden_surface_or_rsi_claim"
+            ]
+          },
+          "normalized_status": { "const": "denied" },
+          "terminal": { "const": true },
+          "can_close_mission": { "const": true },
+          "requires_exact_missing_evidence": { "const": true },
+          "required_readback": { "type": "string", "minLength": 1 },
+          "rsi_remains_denied": { "const": true },
+          "authority_advance_claimed": { "const": false }
         }
       }
     },

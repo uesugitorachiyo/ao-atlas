@@ -3,9 +3,9 @@
   "status": "in_progress",
   "evidence_root": "docs/evidence/ao-atlas-lease-resume-wave-v01",
   "mission_id": "mission-long-wave",
-  "completed_nodes": 25,
+  "completed_nodes": 26,
   "total_nodes": 40,
-  "ready_nodes": 15,
+  "ready_nodes": 14,
   "blocked_nodes": 0,
   "failed_nodes": 0,
   "started_at": "2026-07-04T08:34:04-07:00",
@@ -18,10 +18,10 @@
   "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
   "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
   "early_return_risk_status": "blocked_final_response_ready_nodes_remain",
-  "checkpoint_count": 25,
+  "checkpoint_count": 26,
   "return_gate_status": "blocked_ready_nodes_remain",
   "final_response_allowed": false,
-  "exact_next_action": "Emit Foundry import for mission-recommendation-next-26 and execute exactly one active node.",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-next-27 and execute exactly one active node.",
   "foundry_terminal_status_examples": [
     {
       "source_status": "completed",
@@ -69,6 +69,38 @@
     "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
     "early_return_risk_status": "blocked_final_response_ready_nodes_remain",
     "foundry_promoted_terminal_example": "promoted normalizes to completed only when Promoter and Command agree, RSI remains denied, and no ready nodes remain.",
+    "foundry_denied_terminal_examples": [
+      {
+        "denial_reason": "missing_node_evidence",
+        "normalized_status": "denied",
+        "terminal": true,
+        "can_close_mission": true,
+        "requires_exact_missing_evidence": true,
+        "required_readback": "Denied rollup names the missing node id, missing evidence key, and expected evidence path.",
+        "rsi_remains_denied": true,
+        "authority_advance_claimed": false
+      },
+      {
+        "denial_reason": "missing_stop_gate_evidence",
+        "normalized_status": "denied",
+        "terminal": true,
+        "can_close_mission": true,
+        "requires_exact_missing_evidence": true,
+        "required_readback": "Denied rollup names the uncleared stop gate and the exact artifact needed before promotion can be reconsidered.",
+        "rsi_remains_denied": true,
+        "authority_advance_claimed": false
+      },
+      {
+        "denial_reason": "forbidden_surface_or_rsi_claim",
+        "normalized_status": "denied",
+        "terminal": true,
+        "can_close_mission": true,
+        "requires_exact_missing_evidence": true,
+        "required_readback": "Denied rollup records the forbidden surface or RSI claim, refuses promotion, and keeps RSI denied.",
+        "rsi_remains_denied": true,
+        "authority_advance_claimed": false
+      }
+    ],
     "reconciliation_status": "continuation_required",
     "artifacts_agree": true
   },

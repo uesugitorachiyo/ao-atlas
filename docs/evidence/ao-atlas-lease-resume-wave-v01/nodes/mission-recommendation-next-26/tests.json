@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-26",
+  "red_test": "go test ./internal/atlas -run 'TestRecommendationReadbackSchemaRequiresFoundryDeniedTerminalExamples|TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph' -count=1 failed before implementation because recommendation-readback.schema.json did not require foundry_denied_terminal_examples.",
+  "tests": [
+    "go test ./internal/atlas -run 'TestRecommendationReadbackSchemaRequiresFoundryDeniedTerminalExamples|TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph' -count=1 passed"
+  ],
+  "summary": "Focused tests now prove the schema requires structured Foundry denied terminal examples and generated readbacks describe exact missing evidence, stop-gate, and RSI-safe denial cases."
+}
