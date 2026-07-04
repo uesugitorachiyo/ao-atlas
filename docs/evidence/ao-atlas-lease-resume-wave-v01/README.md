@@ -10,16 +10,16 @@ because ready nodes remain and the lease floor is not met.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 6
-- Ready nodes: 34
+- Completed nodes: 7
+- Ready nodes: 33
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 69
+- Elapsed minutes: 81
 - Minimum minutes met: false
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 6
+- Checkpoint count: 7
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-07`
+- Exact next action: emit Foundry import for `mission-recommendation-next-08`
   and execute exactly one active node.
 
 ## Root Artifacts

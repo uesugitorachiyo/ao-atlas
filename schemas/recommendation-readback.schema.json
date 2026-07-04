@@ -30,6 +30,7 @@
     "command_timeline_status",
     "public_safety_scan_status",
     "final_response_allowed",
+    "final_response_denial_gate",
     "final_response_reason",
     "exact_next_action",
     "node_evidence",
@@ -96,6 +97,13 @@
     },
     "checkpoint_count": { "type": "integer", "minimum": 0 },
     "final_response_allowed": { "type": "boolean" },
+    "final_response_denial_gate": {
+      "enum": [
+        "deny_ready_nodes_or_exact_next_action_remain",
+        "allow_final_response",
+        "blocked_hard_blocker"
+      ]
+    },
     "final_response_reason": { "type": "string", "minLength": 1 },
     "exact_next_action": { "type": "string", "minLength": 1 },
     "node_evidence": {

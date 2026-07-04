@@ -231,6 +231,7 @@ type AtlasRecommendationReadback struct {
 	ReturnGateStatus              string                            `json:"return_gate_status,omitempty"`
 	CheckpointCount               int                               `json:"checkpoint_count"`
 	FinalResponseAllowed          bool                              `json:"final_response_allowed"`
+	FinalResponseDenialGate       string                            `json:"final_response_denial_gate"`
 	FinalResponseReason           string                            `json:"final_response_reason"`
 	ExactNextAction               string                            `json:"exact_next_action"`
 	NodeEvidence                  []AtlasRecommendationNodeEvidence `json:"node_evidence"`

@@ -692,6 +692,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		ReturnGateStatus:            returnGateStatus,
 		CheckpointCount:             completed,
 		FinalResponseAllowed:        finalAllowed,
+		FinalResponseDenialGate:     recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
 		FinalResponseReason:         finalReason,
 		ExactNextAction:             exactNextAction,
 		NodeEvidence:                recommendationNodeEvidence(workgraph),
@@ -734,6 +735,16 @@ func recommendationReturnGateStatus(finalAllowed bool, nodesComplete bool, lease
 		return "blocked_ready_nodes_remain"
 	}
 	return "blocked_no_executable_ready_node"
+}
+
+func recommendationFinalResponseDenialGate(finalAllowed bool, returnGateStatus string) string {
+	if finalAllowed {
+		return "allow_final_response"
+	}
+	if returnGateStatus == "blocked_hard_blocker" {
+		return "blocked_hard_blocker"
+	}
+	return "deny_ready_nodes_or_exact_next_action_remain"
 }
 
 type atlasRecommendationLeaseTiming struct {
@@ -891,8 +902,22 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	if strings.TrimSpace(readback.ReturnGateStatus) != "" && readback.CheckpointCount != readback.CompletedNodes {
 		errs = append(errs, "checkpoint_count must match completed_nodes when return_gate_status is recorded")
 	}
+	requireField(&errs, "final_response_denial_gate", readback.FinalResponseDenialGate)
 	requireField(&errs, "final_response_reason", readback.FinalResponseReason)
 	requireField(&errs, "exact_next_action", readback.ExactNextAction)
+	if readback.FinalResponseAllowed {
+		if readback.FinalResponseDenialGate != "allow_final_response" {
+			errs = append(errs, "final_response_allowed requires final_response_denial_gate=allow_final_response")
+		}
+	} else if readback.ReturnGateStatus == "blocked_hard_blocker" {
+		if readback.FinalResponseDenialGate != "blocked_hard_blocker" {
+			errs = append(errs, "hard blocker requires final_response_denial_gate=blocked_hard_blocker")
+		}
+	} else if readback.ReadyNodes > 0 || strings.TrimSpace(readback.ExactNextAction) != "" {
+		if readback.FinalResponseDenialGate != "deny_ready_nodes_or_exact_next_action_remain" {
+			errs = append(errs, "ready nodes or exact next action require final_response_denial_gate=deny_ready_nodes_or_exact_next_action_remain")
+		}
+	}
 	if readback.FinalResponseAllowed && (readback.ReadyNodes > 0 || readback.BlockedNodes > 0 || readback.FailedNodes > 0) {
 		errs = append(errs, "final_response_allowed requires no ready, blocked, or failed nodes")
 	}
@@ -1608,6 +1633,7 @@ func buildAtlasRecommendationPrompt(wave AtlasRecommendationWave) string {
 	b.WriteString("- scripts/atlas-foundry-roundtrip-smoke.sh\n")
 	b.WriteString("- Public-safety wording scan over changed docs and readbacks.\n\n")
 	b.WriteString("Final response only after completion or true hard blocker:\n")
+	b.WriteString("- If ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response.\n")
 	b.WriteString("- completed nodes / total nodes\n")
 	b.WriteString("- list of node statuses\n")
 	b.WriteString("- merged PRs by repo or local commits if remote lifecycle is blocked\n")
