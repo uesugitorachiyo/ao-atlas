@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-32",
+  "candidate": "atlas-recommendation-completed-final-response-allowance-tests",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Recommendation readback validation did not reject a manually drifted completed workgraph whose final_response_allowed fields no longer matched final closure semantics."
+}

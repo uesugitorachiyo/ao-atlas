@@ -1,0 +1,10 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-32",
+  "rollback": [
+    "Revert completed-workgraph final response allowance validation in internal/atlas/mission_recommendations.go.",
+    "Revert TestRecommendationReadbackRejectsCompletedWorkgraphFinalAllowanceDrift.",
+    "Remove node 32 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-32.",
+    "Regenerate root readbacks from node 31 workgraph if this node is reverted before merge."
+  ]
+}

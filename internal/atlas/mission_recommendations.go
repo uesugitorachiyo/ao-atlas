@@ -1075,6 +1075,18 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 		}
 	}
 	if readback.FinalResponseAllowed {
+		if readback.Status != "completed" {
+			errs = append(errs, "final_response_allowed requires status=completed")
+		}
+		if readback.ReturnGateStatus != "final_response_allowed" {
+			errs = append(errs, "final_response_allowed requires return_gate_status=final_response_allowed")
+		}
+		if readback.FinalResponseReason != "all generated nodes complete and no ready nodes remain" {
+			errs = append(errs, "final_response_allowed requires final_response_reason=all generated nodes complete and no ready nodes remain")
+		}
+		if readback.ExactNextAction != "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks." {
+			errs = append(errs, "final_response_allowed requires final exact_next_action")
+		}
 		if readback.FinalResponseDenialGate != "allow_final_response" {
 			errs = append(errs, "final_response_allowed requires final_response_denial_gate=allow_final_response")
 		}
