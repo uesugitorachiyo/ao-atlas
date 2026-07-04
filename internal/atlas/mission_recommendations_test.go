@@ -77,6 +77,20 @@ func TestRecommendationDerivedReadbackSchemasRequireLeaseHealthStatus(t *testing
 	assertNestedSchemaRequiresField(t, filepath.Join(root, "recommendation-command-readback.schema.json"), "command_timeline_binding", "lease_health_status")
 }
 
+func TestRecommendationDerivedReadbackSchemasRequireCheckpointFreshnessStatus(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "schemas")
+	for _, schemaName := range []string{
+		"recommendation-checkpoint-readback.schema.json",
+		"recommendation-command-readback.schema.json",
+		"recommendation-promoter-readback.schema.json",
+		"recommendation-foundry-rollup.schema.json",
+		"recommendation-reconciliation-packet.schema.json",
+	} {
+		assertSchemaRequiresField(t, filepath.Join(root, schemaName), "checkpoint_freshness_status")
+	}
+	assertNestedSchemaRequiresField(t, filepath.Join(root, "recommendation-command-readback.schema.json"), "command_timeline_binding", "checkpoint_freshness_status")
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -751,8 +765,11 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	}
 	resumeExecution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, resumeExecutionPath)
 	if resumeExecution.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		resumeExecution.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		resumeExecution.GeneratedWorkgraph.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		resumeExecution.GeneratedWorkgraph.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		resumeExecution.FoundryRunLinkReadinessSummary.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		resumeExecution.FoundryRunLinkReadinessSummary.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		resumeExecution.FoundryRunLinkReadinessSummary.CompletedRunLinks != resumeReadback.CompletedNodes ||
 		resumeExecution.FoundryRunLinkReadinessSummary.RequiredRunLinks != resumeReadback.TotalNodes ||
 		resumeExecution.FoundryRunLinkReadinessSummary.NextExecutableNode != resumeReadback.FirstExecutableNode ||
@@ -779,6 +796,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	if !ok ||
 		binding["summary"] != command.CompactTimeline ||
 		binding["lease_health_status"] != resumeReadback.LeaseHealthStatus ||
+		binding["checkpoint_freshness_status"] != resumeReadback.CheckpointFreshnessStatus ||
 		binding["first_executable_node"] != resumeReadback.FirstExecutableNode ||
 		binding["exact_next_action"] != resumeReadback.ExactNextAction ||
 		binding["return_gate_status"] != resumeReadback.ReturnGateStatus {
@@ -786,17 +804,22 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	}
 	if command.ElapsedMinutes != 25 || command.FinalResponseAllowed ||
 		command.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		command.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		command.CommandTimelineBinding.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		command.CommandTimelineBinding.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		promoter.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		promoter.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		promoter.PromotionClaimed || !promoter.RSIRemainsDenied ||
 		foundry.NodeCompletionStatus != "nodes_in_progress" ||
 		foundry.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		foundry.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		foundry.LeaseCompletionStatus != "minimum_minutes_unmet" {
 		t.Fatalf("bad resume closure artifacts: command=%#v promoter=%#v foundry=%#v", command, promoter, foundry)
 	}
 	if reconciliation.ReturnGateStatus != "blocked_ready_nodes_remain" ||
 		reconciliation.CheckpointCount != 1 ||
 		reconciliation.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		reconciliation.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		!reconciliation.ArtifactsAgree ||
 		reconciliation.CommandReturnGateStatus != resumeReadback.ReturnGateStatus ||
 		reconciliation.FoundryReturnGateStatus != resumeReadback.ReturnGateStatus ||
@@ -1080,6 +1103,30 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 		!strings.Contains(err.Error(), "foundry rollup lease_health_status disagrees") {
 		t.Fatalf("expected stale foundry lease health rejection, got %v", err)
 	}
+	foundry = BuildAtlasRecommendationFoundryRollup(readback)
+	command.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback checkpoint_freshness_status disagrees") {
+		t.Fatalf("expected stale command checkpoint freshness rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CommandTimelineBinding.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command timeline binding checkpoint_freshness_status disagrees") {
+		t.Fatalf("expected stale command timeline checkpoint freshness rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	promoter.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "promoter readback checkpoint_freshness_status disagrees") {
+		t.Fatalf("expected stale promoter checkpoint freshness rejection, got %v", err)
+	}
+	promoter = BuildAtlasRecommendationPromoterReadback(readback)
+	foundry.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "foundry rollup checkpoint_freshness_status disagrees") {
+		t.Fatalf("expected stale foundry checkpoint freshness rejection, got %v", err)
+	}
 }
 
 func TestRecommendationCompleteNodeRejectsMissingGateEvidence(t *testing.T) {
@@ -1317,6 +1364,24 @@ func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T)
 	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
 	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness lease_health_status must match recommendation readback") {
 		t.Fatalf("expected stale Foundry lease health rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "checkpoint_freshness_status must match recommendation readback") {
+		t.Fatalf("expected stale execution checkpoint freshness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.GeneratedWorkgraph.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "generated_workgraph.checkpoint_freshness_status must match recommendation readback") {
+		t.Fatalf("expected stale generated workgraph checkpoint freshness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness checkpoint_freshness_status must match recommendation readback") {
+		t.Fatalf("expected stale Foundry checkpoint freshness rejection, got %v", err)
 	}
 }
 

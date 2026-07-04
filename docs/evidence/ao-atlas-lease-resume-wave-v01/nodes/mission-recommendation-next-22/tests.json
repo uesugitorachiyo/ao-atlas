@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-22",
+  "red_test": "go test ./internal/atlas -run 'TestRecommendationDerivedReadbackSchemasRequireCheckpointFreshnessStatus|TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestMissionRecommendationsDetectStaleClosureArtifacts|TestRecommendationExecutionReadbackRejectsFalseCompletedNodes' -count=1 failed before model updates because derived readback structs had no checkpoint_freshness_status fields.",
+  "tests": [
+    "go test ./internal/atlas -run 'TestRecommendationExecutionReadbackArtifactsStayConsistent|TestRecommendationDerivedReadbackSchemasRequireCheckpointFreshnessStatus|TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestMissionRecommendationsDetectStaleClosureArtifacts|TestRecommendationExecutionReadbackRejectsFalseCompletedNodes' -count=1 passed"
+  ],
+  "summary": "Regression coverage now proves derived schemas require checkpoint_freshness_status and stale execution or closure artifacts are rejected when checkpoint freshness drifts from the root readback."
+}

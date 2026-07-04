@@ -11,6 +11,7 @@
   "elapsed_minutes": 180,
   "min_minutes_met": true,
   "lease_health_status": "minimum_unmet",
+  "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
   "final_response_allowed": false,
   "schedules_work": false,
   "executes_work": false,
