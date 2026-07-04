@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-08",
+  "verification": [
+    "go test ./internal/atlas -run TestProductionReadinessExercisesMissionRecommendationsImport -count=1 passed after the red phase",
+    "go test ./... -count=1 passed",
+    "go vet ./... passed",
+    "go build ./cmd/atlas passed; generated root binary removed before public-safety scan",
+    "scripts/production-readiness.sh passed with status=ready, score=100/100, and recommendation-prompt-public-safety-scan",
+    "scripts/atlas-foundry-roundtrip-smoke.sh passed with status=ready"
+  ]
+}

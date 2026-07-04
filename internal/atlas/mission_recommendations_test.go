@@ -964,6 +964,8 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"min_minutes_met=true",
 		"recommendation-ledger-consistency",
 		"next-recommended-prompt.md",
+		"reject_generated_recommendation_prompt_public_safety",
+		"recommendation-prompt-public-safety-scan",
 	} {
 		if !strings.Contains(script, want) {
 			t.Fatalf("production readiness script missing recommendation coverage %q", want)

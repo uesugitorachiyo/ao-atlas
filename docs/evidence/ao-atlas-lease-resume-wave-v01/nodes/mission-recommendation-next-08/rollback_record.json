@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-08",
+  "rollback_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01"
+  ],
+  "rollback_action": "Revert the generated recommendation prompt safety scan, its coverage test, and node 08 evidence/readback refresh.",
+  "direct_main_mutation": false
+}

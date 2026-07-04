@@ -36,6 +36,27 @@ reject_local_absolute_paths() {
   done
 }
 
+reject_generated_recommendation_prompt_public_safety() {
+  local prompt="$1"
+  test -s "$prompt"
+  reject_local_absolute_paths "generated recommendation prompt" "$prompt"
+  local forbidden=(
+    "RSI is proven"
+    "RSI proven"
+    "fully_unsupervised_complex_mutation is proven"
+    "provider calls allowed"
+    "credential inspection allowed"
+    "direct main mutation allowed"
+    "release deploy publish upload tag allowed"
+  )
+  for phrase in "${forbidden[@]}"; do
+    if grep -niF "$phrase" "$prompt" >/dev/null; then
+      echo "generated recommendation prompt contains unsafe wording '$phrase' in $prompt" >&2
+      exit 1
+    fi
+  done
+}
+
 go test ./...
 pass "go-test"
 
@@ -135,6 +156,8 @@ jq -e '.total_nodes == 40 and .minimum_nodes == 30 and .ready_nodes == 40 and .e
 jq -e '.final_response_denial_gate == "deny_ready_nodes_or_exact_next_action_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 grep -q "Target 2-3 hours" "$OUT/mission-recommendations/next-recommended-prompt.md"
 grep -q "If ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response." "$OUT/mission-recommendations/next-recommended-prompt.md"
+reject_generated_recommendation_prompt_public_safety "$OUT/mission-recommendations/next-recommended-prompt.md"
+pass "recommendation-prompt-public-safety-scan"
 "$BIN" mission recommendations readback --wave "$OUT/mission-recommendations/recommendation-wave.json" --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --evidence-root target/production-readiness/mission-recommendations --out "$OUT/mission-recommendations/recommendation-readback-regenerated.json" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-readback-regenerated.json"
 "$BIN" workgraph validate --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null

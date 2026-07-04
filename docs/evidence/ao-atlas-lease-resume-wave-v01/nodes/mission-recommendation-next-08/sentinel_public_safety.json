@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-08",
+  "summary": "Production readiness now directly scans generated recommendation prompts for local path markers and unsafe authority wording. Changed source and evidence scans found no forbidden markers.",
+  "forbidden_markers_found": false,
+  "rsi_claimed": false,
+  "provider_calls": false,
+  "credential_inspection": false
+}
