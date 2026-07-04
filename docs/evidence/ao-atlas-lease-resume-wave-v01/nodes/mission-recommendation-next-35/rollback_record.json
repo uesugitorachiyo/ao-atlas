@@ -1,0 +1,12 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-35",
+  "rollback_scope": [
+    "README.md",
+    "docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-35"
+  ],
+  "rollback_action": "Revert the node 35 docs/readiness/evidence changes without touching earlier completed node evidence.",
+  "summary": "Rollback is limited to the node-specific documentation assertion and evidence bundle."
+}

@@ -21,6 +21,14 @@ Foundry should execute that bounded implementation node, and Blueprint should be
 re-entered only if the node lacks requirements, authorization, candidate rules,
 or scope approval.
 
+Foundry import ownership stays single-node: Atlas emits import material only for
+the current executable node, records that import in the node evidence bundle,
+and leaves downstream ready nodes unimported until their dependencies close.
+Foundry owns the bounded implementation evidence, run-link, and terminal status
+for that active node; Atlas resumes from the resulting checkpoint before
+choosing the next import. This prevents one prompt from treating a 40-node wave
+as a bulk implementation grant.
+
 Use AO Command for compact readback: completed nodes, ready nodes, blockers, exact next action, and whether final response is allowed.
 
 Use AO Promoter only for a promotion or no-promotion verdict. A recommendation wave does not promote mutation authority by itself.
