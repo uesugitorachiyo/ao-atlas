@@ -3,14 +3,14 @@
   "status": "in_progress",
   "evidence_root": "docs/evidence/ao-atlas-lease-resume-wave-v01",
   "mission_id": "mission-long-wave",
-  "completed_nodes": 30,
+  "completed_nodes": 31,
   "total_nodes": 40,
-  "ready_nodes": 10,
+  "ready_nodes": 9,
   "blocked_nodes": 0,
   "failed_nodes": 0,
   "started_at": "2026-07-04T08:34:04-07:00",
-  "completed_at": "2026-07-04T14:37:28-07:00",
-  "elapsed_minutes": 364,
+  "completed_at": "2026-07-04T14:49:36-07:00",
+  "elapsed_minutes": 376,
   "supervisor_min_minutes": 120,
   "min_minutes_met": true,
   "lease_time_status": "minimum_minutes_met",
@@ -18,14 +18,14 @@
   "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
   "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
   "early_return_risk_status": "blocked_final_response_ready_nodes_remain",
-  "checkpoint_count": 30,
+  "checkpoint_count": 31,
   "return_gate_status": "blocked_ready_nodes_remain",
   "final_response_allowed": false,
-  "exact_next_action": "Emit Foundry import for mission-recommendation-next-31 and execute exactly one active node.",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-next-32 and execute exactly one active node.",
   "exact_next_action_readback": {
     "status": "continuation_required",
-    "action": "Emit Foundry import for mission-recommendation-next-31 and execute exactly one active node.",
-    "next_executable_node": "mission-recommendation-next-31",
+    "action": "Emit Foundry import for mission-recommendation-next-32 and execute exactly one active node.",
+    "next_executable_node": "mission-recommendation-next-32",
     "return_gate_status": "blocked_ready_nodes_remain",
     "final_response_allowed": false,
     "source": "recommendation_readback"
@@ -70,6 +70,12 @@
       "required_before_final_response": true
     }
   ],
+  "final_response_denial_tests": {
+    "status": "recorded",
+    "ready_return_gate_required": "blocked_ready_nodes_remain",
+    "ready_final_response_reason": "ready nodes or exact next actions remain",
+    "exact_next_action_names_first_executable_node": true
+  },
   "blocked_node_continuation_prompt": "If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.",
   "foundry_terminal_status_examples": [
     {

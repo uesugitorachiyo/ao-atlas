@@ -1060,6 +1060,20 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	if err := validateExactNextActionReadback(readback); err != nil {
 		errs = append(errs, err.Error())
 	}
+	if readback.ReadyNodes > 0 && readback.BlockedNodes == 0 && readback.FailedNodes == 0 {
+		if readback.FinalResponseAllowed {
+			errs = append(errs, "ready nodes require final_response_allowed=false")
+		}
+		if readback.ReturnGateStatus != "blocked_ready_nodes_remain" {
+			errs = append(errs, "ready nodes require return_gate_status=blocked_ready_nodes_remain")
+		}
+		if readback.FinalResponseReason != "ready nodes or exact next actions remain" {
+			errs = append(errs, "ready nodes require final_response_reason=ready nodes or exact next actions remain")
+		}
+		if readback.ExecutableReadyNodes > 0 && !strings.Contains(readback.ExactNextAction, readback.FirstExecutableNode) {
+			errs = append(errs, "ready nodes require exact_next_action to name first_executable_node")
+		}
+	}
 	if readback.FinalResponseAllowed {
 		if readback.FinalResponseDenialGate != "allow_final_response" {
 			errs = append(errs, "final_response_allowed requires final_response_denial_gate=allow_final_response")

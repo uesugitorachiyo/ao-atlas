@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-31",
+  "candidate": "atlas-recommendation-ready-final-response-denial-tests",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Recommendation readback validation did not reject a manually drifted ready-node return gate, final reason, or exact-next-action string when final response still had to be denied."
+}

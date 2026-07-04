@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-31",
+  "summary": "Validator regression covers stale return gate, stale final reason, and stale exact-next-action drift for ready recommendation workgraphs."
+}

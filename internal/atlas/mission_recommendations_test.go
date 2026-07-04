@@ -1021,6 +1021,55 @@ func TestMissionRecommendationsReadbackFinalGateTransitions(t *testing.T) {
 	}
 }
 
+func TestRecommendationReadbackRejectsReadyWorkgraphFinalGateDrift(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	partial := completeRecommendationNodes(result.Workgraph, 30)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, partial, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:00-07:00",
+		CompletedAt:     "2026-07-04T09:20:00-07:00",
+		ElapsedMinutes:  120,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.ReadyNodes == 0 || readback.FirstExecutableNode != "mission-recommendation-next-31" || readback.FinalResponseAllowed {
+		t.Fatalf("test setup expected ready continuation readback: %#v", readback)
+	}
+
+	tampered := readback
+	tampered.ReturnGateStatus = "final_response_allowed"
+	tampered.ExactNextActionReadback.ReturnGateStatus = tampered.ReturnGateStatus
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "ready nodes require return_gate_status=blocked_ready_nodes_remain") {
+		t.Fatalf("expected stale return gate rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.FinalResponseReason = "all generated nodes complete and no ready nodes remain"
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "ready nodes require final_response_reason=ready nodes or exact next actions remain") {
+		t.Fatalf("expected stale final reason rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.ExactNextAction = "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
+	tampered.ExactNextActionReadback.Action = tampered.ExactNextAction
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "ready nodes require exact_next_action to name first_executable_node") {
+		t.Fatalf("expected stale exact next action rejection, got %v", err)
+	}
+}
+
 func TestMissionRecommendationsDenyFinalResponseWhenLeaseMinutesUnmet(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
