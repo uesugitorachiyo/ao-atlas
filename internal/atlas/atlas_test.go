@@ -1198,6 +1198,12 @@ func TestMissionImportWorkgraphMetadataBindsImportAndWorkgraph(t *testing.T) {
 	if metadata.MissionProvenance["route_history"] != 1 || metadata.MissionProvenance["scheduler_recovery"] != 1 || metadata.MissionProvenance["ledger_compaction"] != 1 {
 		t.Fatalf("missing mission provenance summary: %#v", metadata.MissionProvenance)
 	}
+	if metadata.PrimaryMissionProvenance != "artifact_manifest" {
+		t.Fatalf("metadata should pick deterministic primary provenance, got %q from %#v", metadata.PrimaryMissionProvenance, metadata.MissionProvenance)
+	}
+	if !strings.Contains(metadata.ProvenanceDiagnostics, "artifact_manifest=1") || !strings.Contains(metadata.ProvenanceDiagnostics, "route_history=1") {
+		t.Fatalf("metadata missing provenance diagnostics: %q", metadata.ProvenanceDiagnostics)
+	}
 	if metadata.SafeToExecute || metadata.SchedulesWork || metadata.ExecutesWork || metadata.ApprovesWork {
 		t.Fatalf("metadata widened authority: %#v", metadata)
 	}
