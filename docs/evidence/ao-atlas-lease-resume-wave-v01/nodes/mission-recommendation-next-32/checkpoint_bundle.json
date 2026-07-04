@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-32",
+  "summary": "Node 32 checkpoint records completed-workgraph final-response allowance tests and preserves continuation to node 33 because ready nodes remain."
+}

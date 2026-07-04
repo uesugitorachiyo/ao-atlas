@@ -1070,6 +1070,62 @@ func TestRecommendationReadbackRejectsReadyWorkgraphFinalGateDrift(t *testing.T)
 	}
 }
 
+func TestRecommendationReadbackRejectsCompletedWorkgraphFinalAllowanceDrift(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:00-07:00",
+		CompletedAt:     "2026-07-04T09:20:00-07:00",
+		ElapsedMinutes:  120,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !readback.FinalResponseAllowed || readback.ReadyNodes != 0 || readback.ReturnGateStatus != "final_response_allowed" {
+		t.Fatalf("test setup expected completed final-allowed readback: %#v", readback)
+	}
+
+	tampered := readback
+	tampered.Status = "in_progress"
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed requires status=completed") {
+		t.Fatalf("expected stale completed status rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.ReturnGateStatus = "blocked_ready_nodes_remain"
+	tampered.ExactNextActionReadback.ReturnGateStatus = tampered.ReturnGateStatus
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed requires return_gate_status=final_response_allowed") {
+		t.Fatalf("expected stale return gate rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.FinalResponseReason = "ready nodes or exact next actions remain"
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed requires final_response_reason=all generated nodes complete and no ready nodes remain") {
+		t.Fatalf("expected stale final reason rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.ExactNextAction = "Emit Foundry import for mission-recommendation-next-40 and execute exactly one active node."
+	tampered.ExactNextActionReadback.Action = tampered.ExactNextAction
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed requires final exact_next_action") {
+		t.Fatalf("expected stale exact next action rejection, got %v", err)
+	}
+}
+
 func TestMissionRecommendationsDenyFinalResponseWhenLeaseMinutesUnmet(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
