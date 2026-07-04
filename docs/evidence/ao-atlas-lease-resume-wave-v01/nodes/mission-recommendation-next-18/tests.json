@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-18",
+  "tests": [
+    "go test ./internal/atlas -run TestMissionRecommendationsFirstNodeFoundryImportSmoke -count=1 passed"
+  ],
+  "summary": "Targeted regression coverage proves the first generated recommendation node remains importable into Foundry as a single fixture-only handoff."
+}

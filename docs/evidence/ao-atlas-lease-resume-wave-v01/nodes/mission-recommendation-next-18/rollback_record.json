@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-18",
+  "rollback": [
+    "Revert the TestMissionRecommendationsFirstNodeFoundryImportSmoke addition in internal/atlas/mission_recommendations_test.go.",
+    "Remove node 18 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-18.",
+    "Regenerate recommendation readback artifacts from the last completed workgraph if this node is reverted before merge."
+  ]
+}

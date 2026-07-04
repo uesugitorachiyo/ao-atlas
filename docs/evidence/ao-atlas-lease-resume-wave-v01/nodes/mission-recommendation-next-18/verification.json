@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-18",
+  "verification": [
+    "go test ./internal/atlas -run TestMissionRecommendationsFirstNodeFoundryImportSmoke -count=1 passed",
+    "find docs/evidence/ao-atlas-lease-resume-wave-v01 -name '*.json' -print0 | xargs -0 -n1 jq -e . >/dev/null passed",
+    "go test ./... -count=1 passed",
+    "go vet ./... passed",
+    "go build ./cmd/atlas passed",
+    "scripts/production-readiness.sh passed",
+    "scripts/atlas-foundry-roundtrip-smoke.sh passed"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-18",
+  "candidate": "first-generated-recommendation-foundry-import-smoke",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "The generated recommendation workgraph had shell readiness coverage for Foundry import, but lacked a focused Go regression proving node 01 import fixture, source digest, and continuation handoff wiring."
+}

@@ -437,6 +437,120 @@ func TestMissionRecommendationsImportArtifactsAreDigestBound(t *testing.T) {
 	}
 }
 
+func TestMissionRecommendationsFirstNodeFoundryImportSmoke(t *testing.T) {
+	scratchRel := filepath.Join("..", "..", "target", "mission-recommendations-first-node-foundry-import-smoke")
+	scratchAbs := filepath.Join(repoRoot(t), "target", "mission-recommendations-first-node-foundry-import-smoke")
+	if err := os.RemoveAll(scratchAbs); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() {
+		_ = os.RemoveAll(scratchAbs)
+	})
+	recommendationsPath := filepath.Join(scratchRel, "feature-depth-recommendations.json")
+	recommendationsOut := filepath.Join(scratchRel, "recommendations-out")
+	foundryOut := filepath.Join(scratchRel, "foundry-import")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--started-at", "2026-07-04T08:00:00-07:00",
+		"--out", recommendationsOut,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	workgraphPath := filepath.Join(recommendationsOut, "recommendation-workgraph.json")
+	leaseStartPath := filepath.Join(recommendationsOut, "lease-start.json")
+
+	out.Reset()
+	code = Run([]string{
+		"foundry", "import",
+		"--workgraph", workgraphPath,
+		"--instance", filepath.Join("..", "..", "examples", "valid", "stack-instance.json"),
+		"--node", "mission-recommendation-next-01",
+		"--mission-continuation", leaseStartPath,
+		"--out", foundryOut,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("foundry import failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "tasks=1") ||
+		!strings.Contains(out.String(), "next_recommended_action=Move to ../ao-foundry") {
+		t.Fatalf("foundry import output missing single-node continuation readback: %s", out.String())
+	}
+
+	workgraph := mustLoadJSON[Workgraph](t, workgraphPath)
+	manifestPath := filepath.Join(foundryOut, "foundry-import.json")
+	manifest := mustLoadJSON[FoundryImport](t, manifestPath)
+	if err := ValidateFoundryImport(manifest); err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateFoundryImportMatchesWorkgraph(workgraph, manifest); err != nil {
+		t.Fatal(err)
+	}
+	if len(manifest.Tasks) != 1 {
+		t.Fatalf("recommendation first-node import should emit exactly one task fixture: %#v", manifest.Tasks)
+	}
+	task := manifest.Tasks[0]
+	if task.NodeID != "mission-recommendation-next-01" ||
+		task.TaskID != "mission-recommendation-next-01-task" ||
+		task.Task.ID != task.TaskID ||
+		task.Path != "tasks/mission-recommendation-next-01-task.json" {
+		t.Fatalf("bad first recommendation task fixture: %#v", task)
+	}
+	if task.MutationClass != "low_risk_code" ||
+		task.AuthorityBoundary != "atlas_recommendation_planning_only" ||
+		!containsString(task.RequiredGates, "node_gate") ||
+		!containsStringPrefix(task.RequiredEvidence, "source_task_digest:sha256:") {
+		t.Fatalf("recommendation task fixture lost gate, authority, or source digest binding: %#v", task)
+	}
+	if _, err := os.Stat(filepath.Join(foundryOut, task.Path)); err != nil {
+		t.Fatal(err)
+	}
+	if len(manifest.SourceArtifacts) != 2 {
+		t.Fatalf("expected workgraph and instance source artifacts, got %#v", manifest.SourceArtifacts)
+	}
+	for _, source := range manifest.SourceArtifacts {
+		if !digestPattern.MatchString(source.Digest) {
+			t.Fatalf("source artifact missing digest binding: %#v", manifest.SourceArtifacts)
+		}
+	}
+	if manifest.SchedulesWork || manifest.ExecutesWork || manifest.ApprovesWork {
+		t.Fatalf("Foundry import smoke must remain fixture-only: %#v", manifest)
+	}
+
+	handoff := mustLoadJSON[FoundryContinuationHandoff](t, filepath.Join(foundryOut, "foundry-continuation-handoff.json"))
+	if err := ValidateFoundryContinuationHandoff(handoff); err != nil {
+		t.Fatal(err)
+	}
+	if handoff.FirstSafeNode != "mission-recommendation-next-01" ||
+		handoff.TotalNodeCount != 40 ||
+		handoff.ReadyNodeCount != 40 ||
+		handoff.CompletedNodeCount != 0 ||
+		handoff.FoundryImportPath != filepath.ToSlash(manifestPath) {
+		t.Fatalf("handoff lost generated recommendation node readback: %#v", handoff)
+	}
+	prompt, err := os.ReadFile(filepath.Join(foundryOut, "foundry-continuation-prompt.md"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{
+		"first safe node: mission-recommendation-next-01",
+		"do not stop after import validation",
+		"do not stop after one node",
+		"RSI remains denied",
+		filepath.ToSlash(workgraphPath),
+		filepath.ToSlash(manifestPath),
+	} {
+		if !strings.Contains(string(prompt), want) {
+			t.Fatalf("Foundry continuation prompt missing %q:\n%s", want, string(prompt))
+		}
+	}
+}
+
 func TestMissionRecommendationsReadbackCLIMatchesGeneratedArtifacts(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
