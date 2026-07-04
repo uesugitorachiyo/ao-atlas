@@ -685,6 +685,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 			"blocked":   "terminal_blocker_requires_repair_or_checkpoint_resume",
 		},
 		FoundryTerminalStatusExamples: foundryTerminalStatusExamples(),
+		FoundryDeniedTerminalExamples: foundryDeniedTerminalExamples(),
 		PromoterReadbackStatus:        promoterReadbackStatus,
 		PromoterNoPromotionStatus:     promoterNoPromotionStatus,
 		CommandReadbackStatus:         commandReadbackStatus,
@@ -748,6 +749,41 @@ func foundryTerminalStatusExamples() []AtlasFoundryTerminalStatusExample {
 			Terminal:         true,
 			CanCloseMission:  false,
 			RequiredReadback: "Blocker readback names the exact repair or resume action before final response can close.",
+		},
+	}
+}
+
+func foundryDeniedTerminalExamples() []AtlasFoundryDeniedTerminalExample {
+	return []AtlasFoundryDeniedTerminalExample{
+		{
+			DenialReason:                 "missing_node_evidence",
+			NormalizedStatus:             "denied",
+			Terminal:                     true,
+			CanCloseMission:              true,
+			RequiresExactMissingEvidence: true,
+			RequiredReadback:             "Denied rollup names the missing node id, missing evidence key, and expected evidence path.",
+			RSIRemainsDenied:             true,
+			AuthorityAdvanceClaimed:      false,
+		},
+		{
+			DenialReason:                 "missing_stop_gate_evidence",
+			NormalizedStatus:             "denied",
+			Terminal:                     true,
+			CanCloseMission:              true,
+			RequiresExactMissingEvidence: true,
+			RequiredReadback:             "Denied rollup names the uncleared stop gate and the exact artifact needed before promotion can be reconsidered.",
+			RSIRemainsDenied:             true,
+			AuthorityAdvanceClaimed:      false,
+		},
+		{
+			DenialReason:                 "forbidden_surface_or_rsi_claim",
+			NormalizedStatus:             "denied",
+			Terminal:                     true,
+			CanCloseMission:              true,
+			RequiresExactMissingEvidence: true,
+			RequiredReadback:             "Denied rollup records the forbidden surface or RSI claim, refuses promotion, and keeps RSI denied.",
+			RSIRemainsDenied:             true,
+			AuthorityAdvanceClaimed:      false,
 		},
 	}
 }
@@ -924,6 +960,9 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	if err := validateFoundryTerminalStatusExamples(readback.FoundryTerminalStatusExamples); err != nil {
 		errs = append(errs, err.Error())
 	}
+	if err := validateFoundryDeniedTerminalExamples(readback.FoundryDeniedTerminalExamples); err != nil {
+		errs = append(errs, err.Error())
+	}
 	requireField(&errs, "promoter_readback_status", readback.PromoterReadbackStatus)
 	requireField(&errs, "promoter_no_promotion_status", readback.PromoterNoPromotionStatus)
 	requireField(&errs, "command_readback_status", readback.CommandReadbackStatus)
@@ -1043,6 +1082,54 @@ func validateFoundryTerminalStatusExamples(examples []AtlasFoundryTerminalStatus
 	for source, seen := range required {
 		if !seen {
 			return fmt.Errorf("foundry_terminal_status_examples missing %s", source)
+		}
+	}
+	return nil
+}
+
+func validateFoundryDeniedTerminalExamples(examples []AtlasFoundryDeniedTerminalExample) error {
+	required := map[string]bool{
+		"missing_node_evidence":          false,
+		"missing_stop_gate_evidence":     false,
+		"forbidden_surface_or_rsi_claim": false,
+	}
+	if len(examples) < len(required) {
+		return fmt.Errorf("foundry_denied_terminal_examples must include missing node, stop gate, and forbidden surface examples")
+	}
+	for _, example := range examples {
+		reason := strings.TrimSpace(example.DenialReason)
+		if _, ok := required[reason]; !ok {
+			return fmt.Errorf("foundry_denied_terminal_examples has unsupported denial_reason %q", example.DenialReason)
+		}
+		if required[reason] {
+			return fmt.Errorf("foundry_denied_terminal_examples duplicate denial_reason %q", reason)
+		}
+		required[reason] = true
+		if example.NormalizedStatus != "denied" {
+			return fmt.Errorf("foundry_denied_terminal_examples.%s must normalize to denied", reason)
+		}
+		if !example.Terminal {
+			return fmt.Errorf("foundry_denied_terminal_examples.%s must be terminal", reason)
+		}
+		if !example.CanCloseMission {
+			return fmt.Errorf("foundry_denied_terminal_examples.%s must be closable as final denial", reason)
+		}
+		if !example.RequiresExactMissingEvidence {
+			return fmt.Errorf("foundry_denied_terminal_examples.%s must require exact missing evidence", reason)
+		}
+		if strings.TrimSpace(example.RequiredReadback) == "" {
+			return fmt.Errorf("foundry_denied_terminal_examples.%s required_readback is required", reason)
+		}
+		if !example.RSIRemainsDenied {
+			return fmt.Errorf("foundry_denied_terminal_examples.%s must keep RSI denied", reason)
+		}
+		if example.AuthorityAdvanceClaimed {
+			return fmt.Errorf("foundry_denied_terminal_examples.%s must not claim authority advance", reason)
+		}
+	}
+	for reason, seen := range required {
+		if !seen {
+			return fmt.Errorf("foundry_denied_terminal_examples missing %s", reason)
 		}
 	}
 	return nil

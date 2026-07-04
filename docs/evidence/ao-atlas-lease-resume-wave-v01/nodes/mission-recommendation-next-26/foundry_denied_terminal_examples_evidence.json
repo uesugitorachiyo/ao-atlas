@@ -1,0 +1,18 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-26",
+  "examples_field": "foundry_denied_terminal_examples",
+  "required_denial_reasons": [
+    "missing_node_evidence",
+    "missing_stop_gate_evidence",
+    "forbidden_surface_or_rsi_claim"
+  ],
+  "requires_exact_missing_evidence": true,
+  "rsi_remains_denied": true,
+  "authority_advance_claimed": false,
+  "completed_nodes_after": 26,
+  "ready_nodes_after": 14,
+  "checkpoint_count_after": 26,
+  "exact_next_action_after": "Emit Foundry import for mission-recommendation-next-27 and execute exactly one active node.",
+  "summary": "Node 26 makes denied Foundry terminal states explicit and exact-blocker based without claiming promotion or RSI."
+}

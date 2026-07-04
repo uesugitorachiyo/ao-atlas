@@ -99,6 +99,10 @@ func TestRecommendationReadbackSchemaRequiresFoundryTerminalExamples(t *testing.
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "foundry_terminal_status_examples")
 }
 
+func TestRecommendationReadbackSchemaRequiresFoundryDeniedTerminalExamples(t *testing.T) {
+	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "foundry_denied_terminal_examples")
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -454,6 +458,25 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 		terminalByStatus["denied"]["can_close_mission"] != true ||
 		terminalByStatus["blocked"]["can_close_mission"] != false {
 		t.Fatalf("structured terminal examples do not describe promoted/denied/blocked closure: %#v", terminalByStatus)
+	}
+	deniedExamples, ok := rawReadback["foundry_denied_terminal_examples"].([]any)
+	if !ok || len(deniedExamples) < 3 {
+		t.Fatalf("readback missing structured Foundry denied terminal examples: %#v", rawReadback["foundry_denied_terminal_examples"])
+	}
+	deniedByReason := map[string]map[string]any{}
+	for _, item := range deniedExamples {
+		example, ok := item.(map[string]any)
+		if !ok {
+			t.Fatalf("bad denied terminal example: %#v", item)
+		}
+		reason, _ := example["denial_reason"].(string)
+		deniedByReason[reason] = example
+	}
+	if deniedByReason["missing_node_evidence"]["requires_exact_missing_evidence"] != true ||
+		deniedByReason["missing_stop_gate_evidence"]["can_close_mission"] != true ||
+		deniedByReason["forbidden_surface_or_rsi_claim"]["rsi_remains_denied"] != true ||
+		deniedByReason["forbidden_surface_or_rsi_claim"]["authority_advance_claimed"] != false {
+		t.Fatalf("denied terminal examples do not describe exact blocker and RSI-safe denial: %#v", deniedByReason)
 	}
 	if len(readback.NodeEvidence) != 40 || readback.NodeEvidence[0].NodeGate != "recorded" || readback.NodeEvidence[0].RollbackRecord != "recorded" {
 		t.Fatalf("readback missing per-node evidence: %#v", readback.NodeEvidence[:1])

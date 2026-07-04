@@ -224,6 +224,7 @@ type AtlasRecommendationReadback struct {
 	FoundryRollupStatus           string                              `json:"foundry_rollup_status"`
 	FoundryTerminalStatusReadback map[string]string                   `json:"foundry_terminal_status_readback"`
 	FoundryTerminalStatusExamples []AtlasFoundryTerminalStatusExample `json:"foundry_terminal_status_examples"`
+	FoundryDeniedTerminalExamples []AtlasFoundryDeniedTerminalExample `json:"foundry_denied_terminal_examples"`
 	PromoterReadbackStatus        string                              `json:"promoter_readback_status"`
 	PromoterNoPromotionStatus     string                              `json:"promoter_no_promotion_status"`
 	CommandReadbackStatus         string                              `json:"command_readback_status"`
@@ -249,6 +250,17 @@ type AtlasFoundryTerminalStatusExample struct {
 	Terminal         bool   `json:"terminal"`
 	CanCloseMission  bool   `json:"can_close_mission"`
 	RequiredReadback string `json:"required_readback"`
+}
+
+type AtlasFoundryDeniedTerminalExample struct {
+	DenialReason                 string `json:"denial_reason"`
+	NormalizedStatus             string `json:"normalized_status"`
+	Terminal                     bool   `json:"terminal"`
+	CanCloseMission              bool   `json:"can_close_mission"`
+	RequiresExactMissingEvidence bool   `json:"requires_exact_missing_evidence"`
+	RequiredReadback             string `json:"required_readback"`
+	RSIRemainsDenied             bool   `json:"rsi_remains_denied"`
+	AuthorityAdvanceClaimed      bool   `json:"authority_advance_claimed"`
 }
 
 type AtlasRecommendationNodeEvidence struct {

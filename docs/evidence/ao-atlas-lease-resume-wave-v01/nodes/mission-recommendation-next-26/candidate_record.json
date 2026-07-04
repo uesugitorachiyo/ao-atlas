@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-26",
+  "candidate": "atlas-recommendation-foundry-denied-terminal-examples",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Atlas recommendation readbacks included a generic denied terminal state but did not enumerate denied examples that require exact missing evidence, RSI-safe wording, and no authority advancement."
+}
