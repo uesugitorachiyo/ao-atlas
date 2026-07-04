@@ -310,6 +310,61 @@ func TestMissionRecommendationsReadbackRejectsMismatchedWaveAndWorkgraph(t *test
 	}
 }
 
+func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T) {
+	readback := AtlasRecommendationReadback{
+		ContractVersion:             AtlasRecommendationReadbackContract,
+		MissionID:                   "mission-long-wave",
+		TargetInstance:              "demo-stack",
+		Status:                      "ready",
+		SourceDigest:                "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		TotalNodes:                  40,
+		MinimumNodes:                30,
+		CompletedNodes:              0,
+		ReadyNodes:                  40,
+		ExecutableReadyNodes:        1,
+		LeaseHealthStatus:           "minimum_unmet",
+		CheckpointFreshnessStatus:   "fresh_checkpoint_required_after_each_node_or_timed_interval",
+		StaleRouteDecisionStatus:    "fresh_atlas_supervises_foundry_owns_one_active_node",
+		EarlyReturnRiskStatus:       "blocked_final_response_ready_nodes_remain",
+		FoundryRollupStatus:         "required_pending_first_node_import",
+		PromoterReadbackStatus:      "required_not_bound",
+		CommandReadbackStatus:       "required_not_bound",
+		PublicSafetyScanStatus:      "required_pending_verification",
+		FinalResponseReason:         "ready nodes or exact next actions remain",
+		ExactNextAction:             "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.",
+		NodeEvidence:                []AtlasRecommendationNodeEvidence{{NodeID: "mission-recommendation-next-01", TaskID: "mission-recommendation-next-01-task", Status: "ready", NodeGate: "recorded", CandidateRecord: "recorded", RollbackRecord: "recorded", ImplementationEvidence: "recorded", Tests: "recorded", Verification: "recorded", PublicSafetyWording: "recorded", PromoterReadback: "recorded", CommandReadback: "recorded", RequiredGates: []string{"node_gate"}, VerificationCommands: []string{"go test ./... -count=1"}}},
+		FeatureDepthRecommendations: []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"},
+		SafetyBoundaries:            map[string]bool{"provider_calls": false},
+	}
+	execution := AtlasRecommendationExecutionReadback{
+		Schema:                       "ao.atlas.long-recommendation-wave-execution.v0.3",
+		Status:                       "completed",
+		MissionID:                    "mission-long-wave",
+		CompletedRecommendationNodes: 40,
+		TotalRecommendationNodes:     40,
+		GeneratedWorkgraph: AtlasRecommendationGeneratedWorkgraphReadback{
+			TotalNodes:           40,
+			ReadyNodes:           40,
+			ExecutableReadyNodes: 1,
+			FinalResponseAllowed: false,
+		},
+	}
+
+	err := ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "completed_recommendation_nodes must match recommendation readback completed_nodes") {
+		t.Fatalf("expected false completion rejection, got %v", err)
+	}
+}
+
+func TestRecommendationExecutionReadbackArtifactsStayConsistent(t *testing.T) {
+	root := repoRoot(t)
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "docs", "evidence", "ao-atlas-long-recommendation-wave-v03", "recommendation-readback.json"))
+	execution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, filepath.Join(root, "docs", "evidence", "ao-atlas-long-recommendation-wave-v03", "execution-readback.json"))
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("v0.3 execution ledger is inconsistent with recommendation readback: %v", err)
+	}
+}
+
 func TestMissionRecommendationsRejectMixedOwnerDefaultWaveWithExactReadback(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -356,6 +411,8 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"recommendation-workgraph.json",
 		"recommendation-readback.json",
 		"mission recommendations readback",
+		"completed_recommendation_nodes",
+		"recommendation-ledger-consistency",
 		"next-recommended-prompt.md",
 	} {
 		if !strings.Contains(script, want) {

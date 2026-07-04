@@ -250,6 +250,25 @@ type AtlasRecommendationNodeEvidence struct {
 	VerificationCommands   []string `json:"verification_commands"`
 }
 
+type AtlasRecommendationExecutionReadback struct {
+	Schema                       string                                        `json:"schema"`
+	Status                       string                                        `json:"status"`
+	MissionID                    string                                        `json:"mission_id"`
+	EvidenceRoot                 string                                        `json:"evidence_root,omitempty"`
+	CompletedRecommendationNodes int                                           `json:"completed_recommendation_nodes"`
+	TotalRecommendationNodes     int                                           `json:"total_recommendation_nodes"`
+	GeneratedWorkgraph           AtlasRecommendationGeneratedWorkgraphReadback `json:"generated_workgraph"`
+}
+
+type AtlasRecommendationGeneratedWorkgraphReadback struct {
+	TotalNodes           int    `json:"total_nodes"`
+	ReadyNodes           int    `json:"ready_nodes"`
+	ExecutableReadyNodes int    `json:"executable_ready_nodes"`
+	FirstExecutableNode  string `json:"first_executable_node,omitempty"`
+	FinalResponseAllowed bool   `json:"final_response_allowed"`
+	FinalResponseReason  string `json:"final_response_reason,omitempty"`
+}
+
 type AOMissionSourceArtifact struct {
 	Name   string `json:"name"`
 	Path   string `json:"path"`
