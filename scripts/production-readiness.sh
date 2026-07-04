@@ -83,6 +83,9 @@ test -s "$OUT/mission-status.json"
   --record examples/valid/ao-mission/mission-record.json \
   --command-status examples/valid/ao-mission/command-status.json \
   --artifact-manifest examples/valid/ao-mission/artifact-manifest.json \
+  --route-history examples/valid/ao-mission/route-history.json \
+  --scheduler-recovery examples/valid/ao-mission/scheduler-recovery-readback.json \
+  --ledger-compaction examples/valid/ao-mission/ledger-compaction-readback.json \
   --out "$OUT/ao-mission-import.json" >/dev/null
 test -s "$OUT/ao-mission-import.json"
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
