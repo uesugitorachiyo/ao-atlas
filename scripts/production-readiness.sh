@@ -101,6 +101,45 @@ assert_schema_required_fields_present() {
   }
 }
 
+assert_40_node_recommendation_workgraph() {
+  local workgraph="$1"
+  test -s "$workgraph"
+  jq -e '
+    def node_suffix($n):
+      (if $n < 10 then "0" else "" end) + ($n | tostring);
+    def node_id($n):
+      "mission-recommendation-next-" + node_suffix($n);
+    . as $workgraph |
+    ($workgraph.nodes | length) == 40 and
+    all(range(0; 40); . as $i |
+      $workgraph.nodes[$i].id == node_id($i + 1) and
+      $workgraph.nodes[$i].status == "ready" and
+      ($workgraph.nodes[$i].factory_task.id == (node_id($i + 1) + "-task")) and
+      ($workgraph.nodes[$i].factory_task.mutation_class == "low_risk_code") and
+      ($workgraph.nodes[$i].factory_task.authority_boundary == "atlas_recommendation_planning_only") and
+      any($workgraph.nodes[$i].factory_task.required_evidence[]; startswith("source_digest:sha256:")) and
+      any($workgraph.nodes[$i].factory_task.required_evidence[]; startswith("source_task_digest:sha256:")) and
+      any($workgraph.nodes[$i].factory_task.required_evidence[]; . == ("source_recommendation:next-" + node_suffix($i + 1))) and
+      (($workgraph.nodes[$i].factory_task.required_gates // []) == ["node_gate","candidate_record","rollback_record","tests","verification","sentinel_public_safety","promoter_no_promotion","command_readback"]) and
+      (($workgraph.nodes[$i].factory_task.safety_limits // []) | index("no provider calls") != null) and
+      (($workgraph.nodes[$i].factory_task.safety_limits // []) | index("no credential inspection") != null) and
+      (($workgraph.nodes[$i].factory_task.safety_limits // []) | index("no direct main mutation") != null) and
+      (($workgraph.nodes[$i].factory_task.safety_limits // []) | index("no broad RSI claim") != null) and
+      (if $i == 0 then
+        (($workgraph.nodes[$i].factory_task.dependency_refs // []) | length) == 0
+      else
+        (($workgraph.nodes[$i].factory_task.dependency_refs // []) == [node_id($i)])
+      end)
+    ) and
+    ($workgraph.schedules_work // false) == false and
+    ($workgraph.executes_work // false) == false and
+    ($workgraph.approves_work // false) == false
+  ' "$workgraph" >/dev/null || {
+    echo "recommendation workgraph does not satisfy the 40-node long-run shape: $workgraph" >&2
+    exit 1
+  }
+}
+
 go test ./...
 pass "go-test"
 
@@ -220,6 +259,7 @@ jq -e '.minimum_tasks == 30 and .total_tasks == 40 and .node_budget == 40 and .e
 jq -e '(.tasks | length) == 40 and all(.tasks[]; (.source_task_digest | test("^sha256:[0-9a-f]{64}$")))' "$OUT/mission-recommendations/recommendation-wave.json" >/dev/null
 jq -e '(.nodes | length) == 40' "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
 jq -e 'all(.nodes[]; any(.factory_task.required_evidence[]; startswith("source_task_digest:sha256:")))' "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
+assert_40_node_recommendation_workgraph "$OUT/mission-recommendations/recommendation-workgraph.json"
 jq -e '.schema == "ao.atlas.recommendation-lease-start.v0.1" and .started_at == "2026-07-04T08:00:00-07:00" and .min_minutes == 120 and .max_minutes == 180 and .final_response_allowed == false and .schedules_work == false and .executes_work == false and .approves_work == false' "$OUT/mission-recommendations/lease-start.json" >/dev/null
 jq -e '.total_nodes == 40 and .minimum_nodes == 30 and .ready_nodes == 40 and .executable_ready_nodes == 1 and .checkpoint_count == 0 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false and .lease_health_status == "minimum_unmet" and .early_return_risk_status == "blocked_final_response_ready_nodes_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 jq -e '.final_response_denial_gate == "deny_ready_nodes_or_exact_next_action_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null

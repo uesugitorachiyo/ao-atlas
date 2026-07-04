@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-38",
+  "red_test": "scripts/production-readiness.sh failed after adding assert_40_node_recommendation_workgraph because the helper did not exist yet.",
+  "tests": [
+    "scripts/production-readiness.sh passed after adding the 40-node recommendation workgraph assertion helper and wiring it into the generated recommendation import checks."
+  ],
+  "summary": "Production readiness now validates the exact 40-node recommendation workgraph shape, dependency chain, evidence, gate, safety, and no-execution contract."
+}

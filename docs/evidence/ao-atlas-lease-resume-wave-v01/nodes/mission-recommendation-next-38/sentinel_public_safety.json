@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-38",
+  "public_safety_scope": "production readiness assertions only",
+  "forbidden_claims": [
+    "no broad RSI claim",
+    "no provider-call permission",
+    "no credential inspection permission",
+    "no direct-main mutation permission",
+    "no release/deploy/publish/upload/tag permission"
+  ],
+  "summary": "The node strengthens readiness assertions only; RSI remains denied and no AO authority is widened."
+}

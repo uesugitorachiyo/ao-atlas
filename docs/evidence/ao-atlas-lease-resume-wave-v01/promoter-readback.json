@@ -8,7 +8,7 @@
   "no_promotion_summary": "No mutation authority promotion claimed; RSI remains denied.",
   "next_denied_class": "RSI",
   "reason": "Recommendation wave records no mutation authority promotion; RSI remains denied.",
-  "elapsed_minutes": 451,
+  "elapsed_minutes": 465,
   "min_minutes_met": true,
   "lease_health_status": "minimum_met_continue_if_fast",
   "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",

@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-38",
+  "import_path": "nodes/mission-recommendation-next-38/foundry-import/foundry-import.json",
+  "task_count": 1,
+  "active_node_count": 1,
+  "summary": "Atlas emitted fixture-only Foundry import material for mission-recommendation-next-38 and did not import downstream ready nodes."
+}

@@ -10,23 +10,23 @@ because ready nodes remain.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 37
-- Ready nodes: 3
+- Completed nodes: 38
+- Ready nodes: 2
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 451
+- Elapsed minutes: 465
 - Minimum minutes met: true
 - Lease health status: `minimum_met_continue_if_fast`
 - Checkpoint freshness status: `fresh_checkpoint_required_after_each_node_or_timed_interval`
 - Stale route decision status: `fresh_atlas_supervises_foundry_owns_one_active_node`
 - Early-return risk status: `blocked_final_response_ready_nodes_remain`
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 37
+- Checkpoint count: 38
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-38`
+- Exact next action: emit Foundry import for `mission-recommendation-next-39`
   and execute exactly one active node.
 - Exact next action readback: `continuation_required`, bound to
-  `mission-recommendation-next-38`, `blocked_ready_nodes_remain`, and
+  `mission-recommendation-next-39`, `blocked_ready_nodes_remain`, and
   `final_response_allowed=false`.
 - Command timeline placeholders: `checkpoint`, `exact_next_action`, and
   `return_gate` are pending Command timeline slots required before final
@@ -59,6 +59,10 @@ because ready nodes remain.
   rejects affirmative unsafe wording in generated continuation prompts, includes
   a negative unsafe prompt fixture, and scans Mission recommendation, Blueprint
   import, and direct Foundry import continuation prompts.
+- 40-node recommendation workgraph assertion: production readiness now verifies
+  the generated recommendation workgraph has exactly 40 ready nodes with stable
+  ids, a linear dependency chain, source digest evidence, required gates, safety
+  limits, Atlas planning boundary, and no scheduling/execution/approval flags.
 - Foundry terminal examples: `completed`, `promoted`, `denied`, and `blocked`
   are explicit in the recommendation readback. `promoted` normalizes to
   `completed` only when Promoter and Command agree and RSI remains denied.

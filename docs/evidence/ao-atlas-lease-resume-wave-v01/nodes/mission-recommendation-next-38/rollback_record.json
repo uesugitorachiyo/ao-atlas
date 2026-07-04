@@ -1,0 +1,10 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-38",
+  "rollback_scope": [
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-38"
+  ],
+  "rollback_action": "Revert the node 38 production-readiness assertion and evidence changes without touching earlier completed node evidence.",
+  "summary": "Rollback is limited to the 40-node recommendation workgraph readiness assertion and node-specific evidence bundle."
+}
