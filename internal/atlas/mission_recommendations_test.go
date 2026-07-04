@@ -95,6 +95,10 @@ func TestRecommendationReconciliationSchemaRequiresStaleRouteDecisionStatus(t *t
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-reconciliation-packet.schema.json"), "stale_route_decision_status")
 }
 
+func TestRecommendationReadbackSchemaRequiresFoundryTerminalExamples(t *testing.T) {
+	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "foundry_terminal_status_examples")
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -430,6 +434,26 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 		readback.PromoterNoPromotionStatus == "" ||
 		readback.CommandTimelineStatus == "" {
 		t.Fatalf("readback missing terminal-state, promoter, or command summaries: %#v", readback)
+	}
+	terminalExamples, ok := rawReadback["foundry_terminal_status_examples"].([]any)
+	if !ok || len(terminalExamples) != 4 {
+		t.Fatalf("readback missing structured Foundry terminal examples: %#v", rawReadback["foundry_terminal_status_examples"])
+	}
+	terminalByStatus := map[string]map[string]any{}
+	for _, item := range terminalExamples {
+		example, ok := item.(map[string]any)
+		if !ok {
+			t.Fatalf("bad terminal example: %#v", item)
+		}
+		status, _ := example["source_status"].(string)
+		terminalByStatus[status] = example
+	}
+	if terminalByStatus["promoted"]["normalized_status"] != "completed" ||
+		terminalByStatus["promoted"]["can_close_mission"] != true ||
+		terminalByStatus["promoted"]["required_readback"] != "Promoter and Command agree promotion is terminal, RSI remains denied, and no ready nodes remain." ||
+		terminalByStatus["denied"]["can_close_mission"] != true ||
+		terminalByStatus["blocked"]["can_close_mission"] != false {
+		t.Fatalf("structured terminal examples do not describe promoted/denied/blocked closure: %#v", terminalByStatus)
 	}
 	if len(readback.NodeEvidence) != 40 || readback.NodeEvidence[0].NodeGate != "recorded" || readback.NodeEvidence[0].RollbackRecord != "recorded" {
 		t.Fatalf("readback missing per-node evidence: %#v", readback.NodeEvidence[:1])

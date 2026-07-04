@@ -1,0 +1,19 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-25",
+  "examples_field": "foundry_terminal_status_examples",
+  "required_statuses": [
+    "completed",
+    "promoted",
+    "denied",
+    "blocked"
+  ],
+  "promoted_normalized_status": "completed",
+  "promoted_can_close_mission": true,
+  "blocked_can_close_mission": false,
+  "completed_nodes_after": 25,
+  "ready_nodes_after": 15,
+  "checkpoint_count_after": 25,
+  "exact_next_action_after": "Emit Foundry import for mission-recommendation-next-26 and execute exactly one active node.",
+  "summary": "Node 25 makes promoted Foundry terminal states explicit in Atlas readbacks without claiming authority advancement or RSI."
+}

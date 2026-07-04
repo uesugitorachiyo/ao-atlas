@@ -1,0 +1,12 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-25",
+  "rollback": [
+    "Revert foundry_terminal_status_examples fields and validation in internal/atlas.",
+    "Revert recommendation-readback schema additions for structured terminal examples.",
+    "Revert production-readiness jq checks for promoted terminal examples.",
+    "Revert production-readiness pruning of the standard local ./atlas build binary if a broader scan policy replaces it.",
+    "Remove node 25 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-25.",
+    "Regenerate root readbacks from node 24 workgraph if this node is reverted before merge."
+  ]
+}
