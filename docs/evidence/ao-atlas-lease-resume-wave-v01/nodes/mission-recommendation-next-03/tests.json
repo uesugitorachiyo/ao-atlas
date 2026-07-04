@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-03",
+  "red_phase": "Focused package test failed before implementation because AtlasRecommendationReconciliationPacket and ValidateAtlasRecommendationReconciliationPacket were undefined.",
+  "commands": [
+    "go test ./internal/atlas -run TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt -count=1",
+    "go test ./internal/atlas -run 'TestMissionRecommendations(ImportPersistsLeaseStartAndResumeUsesIt|ReadbackFinalGateTransitions|DetectStaleClosureArtifacts|ProductionReadinessExercisesMissionRecommendationsImport)' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ]
+}

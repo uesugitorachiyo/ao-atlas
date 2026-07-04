@@ -640,6 +640,7 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 	outCommandReadbackPath := fs.String("out-command-readback", "", "compact Command readback output path")
 	outPromoterReadbackPath := fs.String("out-promoter-readback", "", "Promoter no-promotion readback output path")
 	outFoundryRollupPath := fs.String("out-foundry-rollup", "", "Foundry run-link rollup output path")
+	outReconciliationPacketPath := fs.String("out-reconciliation-packet", "", "Atlas recommendation reconciliation packet output path")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -653,7 +654,7 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 			return fmt.Errorf("%s is required", name)
 		}
 	}
-	for _, out := range []string{*outReadbackPath, *outExecutionReadbackPath, *outCommandReadbackPath, *outPromoterReadbackPath, *outFoundryRollupPath} {
+	for _, out := range []string{*outReadbackPath, *outExecutionReadbackPath, *outCommandReadbackPath, *outPromoterReadbackPath, *outFoundryRollupPath, *outReconciliationPacketPath} {
 		if strings.TrimSpace(out) == "" {
 			continue
 		}
@@ -717,7 +718,16 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 			return err
 		}
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nstarted_at=%s\ncompleted_at=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncommand_readback=%s\npromoter_readback=%s\nfoundry_rollup=%s\n",
+	reconciliation := BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, reconciliation); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outReconciliationPacketPath) != "" {
+		if err := WriteJSON(*outReconciliationPacketPath, reconciliation); err != nil {
+			return err
+		}
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nstarted_at=%s\ncompleted_at=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncommand_readback=%s\npromoter_readback=%s\nfoundry_rollup=%s\nreconciliation_packet=%s\n",
 		readback.Status,
 		readback.MissionID,
 		readback.StartedAt,
@@ -734,6 +744,7 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 		filepath.ToSlash(*outCommandReadbackPath),
 		filepath.ToSlash(*outPromoterReadbackPath),
 		filepath.ToSlash(*outFoundryRollupPath),
+		filepath.ToSlash(*outReconciliationPacketPath),
 	)
 	return nil
 }

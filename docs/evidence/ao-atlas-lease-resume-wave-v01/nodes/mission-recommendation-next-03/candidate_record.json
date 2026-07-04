@@ -1,0 +1,6 @@
+{
+  "status": "selected",
+  "node_id": "mission-recommendation-next-03",
+  "task": "Bind Mission final rollup return-gate fields into Atlas reconciliation packets.",
+  "candidate_reason": "Ready node from the active Atlas recommendation workgraph; improves cross-artifact stale-rollup detection."
+}

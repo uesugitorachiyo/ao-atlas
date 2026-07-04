@@ -27,6 +27,7 @@ v0.1 contract names:
 - `ao.atlas.recommendation-command-readback.v0.1`
 - `ao.atlas.recommendation-promoter-readback.v0.1`
 - `ao.atlas.recommendation-foundry-rollup.v0.1`
+- `ao.atlas.recommendation-reconciliation-packet.v0.1`
 
 All contracts are JSON. Validation requires explicit `contract_version` values,
 stable identifiers, non-empty required fields, and public-safe paths.
@@ -97,6 +98,12 @@ recommendation readback for Command, Promoter, and Foundry surfaces. They are
 used as stale-artifact detectors: Command final-response status and Foundry
 rollup completion must agree with the recommendation readback, and Promoter must
 not claim mutation authority or RSI promotion for recommendation waves.
+
+`ao.atlas.recommendation-reconciliation-packet.v0.1` compares the authoritative
+recommendation readback, Command readback, Promoter readback, and Foundry
+rollup. It carries the same `return_gate_status`, `checkpoint_count`, final
+response gate, exact next action, Promoter no-promotion state, Foundry lease
+state, and an `artifacts_agree` result for stale-rollup detection.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,

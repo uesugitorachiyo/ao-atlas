@@ -346,6 +346,8 @@ type AtlasRecommendationCommandReadback struct {
 	MinMinutesMet          bool   `json:"min_minutes_met"`
 	LeaseTimeStatus        string `json:"lease_time_status"`
 	NodeCompletionStatus   string `json:"node_completion_status"`
+	ReturnGateStatus       string `json:"return_gate_status,omitempty"`
+	CheckpointCount        int    `json:"checkpoint_count"`
 	FinalResponseAllowed   bool   `json:"final_response_allowed"`
 	FinalResponseReason    string `json:"final_response_reason"`
 	ExactNextAction        string `json:"exact_next_action"`
@@ -385,12 +387,47 @@ type AtlasRecommendationFoundryRollup struct {
 	TotalNodes             int    `json:"total_nodes"`
 	NodeCompletionStatus   string `json:"node_completion_status"`
 	LeaseCompletionStatus  string `json:"lease_completion_status"`
+	ReturnGateStatus       string `json:"return_gate_status,omitempty"`
+	CheckpointCount        int    `json:"checkpoint_count"`
 	FinalResponseAllowed   bool   `json:"final_response_allowed"`
 	ExactNextAction        string `json:"exact_next_action"`
 	SchedulesWork          bool   `json:"schedules_work"`
 	ExecutesWork           bool   `json:"executes_work"`
 	ApprovesWork           bool   `json:"approves_work"`
 	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+}
+
+type AtlasRecommendationReconciliationPacket struct {
+	Schema                       string `json:"schema"`
+	Status                       string `json:"status"`
+	MissionID                    string `json:"mission_id"`
+	EvidenceRoot                 string `json:"evidence_root,omitempty"`
+	CompletedNodes               int    `json:"completed_nodes"`
+	ReadyNodes                   int    `json:"ready_nodes"`
+	BlockedNodes                 int    `json:"blocked_nodes"`
+	FailedNodes                  int    `json:"failed_nodes"`
+	TotalNodes                   int    `json:"total_nodes"`
+	CheckpointCount              int    `json:"checkpoint_count"`
+	ReturnGateStatus             string `json:"return_gate_status"`
+	LeaseTimeStatus              string `json:"lease_time_status"`
+	FinalResponseAllowed         bool   `json:"final_response_allowed"`
+	FinalResponseReason          string `json:"final_response_reason"`
+	ExactNextAction              string `json:"exact_next_action"`
+	CommandReturnGateStatus      string `json:"command_return_gate_status"`
+	CommandFinalResponseAllowed  bool   `json:"command_final_response_allowed"`
+	PromoterStatus               string `json:"promoter_status"`
+	PromotionClaimed             bool   `json:"promotion_claimed"`
+	RSIRemainsDenied             bool   `json:"rsi_remains_denied"`
+	FoundryStatus                string `json:"foundry_status"`
+	FoundryReturnGateStatus      string `json:"foundry_return_gate_status"`
+	FoundryNodeCompletionStatus  string `json:"foundry_node_completion_status"`
+	FoundryLeaseCompletionStatus string `json:"foundry_lease_completion_status"`
+	FoundryFinalResponseAllowed  bool   `json:"foundry_final_response_allowed"`
+	ArtifactsAgree               bool   `json:"artifacts_agree"`
+	SchedulesWork                bool   `json:"schedules_work"`
+	ExecutesWork                 bool   `json:"executes_work"`
+	ApprovesWork                 bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance       bool   `json:"claims_authority_advance"`
 }
 
 type AOMissionSourceArtifact struct {

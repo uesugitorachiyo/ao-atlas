@@ -1089,6 +1089,8 @@ func BuildAtlasRecommendationCommandReadback(readback AtlasRecommendationReadbac
 		MinMinutesMet:          readback.MinMinutesMet,
 		LeaseTimeStatus:        readback.LeaseTimeStatus,
 		NodeCompletionStatus:   nodeStatus,
+		ReturnGateStatus:       readback.ReturnGateStatus,
+		CheckpointCount:        readback.CheckpointCount,
 		FinalResponseAllowed:   readback.FinalResponseAllowed,
 		FinalResponseReason:    readback.FinalResponseReason,
 		ExactNextAction:        readback.ExactNextAction,
@@ -1149,6 +1151,8 @@ func BuildAtlasRecommendationFoundryRollup(readback AtlasRecommendationReadback)
 		TotalNodes:             readback.TotalNodes,
 		NodeCompletionStatus:   nodeStatus,
 		LeaseCompletionStatus:  readback.LeaseTimeStatus,
+		ReturnGateStatus:       readback.ReturnGateStatus,
+		CheckpointCount:        readback.CheckpointCount,
 		FinalResponseAllowed:   readback.FinalResponseAllowed,
 		ExactNextAction:        readback.ExactNextAction,
 		SchedulesWork:          false,
@@ -1190,6 +1194,18 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	if foundry.FinalResponseAllowed != readback.FinalResponseAllowed {
 		errs = append(errs, "foundry rollup final_response_allowed disagrees")
 	}
+	if strings.TrimSpace(readback.ReturnGateStatus) != "" && command.ReturnGateStatus != readback.ReturnGateStatus {
+		errs = append(errs, "command readback return_gate_status disagrees")
+	}
+	if strings.TrimSpace(readback.ReturnGateStatus) != "" && foundry.ReturnGateStatus != readback.ReturnGateStatus {
+		errs = append(errs, "foundry rollup return_gate_status disagrees")
+	}
+	if strings.TrimSpace(readback.ReturnGateStatus) != "" && command.CheckpointCount != readback.CheckpointCount {
+		errs = append(errs, "command readback checkpoint_count disagrees")
+	}
+	if strings.TrimSpace(readback.ReturnGateStatus) != "" && foundry.CheckpointCount != readback.CheckpointCount {
+		errs = append(errs, "foundry rollup checkpoint_count disagrees")
+	}
 	if foundry.Status == "completed" && !readback.FinalResponseAllowed {
 		errs = append(errs, "foundry rollup completed while recommendation final response is denied")
 	}
@@ -1207,6 +1223,103 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	}
 	if foundry.SchedulesWork || foundry.ExecutesWork || foundry.ApprovesWork || foundry.ClaimsAuthorityAdvance {
 		errs = append(errs, "foundry rollup must not schedule, execute, approve, or claim authority advance")
+	}
+	return joinErrors(errs)
+}
+
+func BuildAtlasRecommendationReconciliationPacket(readback AtlasRecommendationReadback, command AtlasRecommendationCommandReadback, promoter AtlasRecommendationPromoterReadback, foundry AtlasRecommendationFoundryRollup) AtlasRecommendationReconciliationPacket {
+	artifactsAgree := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry) == nil
+	status := "continuation_required"
+	if !artifactsAgree {
+		status = "blocked_stale_artifact"
+	} else if readback.FinalResponseAllowed {
+		status = "ready"
+	}
+	return AtlasRecommendationReconciliationPacket{
+		Schema:                       "ao.atlas.recommendation-reconciliation-packet.v0.1",
+		Status:                       status,
+		MissionID:                    readback.MissionID,
+		EvidenceRoot:                 readback.EvidenceRoot,
+		CompletedNodes:               readback.CompletedNodes,
+		ReadyNodes:                   readback.ReadyNodes,
+		BlockedNodes:                 readback.BlockedNodes,
+		FailedNodes:                  readback.FailedNodes,
+		TotalNodes:                   readback.TotalNodes,
+		CheckpointCount:              readback.CheckpointCount,
+		ReturnGateStatus:             readback.ReturnGateStatus,
+		LeaseTimeStatus:              readback.LeaseTimeStatus,
+		FinalResponseAllowed:         readback.FinalResponseAllowed,
+		FinalResponseReason:          readback.FinalResponseReason,
+		ExactNextAction:              readback.ExactNextAction,
+		CommandReturnGateStatus:      command.ReturnGateStatus,
+		CommandFinalResponseAllowed:  command.FinalResponseAllowed,
+		PromoterStatus:               promoter.Status,
+		PromotionClaimed:             promoter.PromotionClaimed,
+		RSIRemainsDenied:             promoter.RSIRemainsDenied,
+		FoundryStatus:                foundry.Status,
+		FoundryReturnGateStatus:      foundry.ReturnGateStatus,
+		FoundryNodeCompletionStatus:  foundry.NodeCompletionStatus,
+		FoundryLeaseCompletionStatus: foundry.LeaseCompletionStatus,
+		FoundryFinalResponseAllowed:  foundry.FinalResponseAllowed,
+		ArtifactsAgree:               artifactsAgree,
+		SchedulesWork:                false,
+		ExecutesWork:                 false,
+		ApprovesWork:                 false,
+		ClaimsAuthorityAdvance:       false,
+	}
+}
+
+func ValidateAtlasRecommendationReconciliationPacket(readback AtlasRecommendationReadback, command AtlasRecommendationCommandReadback, promoter AtlasRecommendationPromoterReadback, foundry AtlasRecommendationFoundryRollup, packet AtlasRecommendationReconciliationPacket) error {
+	var errs []string
+	if packet.Schema != "ao.atlas.recommendation-reconciliation-packet.v0.1" {
+		errs = append(errs, "schema must be ao.atlas.recommendation-reconciliation-packet.v0.1")
+	}
+	if packet.MissionID != readback.MissionID {
+		errs = append(errs, "reconciliation mission_id disagrees")
+	}
+	if packet.CompletedNodes != readback.CompletedNodes || packet.ReadyNodes != readback.ReadyNodes || packet.TotalNodes != readback.TotalNodes {
+		errs = append(errs, "reconciliation node counts disagree")
+	}
+	if packet.CheckpointCount != readback.CheckpointCount {
+		errs = append(errs, "reconciliation checkpoint_count disagrees")
+	}
+	if packet.ReturnGateStatus != readback.ReturnGateStatus {
+		errs = append(errs, "reconciliation return_gate_status disagrees")
+	}
+	if packet.LeaseTimeStatus != readback.LeaseTimeStatus {
+		errs = append(errs, "reconciliation lease_time_status disagrees")
+	}
+	if packet.FinalResponseAllowed != readback.FinalResponseAllowed {
+		errs = append(errs, "reconciliation final_response_allowed disagrees")
+	}
+	if packet.ExactNextAction != readback.ExactNextAction {
+		errs = append(errs, "reconciliation exact_next_action disagrees")
+	}
+	if packet.CommandReturnGateStatus != command.ReturnGateStatus || packet.CommandFinalResponseAllowed != command.FinalResponseAllowed {
+		errs = append(errs, "reconciliation command fields disagree")
+	}
+	if packet.PromoterStatus != promoter.Status || packet.PromotionClaimed != promoter.PromotionClaimed || packet.RSIRemainsDenied != promoter.RSIRemainsDenied {
+		errs = append(errs, "reconciliation promoter fields disagree")
+	}
+	if packet.FoundryStatus != foundry.Status ||
+		packet.FoundryReturnGateStatus != foundry.ReturnGateStatus ||
+		packet.FoundryNodeCompletionStatus != foundry.NodeCompletionStatus ||
+		packet.FoundryLeaseCompletionStatus != foundry.LeaseCompletionStatus ||
+		packet.FoundryFinalResponseAllowed != foundry.FinalResponseAllowed {
+		errs = append(errs, "reconciliation foundry fields disagree")
+	}
+	closureErr := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry)
+	if closureErr == nil && !packet.ArtifactsAgree {
+		errs = append(errs, "reconciliation artifacts_agree must be true when closure artifacts agree")
+	}
+	if closureErr != nil && packet.ArtifactsAgree {
+		errs = append(errs, "reconciliation artifacts_agree must be false when closure artifacts disagree")
+	}
+	if packet.Status == "ready" && !packet.FinalResponseAllowed {
+		errs = append(errs, "reconciliation ready status requires final_response_allowed")
+	}
+	if packet.SchedulesWork || packet.ExecutesWork || packet.ApprovesWork || packet.ClaimsAuthorityAdvance {
+		errs = append(errs, "reconciliation packet must not schedule, execute, approve, or claim authority advance")
 	}
 	return joinErrors(errs)
 }

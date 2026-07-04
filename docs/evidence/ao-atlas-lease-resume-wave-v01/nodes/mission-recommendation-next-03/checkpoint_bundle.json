@@ -1,0 +1,7 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-03",
+  "lease_start": "docs/evidence/ao-atlas-lease-resume-wave-v01/lease-start.json",
+  "input_workgraph": "docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-02/workgraph-after.json",
+  "checkpoint_policy": "after_each_node_or_timed_interval"
+}

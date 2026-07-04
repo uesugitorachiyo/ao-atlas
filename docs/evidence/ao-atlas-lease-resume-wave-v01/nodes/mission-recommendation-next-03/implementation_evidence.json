@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-03",
+  "summary": "Added recommendation reconciliation packets that compare Atlas recommendation readback, Command readback, Promoter no-promotion readback, and Foundry rollup return-gate fields; resume can now write the packet and production readiness validates it."
+}

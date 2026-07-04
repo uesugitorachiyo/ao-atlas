@@ -1,0 +1,7 @@
+{
+  "status": "no_promotion",
+  "node_id": "mission-recommendation-next-03",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true,
+  "reason": "Reconciliation packet support only; no mutation authority promotion is claimed."
+}
