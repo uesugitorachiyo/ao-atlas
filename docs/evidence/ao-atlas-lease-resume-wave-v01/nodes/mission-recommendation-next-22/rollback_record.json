@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-22",
+  "rollback": [
+    "Revert checkpoint_freshness_status fields added to derived Atlas recommendation readback structs.",
+    "Revert checkpoint_freshness_status propagation and validator checks in internal/atlas/mission_recommendations.go.",
+    "Revert recommendation schema and production-readiness checkpoint-freshness assertions.",
+    "Remove node 22 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-22.",
+    "Regenerate root readbacks from node 21 workgraph if this node is reverted before merge."
+  ]
+}

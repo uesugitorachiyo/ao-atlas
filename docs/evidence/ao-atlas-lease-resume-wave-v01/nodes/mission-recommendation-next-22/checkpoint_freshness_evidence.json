@@ -1,0 +1,24 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-22",
+  "root_readback_before": "recommendation-readback.json",
+  "checkpoint_freshness_status_before": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+  "root_readback_after": "recommendation-readback.json",
+  "completed_nodes_after": 22,
+  "ready_nodes_after": 18,
+  "elapsed_minutes_after": 180,
+  "checkpoint_count_after": 22,
+  "checkpoint_freshness_status_after": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+  "exact_next_action_after": "Emit Foundry import for mission-recommendation-next-23 and execute exactly one active node.",
+  "derived_artifacts_bound": [
+    "execution-readback",
+    "generated-workgraph-readback",
+    "foundry-run-link-readiness-summary",
+    "command-readback",
+    "command-timeline-binding",
+    "promoter-readback",
+    "foundry-rollup",
+    "reconciliation-packet"
+  ],
+  "summary": "Node 22 binds the root recommendation checkpoint freshness status into every derived long-run evidence/readback surface that participates in continuation, closure, or stale-route reconciliation."
+}

@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-22",
+  "summary": "Node 22 checkpoint records derived checkpoint-freshness readback binding and preserves continuation to node 23 because ready nodes remain."
+}

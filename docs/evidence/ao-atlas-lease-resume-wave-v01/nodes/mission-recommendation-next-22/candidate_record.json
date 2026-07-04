@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-22",
+  "candidate": "atlas-long-run-derived-readback-checkpoint-freshness",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Atlas recommendation readbacks carried checkpoint_freshness_status at the root readback and checkpoint artifact, but derived execution, Command, Promoter, Foundry, and reconciliation artifacts could omit or stale that status."
+}
