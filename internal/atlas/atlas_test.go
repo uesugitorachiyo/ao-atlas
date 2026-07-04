@@ -967,6 +967,7 @@ func TestMissionImportBindsRecoveryAndCompactionProvenance(t *testing.T) {
 	manifest := filepath.Join(dir, "artifact-manifest.json")
 	recovery := filepath.Join(dir, "scheduler-recovery-readback.json")
 	compaction := filepath.Join(dir, "ledger-compaction-readback.json")
+	timelineCompaction := filepath.Join(dir, "timeline-compaction-readback.json")
 	outPath := filepath.Join(dir, "ao-mission-import.json")
 	if err := WriteJSON(record, map[string]any{
 		"schema":        "ao.mission.record.v0.1",
@@ -1023,6 +1024,22 @@ func TestMissionImportBindsRecoveryAndCompactionProvenance(t *testing.T) {
 	}); err != nil {
 		t.Fatal(err)
 	}
+	if err := WriteJSON(timelineCompaction, map[string]any{
+		"schema":               "ao.mission.timeline-compaction-readback.v0.1",
+		"mission_id":           "mission-demo",
+		"route_history_before": 12,
+		"route_history_after":  3,
+		"steps_before":         10,
+		"steps_after":          3,
+		"timeline_digest":      "sha256:4d6545f49e29858b51975fde6721907269c081884bc5f8c30ab8e4c8b8322945",
+		"safe_to_execute":      false,
+		"schedules_work":       false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
 	var out bytes.Buffer
 	code := Run([]string{
 		"mission", "import",
@@ -1031,6 +1048,7 @@ func TestMissionImportBindsRecoveryAndCompactionProvenance(t *testing.T) {
 		"--artifact-manifest", manifest,
 		"--scheduler-recovery", recovery,
 		"--ledger-compaction", compaction,
+		"--timeline-compaction", timelineCompaction,
 		"--out", outPath,
 	}, &out, &out)
 	if code != 0 {
@@ -1040,11 +1058,11 @@ func TestMissionImportBindsRecoveryAndCompactionProvenance(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(importRecord.SourceArtifacts) != 5 {
-		t.Fatalf("expected five source artifacts, got %#v", importRecord.SourceArtifacts)
+	if len(importRecord.SourceArtifacts) != 6 {
+		t.Fatalf("expected six source artifacts, got %#v", importRecord.SourceArtifacts)
 	}
-	if importRecord.SourceArtifacts[3].Name != "scheduler_recovery" || importRecord.SourceArtifacts[4].Name != "ledger_compaction" {
-		t.Fatalf("missing recovery/compaction provenance: %#v", importRecord.SourceArtifacts)
+	if importRecord.SourceArtifacts[3].Name != "scheduler_recovery" || importRecord.SourceArtifacts[4].Name != "ledger_compaction" || importRecord.SourceArtifacts[5].Name != "timeline_compaction" {
+		t.Fatalf("missing recovery/compaction/timeline provenance: %#v", importRecord.SourceArtifacts)
 	}
 }
 
@@ -1342,6 +1360,11 @@ func TestMissionImportWorkgraphMetadataBindsImportAndWorkgraph(t *testing.T) {
 	}
 	if metadata.MissionProvenance["route_history"] != 1 || metadata.MissionProvenance["scheduler_recovery"] != 1 || metadata.MissionProvenance["ledger_compaction"] != 1 {
 		t.Fatalf("missing mission provenance summary: %#v", metadata.MissionProvenance)
+	}
+	for _, want := range []string{"gateway_readiness_rollup", "ledger_compaction", "route_history", "scheduler_recovery", "timeline_compaction"} {
+		if !containsString(metadata.ProvenanceNodes, want) {
+			t.Fatalf("metadata missing provenance node %q: %#v", want, metadata.ProvenanceNodes)
+		}
 	}
 	if metadata.PrimaryMissionProvenance != "artifact_manifest" {
 		t.Fatalf("metadata should pick deterministic primary provenance, got %q from %#v", metadata.PrimaryMissionProvenance, metadata.MissionProvenance)

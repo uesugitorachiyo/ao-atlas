@@ -79,6 +79,7 @@ type AOMissionWorkgraphMetadata struct {
 	CurrentRoute             string            `json:"current_route"`
 	NodeCounts               map[string]int    `json:"node_counts"`
 	MissionProvenance        map[string]int    `json:"mission_provenance"`
+	ProvenanceNodes          []string          `json:"provenance_nodes,omitempty"`
 	PrimaryMissionProvenance string            `json:"primary_mission_provenance"`
 	ProvenanceDiagnostics    string            `json:"provenance_diagnostics"`
 	SourceArtifacts          map[string]string `json:"source_artifacts"`

@@ -33,6 +33,16 @@
       "name": "ledger_compaction",
       "path": "examples/valid/ao-mission/ledger-compaction-readback.json",
       "sha256": "sha256:495adc6524853437e03ca373b9e330694bd9315fbd36ad74b631c588629d93bd"
+    },
+    {
+      "name": "timeline_compaction",
+      "path": "examples/valid/ao-mission/timeline-compaction-readback.json",
+      "sha256": "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+    },
+    {
+      "name": "gateway_readiness_rollup",
+      "path": "examples/valid/ao-mission/gateway-readiness-rollup.json",
+      "sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
     }
   ],
   "next_action": "compile AO Mission context into Atlas workgraph before Foundry import",

@@ -25,6 +25,10 @@ func BuildAOMissionImportWithMissionArchive(recordPath, commandStatusPath, artif
 }
 
 func BuildAOMissionImportWithGatewayReadiness(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath, gatewayReadinessRollupPath string) (AOMissionImport, error) {
+	return BuildAOMissionImportWithTimelineCompaction(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, "", missionArchivePath, gatewayReadinessRollupPath)
+}
+
+func BuildAOMissionImportWithTimelineCompaction(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, timelineCompactionPath, missionArchivePath, gatewayReadinessRollupPath string) (AOMissionImport, error) {
 	var record map[string]any
 	if err := readJSONIfPossible(recordPath, &record); err != nil {
 		return AOMissionImport{}, err
@@ -75,6 +79,11 @@ func BuildAOMissionImportWithGatewayReadiness(recordPath, commandStatusPath, art
 			return AOMissionImport{}, err
 		}
 	}
+	if strings.TrimSpace(timelineCompactionPath) != "" {
+		if err := validateAOMissionReadback(timelineCompactionPath, missionID, "ao.mission.timeline-compaction-readback.v0.1", "timeline compaction"); err != nil {
+			return AOMissionImport{}, err
+		}
+	}
 	if strings.TrimSpace(missionArchivePath) != "" {
 		if err := validateAOMissionArchive(missionArchivePath, missionID); err != nil {
 			return AOMissionImport{}, err
@@ -85,7 +94,7 @@ func BuildAOMissionImportWithGatewayReadiness(recordPath, commandStatusPath, art
 			return AOMissionImport{}, err
 		}
 	}
-	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath, gatewayReadinessRollupPath)
+	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, timelineCompactionPath, missionArchivePath, gatewayReadinessRollupPath)
 	if err != nil {
 		return AOMissionImport{}, err
 	}
@@ -140,6 +149,7 @@ func BuildAOMissionWorkgraphMetadata(importPath, workgraphPath string) (AOMissio
 		CurrentRoute:             importRecord.CurrentRoute,
 		NodeCounts:               aoMissionWorkgraphNodeCounts(workgraph),
 		MissionProvenance:        provenance,
+		ProvenanceNodes:          sortedMissionProvenanceKeys(provenance),
 		PrimaryMissionProvenance: primaryMissionProvenance(provenance),
 		ProvenanceDiagnostics:    missionProvenanceDiagnostics(provenance),
 		SourceArtifacts: map[string]string{
@@ -235,7 +245,7 @@ func sortedMissionProvenanceKeys(counts map[string]int) []string {
 	return keys
 }
 
-func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath, gatewayReadinessRollupPath string) ([]AOMissionSourceArtifact, error) {
+func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, timelineCompactionPath, missionArchivePath, gatewayReadinessRollupPath string) ([]AOMissionSourceArtifact, error) {
 	inputs := []struct {
 		name string
 		path string
@@ -261,6 +271,12 @@ func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPat
 			name string
 			path string
 		}{name: "ledger_compaction", path: ledgerCompactionPath})
+	}
+	if strings.TrimSpace(timelineCompactionPath) != "" {
+		inputs = append(inputs, struct {
+			name string
+			path string
+		}{name: "timeline_compaction", path: timelineCompactionPath})
 	}
 	if strings.TrimSpace(missionArchivePath) != "" {
 		inputs = append(inputs, struct {

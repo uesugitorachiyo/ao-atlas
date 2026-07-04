@@ -369,6 +369,7 @@ func runMissionImport(args []string, stdout io.Writer) error {
 	routeHistoryPath := fs.String("route-history", "", "optional AO Mission route history path")
 	schedulerRecoveryPath := fs.String("scheduler-recovery", "", "optional AO Mission scheduler recovery readback path")
 	ledgerCompactionPath := fs.String("ledger-compaction", "", "optional AO Mission ledger compaction readback path")
+	timelineCompactionPath := fs.String("timeline-compaction", "", "optional AO Mission timeline compaction readback path")
 	missionArchivePath := fs.String("mission-archive", "", "optional AO Mission archive path")
 	gatewayReadinessRollupPath := fs.String("gateway-readiness-rollup", "", "optional AO Mission gateway readiness rollup path")
 	outPath := fs.String("out", "", "output path")
@@ -383,13 +384,13 @@ func runMissionImport(args []string, stdout io.Writer) error {
 		return fmt.Errorf("--out or --json is required")
 	}
 	if *outPath != "" {
-		for _, input := range []string{*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath, *schedulerRecoveryPath, *ledgerCompactionPath, *missionArchivePath, *gatewayReadinessRollupPath} {
+		for _, input := range []string{*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath, *schedulerRecoveryPath, *ledgerCompactionPath, *timelineCompactionPath, *missionArchivePath, *gatewayReadinessRollupPath} {
 			if samePath(input, *outPath) {
 				return fmt.Errorf("refusing to overwrite input artifact")
 			}
 		}
 	}
-	importRecord, err := BuildAOMissionImportWithGatewayReadiness(*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath, *schedulerRecoveryPath, *ledgerCompactionPath, *missionArchivePath, *gatewayReadinessRollupPath)
+	importRecord, err := BuildAOMissionImportWithTimelineCompaction(*recordPath, *commandStatusPath, *artifactManifestPath, *routeHistoryPath, *schedulerRecoveryPath, *ledgerCompactionPath, *timelineCompactionPath, *missionArchivePath, *gatewayReadinessRollupPath)
 	if err != nil {
 		return err
 	}
