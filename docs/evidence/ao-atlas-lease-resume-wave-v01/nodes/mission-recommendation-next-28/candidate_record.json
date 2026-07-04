@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-28",
+  "candidate": "atlas-recommendation-exact-next-action-readback",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Recommendation wave evidence carried exact_next_action as a string but did not include a structured readback binding it to the next executable node, return gate, source, and final-response state."
+}

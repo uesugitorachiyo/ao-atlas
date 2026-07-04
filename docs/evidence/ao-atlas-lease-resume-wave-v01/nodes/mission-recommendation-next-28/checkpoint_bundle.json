@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-28",
+  "summary": "Node 28 checkpoint records structured exact-next-action readback and preserves continuation to node 29 because ready nodes remain."
+}
