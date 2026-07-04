@@ -1,0 +1,10 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-37",
+  "rollback_scope": [
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-37"
+  ],
+  "rollback_action": "Revert the node 37 production-readiness scanner and evidence changes without touching earlier completed node evidence.",
+  "summary": "Rollback is limited to the generated continuation prompt safety scan coverage and node-specific evidence bundle."
+}

@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-37",
+  "public_safety_scope": "generated continuation prompt scan coverage",
+  "forbidden_claims": [
+    "affirmative RSI proven wording",
+    "provider-call permission",
+    "credential permission",
+    "direct-main mutation permission",
+    "release/deploy/publish/upload/tag permission",
+    "hidden instruction mutation permission"
+  ],
+  "summary": "The scanner rejects affirmative unsafe wording while allowing explicit prohibition lines; RSI remains denied and no AO authority is widened."
+}

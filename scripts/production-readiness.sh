@@ -57,6 +57,31 @@ reject_generated_recommendation_prompt_public_safety() {
   done
 }
 
+reject_generated_continuation_prompt_public_safety() {
+  local prompt="$1"
+  test -s "$prompt"
+  reject_local_absolute_paths "generated continuation prompt" "$prompt"
+  local forbidden=(
+    "RSI is proven"
+    "RSI proven"
+    "broad RSI is proven"
+    "fully_unsupervised_complex_mutation is proven"
+    "unrestricted self-modification is proven"
+    "provider calls allowed"
+    "credential inspection allowed"
+    "credential use allowed"
+    "direct main mutation allowed"
+    "release deploy publish upload tag allowed"
+    "hidden instruction mutation allowed"
+  )
+  for phrase in "${forbidden[@]}"; do
+    if grep -niF "$phrase" "$prompt" | grep -viE 'do not claim|remains denied|not proven|denied|prohibited|forbidden' >/dev/null; then
+      echo "generated continuation prompt contains unsafe wording '$phrase' in $prompt" >&2
+      return 1
+    fi
+  done
+}
+
 assert_schema_required_fields_present() {
   local schema="$1"
   local artifact="$2"
@@ -89,6 +114,16 @@ for script in scripts/*.sh; do
   bash -n "$script"
 done
 pass "script-syntax"
+
+unsafe_continuation_prompt="$OUT/generated-continuation-prompt-unsafe.md"
+unsafe_continuation_scan="$OUT/generated-continuation-prompt-unsafe.out"
+printf 'provider calls allowed\n' >"$unsafe_continuation_prompt"
+if reject_generated_continuation_prompt_public_safety "$unsafe_continuation_prompt" >"$unsafe_continuation_scan" 2>&1; then
+  echo "unsafe generated continuation prompt was accepted" >&2
+  exit 1
+fi
+grep -q "generated continuation prompt contains unsafe wording" "$unsafe_continuation_scan"
+pass "generated-continuation-prompt-negative-scan"
 
 required_files=(
   README.md
@@ -239,6 +274,7 @@ test -s "$OUT/mission-recommendations-foundry-import/foundry-import.json"
 reject_local_absolute_paths "mission recommendations Foundry continuation" \
   "$OUT/mission-recommendations-foundry-import/foundry-continuation-handoff.json" \
   "$OUT/mission-recommendations-foundry-import/foundry-continuation-prompt.md"
+reject_generated_continuation_prompt_public_safety "$OUT/mission-recommendations-foundry-import/foundry-continuation-prompt.md"
 node_evidence_dir="$OUT/mission-recommendations-node-01-evidence"
 mkdir -p "$node_evidence_dir"
 for key in node_gate candidate_record rollback_record implementation_evidence tests verification sentinel_public_safety promoter_no_promotion command_readback foundry_import checkpoint_bundle; do
@@ -336,6 +372,7 @@ test -s "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation
 reject_local_absolute_paths "Blueprint Foundry continuation" \
   "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-handoff.json" \
   "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
+reject_generated_continuation_prompt_public_safety "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
 grep -q "Move to AO Foundry" "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
 grep -q "Run codex --yolo" "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
 grep -q "Paste this prompt" "$OUT/blueprint-import-low-risk-code/foundry-import/foundry-continuation-prompt.md"
@@ -373,6 +410,7 @@ test -s "$OUT/foundry-import/foundry-continuation-prompt.md"
 reject_local_absolute_paths "Foundry continuation" \
   "$OUT/foundry-import/foundry-continuation-handoff.json" \
   "$OUT/foundry-import/foundry-continuation-prompt.md"
+reject_generated_continuation_prompt_public_safety "$OUT/foundry-import/foundry-continuation-prompt.md"
 grep -q "Move to AO Foundry" "$OUT/foundry-import/foundry-continuation-prompt.md"
 grep -q "Run codex --yolo" "$OUT/foundry-import/foundry-continuation-prompt.md"
 grep -q "Paste this prompt" "$OUT/foundry-import/foundry-continuation-prompt.md"

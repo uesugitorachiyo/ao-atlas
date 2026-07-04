@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-37",
+  "red_test": "scripts/production-readiness.sh failed after adding a negative generated-continuation-prompt unsafe fixture because reject_generated_continuation_prompt_public_safety did not exist yet.",
+  "tests": [
+    "scripts/production-readiness.sh passed after adding the generated continuation prompt safety scanner, negative unsafe prompt fixture, and generated continuation prompt scan calls."
+  ],
+  "summary": "Production readiness now rejects affirmative unsafe wording in generated continuation prompts and scans generated continuation prompt outputs."
+}
