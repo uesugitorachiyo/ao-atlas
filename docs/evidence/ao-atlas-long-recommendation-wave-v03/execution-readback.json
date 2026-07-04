@@ -1,9 +1,9 @@
 {
   "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
-  "status": "completed",
+  "status": "implementation_wave_completed_generated_workgraph_ready",
   "mission_id": "mission-long-wave",
   "evidence_root": "docs/evidence/ao-atlas-long-recommendation-wave-v03",
-  "completed_recommendation_nodes": 40,
+  "completed_recommendation_nodes": 0,
   "total_recommendation_nodes": 40,
   "generated_workgraph": {
     "total_nodes": 40,
@@ -49,5 +49,6 @@
     "broad_rsi_claim": false,
     "rsi_remains_denied": true
   },
-  "exact_next_action": "Run full AO Atlas verification, open PR, wait for CI, merge, sync main, and delete codex branches."
+  "ledger_correction": "The implementation wave added recommendation readback machinery and generated a 40-node workgraph, but it did not execute the generated workgraph nodes. Recommendation node completion must come from recommendation-readback.completed_nodes and per-node run-link evidence.",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node; do not count generated recommendations as completed nodes until recommendation-readback.completed_nodes advances."
 }

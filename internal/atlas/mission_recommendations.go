@@ -656,6 +656,39 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	return joinErrors(errs)
 }
 
+func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationExecutionReadback, readback AtlasRecommendationReadback) error {
+	var errs []string
+	if execution.Schema != "ao.atlas.long-recommendation-wave-execution.v0.3" {
+		errs = append(errs, "schema must be ao.atlas.long-recommendation-wave-execution.v0.3")
+	}
+	requireField(&errs, "status", execution.Status)
+	if execution.MissionID != readback.MissionID {
+		errs = append(errs, "mission_id must match recommendation readback")
+	}
+	if execution.TotalRecommendationNodes != readback.TotalNodes {
+		errs = append(errs, "total_recommendation_nodes must match recommendation readback total_nodes")
+	}
+	if execution.CompletedRecommendationNodes != readback.CompletedNodes {
+		errs = append(errs, "completed_recommendation_nodes must match recommendation readback completed_nodes")
+	}
+	if execution.GeneratedWorkgraph.TotalNodes != readback.TotalNodes {
+		errs = append(errs, "generated_workgraph.total_nodes must match recommendation readback total_nodes")
+	}
+	if execution.GeneratedWorkgraph.ReadyNodes != readback.ReadyNodes {
+		errs = append(errs, "generated_workgraph.ready_nodes must match recommendation readback ready_nodes")
+	}
+	if execution.GeneratedWorkgraph.ExecutableReadyNodes != readback.ExecutableReadyNodes {
+		errs = append(errs, "generated_workgraph.executable_ready_nodes must match recommendation readback executable_ready_nodes")
+	}
+	if execution.GeneratedWorkgraph.FinalResponseAllowed != readback.FinalResponseAllowed {
+		errs = append(errs, "generated_workgraph.final_response_allowed must match recommendation readback final_response_allowed")
+	}
+	if execution.Status == "completed" && !readback.FinalResponseAllowed {
+		errs = append(errs, "status completed requires recommendation readback final_response_allowed")
+	}
+	return joinErrors(errs)
+}
+
 func recommendationNodeEvidence(workgraph Workgraph) []AtlasRecommendationNodeEvidence {
 	evidence := make([]AtlasRecommendationNodeEvidence, 0, len(workgraph.Nodes))
 	for _, node := range workgraph.Nodes {

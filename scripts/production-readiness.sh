@@ -274,6 +274,36 @@ if "$BIN" foundry import --workgraph examples/invalid/workgraph-foundry-import-m
 fi
 pass "invalid-fixtures-rejected"
 
+while IFS= read -r execution_readback; do
+  readback_dir="$(dirname "$execution_readback")"
+  recommendation_readback="$readback_dir/recommendation-readback.json"
+  if [ ! -s "$recommendation_readback" ]; then
+    continue
+  fi
+  if ! jq -e 'has("completed_recommendation_nodes")' "$execution_readback" >/dev/null; then
+    continue
+  fi
+  execution_completed="$(jq -r '.completed_recommendation_nodes' "$execution_readback")"
+  recommendation_completed="$(jq -r '.completed_nodes' "$recommendation_readback")"
+  execution_total="$(jq -r '.total_recommendation_nodes' "$execution_readback")"
+  recommendation_total="$(jq -r '.total_nodes' "$recommendation_readback")"
+  execution_status="$(jq -r '.status' "$execution_readback")"
+  recommendation_final_allowed="$(jq -r '.final_response_allowed' "$recommendation_readback")"
+  if [ "$execution_completed" != "$recommendation_completed" ]; then
+    echo "execution readback $execution_readback claims completed_recommendation_nodes=$execution_completed but recommendation readback has completed_nodes=$recommendation_completed" >&2
+    exit 1
+  fi
+  if [ "$execution_total" != "$recommendation_total" ]; then
+    echo "execution readback $execution_readback total_recommendation_nodes does not match recommendation readback total_nodes" >&2
+    exit 1
+  fi
+  if [ "$execution_status" = "completed" ] && [ "$recommendation_final_allowed" != "true" ]; then
+    echo "execution readback $execution_readback cannot use status=completed while recommendation final_response_allowed is false" >&2
+    exit 1
+  fi
+done < <(find docs/evidence -name execution-readback.json -type f)
+pass "recommendation-ledger-consistency"
+
 scan_file="$OUT/public-safety-files.txt"
 find . \
   -path './.git' -prune -o \
