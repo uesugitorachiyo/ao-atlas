@@ -111,6 +111,10 @@ func TestRecommendationReadbackSchemaRequiresCommandTimelinePlaceholders(t *test
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "command_timeline_placeholders")
 }
 
+func TestRecommendationReadbackSchemaRequiresPromoterNoPromotionPlaceholders(t *testing.T) {
+	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "promoter_no_promotion_placeholders")
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -463,6 +467,24 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 		timelineBySlot["exact_next_action"]["status"] != "pending_command_timeline" ||
 		timelineBySlot["return_gate"]["required_before_final_response"] != true {
 		t.Fatalf("Command timeline placeholders do not bind checkpoint/action/return gate: %#v", timelineBySlot)
+	}
+	promoterPlaceholders, ok := rawReadback["promoter_no_promotion_placeholders"].([]any)
+	if !ok || len(promoterPlaceholders) < 3 {
+		t.Fatalf("readback missing Promoter no-promotion placeholders: %#v", rawReadback["promoter_no_promotion_placeholders"])
+	}
+	promoterBySlot := map[string]map[string]any{}
+	for _, item := range promoterPlaceholders {
+		placeholder, ok := item.(map[string]any)
+		if !ok {
+			t.Fatalf("bad Promoter no-promotion placeholder: %#v", item)
+		}
+		slot, _ := placeholder["slot"].(string)
+		promoterBySlot[slot] = placeholder
+	}
+	if promoterBySlot["promotion_claim"]["source"] != "recommendation_readback" ||
+		promoterBySlot["rsi_boundary"]["status"] != "pending_promoter_no_promotion" ||
+		promoterBySlot["authority_advance"]["required_before_final_response"] != true {
+		t.Fatalf("Promoter no-promotion placeholders do not bind promotion, RSI, and authority boundaries: %#v", promoterBySlot)
 	}
 	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 0 {
 		t.Fatalf("readback missing return gate status or checkpoint count: %#v", readback)
@@ -1402,6 +1424,39 @@ func TestMissionRecommendationsReadbackRejectsMismatchedWaveAndWorkgraph(t *test
 	result.Workgraph.TargetInstance = "other-stack"
 	if _, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{}); err == nil || !strings.Contains(err.Error(), "target_instance") {
 		t.Fatalf("expected target_instance mismatch rejection, got %v", err)
+	}
+}
+
+func TestRecommendationReadbackRejectsMissingPromoterNoPromotionPlaceholders(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	readback.PromoterNoPromotionPlaceholders = nil
+	if err := ValidateAtlasRecommendationReadback(readback); err == nil ||
+		!strings.Contains(err.Error(), "promoter_no_promotion_placeholders must include promotion_claim, rsi_boundary, and authority_advance") {
+		t.Fatalf("expected missing promoter no-promotion placeholders rejection, got %v", err)
+	}
+
+	readback, err = BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readback.PromoterNoPromotionPlaceholders[0].Status = "stale"
+	if err := ValidateAtlasRecommendationReadback(readback); err == nil ||
+		!strings.Contains(err.Error(), "promoter_no_promotion_placeholders.promotion_claim status must be pending_promoter_no_promotion") {
+		t.Fatalf("expected stale promoter no-promotion placeholder rejection, got %v", err)
 	}
 }
 

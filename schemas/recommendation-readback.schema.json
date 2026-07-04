@@ -28,6 +28,7 @@
     "foundry_denied_terminal_examples",
     "promoter_readback_status",
     "promoter_no_promotion_status",
+    "promoter_no_promotion_placeholders",
     "command_readback_status",
     "command_timeline_status",
     "command_timeline_placeholders",
@@ -143,6 +144,28 @@
     },
     "promoter_readback_status": { "type": "string", "minLength": 1 },
     "promoter_no_promotion_status": { "type": "string", "minLength": 1 },
+    "promoter_no_promotion_placeholders": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "slot",
+          "source",
+          "status",
+          "summary",
+          "required_before_final_response"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "slot": { "enum": ["promotion_claim", "rsi_boundary", "authority_advance"] },
+          "source": { "const": "recommendation_readback" },
+          "status": { "const": "pending_promoter_no_promotion" },
+          "summary": { "type": "string", "minLength": 1 },
+          "required_before_final_response": { "const": true }
+        }
+      }
+    },
     "command_readback_status": { "type": "string", "minLength": 1 },
     "command_timeline_status": { "type": "string", "minLength": 1 },
     "command_timeline_placeholders": {

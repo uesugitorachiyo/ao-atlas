@@ -684,23 +684,24 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 			"denied":    "terminal_denial_requires_exact_missing_evidence_readback",
 			"blocked":   "terminal_blocker_requires_repair_or_checkpoint_resume",
 		},
-		FoundryTerminalStatusExamples: foundryTerminalStatusExamples(),
-		FoundryDeniedTerminalExamples: foundryDeniedTerminalExamples(),
-		PromoterReadbackStatus:        promoterReadbackStatus,
-		PromoterNoPromotionStatus:     promoterNoPromotionStatus,
-		CommandReadbackStatus:         commandReadbackStatus,
-		CommandTimelineStatus:         commandTimelineStatus,
-		CommandTimelinePlaceholders:   commandTimelinePlaceholders(),
-		PublicSafetyScanStatus:        wave.PublicSafetyScanStatus,
-		ReturnGateStatus:              returnGateStatus,
-		CheckpointCount:               completed,
-		FinalResponseAllowed:          finalAllowed,
-		FinalResponseDenialGate:       recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
-		FinalResponseReason:           finalReason,
-		ExactNextAction:               exactNextAction,
-		ExactNextActionReadback:       buildExactNextActionReadback(exactNextAction, firstExecutable, returnGateStatus, finalAllowed),
-		NodeEvidence:                  recommendationNodeEvidence(workgraph),
-		FeatureDepthRecommendations:   featureDepthRecommendationReadback(wave.Tasks, 10),
+		FoundryTerminalStatusExamples:   foundryTerminalStatusExamples(),
+		FoundryDeniedTerminalExamples:   foundryDeniedTerminalExamples(),
+		PromoterReadbackStatus:          promoterReadbackStatus,
+		PromoterNoPromotionStatus:       promoterNoPromotionStatus,
+		PromoterNoPromotionPlaceholders: promoterNoPromotionPlaceholders(),
+		CommandReadbackStatus:           commandReadbackStatus,
+		CommandTimelineStatus:           commandTimelineStatus,
+		CommandTimelinePlaceholders:     commandTimelinePlaceholders(),
+		PublicSafetyScanStatus:          wave.PublicSafetyScanStatus,
+		ReturnGateStatus:                returnGateStatus,
+		CheckpointCount:                 completed,
+		FinalResponseAllowed:            finalAllowed,
+		FinalResponseDenialGate:         recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
+		FinalResponseReason:             finalReason,
+		ExactNextAction:                 exactNextAction,
+		ExactNextActionReadback:         buildExactNextActionReadback(exactNextAction, firstExecutable, returnGateStatus, finalAllowed),
+		NodeEvidence:                    recommendationNodeEvidence(workgraph),
+		FeatureDepthRecommendations:     featureDepthRecommendationReadback(wave.Tasks, 10),
 		SafetyBoundaries: map[string]bool{
 			"provider_calls":                    false,
 			"credential_inspection":             false,
@@ -758,6 +759,32 @@ func commandTimelinePlaceholders() []AtlasCommandTimelinePlaceholder {
 			Source:                      "recommendation_readback",
 			Status:                      "pending_command_timeline",
 			Summary:                     "Bind return_gate_status and final_response_allowed into the compact Command timeline.",
+			RequiredBeforeFinalResponse: true,
+		},
+	}
+}
+
+func promoterNoPromotionPlaceholders() []AtlasPromoterNoPromotionPlaceholder {
+	return []AtlasPromoterNoPromotionPlaceholder{
+		{
+			Slot:                        "promotion_claim",
+			Source:                      "recommendation_readback",
+			Status:                      "pending_promoter_no_promotion",
+			Summary:                     "Bind promotion_claimed=false and the no-promotion summary before closure.",
+			RequiredBeforeFinalResponse: true,
+		},
+		{
+			Slot:                        "rsi_boundary",
+			Source:                      "recommendation_readback",
+			Status:                      "pending_promoter_no_promotion",
+			Summary:                     "Bind rsi_remains_denied=true and next_denied_class=RSI before closure.",
+			RequiredBeforeFinalResponse: true,
+		},
+		{
+			Slot:                        "authority_advance",
+			Source:                      "recommendation_readback",
+			Status:                      "pending_promoter_no_promotion",
+			Summary:                     "Bind claims_authority_advance=false plus no scheduling, execution, or approval authority.",
 			RequiredBeforeFinalResponse: true,
 		},
 	}
@@ -1008,6 +1035,9 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	}
 	requireField(&errs, "promoter_readback_status", readback.PromoterReadbackStatus)
 	requireField(&errs, "promoter_no_promotion_status", readback.PromoterNoPromotionStatus)
+	if err := validatePromoterNoPromotionPlaceholders(readback.PromoterNoPromotionPlaceholders); err != nil {
+		errs = append(errs, err.Error())
+	}
 	requireField(&errs, "command_readback_status", readback.CommandReadbackStatus)
 	requireField(&errs, "command_timeline_status", readback.CommandTimelineStatus)
 	if err := validateCommandTimelinePlaceholders(readback.CommandTimelinePlaceholders); err != nil {
@@ -1107,6 +1137,45 @@ func validateExactNextActionReadback(readback AtlasRecommendationReadback) error
 		}
 	} else if action.Status != "continuation_required" {
 		return fmt.Errorf("exact_next_action_readback.status must be continuation_required")
+	}
+	return nil
+}
+
+func validatePromoterNoPromotionPlaceholders(placeholders []AtlasPromoterNoPromotionPlaceholder) error {
+	required := map[string]bool{
+		"promotion_claim":   false,
+		"rsi_boundary":      false,
+		"authority_advance": false,
+	}
+	if len(placeholders) < len(required) {
+		return fmt.Errorf("promoter_no_promotion_placeholders must include promotion_claim, rsi_boundary, and authority_advance")
+	}
+	for _, placeholder := range placeholders {
+		slot := strings.TrimSpace(placeholder.Slot)
+		if _, ok := required[slot]; !ok {
+			return fmt.Errorf("promoter_no_promotion_placeholders has unsupported slot %q", placeholder.Slot)
+		}
+		if required[slot] {
+			return fmt.Errorf("promoter_no_promotion_placeholders duplicate slot %q", slot)
+		}
+		required[slot] = true
+		if placeholder.Source != "recommendation_readback" {
+			return fmt.Errorf("promoter_no_promotion_placeholders.%s source must be recommendation_readback", slot)
+		}
+		if placeholder.Status != "pending_promoter_no_promotion" {
+			return fmt.Errorf("promoter_no_promotion_placeholders.%s status must be pending_promoter_no_promotion", slot)
+		}
+		if strings.TrimSpace(placeholder.Summary) == "" {
+			return fmt.Errorf("promoter_no_promotion_placeholders.%s summary is required", slot)
+		}
+		if !placeholder.RequiredBeforeFinalResponse {
+			return fmt.Errorf("promoter_no_promotion_placeholders.%s must be required before final response", slot)
+		}
+	}
+	for slot, seen := range required {
+		if !seen {
+			return fmt.Errorf("promoter_no_promotion_placeholders missing %s", slot)
+		}
 	}
 	return nil
 }
