@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-08",
+  "red_phase": "Focused production-readiness coverage test failed before implementation because the script did not include reject_generated_recommendation_prompt_public_safety.",
+  "green_phase": "Focused production-readiness coverage test passed after the script scanned generated recommendation prompts and emitted recommendation-prompt-public-safety-scan.",
+  "tests": [
+    "TestProductionReadinessExercisesMissionRecommendationsImport",
+    "scripts/production-readiness.sh recommendation-prompt-public-safety-scan"
+  ]
+}
