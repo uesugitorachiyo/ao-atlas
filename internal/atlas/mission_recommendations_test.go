@@ -565,6 +565,48 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 	}
 }
 
+func TestRecommendationLongRunSupervisorExamplesCoverLeaseFields(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "examples", "valid")
+	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave-long-run-supervisor.json"))
+	if err := ValidateAtlasRecommendationWave(wave); err != nil {
+		t.Fatal(err)
+	}
+	if wave.Supervisor == nil ||
+		wave.MinimumTasks != 30 ||
+		wave.NodeBudget != 40 ||
+		wave.EstimatedMinutes != 120 ||
+		wave.Supervisor.MinNodes != 30 ||
+		wave.Supervisor.MinMinutes != 120 ||
+		wave.Supervisor.MaxMinutes != 180 ||
+		wave.Supervisor.ContinueIfFastTarget != 40 ||
+		wave.Supervisor.ReturnOnlyWhen != "all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker" ||
+		wave.Supervisor.CheckpointPolicy != "after_each_node_or_timed_interval" ||
+		wave.Supervisor.FinalReportContract != "ao.atlas.long-run-final-report.v0.2" {
+		t.Fatalf("long-run wave example missing supervisor lease fields: %#v", wave)
+	}
+	if wave.FinalResponseAllowed || wave.SafeToExecute || wave.SchedulesWork || wave.ExecutesWork || wave.ApprovesWork {
+		t.Fatalf("long-run wave example widened authority: %#v", wave)
+	}
+
+	lease := mustLoadJSON[AtlasRecommendationLeaseStart](t, filepath.Join(root, "recommendation-lease-start-long-run.json"))
+	if err := ValidateAtlasRecommendationLeaseStart(lease); err != nil {
+		t.Fatal(err)
+	}
+	if lease.MinMinutes != 120 ||
+		lease.MaxMinutes != 180 ||
+		lease.ContinueIfFastTarget != 40 ||
+		lease.CheckpointPolicy != "after_each_node_or_timed_interval" ||
+		lease.FinalResponseAllowed ||
+		lease.SchedulesWork ||
+		lease.ExecutesWork ||
+		lease.ApprovesWork ||
+		lease.MutatesRepositories ||
+		lease.CallsProviders ||
+		lease.ClaimsAuthorityAdvance {
+		t.Fatalf("long-run lease example missing lease or safety fields: %#v", lease)
+	}
+}
+
 func TestMissionRecommendationsImportArtifactsAreDigestBound(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")

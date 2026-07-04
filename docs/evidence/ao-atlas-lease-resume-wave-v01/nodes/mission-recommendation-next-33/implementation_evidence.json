@@ -1,0 +1,14 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-33",
+  "summary": "Added stable examples for long-run recommendation wave supervisor fields and lease-start fields, plus tests and production-readiness checks proving the 30-node, 120-180 minute, continue-if-fast lease contract.",
+  "changed_files": [
+    "examples/valid/recommendation-wave-long-run-supervisor.json",
+    "examples/valid/recommendation-lease-start-long-run.json",
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/recommendation-readback.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/final-synthesis.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/README.md"
+  ]
+}

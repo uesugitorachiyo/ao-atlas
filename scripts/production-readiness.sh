@@ -132,6 +132,8 @@ required_files=(
   schemas/recommendation-promoter-readback.schema.json
   schemas/recommendation-foundry-rollup.schema.json
   schemas/recommendation-reconciliation-packet.schema.json
+  examples/valid/recommendation-wave-long-run-supervisor.json
+  examples/valid/recommendation-lease-start-long-run.json
 )
 for file in "${required_files[@]}"; do
   test -s "$file"
@@ -146,6 +148,10 @@ for file in schemas/*.json examples/valid/*.json examples/invalid/*.json; do
   jq -e . "$file" >/dev/null
 done
 pass "json-syntax"
+
+jq -e '.minimum_tasks == 30 and .node_budget == 40 and .estimated_minutes == 120 and .supervisor.min_nodes == 30 and .supervisor.min_minutes == 120 and .supervisor.max_minutes == 180 and .supervisor.continue_if_fast_target == 40 and .supervisor.checkpoint_policy == "after_each_node_or_timed_interval" and .final_response_allowed == false and .safe_to_execute == false and .schedules_work == false and .executes_work == false and .approves_work == false' examples/valid/recommendation-wave-long-run-supervisor.json >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-lease-start.v0.1" and .min_minutes == 120 and .max_minutes == 180 and .continue_if_fast_target == 40 and .checkpoint_policy == "after_each_node_or_timed_interval" and .final_response_allowed == false and .schedules_work == false and .executes_work == false and .approves_work == false and .mutates_repositories == false and .calls_providers == false and .claims_authority_advance == false' examples/valid/recommendation-lease-start-long-run.json >/dev/null
+pass "recommendation-long-run-examples"
 
 "$BIN" instance validate --instance examples/valid/stack-instance.json >/dev/null
 "$BIN" instance doctor --instance examples/valid/stack-instance.json --registry examples/valid/atlas-registry.json --out "$OUT/instance-doctor.json" >/dev/null

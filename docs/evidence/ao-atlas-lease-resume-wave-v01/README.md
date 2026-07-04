@@ -10,23 +10,23 @@ because ready nodes remain.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 32
-- Ready nodes: 8
+- Completed nodes: 33
+- Ready nodes: 7
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 387
+- Elapsed minutes: 400
 - Minimum minutes met: true
 - Lease health status: `minimum_met_continue_if_fast`
 - Checkpoint freshness status: `fresh_checkpoint_required_after_each_node_or_timed_interval`
 - Stale route decision status: `fresh_atlas_supervises_foundry_owns_one_active_node`
 - Early-return risk status: `blocked_final_response_ready_nodes_remain`
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 32
+- Checkpoint count: 33
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-33`
+- Exact next action: emit Foundry import for `mission-recommendation-next-34`
   and execute exactly one active node.
 - Exact next action readback: `continuation_required`, bound to
-  `mission-recommendation-next-33`, `blocked_ready_nodes_remain`, and
+  `mission-recommendation-next-34`, `blocked_ready_nodes_remain`, and
   `final_response_allowed=false`.
 - Command timeline placeholders: `checkpoint`, `exact_next_action`, and
   `return_gate` are pending Command timeline slots required before final
@@ -40,6 +40,9 @@ because ready nodes remain.
 - Final-response allowance tests: completed recommendation workgraphs now
   reject stale allowed-state status, return gate, final reason, and final exact
   next action drift.
+- Long-run lease examples: `examples/valid/recommendation-wave-long-run-supervisor.json`
+  and `examples/valid/recommendation-lease-start-long-run.json` cover the
+  30-node, 120-180 minute, continue-if-fast lease fields.
 - Foundry terminal examples: `completed`, `promoted`, `denied`, and `blocked`
   are explicit in the recommendation readback. `promoted` normalizes to
   `completed` only when Promoter and Command agree and RSI remains denied.

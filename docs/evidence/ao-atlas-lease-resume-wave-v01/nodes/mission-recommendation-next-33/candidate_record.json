@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-33",
+  "candidate": "atlas-recommendation-long-run-lease-schema-examples",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "The schema set had generated long-run lease artifacts but no stable examples/valid fixtures for supervisor min_nodes, min_minutes, max_minutes, continue_if_fast_target, and checkpoint_policy fields."
+}

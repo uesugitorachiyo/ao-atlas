@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-33",
+  "foundry_import": "nodes/mission-recommendation-next-33/foundry-import/foundry-import.json",
+  "foundry_continuation_handoff": "nodes/mission-recommendation-next-33/foundry-import/foundry-continuation-handoff.json",
+  "foundry_continuation_prompt": "nodes/mission-recommendation-next-33/foundry-import/foundry-continuation-prompt.md",
+  "next_recommended_action": "Move to ../ao-foundry; Run codex --yolo; Paste this prompt"
+}
