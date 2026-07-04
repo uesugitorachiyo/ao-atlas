@@ -281,13 +281,20 @@ func TestMissionRecommendationsReadbackFinalGateTransitions(t *testing.T) {
 	}
 
 	completed := completeRecommendationNodes(result.Workgraph, 40)
-	completedReadback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{})
+	completedReadback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:00-07:00",
+		CompletedAt:     "2026-07-04T09:20:00-07:00",
+		ElapsedMinutes:  120,
+		LeaseTimingMode: "actual",
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
 	if !completedReadback.FinalResponseAllowed ||
 		completedReadback.FinalResponseReason != "all generated nodes complete and no ready nodes remain" ||
 		completedReadback.LeaseHealthStatus != "all_generated_nodes_complete" ||
+		!completedReadback.MinMinutesMet ||
+		completedReadback.LeaseTimeStatus != "minimum_minutes_met" ||
 		completedReadback.ExactNextAction != "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks." {
 		t.Fatalf("completed readback must allow closure: %#v", completedReadback)
 	}
@@ -297,6 +304,79 @@ func TestMissionRecommendationsReadbackFinalGateTransitions(t *testing.T) {
 		completedReadback.CommandReadbackStatus != "compact_timeline_recorded" ||
 		completedReadback.CommandTimelineStatus != "recorded_compact_timeline_for_completed_wave" {
 		t.Fatalf("completed readback missing closure bindings: %#v", completedReadback)
+	}
+}
+
+func TestMissionRecommendationsDenyFinalResponseWhenLeaseMinutesUnmet(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:20-07:00",
+		CompletedAt:     "2026-07-04T07:42:06-07:00",
+		ElapsedMinutes:  22,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.FinalResponseAllowed {
+		t.Fatalf("completed nodes cannot close before min_minutes: %#v", readback)
+	}
+	if readback.Status != "in_progress" ||
+		readback.MinMinutesMet ||
+		readback.LeaseTimeStatus != "minimum_minutes_unmet" ||
+		readback.LeaseHealthStatus != "minimum_minutes_unmet_continue_next_wave" ||
+		readback.EarlyReturnRiskStatus != "blocked_final_response_minimum_minutes_unmet" ||
+		readback.FinalResponseReason != "minimum lease minutes unmet" {
+		t.Fatalf("readback did not report unmet lease timing: %#v", readback)
+	}
+	if !strings.Contains(readback.ExactNextAction, "Generate and execute the next useful Atlas recommendation wave") {
+		t.Fatalf("readback missing continuation action after short run: %#v", readback)
+	}
+	execution := BuildAtlasRecommendationExecutionReadback(readback)
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("execution ledger should stay consistent for early timing denial: %v", err)
+	}
+	if execution.Status == "completed" {
+		t.Fatalf("execution ledger cannot be completed before min_minutes: %#v", execution)
+	}
+}
+
+func TestMissionRecommendationsDenyFinalResponseWhenLeaseTimingMissing(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.FinalResponseAllowed ||
+		readback.MinMinutesMet ||
+		readback.LeaseTimeStatus != "lease_timing_missing" ||
+		readback.FinalResponseReason != "minimum lease timing evidence missing" {
+		t.Fatalf("completed long-run wave without timing must deny final response: %#v", readback)
+	}
+	if !strings.Contains(readback.ExactNextAction, "Record started_at, completed_at, and elapsed_minutes") {
+		t.Fatalf("missing timing denial should ask for timing evidence: %#v", readback)
 	}
 }
 
@@ -571,8 +651,16 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"recommendation-readback.json",
 		"mission recommendations readback",
 		"mission recommendations complete-node",
+		"--elapsed-minutes",
+		"--started-at",
+		"--completed-at",
+		"--lease-timing-mode",
+		"minimum_minutes_unmet",
+		"lease_timing_missing",
+		"minimum_minutes_met",
 		"--out-execution-readback",
 		"completed_recommendation_nodes",
+		"min_minutes_met=true",
 		"recommendation-ledger-consistency",
 		"next-recommended-prompt.md",
 	} {

@@ -1,6 +1,6 @@
 {
   "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
-  "status": "completed",
+  "status": "in_progress",
   "mission_id": "mission-long-wave",
   "evidence_root": "docs/evidence/ao-atlas-long-recommendation-wave-v04",
   "completed_recommendation_nodes": 40,
@@ -9,7 +9,7 @@
     "total_nodes": 40,
     "ready_nodes": 0,
     "executable_ready_nodes": 0,
-    "final_response_allowed": true,
-    "final_response_reason": "all generated nodes complete and no ready nodes remain"
+    "final_response_allowed": false,
+    "final_response_reason": "minimum lease minutes unmet"
   }
 }

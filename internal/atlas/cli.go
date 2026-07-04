@@ -470,6 +470,10 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 	expectedNodeID := fs.String("expected-node", "", "expected executable recommendation node id")
 	evidenceRoot := fs.String("evidence-root", "", "filesystem root used to verify run-link evidence files")
 	readbackEvidenceRoot := fs.String("readback-evidence-root", "", "portable evidence root written into readback")
+	startedAt := fs.String("started-at", "", "long-run lease start time, RFC3339")
+	completedAt := fs.String("completed-at", "", "long-run lease completion time, RFC3339")
+	elapsedMinutes := fs.Int("elapsed-minutes", 0, "long-run lease elapsed minutes")
+	leaseTimingMode := fs.String("lease-timing-mode", "", "lease timing evidence mode")
 	outWorkgraphPath := fs.String("out-workgraph", "", "updated workgraph output path")
 	outReadbackPath := fs.String("out-readback", "", "updated recommendation readback output path")
 	outExecutionReadbackPath := fs.String("out-execution-readback", "", "updated execution readback output path")
@@ -518,9 +522,13 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 		return err
 	}
 	readback, err := BuildAtlasRecommendationReadback(wave, updated, AtlasRecommendationReadbackOptions{
-		WavePath:      *wavePath,
-		WorkgraphPath: *outWorkgraphPath,
-		EvidenceRoot:  *readbackEvidenceRoot,
+		WavePath:        *wavePath,
+		WorkgraphPath:   *outWorkgraphPath,
+		EvidenceRoot:    *readbackEvidenceRoot,
+		StartedAt:       *startedAt,
+		CompletedAt:     *completedAt,
+		ElapsedMinutes:  *elapsedMinutes,
+		LeaseTimingMode: *leaseTimingMode,
 	})
 	if err != nil {
 		return err
@@ -541,11 +549,14 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 	if nextExecutable == "" {
 		nextExecutable = "none"
 	}
-	fmt.Fprintf(stdout, "status=written\ncompleted_node=%s\ncompleted_nodes=%d\nready_nodes=%d\nnext_executable_node=%s\nfinal_response_allowed=%t\nupdated_workgraph=%s\nrecommendation_readback=%s\nexecution_readback=%s\n",
+	fmt.Fprintf(stdout, "status=written\ncompleted_node=%s\ncompleted_nodes=%d\nready_nodes=%d\nnext_executable_node=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nupdated_workgraph=%s\nrecommendation_readback=%s\nexecution_readback=%s\n",
 		completedNodeID,
 		readback.CompletedNodes,
 		readback.ReadyNodes,
 		nextExecutable,
+		readback.ElapsedMinutes,
+		readback.MinMinutesMet,
+		readback.LeaseTimeStatus,
 		readback.FinalResponseAllowed,
 		filepath.ToSlash(*outWorkgraphPath),
 		filepath.ToSlash(*outReadbackPath),
@@ -560,6 +571,10 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	wavePath := fs.String("wave", "", "Atlas recommendation wave path")
 	workgraphPath := fs.String("workgraph", "", "Atlas recommendation workgraph path")
 	evidenceRoot := fs.String("evidence-root", "", "relative evidence root")
+	startedAt := fs.String("started-at", "", "long-run lease start time, RFC3339")
+	completedAt := fs.String("completed-at", "", "long-run lease completion time, RFC3339")
+	elapsedMinutes := fs.Int("elapsed-minutes", 0, "long-run lease elapsed minutes")
+	leaseTimingMode := fs.String("lease-timing-mode", "", "lease timing evidence mode")
 	outPath := fs.String("out", "", "output path")
 	jsonOut := fs.Bool("json", false, "json output")
 	if err := fs.Parse(args); err != nil {
@@ -586,9 +601,13 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 		return err
 	}
 	readback, err := BuildAtlasRecommendationReadback(wave, workgraph, AtlasRecommendationReadbackOptions{
-		WavePath:      *wavePath,
-		WorkgraphPath: *workgraphPath,
-		EvidenceRoot:  *evidenceRoot,
+		WavePath:        *wavePath,
+		WorkgraphPath:   *workgraphPath,
+		EvidenceRoot:    *evidenceRoot,
+		StartedAt:       *startedAt,
+		CompletedAt:     *completedAt,
+		ElapsedMinutes:  *elapsedMinutes,
+		LeaseTimingMode: *leaseTimingMode,
 	})
 	if err != nil {
 		return err
@@ -601,7 +620,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	if *jsonOut {
 		return printJSON(stdout, readback)
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\n",
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\n",
 		readback.Status,
 		readback.MissionID,
 		readback.TotalNodes,
@@ -609,6 +628,9 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 		readback.ReadyNodes,
 		readback.ExecutableReadyNodes,
 		readback.LeaseHealthStatus,
+		readback.ElapsedMinutes,
+		readback.MinMinutesMet,
+		readback.LeaseTimeStatus,
 		readback.FinalResponseAllowed,
 		readback.ExactNextAction,
 		filepath.ToSlash(*outPath),

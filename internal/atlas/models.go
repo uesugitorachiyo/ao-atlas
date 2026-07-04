@@ -203,6 +203,11 @@ type AtlasRecommendationReadback struct {
 	WorkgraphDigest               string                            `json:"workgraph_digest,omitempty"`
 	EvidenceRoot                  string                            `json:"evidence_root,omitempty"`
 	Supervisor                    *AtlasLongRunSupervisor           `json:"supervisor,omitempty"`
+	StartedAt                     string                            `json:"started_at,omitempty"`
+	CompletedAt                   string                            `json:"completed_at,omitempty"`
+	ElapsedMinutes                int                               `json:"elapsed_minutes"`
+	MinMinutesMet                 bool                              `json:"min_minutes_met"`
+	LeaseTimeStatus               string                            `json:"lease_time_status"`
 	TotalNodes                    int                               `json:"total_nodes"`
 	MinimumNodes                  int                               `json:"minimum_nodes"`
 	CompletedNodes                int                               `json:"completed_nodes"`
