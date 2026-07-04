@@ -871,6 +871,102 @@ func TestMissionImportBindsAOMissionArtifacts(t *testing.T) {
 	}
 }
 
+func TestMissionImportBindsOptionalRouteHistoryProvenance(t *testing.T) {
+	dir := t.TempDir()
+	record := filepath.Join(dir, "mission-record.json")
+	status := filepath.Join(dir, "command-status.json")
+	manifest := filepath.Join(dir, "artifact-manifest.json")
+	history := filepath.Join(dir, "route-history.json")
+	outPath := filepath.Join(dir, "ao-mission-import.json")
+	if err := WriteJSON(record, map[string]any{
+		"schema":        "ao.mission.record.v0.1",
+		"mission_id":    "mission-demo",
+		"status":        "active",
+		"current_route": "ao-atlas",
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(status, map[string]any{
+		"schema":               "ao.command.mission-status.v0.1",
+		"mission_id":           "mission-demo",
+		"status":               "active",
+		"current_route":        "ao-atlas",
+		"safe_to_execute":      false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(manifest, map[string]any{
+		"schema":        "ao.mission.artifact-manifest.v0.1",
+		"mission_id":    "mission-demo",
+		"artifact_refs": []any{},
+		"executes_work": false,
+		"approves_work": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(history, []any{
+		map[string]any{
+			"schema":               "ao.mission.route-decision.v0.1",
+			"mission_id":           "mission-demo",
+			"route":                "ao-atlas",
+			"safe_to_execute":      false,
+			"executes_work":        false,
+			"approves_work":        false,
+			"mutates_repositories": false,
+		},
+	}); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "import",
+		"--record", record,
+		"--command-status", status,
+		"--artifact-manifest", manifest,
+		"--route-history", history,
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission import with route history failed: %s", out.String())
+	}
+	importRecord, err := LoadJSON[AOMissionImport](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(importRecord.SourceArtifacts) != 4 || importRecord.SourceArtifacts[3].Name != "route_history" || importRecord.SourceArtifacts[3].SHA256 == "" {
+		t.Fatalf("missing route-history provenance: %#v", importRecord.SourceArtifacts)
+	}
+}
+
+func TestMissionImportRejectsUnsafeRouteHistory(t *testing.T) {
+	dir := t.TempDir()
+	record := filepath.Join(dir, "mission-record.json")
+	status := filepath.Join(dir, "command-status.json")
+	manifest := filepath.Join(dir, "artifact-manifest.json")
+	history := filepath.Join(dir, "route-history.json")
+	outPath := filepath.Join(dir, "ao-mission-import.json")
+	if err := WriteJSON(record, map[string]any{"schema": "ao.mission.record.v0.1", "mission_id": "mission-demo", "status": "active", "current_route": "ao-atlas"}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(status, map[string]any{"schema": "ao.command.mission-status.v0.1", "mission_id": "mission-demo", "status": "active", "current_route": "ao-atlas", "safe_to_execute": false, "executes_work": false, "approves_work": false, "mutates_repositories": false}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(manifest, map[string]any{"schema": "ao.mission.artifact-manifest.v0.1", "mission_id": "mission-demo", "artifact_refs": []any{}, "executes_work": false, "approves_work": false}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(history, []any{map[string]any{"schema": "ao.mission.route-decision.v0.1", "mission_id": "mission-demo", "route": "ao-foundry", "safe_to_execute": true}}); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{"mission", "import", "--record", record, "--command-status", status, "--artifact-manifest", manifest, "--route-history", history, "--out", outPath}, &out, &out)
+	if code == 0 || !strings.Contains(out.String(), "route history must not claim execution") {
+		t.Fatalf("expected unsafe route-history rejection, code=%d out=%s", code, out.String())
+	}
+}
+
 func TestMissionImportRejectsArtifactManifestDigestMismatch(t *testing.T) {
 	dir := t.TempDir()
 	record := filepath.Join(dir, "mission-record.json")
