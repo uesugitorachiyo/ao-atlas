@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-02",
+  "compact_readback": "Atlas recommendation status now exposes return_gate_status and checkpoint_count for compact continuation decisions."
+}

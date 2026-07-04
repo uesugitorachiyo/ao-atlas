@@ -1,0 +1,7 @@
+{
+  "status": "no_promotion",
+  "node_id": "mission-recommendation-next-02",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true,
+  "reason": "Readback quality improvement only; no mutation authority promotion is claimed."
+}

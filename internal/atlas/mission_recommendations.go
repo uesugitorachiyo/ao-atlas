@@ -604,6 +604,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 			exactNextAction = fmt.Sprintf("Emit Foundry import for %s and execute exactly one active node.", firstExecutable)
 		}
 	}
+	returnGateStatus := recommendationReturnGateStatus(finalAllowed, nodesComplete, leaseTiming, ready, blocked, failed)
 	status := "ready"
 	if finalAllowed {
 		status = "completed"
@@ -684,6 +685,8 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		CommandReadbackStatus:       commandReadbackStatus,
 		CommandTimelineStatus:       commandTimelineStatus,
 		PublicSafetyScanStatus:      wave.PublicSafetyScanStatus,
+		ReturnGateStatus:            returnGateStatus,
+		CheckpointCount:             completed,
 		FinalResponseAllowed:        finalAllowed,
 		FinalResponseReason:         finalReason,
 		ExactNextAction:             exactNextAction,
@@ -708,6 +711,25 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		return AtlasRecommendationReadback{}, err
 	}
 	return readback, nil
+}
+
+func recommendationReturnGateStatus(finalAllowed bool, nodesComplete bool, leaseTiming atlasRecommendationLeaseTiming, ready, blocked, failed int) string {
+	if finalAllowed {
+		return "final_response_allowed"
+	}
+	if blocked > 0 || failed > 0 {
+		return "blocked_hard_blocker"
+	}
+	if nodesComplete && leaseTiming.LeaseTimeStatus == "lease_timing_missing" {
+		return "blocked_lease_timing_missing"
+	}
+	if nodesComplete && !leaseTiming.MinMinutesMet {
+		return "blocked_minimum_minutes_unmet"
+	}
+	if ready > 0 {
+		return "blocked_ready_nodes_remain"
+	}
+	return "blocked_no_executable_ready_node"
 }
 
 type atlasRecommendationLeaseTiming struct {
@@ -855,6 +877,16 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	requireField(&errs, "command_readback_status", readback.CommandReadbackStatus)
 	requireField(&errs, "command_timeline_status", readback.CommandTimelineStatus)
 	requireField(&errs, "public_safety_scan_status", readback.PublicSafetyScanStatus)
+	if strings.TrimSpace(readback.ReturnGateStatus) != "" &&
+		!oneOf(readback.ReturnGateStatus, "final_response_allowed", "blocked_hard_blocker", "blocked_lease_timing_missing", "blocked_minimum_minutes_unmet", "blocked_ready_nodes_remain", "blocked_no_executable_ready_node") {
+		errs = append(errs, "return_gate_status has unsupported value")
+	}
+	if readback.CheckpointCount < 0 {
+		errs = append(errs, "checkpoint_count must be non-negative")
+	}
+	if strings.TrimSpace(readback.ReturnGateStatus) != "" && readback.CheckpointCount != readback.CompletedNodes {
+		errs = append(errs, "checkpoint_count must match completed_nodes when return_gate_status is recorded")
+	}
 	requireField(&errs, "final_response_reason", readback.FinalResponseReason)
 	requireField(&errs, "exact_next_action", readback.ExactNextAction)
 	if readback.FinalResponseAllowed && (readback.ReadyNodes > 0 || readback.BlockedNodes > 0 || readback.FailedNodes > 0) {
@@ -1206,6 +1238,12 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 	if execution.GeneratedWorkgraph.FinalResponseAllowed != readback.FinalResponseAllowed {
 		errs = append(errs, "generated_workgraph.final_response_allowed must match recommendation readback final_response_allowed")
 	}
+	if strings.TrimSpace(readback.ReturnGateStatus) != "" && execution.GeneratedWorkgraph.ReturnGateStatus != readback.ReturnGateStatus {
+		errs = append(errs, "generated_workgraph.return_gate_status must match recommendation readback return_gate_status")
+	}
+	if strings.TrimSpace(readback.ReturnGateStatus) != "" && execution.GeneratedWorkgraph.CheckpointCount != readback.CheckpointCount {
+		errs = append(errs, "generated_workgraph.checkpoint_count must match recommendation readback checkpoint_count")
+	}
 	if execution.Status == "completed" && !readback.FinalResponseAllowed {
 		errs = append(errs, "status completed requires recommendation readback final_response_allowed")
 	}
@@ -1235,6 +1273,8 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 			ReadyNodes:           readback.ReadyNodes,
 			ExecutableReadyNodes: readback.ExecutableReadyNodes,
 			FirstExecutableNode:  readback.FirstExecutableNode,
+			ReturnGateStatus:     readback.ReturnGateStatus,
+			CheckpointCount:      readback.CheckpointCount,
 			FinalResponseAllowed: readback.FinalResponseAllowed,
 			FinalResponseReason:  readback.FinalResponseReason,
 		},

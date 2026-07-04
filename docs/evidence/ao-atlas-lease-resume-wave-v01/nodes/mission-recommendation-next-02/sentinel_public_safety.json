@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-02",
+  "scan": "production-readiness public-safety-scan passed; node 02 Foundry continuation handoff was normalized to ../ao-foundry before evidence attach",
+  "rsi_status": "denied"
+}

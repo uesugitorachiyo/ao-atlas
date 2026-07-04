@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-02",
+  "red_phase": "Focused package test failed before implementation because AtlasRecommendationReadback and AtlasRecommendationGeneratedWorkgraphReadback lacked ReturnGateStatus and CheckpointCount.",
+  "commands": [
+    "go test ./internal/atlas -run 'TestMissionRecommendations(DefaultLongRunSupervisorAndReadback|ReadbackCLIMatchesGeneratedArtifacts|CompleteNodeRequiresRunLinkEvidence)' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ]
+}

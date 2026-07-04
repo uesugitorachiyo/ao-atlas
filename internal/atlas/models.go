@@ -227,6 +227,8 @@ type AtlasRecommendationReadback struct {
 	CommandReadbackStatus         string                            `json:"command_readback_status"`
 	CommandTimelineStatus         string                            `json:"command_timeline_status"`
 	PublicSafetyScanStatus        string                            `json:"public_safety_scan_status"`
+	ReturnGateStatus              string                            `json:"return_gate_status,omitempty"`
+	CheckpointCount               int                               `json:"checkpoint_count"`
 	FinalResponseAllowed          bool                              `json:"final_response_allowed"`
 	FinalResponseReason           string                            `json:"final_response_reason"`
 	ExactNextAction               string                            `json:"exact_next_action"`
@@ -321,6 +323,8 @@ type AtlasRecommendationGeneratedWorkgraphReadback struct {
 	ReadyNodes           int    `json:"ready_nodes"`
 	ExecutableReadyNodes int    `json:"executable_ready_nodes"`
 	FirstExecutableNode  string `json:"first_executable_node,omitempty"`
+	ReturnGateStatus     string `json:"return_gate_status,omitempty"`
+	CheckpointCount      int    `json:"checkpoint_count"`
 	FinalResponseAllowed bool   `json:"final_response_allowed"`
 	FinalResponseReason  string `json:"final_response_reason,omitempty"`
 }

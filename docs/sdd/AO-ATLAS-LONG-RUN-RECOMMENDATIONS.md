@@ -36,6 +36,12 @@ continues in a later session. If a wave completes all nodes before
 and generate the next useful Atlas-owned wave. Synthetic node evidence can prove
 ledger mechanics, but it cannot satisfy a 2-3 hour lease by itself.
 
+The recommendation readback exposes `return_gate_status` and `checkpoint_count`
+for compact status checks. `return_gate_status` names the active final-response
+gate, such as `blocked_ready_nodes_remain`,
+`blocked_minimum_minutes_unmet`, or `final_response_allowed`.
+`checkpoint_count` mirrors the completed-node count that has checkpoint evidence.
+
 ## Execution Pattern
 
 1. Confirm the repo is on a branch, clean enough for the wave, and not mutating `main` directly.

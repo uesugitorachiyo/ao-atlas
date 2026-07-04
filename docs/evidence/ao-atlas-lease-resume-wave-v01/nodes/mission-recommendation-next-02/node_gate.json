@@ -1,0 +1,6 @@
+{
+  "status": "cleared",
+  "node_id": "mission-recommendation-next-02",
+  "gate": "single executable Atlas recommendation node active",
+  "evidence": "workgraph-after-node-01 exposed mission-recommendation-next-02 as the first executable node"
+}
