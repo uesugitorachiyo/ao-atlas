@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 )
 
@@ -112,14 +113,17 @@ func BuildAOMissionWorkgraphMetadata(importPath, workgraphPath string) (AOMissio
 	if err != nil {
 		return AOMissionWorkgraphMetadata{}, err
 	}
+	provenance := aoMissionProvenanceCounts(importRecord)
 	return AOMissionWorkgraphMetadata{
-		ContractVersion:   AOMissionWorkgraphMetadataContract,
-		MissionID:         importRecord.MissionID,
-		WorkgraphID:       workgraph.ID,
-		TargetInstance:    workgraph.TargetInstance,
-		CurrentRoute:      importRecord.CurrentRoute,
-		NodeCounts:        aoMissionWorkgraphNodeCounts(workgraph),
-		MissionProvenance: aoMissionProvenanceCounts(importRecord),
+		ContractVersion:          AOMissionWorkgraphMetadataContract,
+		MissionID:                importRecord.MissionID,
+		WorkgraphID:              workgraph.ID,
+		TargetInstance:           workgraph.TargetInstance,
+		CurrentRoute:             importRecord.CurrentRoute,
+		NodeCounts:               aoMissionWorkgraphNodeCounts(workgraph),
+		MissionProvenance:        provenance,
+		PrimaryMissionProvenance: primaryMissionProvenance(provenance),
+		ProvenanceDiagnostics:    missionProvenanceDiagnostics(provenance),
 		SourceArtifacts: map[string]string{
 			"ao_mission_import": importDigest,
 			"workgraph":         workgraphDigest,
@@ -179,6 +183,38 @@ func aoMissionProvenanceCounts(importRecord AOMissionImport) map[string]int {
 		counts[source.Name]++
 	}
 	return counts
+}
+
+func primaryMissionProvenance(counts map[string]int) string {
+	keys := sortedMissionProvenanceKeys(counts)
+	if len(keys) == 0 {
+		return ""
+	}
+	best := keys[0]
+	for _, key := range keys[1:] {
+		if counts[key] > counts[best] {
+			best = key
+		}
+	}
+	return best
+}
+
+func missionProvenanceDiagnostics(counts map[string]int) string {
+	keys := sortedMissionProvenanceKeys(counts)
+	parts := make([]string, 0, len(keys))
+	for _, key := range keys {
+		parts = append(parts, fmt.Sprintf("%s=%d", key, counts[key]))
+	}
+	return strings.Join(parts, ",")
+}
+
+func sortedMissionProvenanceKeys(counts map[string]int) []string {
+	keys := make([]string, 0, len(counts))
+	for key := range counts {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+	return keys
 }
 
 func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath string) ([]AOMissionSourceArtifact, error) {
