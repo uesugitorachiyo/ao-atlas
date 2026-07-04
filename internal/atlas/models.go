@@ -123,6 +123,58 @@ type AOMissionProvenanceRender struct {
 	ApprovesWork             bool           `json:"approves_work"`
 }
 
+type AOMissionFeatureDepthRecommendations struct {
+	Schema              string                      `json:"schema"`
+	MissionID           string                      `json:"mission_id"`
+	Status              string                      `json:"status"`
+	MinimumTasks        int                         `json:"minimum_tasks"`
+	RecommendationCount int                         `json:"recommendation_count"`
+	Tasks               []AOMissionFeatureDepthTask `json:"tasks"`
+	SafeToExecute       bool                        `json:"safe_to_execute"`
+	SchedulesWork       bool                        `json:"schedules_work,omitempty"`
+	ExecutesWork        bool                        `json:"executes_work"`
+	ApprovesWork        bool                        `json:"approves_work"`
+	MutatesRepositories bool                        `json:"mutates_repositories,omitempty"`
+}
+
+type AOMissionFeatureDepthTask struct {
+	ID    string `json:"id"`
+	Owner string `json:"owner"`
+	Task  string `json:"task"`
+}
+
+type AtlasRecommendationWave struct {
+	ContractVersion       string                    `json:"contract_version"`
+	MissionID             string                    `json:"mission_id"`
+	TargetInstance        string                    `json:"target_instance"`
+	Status                string                    `json:"status"`
+	SourceDigest          string                    `json:"source_digest"`
+	MinimumTasks          int                       `json:"minimum_tasks"`
+	TotalTasks            int                       `json:"total_tasks"`
+	NodeBudget            int                       `json:"node_budget"`
+	EstimatedMinutes      int                       `json:"estimated_minutes"`
+	Tasks                 []AtlasRecommendationTask `json:"tasks"`
+	NextRecommendedPrompt string                    `json:"next_recommended_prompt"`
+	SafeToExecute         bool                      `json:"safe_to_execute"`
+	SchedulesWork         bool                      `json:"schedules_work"`
+	ExecutesWork          bool                      `json:"executes_work"`
+	ApprovesWork          bool                      `json:"approves_work"`
+}
+
+type AtlasRecommendationTask struct {
+	ID                string   `json:"id"`
+	Owner             string   `json:"owner"`
+	Task              string   `json:"task"`
+	NodeID            string   `json:"node_id"`
+	TaskID            string   `json:"task_id"`
+	MutationClass     string   `json:"mutation_class"`
+	TargetFactoryRepo string   `json:"target_factory_repo"`
+	FactoryFolder     string   `json:"factory_folder"`
+	RequiredGates     []string `json:"required_gates"`
+	Verification      []string `json:"verification_commands"`
+	SafetyLimits      []string `json:"safety_limits"`
+}
+
 type AOMissionSourceArtifact struct {
 	Name   string `json:"name"`
 	Path   string `json:"path"`

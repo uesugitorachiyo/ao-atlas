@@ -1,0 +1,114 @@
+{
+  "schema": "ao.mission.feature-depth-recommendations.v0.3",
+  "mission_id": "mission-unsafe",
+  "status": "ready",
+  "minimum_tasks": 20,
+  "recommendation_count": 20,
+  "tasks": [
+    {
+      "id": "next-01",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task one with tests and readback evidence."
+    },
+    {
+      "id": "next-02",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task two with tests and readback evidence."
+    },
+    {
+      "id": "next-03",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task three with tests and readback evidence."
+    },
+    {
+      "id": "next-04",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task four with tests and readback evidence."
+    },
+    {
+      "id": "next-05",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task five with tests and readback evidence."
+    },
+    {
+      "id": "next-06",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task six with tests and readback evidence."
+    },
+    {
+      "id": "next-07",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task seven with tests and readback evidence."
+    },
+    {
+      "id": "next-08",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task eight with tests and readback evidence."
+    },
+    {
+      "id": "next-09",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task nine with tests and readback evidence."
+    },
+    {
+      "id": "next-10",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task ten with tests and readback evidence."
+    },
+    {
+      "id": "next-11",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task eleven with tests and readback evidence."
+    },
+    {
+      "id": "next-12",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task twelve with tests and readback evidence."
+    },
+    {
+      "id": "next-13",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task thirteen with tests and readback evidence."
+    },
+    {
+      "id": "next-14",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task fourteen with tests and readback evidence."
+    },
+    {
+      "id": "next-15",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task fifteen with tests and readback evidence."
+    },
+    {
+      "id": "next-16",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task sixteen with tests and readback evidence."
+    },
+    {
+      "id": "next-17",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task seventeen with tests and readback evidence."
+    },
+    {
+      "id": "next-18",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task eighteen with tests and readback evidence."
+    },
+    {
+      "id": "next-19",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task nineteen with tests and readback evidence."
+    },
+    {
+      "id": "next-20",
+      "owner": "ao-atlas",
+      "task": "Add unsafe Atlas task twenty with tests and readback evidence."
+    }
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

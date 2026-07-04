@@ -1,0 +1,114 @@
+{
+  "schema": "ao.mission.feature-depth-recommendations.v0.3",
+  "mission_id": "mission-long-wave",
+  "status": "ready",
+  "minimum_tasks": 20,
+  "recommendation_count": 20,
+  "tasks": [
+    {
+      "id": "next-01",
+      "owner": "ao-atlas",
+      "task": "Add Mission recommendation CLI fixtures for lease flags and checkpoint bundle readback."
+    },
+    {
+      "id": "next-02",
+      "owner": "ao-atlas",
+      "task": "Expose Mission return gate and checkpoint count in Atlas status readback."
+    },
+    {
+      "id": "next-03",
+      "owner": "ao-atlas",
+      "task": "Bind Mission final rollup return-gate fields into Atlas reconciliation packets."
+    },
+    {
+      "id": "next-04",
+      "owner": "ao-atlas",
+      "task": "Import Feature Depth Recommendations into Atlas workgraph generation."
+    },
+    {
+      "id": "next-05",
+      "owner": "ao-atlas",
+      "task": "Generate a single-executable-node Atlas workgraph from long-run recommendation waves."
+    },
+    {
+      "id": "next-06",
+      "owner": "ao-atlas",
+      "task": "Add digest-bound source evidence for each recommendation node."
+    },
+    {
+      "id": "next-07",
+      "owner": "ao-atlas",
+      "task": "Strengthen Atlas prompt readback so final responses stay denied while ready work remains."
+    },
+    {
+      "id": "next-08",
+      "owner": "ao-atlas",
+      "task": "Add public-safety wording scan evidence for generated recommendation prompts."
+    },
+    {
+      "id": "next-09",
+      "owner": "ao-atlas",
+      "task": "Add Promoter no-promotion summary fields to Atlas long-run readbacks."
+    },
+    {
+      "id": "next-10",
+      "owner": "ao-atlas",
+      "task": "Add Command compact mission timeline binding to Atlas recommendation evidence."
+    },
+    {
+      "id": "next-11",
+      "owner": "ao-atlas",
+      "task": "Record Foundry run-link readiness summary as an Atlas source artifact."
+    },
+    {
+      "id": "next-12",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage for rejected shallow Feature Depth bundles."
+    },
+    {
+      "id": "next-13",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage for unsafe Feature Depth authority claims."
+    },
+    {
+      "id": "next-14",
+      "owner": "ao-atlas",
+      "task": "Add schema coverage for Atlas recommendation wave readbacks."
+    },
+    {
+      "id": "next-15",
+      "owner": "ao-atlas",
+      "task": "Add operator docs for double-size AO Atlas long-run task waves."
+    },
+    {
+      "id": "next-16",
+      "owner": "ao-atlas",
+      "task": "Add exact next prompt artifact for continuing after the long recommendation wave."
+    },
+    {
+      "id": "next-17",
+      "owner": "ao-atlas",
+      "task": "Add production readiness coverage for recommendation import artifacts."
+    },
+    {
+      "id": "next-18",
+      "owner": "ao-atlas",
+      "task": "Add Foundry import smoke coverage for the first generated recommendation node."
+    },
+    {
+      "id": "next-19",
+      "owner": "ao-atlas",
+      "task": "Add final state evidence comparing recommendation wave, workgraph, and prompt."
+    },
+    {
+      "id": "next-20",
+      "owner": "ao-atlas",
+      "task": "Run production readiness and public-safety scans for the full long wave."
+    }
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

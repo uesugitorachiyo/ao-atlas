@@ -60,6 +60,8 @@ required_files=(
   schemas/foundry-continuation-handoff.schema.json
   schemas/run-link.schema.json
   schemas/ao-mission-import.schema.json
+  schemas/ao-mission-feature-depth-recommendations.schema.json
+  schemas/recommendation-wave.schema.json
 )
 for file in "${required_files[@]}"; do
   test -s "$file"
@@ -88,6 +90,13 @@ test -s "$OUT/mission-status.json"
   --ledger-compaction examples/valid/ao-mission/ledger-compaction-readback.json \
   --out "$OUT/ao-mission-import.json" >/dev/null
 test -s "$OUT/ao-mission-import.json"
+"$BIN" mission recommendations import --recommendations examples/valid/ao-mission/feature-depth-recommendations.json --target-instance demo-stack --min-tasks 20 --node-budget 20 --estimated-minutes 90 --out "$OUT/mission-recommendations" >/dev/null
+test -s "$OUT/mission-recommendations/recommendation-wave.json"
+test -s "$OUT/mission-recommendations/recommendation-workgraph.json"
+test -s "$OUT/mission-recommendations/next-recommended-prompt.md"
+"$BIN" workgraph validate --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
+"$BIN" foundry import --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --instance examples/valid/stack-instance.json --node mission-recommendation-next-01 --out "$OUT/mission-recommendations-foundry-import" >/dev/null
+test -s "$OUT/mission-recommendations-foundry-import/foundry-import.json"
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" blueprint import \
   --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack \
@@ -180,6 +189,14 @@ if "$BIN" workgraph validate --workgraph examples/invalid/workgraph-missing-depe
 fi
 if "$BIN" blueprint-request validate --request examples/invalid/blueprint-request-ready-status.json >/dev/null 2>&1; then
   echo "invalid blueprint request was accepted" >&2
+  exit 1
+fi
+if "$BIN" mission recommendations import --recommendations examples/invalid/feature-depth-recommendations-shallow.json --target-instance demo-stack --min-tasks 20 --node-budget 20 --estimated-minutes 90 --out "$OUT/mission-recommendations-shallow" >/dev/null 2>&1; then
+  echo "shallow Feature Depth recommendations were accepted" >&2
+  exit 1
+fi
+if "$BIN" mission recommendations import --recommendations examples/invalid/feature-depth-recommendations-unsafe.json --target-instance demo-stack --min-tasks 20 --node-budget 20 --estimated-minutes 90 --out "$OUT/mission-recommendations-unsafe" >/dev/null 2>&1; then
+  echo "unsafe Feature Depth recommendations were accepted" >&2
   exit 1
 fi
 if "$BIN" blueprint import --pack examples/invalid/blueprint-import-missing-authorization/blueprint-pack --instance examples/valid/stack-instance.json --mutation-classes examples/valid/mutation-classes.json --out "$OUT/blueprint-import-missing-auth" >/dev/null 2>&1; then

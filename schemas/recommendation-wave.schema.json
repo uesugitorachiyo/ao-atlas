@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.recommendation-wave.v0.1",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "mission_id",
+    "target_instance",
+    "status",
+    "source_digest",
+    "minimum_tasks",
+    "total_tasks",
+    "node_budget",
+    "estimated_minutes",
+    "tasks",
+    "next_recommended_prompt",
+    "safe_to_execute",
+    "schedules_work",
+    "executes_work",
+    "approves_work"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": { "const": "ao.atlas.recommendation-wave.v0.1" },
+    "mission_id": { "type": "string", "minLength": 1 },
+    "target_instance": { "type": "string", "minLength": 1 },
+    "status": { "const": "ready" },
+    "source_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "minimum_tasks": { "type": "integer", "minimum": 1 },
+    "total_tasks": { "type": "integer", "minimum": 1 },
+    "node_budget": { "type": "integer", "minimum": 1 },
+    "estimated_minutes": { "type": "integer", "minimum": 1 },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "owner",
+          "task",
+          "node_id",
+          "task_id",
+          "mutation_class",
+          "target_factory_repo",
+          "factory_folder",
+          "required_gates",
+          "verification_commands",
+          "safety_limits"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "owner": { "const": "ao-atlas" },
+          "task": { "type": "string", "minLength": 1 },
+          "node_id": { "type": "string", "minLength": 1 },
+          "task_id": { "type": "string", "minLength": 1 },
+          "mutation_class": { "const": "low_risk_code" },
+          "target_factory_repo": { "const": "ao-atlas" },
+          "factory_folder": { "type": "string", "minLength": 1 },
+          "required_gates": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "verification_commands": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "safety_limits": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+        }
+      }
+    },
+    "next_recommended_prompt": { "type": "string", "minLength": 1 },
+    "safe_to_execute": { "const": false },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false }
+  }
+}
