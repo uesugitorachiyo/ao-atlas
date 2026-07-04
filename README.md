@@ -120,7 +120,7 @@ go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out .atlas-local/mission-status.json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-needs-context.json --json
 go run ./cmd/atlas mission import --record examples/valid/ao-mission/mission-record.json --command-status examples/valid/ao-mission/command-status.json --artifact-manifest examples/valid/ao-mission/artifact-manifest.json --route-history examples/valid/ao-mission/route-history.json --scheduler-recovery examples/valid/ao-mission/scheduler-recovery-readback.json --ledger-compaction examples/valid/ao-mission/ledger-compaction-readback.json --mission-archive examples/valid/ao-mission/mission-archive.json --gateway-readiness-rollup examples/valid/ao-mission/gateway-readiness-rollup.json --out .atlas-local/ao-mission-import.json
-go run ./cmd/atlas mission recommendations import --recommendations examples/valid/ao-mission/feature-depth-recommendations.json --target-instance demo-stack --min-tasks 20 --node-budget 20 --estimated-minutes 90 --out .atlas-local/mission-recommendations
+go run ./cmd/atlas mission recommendations import --recommendations examples/valid/ao-mission/feature-depth-recommendations.json --target-instance demo-stack --min-tasks 30 --node-budget 40 --min-minutes 120 --max-minutes 180 --continue-if-fast-target 40 --out .atlas-local/mission-recommendations
 go run ./cmd/atlas blueprint-request validate --request examples/valid/blueprint-request.json
 go run ./cmd/atlas blueprint import --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack --authorization examples/valid/blueprint-import-low-risk-code/build-authorization.json --instance examples/valid/stack-instance.json --mutation-classes examples/valid/mutation-classes.json --out .atlas-local/blueprint-import-low-risk-code
 go run ./cmd/atlas mutation-classes validate --model examples/valid/mutation-classes.json
@@ -172,14 +172,19 @@ context for Atlas compilation only; it is not a Foundry execution grant.
 
 `atlas mission recommendations import` turns AO Mission Feature Depth
 Recommendations into an Atlas recommendation wave, a bounded workgraph, and a
-next recommended prompt. For long-run Atlas work, use `--min-tasks 20`,
-`--node-budget 20`, and `--estimated-minutes 90` to double a short 45-minute
-batch. The generated workgraph keeps all 20 nodes ready but dependency-chained,
-so only the first node is executable-ready until downstream evidence completes
-the prior node. The wave rejects shallow bundles and any recommendation artifact
-that claims execution, scheduling, approval, repository mutation, provider,
+next recommended prompt. For 2-3 hour Atlas work, use `--min-tasks 30`,
+`--node-budget 40`, `--min-minutes 120`, `--max-minutes 180`, and
+`--continue-if-fast-target 40`. With no budget flags, the importer uses that
+same v0.2 long-run supervisor default. The generated workgraph keeps all 40
+nodes ready but dependency-chained, so only the first node is executable-ready
+until downstream evidence completes the prior node. The wave records the
+supervisor lease, checkpoint policy, Promoter/Command/public-safety readback
+requirements, and `final_response_allowed=false` while ready nodes or exact next
+actions remain. It rejects shallow bundles and any recommendation artifact that
+claims execution, scheduling, approval, repository mutation, provider,
 credential, direct-main, release, dependency, policy, auth, config, or broad RSI
-authority.
+authority. Explicit 20-node/90-minute imports remain available only as
+compatibility coverage for older double-size waves.
 
 The committed
 `examples/valid/workgraph-repair-plan-blocked-node-demo.json` fixture shows the

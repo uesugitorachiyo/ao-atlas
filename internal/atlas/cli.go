@@ -374,9 +374,16 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	fs.SetOutput(io.Discard)
 	recommendationsPath := fs.String("recommendations", "", "AO Mission Feature Depth Recommendations path")
 	targetInstance := fs.String("target-instance", "", "Atlas target instance id")
-	minTasks := fs.Int("min-tasks", 20, "minimum Atlas recommendation tasks")
-	nodeBudget := fs.Int("node-budget", 20, "Atlas node budget")
-	estimatedMinutes := fs.Int("estimated-minutes", 90, "estimated long-run minutes")
+	minTasks := fs.Int("min-tasks", 0, "minimum Atlas recommendation tasks")
+	nodeBudget := fs.Int("node-budget", 0, "Atlas node budget")
+	estimatedMinutes := fs.Int("estimated-minutes", 0, "estimated long-run minutes")
+	minMinutes := fs.Int("min-minutes", 0, "minimum lease minutes")
+	maxMinutes := fs.Int("max-minutes", 0, "maximum lease minutes")
+	continueIfFastTarget := fs.Int("continue-if-fast-target", 0, "continue-if-fast node target")
+	returnOnlyWhen := fs.String("return-only-when", "", "final response return policy")
+	checkpointPolicy := fs.String("checkpoint-policy", "", "checkpoint policy")
+	evidencePolicy := fs.String("evidence-policy", "", "evidence policy")
+	finalReportContract := fs.String("final-report-contract", "", "final report contract")
 	outDir := fs.String("out", "", "output directory")
 	jsonOut := fs.Bool("json", false, "json output")
 	if err := fs.Parse(args[1:]); err != nil {
@@ -395,11 +402,18 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return fmt.Errorf("refusing to overwrite input artifact")
 	}
 	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
-		RecommendationsPath: *recommendationsPath,
-		TargetInstance:      *targetInstance,
-		MinTasks:            *minTasks,
-		NodeBudget:          *nodeBudget,
-		EstimatedMinutes:    *estimatedMinutes,
+		RecommendationsPath:  *recommendationsPath,
+		TargetInstance:       *targetInstance,
+		MinTasks:             *minTasks,
+		NodeBudget:           *nodeBudget,
+		EstimatedMinutes:     *estimatedMinutes,
+		MinMinutes:           *minMinutes,
+		MaxMinutes:           *maxMinutes,
+		ContinueIfFastTarget: *continueIfFastTarget,
+		ReturnOnlyWhen:       *returnOnlyWhen,
+		CheckpointPolicy:     *checkpointPolicy,
+		EvidencePolicy:       *evidencePolicy,
+		FinalReportContract:  *finalReportContract,
 	})
 	if err != nil {
 		return err
@@ -412,12 +426,24 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if *jsonOut {
 		return printJSON(stdout, result.Wave)
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nrecommendation_tasks=%d\nnode_budget=%d\nestimated_minutes=%d\nrecommendation_wave=%s\nrecommendation_workgraph=%s\nnext_recommended_prompt=%s\n",
+	minLeaseMinutes := result.Wave.EstimatedMinutes
+	maxLeaseMinutes := result.Wave.EstimatedMinutes
+	continueTarget := result.Wave.NodeBudget
+	if result.Wave.Supervisor != nil {
+		minLeaseMinutes = result.Wave.Supervisor.MinMinutes
+		maxLeaseMinutes = result.Wave.Supervisor.MaxMinutes
+		continueTarget = result.Wave.Supervisor.ContinueIfFastTarget
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nrecommendation_tasks=%d\nnode_budget=%d\nestimated_minutes=%d\nmin_minutes=%d\nmax_minutes=%d\ncontinue_if_fast_target=%d\nfinal_response_allowed=%t\nrecommendation_wave=%s\nrecommendation_workgraph=%s\nnext_recommended_prompt=%s\n",
 		result.Wave.Status,
 		result.Wave.MissionID,
 		result.Wave.TotalTasks,
 		result.Wave.NodeBudget,
 		result.Wave.EstimatedMinutes,
+		minLeaseMinutes,
+		maxLeaseMinutes,
+		continueTarget,
+		result.Wave.FinalResponseAllowed,
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-wave.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-workgraph.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "next-recommended-prompt.md")),

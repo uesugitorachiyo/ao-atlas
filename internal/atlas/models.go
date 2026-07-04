@@ -144,21 +144,39 @@ type AOMissionFeatureDepthTask struct {
 }
 
 type AtlasRecommendationWave struct {
-	ContractVersion       string                    `json:"contract_version"`
-	MissionID             string                    `json:"mission_id"`
-	TargetInstance        string                    `json:"target_instance"`
-	Status                string                    `json:"status"`
-	SourceDigest          string                    `json:"source_digest"`
-	MinimumTasks          int                       `json:"minimum_tasks"`
-	TotalTasks            int                       `json:"total_tasks"`
-	NodeBudget            int                       `json:"node_budget"`
-	EstimatedMinutes      int                       `json:"estimated_minutes"`
-	Tasks                 []AtlasRecommendationTask `json:"tasks"`
-	NextRecommendedPrompt string                    `json:"next_recommended_prompt"`
-	SafeToExecute         bool                      `json:"safe_to_execute"`
-	SchedulesWork         bool                      `json:"schedules_work"`
-	ExecutesWork          bool                      `json:"executes_work"`
-	ApprovesWork          bool                      `json:"approves_work"`
+	ContractVersion        string                    `json:"contract_version"`
+	MissionID              string                    `json:"mission_id"`
+	TargetInstance         string                    `json:"target_instance"`
+	Status                 string                    `json:"status"`
+	SourceDigest           string                    `json:"source_digest"`
+	MinimumTasks           int                       `json:"minimum_tasks"`
+	TotalTasks             int                       `json:"total_tasks"`
+	NodeBudget             int                       `json:"node_budget"`
+	EstimatedMinutes       int                       `json:"estimated_minutes"`
+	Supervisor             *AtlasLongRunSupervisor   `json:"supervisor,omitempty"`
+	Tasks                  []AtlasRecommendationTask `json:"tasks"`
+	NextRecommendedPrompt  string                    `json:"next_recommended_prompt"`
+	FinalResponseAllowed   bool                      `json:"final_response_allowed"`
+	FinalResponseReason    string                    `json:"final_response_reason"`
+	PromoterReadbackStatus string                    `json:"promoter_readback_status"`
+	CommandReadbackStatus  string                    `json:"command_readback_status"`
+	PublicSafetyScanStatus string                    `json:"public_safety_scan_status"`
+	SafeToExecute          bool                      `json:"safe_to_execute"`
+	SchedulesWork          bool                      `json:"schedules_work"`
+	ExecutesWork           bool                      `json:"executes_work"`
+	ApprovesWork           bool                      `json:"approves_work"`
+}
+
+type AtlasLongRunSupervisor struct {
+	ContractVersion      string `json:"contract_version"`
+	MinNodes             int    `json:"min_nodes"`
+	MinMinutes           int    `json:"min_minutes"`
+	MaxMinutes           int    `json:"max_minutes"`
+	ContinueIfFastTarget int    `json:"continue_if_fast_target"`
+	ReturnOnlyWhen       string `json:"return_only_when"`
+	CheckpointPolicy     string `json:"checkpoint_policy"`
+	EvidencePolicy       string `json:"evidence_policy"`
+	FinalReportContract  string `json:"final_report_contract"`
 }
 
 type AtlasRecommendationTask struct {

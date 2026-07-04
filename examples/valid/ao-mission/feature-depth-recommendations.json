@@ -2,8 +2,8 @@
   "schema": "ao.mission.feature-depth-recommendations.v0.3",
   "mission_id": "mission-long-wave",
   "status": "ready",
-  "minimum_tasks": 20,
-  "recommendation_count": 20,
+  "minimum_tasks": 40,
+  "recommendation_count": 40,
   "tasks": [
     {
       "id": "next-01",
@@ -104,6 +104,106 @@
       "id": "next-20",
       "owner": "ao-atlas",
       "task": "Run production readiness and public-safety scans for the full long wave."
+    },
+    {
+      "id": "next-21",
+      "owner": "ao-atlas",
+      "task": "Add lease health fields to Atlas long-run evidence readbacks."
+    },
+    {
+      "id": "next-22",
+      "owner": "ao-atlas",
+      "task": "Add checkpoint freshness readback to generated recommendation artifacts."
+    },
+    {
+      "id": "next-23",
+      "owner": "ao-atlas",
+      "task": "Add stale route decision readback to Atlas final-state reconciliation evidence."
+    },
+    {
+      "id": "next-24",
+      "owner": "ao-atlas",
+      "task": "Add early-return risk wording to the long-run recommendation prompt."
+    },
+    {
+      "id": "next-25",
+      "owner": "ao-atlas",
+      "task": "Add Foundry promoted terminal-state examples to Atlas recommendation readbacks."
+    },
+    {
+      "id": "next-26",
+      "owner": "ao-atlas",
+      "task": "Add Foundry denied terminal-state examples to Atlas recommendation readbacks."
+    },
+    {
+      "id": "next-27",
+      "owner": "ao-atlas",
+      "task": "Add blocked-node continuation wording to generated Atlas prompts."
+    },
+    {
+      "id": "next-28",
+      "owner": "ao-atlas",
+      "task": "Add exact next action readback to recommendation wave evidence."
+    },
+    {
+      "id": "next-29",
+      "owner": "ao-atlas",
+      "task": "Add compact Command timeline placeholders to long-run recommendation evidence."
+    },
+    {
+      "id": "next-30",
+      "owner": "ao-atlas",
+      "task": "Add Promoter no-promotion placeholders to long-run recommendation evidence."
+    },
+    {
+      "id": "next-31",
+      "owner": "ao-atlas",
+      "task": "Add Atlas final response denial tests for ready recommendation workgraphs."
+    },
+    {
+      "id": "next-32",
+      "owner": "ao-atlas",
+      "task": "Add Atlas final response allowance tests for completed recommendation workgraphs."
+    },
+    {
+      "id": "next-33",
+      "owner": "ao-atlas",
+      "task": "Add schema examples for long-run supervisor lease fields."
+    },
+    {
+      "id": "next-34",
+      "owner": "ao-atlas",
+      "task": "Add docs explaining why Blueprint is skipped for ready Atlas-owned tasks."
+    },
+    {
+      "id": "next-35",
+      "owner": "ao-atlas",
+      "task": "Add docs explaining Foundry import ownership for one active node."
+    },
+    {
+      "id": "next-36",
+      "owner": "ao-atlas",
+      "task": "Add docs explaining Command readback requirements for long-run waves."
+    },
+    {
+      "id": "next-37",
+      "owner": "ao-atlas",
+      "task": "Add public-safety wording scan coverage for generated continuation prompts."
+    },
+    {
+      "id": "next-38",
+      "owner": "ao-atlas",
+      "task": "Add production readiness assertions for 40-node recommendation workgraphs."
+    },
+    {
+      "id": "next-39",
+      "owner": "ao-atlas",
+      "task": "Add evidence README for the 2-3 hour long-run recommendation wave."
+    },
+    {
+      "id": "next-40",
+      "owner": "ao-atlas",
+      "task": "Add final execution readback for the 40-node recommendation wave."
     }
   ],
   "safe_to_execute": false,

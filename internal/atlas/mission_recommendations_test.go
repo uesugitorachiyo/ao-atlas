@@ -120,6 +120,105 @@ func TestMissionRecommendationsRejectShallowAndUnsafeBundles(t *testing.T) {
 	}
 }
 
+func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	outDir := filepath.Join(dir, "recommendations-out")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", outDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(outDir, "recommendation-wave.json"))
+	if wave.TotalTasks != 40 || wave.NodeBudget != 40 {
+		t.Fatalf("default wave should generate 40 nodes for continue-if-fast policy: %#v", wave)
+	}
+	if wave.MinimumTasks != 30 || wave.EstimatedMinutes != 120 {
+		t.Fatalf("default wave should require 30 nodes and 120 minute floor: %#v", wave)
+	}
+	if wave.Supervisor == nil {
+		t.Fatalf("default wave missing long-run supervisor: %#v", wave)
+	}
+	if wave.Supervisor.MinNodes != 30 ||
+		wave.Supervisor.MinMinutes != 120 ||
+		wave.Supervisor.MaxMinutes != 180 ||
+		wave.Supervisor.ContinueIfFastTarget != 40 ||
+		wave.Supervisor.ReturnOnlyWhen != "all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker" ||
+		wave.Supervisor.CheckpointPolicy != "after_each_node_or_timed_interval" ||
+		wave.Supervisor.EvidencePolicy != "node_gate_candidate_rollback_tests_verification_public_safety_promoter_command" ||
+		wave.Supervisor.FinalReportContract != "ao.atlas.long-run-final-report.v0.2" {
+		t.Fatalf("bad long-run supervisor: %#v", wave.Supervisor)
+	}
+	if wave.FinalResponseAllowed || wave.FinalResponseReason != "ready nodes or exact next actions remain" {
+		t.Fatalf("default wave must deny final response while ready nodes remain: %#v", wave)
+	}
+	if wave.PromoterReadbackStatus != "required_not_bound" || wave.CommandReadbackStatus != "required_not_bound" || wave.PublicSafetyScanStatus != "required_pending_verification" {
+		t.Fatalf("wave should require promoter, command, and public-safety readbacks: %#v", wave)
+	}
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join(outDir, "recommendation-workgraph.json"))
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(workgraph.Nodes) != 40 || len(state.ExecutableReadyNodeIDs) != 1 {
+		t.Fatalf("expected 40 dependency-chained nodes with one executable-ready node, nodes=%d ready=%#v", len(workgraph.Nodes), state.ExecutableReadyNodeIDs)
+	}
+	prompt := wave.NextRecommendedPrompt
+	for _, want := range []string{
+		"Current state:",
+		"Problem:",
+		"Goal:",
+		"Minimum work budget:",
+		"Safety boundaries:",
+		"Required work:",
+		"Per-node requirements:",
+		"Regression tests:",
+		"Verification:",
+		"Final response only after completion or true hard blocker:",
+		"Target 2-3 hours",
+		"Complete at least 30 bounded implementation/evidence nodes",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("v0.2 prompt missing section %q:\n%s", want, prompt)
+		}
+	}
+}
+
+func TestMissionRecommendationsRejectMixedOwnerDefaultWaveWithExactReadback(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	var bundle AOMissionFeatureDepthRecommendations
+	if err := readJSONIfPossible(recommendationsPath, &bundle); err != nil {
+		t.Fatal(err)
+	}
+	bundle.Tasks[39].Owner = "ao-foundry"
+	if err := WriteJSON(recommendationsPath, bundle); err != nil {
+		t.Fatal(err)
+	}
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", filepath.Join(dir, "out"),
+	}, &out, &out)
+	if code == 0 {
+		t.Fatal("mixed-owner default wave was accepted")
+	}
+	if !strings.Contains(out.String(), "requires at least 30 AO Atlas-owned tasks and 40 tasks for continue-if-fast target") {
+		t.Fatalf("mixed-owner error did not report exact readback: %s", out.String())
+	}
+}
+
 func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) {
 	root := repoRoot(t)
 	scriptPath := filepath.Join(root, "scripts", "production-readiness.sh")
@@ -131,8 +230,10 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 	for _, want := range []string{
 		"mission recommendations import",
 		"--recommendations examples/valid/ao-mission/feature-depth-recommendations.json",
-		"--min-tasks 20",
-		"--estimated-minutes 90",
+		"--min-tasks 30",
+		"--min-minutes 120",
+		"--max-minutes 180",
+		"--continue-if-fast-target 40",
 		"recommendation-workgraph.json",
 		"next-recommended-prompt.md",
 	} {
@@ -156,7 +257,7 @@ func writeFeatureDepthBundle(t *testing.T, path string, taskCount int, unsafe bo
 		"schema":               "ao.mission.feature-depth-recommendations.v0.3",
 		"mission_id":           "mission-long-wave",
 		"status":               "ready",
-		"minimum_tasks":        20,
+		"minimum_tasks":        taskCount,
 		"recommendation_count": taskCount,
 		"tasks":                tasks,
 		"safe_to_execute":      unsafe,
