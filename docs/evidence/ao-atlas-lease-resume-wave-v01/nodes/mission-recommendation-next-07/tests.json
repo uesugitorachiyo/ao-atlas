@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-07",
+  "red_phase": "Focused default-wave test failed before implementation because recommendation readback lacked final_response_denial_gate.",
+  "green_phase": "Focused default-wave test passed after the readback exposed final_response_denial_gate and the generated prompt contained the explicit no-final-response clause.",
+  "tests": [
+    "TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave",
+    "production-readiness final_response_denial_gate check",
+    "production-readiness generated prompt denial clause check"
+  ]
+}

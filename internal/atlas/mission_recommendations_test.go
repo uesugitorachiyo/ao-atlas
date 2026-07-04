@@ -213,6 +213,10 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 	if readback.FinalResponseAllowed || readback.ExactNextAction != "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node." {
 		t.Fatalf("readback must deny final response with exact next node: %#v", readback)
 	}
+	rawReadback := mustLoadJSON[map[string]any](t, filepath.Join(outDir, "recommendation-readback.json"))
+	if rawReadback["final_response_denial_gate"] != "deny_ready_nodes_or_exact_next_action_remain" {
+		t.Fatalf("readback missing final response denial gate: %#v", rawReadback["final_response_denial_gate"])
+	}
 	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 0 {
 		t.Fatalf("readback missing return gate status or checkpoint count: %#v", readback)
 	}
@@ -243,6 +247,7 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 		"Final response only after completion or true hard blocker:",
 		"Target 2-3 hours",
 		"Complete at least 30 bounded implementation/evidence nodes",
+		"If ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response.",
 	} {
 		if !strings.Contains(prompt, want) {
 			t.Fatalf("v0.2 prompt missing section %q:\n%s", want, prompt)

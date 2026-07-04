@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-07",
+  "candidate": "explicit-final-response-denial-gate",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Recommendation readbacks and prompts denied final response implicitly, but did not expose a dedicated gate for ready nodes or exact next actions. The candidate repair adds final_response_denial_gate and explicit prompt text."
+}

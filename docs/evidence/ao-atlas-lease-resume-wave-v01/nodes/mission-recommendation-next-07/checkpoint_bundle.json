@@ -1,0 +1,7 @@
+{
+  "status": "prepared",
+  "node_id": "mission-recommendation-next-07",
+  "summary": "Checkpoint bundle will be refreshed by mission recommendations complete-node after attaching the node run-link.",
+  "workgraph_before": "nodes/mission-recommendation-next-06/workgraph-after.json",
+  "expected_workgraph_after": "nodes/mission-recommendation-next-07/workgraph-after.json"
+}
