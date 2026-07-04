@@ -164,6 +164,57 @@ func BuildAOMissionWorkgraphMetadata(importPath, workgraphPath string) (AOMissio
 	}, nil
 }
 
+func BuildAOMissionProvenanceWorkgraph(importRecord AOMissionImport, workgraph Workgraph) (Workgraph, error) {
+	if importRecord.ContractVersion != AOMissionImportContract {
+		return Workgraph{}, fmt.Errorf("invalid AO Mission import contract_version")
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return Workgraph{}, err
+	}
+	augmented := workgraph
+	augmented.Nodes = append([]WorkgraphNode(nil), workgraph.Nodes...)
+	existing := map[string]bool{}
+	for _, node := range augmented.Nodes {
+		existing[node.ID] = true
+	}
+	for _, source := range importRecord.SourceArtifacts {
+		name := sanitizeMissionProvenanceNodeName(source.Name)
+		if name == "" {
+			continue
+		}
+		nodeID := "ao-mission-provenance-" + name
+		if existing[nodeID] {
+			continue
+		}
+		augmented.Nodes = append(augmented.Nodes, WorkgraphNode{
+			ID:           nodeID,
+			Status:       "blocked",
+			Dependencies: []string{},
+			Blockers:     []string{"AO Mission provenance node is readback-only and requires explicit downstream evidence binding before execution"},
+			StitchTask:   false,
+			FactoryTask: FactoryTask{
+				ContractVersion:   FactoryTaskContract,
+				ID:                nodeID + "-task",
+				Objective:         "Bind AO Mission provenance source " + name + " as a first-class Atlas workgraph readback node.",
+				TargetFactoryRepo: "ao-foundry",
+				FactoryFolder:     "factory/ao-mission-provenance/" + name,
+				Acceptance:        []string{"provenance source is digest-bound without granting execution authority"},
+				NonGoals:          []string{"do not execute mutation", "do not approve AO Mission authority"},
+				WriteScope:        []string{"factory/ao-mission-provenance/" + name},
+				Verification:      []string{"scripts/production-readiness.sh"},
+				RequiredEvidence:  []string{source.Path + "@" + source.SHA256},
+				SafetyLimits:      []string{"readback-only", "no provider calls", "no credentials", "no public claim broadening"},
+				AuthorityBoundary: "atlas_provenance_readback_only",
+			},
+		})
+		existing[nodeID] = true
+	}
+	if err := ValidateWorkgraph(augmented); err != nil {
+		return Workgraph{}, err
+	}
+	return augmented, nil
+}
+
 func ValidateAOMissionWorkgraphMetadata(metadata AOMissionWorkgraphMetadata, workgraph Workgraph) error {
 	if metadata.ContractVersion != AOMissionWorkgraphMetadataContract {
 		return fmt.Errorf("invalid AO Mission workgraph metadata contract_version")
@@ -203,6 +254,23 @@ func aoMissionWorkgraphNodeCounts(workgraph Workgraph) map[string]int {
 		counts[node.Status]++
 	}
 	return counts
+}
+
+func sanitizeMissionProvenanceNodeName(value string) string {
+	value = strings.TrimSpace(strings.ToLower(value))
+	value = strings.ReplaceAll(value, "_", "-")
+	value = strings.ReplaceAll(value, ".", "-")
+	value = strings.ReplaceAll(value, "/", "-")
+	value = strings.ReplaceAll(value, "\\", "-")
+	fields := strings.Fields(value)
+	value = strings.Join(fields, "-")
+	var b strings.Builder
+	for _, r := range value {
+		if (r >= 'a' && r <= 'z') || (r >= '0' && r <= '9') || r == '-' {
+			b.WriteRune(r)
+		}
+	}
+	return strings.Trim(b.String(), "-")
 }
 
 func aoMissionProvenanceCounts(importRecord AOMissionImport) map[string]int {

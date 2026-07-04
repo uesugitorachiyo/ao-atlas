@@ -412,6 +412,7 @@ func runMissionWorkgraphMetadata(args []string, stdout io.Writer) error {
 	importPath := fs.String("import", "", "AO Mission import path")
 	workgraphPath := fs.String("workgraph", "", "Atlas workgraph path")
 	outPath := fs.String("out", "", "output path")
+	provenanceWorkgraphOut := fs.String("provenance-workgraph-out", "", "optional output path for workgraph with AO Mission provenance nodes")
 	jsonOut := fs.Bool("json", false, "json output")
 	if err := fs.Parse(args); err != nil {
 		return err
@@ -429,9 +430,33 @@ func runMissionWorkgraphMetadata(args []string, stdout io.Writer) error {
 			}
 		}
 	}
+	if *provenanceWorkgraphOut != "" {
+		for _, input := range []string{*importPath, *workgraphPath} {
+			if samePath(input, *provenanceWorkgraphOut) {
+				return fmt.Errorf("refusing to overwrite input artifact")
+			}
+		}
+	}
 	metadata, err := BuildAOMissionWorkgraphMetadata(*importPath, *workgraphPath)
 	if err != nil {
 		return err
+	}
+	if *provenanceWorkgraphOut != "" {
+		importRecord, err := LoadJSON[AOMissionImport](*importPath)
+		if err != nil {
+			return err
+		}
+		workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+		if err != nil {
+			return err
+		}
+		provenanceWorkgraph, err := BuildAOMissionProvenanceWorkgraph(importRecord, workgraph)
+		if err != nil {
+			return err
+		}
+		if err := WriteJSON(*provenanceWorkgraphOut, provenanceWorkgraph); err != nil {
+			return err
+		}
 	}
 	if *outPath != "" {
 		if err := WriteJSON(*outPath, metadata); err != nil {
@@ -442,6 +467,9 @@ func runMissionWorkgraphMetadata(args []string, stdout io.Writer) error {
 		return printJSON(stdout, metadata)
 	}
 	fmt.Fprintf(stdout, "status=ready\nmission_id=%s\nworkgraph=%s\nao_mission_workgraph_metadata=%s\n", metadata.MissionID, metadata.WorkgraphID, *outPath)
+	if *provenanceWorkgraphOut != "" {
+		fmt.Fprintf(stdout, "ao_mission_provenance_workgraph=%s\n", *provenanceWorkgraphOut)
+	}
 	return nil
 }
 

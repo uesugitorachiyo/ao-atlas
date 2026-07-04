@@ -1332,12 +1332,14 @@ func TestMissionImportRejectsArtifactManifestDigestMismatch(t *testing.T) {
 func TestMissionImportWorkgraphMetadataBindsImportAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	outPath := filepath.Join(dir, "ao-mission-workgraph-metadata.json")
+	provenanceWorkgraphPath := filepath.Join(dir, "ao-mission-provenance-workgraph.json")
 	var out bytes.Buffer
 	code := Run([]string{
 		"mission", "workgraph-metadata",
 		"--import", filepath.Join("..", "..", "examples", "valid", "ao-mission-import.json"),
 		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
 		"--out", outPath,
+		"--provenance-workgraph-out", provenanceWorkgraphPath,
 	}, &out, &out)
 	if code != 0 {
 		t.Fatalf("mission workgraph metadata failed: %s", out.String())
@@ -1374,6 +1376,32 @@ func TestMissionImportWorkgraphMetadataBindsImportAndWorkgraph(t *testing.T) {
 	}
 	if metadata.SafeToExecute || metadata.SchedulesWork || metadata.ExecutesWork || metadata.ApprovesWork {
 		t.Fatalf("metadata widened authority: %#v", metadata)
+	}
+	provenanceWorkgraph, err := LoadJSON[Workgraph](provenanceWorkgraphPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateWorkgraph(provenanceWorkgraph); err != nil {
+		t.Fatalf("provenance workgraph did not validate: %v", err)
+	}
+	nodes := workgraphNodesByID(provenanceWorkgraph)
+	for _, want := range []string{"ao-mission-provenance-gateway-readiness-rollup", "ao-mission-provenance-timeline-compaction"} {
+		node, ok := nodes[want]
+		if !ok {
+			t.Fatalf("provenance workgraph missing node %q", want)
+		}
+		if node.Status != "blocked" || len(node.Blockers) == 0 {
+			t.Fatalf("provenance node must be blocked/readback-only: %+v", node)
+		}
+		if node.FactoryTask.TargetFactoryRepo != "ao-foundry" || node.FactoryTask.AuthorityBoundary != "atlas_provenance_readback_only" {
+			t.Fatalf("provenance node has wrong boundary: %+v", node.FactoryTask)
+		}
+		if len(node.FactoryTask.RequiredEvidence) != 1 || !strings.Contains(node.FactoryTask.RequiredEvidence[0], "sha256:") {
+			t.Fatalf("provenance node missing digest-bound evidence: %+v", node.FactoryTask.RequiredEvidence)
+		}
+	}
+	if _, ok := NextReadyNode(provenanceWorkgraph); !ok {
+		t.Fatalf("provenance workgraph should preserve original first ready node")
 	}
 }
 
