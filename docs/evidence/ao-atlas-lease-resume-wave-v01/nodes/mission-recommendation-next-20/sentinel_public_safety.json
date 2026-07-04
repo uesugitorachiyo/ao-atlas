@@ -1,0 +1,5 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-20",
+  "summary": "Production readiness now rejects unsafe wording in the live lease-resume continuation prompt and the global public-safety scan still passes."
+}

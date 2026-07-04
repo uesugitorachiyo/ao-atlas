@@ -4,25 +4,25 @@ Do not ask the operator for permission. Do not reset the lease clock. Load and p
 
 - Evidence root: `docs/evidence/ao-atlas-lease-resume-wave-v01`
 - Lease start: `docs/evidence/ao-atlas-lease-resume-wave-v01/lease-start.json`
-- Current workgraph: `docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-19/workgraph-after.json`
+- Current workgraph: `docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-20/workgraph-after.json`
 - Current readback: `docs/evidence/ao-atlas-lease-resume-wave-v01/recommendation-readback.json`
 
 Current status:
-- Completed nodes: 19 / 40
-- Ready nodes: 21
+- Completed nodes: 20 / 40
+- Ready nodes: 20
 - Elapsed minutes at latest checkpoint: 180
 - Minimum minutes: 120
 - `min_minutes_met=true`
 - `final_response_allowed=false`
 - Return gate: `blocked_ready_nodes_remain`
-- Checkpoint count: 19
-- Next executable node: `mission-recommendation-next-20`
+- Checkpoint count: 20
+- Next executable node: `mission-recommendation-next-21`
 
 Goal:
 Continue the useful 2-3 hour Atlas-owned hardening wave. Execute exactly one bounded node at a time, preserving the original `started_at` from `lease-start.json`, until all ready work is handled or a true hard blocker remains after safe repair attempts.
 
 Exact next action:
-- Emit Foundry import for mission-recommendation-next-20 and execute exactly one active node.
+- Emit Foundry import for mission-recommendation-next-21 and execute exactly one active node.
 
 Safety boundaries:
 - No provider calls.

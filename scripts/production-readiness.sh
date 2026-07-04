@@ -518,6 +518,47 @@ while IFS= read -r execution_readback; do
 done < <(find docs/evidence -name execution-readback.json -type f)
 pass "recommendation-ledger-consistency"
 
+lease_resume_root="docs/evidence/ao-atlas-lease-resume-wave-v01"
+lease_resume_readback="$lease_resume_root/recommendation-readback.json"
+lease_resume_synthesis="$lease_resume_root/final-synthesis.json"
+lease_resume_prompt="$lease_resume_root/next-recommended-prompt.md"
+if [ -f "$lease_resume_readback" ]; then
+  test -s "$lease_resume_synthesis"
+  test -s "$lease_resume_prompt"
+  jq -e --slurpfile synthesis "$lease_resume_synthesis" '
+    .total_nodes == $synthesis[0].total_nodes and
+    .completed_nodes == $synthesis[0].completed_nodes and
+    .ready_nodes == $synthesis[0].ready_nodes and
+    .checkpoint_count == $synthesis[0].checkpoint_count and
+    .elapsed_minutes == $synthesis[0].elapsed_minutes and
+    .return_gate_status == $synthesis[0].return_gate_status and
+    .final_response_allowed == $synthesis[0].final_response_allowed and
+    .exact_next_action == $synthesis[0].exact_next_action and
+    .final_response_allowed == false and
+    .return_gate_status == "blocked_ready_nodes_remain" and
+    .ready_nodes > 0 and
+    (.exact_next_action | length) > 0
+  ' "$lease_resume_readback" >/dev/null
+  lease_resume_completed_nodes="$(jq -r '.completed_nodes' "$lease_resume_readback")"
+  lease_resume_total_nodes="$(jq -r '.total_nodes' "$lease_resume_readback")"
+  lease_resume_ready_nodes="$(jq -r '.ready_nodes' "$lease_resume_readback")"
+  lease_resume_elapsed_minutes="$(jq -r '.elapsed_minutes' "$lease_resume_readback")"
+  lease_resume_checkpoint_count="$(jq -r '.checkpoint_count' "$lease_resume_readback")"
+  lease_resume_next_action="$(jq -r '.exact_next_action' "$lease_resume_readback")"
+  lease_resume_node_suffix="$(printf "%02d" "$lease_resume_completed_nodes")"
+  lease_resume_workgraph="$lease_resume_root/nodes/mission-recommendation-next-$lease_resume_node_suffix/workgraph-after.json"
+  test -s "$lease_resume_workgraph"
+  grep -qF "Current workgraph: \`$lease_resume_workgraph\`" "$lease_resume_prompt"
+  grep -qF "Completed nodes: $lease_resume_completed_nodes / $lease_resume_total_nodes" "$lease_resume_prompt"
+  grep -qF "Ready nodes: $lease_resume_ready_nodes" "$lease_resume_prompt"
+  grep -qF "Elapsed minutes at latest checkpoint: $lease_resume_elapsed_minutes" "$lease_resume_prompt"
+  grep -qF "Checkpoint count: $lease_resume_checkpoint_count" "$lease_resume_prompt"
+  grep -qF "$lease_resume_next_action" "$lease_resume_prompt"
+  grep -qF 'If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.' "$lease_resume_prompt"
+  reject_generated_recommendation_prompt_public_safety "$lease_resume_prompt"
+fi
+pass "lease-resume-wave-public-safety-readback"
+
 scan_file="$OUT/public-safety-files.txt"
 find . \
   -path './.git' -prune -o \
