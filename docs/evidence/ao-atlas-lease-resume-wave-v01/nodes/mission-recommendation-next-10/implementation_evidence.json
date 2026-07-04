@@ -1,0 +1,12 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-10",
+  "summary": "Added command_timeline_binding to Atlas recommendation Command readbacks, schema, closure validation, and production readiness checks.",
+  "changed_files": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "schemas/recommendation-command-readback.schema.json",
+    "scripts/production-readiness.sh"
+  ]
+}

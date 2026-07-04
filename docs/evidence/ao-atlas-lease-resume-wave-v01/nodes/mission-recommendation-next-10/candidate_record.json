@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-10",
+  "candidate": "command-compact-timeline-binding",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Command readbacks had an opaque compact timeline string. The repair adds a structured command_timeline_binding object so Command evidence can compare node counts, lease status, return gate, first executable node, and exact next action without parsing prose."
+}

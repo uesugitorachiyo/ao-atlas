@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-10",
+  "summary": "Changed Command readback metadata only. The binding preserves no-provider, no-credential, no-release, and no-authority-advance boundaries. RSI remains explicitly denied.",
+  "forbidden_markers_found": false,
+  "rsi_claimed": false,
+  "provider_calls": false,
+  "credential_inspection": false
+}

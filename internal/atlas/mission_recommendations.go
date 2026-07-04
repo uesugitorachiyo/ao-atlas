@@ -1101,29 +1101,46 @@ func BuildAtlasRecommendationCommandReadback(readback AtlasRecommendationReadbac
 	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
 		nodeStatus = "blocked_or_failed_nodes_present"
 	}
+	compactTimeline := fmt.Sprintf("%d/%d recommendation nodes complete; elapsed_minutes=%d; lease_time_status=%s; final_response_allowed=%t", readback.CompletedNodes, readback.TotalNodes, readback.ElapsedMinutes, readback.LeaseTimeStatus, readback.FinalResponseAllowed)
 	return AtlasRecommendationCommandReadback{
-		Schema:                 "ao.atlas.recommendation-command-readback.v0.1",
-		Status:                 readback.Status,
-		MissionID:              readback.MissionID,
-		EvidenceRoot:           readback.EvidenceRoot,
-		CompletedNodes:         readback.CompletedNodes,
-		ReadyNodes:             readback.ReadyNodes,
-		BlockedNodes:           readback.BlockedNodes,
-		FailedNodes:            readback.FailedNodes,
-		TotalNodes:             readback.TotalNodes,
-		StartedAt:              readback.StartedAt,
-		CompletedAt:            readback.CompletedAt,
-		ElapsedMinutes:         readback.ElapsedMinutes,
-		MinMinutes:             minMinutes,
-		MinMinutesMet:          readback.MinMinutesMet,
-		LeaseTimeStatus:        readback.LeaseTimeStatus,
-		NodeCompletionStatus:   nodeStatus,
-		ReturnGateStatus:       readback.ReturnGateStatus,
-		CheckpointCount:        readback.CheckpointCount,
-		FinalResponseAllowed:   readback.FinalResponseAllowed,
-		FinalResponseReason:    readback.FinalResponseReason,
-		ExactNextAction:        readback.ExactNextAction,
-		CompactTimeline:        fmt.Sprintf("%d/%d recommendation nodes complete; elapsed_minutes=%d; lease_time_status=%s; final_response_allowed=%t", readback.CompletedNodes, readback.TotalNodes, readback.ElapsedMinutes, readback.LeaseTimeStatus, readback.FinalResponseAllowed),
+		Schema:               "ao.atlas.recommendation-command-readback.v0.1",
+		Status:               readback.Status,
+		MissionID:            readback.MissionID,
+		EvidenceRoot:         readback.EvidenceRoot,
+		CompletedNodes:       readback.CompletedNodes,
+		ReadyNodes:           readback.ReadyNodes,
+		BlockedNodes:         readback.BlockedNodes,
+		FailedNodes:          readback.FailedNodes,
+		TotalNodes:           readback.TotalNodes,
+		StartedAt:            readback.StartedAt,
+		CompletedAt:          readback.CompletedAt,
+		ElapsedMinutes:       readback.ElapsedMinutes,
+		MinMinutes:           minMinutes,
+		MinMinutesMet:        readback.MinMinutesMet,
+		LeaseTimeStatus:      readback.LeaseTimeStatus,
+		NodeCompletionStatus: nodeStatus,
+		ReturnGateStatus:     readback.ReturnGateStatus,
+		CheckpointCount:      readback.CheckpointCount,
+		FinalResponseAllowed: readback.FinalResponseAllowed,
+		FinalResponseReason:  readback.FinalResponseReason,
+		ExactNextAction:      readback.ExactNextAction,
+		CompactTimeline:      compactTimeline,
+		CommandTimelineBinding: AtlasRecommendationCommandTimelineBinding{
+			Summary:              compactTimeline,
+			FirstExecutableNode:  readback.FirstExecutableNode,
+			ExactNextAction:      readback.ExactNextAction,
+			ReturnGateStatus:     readback.ReturnGateStatus,
+			NodeCompletionStatus: nodeStatus,
+			LeaseTimeStatus:      readback.LeaseTimeStatus,
+			CheckpointCount:      readback.CheckpointCount,
+			CompletedNodes:       readback.CompletedNodes,
+			ReadyNodes:           readback.ReadyNodes,
+			TotalNodes:           readback.TotalNodes,
+			ElapsedMinutes:       readback.ElapsedMinutes,
+			MinMinutes:           minMinutes,
+			MinMinutesMet:        readback.MinMinutesMet,
+			FinalResponseAllowed: readback.FinalResponseAllowed,
+		},
 		SchedulesWork:          false,
 		ExecutesWork:           false,
 		ApprovesWork:           false,
@@ -1233,6 +1250,40 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	}
 	if strings.TrimSpace(readback.ReturnGateStatus) != "" && command.CheckpointCount != readback.CheckpointCount {
 		errs = append(errs, "command readback checkpoint_count disagrees")
+	}
+	if command.CommandTimelineBinding.Summary != command.CompactTimeline {
+		errs = append(errs, "command timeline binding summary disagrees")
+	}
+	if command.CommandTimelineBinding.FirstExecutableNode != readback.FirstExecutableNode {
+		errs = append(errs, "command timeline binding first_executable_node disagrees")
+	}
+	if command.CommandTimelineBinding.ExactNextAction != readback.ExactNextAction {
+		errs = append(errs, "command timeline binding exact_next_action disagrees")
+	}
+	if command.CommandTimelineBinding.ReturnGateStatus != readback.ReturnGateStatus {
+		errs = append(errs, "command timeline binding return_gate_status disagrees")
+	}
+	if command.CommandTimelineBinding.NodeCompletionStatus != command.NodeCompletionStatus {
+		errs = append(errs, "command timeline binding node_completion_status disagrees")
+	}
+	if command.CommandTimelineBinding.LeaseTimeStatus != readback.LeaseTimeStatus {
+		errs = append(errs, "command timeline binding lease_time_status disagrees")
+	}
+	if command.CommandTimelineBinding.CheckpointCount != readback.CheckpointCount {
+		errs = append(errs, "command timeline binding checkpoint_count disagrees")
+	}
+	if command.CommandTimelineBinding.CompletedNodes != readback.CompletedNodes ||
+		command.CommandTimelineBinding.ReadyNodes != readback.ReadyNodes ||
+		command.CommandTimelineBinding.TotalNodes != readback.TotalNodes {
+		errs = append(errs, "command timeline binding node counts disagree")
+	}
+	if command.CommandTimelineBinding.ElapsedMinutes != readback.ElapsedMinutes ||
+		command.CommandTimelineBinding.MinMinutes != command.MinMinutes ||
+		command.CommandTimelineBinding.MinMinutesMet != readback.MinMinutesMet {
+		errs = append(errs, "command timeline binding lease timing disagrees")
+	}
+	if command.CommandTimelineBinding.FinalResponseAllowed != readback.FinalResponseAllowed {
+		errs = append(errs, "command timeline binding final_response_allowed disagrees")
 	}
 	if strings.TrimSpace(readback.ReturnGateStatus) != "" && foundry.CheckpointCount != readback.CheckpointCount {
 		errs = append(errs, "foundry rollup checkpoint_count disagrees")
