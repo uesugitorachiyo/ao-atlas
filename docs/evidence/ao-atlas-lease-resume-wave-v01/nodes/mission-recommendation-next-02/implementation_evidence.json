@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-02",
+  "summary": "Added return_gate_status and checkpoint_count to Atlas recommendation readbacks, mirrored them into execution readbacks, exposed them in CLI status output, documented them, and asserted them in production readiness."
+}

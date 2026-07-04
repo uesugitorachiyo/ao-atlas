@@ -1,0 +1,6 @@
+{
+  "status": "selected",
+  "node_id": "mission-recommendation-next-02",
+  "task": "Expose Mission return gate and checkpoint count in Atlas status readback.",
+  "candidate_reason": "Ready node from the active Atlas recommendation workgraph; improves long-run continuation readback quality."
+}

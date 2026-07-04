@@ -583,11 +583,13 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 	if nextExecutable == "" {
 		nextExecutable = "none"
 	}
-	fmt.Fprintf(stdout, "status=written\ncompleted_node=%s\ncompleted_nodes=%d\nready_nodes=%d\nnext_executable_node=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nupdated_workgraph=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncheckpoint_readback=%s\n",
+	fmt.Fprintf(stdout, "status=written\ncompleted_node=%s\ncompleted_nodes=%d\nready_nodes=%d\nnext_executable_node=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nupdated_workgraph=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncheckpoint_readback=%s\n",
 		completedNodeID,
 		readback.CompletedNodes,
 		readback.ReadyNodes,
 		nextExecutable,
+		readback.CheckpointCount,
+		readback.ReturnGateStatus,
 		readback.ElapsedMinutes,
 		readback.MinMinutesMet,
 		readback.LeaseTimeStatus,
@@ -715,7 +717,7 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 			return err
 		}
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nstarted_at=%s\ncompleted_at=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncommand_readback=%s\npromoter_readback=%s\nfoundry_rollup=%s\n",
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nstarted_at=%s\ncompleted_at=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncommand_readback=%s\npromoter_readback=%s\nfoundry_rollup=%s\n",
 		readback.Status,
 		readback.MissionID,
 		readback.StartedAt,
@@ -723,6 +725,8 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 		readback.ElapsedMinutes,
 		readback.MinMinutesMet,
 		readback.LeaseTimeStatus,
+		readback.CheckpointCount,
+		readback.ReturnGateStatus,
 		readback.FinalResponseAllowed,
 		readback.ExactNextAction,
 		filepath.ToSlash(*outReadbackPath),
@@ -789,7 +793,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	if *jsonOut {
 		return printJSON(stdout, readback)
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\n",
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\n",
 		readback.Status,
 		readback.MissionID,
 		readback.TotalNodes,
@@ -797,6 +801,8 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 		readback.ReadyNodes,
 		readback.ExecutableReadyNodes,
 		readback.LeaseHealthStatus,
+		readback.CheckpointCount,
+		readback.ReturnGateStatus,
 		readback.ElapsedMinutes,
 		readback.MinMinutesMet,
 		readback.LeaseTimeStatus,

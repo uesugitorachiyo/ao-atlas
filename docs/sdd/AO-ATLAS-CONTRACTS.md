@@ -76,7 +76,9 @@ and the first 10 Feature Depth recommendations. Final response is allowed only
 when no ready, blocked, or failed recommendation nodes remain and the elapsed
 lease time meets `supervisor.min_minutes`. The readback is evidence only: it
 does not schedule, execute, approve, mutate repositories, call providers,
-inspect credentials, or claim broad RSI.
+inspect credentials, or claim broad RSI. `return_gate_status` names the active
+final-response gate, and `checkpoint_count` records the number of completed-node
+checkpoints represented by the workgraph.
 
 `ao.atlas.recommendation-lease-start.v0.1` is the durable start marker for a
 long-run recommendation wave. It records `started_at`, lease minutes, checkpoint

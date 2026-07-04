@@ -84,6 +84,17 @@
     "command_readback_status": { "type": "string", "minLength": 1 },
     "command_timeline_status": { "type": "string", "minLength": 1 },
     "public_safety_scan_status": { "type": "string", "minLength": 1 },
+    "return_gate_status": {
+      "enum": [
+        "final_response_allowed",
+        "blocked_hard_blocker",
+        "blocked_lease_timing_missing",
+        "blocked_minimum_minutes_unmet",
+        "blocked_ready_nodes_remain",
+        "blocked_no_executable_ready_node"
+      ]
+    },
+    "checkpoint_count": { "type": "integer", "minimum": 0 },
     "final_response_allowed": { "type": "boolean" },
     "final_response_reason": { "type": "string", "minLength": 1 },
     "exact_next_action": { "type": "string", "minLength": 1 },

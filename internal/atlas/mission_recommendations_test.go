@@ -186,6 +186,9 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 	if readback.FinalResponseAllowed || readback.ExactNextAction != "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node." {
 		t.Fatalf("readback must deny final response with exact next node: %#v", readback)
 	}
+	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 0 {
+		t.Fatalf("readback missing return gate status or checkpoint count: %#v", readback)
+	}
 	if readback.FoundryTerminalStatusReadback["promoted"] == "" ||
 		readback.FoundryTerminalStatusReadback["denied"] == "" ||
 		readback.FoundryTerminalStatusReadback["blocked"] == "" ||
@@ -248,12 +251,17 @@ func TestMissionRecommendationsReadbackCLIMatchesGeneratedArtifacts(t *testing.T
 		t.Fatalf("recommendation readback failed: %s", out.String())
 	}
 	if !strings.Contains(out.String(), "final_response_allowed=false") ||
+		!strings.Contains(out.String(), "return_gate_status=blocked_ready_nodes_remain") ||
+		!strings.Contains(out.String(), "checkpoint_count=0") ||
 		!strings.Contains(out.String(), "exact_next_action=Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.") {
 		t.Fatalf("readback output missing final gate and exact action: %s", out.String())
 	}
 	readback := mustLoadJSON[AtlasRecommendationReadback](t, readbackPath)
 	if readback.WaveDigest == "" || readback.WorkgraphDigest == "" {
 		t.Fatalf("readback must carry artifact digests: %#v", readback)
+	}
+	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 0 {
+		t.Fatalf("readback must expose return gate status and checkpoint count: %#v", readback)
 	}
 }
 
@@ -731,6 +739,8 @@ func TestMissionRecommendationsCompleteNodeCLIWritesUpdatedArtifacts(t *testing.
 		t.Fatalf("complete-node failed: %s", out.String())
 	}
 	if !strings.Contains(out.String(), "completed_nodes=1") ||
+		!strings.Contains(out.String(), "checkpoint_count=1") ||
+		!strings.Contains(out.String(), "return_gate_status=blocked_ready_nodes_remain") ||
 		!strings.Contains(out.String(), "next_executable_node=mission-recommendation-next-02") {
 		t.Fatalf("complete-node output missing progress readback: %s", out.String())
 	}
@@ -742,9 +752,16 @@ func TestMissionRecommendationsCompleteNodeCLIWritesUpdatedArtifacts(t *testing.
 	if readback.CompletedNodes != 1 || readback.EvidenceRoot != "docs/evidence/test-wave" {
 		t.Fatalf("bad readback artifact: %#v", readback)
 	}
+	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 1 {
+		t.Fatalf("readback must carry node checkpoint count and return gate status: %#v", readback)
+	}
 	execution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, executionPath)
 	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
 		t.Fatalf("bad execution artifact: %v", err)
+	}
+	if execution.GeneratedWorkgraph.ReturnGateStatus != readback.ReturnGateStatus ||
+		execution.GeneratedWorkgraph.CheckpointCount != readback.CheckpointCount {
+		t.Fatalf("execution readback missing status gate mirror: %#v", execution.GeneratedWorkgraph)
 	}
 }
 
@@ -884,6 +901,12 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"minimum_minutes_met",
 		"--out-execution-readback",
 		"completed_recommendation_nodes",
+		"checkpoint_count",
+		"return_gate_status",
+		"blocked_ready_nodes_remain",
+		"blocked_minimum_minutes_unmet",
+		"blocked_lease_timing_missing",
+		"final_response_allowed",
 		"min_minutes_met=true",
 		"recommendation-ledger-consistency",
 		"next-recommended-prompt.md",
