@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-13",
+  "candidate": "unsafe-feature-depth-authority-claim-regressions",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Existing unsafe-bundle coverage checked safe_to_execute only. The repair adds explicit regressions for schedules_work, executes_work, approves_work, and mutates_repositories authority claims."
+}

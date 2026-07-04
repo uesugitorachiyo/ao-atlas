@@ -365,10 +365,11 @@ if "$BIN" mission recommendations import --recommendations examples/invalid/feat
   exit 1
 fi
 grep -q "at least 20 tasks" "$OUT/mission-recommendations-shallow.out"
-if "$BIN" mission recommendations import --recommendations examples/invalid/feature-depth-recommendations-unsafe.json --target-instance demo-stack --min-tasks 20 --node-budget 20 --estimated-minutes 90 --out "$OUT/mission-recommendations-unsafe" >/dev/null 2>&1; then
+if "$BIN" mission recommendations import --recommendations examples/invalid/feature-depth-recommendations-unsafe.json --target-instance demo-stack --min-tasks 20 --node-budget 20 --estimated-minutes 90 --out "$OUT/mission-recommendations-unsafe" >"$OUT/mission-recommendations-unsafe.out" 2>&1; then
   echo "unsafe Feature Depth recommendations were accepted" >&2
   exit 1
 fi
+grep -q "safe_to_execute must be false" "$OUT/mission-recommendations-unsafe.out"
 if "$BIN" blueprint import --pack examples/invalid/blueprint-import-missing-authorization/blueprint-pack --instance examples/valid/stack-instance.json --mutation-classes examples/valid/mutation-classes.json --out "$OUT/blueprint-import-missing-auth" >/dev/null 2>&1; then
   echo "missing Blueprint authorization emitted ready import material" >&2
   exit 1
