@@ -1130,6 +1130,69 @@ func TestMissionImportBindsMissionArchiveProvenance(t *testing.T) {
 	}
 }
 
+func TestMissionImportBindsGatewayReadinessRollupProvenance(t *testing.T) {
+	dir := t.TempDir()
+	record := filepath.Join(dir, "mission-record.json")
+	status := filepath.Join(dir, "command-status.json")
+	manifest := filepath.Join(dir, "artifact-manifest.json")
+	rollup := filepath.Join(dir, "gateway-readiness-rollup.json")
+	outPath := filepath.Join(dir, "ao-mission-import.json")
+	if err := WriteJSON(record, map[string]any{"schema": "ao.mission.record.v0.1", "mission_id": "mission-demo", "status": "active", "current_route": "ao-atlas"}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(status, map[string]any{"schema": "ao.command.mission-status.v0.1", "mission_id": "mission-demo", "status": "active", "current_route": "ao-atlas", "safe_to_execute": false, "executes_work": false, "approves_work": false, "mutates_repositories": false}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(manifest, map[string]any{"schema": "ao.mission.artifact-manifest.v0.1", "mission_id": "mission-demo", "artifact_refs": []any{}, "executes_work": false, "approves_work": false}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(rollup, map[string]any{
+		"schema":               "ao.mission.gateway-readiness-rollup.v0.1",
+		"mission_id":           "mission-demo",
+		"status":               "ready",
+		"correlation_id":       "corr-gateway-001",
+		"readback_count":       2,
+		"safe_to_execute":      false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "import",
+		"--record", record,
+		"--command-status", status,
+		"--artifact-manifest", manifest,
+		"--gateway-readiness-rollup", rollup,
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission import with gateway rollup failed: %s", out.String())
+	}
+	importRecord, err := LoadJSON[AOMissionImport](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(importRecord.SourceArtifacts) != 4 || importRecord.SourceArtifacts[3].Name != "gateway_readiness_rollup" {
+		t.Fatalf("missing gateway readiness provenance: %#v", importRecord.SourceArtifacts)
+	}
+	metadata := filepath.Join(dir, "metadata.json")
+	out.Reset()
+	code = Run([]string{"mission", "workgraph-metadata", "--import", outPath, "--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"), "--out", metadata}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission metadata with gateway rollup failed: %s", out.String())
+	}
+	metadataRecord, err := LoadJSON[AOMissionWorkgraphMetadata](metadata)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if metadataRecord.MissionProvenance["gateway_readiness_rollup"] != 1 || !strings.Contains(metadataRecord.ProvenanceDiagnostics, "gateway_readiness_rollup=1") {
+		t.Fatalf("metadata missing gateway readiness diagnostics: %#v", metadataRecord)
+	}
+}
+
 func TestMissionImportRejectsUnsafeRouteHistory(t *testing.T) {
 	dir := t.TempDir()
 	record := filepath.Join(dir, "mission-record.json")

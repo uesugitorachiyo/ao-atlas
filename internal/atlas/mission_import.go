@@ -21,6 +21,10 @@ func BuildAOMissionImportWithMissionReadbacks(recordPath, commandStatusPath, art
 }
 
 func BuildAOMissionImportWithMissionArchive(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath string) (AOMissionImport, error) {
+	return BuildAOMissionImportWithGatewayReadiness(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath, "")
+}
+
+func BuildAOMissionImportWithGatewayReadiness(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath, gatewayReadinessRollupPath string) (AOMissionImport, error) {
 	var record map[string]any
 	if err := readJSONIfPossible(recordPath, &record); err != nil {
 		return AOMissionImport{}, err
@@ -76,7 +80,12 @@ func BuildAOMissionImportWithMissionArchive(recordPath, commandStatusPath, artif
 			return AOMissionImport{}, err
 		}
 	}
-	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath)
+	if strings.TrimSpace(gatewayReadinessRollupPath) != "" {
+		if err := validateAOMissionReadback(gatewayReadinessRollupPath, missionID, "ao.mission.gateway-readiness-rollup.v0.1", "gateway readiness rollup"); err != nil {
+			return AOMissionImport{}, err
+		}
+	}
+	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath, gatewayReadinessRollupPath)
 	if err != nil {
 		return AOMissionImport{}, err
 	}
@@ -226,7 +235,7 @@ func sortedMissionProvenanceKeys(counts map[string]int) []string {
 	return keys
 }
 
-func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath string) ([]AOMissionSourceArtifact, error) {
+func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath, missionArchivePath, gatewayReadinessRollupPath string) ([]AOMissionSourceArtifact, error) {
 	inputs := []struct {
 		name string
 		path string
@@ -258,6 +267,12 @@ func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPat
 			name string
 			path string
 		}{name: "mission_archive", path: missionArchivePath})
+	}
+	if strings.TrimSpace(gatewayReadinessRollupPath) != "" {
+		inputs = append(inputs, struct {
+			name string
+			path string
+		}{name: "gateway_readiness_rollup", path: gatewayReadinessRollupPath})
 	}
 	sources := make([]AOMissionSourceArtifact, 0, len(inputs))
 	for _, input := range inputs {
