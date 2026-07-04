@@ -1,0 +1,5 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-34",
+  "summary": "Blueprint skip wording is routing-only and does not claim RSI, authority expansion, deployment, release, credential access, provider execution, or Blueprint authority bypass for missing authorization."
+}

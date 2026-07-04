@@ -139,6 +139,7 @@ for file in "${required_files[@]}"; do
   test -s "$file"
 done
 grep -q "## Double-Size Operator Requests" docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
+grep -q "Ready Atlas-owned tasks skip Blueprint" docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
 grep -q "A 20-node or" docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
 grep -q "90-minute wave is too small for this path" docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
 grep -q "prior wave was too short" README.md

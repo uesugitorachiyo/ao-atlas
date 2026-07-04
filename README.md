@@ -195,6 +195,10 @@ When an operator says the prior wave was too short, use the 2-3 hour supervisor
 defaults instead of a 20-node or 90-minute compatibility wave. Preserve the
 lease-start artifact across resumes, execute one Atlas-owned node at a time, and
 do not produce a final response while ready nodes or an exact next action remain.
+Ready Atlas-owned recommendation tasks skip Blueprint: Atlas already has the
+bounded task, safety limits, required gates, and digest-bound source evidence,
+so Blueprint is only re-entered when requirements, authorization, candidate
+rules, or scope approval are missing.
 The detailed operator runbook is
 `docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md`.
 
