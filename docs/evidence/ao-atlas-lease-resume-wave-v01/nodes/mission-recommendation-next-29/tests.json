@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-29",
+  "red_test": "go test ./internal/atlas -run 'TestRecommendationReadbackSchemaRequiresCommandTimelinePlaceholders|TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph' -count=1 failed before implementation because recommendation-readback.schema.json did not require command_timeline_placeholders.",
+  "tests": [
+    "go test ./internal/atlas -run 'TestRecommendationReadbackSchemaRequiresCommandTimelinePlaceholders|TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph' -count=1 passed"
+  ],
+  "summary": "Focused tests now prove the schema requires Command timeline placeholders and generated readbacks bind checkpoint, exact next action, and return gate slots."
+}

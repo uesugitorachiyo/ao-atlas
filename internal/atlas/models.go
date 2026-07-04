@@ -229,6 +229,7 @@ type AtlasRecommendationReadback struct {
 	PromoterNoPromotionStatus     string                              `json:"promoter_no_promotion_status"`
 	CommandReadbackStatus         string                              `json:"command_readback_status"`
 	CommandTimelineStatus         string                              `json:"command_timeline_status"`
+	CommandTimelinePlaceholders   []AtlasCommandTimelinePlaceholder   `json:"command_timeline_placeholders"`
 	PublicSafetyScanStatus        string                              `json:"public_safety_scan_status"`
 	ReturnGateStatus              string                              `json:"return_gate_status,omitempty"`
 	CheckpointCount               int                                 `json:"checkpoint_count"`
@@ -271,6 +272,14 @@ type AtlasExactNextActionReadback struct {
 	ReturnGateStatus     string `json:"return_gate_status"`
 	FinalResponseAllowed bool   `json:"final_response_allowed"`
 	Source               string `json:"source"`
+}
+
+type AtlasCommandTimelinePlaceholder struct {
+	Slot                        string `json:"slot"`
+	Source                      string `json:"source"`
+	Status                      string `json:"status"`
+	Summary                     string `json:"summary"`
+	RequiredBeforeFinalResponse bool   `json:"required_before_final_response"`
 }
 
 type AtlasRecommendationNodeEvidence struct {

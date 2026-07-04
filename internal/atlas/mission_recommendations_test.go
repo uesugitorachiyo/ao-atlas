@@ -107,6 +107,10 @@ func TestRecommendationReadbackSchemaRequiresExactNextActionReadback(t *testing.
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "exact_next_action_readback")
 }
 
+func TestRecommendationReadbackSchemaRequiresCommandTimelinePlaceholders(t *testing.T) {
+	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "command_timeline_placeholders")
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -441,6 +445,24 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 	}
 	if rawReadback["final_response_denial_gate"] != "deny_ready_nodes_or_exact_next_action_remain" {
 		t.Fatalf("readback missing final response denial gate: %#v", rawReadback["final_response_denial_gate"])
+	}
+	timelinePlaceholders, ok := rawReadback["command_timeline_placeholders"].([]any)
+	if !ok || len(timelinePlaceholders) < 3 {
+		t.Fatalf("readback missing Command timeline placeholders: %#v", rawReadback["command_timeline_placeholders"])
+	}
+	timelineBySlot := map[string]map[string]any{}
+	for _, item := range timelinePlaceholders {
+		placeholder, ok := item.(map[string]any)
+		if !ok {
+			t.Fatalf("bad Command timeline placeholder: %#v", item)
+		}
+		slot, _ := placeholder["slot"].(string)
+		timelineBySlot[slot] = placeholder
+	}
+	if timelineBySlot["checkpoint"]["source"] != "recommendation_readback" ||
+		timelineBySlot["exact_next_action"]["status"] != "pending_command_timeline" ||
+		timelineBySlot["return_gate"]["required_before_final_response"] != true {
+		t.Fatalf("Command timeline placeholders do not bind checkpoint/action/return gate: %#v", timelineBySlot)
 	}
 	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 0 {
 		t.Fatalf("readback missing return gate status or checkpoint count: %#v", readback)
