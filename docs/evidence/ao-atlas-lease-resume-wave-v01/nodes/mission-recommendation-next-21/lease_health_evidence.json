@@ -1,0 +1,26 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-21",
+  "root_readback_before": "recommendation-readback.json",
+  "lease_health_status_before": "minimum_unmet",
+  "root_readback_after": "recommendation-readback.json",
+  "completed_nodes_after": 21,
+  "ready_nodes_after": 19,
+  "elapsed_minutes_after": 180,
+  "min_minutes_met_after": true,
+  "lease_time_status_after": "minimum_minutes_met",
+  "lease_health_status_after": "minimum_unmet",
+  "exact_next_action_after": "Emit Foundry import for mission-recommendation-next-22 and execute exactly one active node.",
+  "derived_artifacts_bound": [
+    "checkpoint-readback",
+    "execution-readback",
+    "generated-workgraph-readback",
+    "foundry-run-link-readiness-summary",
+    "command-readback",
+    "command-timeline-binding",
+    "promoter-readback",
+    "foundry-rollup",
+    "reconciliation-packet"
+  ],
+  "summary": "Node 21 binds the root recommendation lease health into every derived long-run evidence/readback surface that participates in continuation, closure, or stale-route reconciliation."
+}

@@ -3,6 +3,7 @@
   "status": "implementation_wave_completed_generated_workgraph_ready",
   "mission_id": "mission-long-wave",
   "evidence_root": "docs/evidence/ao-atlas-long-recommendation-wave-v03",
+  "lease_health_status": "minimum_unmet",
   "completed_recommendation_nodes": 0,
   "total_recommendation_nodes": 40,
   "generated_workgraph": {
@@ -10,6 +11,7 @@
     "ready_nodes": 40,
     "executable_ready_nodes": 1,
     "first_executable_node": "mission-recommendation-next-01",
+    "lease_health_status": "minimum_unmet",
     "final_response_allowed": false,
     "final_response_reason": "ready nodes or exact next actions remain"
   },
@@ -21,13 +23,14 @@
     "missing_run_links": 40,
     "ready_nodes": 40,
     "next_executable_node": "mission-recommendation-next-01",
+    "lease_health_status": "minimum_unmet",
     "checkpoint_count": 0,
     "final_response_allowed": false
   },
   "source_artifacts": [
     {
       "ref": "foundry_run_link_readiness_summary",
-      "digest": "sha256:c7d92f3aed23caacce8658060a057641cbffbc5deb65aec7a33883d3784ffb9f"
+      "digest": "sha256:fef1379526021913791fb054af0d2ac2d6c47909fd5a90ab5cdd016ad39d2e99"
     }
   ],
   "implemented_bindings": [

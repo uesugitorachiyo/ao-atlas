@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-21",
+  "rollback": [
+    "Revert lease_health_status fields added to derived Atlas recommendation readback structs.",
+    "Revert lease_health_status propagation and validator checks in internal/atlas/mission_recommendations.go.",
+    "Revert recommendation schema and production-readiness lease-health assertions.",
+    "Remove node 21 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-21.",
+    "Regenerate root readbacks from node 20 workgraph if this node is reverted before merge."
+  ]
+}

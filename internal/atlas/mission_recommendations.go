@@ -1035,6 +1035,7 @@ func BuildAtlasRecommendationCheckpointReadback(readback AtlasRecommendationRead
 		MaxMinutes:                maxMinutes,
 		MinMinutesMet:             readback.MinMinutesMet,
 		LeaseTimeStatus:           readback.LeaseTimeStatus,
+		LeaseHealthStatus:         readback.LeaseHealthStatus,
 		CheckpointFreshnessStatus: "elapsed_minutes_recorded_after_node_checkpoint",
 		CompletedNodes:            readback.CompletedNodes,
 		ReadyNodes:                readback.ReadyNodes,
@@ -1068,6 +1069,7 @@ func ValidateAtlasRecommendationCheckpointReadback(checkpoint AtlasRecommendatio
 		errs = append(errs, "elapsed_minutes must be non-negative")
 	}
 	requireField(&errs, "lease_time_status", checkpoint.LeaseTimeStatus)
+	requireField(&errs, "lease_health_status", checkpoint.LeaseHealthStatus)
 	requireField(&errs, "checkpoint_freshness_status", checkpoint.CheckpointFreshnessStatus)
 	requireField(&errs, "final_response_reason", checkpoint.FinalResponseReason)
 	requireField(&errs, "exact_next_action", checkpoint.ExactNextAction)
@@ -1118,6 +1120,7 @@ func BuildAtlasRecommendationCommandReadback(readback AtlasRecommendationReadbac
 		MinMinutes:           minMinutes,
 		MinMinutesMet:        readback.MinMinutesMet,
 		LeaseTimeStatus:      readback.LeaseTimeStatus,
+		LeaseHealthStatus:    readback.LeaseHealthStatus,
 		NodeCompletionStatus: nodeStatus,
 		ReturnGateStatus:     readback.ReturnGateStatus,
 		CheckpointCount:      readback.CheckpointCount,
@@ -1132,6 +1135,7 @@ func BuildAtlasRecommendationCommandReadback(readback AtlasRecommendationReadbac
 			ReturnGateStatus:     readback.ReturnGateStatus,
 			NodeCompletionStatus: nodeStatus,
 			LeaseTimeStatus:      readback.LeaseTimeStatus,
+			LeaseHealthStatus:    readback.LeaseHealthStatus,
 			CheckpointCount:      readback.CheckpointCount,
 			CompletedNodes:       readback.CompletedNodes,
 			ReadyNodes:           readback.ReadyNodes,
@@ -1165,6 +1169,7 @@ func BuildAtlasRecommendationPromoterReadback(readback AtlasRecommendationReadba
 		Reason:                 reason,
 		ElapsedMinutes:         readback.ElapsedMinutes,
 		MinMinutesMet:          readback.MinMinutesMet,
+		LeaseHealthStatus:      readback.LeaseHealthStatus,
 		FinalResponseAllowed:   readback.FinalResponseAllowed,
 		SchedulesWork:          false,
 		ExecutesWork:           false,
@@ -1199,6 +1204,7 @@ func BuildAtlasRecommendationFoundryRollup(readback AtlasRecommendationReadback)
 		TotalNodes:             readback.TotalNodes,
 		NodeCompletionStatus:   nodeStatus,
 		LeaseCompletionStatus:  readback.LeaseTimeStatus,
+		LeaseHealthStatus:      readback.LeaseHealthStatus,
 		ReturnGateStatus:       readback.ReturnGateStatus,
 		CheckpointCount:        readback.CheckpointCount,
 		FinalResponseAllowed:   readback.FinalResponseAllowed,
@@ -1288,6 +1294,18 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	if strings.TrimSpace(readback.ReturnGateStatus) != "" && foundry.CheckpointCount != readback.CheckpointCount {
 		errs = append(errs, "foundry rollup checkpoint_count disagrees")
 	}
+	if command.LeaseHealthStatus != readback.LeaseHealthStatus {
+		errs = append(errs, "command readback lease_health_status disagrees")
+	}
+	if command.CommandTimelineBinding.LeaseHealthStatus != readback.LeaseHealthStatus {
+		errs = append(errs, "command timeline binding lease_health_status disagrees")
+	}
+	if promoter.LeaseHealthStatus != readback.LeaseHealthStatus {
+		errs = append(errs, "promoter readback lease_health_status disagrees")
+	}
+	if foundry.LeaseHealthStatus != readback.LeaseHealthStatus {
+		errs = append(errs, "foundry rollup lease_health_status disagrees")
+	}
 	if foundry.Status == "completed" && !readback.FinalResponseAllowed {
 		errs = append(errs, "foundry rollup completed while recommendation final response is denied")
 	}
@@ -1336,6 +1354,7 @@ func BuildAtlasRecommendationReconciliationPacket(readback AtlasRecommendationRe
 		CheckpointCount:              readback.CheckpointCount,
 		ReturnGateStatus:             readback.ReturnGateStatus,
 		LeaseTimeStatus:              readback.LeaseTimeStatus,
+		LeaseHealthStatus:            readback.LeaseHealthStatus,
 		FinalResponseAllowed:         readback.FinalResponseAllowed,
 		FinalResponseReason:          readback.FinalResponseReason,
 		ExactNextAction:              readback.ExactNextAction,
@@ -1376,6 +1395,9 @@ func ValidateAtlasRecommendationReconciliationPacket(readback AtlasRecommendatio
 	}
 	if packet.LeaseTimeStatus != readback.LeaseTimeStatus {
 		errs = append(errs, "reconciliation lease_time_status disagrees")
+	}
+	if packet.LeaseHealthStatus != readback.LeaseHealthStatus {
+		errs = append(errs, "reconciliation lease_health_status disagrees")
 	}
 	if packet.FinalResponseAllowed != readback.FinalResponseAllowed {
 		errs = append(errs, "reconciliation final_response_allowed disagrees")
@@ -1427,6 +1449,9 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 	if execution.CompletedRecommendationNodes != readback.CompletedNodes {
 		errs = append(errs, "completed_recommendation_nodes must match recommendation readback completed_nodes")
 	}
+	if execution.LeaseHealthStatus != readback.LeaseHealthStatus {
+		errs = append(errs, "lease_health_status must match recommendation readback")
+	}
 	if execution.GeneratedWorkgraph.TotalNodes != readback.TotalNodes {
 		errs = append(errs, "generated_workgraph.total_nodes must match recommendation readback total_nodes")
 	}
@@ -1444,6 +1469,9 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 	}
 	if strings.TrimSpace(readback.ReturnGateStatus) != "" && execution.GeneratedWorkgraph.CheckpointCount != readback.CheckpointCount {
 		errs = append(errs, "generated_workgraph.checkpoint_count must match recommendation readback checkpoint_count")
+	}
+	if execution.GeneratedWorkgraph.LeaseHealthStatus != readback.LeaseHealthStatus {
+		errs = append(errs, "generated_workgraph.lease_health_status must match recommendation readback")
 	}
 	requireField(&errs, "foundry_run_link_readiness_summary.status", execution.FoundryRunLinkReadinessSummary.Status)
 	requireField(&errs, "foundry_run_link_readiness_summary.summary", execution.FoundryRunLinkReadinessSummary.Summary)
@@ -1467,6 +1495,9 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 	}
 	if execution.FoundryRunLinkReadinessSummary.FinalResponseAllowed != readback.FinalResponseAllowed {
 		errs = append(errs, "foundry run-link readiness final_response_allowed must match recommendation readback final_response_allowed")
+	}
+	if execution.FoundryRunLinkReadinessSummary.LeaseHealthStatus != readback.LeaseHealthStatus {
+		errs = append(errs, "foundry run-link readiness lease_health_status must match recommendation readback")
 	}
 	if sourceDigest, ok := sourceArtifactDigest(execution.SourceArtifacts, "foundry_run_link_readiness_summary"); !ok {
 		errs = append(errs, "source_artifacts must include foundry_run_link_readiness_summary")
@@ -1508,6 +1539,7 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 		MissingRunLinks:      readback.TotalNodes - readback.CompletedNodes,
 		ReadyNodes:           readback.ReadyNodes,
 		NextExecutableNode:   readback.FirstExecutableNode,
+		LeaseHealthStatus:    readback.LeaseHealthStatus,
 		CheckpointCount:      readback.CheckpointCount,
 		FinalResponseAllowed: readback.FinalResponseAllowed,
 	}
@@ -1516,6 +1548,7 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 		Status:                       status,
 		MissionID:                    readback.MissionID,
 		EvidenceRoot:                 readback.EvidenceRoot,
+		LeaseHealthStatus:            readback.LeaseHealthStatus,
 		CompletedRecommendationNodes: readback.CompletedNodes,
 		TotalRecommendationNodes:     readback.TotalNodes,
 		GeneratedWorkgraph: AtlasRecommendationGeneratedWorkgraphReadback{
@@ -1523,6 +1556,7 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 			ReadyNodes:           readback.ReadyNodes,
 			ExecutableReadyNodes: readback.ExecutableReadyNodes,
 			FirstExecutableNode:  readback.FirstExecutableNode,
+			LeaseHealthStatus:    readback.LeaseHealthStatus,
 			ReturnGateStatus:     readback.ReturnGateStatus,
 			CheckpointCount:      readback.CheckpointCount,
 			FinalResponseAllowed: readback.FinalResponseAllowed,

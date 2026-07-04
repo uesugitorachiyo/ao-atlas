@@ -10,6 +10,7 @@
   "reason": "Recommendation wave records no mutation authority promotion; RSI remains denied.",
   "elapsed_minutes": 180,
   "min_minutes_met": true,
+  "lease_health_status": "minimum_unmet",
   "final_response_allowed": false,
   "schedules_work": false,
   "executes_work": false,

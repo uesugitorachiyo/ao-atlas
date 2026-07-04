@@ -19,7 +19,8 @@ func containsStringPrefix(values []string, prefix string) bool {
 }
 
 type requiredFieldSchema struct {
-	Required []string `json:"required"`
+	Required   []string                       `json:"required"`
+	Properties map[string]requiredFieldSchema `json:"properties"`
 }
 
 func assertSchemaRequiredFieldsPresent(t *testing.T, schemaPath, artifactPath string) {
@@ -34,6 +35,46 @@ func assertSchemaRequiredFieldsPresent(t *testing.T, schemaPath, artifactPath st
 			t.Fatalf("%s missing required schema field %q from %s", artifactPath, field, schemaPath)
 		}
 	}
+}
+
+func assertSchemaRequiresField(t *testing.T, schemaPath, field string) {
+	t.Helper()
+	schema := mustLoadJSON[requiredFieldSchema](t, schemaPath)
+	for _, required := range schema.Required {
+		if required == field {
+			return
+		}
+	}
+	t.Fatalf("schema %s does not require %q", schemaPath, field)
+}
+
+func assertNestedSchemaRequiresField(t *testing.T, schemaPath, property, field string) {
+	t.Helper()
+	schema := mustLoadJSON[requiredFieldSchema](t, schemaPath)
+	nested, ok := schema.Properties[property]
+	if !ok {
+		t.Fatalf("schema %s missing nested property %q", schemaPath, property)
+	}
+	for _, required := range nested.Required {
+		if required == field {
+			return
+		}
+	}
+	t.Fatalf("schema %s nested property %q does not require %q", schemaPath, property, field)
+}
+
+func TestRecommendationDerivedReadbackSchemasRequireLeaseHealthStatus(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "schemas")
+	for _, schemaName := range []string{
+		"recommendation-checkpoint-readback.schema.json",
+		"recommendation-command-readback.schema.json",
+		"recommendation-promoter-readback.schema.json",
+		"recommendation-foundry-rollup.schema.json",
+		"recommendation-reconciliation-packet.schema.json",
+	} {
+		assertSchemaRequiresField(t, filepath.Join(root, schemaName), "lease_health_status")
+	}
+	assertNestedSchemaRequiresField(t, filepath.Join(root, "recommendation-command-readback.schema.json"), "command_timeline_binding", "lease_health_status")
 }
 
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
@@ -666,6 +707,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	}
 	if checkpoint.StartedAt != leaseStart.StartedAt ||
 		checkpoint.ElapsedMinutes != 17 ||
+		checkpoint.LeaseHealthStatus != "minimum_unmet" ||
 		checkpoint.CompletedNodes != 1 ||
 		checkpoint.ReadyNodes != 39 ||
 		checkpoint.FinalResponseAllowed {
@@ -708,7 +750,10 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		t.Fatalf("resume readback lost lease start: %#v", resumeReadback)
 	}
 	resumeExecution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, resumeExecutionPath)
-	if resumeExecution.FoundryRunLinkReadinessSummary.CompletedRunLinks != resumeReadback.CompletedNodes ||
+	if resumeExecution.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		resumeExecution.GeneratedWorkgraph.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		resumeExecution.FoundryRunLinkReadinessSummary.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		resumeExecution.FoundryRunLinkReadinessSummary.CompletedRunLinks != resumeReadback.CompletedNodes ||
 		resumeExecution.FoundryRunLinkReadinessSummary.RequiredRunLinks != resumeReadback.TotalNodes ||
 		resumeExecution.FoundryRunLinkReadinessSummary.NextExecutableNode != resumeReadback.FirstExecutableNode ||
 		!hasSourceArtifact(resumeExecution.SourceArtifacts, "foundry_run_link_readiness_summary") {
@@ -733,19 +778,25 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	binding, ok := rawCommand["command_timeline_binding"].(map[string]any)
 	if !ok ||
 		binding["summary"] != command.CompactTimeline ||
+		binding["lease_health_status"] != resumeReadback.LeaseHealthStatus ||
 		binding["first_executable_node"] != resumeReadback.FirstExecutableNode ||
 		binding["exact_next_action"] != resumeReadback.ExactNextAction ||
 		binding["return_gate_status"] != resumeReadback.ReturnGateStatus {
 		t.Fatalf("command readback missing structured timeline binding: %#v", rawCommand)
 	}
 	if command.ElapsedMinutes != 25 || command.FinalResponseAllowed ||
+		command.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		command.CommandTimelineBinding.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		promoter.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		promoter.PromotionClaimed || !promoter.RSIRemainsDenied ||
 		foundry.NodeCompletionStatus != "nodes_in_progress" ||
+		foundry.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		foundry.LeaseCompletionStatus != "minimum_minutes_unmet" {
 		t.Fatalf("bad resume closure artifacts: command=%#v promoter=%#v foundry=%#v", command, promoter, foundry)
 	}
 	if reconciliation.ReturnGateStatus != "blocked_ready_nodes_remain" ||
 		reconciliation.CheckpointCount != 1 ||
+		reconciliation.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		!reconciliation.ArtifactsAgree ||
 		reconciliation.CommandReturnGateStatus != resumeReadback.ReturnGateStatus ||
 		reconciliation.FoundryReturnGateStatus != resumeReadback.ReturnGateStatus ||
@@ -1005,6 +1056,30 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 		!strings.Contains(err.Error(), "command timeline binding exact_next_action disagrees") {
 		t.Fatalf("expected stale command timeline binding rejection, got %v", err)
 	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.LeaseHealthStatus = "stale_lease_health"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback lease_health_status disagrees") {
+		t.Fatalf("expected stale command lease health rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CommandTimelineBinding.LeaseHealthStatus = "stale_lease_health"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command timeline binding lease_health_status disagrees") {
+		t.Fatalf("expected stale command timeline lease health rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	promoter.LeaseHealthStatus = "stale_lease_health"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "promoter readback lease_health_status disagrees") {
+		t.Fatalf("expected stale promoter lease health rejection, got %v", err)
+	}
+	promoter = BuildAtlasRecommendationPromoterReadback(readback)
+	foundry.LeaseHealthStatus = "stale_lease_health"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "foundry rollup lease_health_status disagrees") {
+		t.Fatalf("expected stale foundry lease health rejection, got %v", err)
+	}
 }
 
 func TestRecommendationCompleteNodeRejectsMissingGateEvidence(t *testing.T) {
@@ -1224,6 +1299,24 @@ func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T)
 	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
 	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness completed_run_links must match recommendation readback completed_nodes") {
 		t.Fatalf("expected stale Foundry run-link readiness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.LeaseHealthStatus = "stale_lease_health"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "lease_health_status must match recommendation readback") {
+		t.Fatalf("expected stale execution lease health rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.GeneratedWorkgraph.LeaseHealthStatus = "stale_lease_health"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "generated_workgraph.lease_health_status must match recommendation readback") {
+		t.Fatalf("expected stale generated workgraph lease health rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.LeaseHealthStatus = "stale_lease_health"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness lease_health_status must match recommendation readback") {
+		t.Fatalf("expected stale Foundry lease health rejection, got %v", err)
 	}
 }
 

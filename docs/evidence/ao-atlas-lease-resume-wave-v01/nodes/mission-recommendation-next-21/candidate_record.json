@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-21",
+  "candidate": "atlas-long-run-derived-readback-lease-health",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Atlas recommendation readbacks carried lease_health_status at the root readback, but derived checkpoint, execution, Command, Promoter, Foundry, and reconciliation artifacts could omit or stale that status."
+}
