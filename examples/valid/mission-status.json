@@ -17,6 +17,20 @@
   "missing_handoffs": [],
   "next_recommended_action": "record completion readback",
   "next_actions": ["record completion readback and keep artifacts public-safe"],
+  "final_response_allowed": true,
+  "final_response_reason": "workgraph is completed and no ready nodes remain",
+  "final_state_reconciliation": {
+    "contract_version": "ao.atlas.final-state-reconciliation.v0.1",
+    "status": "ready",
+    "workgraph_status": "completed",
+    "foundry_rollup_status": "run_links_recorded",
+    "promoter_verdict_status": "not_bound",
+    "command_readback_status": "not_bound",
+    "exact_next_action": "record completion readback",
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false
+  },
   "schedules_work": false,
   "executes_work": false
 }

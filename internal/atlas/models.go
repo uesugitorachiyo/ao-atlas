@@ -42,20 +42,36 @@ type Intake struct {
 }
 
 type MissionStatus struct {
-	ContractVersion       string                 `json:"contract_version"`
-	IntakeID              string                 `json:"intake_id"`
-	WorkgraphID           string                 `json:"workgraph_id"`
-	TargetInstance        string                 `json:"target_instance"`
-	CompletionStatus      string                 `json:"completion_status"`
-	NodeCounts            map[string]int         `json:"node_counts"`
-	RunLinks              map[string]string      `json:"run_links"`
-	MissingContextPacks   []string               `json:"missing_context_packs"`
-	MissingHandoffs       []string               `json:"missing_handoffs"`
-	NextRecommendedAction string                 `json:"next_recommended_action"`
-	NextActions           []string               `json:"next_actions"`
-	AuthorityLadder       *AuthorityLadderStatus `json:"authority_ladder,omitempty"`
-	SchedulesWork         bool                   `json:"schedules_work"`
-	ExecutesWork          bool                   `json:"executes_work"`
+	ContractVersion          string                         `json:"contract_version"`
+	IntakeID                 string                         `json:"intake_id"`
+	WorkgraphID              string                         `json:"workgraph_id"`
+	TargetInstance           string                         `json:"target_instance"`
+	CompletionStatus         string                         `json:"completion_status"`
+	NodeCounts               map[string]int                 `json:"node_counts"`
+	RunLinks                 map[string]string              `json:"run_links"`
+	MissingContextPacks      []string                       `json:"missing_context_packs"`
+	MissingHandoffs          []string                       `json:"missing_handoffs"`
+	NextRecommendedAction    string                         `json:"next_recommended_action"`
+	NextActions              []string                       `json:"next_actions"`
+	AuthorityLadder          *AuthorityLadderStatus         `json:"authority_ladder,omitempty"`
+	FinalResponseAllowed     bool                           `json:"final_response_allowed"`
+	FinalResponseReason      string                         `json:"final_response_reason"`
+	FinalStateReconciliation *AtlasFinalStateReconciliation `json:"final_state_reconciliation,omitempty"`
+	SchedulesWork            bool                           `json:"schedules_work"`
+	ExecutesWork             bool                           `json:"executes_work"`
+}
+
+type AtlasFinalStateReconciliation struct {
+	ContractVersion       string `json:"contract_version"`
+	Status                string `json:"status"`
+	WorkgraphStatus       string `json:"workgraph_status"`
+	FoundryRollupStatus   string `json:"foundry_rollup_status"`
+	PromoterVerdictStatus string `json:"promoter_verdict_status"`
+	CommandReadbackStatus string `json:"command_readback_status"`
+	ExactNextAction       string `json:"exact_next_action"`
+	SchedulesWork         bool   `json:"schedules_work"`
+	ExecutesWork          bool   `json:"executes_work"`
+	ApprovesWork          bool   `json:"approves_work"`
 }
 
 type AOMissionImport struct {
@@ -88,6 +104,23 @@ type AOMissionWorkgraphMetadata struct {
 	SchedulesWork            bool              `json:"schedules_work"`
 	ExecutesWork             bool              `json:"executes_work"`
 	ApprovesWork             bool              `json:"approves_work"`
+}
+
+type AOMissionProvenanceRender struct {
+	ContractVersion          string         `json:"contract_version"`
+	Status                   string         `json:"status"`
+	MissionID                string         `json:"mission_id"`
+	WorkgraphID              string         `json:"workgraph_id"`
+	PrimaryMissionProvenance string         `json:"primary_mission_provenance"`
+	TotalProvenanceSources   int            `json:"total_provenance_sources"`
+	ProvenanceSummary        string         `json:"provenance_summary"`
+	ProvenanceNodes          []string       `json:"provenance_nodes"`
+	MissionProvenance        map[string]int `json:"mission_provenance"`
+	NextAction               string         `json:"next_action"`
+	SafeToExecute            bool           `json:"safe_to_execute"`
+	SchedulesWork            bool           `json:"schedules_work"`
+	ExecutesWork             bool           `json:"executes_work"`
+	ApprovesWork             bool           `json:"approves_work"`
 }
 
 type AOMissionSourceArtifact struct {

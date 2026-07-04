@@ -291,6 +291,12 @@ func ValidateMissionStatus(status MissionStatus) error {
 	if status.AuthorityLadder != nil {
 		validateAuthorityLadderStatus(&errs, *status.AuthorityLadder)
 	}
+	requireField(&errs, "final_response_reason", status.FinalResponseReason)
+	if status.FinalStateReconciliation == nil {
+		errs = append(errs, "final_state_reconciliation must be present")
+	} else {
+		validateAtlasFinalStateReconciliation(&errs, *status.FinalStateReconciliation)
+	}
 	if status.SchedulesWork {
 		errs = append(errs, "schedules_work must be false")
 	}
@@ -298,6 +304,26 @@ func ValidateMissionStatus(status MissionStatus) error {
 		errs = append(errs, "executes_work must be false")
 	}
 	return joinErrors(errs)
+}
+
+func validateAtlasFinalStateReconciliation(errs *[]string, packet AtlasFinalStateReconciliation) {
+	requireContract(errs, "final_state_reconciliation", packet.ContractVersion, "ao.atlas.final-state-reconciliation.v0.1")
+	requireField(errs, "final_state_reconciliation.status", packet.Status)
+	requireField(errs, "final_state_reconciliation.workgraph_status", packet.WorkgraphStatus)
+	requireField(errs, "final_state_reconciliation.foundry_rollup_status", packet.FoundryRollupStatus)
+	requireField(errs, "final_state_reconciliation.promoter_verdict_status", packet.PromoterVerdictStatus)
+	requireField(errs, "final_state_reconciliation.command_readback_status", packet.CommandReadbackStatus)
+	requireField(errs, "final_state_reconciliation.exact_next_action", packet.ExactNextAction)
+	checkPublicPath(errs, "final_state_reconciliation.exact_next_action", packet.ExactNextAction, true)
+	if packet.SchedulesWork {
+		*errs = append(*errs, "final_state_reconciliation.schedules_work must be false")
+	}
+	if packet.ExecutesWork {
+		*errs = append(*errs, "final_state_reconciliation.executes_work must be false")
+	}
+	if packet.ApprovesWork {
+		*errs = append(*errs, "final_state_reconciliation.approves_work must be false")
+	}
 }
 
 func validateAuthorityLadderStatus(errs *[]string, ladder AuthorityLadderStatus) {

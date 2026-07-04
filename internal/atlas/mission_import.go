@@ -215,6 +215,31 @@ func BuildAOMissionProvenanceWorkgraph(importRecord AOMissionImport, workgraph W
 	return augmented, nil
 }
 
+func BuildAOMissionProvenanceRender(metadata AOMissionWorkgraphMetadata) (AOMissionProvenanceRender, error) {
+	if metadata.ContractVersion != AOMissionWorkgraphMetadataContract {
+		return AOMissionProvenanceRender{}, fmt.Errorf("invalid AO Mission workgraph metadata contract_version")
+	}
+	if metadata.SafeToExecute || metadata.SchedulesWork || metadata.ExecutesWork || metadata.ApprovesWork {
+		return AOMissionProvenanceRender{}, fmt.Errorf("AO Mission workgraph metadata must not claim execution, scheduling, or approval authority")
+	}
+	return AOMissionProvenanceRender{
+		ContractVersion:          "ao.atlas.ao-mission-provenance-render.v0.1",
+		Status:                   "ready",
+		MissionID:                metadata.MissionID,
+		WorkgraphID:              metadata.WorkgraphID,
+		PrimaryMissionProvenance: metadata.PrimaryMissionProvenance,
+		TotalProvenanceSources:   countMissionProvenanceSources(metadata.MissionProvenance),
+		ProvenanceSummary:        metadata.ProvenanceDiagnostics,
+		ProvenanceNodes:          append([]string(nil), metadata.ProvenanceNodes...),
+		MissionProvenance:        copyStringIntMap(metadata.MissionProvenance),
+		NextAction:               "render AO Mission provenance for operator review, then send safe workgraph nodes through Foundry gates",
+		SafeToExecute:            false,
+		SchedulesWork:            false,
+		ExecutesWork:             false,
+		ApprovesWork:             false,
+	}, nil
+}
+
 func ValidateAOMissionWorkgraphMetadata(metadata AOMissionWorkgraphMetadata, workgraph Workgraph) error {
 	if metadata.ContractVersion != AOMissionWorkgraphMetadataContract {
 		return fmt.Errorf("invalid AO Mission workgraph metadata contract_version")
@@ -246,6 +271,22 @@ func ValidateAOMissionWorkgraphMetadata(metadata AOMissionWorkgraphMetadata, wor
 		return fmt.Errorf("AO Mission workgraph metadata requires mission_provenance")
 	}
 	return nil
+}
+
+func countMissionProvenanceSources(values map[string]int) int {
+	total := 0
+	for _, count := range values {
+		total += count
+	}
+	return total
+}
+
+func copyStringIntMap(values map[string]int) map[string]int {
+	out := make(map[string]int, len(values))
+	for key, value := range values {
+		out[key] = value
+	}
+	return out
 }
 
 func aoMissionWorkgraphNodeCounts(workgraph Workgraph) map[string]int {

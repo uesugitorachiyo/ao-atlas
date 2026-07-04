@@ -823,6 +823,9 @@ func TestMissionStatusSummarizesIntakeWorkgraphAndRunLinks(t *testing.T) {
 	if status.CompletionStatus != "completed" || status.NodeCounts["completed"] != 2 {
 		t.Fatalf("expected completed mission status, got %#v", status)
 	}
+	if !status.FinalResponseAllowed || status.FinalStateReconciliation == nil || status.FinalStateReconciliation.Status != "ready" {
+		t.Fatalf("completed mission should allow final response with reconciliation: %#v", status)
+	}
 }
 
 func TestMissionImportBindsAOMissionArtifacts(t *testing.T) {
@@ -1405,6 +1408,62 @@ func TestMissionImportWorkgraphMetadataBindsImportAndWorkgraph(t *testing.T) {
 	}
 }
 
+func TestMissionProvenanceRenderSummarizesMetadataWithoutAuthority(t *testing.T) {
+	dir := t.TempDir()
+	importPath := filepath.Join(dir, "ao-mission-import.json")
+	metadataPath := filepath.Join(dir, "ao-mission-workgraph-metadata.json")
+	renderPath := filepath.Join(dir, "ao-mission-provenance-render.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "import",
+		"--record", filepath.Join("..", "..", "examples", "valid", "ao-mission", "mission-record.json"),
+		"--command-status", filepath.Join("..", "..", "examples", "valid", "ao-mission", "command-status.json"),
+		"--artifact-manifest", filepath.Join("..", "..", "examples", "valid", "ao-mission", "artifact-manifest.json"),
+		"--route-history", filepath.Join("..", "..", "examples", "valid", "ao-mission", "route-history.json"),
+		"--scheduler-recovery", filepath.Join("..", "..", "examples", "valid", "ao-mission", "scheduler-recovery-readback.json"),
+		"--ledger-compaction", filepath.Join("..", "..", "examples", "valid", "ao-mission", "ledger-compaction-readback.json"),
+		"--gateway-readiness-rollup", filepath.Join("..", "..", "examples", "valid", "ao-mission", "gateway-readiness-rollup.json"),
+		"--out", importPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission import failed: %s", out.String())
+	}
+	out.Reset()
+	code = Run([]string{
+		"mission", "workgraph-metadata",
+		"--import", importPath,
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--out", metadataPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission workgraph metadata failed: %s", out.String())
+	}
+	out.Reset()
+	code = Run([]string{"mission", "provenance", "render", "--metadata", metadataPath, "--out", renderPath, "--json"}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission provenance render failed: %s", out.String())
+	}
+	var render AOMissionProvenanceRender
+	if err := json.Unmarshal(out.Bytes(), &render); err != nil {
+		t.Fatal(err)
+	}
+	if render.ContractVersion != "ao.atlas.ao-mission-provenance-render.v0.1" || render.Status != "ready" {
+		t.Fatalf("bad provenance render: %#v", render)
+	}
+	if render.MissionID != "mission-demo" || render.PrimaryMissionProvenance != "artifact_manifest" {
+		t.Fatalf("bad provenance identity: %#v", render)
+	}
+	if render.TotalProvenanceSources < 6 || !strings.Contains(render.ProvenanceSummary, "gateway_readiness_rollup=1") {
+		t.Fatalf("provenance render missing summary: %#v", render)
+	}
+	if render.SafeToExecute || render.SchedulesWork || render.ExecutesWork || render.ApprovesWork {
+		t.Fatalf("provenance render widened authority: %#v", render)
+	}
+	if _, err := os.Stat(renderPath); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestMissionStatusReportsBlockedWhenRunLinkBlocked(t *testing.T) {
 	dir := t.TempDir()
 	outPath := filepath.Join(dir, "mission-status.json")
@@ -1478,6 +1537,12 @@ func TestMissionStatusJSONReportsMissingHandoffs(t *testing.T) {
 	}
 	if status.NextRecommendedAction != "emit Foundry handoff for ready nodes" {
 		t.Fatalf("unexpected next recommended action: %#v", status.NextRecommendedAction)
+	}
+	if status.FinalResponseAllowed || status.FinalResponseReason == "" {
+		t.Fatalf("final response should be refused while ready nodes or next actions remain: %#v", status)
+	}
+	if status.FinalStateReconciliation == nil || status.FinalStateReconciliation.WorkgraphStatus == "" || status.FinalStateReconciliation.CommandReadbackStatus == "" {
+		t.Fatalf("missing final-state reconciliation packet: %#v", status)
 	}
 }
 

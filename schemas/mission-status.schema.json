@@ -14,6 +14,9 @@
     "missing_handoffs",
     "next_recommended_action",
     "next_actions",
+    "final_response_allowed",
+    "final_response_reason",
+    "final_state_reconciliation",
     "schedules_work",
     "executes_work"
   ],
@@ -45,6 +48,35 @@
       "type": "array",
       "minItems": 1,
       "items": { "type": "string", "minLength": 1 }
+    },
+    "final_response_allowed": { "type": "boolean" },
+    "final_response_reason": { "type": "string", "minLength": 1 },
+    "final_state_reconciliation": {
+      "type": "object",
+      "required": [
+        "contract_version",
+        "status",
+        "workgraph_status",
+        "foundry_rollup_status",
+        "promoter_verdict_status",
+        "command_readback_status",
+        "exact_next_action",
+        "schedules_work",
+        "executes_work",
+        "approves_work"
+      ],
+      "properties": {
+        "contract_version": { "const": "ao.atlas.final-state-reconciliation.v0.1" },
+        "status": { "type": "string", "minLength": 1 },
+        "workgraph_status": { "type": "string", "minLength": 1 },
+        "foundry_rollup_status": { "type": "string", "minLength": 1 },
+        "promoter_verdict_status": { "type": "string", "minLength": 1 },
+        "command_readback_status": { "type": "string", "minLength": 1 },
+        "exact_next_action": { "type": "string", "minLength": 1 },
+        "schedules_work": { "type": "boolean" },
+        "executes_work": { "type": "boolean" },
+        "approves_work": { "type": "boolean" }
+      }
     },
     "authority_ladder": {
       "type": "object",

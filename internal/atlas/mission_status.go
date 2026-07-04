@@ -57,20 +57,24 @@ func BuildMissionStatus(intake Intake, workgraph Workgraph, links []RunLink) (Mi
 		nextRecommendedAction = "emit Foundry handoff for ready nodes"
 		nextActions = []string{"emit Foundry handoff/import material for ready nodes"}
 	}
+	finalAllowed, finalReason := atlasFinalResponseGate(completion, state.NodeCounts, missingHandoffs, nextRecommendedAction)
 	status := MissionStatus{
-		ContractVersion:       MissionStatusContract,
-		IntakeID:              intake.ID,
-		WorkgraphID:           workgraph.ID,
-		TargetInstance:        workgraph.TargetInstance,
-		CompletionStatus:      completion,
-		NodeCounts:            state.NodeCounts,
-		RunLinks:              runLinks,
-		MissingContextPacks:   missingContextPacks,
-		MissingHandoffs:       missingHandoffs,
-		NextRecommendedAction: nextRecommendedAction,
-		NextActions:           nextActions,
-		SchedulesWork:         false,
-		ExecutesWork:          false,
+		ContractVersion:          MissionStatusContract,
+		IntakeID:                 intake.ID,
+		WorkgraphID:              workgraph.ID,
+		TargetInstance:           workgraph.TargetInstance,
+		CompletionStatus:         completion,
+		NodeCounts:               state.NodeCounts,
+		RunLinks:                 runLinks,
+		MissingContextPacks:      missingContextPacks,
+		MissingHandoffs:          missingHandoffs,
+		NextRecommendedAction:    nextRecommendedAction,
+		NextActions:              nextActions,
+		FinalResponseAllowed:     finalAllowed,
+		FinalResponseReason:      finalReason,
+		FinalStateReconciliation: buildAtlasFinalStateReconciliation(completion, state.NodeCounts, runLinks, finalAllowed, nextRecommendedAction),
+		SchedulesWork:            false,
+		ExecutesWork:             false,
 	}
 	if isAuthorityLadderWorkgraph(workgraph) {
 		status.AuthorityLadder = BuildAuthorityLadderStatus(workgraph, links)
@@ -79,6 +83,45 @@ func BuildMissionStatus(intake Intake, workgraph Workgraph, links []RunLink) (Mi
 		return MissionStatus{}, err
 	}
 	return status, nil
+}
+
+func atlasFinalResponseGate(completion string, counts map[string]int, missingHandoffs []string, exactNextAction string) (bool, string) {
+	if counts["ready"] > 0 || len(missingHandoffs) > 0 {
+		return false, "ready nodes or exact next actions remain"
+	}
+	if completion == "completed" {
+		return true, "workgraph is completed and no ready nodes remain"
+	}
+	if completion == "blocked" {
+		return true, "workgraph is blocked for operator repair or support routing"
+	}
+	if strings.TrimSpace(exactNextAction) != "" {
+		return false, "exact next action remains"
+	}
+	return true, "no ready work remains"
+}
+
+func buildAtlasFinalStateReconciliation(completion string, counts map[string]int, runLinks map[string]string, finalAllowed bool, nextAction string) *AtlasFinalStateReconciliation {
+	foundryStatus := "not_bound"
+	if len(runLinks) > 0 {
+		foundryStatus = "run_links_recorded"
+	}
+	status := "ready"
+	if !finalAllowed {
+		status = "continuation_required"
+	}
+	return &AtlasFinalStateReconciliation{
+		ContractVersion:       "ao.atlas.final-state-reconciliation.v0.1",
+		Status:                status,
+		WorkgraphStatus:       completion,
+		FoundryRollupStatus:   foundryStatus,
+		PromoterVerdictStatus: "not_bound",
+		CommandReadbackStatus: "not_bound",
+		ExactNextAction:       nextAction,
+		SchedulesWork:         false,
+		ExecutesWork:          false,
+		ApprovesWork:          false,
+	}
 }
 
 func isAuthorityLadderWorkgraph(workgraph Workgraph) bool {
