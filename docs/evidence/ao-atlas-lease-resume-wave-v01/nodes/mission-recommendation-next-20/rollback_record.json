@@ -1,0 +1,10 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-20",
+  "rollback": [
+    "Revert the lease-resume-wave-public-safety-readback block in scripts/production-readiness.sh.",
+    "Revert the production-readiness script assertion additions in internal/atlas/mission_recommendations_test.go.",
+    "Remove node 20 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-20.",
+    "Regenerate root readbacks from node 19 workgraph if this node is reverted before merge."
+  ]
+}

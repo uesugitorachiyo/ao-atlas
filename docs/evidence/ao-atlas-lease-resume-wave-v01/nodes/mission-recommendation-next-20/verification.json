@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-20",
+  "verification": [
+    "bash -n scripts/production-readiness.sh passed",
+    "go test ./internal/atlas -run 'TestProductionReadinessExercisesMissionRecommendationsImport|TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt' -count=1 passed",
+    "scripts/production-readiness.sh passed with ok lease-resume-wave-public-safety-readback",
+    "find docs/evidence/ao-atlas-lease-resume-wave-v01 -name '*.json' -print0 | xargs -0 -n1 jq -e . >/dev/null passed",
+    "go test ./... -count=1 passed",
+    "go vet ./... passed",
+    "go build ./cmd/atlas passed",
+    "scripts/atlas-foundry-roundtrip-smoke.sh passed"
+  ]
+}

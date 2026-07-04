@@ -1430,6 +1430,11 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"next-recommended-prompt.md",
 		"reject_generated_recommendation_prompt_public_safety",
 		"recommendation-prompt-public-safety-scan",
+		"lease-resume-wave-public-safety-readback",
+		"lease_resume_root=\"docs/evidence/ao-atlas-lease-resume-wave-v01\"",
+		"final-synthesis.json",
+		"Current workgraph:",
+		"do not produce a final response",
 	} {
 		if !strings.Contains(script, want) {
 			t.Fatalf("production readiness script missing recommendation coverage %q", want)

@@ -1,0 +1,10 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-20",
+  "tests": [
+    "bash -n scripts/production-readiness.sh passed",
+    "go test ./internal/atlas -run 'TestProductionReadinessExercisesMissionRecommendationsImport|TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt' -count=1 passed",
+    "scripts/production-readiness.sh passed with ok lease-resume-wave-public-safety-readback"
+  ],
+  "summary": "Targeted tests and production readiness now exercise the full lease-resume wave public-safety/readback gate."
+}

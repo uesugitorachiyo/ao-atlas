@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-20",
+  "candidate": "lease-resume-production-readiness-public-safety-readback",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Production readiness scanned generated recommendation prompts, but did not explicitly bind the live lease-resume wave prompt, readback, final synthesis, and latest workgraph before the global public-safety scan."
+}
