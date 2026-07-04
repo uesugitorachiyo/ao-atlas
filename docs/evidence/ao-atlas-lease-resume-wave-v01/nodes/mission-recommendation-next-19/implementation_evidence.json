@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-19",
+  "summary": "Added a regression that compares the lease-resume recommendation wave, latest completed workgraph, root readback, final synthesis, and next recommended prompt.",
+  "changed_files": [
+    "internal/atlas/mission_recommendations_test.go"
+  ]
+}

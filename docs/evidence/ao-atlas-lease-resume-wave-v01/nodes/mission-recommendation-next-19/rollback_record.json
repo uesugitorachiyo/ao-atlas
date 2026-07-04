@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-19",
+  "rollback": [
+    "Revert the TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt addition in internal/atlas/mission_recommendations_test.go.",
+    "Remove node 19 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-19.",
+    "Regenerate root readback artifacts from node 18 workgraph if this node is reverted before merge."
+  ]
+}

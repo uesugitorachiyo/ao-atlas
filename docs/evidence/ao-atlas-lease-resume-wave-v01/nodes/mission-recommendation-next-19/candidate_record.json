@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-19",
+  "candidate": "lease-resume-final-state-wave-workgraph-prompt-comparison",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "The lease-resume evidence root had readback, synthesis, workgraph, and prompt artifacts, but lacked regression coverage proving those final-state surfaces agree as the wave advances."
+}
