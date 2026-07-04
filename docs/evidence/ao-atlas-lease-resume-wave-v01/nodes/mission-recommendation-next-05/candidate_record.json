@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-05",
+  "candidate": "portable-foundry-continuation-route",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Foundry continuation handoffs were still generated with a machine-local target folder and were only made portable by manual evidence normalization. The candidate repair makes the generator emit a portable sibling route and adds readiness checks for generated continuation artifacts."
+}

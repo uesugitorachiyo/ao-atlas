@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-05",
+  "summary": "Changed public-facing continuation route text to a portable sibling path and scanned node 05 route material, changed source, and generated artifacts for local path and secret markers.",
+  "forbidden_markers_found": false,
+  "rsi_claimed": false,
+  "provider_calls": false,
+  "credential_inspection": false
+}

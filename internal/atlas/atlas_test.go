@@ -272,7 +272,7 @@ func TestBlueprintImportCompilesLowRiskCodePackIntoAtlasAndFoundryMaterial(t *te
 	if code != 0 {
 		t.Fatalf("blueprint import failed: %s", out.String())
 	}
-	targetFolder := strings.Join([]string{"", "Users", "torachiyouesugi", "Documents", "public", "ao-foundry"}, "/")
+	targetFolder := "../ao-foundry"
 	if !strings.Contains(out.String(), "foundry_continuation_prompt="+filepath.ToSlash(filepath.Join(outDir, "foundry-import", "foundry-continuation-prompt.md"))) ||
 		!strings.Contains(out.String(), "Move to "+targetFolder) ||
 		!strings.Contains(out.String(), "Run codex --yolo") ||
@@ -326,12 +326,22 @@ func TestBlueprintImportCompilesLowRiskCodePackIntoAtlasAndFoundryMaterial(t *te
 	if err := ValidateFoundryContinuationHandoff(handoff); err != nil {
 		t.Fatal(err)
 	}
+	if handoff.TargetFolder != targetFolder {
+		t.Fatalf("blueprint import continuation target folder must be portable, got %q", handoff.TargetFolder)
+	}
+	if !strings.Contains(handoff.NextRecommendedAction, "Move to ../ao-foundry") ||
+		strings.Contains(handoff.NextRecommendedAction, "Move to /") {
+		t.Fatalf("blueprint import continuation next action must use portable Foundry route: %q", handoff.NextRecommendedAction)
+	}
 	promptPath := filepath.Join(outDir, "foundry-import", "foundry-continuation-prompt.md")
 	promptBytes, err := os.ReadFile(promptPath)
 	if err != nil {
 		t.Fatal(err)
 	}
 	prompt := string(promptBytes)
+	if !strings.Contains(prompt, "cd ../ao-foundry") || strings.Contains(prompt, "cd /") {
+		t.Fatalf("blueprint import continuation prompt must use portable Foundry route:\n%s", prompt)
+	}
 	for _, want := range []string{"Move to AO Foundry", "Run codex --yolo", "Paste this prompt"} {
 		if !strings.Contains(prompt, want) {
 			t.Fatalf("blueprint import continuation prompt missing %q:\n%s", want, prompt)
@@ -1913,7 +1923,7 @@ func TestFoundryImportWritesContinuationHandoffPrompt(t *testing.T) {
 	blueprintPackPath := filepath.Join("..", "ao-blueprint", "excluded", "fully_unsupervised_complex_mutation-readiness-blueprint")
 	atlasImportPath := filepath.Join(".atlas-local", "fully-unsupervised-readiness", "blueprint-import", "blueprint-import.json")
 	missionEvidencePath := filepath.Join(".atlas-local", "fully-unsupervised-readiness", "atlas-first-phase", "mission-continuation-evidence.json")
-	targetFolder := strings.Join([]string{"", "Users", "torachiyouesugi", "Documents", "public", "ao-foundry"}, "/")
+	targetFolder := "../ao-foundry"
 	var out bytes.Buffer
 	code := Run([]string{
 		"foundry", "import",
@@ -1937,7 +1947,7 @@ func TestFoundryImportWritesContinuationHandoffPrompt(t *testing.T) {
 		t.Fatal(err)
 	}
 	if handoff.TargetFolder != targetFolder {
-		t.Fatalf("unexpected target folder: %q", handoff.TargetFolder)
+		t.Fatalf("continuation target folder must be portable, got %q", handoff.TargetFolder)
 	}
 	if handoff.Command != "codex --yolo" {
 		t.Fatalf("unexpected command: %q", handoff.Command)
@@ -1990,6 +2000,13 @@ func TestFoundryImportWritesContinuationHandoffPrompt(t *testing.T) {
 	if strings.Contains(prompt, "cat "+filepath.Join(outDir, "foundry-import.json")) ||
 		strings.Contains(handoff.NextRecommendedAction, "cat ") {
 		t.Fatalf("continuation handoff must not use cat as the primary next action: %#v\n%s", handoff, prompt)
+	}
+	if !strings.Contains(handoff.NextRecommendedAction, "Move to ../ao-foundry") ||
+		strings.Contains(handoff.NextRecommendedAction, "Move to /") {
+		t.Fatalf("continuation next action must use portable Foundry route: %q", handoff.NextRecommendedAction)
+	}
+	if !strings.Contains(prompt, "cd ../ao-foundry") || strings.Contains(prompt, "cd /") {
+		t.Fatalf("continuation prompt must use portable Foundry route:\n%s", prompt)
 	}
 	if !strings.Contains(out.String(), "foundry_continuation_prompt="+promptPath) ||
 		!strings.Contains(out.String(), "Run codex --yolo") ||

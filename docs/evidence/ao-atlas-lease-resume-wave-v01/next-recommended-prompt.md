@@ -5,20 +5,20 @@ preserve:
 
 - Evidence root: `docs/evidence/ao-atlas-lease-resume-wave-v01`
 - Lease start: `docs/evidence/ao-atlas-lease-resume-wave-v01/lease-start.json`
-- Current workgraph: `docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-04/workgraph-after.json`
+- Current workgraph: `docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-05/workgraph-after.json`
 - Current readback: `docs/evidence/ao-atlas-lease-resume-wave-v01/recommendation-readback.json`
 
 Current status:
-- Completed nodes: 4 / 40
-- Ready nodes: 36
-- Elapsed minutes at latest checkpoint: 43
+- Completed nodes: 5 / 40
+- Ready nodes: 35
+- Elapsed minutes at latest checkpoint: 58
 - Minimum minutes: 120
 - `min_minutes_met=false`
 - `final_response_allowed=false`
 - Return gate: `blocked_ready_nodes_remain`
-- Checkpoint count: 4
+- Checkpoint count: 5
 - Reconciliation packet: `artifacts_agree=true`
-- Next executable node: `mission-recommendation-next-05`
+- Next executable node: `mission-recommendation-next-06`
 
 Goal:
 Continue the useful 2-3 hour Atlas-owned hardening wave. Execute exactly one
@@ -27,25 +27,23 @@ bounded node at a time, preserving the original `started_at` from
 a true hard blocker remains after safe repair attempts.
 
 Prioritized next tasks:
-01. Execute `mission-recommendation-next-05` with Foundry import, run-link,
+01. Execute `mission-recommendation-next-06` with Foundry import, run-link,
 checkpoint readback, and resume readbacks.
-02. Add schema files for `recommendation-lease-start`,
-`recommendation-checkpoint-readback`, `recommendation-command-readback`,
-`recommendation-promoter-readback`, and `recommendation-foundry-rollup`.
-03. Add schema validation coverage in production readiness for the new
-recommendation artifacts.
-04. Add stale Command/Foundry fixture files and a CLI validation command for
+02. Add stale Command/Foundry fixture files and a CLI validation command for
 closure artifacts.
-05. Add a resume smoke script that runs import, complete-node, resume, and
+03. Add a resume smoke script that runs import, complete-node, resume, and
 closure-artifact validation.
-06. Add operator docs for continuing a lease across Codex sessions.
-07. Add evidence-root cleanup checks that reject local absolute paths in
-Foundry continuation prompts.
-08. Add Command status output for first executable node after resume.
-09. Add Promoter no-promotion reason text to mention lease status without
+04. Add operator docs for continuing a lease across Codex sessions.
+05. Add Command status output for first executable node after resume.
+06. Add Promoter no-promotion reason text to mention lease status without
 claiming authority promotion.
-10. Add Foundry rollup status text that distinguishes all nodes complete from
+07. Add Foundry rollup status text that distinguishes all nodes complete from
 lease complete.
+08. Add a validator fixture for Foundry continuation handoffs that use an
+absolute target folder.
+09. Add a CLI readback check that prints return gate status after Foundry
+import generation.
+10. Add a docs scan fixture proving generated route prompts remain portable.
 
 Safety boundaries:
 - No provider calls.

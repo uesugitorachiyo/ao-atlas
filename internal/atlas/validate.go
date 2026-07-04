@@ -865,6 +865,8 @@ func ValidateFoundryContinuationHandoff(handoff FoundryContinuationHandoff) erro
 	if handoff.Command != "codex --yolo" {
 		errs = append(errs, "command must be codex --yolo")
 	}
+	checkPublicPath(&errs, "target_folder", handoff.TargetFolder, true)
+	checkPublicPath(&errs, "next_recommended_action", handoff.NextRecommendedAction, true)
 	for _, required := range []string{
 		"Move to AO Foundry",
 		"Run codex --yolo",

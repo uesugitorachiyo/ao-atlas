@@ -1,0 +1,12 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-05",
+  "rollback_scope": [
+    "internal/atlas/foundry_handoff.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/atlas_test.go",
+    "scripts/production-readiness.sh"
+  ],
+  "rollback_action": "Revert the portable target folder generator change, the Foundry continuation validation checks, and the generated-artifact production readiness checks.",
+  "direct_main_mutation": false
+}
