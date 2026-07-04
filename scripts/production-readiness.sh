@@ -269,13 +269,15 @@ jq -e '.schema == "ao.atlas.recommendation-checkpoint-readback.v0.1" and .comple
   --out-command-readback "$OUT/mission-recommendations/command-readback-resumed.json" \
   --out-promoter-readback "$OUT/mission-recommendations/promoter-readback-resumed.json" \
   --out-foundry-rollup "$OUT/mission-recommendations/foundry-rollup-resumed.json" \
-  --out-reconciliation-packet "$OUT/mission-recommendations/reconciliation-packet-resumed.json" >/dev/null
+  --out-reconciliation-packet "$OUT/mission-recommendations/reconciliation-packet-resumed.json" \
+  --out-next-prompt "$OUT/mission-recommendations/next-recommended-prompt-resumed.md" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-readback-resumed.json"
 test -s "$OUT/mission-recommendations/execution-readback-resumed.json"
 test -s "$OUT/mission-recommendations/command-readback-resumed.json"
 test -s "$OUT/mission-recommendations/promoter-readback-resumed.json"
 test -s "$OUT/mission-recommendations/foundry-rollup-resumed.json"
 test -s "$OUT/mission-recommendations/reconciliation-packet-resumed.json"
+test -s "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 jq -e '.started_at == "2026-07-04T08:00:00-07:00" and .elapsed_minutes == 25 and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-readback-resumed.json" >/dev/null
 jq -e '.foundry_run_link_readiness_summary.completed_run_links == 1 and .foundry_run_link_readiness_summary.required_run_links == 40 and .foundry_run_link_readiness_summary.next_executable_node == "mission-recommendation-next-02" and (.source_artifacts[] | select(.ref == "foundry_run_link_readiness_summary" and (.digest | test("^sha256:[0-9a-f]{64}$"))))' "$OUT/mission-recommendations/execution-readback-resumed.json" >/dev/null
 jq -e '.schema == "ao.atlas.recommendation-command-readback.v0.1" and .elapsed_minutes == 25 and .lease_time_status == "minimum_minutes_unmet" and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false and .claims_authority_advance == false and .command_timeline_binding.summary == .compact_timeline and .command_timeline_binding.exact_next_action == .exact_next_action and .command_timeline_binding.return_gate_status == .return_gate_status' "$OUT/mission-recommendations/command-readback-resumed.json" >/dev/null
@@ -283,6 +285,9 @@ jq -e '.schema == "ao.atlas.recommendation-promoter-readback.v0.1" and .promotio
 jq -e '.no_promotion_summary == "No mutation authority promotion claimed; RSI remains denied." and .next_denied_class == "RSI"' "$OUT/mission-recommendations/promoter-readback-resumed.json" >/dev/null
 jq -e '.schema == "ao.atlas.recommendation-foundry-rollup.v0.1" and .node_completion_status == "nodes_in_progress" and .lease_completion_status == "minimum_minutes_unmet" and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false and .claims_authority_advance == false' "$OUT/mission-recommendations/foundry-rollup-resumed.json" >/dev/null
 jq -e '.schema == "ao.atlas.recommendation-reconciliation-packet.v0.1" and .status == "continuation_required" and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .command_return_gate_status == "blocked_ready_nodes_remain" and .foundry_return_gate_status == "blocked_ready_nodes_remain" and .artifacts_agree == true and .promotion_claimed == false and .rsi_remains_denied == true and .claims_authority_advance == false' "$OUT/mission-recommendations/reconciliation-packet-resumed.json" >/dev/null
+grep -q "Next executable node: \`mission-recommendation-next-02\`" "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
+grep -q "If \`ready_nodes > 0\` or \`exact_next_action\` is non-empty, do not produce a final response." "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
+reject_generated_recommendation_prompt_public_safety "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 assert_schema_required_fields_present schemas/recommendation-readback.schema.json "$OUT/mission-recommendations/recommendation-readback-resumed.json" "recommendation readback"
 assert_schema_required_fields_present schemas/recommendation-checkpoint-readback.schema.json "$OUT/mission-recommendations/checkpoint-readback-after-node-01.json" "recommendation checkpoint readback"
 assert_schema_required_fields_present schemas/recommendation-command-readback.schema.json "$OUT/mission-recommendations/command-readback-resumed.json" "recommendation command readback"
