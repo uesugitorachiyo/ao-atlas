@@ -1,0 +1,9 @@
+status=written
+completed_node=mission-recommendation-next-16
+completed_nodes=16
+ready_nodes=24
+next_executable_node=mission-recommendation-next-17
+final_response_allowed=false
+updated_workgraph=docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-16/workgraph-after.json
+recommendation_readback=docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-16/recommendation-readback-after.json
+execution_readback=docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-16/execution-readback-after.json

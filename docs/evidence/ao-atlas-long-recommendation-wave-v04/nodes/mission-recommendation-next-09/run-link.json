@@ -1,0 +1,19 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-next-09-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/command_readback.json",
+    "foundry_import": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/tests.json",
+    "verification": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-09/verification.json"
+  },
+  "digest": "sha256:158f7aae83e61749492c4f95e7f87aeb5ab2d04e44cd003df25da6fbf95aa57a"
+}

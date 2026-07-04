@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "mission-long-wave",
+  "node_id": "mission-recommendation-next-07",
+  "task_id": "mission-recommendation-next-07-task",
+  "evidence_key": "candidate_record",
+  "status": "recorded",
+  "objective": "Strengthen Atlas prompt readback so final responses stay denied while ready work remains.",
+  "foundry_import": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-07/foundry-import.json",
+  "checkpoint_bundle": "docs/evidence/ao-atlas-long-recommendation-wave-v04/nodes/mission-recommendation-next-07/checkpoint-bundle.json",
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}

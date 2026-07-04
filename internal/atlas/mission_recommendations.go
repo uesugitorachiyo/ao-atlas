@@ -34,6 +34,11 @@ type AtlasRecommendationReadbackOptions struct {
 	EvidenceRoot  string
 }
 
+type AtlasRecommendationCompleteNodeOptions struct {
+	ExpectedNodeID string
+	EvidenceRoot   string
+}
+
 func BuildAtlasRecommendationWave(options AtlasRecommendationWaveOptions) (AtlasRecommendationWaveResult, error) {
 	minTasks := options.MinTasks
 	if minTasks <= 0 {
@@ -498,6 +503,23 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 	} else if completed > 0 {
 		status = "in_progress"
 	}
+	foundryRollupStatus := "required_pending_first_node_import"
+	promoterReadbackStatus := wave.PromoterReadbackStatus
+	promoterNoPromotionStatus := "required_not_bound_until_promotion_evidence_exists"
+	commandReadbackStatus := wave.CommandReadbackStatus
+	commandTimelineStatus := "compact_timeline_required_before_closure"
+	if completed > 0 {
+		foundryRollupStatus = "in_progress_node_run_links_recorded"
+		promoterNoPromotionStatus = "in_progress_no_promotion_recorded"
+		commandTimelineStatus = "in_progress_compact_timeline_recorded"
+	}
+	if finalAllowed {
+		foundryRollupStatus = "completed_all_node_run_links_recorded"
+		promoterReadbackStatus = "no_promotion_recorded"
+		promoterNoPromotionStatus = "recorded_no_promotion_for_recommendation_wave"
+		commandReadbackStatus = "compact_timeline_recorded"
+		commandTimelineStatus = "recorded_compact_timeline_for_completed_wave"
+	}
 	waveDigest := digestValue(wave)
 	if strings.TrimSpace(options.WavePath) != "" {
 		if digest, err := digestFile(options.WavePath); err == nil {
@@ -536,17 +558,17 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		CheckpointFreshnessStatus: "fresh_checkpoint_required_after_each_node_or_timed_interval",
 		StaleRouteDecisionStatus:  "fresh_atlas_supervises_foundry_owns_one_active_node",
 		EarlyReturnRiskStatus:     earlyReturnRisk,
-		FoundryRollupStatus:       "required_pending_first_node_import",
+		FoundryRollupStatus:       foundryRollupStatus,
 		FoundryTerminalStatusReadback: map[string]string{
 			"completed": "terminal_success_can_close_when_all_nodes_and_readbacks_are_complete",
 			"promoted":  "terminal_success_can_close_when_promoter_and_command_agree",
 			"denied":    "terminal_denial_requires_exact_missing_evidence_readback",
 			"blocked":   "terminal_blocker_requires_repair_or_checkpoint_resume",
 		},
-		PromoterReadbackStatus:      wave.PromoterReadbackStatus,
-		PromoterNoPromotionStatus:   "required_not_bound_until_promotion_evidence_exists",
-		CommandReadbackStatus:       wave.CommandReadbackStatus,
-		CommandTimelineStatus:       "compact_timeline_required_before_closure",
+		PromoterReadbackStatus:      promoterReadbackStatus,
+		PromoterNoPromotionStatus:   promoterNoPromotionStatus,
+		CommandReadbackStatus:       commandReadbackStatus,
+		CommandTimelineStatus:       commandTimelineStatus,
 		PublicSafetyScanStatus:      wave.PublicSafetyScanStatus,
 		FinalResponseAllowed:        finalAllowed,
 		FinalResponseReason:         finalReason,
@@ -687,6 +709,122 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 		errs = append(errs, "status completed requires recommendation readback final_response_allowed")
 	}
 	return joinErrors(errs)
+}
+
+func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadback) AtlasRecommendationExecutionReadback {
+	status := "implementation_wave_completed_generated_workgraph_ready"
+	if readback.Status == "in_progress" || readback.CompletedNodes > 0 {
+		status = "in_progress"
+	}
+	if readback.Status == "blocked" {
+		status = "blocked"
+	}
+	if readback.FinalResponseAllowed {
+		status = "completed"
+	}
+	return AtlasRecommendationExecutionReadback{
+		Schema:                       "ao.atlas.long-recommendation-wave-execution.v0.3",
+		Status:                       status,
+		MissionID:                    readback.MissionID,
+		EvidenceRoot:                 readback.EvidenceRoot,
+		CompletedRecommendationNodes: readback.CompletedNodes,
+		TotalRecommendationNodes:     readback.TotalNodes,
+		GeneratedWorkgraph: AtlasRecommendationGeneratedWorkgraphReadback{
+			TotalNodes:           readback.TotalNodes,
+			ReadyNodes:           readback.ReadyNodes,
+			ExecutableReadyNodes: readback.ExecutableReadyNodes,
+			FirstExecutableNode:  readback.FirstExecutableNode,
+			FinalResponseAllowed: readback.FinalResponseAllowed,
+			FinalResponseReason:  readback.FinalResponseReason,
+		},
+	}
+}
+
+func CompleteAtlasRecommendationNodeWithRunLink(wave AtlasRecommendationWave, workgraph Workgraph, link RunLink, options AtlasRecommendationCompleteNodeOptions) (Workgraph, string, error) {
+	if err := ValidateAtlasRecommendationWave(wave); err != nil {
+		return Workgraph{}, "", err
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return Workgraph{}, "", err
+	}
+	if err := ValidateRunLink(link); err != nil {
+		return Workgraph{}, "", err
+	}
+	if wave.TargetInstance != workgraph.TargetInstance {
+		return Workgraph{}, "", fmt.Errorf("target_instance mismatch between recommendation wave and workgraph")
+	}
+	if len(wave.Tasks) != len(workgraph.Nodes) {
+		return Workgraph{}, "", fmt.Errorf("workgraph node count must match recommendation tasks")
+	}
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		return Workgraph{}, "", err
+	}
+	executable, ok := state.NextReadyNode()
+	if !ok {
+		return Workgraph{}, "", fmt.Errorf("no executable recommendation node remains")
+	}
+	expectedNodeID := strings.TrimSpace(options.ExpectedNodeID)
+	if expectedNodeID != "" && executable.ID != expectedNodeID {
+		return Workgraph{}, "", fmt.Errorf("expected executable node %s, got %s", expectedNodeID, executable.ID)
+	}
+	if link.Status != "completed" {
+		return Workgraph{}, "", fmt.Errorf("run-link status must be completed")
+	}
+	if link.TaskID != executable.FactoryTask.ID {
+		return Workgraph{}, "", fmt.Errorf("run-link task_id must match executable node %s task %s", executable.ID, executable.FactoryTask.ID)
+	}
+	if err := validateRecommendationRunLinkEvidence(executable.FactoryTask, link, options.EvidenceRoot); err != nil {
+		return Workgraph{}, "", err
+	}
+	return CompleteWorkgraph(workgraph, link)
+}
+
+func validateRecommendationRunLinkEvidence(task FactoryTask, link RunLink, evidenceRoot string) error {
+	for _, key := range requiredRecommendationRunLinkEvidence(task) {
+		path := strings.TrimSpace(link.Evidence[key])
+		if path == "" {
+			return fmt.Errorf("missing evidence %s", key)
+		}
+		if strings.TrimSpace(evidenceRoot) == "" {
+			continue
+		}
+		clean := filepath.Clean(path)
+		if filepath.IsAbs(clean) || clean == ".." || strings.HasPrefix(clean, ".."+string(os.PathSeparator)) {
+			return fmt.Errorf("evidence %s must stay inside evidence root", key)
+		}
+		if _, err := os.Stat(filepath.Join(evidenceRoot, clean)); err != nil {
+			if os.IsNotExist(err) {
+				return fmt.Errorf("evidence %s path does not exist: %s", key, filepath.ToSlash(clean))
+			}
+			return err
+		}
+	}
+	return nil
+}
+
+func requiredRecommendationRunLinkEvidence(task FactoryTask) []string {
+	seen := map[string]bool{}
+	keys := []string{}
+	add := func(key string) {
+		key = strings.TrimSpace(key)
+		if key == "" || seen[key] {
+			return
+		}
+		seen[key] = true
+		keys = append(keys, key)
+	}
+	for _, gate := range task.RequiredGates {
+		add(gate)
+	}
+	for _, key := range []string{
+		"implementation_evidence",
+		"foundry_import",
+		"checkpoint_bundle",
+	} {
+		add(key)
+	}
+	return keys
 }
 
 func recommendationNodeEvidence(workgraph Workgraph) []AtlasRecommendationNodeEvidence {
