@@ -17,6 +17,24 @@ func containsStringPrefix(values []string, prefix string) bool {
 	return false
 }
 
+type requiredFieldSchema struct {
+	Required []string `json:"required"`
+}
+
+func assertSchemaRequiredFieldsPresent(t *testing.T, schemaPath, artifactPath string) {
+	t.Helper()
+	schema := mustLoadJSON[requiredFieldSchema](t, schemaPath)
+	if len(schema.Required) == 0 {
+		t.Fatalf("schema %s has no required fields", schemaPath)
+	}
+	artifact := mustLoadJSON[map[string]any](t, artifactPath)
+	for _, field := range schema.Required {
+		if _, ok := artifact[field]; !ok {
+			t.Fatalf("%s missing required schema field %q from %s", artifactPath, field, schemaPath)
+		}
+	}
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -577,6 +595,20 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		reconciliation.FoundryReturnGateStatus != resumeReadback.ReturnGateStatus ||
 		reconciliation.PromotionClaimed {
 		t.Fatalf("bad reconciliation packet: %#v", reconciliation)
+	}
+	schemaRoot := filepath.Join(repoRoot(t), "schemas")
+	for _, tc := range []struct {
+		schemaPath   string
+		artifactPath string
+	}{
+		{filepath.Join(schemaRoot, "recommendation-readback.schema.json"), resumeReadbackPath},
+		{filepath.Join(schemaRoot, "recommendation-checkpoint-readback.schema.json"), checkpointPath},
+		{filepath.Join(schemaRoot, "recommendation-command-readback.schema.json"), commandPath},
+		{filepath.Join(schemaRoot, "recommendation-promoter-readback.schema.json"), promoterPath},
+		{filepath.Join(schemaRoot, "recommendation-foundry-rollup.schema.json"), foundryPath},
+		{filepath.Join(schemaRoot, "recommendation-reconciliation-packet.schema.json"), reconciliationPath},
+	} {
+		assertSchemaRequiredFieldsPresent(t, tc.schemaPath, tc.artifactPath)
 	}
 }
 

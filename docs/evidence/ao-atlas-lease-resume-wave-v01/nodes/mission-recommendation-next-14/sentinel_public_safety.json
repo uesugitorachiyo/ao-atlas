@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-14",
+  "summary": "Changed tests and readiness checks only. The schema coverage adds no provider calls, credential inspection, releases, authority promotion, or RSI proof claims.",
+  "forbidden_markers_found": false,
+  "rsi_claimed": false,
+  "provider_calls": false,
+  "credential_inspection": false
+}

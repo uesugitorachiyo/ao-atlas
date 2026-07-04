@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-14",
+  "candidate": "recommendation-readback-schema-required-field-coverage",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Generated recommendation readbacks had schema files, but tests and production readiness did not compare generated artifacts against each schema required field list."
+}
