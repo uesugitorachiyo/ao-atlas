@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-24",
+  "candidate": "long-run-recommendation-prompt-early-return-risk-wording",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "The long-run continuation prompt denied final responses but did not show the concrete early_return_risk_status, making short-return diagnosis less visible to the operator loop."
+}

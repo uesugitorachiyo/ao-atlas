@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-24",
+  "rollback": [
+    "Revert early-return risk wording in the recommendation prompt builders.",
+    "Revert prompt wording assertions in internal/atlas/mission_recommendations_test.go.",
+    "Revert production-readiness prompt grep additions for early-return risk wording.",
+    "Remove node 24 evidence artifacts under docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-24.",
+    "Regenerate root readbacks from node 23 workgraph if this node is reverted before merge."
+  ]
+}

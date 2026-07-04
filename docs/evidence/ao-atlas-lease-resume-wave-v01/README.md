@@ -10,8 +10,8 @@ because ready nodes remain.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 23
-- Ready nodes: 17
+- Completed nodes: 24
+- Ready nodes: 16
 - Blocked nodes: 0
 - Failed nodes: 0
 - Elapsed minutes: 180
@@ -19,10 +19,11 @@ because ready nodes remain.
 - Lease health status: `minimum_unmet`
 - Checkpoint freshness status: `fresh_checkpoint_required_after_each_node_or_timed_interval`
 - Stale route decision status: `fresh_atlas_supervises_foundry_owns_one_active_node`
+- Early-return risk status: `blocked_final_response_ready_nodes_remain`
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 23
+- Checkpoint count: 24
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-24`
+- Exact next action: emit Foundry import for `mission-recommendation-next-25`
   and execute exactly one active node.
 
 ## Root Artifacts

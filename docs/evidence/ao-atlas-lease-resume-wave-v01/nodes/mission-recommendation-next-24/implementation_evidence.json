@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-24",
+  "summary": "Added explicit early-return risk wording to long-run recommendation prompts, required the symbolic early_return_risk_status in initial prompt text, and made production readiness check concrete risk status in resumed/live prompts.",
+  "changed_files": [
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/next-recommended-prompt.md"
+  ]
+}
