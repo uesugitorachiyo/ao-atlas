@@ -1,0 +1,16 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-21",
+  "summary": "Added lease_health_status to derived Atlas long-run readbacks, propagated it from the root recommendation readback, rejected stale derived artifacts, and made schemas plus production readiness require the field.",
+  "changed_files": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "schemas/recommendation-checkpoint-readback.schema.json",
+    "schemas/recommendation-command-readback.schema.json",
+    "schemas/recommendation-promoter-readback.schema.json",
+    "schemas/recommendation-foundry-rollup.schema.json",
+    "schemas/recommendation-reconciliation-packet.schema.json",
+    "scripts/production-readiness.sh"
+  ]
+}
