@@ -14,6 +14,7 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 	fs.SetOutput(io.Discard)
 	path := fs.String("workgraph", "", "workgraph path")
 	runLinkPath := fs.String("run-link", "", "run link path")
+	aoMissionMetadataPath := fs.String("ao-mission-metadata", "", "optional AO Mission workgraph metadata")
 	jsonOut := fs.Bool("json", false, "json output")
 	out := fs.String("out", "", "output directory")
 	dryRun := fs.Bool("dry-run", false, "write a dry-run skeleton without scheduling or executing")
@@ -41,14 +42,32 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 		}
 		fmt.Fprintf(stdout, "status=ready\nnode=%s\ntask=%s\n", node.ID, node.FactoryTask.ID)
 	case "status":
-		counts := map[string]int{"ready": 0, "blocked": 0, "completed": 0}
+		counts := map[string]any{"ready": 0, "blocked": 0, "completed": 0, "schedules_work": false, "executes_work": false, "approves_work": false}
 		for _, node := range workgraph.Nodes {
-			counts[node.Status]++
+			if value, ok := counts[node.Status].(int); ok {
+				counts[node.Status] = value + 1
+			}
+		}
+		if *aoMissionMetadataPath != "" {
+			metadata, err := LoadJSON[AOMissionWorkgraphMetadata](*aoMissionMetadataPath)
+			if err != nil {
+				return err
+			}
+			if err := ValidateAOMissionWorkgraphMetadata(metadata, workgraph); err != nil {
+				return err
+			}
+			counts["mission_id"] = metadata.MissionID
+			counts["primary_mission_provenance"] = metadata.PrimaryMissionProvenance
+			counts["provenance_diagnostics"] = metadata.ProvenanceDiagnostics
+			counts["mission_provenance"] = metadata.MissionProvenance
 		}
 		if *jsonOut {
 			return printJSON(stdout, counts)
 		}
 		fmt.Fprintf(stdout, "ready=%d\nblocked=%d\ncompleted=%d\n", counts["ready"], counts["blocked"], counts["completed"])
+		if *aoMissionMetadataPath != "" {
+			fmt.Fprintf(stdout, "primary_mission_provenance=%s\nprovenance_diagnostics=%s\n", counts["primary_mission_provenance"], counts["provenance_diagnostics"])
+		}
 	case "materialize-next":
 		if !*dryRun {
 			return fmt.Errorf("--dry-run is required for v0.1 workgraph materialization")

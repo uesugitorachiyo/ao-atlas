@@ -1598,6 +1598,52 @@ func TestFoundryImportIncludesAOMissionMetadataSourceArtifact(t *testing.T) {
 	}
 }
 
+func TestWorkgraphStatusReportsAOMissionProvenanceDiagnostics(t *testing.T) {
+	dir := t.TempDir()
+	metadataPath := filepath.Join(dir, "ao-mission-workgraph-metadata.json")
+	if err := WriteJSON(metadataPath, AOMissionWorkgraphMetadata{
+		ContractVersion:          AOMissionWorkgraphMetadataContract,
+		MissionID:                "mission-demo",
+		WorkgraphID:              "atlas-readiness-workgraph",
+		TargetInstance:           "demo-stack",
+		CurrentRoute:             "ao-atlas",
+		NodeCounts:               map[string]int{"total": 2, "completed": 1, "ready": 1},
+		MissionProvenance:        map[string]int{"artifact_manifest": 1, "route_history": 1},
+		PrimaryMissionProvenance: "artifact_manifest",
+		ProvenanceDiagnostics:    "artifact_manifest=1,route_history=1",
+		SourceArtifacts: map[string]string{
+			"ao_mission_import": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+			"workgraph":         "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+		},
+		SafeToExecute: false,
+		SchedulesWork: false,
+		ExecutesWork:  false,
+		ApprovesWork:  false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{
+		"workgraph", "status",
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--ao-mission-metadata", metadataPath,
+		"--json",
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("workgraph status failed: %s", out.String())
+	}
+	var status map[string]any
+	if err := json.Unmarshal(out.Bytes(), &status); err != nil {
+		t.Fatal(err)
+	}
+	if status["primary_mission_provenance"] != "artifact_manifest" || status["provenance_diagnostics"] != "artifact_manifest=1,route_history=1" {
+		t.Fatalf("workgraph status missing Mission provenance diagnostics: %#v", status)
+	}
+	if status["executes_work"] != false || status["approves_work"] != false || status["schedules_work"] != false {
+		t.Fatalf("workgraph status widened authority: %#v", status)
+	}
+}
+
 func TestFoundryImportWritesContinuationHandoffPrompt(t *testing.T) {
 	dir := t.TempDir()
 	outDir := filepath.Join(dir, "foundry-import")
