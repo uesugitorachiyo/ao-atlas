@@ -407,6 +407,13 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	if resumeReadback.StartedAt != leaseStart.StartedAt || resumeReadback.ElapsedMinutes != 25 {
 		t.Fatalf("resume readback lost lease start: %#v", resumeReadback)
 	}
+	resumeExecution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, resumeExecutionPath)
+	if resumeExecution.FoundryRunLinkReadinessSummary.CompletedRunLinks != resumeReadback.CompletedNodes ||
+		resumeExecution.FoundryRunLinkReadinessSummary.RequiredRunLinks != resumeReadback.TotalNodes ||
+		resumeExecution.FoundryRunLinkReadinessSummary.NextExecutableNode != resumeReadback.FirstExecutableNode ||
+		!hasSourceArtifact(resumeExecution.SourceArtifacts, "foundry_run_link_readiness_summary") {
+		t.Fatalf("execution readback missing Foundry run-link readiness source artifact: %#v", resumeExecution)
+	}
 	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, commandPath)
 	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, promoterPath)
 	foundry := mustLoadJSON[AtlasRecommendationFoundryRollup](t, foundryPath)
@@ -874,23 +881,19 @@ func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T)
 		FeatureDepthRecommendations: []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"},
 		SafetyBoundaries:            map[string]bool{"provider_calls": false},
 	}
-	execution := AtlasRecommendationExecutionReadback{
-		Schema:                       "ao.atlas.long-recommendation-wave-execution.v0.3",
-		Status:                       "completed",
-		MissionID:                    "mission-long-wave",
-		CompletedRecommendationNodes: 40,
-		TotalRecommendationNodes:     40,
-		GeneratedWorkgraph: AtlasRecommendationGeneratedWorkgraphReadback{
-			TotalNodes:           40,
-			ReadyNodes:           40,
-			ExecutableReadyNodes: 1,
-			FinalResponseAllowed: false,
-		},
-	}
+	execution := BuildAtlasRecommendationExecutionReadback(readback)
+	execution.Status = "completed"
+	execution.CompletedRecommendationNodes = 40
 
 	err := ValidateAtlasRecommendationExecutionReadback(execution, readback)
 	if err == nil || !strings.Contains(err.Error(), "completed_recommendation_nodes must match recommendation readback completed_nodes") {
 		t.Fatalf("expected false completion rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.CompletedRunLinks = 40
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness completed_run_links must match recommendation readback completed_nodes") {
+		t.Fatalf("expected stale Foundry run-link readiness rejection, got %v", err)
 	}
 }
 
@@ -1043,6 +1046,15 @@ func recommendationRunLink(t *testing.T, taskID string, evidence map[string]stri
 		t.Fatal(err)
 	}
 	return link
+}
+
+func hasSourceArtifact(sources []SourceRef, ref string) bool {
+	for _, source := range sources {
+		if source.Ref == ref && strings.HasPrefix(source.Digest, "sha256:") {
+			return true
+		}
+	}
+	return false
 }
 
 func recommendationEvidenceFiles(t *testing.T, scenario, nodeID string) map[string]string {

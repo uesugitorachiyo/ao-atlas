@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-11",
+  "summary": "Changed Atlas readback metadata only. The summary records Foundry run-link readiness without provider calls, credential inspection, release actions, authority promotion, or RSI proof claims.",
+  "forbidden_markers_found": false,
+  "rsi_claimed": false,
+  "provider_calls": false,
+  "credential_inspection": false
+}

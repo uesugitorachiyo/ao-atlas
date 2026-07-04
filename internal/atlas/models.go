@@ -260,13 +260,27 @@ type AtlasRecommendationNodeEvidence struct {
 }
 
 type AtlasRecommendationExecutionReadback struct {
-	Schema                       string                                        `json:"schema"`
-	Status                       string                                        `json:"status"`
-	MissionID                    string                                        `json:"mission_id"`
-	EvidenceRoot                 string                                        `json:"evidence_root,omitempty"`
-	CompletedRecommendationNodes int                                           `json:"completed_recommendation_nodes"`
-	TotalRecommendationNodes     int                                           `json:"total_recommendation_nodes"`
-	GeneratedWorkgraph           AtlasRecommendationGeneratedWorkgraphReadback `json:"generated_workgraph"`
+	Schema                         string                                            `json:"schema"`
+	Status                         string                                            `json:"status"`
+	MissionID                      string                                            `json:"mission_id"`
+	EvidenceRoot                   string                                            `json:"evidence_root,omitempty"`
+	CompletedRecommendationNodes   int                                               `json:"completed_recommendation_nodes"`
+	TotalRecommendationNodes       int                                               `json:"total_recommendation_nodes"`
+	GeneratedWorkgraph             AtlasRecommendationGeneratedWorkgraphReadback     `json:"generated_workgraph"`
+	FoundryRunLinkReadinessSummary AtlasRecommendationFoundryRunLinkReadinessSummary `json:"foundry_run_link_readiness_summary"`
+	SourceArtifacts                []SourceRef                                       `json:"source_artifacts"`
+}
+
+type AtlasRecommendationFoundryRunLinkReadinessSummary struct {
+	Status               string `json:"status"`
+	Summary              string `json:"summary"`
+	CompletedRunLinks    int    `json:"completed_run_links"`
+	RequiredRunLinks     int    `json:"required_run_links"`
+	MissingRunLinks      int    `json:"missing_run_links"`
+	ReadyNodes           int    `json:"ready_nodes"`
+	NextExecutableNode   string `json:"next_executable_node,omitempty"`
+	CheckpointCount      int    `json:"checkpoint_count"`
+	FinalResponseAllowed bool   `json:"final_response_allowed"`
 }
 
 type AtlasRecommendationLeaseStart struct {
