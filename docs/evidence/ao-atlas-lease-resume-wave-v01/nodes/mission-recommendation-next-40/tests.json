@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-40",
+  "red_test": "scripts/production-readiness.sh failed after adding the final 40/40 lease-resume readback assertion because the root readback was still at completed_nodes=39, ready_nodes=1, and final_response_allowed=false.",
+  "tests": [
+    "scripts/production-readiness.sh passes after node 40 completion and final readback refresh."
+  ],
+  "summary": "Production readiness now asserts the lease-resume evidence root reaches 40/40 completed with no ready nodes, minimum lease met, final_response_allowed=true, and the final exact next action."
+}

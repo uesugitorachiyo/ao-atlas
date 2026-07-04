@@ -1,33 +1,33 @@
 {
   "schema": "ao.atlas.lease-resume-wave-final-synthesis.v0.1",
-  "status": "in_progress",
+  "status": "completed",
   "evidence_root": "docs/evidence/ao-atlas-lease-resume-wave-v01",
   "mission_id": "mission-long-wave",
-  "completed_nodes": 39,
+  "completed_nodes": 40,
   "total_nodes": 40,
-  "ready_nodes": 1,
+  "ready_nodes": 0,
   "blocked_nodes": 0,
   "failed_nodes": 0,
   "started_at": "2026-07-04T08:34:04-07:00",
-  "completed_at": "2026-07-04T16:31:19-07:00",
-  "elapsed_minutes": 478,
+  "completed_at": "2026-07-04T16:44:29-07:00",
+  "elapsed_minutes": 491,
   "supervisor_min_minutes": 120,
   "min_minutes_met": true,
   "lease_time_status": "minimum_minutes_met",
-  "lease_health_status": "minimum_met_continue_if_fast",
+  "lease_health_status": "all_generated_nodes_complete",
   "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
   "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
-  "early_return_risk_status": "blocked_final_response_ready_nodes_remain",
-  "checkpoint_count": 39,
-  "return_gate_status": "blocked_ready_nodes_remain",
-  "final_response_allowed": false,
-  "exact_next_action": "Emit Foundry import for mission-recommendation-next-40 and execute exactly one active node.",
+  "early_return_risk_status": "cleared_no_ready_nodes_remain",
+  "checkpoint_count": 40,
+  "return_gate_status": "final_response_allowed",
+  "final_response_allowed": true,
+  "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
   "exact_next_action_readback": {
-    "status": "continuation_required",
-    "action": "Emit Foundry import for mission-recommendation-next-40 and execute exactly one active node.",
-    "next_executable_node": "mission-recommendation-next-40",
-    "return_gate_status": "blocked_ready_nodes_remain",
-    "final_response_allowed": false,
+    "status": "finalization_ready",
+    "action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
+    "next_executable_node": null,
+    "return_gate_status": "final_response_allowed",
+    "final_response_allowed": true,
     "source": "recommendation_readback"
   },
   "command_timeline_placeholders": [
@@ -140,6 +140,16 @@
     "section": "2-3 Hour Long-Run Recommendation Wave Evidence",
     "summary": "Documents the 40-node, 120-180 minute lease, checkpoint evidence requirements, final-response gate, cross-artifact agreement, no-promotion boundary, and RSI-denied boundary."
   },
+  "final_execution_readback": {
+    "status": "recorded",
+    "recommendation_readback": "docs/evidence/ao-atlas-lease-resume-wave-v01/recommendation-readback.json",
+    "execution_readback": "docs/evidence/ao-atlas-lease-resume-wave-v01/execution-readback.json",
+    "command_readback": "docs/evidence/ao-atlas-lease-resume-wave-v01/command-readback.json",
+    "promoter_readback": "docs/evidence/ao-atlas-lease-resume-wave-v01/promoter-readback.json",
+    "foundry_rollup": "docs/evidence/ao-atlas-lease-resume-wave-v01/foundry-rollup.json",
+    "reconciliation_packet": "docs/evidence/ao-atlas-lease-resume-wave-v01/reconciliation-packet.json",
+    "summary": "Final readbacks report 40/40 recommendation nodes complete, ready_nodes=0, checkpoint_count=40, minimum lease met, final_response_allowed=true, promotion_claimed=false, and RSI remains denied."
+  },
   "blocked_node_continuation_prompt": "If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.",
   "foundry_terminal_status_examples": [
     {
@@ -172,21 +182,21 @@
     }
   ],
   "closure_artifacts": {
-    "command_final_response_allowed": false,
-    "command_return_gate_status": "blocked_ready_nodes_remain",
+    "command_final_response_allowed": true,
+    "command_return_gate_status": "final_response_allowed",
     "promoter_status": "no_promotion",
     "promotion_claimed": false,
     "no_promotion_summary": "No mutation authority promotion claimed; RSI remains denied.",
     "next_denied_class": "RSI",
     "rsi_remains_denied": true,
-    "foundry_status": "in_progress",
-    "foundry_return_gate_status": "blocked_ready_nodes_remain",
-    "foundry_node_completion_status": "nodes_in_progress",
+    "foundry_status": "completed",
+    "foundry_return_gate_status": "final_response_allowed",
+    "foundry_node_completion_status": "all_nodes_complete",
     "foundry_lease_completion_status": "minimum_minutes_met",
-    "foundry_lease_health_status": "minimum_met_continue_if_fast",
+    "foundry_lease_health_status": "all_generated_nodes_complete",
     "foundry_checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
     "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
-    "early_return_risk_status": "blocked_final_response_ready_nodes_remain",
+    "early_return_risk_status": "cleared_no_ready_nodes_remain",
     "foundry_promoted_terminal_example": "promoted normalizes to completed only when Promoter and Command agree, RSI remains denied, and no ready nodes remain.",
     "foundry_denied_terminal_examples": [
       {
@@ -220,7 +230,7 @@
         "authority_advance_claimed": false
       }
     ],
-    "reconciliation_status": "continuation_required",
+    "reconciliation_status": "ready",
     "artifacts_agree": true
   },
   "fixtures": {
