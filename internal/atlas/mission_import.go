@@ -12,6 +12,10 @@ func BuildAOMissionImport(recordPath, commandStatusPath, artifactManifestPath st
 }
 
 func BuildAOMissionImportWithRouteHistory(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath string) (AOMissionImport, error) {
+	return BuildAOMissionImportWithMissionReadbacks(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, "", "")
+}
+
+func BuildAOMissionImportWithMissionReadbacks(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath string) (AOMissionImport, error) {
 	var record map[string]any
 	if err := readJSONIfPossible(recordPath, &record); err != nil {
 		return AOMissionImport{}, err
@@ -52,7 +56,17 @@ func BuildAOMissionImportWithRouteHistory(recordPath, commandStatusPath, artifac
 			return AOMissionImport{}, err
 		}
 	}
-	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath)
+	if strings.TrimSpace(schedulerRecoveryPath) != "" {
+		if err := validateAOMissionReadback(schedulerRecoveryPath, missionID, "ao.mission.scheduler-recovery-readback.v0.1", "scheduler recovery"); err != nil {
+			return AOMissionImport{}, err
+		}
+	}
+	if strings.TrimSpace(ledgerCompactionPath) != "" {
+		if err := validateAOMissionReadback(ledgerCompactionPath, missionID, "ao.mission.ledger-compaction-readback.v0.1", "ledger compaction"); err != nil {
+			return AOMissionImport{}, err
+		}
+	}
+	sources, err := aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath)
 	if err != nil {
 		return AOMissionImport{}, err
 	}
@@ -155,7 +169,7 @@ func aoMissionWorkgraphNodeCounts(workgraph Workgraph) map[string]int {
 	return counts
 }
 
-func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath string) ([]AOMissionSourceArtifact, error) {
+func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPath, routeHistoryPath, schedulerRecoveryPath, ledgerCompactionPath string) ([]AOMissionSourceArtifact, error) {
 	inputs := []struct {
 		name string
 		path string
@@ -169,6 +183,18 @@ func aoMissionSourceArtifacts(recordPath, commandStatusPath, artifactManifestPat
 			name string
 			path string
 		}{name: "route_history", path: routeHistoryPath})
+	}
+	if strings.TrimSpace(schedulerRecoveryPath) != "" {
+		inputs = append(inputs, struct {
+			name string
+			path string
+		}{name: "scheduler_recovery", path: schedulerRecoveryPath})
+	}
+	if strings.TrimSpace(ledgerCompactionPath) != "" {
+		inputs = append(inputs, struct {
+			name string
+			path string
+		}{name: "ledger_compaction", path: ledgerCompactionPath})
 	}
 	sources := make([]AOMissionSourceArtifact, 0, len(inputs))
 	for _, input := range inputs {
@@ -200,6 +226,25 @@ func validateAOMissionRouteHistory(path, missionID string) error {
 			if value, ok := item[field].(bool); ok && value {
 				return fmt.Errorf("route history must not claim execution, approval, or repository mutation authority")
 			}
+		}
+	}
+	return nil
+}
+
+func validateAOMissionReadback(path, missionID, expectedSchema, label string) error {
+	var readback map[string]any
+	if err := readJSONIfPossible(path, &readback); err != nil {
+		return err
+	}
+	if schema, _ := readback["schema"].(string); schema != expectedSchema {
+		return fmt.Errorf("%s schema must be %s", label, expectedSchema)
+	}
+	if got, _ := readback["mission_id"].(string); got != missionID {
+		return fmt.Errorf("%s mission_id mismatch", label)
+	}
+	for _, field := range []string{"safe_to_execute", "schedules_work", "executes_work", "approves_work", "mutates_repositories", "provider_calls", "release_or_publish", "credential_use", "direct_main_mutation", "concurrent_mutation"} {
+		if value, ok := readback[field].(bool); ok && value {
+			return fmt.Errorf("%s %s must be false", label, field)
 		}
 	}
 	return nil

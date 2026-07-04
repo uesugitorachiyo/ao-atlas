@@ -941,6 +941,94 @@ func TestMissionImportBindsOptionalRouteHistoryProvenance(t *testing.T) {
 	}
 }
 
+func TestMissionImportBindsRecoveryAndCompactionProvenance(t *testing.T) {
+	dir := t.TempDir()
+	record := filepath.Join(dir, "mission-record.json")
+	status := filepath.Join(dir, "command-status.json")
+	manifest := filepath.Join(dir, "artifact-manifest.json")
+	recovery := filepath.Join(dir, "scheduler-recovery-readback.json")
+	compaction := filepath.Join(dir, "ledger-compaction-readback.json")
+	outPath := filepath.Join(dir, "ao-mission-import.json")
+	if err := WriteJSON(record, map[string]any{
+		"schema":        "ao.mission.record.v0.1",
+		"mission_id":    "mission-demo",
+		"status":        "active",
+		"current_route": "ao-atlas",
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(status, map[string]any{
+		"schema":               "ao.command.mission-status.v0.1",
+		"mission_id":           "mission-demo",
+		"status":               "active",
+		"current_route":        "ao-atlas",
+		"safe_to_execute":      false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(manifest, map[string]any{
+		"schema":        "ao.mission.artifact-manifest.v0.1",
+		"mission_id":    "mission-demo",
+		"artifact_refs": []any{},
+		"executes_work": false,
+		"approves_work": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(recovery, map[string]any{
+		"schema":               "ao.mission.scheduler-recovery-readback.v0.1",
+		"mission_id":           "mission-demo",
+		"missed_wakeups":       1,
+		"recovered_wakeups":    1,
+		"safe_to_execute":      false,
+		"schedules_work":       false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(compaction, map[string]any{
+		"schema":               "ao.mission.ledger-compaction-readback.v0.1",
+		"mission_id":           "mission-demo",
+		"records_before":       8,
+		"records_after":        4,
+		"safe_to_execute":      false,
+		"schedules_work":       false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "import",
+		"--record", record,
+		"--command-status", status,
+		"--artifact-manifest", manifest,
+		"--scheduler-recovery", recovery,
+		"--ledger-compaction", compaction,
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission import with recovery and compaction failed: %s", out.String())
+	}
+	importRecord, err := LoadJSON[AOMissionImport](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(importRecord.SourceArtifacts) != 5 {
+		t.Fatalf("expected five source artifacts, got %#v", importRecord.SourceArtifacts)
+	}
+	if importRecord.SourceArtifacts[3].Name != "scheduler_recovery" || importRecord.SourceArtifacts[4].Name != "ledger_compaction" {
+		t.Fatalf("missing recovery/compaction provenance: %#v", importRecord.SourceArtifacts)
+	}
+}
+
 func TestMissionImportRejectsUnsafeRouteHistory(t *testing.T) {
 	dir := t.TempDir()
 	record := filepath.Join(dir, "mission-record.json")
@@ -964,6 +1052,32 @@ func TestMissionImportRejectsUnsafeRouteHistory(t *testing.T) {
 	code := Run([]string{"mission", "import", "--record", record, "--command-status", status, "--artifact-manifest", manifest, "--route-history", history, "--out", outPath}, &out, &out)
 	if code == 0 || !strings.Contains(out.String(), "route history must not claim execution") {
 		t.Fatalf("expected unsafe route-history rejection, code=%d out=%s", code, out.String())
+	}
+}
+
+func TestMissionImportRejectsUnsafeSchedulerRecovery(t *testing.T) {
+	dir := t.TempDir()
+	record := filepath.Join(dir, "mission-record.json")
+	status := filepath.Join(dir, "command-status.json")
+	manifest := filepath.Join(dir, "artifact-manifest.json")
+	recovery := filepath.Join(dir, "scheduler-recovery-readback.json")
+	outPath := filepath.Join(dir, "ao-mission-import.json")
+	if err := WriteJSON(record, map[string]any{"schema": "ao.mission.record.v0.1", "mission_id": "mission-demo", "status": "active", "current_route": "ao-atlas"}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(status, map[string]any{"schema": "ao.command.mission-status.v0.1", "mission_id": "mission-demo", "status": "active", "current_route": "ao-atlas", "safe_to_execute": false, "executes_work": false, "approves_work": false, "mutates_repositories": false}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(manifest, map[string]any{"schema": "ao.mission.artifact-manifest.v0.1", "mission_id": "mission-demo", "artifact_refs": []any{}, "executes_work": false, "approves_work": false}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(recovery, map[string]any{"schema": "ao.mission.scheduler-recovery-readback.v0.1", "mission_id": "mission-demo", "safe_to_execute": true}); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{"mission", "import", "--record", record, "--command-status", status, "--artifact-manifest", manifest, "--scheduler-recovery", recovery, "--out", outPath}, &out, &out)
+	if code == 0 || !strings.Contains(out.String(), "scheduler recovery safe_to_execute must be false") {
+		t.Fatalf("expected unsafe scheduler recovery rejection, code=%d out=%s", code, out.String())
 	}
 }
 

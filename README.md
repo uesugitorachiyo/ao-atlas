@@ -119,7 +119,7 @@ go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json
 go run ./cmd/atlas instance doctor --instance examples/valid/stack-instance.json --json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph-completed.json --run-link examples/valid/run-link.json --out .atlas-local/mission-status.json
 go run ./cmd/atlas mission status --intake examples/valid/intake.json --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link-needs-context.json --json
-go run ./cmd/atlas mission import --record examples/valid/ao-mission/mission-record.json --command-status examples/valid/ao-mission/command-status.json --artifact-manifest examples/valid/ao-mission/artifact-manifest.json --route-history examples/valid/ao-mission/route-history.json --out .atlas-local/ao-mission-import.json
+go run ./cmd/atlas mission import --record examples/valid/ao-mission/mission-record.json --command-status examples/valid/ao-mission/command-status.json --artifact-manifest examples/valid/ao-mission/artifact-manifest.json --route-history examples/valid/ao-mission/route-history.json --scheduler-recovery examples/valid/ao-mission/scheduler-recovery-readback.json --ledger-compaction examples/valid/ao-mission/ledger-compaction-readback.json --out .atlas-local/ao-mission-import.json
 go run ./cmd/atlas blueprint-request validate --request examples/valid/blueprint-request.json
 go run ./cmd/atlas blueprint import --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack --authorization examples/valid/blueprint-import-low-risk-code/build-authorization.json --instance examples/valid/stack-instance.json --mutation-classes examples/valid/mutation-classes.json --out .atlas-local/blueprint-import-low-risk-code
 go run ./cmd/atlas mutation-classes validate --model examples/valid/mutation-classes.json
@@ -155,14 +155,16 @@ work ready. The request is a clarification artifact only; AO Blueprint still
 owns requirements interview and build authorization.
 
 `atlas mission import` binds AO Mission record, AO Command mission-status, AO
-Mission artifact-manifest readbacks, and optional AO Mission route-history
-provenance into `ao.atlas.ao-mission-import.v0.1`. When an artifact manifest
-contains `artifact_refs`, Atlas resolves each ref and verifies the declared
-`sha256:` digest before emitting the import record. A digest mismatch blocks the
-import and grants no execution authority. Route-history provenance must remain
-read-only; any entry that claims execution, approval, or repository mutation
-authority is rejected. The import is context for Atlas compilation only; it is
-not a Foundry execution grant.
+Mission artifact-manifest readbacks, and optional AO Mission route-history,
+scheduler-recovery, and ledger-compaction provenance into
+`ao.atlas.ao-mission-import.v0.1`. When an artifact manifest contains
+`artifact_refs`, Atlas resolves each ref and verifies the declared `sha256:`
+digest before emitting the import record. A digest mismatch blocks the import and
+grants no execution authority. Optional Mission provenance must remain read-only;
+any route, scheduler-recovery, or ledger-compaction readback that claims
+execution, scheduling, approval, repository mutation, provider, credential,
+release, direct-main, or concurrent mutation authority is rejected. The import is
+context for Atlas compilation only; it is not a Foundry execution grant.
 
 The committed
 `examples/valid/workgraph-repair-plan-blocked-node-demo.json` fixture shows the
