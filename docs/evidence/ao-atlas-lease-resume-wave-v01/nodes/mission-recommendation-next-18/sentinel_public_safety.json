@@ -1,0 +1,5 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-18",
+  "summary": "Changed test code and private evidence only; generated Foundry continuation prompt preserves no-provider-call, no-credential, no-authority-promotion, and RSI-denied wording."
+}

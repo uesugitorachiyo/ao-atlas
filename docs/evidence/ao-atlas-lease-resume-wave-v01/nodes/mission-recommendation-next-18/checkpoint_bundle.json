@@ -1,0 +1,5 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-18",
+  "summary": "Node 18 checkpoint records Foundry import smoke coverage and preserves continuation to node 19 because ready nodes remain."
+}
