@@ -10,23 +10,23 @@ because ready nodes remain.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 35
-- Ready nodes: 5
+- Completed nodes: 36
+- Ready nodes: 4
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 424
+- Elapsed minutes: 437
 - Minimum minutes met: true
 - Lease health status: `minimum_met_continue_if_fast`
 - Checkpoint freshness status: `fresh_checkpoint_required_after_each_node_or_timed_interval`
 - Stale route decision status: `fresh_atlas_supervises_foundry_owns_one_active_node`
 - Early-return risk status: `blocked_final_response_ready_nodes_remain`
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 35
+- Checkpoint count: 36
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-36`
+- Exact next action: emit Foundry import for `mission-recommendation-next-37`
   and execute exactly one active node.
 - Exact next action readback: `continuation_required`, bound to
-  `mission-recommendation-next-36`, `blocked_ready_nodes_remain`, and
+  `mission-recommendation-next-37`, `blocked_ready_nodes_remain`, and
   `final_response_allowed=false`.
 - Command timeline placeholders: `checkpoint`, `exact_next_action`, and
   `return_gate` are pending Command timeline slots required before final
@@ -50,6 +50,11 @@ because ready nodes remain.
   that Atlas imports only the current executable node, Foundry owns that
   bounded implementation evidence and run-link, and Atlas resumes from the
   checkpoint before importing the next node.
+- Command readback requirements docs: the operator runbook and README now
+  explain that Command stays compact and gate-bound, reporting node counts,
+  lease status, checkpoint freshness, return gate, exact next action, first
+  executable node, and final-response allowance without replacing Atlas
+  workgraph or Foundry run-link evidence.
 - Foundry terminal examples: `completed`, `promoted`, `denied`, and `blocked`
   are explicit in the recommendation readback. `promoted` normalizes to
   `completed` only when Promoter and Command agree and RSI remains denied.

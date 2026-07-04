@@ -203,6 +203,10 @@ Foundry import ownership stays single-node: Atlas emits import material for the
 current executable node only, Foundry owns that bounded implementation evidence
 and run-link, and Atlas resumes from the checkpoint before importing the next
 node.
+Command readback requirements stay compact and gate-bound: Command reports node
+counts, lease status, checkpoint freshness, return gate, exact next action,
+first executable node, and final-response allowance without replacing Atlas
+workgraph or Foundry run-link evidence.
 The detailed operator runbook is
 `docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md`.
 
