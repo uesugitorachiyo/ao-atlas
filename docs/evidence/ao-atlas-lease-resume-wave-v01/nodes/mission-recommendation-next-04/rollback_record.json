@@ -1,0 +1,15 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-04",
+  "rollback_scope": [
+    "schemas/recommendation-lease-start.schema.json",
+    "schemas/recommendation-checkpoint-readback.schema.json",
+    "schemas/recommendation-command-readback.schema.json",
+    "schemas/recommendation-promoter-readback.schema.json",
+    "schemas/recommendation-foundry-rollup.schema.json",
+    "scripts/production-readiness.sh",
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-04"
+  ],
+  "rollback_command": "revert the PR commit for node 04"
+}

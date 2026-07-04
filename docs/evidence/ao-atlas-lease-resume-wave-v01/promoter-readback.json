@@ -6,7 +6,7 @@
   "promotion_claimed": false,
   "rsi_remains_denied": true,
   "reason": "Recommendation wave records no mutation authority promotion; RSI remains denied.",
-  "elapsed_minutes": 33,
+  "elapsed_minutes": 43,
   "min_minutes_met": false,
   "final_response_allowed": false,
   "schedules_work": false,

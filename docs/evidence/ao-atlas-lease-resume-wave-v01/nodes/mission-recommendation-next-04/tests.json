@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-04",
+  "red_phase": "TestProductionReadinessExercisesMissionRecommendationsImport failed before implementation because production readiness did not reference recommendation-lease-start.schema.json.",
+  "commands": [
+    "go test ./internal/atlas -run TestProductionReadinessExercisesMissionRecommendationsImport -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ]
+}
