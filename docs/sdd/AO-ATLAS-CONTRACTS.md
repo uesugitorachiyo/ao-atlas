@@ -22,6 +22,11 @@ v0.1 contract names:
 - `ao.atlas.ao-mission-workgraph-metadata.v0.1`
 - `ao.atlas.recommendation-wave.v0.1`
 - `ao.atlas.recommendation-readback.v0.1`
+- `ao.atlas.recommendation-lease-start.v0.1`
+- `ao.atlas.recommendation-checkpoint-readback.v0.1`
+- `ao.atlas.recommendation-command-readback.v0.1`
+- `ao.atlas.recommendation-promoter-readback.v0.1`
+- `ao.atlas.recommendation-foundry-rollup.v0.1`
 
 All contracts are JSON. Validation requires explicit `contract_version` values,
 stable identifiers, non-empty required fields, and public-safe paths.
@@ -72,6 +77,24 @@ when no ready, blocked, or failed recommendation nodes remain and the elapsed
 lease time meets `supervisor.min_minutes`. The readback is evidence only: it
 does not schedule, execute, approve, mutate repositories, call providers,
 inspect credentials, or claim broad RSI.
+
+`ao.atlas.recommendation-lease-start.v0.1` is the durable start marker for a
+long-run recommendation wave. It records `started_at`, lease minutes, checkpoint
+policy, wave/workgraph digests, and explicit non-authority boundaries. Resume
+commands use it as the source of truth so continuation prompts cannot reset the
+lease clock.
+
+`ao.atlas.recommendation-checkpoint-readback.v0.1` records elapsed lease status
+after a node checkpoint. It carries node counts, `elapsed_minutes`,
+`min_minutes_met`, `lease_time_status`, and the exact next action.
+
+`ao.atlas.recommendation-command-readback.v0.1`,
+`ao.atlas.recommendation-promoter-readback.v0.1`, and
+`ao.atlas.recommendation-foundry-rollup.v0.1` summarize the same authoritative
+recommendation readback for Command, Promoter, and Foundry surfaces. They are
+used as stale-artifact detectors: Command final-response status and Foundry
+rollup completion must agree with the recommendation readback, and Promoter must
+not claim mutation authority or RSI promotion for recommendation waves.
 
 `ao.atlas.blueprint-request.v0.1` is emitted when intake is not specific
 enough to compile into a workgraph. It records the intake id, missing fields,

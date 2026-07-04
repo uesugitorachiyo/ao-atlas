@@ -257,6 +257,128 @@ func TestMissionRecommendationsReadbackCLIMatchesGeneratedArtifacts(t *testing.T
 	}
 }
 
+func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--started-at", "2026-07-04T08:00:00-07:00",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "lease_start=") {
+		t.Fatalf("import output missing lease start artifact: %s", out.String())
+	}
+	leaseStartPath := filepath.Join(importDir, "lease-start.json")
+	leaseStart := mustLoadJSON[AtlasRecommendationLeaseStart](t, leaseStartPath)
+	if err := ValidateAtlasRecommendationLeaseStart(leaseStart); err != nil {
+		t.Fatal(err)
+	}
+	if leaseStart.StartedAt != "2026-07-04T08:00:00-07:00" ||
+		leaseStart.MinMinutes != 120 ||
+		leaseStart.MaxMinutes != 180 ||
+		leaseStart.FinalResponseAllowed {
+		t.Fatalf("bad lease start marker: %#v", leaseStart)
+	}
+
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join(importDir, "recommendation-workgraph.json"))
+	firstNode := workgraph.Nodes[0]
+	linkPath := filepath.Join(dir, "run-link.json")
+	if err := WriteJSON(linkPath, recommendationRunLink(t, firstNode.FactoryTask.ID, recommendationEvidenceFiles(t, "lease-start", firstNode.ID))); err != nil {
+		t.Fatal(err)
+	}
+	updatedWorkgraphPath := filepath.Join(dir, "updated-workgraph.json")
+	readbackPath := filepath.Join(dir, "updated-readback.json")
+	executionPath := filepath.Join(dir, "updated-execution-readback.json")
+	checkpointPath := filepath.Join(dir, "checkpoint-readback.json")
+
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "complete-node",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--run-link", linkPath,
+		"--expected-node", firstNode.ID,
+		"--evidence-root", repoRoot(t),
+		"--readback-evidence-root", "docs/evidence/test-wave",
+		"--lease-start", leaseStartPath,
+		"--completed-at", "2026-07-04T08:17:00-07:00",
+		"--out-workgraph", updatedWorkgraphPath,
+		"--out-readback", readbackPath,
+		"--out-execution-readback", executionPath,
+		"--out-checkpoint-readback", checkpointPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("complete-node failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "checkpoint_readback=") ||
+		!strings.Contains(out.String(), "elapsed_minutes=17") {
+		t.Fatalf("complete-node output missing checkpoint timing: %s", out.String())
+	}
+	checkpoint := mustLoadJSON[AtlasRecommendationCheckpointReadback](t, checkpointPath)
+	if err := ValidateAtlasRecommendationCheckpointReadback(checkpoint); err != nil {
+		t.Fatal(err)
+	}
+	if checkpoint.StartedAt != leaseStart.StartedAt ||
+		checkpoint.ElapsedMinutes != 17 ||
+		checkpoint.CompletedNodes != 1 ||
+		checkpoint.ReadyNodes != 39 ||
+		checkpoint.FinalResponseAllowed {
+		t.Fatalf("bad checkpoint readback: %#v", checkpoint)
+	}
+
+	resumeReadbackPath := filepath.Join(dir, "resume-readback.json")
+	resumeExecutionPath := filepath.Join(dir, "resume-execution-readback.json")
+	commandPath := filepath.Join(dir, "command-readback.json")
+	promoterPath := filepath.Join(dir, "promoter-readback.json")
+	foundryPath := filepath.Join(dir, "foundry-rollup.json")
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "resume",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", updatedWorkgraphPath,
+		"--lease-start", leaseStartPath,
+		"--completed-at", "2026-07-04T08:25:00-07:00",
+		"--evidence-root", "docs/evidence/test-wave",
+		"--out-readback", resumeReadbackPath,
+		"--out-execution-readback", resumeExecutionPath,
+		"--out-command-readback", commandPath,
+		"--out-promoter-readback", promoterPath,
+		"--out-foundry-rollup", foundryPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("resume failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "started_at=2026-07-04T08:00:00-07:00") ||
+		!strings.Contains(out.String(), "elapsed_minutes=25") {
+		t.Fatalf("resume output did not preserve lease timing: %s", out.String())
+	}
+	resumeReadback := mustLoadJSON[AtlasRecommendationReadback](t, resumeReadbackPath)
+	if resumeReadback.StartedAt != leaseStart.StartedAt || resumeReadback.ElapsedMinutes != 25 {
+		t.Fatalf("resume readback lost lease start: %#v", resumeReadback)
+	}
+	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, commandPath)
+	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, promoterPath)
+	foundry := mustLoadJSON[AtlasRecommendationFoundryRollup](t, foundryPath)
+	if err := ValidateAtlasRecommendationClosureArtifacts(resumeReadback, command, promoter, foundry); err != nil {
+		t.Fatalf("closure artifacts should agree with resumed readback: %v", err)
+	}
+	if command.ElapsedMinutes != 25 || command.FinalResponseAllowed ||
+		promoter.PromotionClaimed || !promoter.RSIRemainsDenied ||
+		foundry.NodeCompletionStatus != "nodes_in_progress" ||
+		foundry.LeaseCompletionStatus != "minimum_minutes_unmet" {
+		t.Fatalf("bad resume closure artifacts: command=%#v promoter=%#v foundry=%#v", command, promoter, foundry)
+	}
+}
+
 func TestMissionRecommendationsReadbackFinalGateTransitions(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -377,6 +499,100 @@ func TestMissionRecommendationsDenyFinalResponseWhenLeaseTimingMissing(t *testin
 	}
 	if !strings.Contains(readback.ExactNextAction, "Record started_at, completed_at, and elapsed_minutes") {
 		t.Fatalf("missing timing denial should ask for timing evidence: %#v", readback)
+	}
+}
+
+func TestMissionRecommendationsDeriveElapsedMinutesFromTimestamps(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T08:00:00-07:00",
+		CompletedAt:     "2026-07-04T10:00:01-07:00",
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.ElapsedMinutes != 121 ||
+		!readback.MinMinutesMet ||
+		readback.LeaseTimeStatus != "minimum_minutes_met" ||
+		!readback.FinalResponseAllowed {
+		t.Fatalf("readback did not derive elapsed lease minutes: %#v", readback)
+	}
+}
+
+func TestMissionRecommendationsRejectInvalidLeaseTimestamps(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	_, err = BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:   "not-a-time",
+		CompletedAt: "2026-07-04T08:00:00-07:00",
+	})
+	if err == nil || !strings.Contains(err.Error(), "started_at must be RFC3339") {
+		t.Fatalf("expected invalid started_at rejection, got %v", err)
+	}
+	_, err = BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:   "2026-07-04T09:00:00-07:00",
+		CompletedAt: "2026-07-04T08:00:00-07:00",
+	})
+	if err == nil || !strings.Contains(err.Error(), "completed_at must be greater than or equal to started_at") {
+		t.Fatalf("expected reversed timestamp rejection, got %v", err)
+	}
+}
+
+func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T08:00:00-07:00",
+		CompletedAt:     "2026-07-04T08:22:00-07:00",
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := BuildAtlasRecommendationCommandReadback(readback)
+	promoter := BuildAtlasRecommendationPromoterReadback(readback)
+	foundry := BuildAtlasRecommendationFoundryRollup(readback)
+	command.FinalResponseAllowed = true
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback final_response_allowed disagrees") {
+		t.Fatalf("expected stale command readback rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	foundry.Status = "completed"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "foundry rollup completed while recommendation final response is denied") {
+		t.Fatalf("expected stale foundry rollup rejection, got %v", err)
 	}
 }
 
@@ -648,13 +864,21 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"--max-minutes 180",
 		"--continue-if-fast-target 40",
 		"recommendation-workgraph.json",
+		"lease-start.json",
 		"recommendation-readback.json",
 		"mission recommendations readback",
 		"mission recommendations complete-node",
+		"mission recommendations resume",
+		"--lease-start",
 		"--elapsed-minutes",
 		"--started-at",
 		"--completed-at",
 		"--lease-timing-mode",
+		"--out-checkpoint-readback",
+		"checkpoint-readback-after-node-01.json",
+		"command-readback-resumed.json",
+		"promoter-readback-resumed.json",
+		"foundry-rollup-resumed.json",
 		"minimum_minutes_unmet",
 		"lease_timing_missing",
 		"minimum_minutes_met",

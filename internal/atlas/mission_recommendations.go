@@ -39,6 +39,13 @@ type AtlasRecommendationReadbackOptions struct {
 	LeaseTimingMode string
 }
 
+type AtlasRecommendationLeaseStartOptions struct {
+	WavePath      string
+	WorkgraphPath string
+	EvidenceRoot  string
+	StartedAt     string
+}
+
 type AtlasRecommendationCompleteNodeOptions struct {
 	ExpectedNodeID string
 	EvidenceRoot   string
@@ -421,6 +428,17 @@ func WriteAtlasRecommendationWaveArtifacts(outDir string, result AtlasRecommenda
 	if err := WriteJSON(filepath.Join(outDir, "recommendation-workgraph.json"), result.Workgraph); err != nil {
 		return err
 	}
+	leaseStart, err := BuildAtlasRecommendationLeaseStart(result.Wave, result.Workgraph, AtlasRecommendationLeaseStartOptions{
+		WavePath:      filepath.Join(outDir, "recommendation-wave.json"),
+		WorkgraphPath: filepath.Join(outDir, "recommendation-workgraph.json"),
+		EvidenceRoot:  filepath.ToSlash(outDir),
+	})
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(filepath.Join(outDir, "lease-start.json"), leaseStart); err != nil {
+		return err
+	}
 	readback, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{
 		WavePath:      filepath.Join(outDir, "recommendation-wave.json"),
 		WorkgraphPath: filepath.Join(outDir, "recommendation-workgraph.json"),
@@ -433,6 +451,77 @@ func WriteAtlasRecommendationWaveArtifacts(outDir string, result AtlasRecommenda
 		return err
 	}
 	return os.WriteFile(filepath.Join(outDir, "next-recommended-prompt.md"), []byte(result.Prompt), 0o644)
+}
+
+func BuildAtlasRecommendationLeaseStart(wave AtlasRecommendationWave, workgraph Workgraph, options AtlasRecommendationLeaseStartOptions) (AtlasRecommendationLeaseStart, error) {
+	if err := ValidateAtlasRecommendationWave(wave); err != nil {
+		return AtlasRecommendationLeaseStart{}, err
+	}
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		return AtlasRecommendationLeaseStart{}, err
+	}
+	if wave.TargetInstance != workgraph.TargetInstance {
+		return AtlasRecommendationLeaseStart{}, fmt.Errorf("target_instance mismatch between recommendation wave and workgraph")
+	}
+	startedAt := strings.TrimSpace(options.StartedAt)
+	if startedAt == "" {
+		startedAt = time.Now().UTC().Format(time.RFC3339)
+	}
+	if _, err := time.Parse(time.RFC3339, startedAt); err != nil {
+		return AtlasRecommendationLeaseStart{}, fmt.Errorf("started_at must be RFC3339: %w", err)
+	}
+	minMinutes := wave.EstimatedMinutes
+	maxMinutes := wave.EstimatedMinutes
+	continueIfFastTarget := wave.NodeBudget
+	checkpointPolicy := "after_each_node_or_timed_interval"
+	if wave.Supervisor != nil {
+		minMinutes = wave.Supervisor.MinMinutes
+		maxMinutes = wave.Supervisor.MaxMinutes
+		continueIfFastTarget = wave.Supervisor.ContinueIfFastTarget
+		checkpointPolicy = wave.Supervisor.CheckpointPolicy
+	}
+	waveDigest := digestValue(wave)
+	if strings.TrimSpace(options.WavePath) != "" {
+		digest, err := digestFile(options.WavePath)
+		if err != nil {
+			return AtlasRecommendationLeaseStart{}, err
+		}
+		waveDigest = digest
+	}
+	workgraphDigest := digestValue(workgraph)
+	if strings.TrimSpace(options.WorkgraphPath) != "" {
+		digest, err := digestFile(options.WorkgraphPath)
+		if err != nil {
+			return AtlasRecommendationLeaseStart{}, err
+		}
+		workgraphDigest = digest
+	}
+	leaseStart := AtlasRecommendationLeaseStart{
+		Schema:                 "ao.atlas.recommendation-lease-start.v0.1",
+		Status:                 "started",
+		MissionID:              wave.MissionID,
+		TargetInstance:         wave.TargetInstance,
+		EvidenceRoot:           filepath.ToSlash(strings.TrimSpace(options.EvidenceRoot)),
+		StartedAt:              startedAt,
+		MinMinutes:             minMinutes,
+		MaxMinutes:             maxMinutes,
+		ContinueIfFastTarget:   continueIfFastTarget,
+		CheckpointPolicy:       checkpointPolicy,
+		WaveDigest:             waveDigest,
+		WorkgraphDigest:        workgraphDigest,
+		FinalResponseAllowed:   false,
+		FinalResponseReason:    "lease start marker does not allow final response",
+		SchedulesWork:          false,
+		ExecutesWork:           false,
+		ApprovesWork:           false,
+		MutatesRepositories:    false,
+		CallsProviders:         false,
+		ClaimsAuthorityAdvance: false,
+	}
+	if err := ValidateAtlasRecommendationLeaseStart(leaseStart); err != nil {
+		return AtlasRecommendationLeaseStart{}, err
+	}
+	return leaseStart, nil
 }
 
 func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Workgraph, options AtlasRecommendationReadbackOptions) (AtlasRecommendationReadback, error) {
@@ -802,6 +891,290 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 		requireField(&errs, prefix+".command_readback", evidence.CommandReadback)
 		requireList(&errs, prefix+".required_gates", evidence.RequiredGates)
 		requireList(&errs, prefix+".verification_commands", evidence.VerificationCommands)
+	}
+	return joinErrors(errs)
+}
+
+func ValidateAtlasRecommendationLeaseStart(leaseStart AtlasRecommendationLeaseStart) error {
+	var errs []string
+	if leaseStart.Schema != "ao.atlas.recommendation-lease-start.v0.1" {
+		errs = append(errs, "schema must be ao.atlas.recommendation-lease-start.v0.1")
+	}
+	if leaseStart.Status != "started" {
+		errs = append(errs, "status must be started")
+	}
+	requireField(&errs, "mission_id", leaseStart.MissionID)
+	requireField(&errs, "target_instance", leaseStart.TargetInstance)
+	requireField(&errs, "started_at", leaseStart.StartedAt)
+	if strings.TrimSpace(leaseStart.StartedAt) != "" {
+		if _, err := time.Parse(time.RFC3339, leaseStart.StartedAt); err != nil {
+			errs = append(errs, "started_at must be RFC3339")
+		}
+	}
+	if leaseStart.MinMinutes < 1 {
+		errs = append(errs, "min_minutes must be positive")
+	}
+	if leaseStart.MaxMinutes < leaseStart.MinMinutes {
+		errs = append(errs, "max_minutes must be greater than or equal to min_minutes")
+	}
+	if leaseStart.ContinueIfFastTarget < 1 {
+		errs = append(errs, "continue_if_fast_target must be positive")
+	}
+	if !digestPattern.MatchString(leaseStart.WaveDigest) {
+		errs = append(errs, "wave_digest must be sha256 digest")
+	}
+	if !digestPattern.MatchString(leaseStart.WorkgraphDigest) {
+		errs = append(errs, "workgraph_digest must be sha256 digest")
+	}
+	if leaseStart.FinalResponseAllowed {
+		errs = append(errs, "final_response_allowed must be false for lease start marker")
+	}
+	requireField(&errs, "final_response_reason", leaseStart.FinalResponseReason)
+	if leaseStart.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if leaseStart.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if leaseStart.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	if leaseStart.MutatesRepositories {
+		errs = append(errs, "mutates_repositories must be false")
+	}
+	if leaseStart.CallsProviders {
+		errs = append(errs, "calls_providers must be false")
+	}
+	if leaseStart.ClaimsAuthorityAdvance {
+		errs = append(errs, "claims_authority_advance must be false")
+	}
+	return joinErrors(errs)
+}
+
+func BuildAtlasRecommendationCheckpointReadback(readback AtlasRecommendationReadback) AtlasRecommendationCheckpointReadback {
+	minMinutes := readback.ElapsedMinutes
+	maxMinutes := readback.ElapsedMinutes
+	if readback.Supervisor != nil {
+		minMinutes = readback.Supervisor.MinMinutes
+		maxMinutes = readback.Supervisor.MaxMinutes
+	}
+	status := "fresh"
+	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
+		status = "blocked"
+	}
+	return AtlasRecommendationCheckpointReadback{
+		Schema:                    "ao.atlas.recommendation-checkpoint-readback.v0.1",
+		Status:                    status,
+		MissionID:                 readback.MissionID,
+		EvidenceRoot:              readback.EvidenceRoot,
+		StartedAt:                 readback.StartedAt,
+		CompletedAt:               readback.CompletedAt,
+		ElapsedMinutes:            readback.ElapsedMinutes,
+		MinMinutes:                minMinutes,
+		MaxMinutes:                maxMinutes,
+		MinMinutesMet:             readback.MinMinutesMet,
+		LeaseTimeStatus:           readback.LeaseTimeStatus,
+		CheckpointFreshnessStatus: "elapsed_minutes_recorded_after_node_checkpoint",
+		CompletedNodes:            readback.CompletedNodes,
+		ReadyNodes:                readback.ReadyNodes,
+		BlockedNodes:              readback.BlockedNodes,
+		FailedNodes:               readback.FailedNodes,
+		TotalNodes:                readback.TotalNodes,
+		FirstExecutableNode:       readback.FirstExecutableNode,
+		FinalResponseAllowed:      readback.FinalResponseAllowed,
+		FinalResponseReason:       readback.FinalResponseReason,
+		ExactNextAction:           readback.ExactNextAction,
+		SchedulesWork:             false,
+		ExecutesWork:              false,
+		ApprovesWork:              false,
+		ClaimsAuthorityAdvance:    false,
+	}
+}
+
+func ValidateAtlasRecommendationCheckpointReadback(checkpoint AtlasRecommendationCheckpointReadback) error {
+	var errs []string
+	if checkpoint.Schema != "ao.atlas.recommendation-checkpoint-readback.v0.1" {
+		errs = append(errs, "schema must be ao.atlas.recommendation-checkpoint-readback.v0.1")
+	}
+	if !oneOf(checkpoint.Status, "fresh", "blocked") {
+		errs = append(errs, "status must be fresh or blocked")
+	}
+	requireField(&errs, "mission_id", checkpoint.MissionID)
+	if checkpoint.CompletedNodes+checkpoint.ReadyNodes+checkpoint.BlockedNodes+checkpoint.FailedNodes != checkpoint.TotalNodes {
+		errs = append(errs, "node counts must sum to total_nodes")
+	}
+	if checkpoint.ElapsedMinutes < 0 {
+		errs = append(errs, "elapsed_minutes must be non-negative")
+	}
+	requireField(&errs, "lease_time_status", checkpoint.LeaseTimeStatus)
+	requireField(&errs, "checkpoint_freshness_status", checkpoint.CheckpointFreshnessStatus)
+	requireField(&errs, "final_response_reason", checkpoint.FinalResponseReason)
+	requireField(&errs, "exact_next_action", checkpoint.ExactNextAction)
+	if checkpoint.FinalResponseAllowed && !checkpoint.MinMinutesMet {
+		errs = append(errs, "final_response_allowed requires min_minutes_met")
+	}
+	if checkpoint.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if checkpoint.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if checkpoint.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	if checkpoint.ClaimsAuthorityAdvance {
+		errs = append(errs, "claims_authority_advance must be false")
+	}
+	return joinErrors(errs)
+}
+
+func BuildAtlasRecommendationCommandReadback(readback AtlasRecommendationReadback) AtlasRecommendationCommandReadback {
+	minMinutes := readback.ElapsedMinutes
+	if readback.Supervisor != nil {
+		minMinutes = readback.Supervisor.MinMinutes
+	}
+	nodeStatus := "nodes_in_progress"
+	if readback.CompletedNodes == readback.TotalNodes && readback.ReadyNodes == 0 && readback.BlockedNodes == 0 && readback.FailedNodes == 0 {
+		nodeStatus = "all_nodes_complete"
+	}
+	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
+		nodeStatus = "blocked_or_failed_nodes_present"
+	}
+	return AtlasRecommendationCommandReadback{
+		Schema:                 "ao.atlas.recommendation-command-readback.v0.1",
+		Status:                 readback.Status,
+		MissionID:              readback.MissionID,
+		EvidenceRoot:           readback.EvidenceRoot,
+		CompletedNodes:         readback.CompletedNodes,
+		ReadyNodes:             readback.ReadyNodes,
+		BlockedNodes:           readback.BlockedNodes,
+		FailedNodes:            readback.FailedNodes,
+		TotalNodes:             readback.TotalNodes,
+		StartedAt:              readback.StartedAt,
+		CompletedAt:            readback.CompletedAt,
+		ElapsedMinutes:         readback.ElapsedMinutes,
+		MinMinutes:             minMinutes,
+		MinMinutesMet:          readback.MinMinutesMet,
+		LeaseTimeStatus:        readback.LeaseTimeStatus,
+		NodeCompletionStatus:   nodeStatus,
+		FinalResponseAllowed:   readback.FinalResponseAllowed,
+		FinalResponseReason:    readback.FinalResponseReason,
+		ExactNextAction:        readback.ExactNextAction,
+		CompactTimeline:        fmt.Sprintf("%d/%d recommendation nodes complete; elapsed_minutes=%d; lease_time_status=%s; final_response_allowed=%t", readback.CompletedNodes, readback.TotalNodes, readback.ElapsedMinutes, readback.LeaseTimeStatus, readback.FinalResponseAllowed),
+		SchedulesWork:          false,
+		ExecutesWork:           false,
+		ApprovesWork:           false,
+		ClaimsAuthorityAdvance: false,
+	}
+}
+
+func BuildAtlasRecommendationPromoterReadback(readback AtlasRecommendationReadback) AtlasRecommendationPromoterReadback {
+	reason := "Recommendation wave records no mutation authority promotion; RSI remains denied."
+	if readback.FinalResponseAllowed {
+		reason = "Recommendation wave may close its readback lease, but it does not promote mutation authority; RSI remains denied."
+	}
+	return AtlasRecommendationPromoterReadback{
+		Schema:                 "ao.atlas.recommendation-promoter-readback.v0.1",
+		Status:                 "no_promotion",
+		MissionID:              readback.MissionID,
+		EvidenceRoot:           readback.EvidenceRoot,
+		PromotionClaimed:       false,
+		RSIRemainsDenied:       true,
+		Reason:                 reason,
+		ElapsedMinutes:         readback.ElapsedMinutes,
+		MinMinutesMet:          readback.MinMinutesMet,
+		FinalResponseAllowed:   readback.FinalResponseAllowed,
+		SchedulesWork:          false,
+		ExecutesWork:           false,
+		ApprovesWork:           false,
+		ClaimsAuthorityAdvance: false,
+	}
+}
+
+func BuildAtlasRecommendationFoundryRollup(readback AtlasRecommendationReadback) AtlasRecommendationFoundryRollup {
+	nodeStatus := "nodes_in_progress"
+	status := "in_progress"
+	if readback.CompletedNodes == readback.TotalNodes && readback.ReadyNodes == 0 && readback.BlockedNodes == 0 && readback.FailedNodes == 0 {
+		nodeStatus = "all_nodes_complete"
+		status = "nodes_complete_lease_pending"
+	}
+	if readback.FinalResponseAllowed {
+		status = "completed"
+	}
+	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
+		nodeStatus = "blocked_or_failed_nodes_present"
+		status = "blocked"
+	}
+	return AtlasRecommendationFoundryRollup{
+		Schema:                 "ao.atlas.recommendation-foundry-rollup.v0.1",
+		Status:                 status,
+		MissionID:              readback.MissionID,
+		EvidenceRoot:           readback.EvidenceRoot,
+		CompletedNodes:         readback.CompletedNodes,
+		ReadyNodes:             readback.ReadyNodes,
+		BlockedNodes:           readback.BlockedNodes,
+		FailedNodes:            readback.FailedNodes,
+		TotalNodes:             readback.TotalNodes,
+		NodeCompletionStatus:   nodeStatus,
+		LeaseCompletionStatus:  readback.LeaseTimeStatus,
+		FinalResponseAllowed:   readback.FinalResponseAllowed,
+		ExactNextAction:        readback.ExactNextAction,
+		SchedulesWork:          false,
+		ExecutesWork:           false,
+		ApprovesWork:           false,
+		ClaimsAuthorityAdvance: false,
+	}
+}
+
+func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationReadback, command AtlasRecommendationCommandReadback, promoter AtlasRecommendationPromoterReadback, foundry AtlasRecommendationFoundryRollup) error {
+	var errs []string
+	if command.Schema != "ao.atlas.recommendation-command-readback.v0.1" {
+		errs = append(errs, "command readback schema must be ao.atlas.recommendation-command-readback.v0.1")
+	}
+	if promoter.Schema != "ao.atlas.recommendation-promoter-readback.v0.1" {
+		errs = append(errs, "promoter readback schema must be ao.atlas.recommendation-promoter-readback.v0.1")
+	}
+	if foundry.Schema != "ao.atlas.recommendation-foundry-rollup.v0.1" {
+		errs = append(errs, "foundry rollup schema must be ao.atlas.recommendation-foundry-rollup.v0.1")
+	}
+	if command.MissionID != readback.MissionID {
+		errs = append(errs, "command readback mission_id disagrees")
+	}
+	if promoter.MissionID != readback.MissionID {
+		errs = append(errs, "promoter readback mission_id disagrees")
+	}
+	if foundry.MissionID != readback.MissionID {
+		errs = append(errs, "foundry rollup mission_id disagrees")
+	}
+	if command.CompletedNodes != readback.CompletedNodes || command.ReadyNodes != readback.ReadyNodes || command.TotalNodes != readback.TotalNodes {
+		errs = append(errs, "command readback node counts disagree")
+	}
+	if foundry.CompletedNodes != readback.CompletedNodes || foundry.ReadyNodes != readback.ReadyNodes || foundry.TotalNodes != readback.TotalNodes {
+		errs = append(errs, "foundry rollup node counts disagree")
+	}
+	if command.FinalResponseAllowed != readback.FinalResponseAllowed {
+		errs = append(errs, "command readback final_response_allowed disagrees")
+	}
+	if foundry.FinalResponseAllowed != readback.FinalResponseAllowed {
+		errs = append(errs, "foundry rollup final_response_allowed disagrees")
+	}
+	if foundry.Status == "completed" && !readback.FinalResponseAllowed {
+		errs = append(errs, "foundry rollup completed while recommendation final response is denied")
+	}
+	if promoter.PromotionClaimed {
+		errs = append(errs, "promoter readback must not claim promotion for recommendation wave")
+	}
+	if !promoter.RSIRemainsDenied {
+		errs = append(errs, "promoter readback must keep RSI denied")
+	}
+	if command.SchedulesWork || command.ExecutesWork || command.ApprovesWork || command.ClaimsAuthorityAdvance {
+		errs = append(errs, "command readback must not schedule, execute, approve, or claim authority advance")
+	}
+	if promoter.SchedulesWork || promoter.ExecutesWork || promoter.ApprovesWork || promoter.ClaimsAuthorityAdvance {
+		errs = append(errs, "promoter readback must not schedule, execute, approve, or claim authority advance")
+	}
+	if foundry.SchedulesWork || foundry.ExecutesWork || foundry.ApprovesWork || foundry.ClaimsAuthorityAdvance {
+		errs = append(errs, "foundry rollup must not schedule, execute, approve, or claim authority advance")
 	}
 	return joinErrors(errs)
 }

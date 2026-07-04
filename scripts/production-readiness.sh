@@ -92,13 +92,15 @@ test -s "$OUT/mission-status.json"
   --ledger-compaction examples/valid/ao-mission/ledger-compaction-readback.json \
   --out "$OUT/ao-mission-import.json" >/dev/null
 test -s "$OUT/ao-mission-import.json"
-"$BIN" mission recommendations import --recommendations examples/valid/ao-mission/feature-depth-recommendations.json --target-instance demo-stack --min-tasks 30 --node-budget 40 --min-minutes 120 --max-minutes 180 --continue-if-fast-target 40 --out "$OUT/mission-recommendations" >/dev/null
+"$BIN" mission recommendations import --recommendations examples/valid/ao-mission/feature-depth-recommendations.json --target-instance demo-stack --min-tasks 30 --node-budget 40 --min-minutes 120 --max-minutes 180 --continue-if-fast-target 40 --started-at 2026-07-04T08:00:00-07:00 --out "$OUT/mission-recommendations" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-wave.json"
 test -s "$OUT/mission-recommendations/recommendation-workgraph.json"
+test -s "$OUT/mission-recommendations/lease-start.json"
 test -s "$OUT/mission-recommendations/recommendation-readback.json"
 test -s "$OUT/mission-recommendations/next-recommended-prompt.md"
 jq -e '.minimum_tasks == 30 and .total_tasks == 40 and .node_budget == 40 and .estimated_minutes == 120 and .supervisor.min_minutes == 120 and .supervisor.max_minutes == 180 and .supervisor.continue_if_fast_target == 40 and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-wave.json" >/dev/null
 jq -e '(.nodes | length) == 40' "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-lease-start.v0.1" and .started_at == "2026-07-04T08:00:00-07:00" and .min_minutes == 120 and .max_minutes == 180 and .final_response_allowed == false and .schedules_work == false and .executes_work == false and .approves_work == false' "$OUT/mission-recommendations/lease-start.json" >/dev/null
 jq -e '.total_nodes == 40 and .minimum_nodes == 30 and .ready_nodes == 40 and .executable_ready_nodes == 1 and .final_response_allowed == false and .lease_health_status == "minimum_unmet" and .early_return_risk_status == "blocked_final_response_ready_nodes_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 grep -q "Target 2-3 hours" "$OUT/mission-recommendations/next-recommended-prompt.md"
 "$BIN" mission recommendations readback --wave "$OUT/mission-recommendations/recommendation-wave.json" --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --evidence-root target/production-readiness/mission-recommendations --out "$OUT/mission-recommendations/recommendation-readback-regenerated.json" >/dev/null
@@ -132,6 +134,7 @@ jq -e '.completed_nodes == 40 and .ready_nodes == 0 and .min_minutes_met == fals
   --lease-timing-mode actual \
   --out "$OUT/mission-recommendations/recommendation-readback-completed-lease-met.json" >/dev/null
 jq -e '.completed_nodes == 40 and .ready_nodes == 0 and .elapsed_minutes == 120 and .min_minutes_met == true and .lease_time_status == "minimum_minutes_met" and .final_response_allowed == true and .final_response_reason == "all generated nodes complete and no ready nodes remain"' "$OUT/mission-recommendations/recommendation-readback-completed-lease-met.json" >/dev/null
+jq -e 'has("started_at") and has("completed_at")' "$OUT/mission-recommendations/recommendation-readback-completed-lease-met.json" >/dev/null
 "$BIN" foundry import --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --instance examples/valid/stack-instance.json --node mission-recommendation-next-01 --out "$OUT/mission-recommendations-foundry-import" >/dev/null
 test -s "$OUT/mission-recommendations-foundry-import/foundry-import.json"
 node_evidence_dir="$OUT/mission-recommendations-node-01-evidence"
@@ -161,14 +164,39 @@ done
   --expected-node mission-recommendation-next-01 \
   --evidence-root . \
   --readback-evidence-root target/production-readiness/mission-recommendations \
+  --lease-start "$OUT/mission-recommendations/lease-start.json" \
+  --completed-at 2026-07-04T08:17:00-07:00 \
   --out-workgraph "$OUT/mission-recommendations/recommendation-workgraph-after-node-01.json" \
   --out-readback "$OUT/mission-recommendations/recommendation-readback-after-node-01.json" \
-  --out-execution-readback "$OUT/mission-recommendations/execution-readback-after-node-01.json" >/dev/null
+  --out-execution-readback "$OUT/mission-recommendations/execution-readback-after-node-01.json" \
+  --out-checkpoint-readback "$OUT/mission-recommendations/checkpoint-readback-after-node-01.json" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-workgraph-after-node-01.json"
 test -s "$OUT/mission-recommendations/recommendation-readback-after-node-01.json"
 test -s "$OUT/mission-recommendations/execution-readback-after-node-01.json"
-jq -e '.completed_nodes == 1 and .ready_nodes == 39 and .first_executable_node == "mission-recommendation-next-02" and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-readback-after-node-01.json" >/dev/null
+test -s "$OUT/mission-recommendations/checkpoint-readback-after-node-01.json"
+jq -e '.completed_nodes == 1 and .ready_nodes == 39 and .first_executable_node == "mission-recommendation-next-02" and .started_at == "2026-07-04T08:00:00-07:00" and .elapsed_minutes == 17 and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-readback-after-node-01.json" >/dev/null
 jq -e '.completed_recommendation_nodes == 1 and .generated_workgraph.ready_nodes == 39 and .generated_workgraph.executable_ready_nodes == 1 and .generated_workgraph.first_executable_node == "mission-recommendation-next-02" and .generated_workgraph.final_response_allowed == false' "$OUT/mission-recommendations/execution-readback-after-node-01.json" >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-checkpoint-readback.v0.1" and .completed_nodes == 1 and .ready_nodes == 39 and .elapsed_minutes == 17 and .min_minutes_met == false and .final_response_allowed == false' "$OUT/mission-recommendations/checkpoint-readback-after-node-01.json" >/dev/null
+"$BIN" mission recommendations resume \
+  --wave "$OUT/mission-recommendations/recommendation-wave.json" \
+  --workgraph "$OUT/mission-recommendations/recommendation-workgraph-after-node-01.json" \
+  --lease-start "$OUT/mission-recommendations/lease-start.json" \
+  --completed-at 2026-07-04T08:25:00-07:00 \
+  --evidence-root target/production-readiness/mission-recommendations \
+  --out-readback "$OUT/mission-recommendations/recommendation-readback-resumed.json" \
+  --out-execution-readback "$OUT/mission-recommendations/execution-readback-resumed.json" \
+  --out-command-readback "$OUT/mission-recommendations/command-readback-resumed.json" \
+  --out-promoter-readback "$OUT/mission-recommendations/promoter-readback-resumed.json" \
+  --out-foundry-rollup "$OUT/mission-recommendations/foundry-rollup-resumed.json" >/dev/null
+test -s "$OUT/mission-recommendations/recommendation-readback-resumed.json"
+test -s "$OUT/mission-recommendations/execution-readback-resumed.json"
+test -s "$OUT/mission-recommendations/command-readback-resumed.json"
+test -s "$OUT/mission-recommendations/promoter-readback-resumed.json"
+test -s "$OUT/mission-recommendations/foundry-rollup-resumed.json"
+jq -e '.started_at == "2026-07-04T08:00:00-07:00" and .elapsed_minutes == 25 and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-readback-resumed.json" >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-command-readback.v0.1" and .elapsed_minutes == 25 and .lease_time_status == "minimum_minutes_unmet" and .final_response_allowed == false and .claims_authority_advance == false' "$OUT/mission-recommendations/command-readback-resumed.json" >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-promoter-readback.v0.1" and .promotion_claimed == false and .rsi_remains_denied == true and .claims_authority_advance == false' "$OUT/mission-recommendations/promoter-readback-resumed.json" >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-foundry-rollup.v0.1" and .node_completion_status == "nodes_in_progress" and .lease_completion_status == "minimum_minutes_unmet" and .final_response_allowed == false and .claims_authority_advance == false' "$OUT/mission-recommendations/foundry-rollup-resumed.json" >/dev/null
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" blueprint import \
   --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack \

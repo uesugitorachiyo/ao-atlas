@@ -368,7 +368,7 @@ func runMission(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, readback, or complete-node")
+		return fmt.Errorf("mission recommendations requires import, readback, complete-node, or resume")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -376,8 +376,11 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "complete-node" {
 		return runMissionRecommendationsCompleteNode(args[1:], stdout)
 	}
+	if args[0] == "resume" {
+		return runMissionRecommendationsResume(args[1:], stdout)
+	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, readback, or complete-node")
+		return fmt.Errorf("mission recommendations requires import, readback, complete-node, or resume")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -393,6 +396,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	checkpointPolicy := fs.String("checkpoint-policy", "", "checkpoint policy")
 	evidencePolicy := fs.String("evidence-policy", "", "evidence policy")
 	finalReportContract := fs.String("final-report-contract", "", "final report contract")
+	startedAt := fs.String("started-at", "", "long-run lease start time, RFC3339")
 	outDir := fs.String("out", "", "output directory")
 	jsonOut := fs.Bool("json", false, "json output")
 	if err := fs.Parse(args[1:]); err != nil {
@@ -431,6 +435,20 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		if err := WriteAtlasRecommendationWaveArtifacts(*outDir, result); err != nil {
 			return err
 		}
+		if strings.TrimSpace(*startedAt) != "" {
+			leaseStart, err := BuildAtlasRecommendationLeaseStart(result.Wave, result.Workgraph, AtlasRecommendationLeaseStartOptions{
+				WavePath:      filepath.Join(*outDir, "recommendation-wave.json"),
+				WorkgraphPath: filepath.Join(*outDir, "recommendation-workgraph.json"),
+				EvidenceRoot:  filepath.ToSlash(*outDir),
+				StartedAt:     *startedAt,
+			})
+			if err != nil {
+				return err
+			}
+			if err := WriteJSON(filepath.Join(*outDir, "lease-start.json"), leaseStart); err != nil {
+				return err
+			}
+		}
 	}
 	if *jsonOut {
 		return printJSON(stdout, result.Wave)
@@ -443,7 +461,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		maxLeaseMinutes = result.Wave.Supervisor.MaxMinutes
 		continueTarget = result.Wave.Supervisor.ContinueIfFastTarget
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nrecommendation_tasks=%d\nnode_budget=%d\nestimated_minutes=%d\nmin_minutes=%d\nmax_minutes=%d\ncontinue_if_fast_target=%d\nfinal_response_allowed=%t\nrecommendation_wave=%s\nrecommendation_workgraph=%s\nrecommendation_readback=%s\nnext_recommended_prompt=%s\n",
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nrecommendation_tasks=%d\nnode_budget=%d\nestimated_minutes=%d\nmin_minutes=%d\nmax_minutes=%d\ncontinue_if_fast_target=%d\nfinal_response_allowed=%t\nrecommendation_wave=%s\nrecommendation_workgraph=%s\nlease_start=%s\nrecommendation_readback=%s\nnext_recommended_prompt=%s\n",
 		result.Wave.Status,
 		result.Wave.MissionID,
 		result.Wave.TotalTasks,
@@ -455,6 +473,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		result.Wave.FinalResponseAllowed,
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-wave.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-workgraph.json")),
+		filepath.ToSlash(filepath.Join(*outDir, "lease-start.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-readback.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "next-recommended-prompt.md")),
 	)
@@ -470,6 +489,7 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 	expectedNodeID := fs.String("expected-node", "", "expected executable recommendation node id")
 	evidenceRoot := fs.String("evidence-root", "", "filesystem root used to verify run-link evidence files")
 	readbackEvidenceRoot := fs.String("readback-evidence-root", "", "portable evidence root written into readback")
+	leaseStartPath := fs.String("lease-start", "", "lease start marker path")
 	startedAt := fs.String("started-at", "", "long-run lease start time, RFC3339")
 	completedAt := fs.String("completed-at", "", "long-run lease completion time, RFC3339")
 	elapsedMinutes := fs.Int("elapsed-minutes", 0, "long-run lease elapsed minutes")
@@ -477,6 +497,7 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 	outWorkgraphPath := fs.String("out-workgraph", "", "updated workgraph output path")
 	outReadbackPath := fs.String("out-readback", "", "updated recommendation readback output path")
 	outExecutionReadbackPath := fs.String("out-execution-readback", "", "updated execution readback output path")
+	outCheckpointReadbackPath := fs.String("out-checkpoint-readback", "", "updated checkpoint readback output path")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -491,11 +512,11 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 			return fmt.Errorf("%s is required", name)
 		}
 	}
-	for _, out := range []string{*outWorkgraphPath, *outReadbackPath, *outExecutionReadbackPath} {
+	for _, out := range []string{*outWorkgraphPath, *outReadbackPath, *outExecutionReadbackPath, *outCheckpointReadbackPath} {
 		if strings.TrimSpace(out) == "" {
 			continue
 		}
-		if samePath(*wavePath, out) || samePath(*workgraphPath, out) || samePath(*runLinkPath, out) {
+		if samePath(*wavePath, out) || samePath(*workgraphPath, out) || samePath(*runLinkPath, out) || samePath(*leaseStartPath, out) {
 			return fmt.Errorf("refusing to overwrite input artifact")
 		}
 	}
@@ -521,7 +542,7 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 	if err := WriteJSON(*outWorkgraphPath, updated); err != nil {
 		return err
 	}
-	readback, err := BuildAtlasRecommendationReadback(wave, updated, AtlasRecommendationReadbackOptions{
+	readbackOptions, err := recommendationReadbackOptionsFromLeaseStart(*leaseStartPath, AtlasRecommendationReadbackOptions{
 		WavePath:        *wavePath,
 		WorkgraphPath:   *outWorkgraphPath,
 		EvidenceRoot:    *readbackEvidenceRoot,
@@ -530,6 +551,10 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 		ElapsedMinutes:  *elapsedMinutes,
 		LeaseTimingMode: *leaseTimingMode,
 	})
+	if err != nil {
+		return err
+	}
+	readback, err := BuildAtlasRecommendationReadback(wave, updated, readbackOptions)
 	if err != nil {
 		return err
 	}
@@ -545,11 +570,20 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 			return err
 		}
 	}
+	checkpoint := BuildAtlasRecommendationCheckpointReadback(readback)
+	if err := ValidateAtlasRecommendationCheckpointReadback(checkpoint); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outCheckpointReadbackPath) != "" {
+		if err := WriteJSON(*outCheckpointReadbackPath, checkpoint); err != nil {
+			return err
+		}
+	}
 	nextExecutable := readback.FirstExecutableNode
 	if nextExecutable == "" {
 		nextExecutable = "none"
 	}
-	fmt.Fprintf(stdout, "status=written\ncompleted_node=%s\ncompleted_nodes=%d\nready_nodes=%d\nnext_executable_node=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nupdated_workgraph=%s\nrecommendation_readback=%s\nexecution_readback=%s\n",
+	fmt.Fprintf(stdout, "status=written\ncompleted_node=%s\ncompleted_nodes=%d\nready_nodes=%d\nnext_executable_node=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nupdated_workgraph=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncheckpoint_readback=%s\n",
 		completedNodeID,
 		readback.CompletedNodes,
 		readback.ReadyNodes,
@@ -561,6 +595,141 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 		filepath.ToSlash(*outWorkgraphPath),
 		filepath.ToSlash(*outReadbackPath),
 		filepath.ToSlash(*outExecutionReadbackPath),
+		filepath.ToSlash(*outCheckpointReadbackPath),
+	)
+	return nil
+}
+
+func recommendationReadbackOptionsFromLeaseStart(leaseStartPath string, options AtlasRecommendationReadbackOptions) (AtlasRecommendationReadbackOptions, error) {
+	if strings.TrimSpace(leaseStartPath) == "" {
+		return options, nil
+	}
+	leaseStart, err := LoadJSON[AtlasRecommendationLeaseStart](leaseStartPath)
+	if err != nil {
+		return AtlasRecommendationReadbackOptions{}, err
+	}
+	if err := ValidateAtlasRecommendationLeaseStart(leaseStart); err != nil {
+		return AtlasRecommendationReadbackOptions{}, err
+	}
+	if strings.TrimSpace(options.StartedAt) == "" {
+		options.StartedAt = leaseStart.StartedAt
+	}
+	if strings.TrimSpace(options.EvidenceRoot) == "" {
+		options.EvidenceRoot = leaseStart.EvidenceRoot
+	}
+	if strings.TrimSpace(options.LeaseTimingMode) == "" {
+		options.LeaseTimingMode = "actual"
+	}
+	return options, nil
+}
+
+func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations resume", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	wavePath := fs.String("wave", "", "Atlas recommendation wave path")
+	workgraphPath := fs.String("workgraph", "", "Atlas recommendation workgraph path")
+	leaseStartPath := fs.String("lease-start", "", "lease start marker path")
+	evidenceRoot := fs.String("evidence-root", "", "relative evidence root")
+	completedAt := fs.String("completed-at", "", "long-run lease completion time, RFC3339")
+	elapsedMinutes := fs.Int("elapsed-minutes", 0, "long-run lease elapsed minutes")
+	leaseTimingMode := fs.String("lease-timing-mode", "actual", "lease timing evidence mode")
+	outReadbackPath := fs.String("out-readback", "", "resumed recommendation readback output path")
+	outExecutionReadbackPath := fs.String("out-execution-readback", "", "resumed execution readback output path")
+	outCommandReadbackPath := fs.String("out-command-readback", "", "compact Command readback output path")
+	outPromoterReadbackPath := fs.String("out-promoter-readback", "", "Promoter no-promotion readback output path")
+	outFoundryRollupPath := fs.String("out-foundry-rollup", "", "Foundry run-link rollup output path")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	for name, value := range map[string]string{
+		"--wave":         *wavePath,
+		"--workgraph":    *workgraphPath,
+		"--lease-start":  *leaseStartPath,
+		"--out-readback": *outReadbackPath,
+	} {
+		if strings.TrimSpace(value) == "" {
+			return fmt.Errorf("%s is required", name)
+		}
+	}
+	for _, out := range []string{*outReadbackPath, *outExecutionReadbackPath, *outCommandReadbackPath, *outPromoterReadbackPath, *outFoundryRollupPath} {
+		if strings.TrimSpace(out) == "" {
+			continue
+		}
+		if samePath(*wavePath, out) || samePath(*workgraphPath, out) || samePath(*leaseStartPath, out) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+	}
+	wave, err := LoadJSON[AtlasRecommendationWave](*wavePath)
+	if err != nil {
+		return err
+	}
+	workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+	if err != nil {
+		return err
+	}
+	options, err := recommendationReadbackOptionsFromLeaseStart(*leaseStartPath, AtlasRecommendationReadbackOptions{
+		WavePath:        *wavePath,
+		WorkgraphPath:   *workgraphPath,
+		EvidenceRoot:    *evidenceRoot,
+		CompletedAt:     *completedAt,
+		ElapsedMinutes:  *elapsedMinutes,
+		LeaseTimingMode: *leaseTimingMode,
+	})
+	if err != nil {
+		return err
+	}
+	readback, err := BuildAtlasRecommendationReadback(wave, workgraph, options)
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(*outReadbackPath, readback); err != nil {
+		return err
+	}
+	execution := BuildAtlasRecommendationExecutionReadback(readback)
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outExecutionReadbackPath) != "" {
+		if err := WriteJSON(*outExecutionReadbackPath, execution); err != nil {
+			return err
+		}
+	}
+	command := BuildAtlasRecommendationCommandReadback(readback)
+	promoter := BuildAtlasRecommendationPromoterReadback(readback)
+	foundry := BuildAtlasRecommendationFoundryRollup(readback)
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outCommandReadbackPath) != "" {
+		if err := WriteJSON(*outCommandReadbackPath, command); err != nil {
+			return err
+		}
+	}
+	if strings.TrimSpace(*outPromoterReadbackPath) != "" {
+		if err := WriteJSON(*outPromoterReadbackPath, promoter); err != nil {
+			return err
+		}
+	}
+	if strings.TrimSpace(*outFoundryRollupPath) != "" {
+		if err := WriteJSON(*outFoundryRollupPath, foundry); err != nil {
+			return err
+		}
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nstarted_at=%s\ncompleted_at=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\ncommand_readback=%s\npromoter_readback=%s\nfoundry_rollup=%s\n",
+		readback.Status,
+		readback.MissionID,
+		readback.StartedAt,
+		readback.CompletedAt,
+		readback.ElapsedMinutes,
+		readback.MinMinutesMet,
+		readback.LeaseTimeStatus,
+		readback.FinalResponseAllowed,
+		readback.ExactNextAction,
+		filepath.ToSlash(*outReadbackPath),
+		filepath.ToSlash(*outExecutionReadbackPath),
+		filepath.ToSlash(*outCommandReadbackPath),
+		filepath.ToSlash(*outPromoterReadbackPath),
+		filepath.ToSlash(*outFoundryRollupPath),
 	)
 	return nil
 }

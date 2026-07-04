@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-lease-start.v0.1",
+  "status": "started",
+  "mission_id": "mission-long-wave",
+  "target_instance": "demo-stack",
+  "evidence_root": "docs/evidence/ao-atlas-lease-resume-wave-v01",
+  "started_at": "2026-07-04T08:34:04-07:00",
+  "min_minutes": 120,
+  "max_minutes": 180,
+  "continue_if_fast_target": 40,
+  "checkpoint_policy": "after_each_node_or_timed_interval",
+  "wave_digest": "sha256:3b78d2a00328f8011d7eab96e915c71d374b9a5ebc246965e92a4c477d75021a",
+  "workgraph_digest": "sha256:acc528ce4b255c271c9af31782e00a94df2a0795e94600051d35bce691684cbf",
+  "final_response_allowed": false,
+  "final_response_reason": "lease start marker does not allow final response",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "claims_authority_advance": false
+}
