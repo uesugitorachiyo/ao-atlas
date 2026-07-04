@@ -24,6 +24,7 @@
     "early_return_risk_status",
     "foundry_rollup_status",
     "foundry_terminal_status_readback",
+    "foundry_terminal_status_examples",
     "promoter_readback_status",
     "promoter_no_promotion_status",
     "command_readback_status",
@@ -78,6 +79,29 @@
         "promoted": { "type": "string", "minLength": 1 },
         "denied": { "type": "string", "minLength": 1 },
         "blocked": { "type": "string", "minLength": 1 }
+      }
+    },
+    "foundry_terminal_status_examples": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_status",
+          "normalized_status",
+          "terminal",
+          "can_close_mission",
+          "required_readback"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "source_status": { "enum": ["completed", "promoted", "denied", "blocked"] },
+          "normalized_status": { "enum": ["completed", "denied", "blocked"] },
+          "terminal": { "const": true },
+          "can_close_mission": { "type": "boolean" },
+          "required_readback": { "type": "string", "minLength": 1 }
+        }
       }
     },
     "promoter_readback_status": { "type": "string", "minLength": 1 },

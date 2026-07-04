@@ -177,6 +177,7 @@ jq -e 'all(.nodes[]; any(.factory_task.required_evidence[]; startswith("source_t
 jq -e '.schema == "ao.atlas.recommendation-lease-start.v0.1" and .started_at == "2026-07-04T08:00:00-07:00" and .min_minutes == 120 and .max_minutes == 180 and .final_response_allowed == false and .schedules_work == false and .executes_work == false and .approves_work == false' "$OUT/mission-recommendations/lease-start.json" >/dev/null
 jq -e '.total_nodes == 40 and .minimum_nodes == 30 and .ready_nodes == 40 and .executable_ready_nodes == 1 and .checkpoint_count == 0 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false and .lease_health_status == "minimum_unmet" and .early_return_risk_status == "blocked_final_response_ready_nodes_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 jq -e '.final_response_denial_gate == "deny_ready_nodes_or_exact_next_action_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
+jq -e '([.foundry_terminal_status_examples[].source_status] | sort) == ["blocked","completed","denied","promoted"] and any(.foundry_terminal_status_examples[]; .source_status == "promoted" and .normalized_status == "completed" and .terminal == true and .can_close_mission == true and (.required_readback | contains("RSI remains denied"))) and any(.foundry_terminal_status_examples[]; .source_status == "blocked" and .normalized_status == "blocked" and .terminal == true and .can_close_mission == false)' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 jq -e '(.wave_digest | test("^sha256:[0-9a-f]{64}$")) and (.workgraph_digest | test("^sha256:[0-9a-f]{64}$"))' "$OUT/mission-recommendations/lease-start.json" >/dev/null
 jq -e --slurpfile lease "$OUT/mission-recommendations/lease-start.json" '.wave_digest == $lease[0].wave_digest and .workgraph_digest == $lease[0].workgraph_digest' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 pass "recommendation-import-artifact-binding"
@@ -568,6 +569,7 @@ find . \
   -path './target' -prune -o \
   -path './.atlas-local' -prune -o \
   -path './.atlas-state' -prune -o \
+  -path './atlas' -prune -o \
   -type f -print > "$scan_file"
 
 patterns=(

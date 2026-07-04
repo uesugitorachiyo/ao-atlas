@@ -1,0 +1,8 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-25",
+  "candidate": "atlas-recommendation-foundry-terminal-status-examples",
+  "mutation_class": "low_risk_code",
+  "owner": "ao-atlas",
+  "summary": "Atlas recommendation readbacks named Foundry terminal statuses but did not include structured examples showing that promoted is terminal and normalizes to completed when Promoter and Command agree."
+}

@@ -684,19 +684,20 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 			"denied":    "terminal_denial_requires_exact_missing_evidence_readback",
 			"blocked":   "terminal_blocker_requires_repair_or_checkpoint_resume",
 		},
-		PromoterReadbackStatus:      promoterReadbackStatus,
-		PromoterNoPromotionStatus:   promoterNoPromotionStatus,
-		CommandReadbackStatus:       commandReadbackStatus,
-		CommandTimelineStatus:       commandTimelineStatus,
-		PublicSafetyScanStatus:      wave.PublicSafetyScanStatus,
-		ReturnGateStatus:            returnGateStatus,
-		CheckpointCount:             completed,
-		FinalResponseAllowed:        finalAllowed,
-		FinalResponseDenialGate:     recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
-		FinalResponseReason:         finalReason,
-		ExactNextAction:             exactNextAction,
-		NodeEvidence:                recommendationNodeEvidence(workgraph),
-		FeatureDepthRecommendations: featureDepthRecommendationReadback(wave.Tasks, 10),
+		FoundryTerminalStatusExamples: foundryTerminalStatusExamples(),
+		PromoterReadbackStatus:        promoterReadbackStatus,
+		PromoterNoPromotionStatus:     promoterNoPromotionStatus,
+		CommandReadbackStatus:         commandReadbackStatus,
+		CommandTimelineStatus:         commandTimelineStatus,
+		PublicSafetyScanStatus:        wave.PublicSafetyScanStatus,
+		ReturnGateStatus:              returnGateStatus,
+		CheckpointCount:               completed,
+		FinalResponseAllowed:          finalAllowed,
+		FinalResponseDenialGate:       recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
+		FinalResponseReason:           finalReason,
+		ExactNextAction:               exactNextAction,
+		NodeEvidence:                  recommendationNodeEvidence(workgraph),
+		FeatureDepthRecommendations:   featureDepthRecommendationReadback(wave.Tasks, 10),
 		SafetyBoundaries: map[string]bool{
 			"provider_calls":                    false,
 			"credential_inspection":             false,
@@ -716,6 +717,39 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		return AtlasRecommendationReadback{}, err
 	}
 	return readback, nil
+}
+
+func foundryTerminalStatusExamples() []AtlasFoundryTerminalStatusExample {
+	return []AtlasFoundryTerminalStatusExample{
+		{
+			SourceStatus:     "completed",
+			NormalizedStatus: "completed",
+			Terminal:         true,
+			CanCloseMission:  true,
+			RequiredReadback: "Foundry rollup reports completed, all node evidence exists, and no ready nodes remain.",
+		},
+		{
+			SourceStatus:     "promoted",
+			NormalizedStatus: "completed",
+			Terminal:         true,
+			CanCloseMission:  true,
+			RequiredReadback: "Promoter and Command agree promotion is terminal, RSI remains denied, and no ready nodes remain.",
+		},
+		{
+			SourceStatus:     "denied",
+			NormalizedStatus: "denied",
+			Terminal:         true,
+			CanCloseMission:  true,
+			RequiredReadback: "Denial readback includes exact missing evidence, no ready repair node remains, and no authority advance is claimed.",
+		},
+		{
+			SourceStatus:     "blocked",
+			NormalizedStatus: "blocked",
+			Terminal:         true,
+			CanCloseMission:  false,
+			RequiredReadback: "Blocker readback names the exact repair or resume action before final response can close.",
+		},
+	}
 }
 
 func recommendationReturnGateStatus(finalAllowed bool, nodesComplete bool, leaseTiming atlasRecommendationLeaseTiming, ready, blocked, failed int) string {
@@ -887,6 +921,9 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	for _, key := range []string{"completed", "promoted", "denied", "blocked"} {
 		requireField(&errs, "foundry_terminal_status_readback."+key, readback.FoundryTerminalStatusReadback[key])
 	}
+	if err := validateFoundryTerminalStatusExamples(readback.FoundryTerminalStatusExamples); err != nil {
+		errs = append(errs, err.Error())
+	}
 	requireField(&errs, "promoter_readback_status", readback.PromoterReadbackStatus)
 	requireField(&errs, "promoter_no_promotion_status", readback.PromoterNoPromotionStatus)
 	requireField(&errs, "command_readback_status", readback.CommandReadbackStatus)
@@ -954,6 +991,61 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 		requireList(&errs, prefix+".verification_commands", evidence.VerificationCommands)
 	}
 	return joinErrors(errs)
+}
+
+func validateFoundryTerminalStatusExamples(examples []AtlasFoundryTerminalStatusExample) error {
+	required := map[string]bool{
+		"completed": false,
+		"promoted":  false,
+		"denied":    false,
+		"blocked":   false,
+	}
+	if len(examples) != len(required) {
+		return fmt.Errorf("foundry_terminal_status_examples must include completed, promoted, denied, and blocked examples")
+	}
+	for _, example := range examples {
+		source := strings.TrimSpace(example.SourceStatus)
+		if _, ok := required[source]; !ok {
+			return fmt.Errorf("foundry_terminal_status_examples has unsupported source_status %q", example.SourceStatus)
+		}
+		if required[source] {
+			return fmt.Errorf("foundry_terminal_status_examples duplicate source_status %q", source)
+		}
+		required[source] = true
+		if strings.TrimSpace(example.NormalizedStatus) == "" {
+			return fmt.Errorf("foundry_terminal_status_examples.%s normalized_status is required", source)
+		}
+		if strings.TrimSpace(example.RequiredReadback) == "" {
+			return fmt.Errorf("foundry_terminal_status_examples.%s required_readback is required", source)
+		}
+		if !example.Terminal {
+			return fmt.Errorf("foundry_terminal_status_examples.%s must be terminal", source)
+		}
+		switch source {
+		case "completed":
+			if example.NormalizedStatus != "completed" || !example.CanCloseMission {
+				return fmt.Errorf("foundry_terminal_status_examples.completed must close as completed")
+			}
+		case "promoted":
+			if example.NormalizedStatus != "completed" || !example.CanCloseMission {
+				return fmt.Errorf("foundry_terminal_status_examples.promoted must close as completed")
+			}
+		case "denied":
+			if example.NormalizedStatus != "denied" || !example.CanCloseMission {
+				return fmt.Errorf("foundry_terminal_status_examples.denied must close with exact denial evidence")
+			}
+		case "blocked":
+			if example.NormalizedStatus != "blocked" || example.CanCloseMission {
+				return fmt.Errorf("foundry_terminal_status_examples.blocked must remain open for repair or resume")
+			}
+		}
+	}
+	for source, seen := range required {
+		if !seen {
+			return fmt.Errorf("foundry_terminal_status_examples missing %s", source)
+		}
+	}
+	return nil
 }
 
 func ValidateAtlasRecommendationLeaseStart(leaseStart AtlasRecommendationLeaseStart) error {

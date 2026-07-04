@@ -10,8 +10,8 @@ because ready nodes remain.
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 24
-- Ready nodes: 16
+- Completed nodes: 25
+- Ready nodes: 15
 - Blocked nodes: 0
 - Failed nodes: 0
 - Elapsed minutes: 180
@@ -21,10 +21,13 @@ because ready nodes remain.
 - Stale route decision status: `fresh_atlas_supervises_foundry_owns_one_active_node`
 - Early-return risk status: `blocked_final_response_ready_nodes_remain`
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 24
+- Checkpoint count: 25
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-25`
+- Exact next action: emit Foundry import for `mission-recommendation-next-26`
   and execute exactly one active node.
+- Foundry terminal examples: `completed`, `promoted`, `denied`, and `blocked`
+  are explicit in the recommendation readback. `promoted` normalizes to
+  `completed` only when Promoter and Command agree and RSI remains denied.
 
 ## Root Artifacts
 
