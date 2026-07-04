@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-35",
+  "red_test": "scripts/production-readiness.sh failed after adding the grep for \"Foundry import ownership stays single-node\" because the runbook and README did not yet contain that wording.",
+  "tests": [
+    "scripts/production-readiness.sh passed with required-docs-and-contracts after the runbook and README documented the single-node Foundry import ownership rule."
+  ],
+  "summary": "Production readiness now asserts the Foundry import ownership rule is documented in both the long-run recommendation runbook and README."
+}

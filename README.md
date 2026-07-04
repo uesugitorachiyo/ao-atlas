@@ -199,6 +199,10 @@ Ready Atlas-owned recommendation tasks skip Blueprint: Atlas already has the
 bounded task, safety limits, required gates, and digest-bound source evidence,
 so Blueprint is only re-entered when requirements, authorization, candidate
 rules, or scope approval are missing.
+Foundry import ownership stays single-node: Atlas emits import material for the
+current executable node only, Foundry owns that bounded implementation evidence
+and run-link, and Atlas resumes from the checkpoint before importing the next
+node.
 The detailed operator runbook is
 `docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md`.
 

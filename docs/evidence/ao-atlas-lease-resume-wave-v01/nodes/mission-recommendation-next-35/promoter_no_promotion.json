@@ -1,0 +1,7 @@
+{
+  "status": "no_promotion",
+  "node_id": "mission-recommendation-next-35",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true,
+  "summary": "Node 35 documents single-node Foundry import ownership and does not request or grant any mutation authority promotion."
+}

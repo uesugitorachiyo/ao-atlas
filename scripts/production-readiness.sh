@@ -140,9 +140,11 @@ for file in "${required_files[@]}"; do
 done
 grep -q "## Double-Size Operator Requests" docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
 grep -q "Ready Atlas-owned tasks skip Blueprint" docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
+grep -q "Foundry import ownership stays single-node" docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
 grep -q "A 20-node or" docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
 grep -q "90-minute wave is too small for this path" docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
 grep -q "prior wave was too short" README.md
+grep -q "Foundry import ownership stays single-node" README.md
 pass "required-docs-and-contracts"
 
 for file in schemas/*.json examples/valid/*.json examples/invalid/*.json; do
