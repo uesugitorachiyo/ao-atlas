@@ -170,6 +170,35 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 	if len(workgraph.Nodes) != 40 || len(state.ExecutableReadyNodeIDs) != 1 {
 		t.Fatalf("expected 40 dependency-chained nodes with one executable-ready node, nodes=%d ready=%#v", len(workgraph.Nodes), state.ExecutableReadyNodeIDs)
 	}
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(outDir, "recommendation-readback.json"))
+	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
+		t.Fatal(err)
+	}
+	if readback.TotalNodes != 40 || readback.CompletedNodes != 0 || readback.ReadyNodes != 40 || readback.ExecutableReadyNodes != 1 {
+		t.Fatalf("bad default readback node counts: %#v", readback)
+	}
+	if readback.LeaseHealthStatus != "minimum_unmet" ||
+		readback.CheckpointFreshnessStatus != "fresh_checkpoint_required_after_each_node_or_timed_interval" ||
+		readback.StaleRouteDecisionStatus != "fresh_atlas_supervises_foundry_owns_one_active_node" ||
+		readback.EarlyReturnRiskStatus != "blocked_final_response_ready_nodes_remain" {
+		t.Fatalf("readback missing long-run health statuses: %#v", readback)
+	}
+	if readback.FinalResponseAllowed || readback.ExactNextAction != "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node." {
+		t.Fatalf("readback must deny final response with exact next node: %#v", readback)
+	}
+	if readback.FoundryTerminalStatusReadback["promoted"] == "" ||
+		readback.FoundryTerminalStatusReadback["denied"] == "" ||
+		readback.FoundryTerminalStatusReadback["blocked"] == "" ||
+		readback.PromoterNoPromotionStatus == "" ||
+		readback.CommandTimelineStatus == "" {
+		t.Fatalf("readback missing terminal-state, promoter, or command summaries: %#v", readback)
+	}
+	if len(readback.NodeEvidence) != 40 || readback.NodeEvidence[0].NodeGate != "recorded" || readback.NodeEvidence[0].RollbackRecord != "recorded" {
+		t.Fatalf("readback missing per-node evidence: %#v", readback.NodeEvidence[:1])
+	}
+	if len(readback.FeatureDepthRecommendations) < 10 {
+		t.Fatalf("readback must carry at least 10 next recommendations: %#v", readback.FeatureDepthRecommendations)
+	}
 	prompt := wave.NextRecommendedPrompt
 	for _, want := range []string{
 		"Current state:",
@@ -188,6 +217,96 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 		if !strings.Contains(prompt, want) {
 			t.Fatalf("v0.2 prompt missing section %q:\n%s", want, prompt)
 		}
+	}
+}
+
+func TestMissionRecommendationsReadbackCLIMatchesGeneratedArtifacts(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	readbackPath := filepath.Join(dir, "readback.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "readback",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--out", readbackPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation readback failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "final_response_allowed=false") ||
+		!strings.Contains(out.String(), "exact_next_action=Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.") {
+		t.Fatalf("readback output missing final gate and exact action: %s", out.String())
+	}
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, readbackPath)
+	if readback.WaveDigest == "" || readback.WorkgraphDigest == "" {
+		t.Fatalf("readback must carry artifact digests: %#v", readback)
+	}
+}
+
+func TestMissionRecommendationsReadbackFinalGateTransitions(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	partial := completeRecommendationNodes(result.Workgraph, 30)
+	partialReadback, err := BuildAtlasRecommendationReadback(result.Wave, partial, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if partialReadback.LeaseHealthStatus != "minimum_met_continue_if_fast" ||
+		partialReadback.FinalResponseAllowed ||
+		partialReadback.ExactNextAction != "Emit Foundry import for mission-recommendation-next-31 and execute exactly one active node." {
+		t.Fatalf("partial readback must continue after minimum while ready nodes remain: %#v", partialReadback)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	completedReadback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !completedReadback.FinalResponseAllowed ||
+		completedReadback.FinalResponseReason != "all generated nodes complete and no ready nodes remain" ||
+		completedReadback.LeaseHealthStatus != "all_generated_nodes_complete" ||
+		completedReadback.ExactNextAction != "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks." {
+		t.Fatalf("completed readback must allow closure: %#v", completedReadback)
+	}
+}
+
+func TestMissionRecommendationsReadbackRejectsMismatchedWaveAndWorkgraph(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	result.Workgraph.TargetInstance = "other-stack"
+	if _, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{}); err == nil || !strings.Contains(err.Error(), "target_instance") {
+		t.Fatalf("expected target_instance mismatch rejection, got %v", err)
 	}
 }
 
@@ -235,6 +354,8 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"--max-minutes 180",
 		"--continue-if-fast-target 40",
 		"recommendation-workgraph.json",
+		"recommendation-readback.json",
+		"mission recommendations readback",
 		"next-recommended-prompt.md",
 	} {
 		if !strings.Contains(script, want) {
@@ -273,4 +394,15 @@ func twoDigit(value int) string {
 		return "0" + string(rune('0'+value))
 	}
 	return "10"[:0] + string(rune('0'+value/10)) + string(rune('0'+value%10))
+}
+
+func completeRecommendationNodes(workgraph Workgraph, count int) Workgraph {
+	updated := workgraph
+	updated.Nodes = append([]WorkgraphNode(nil), workgraph.Nodes...)
+	for i := range updated.Nodes {
+		if i < count {
+			updated.Nodes[i].Status = "completed"
+		}
+	}
+	return updated
 }

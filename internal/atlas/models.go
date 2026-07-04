@@ -193,6 +193,63 @@ type AtlasRecommendationTask struct {
 	SafetyLimits      []string `json:"safety_limits"`
 }
 
+type AtlasRecommendationReadback struct {
+	ContractVersion               string                            `json:"contract_version"`
+	MissionID                     string                            `json:"mission_id"`
+	TargetInstance                string                            `json:"target_instance"`
+	Status                        string                            `json:"status"`
+	SourceDigest                  string                            `json:"source_digest"`
+	WaveDigest                    string                            `json:"wave_digest,omitempty"`
+	WorkgraphDigest               string                            `json:"workgraph_digest,omitempty"`
+	EvidenceRoot                  string                            `json:"evidence_root,omitempty"`
+	Supervisor                    *AtlasLongRunSupervisor           `json:"supervisor,omitempty"`
+	TotalNodes                    int                               `json:"total_nodes"`
+	MinimumNodes                  int                               `json:"minimum_nodes"`
+	CompletedNodes                int                               `json:"completed_nodes"`
+	ReadyNodes                    int                               `json:"ready_nodes"`
+	BlockedNodes                  int                               `json:"blocked_nodes"`
+	FailedNodes                   int                               `json:"failed_nodes"`
+	ExecutableReadyNodes          int                               `json:"executable_ready_nodes"`
+	FirstExecutableNode           string                            `json:"first_executable_node,omitempty"`
+	LeaseHealthStatus             string                            `json:"lease_health_status"`
+	CheckpointFreshnessStatus     string                            `json:"checkpoint_freshness_status"`
+	StaleRouteDecisionStatus      string                            `json:"stale_route_decision_status"`
+	EarlyReturnRiskStatus         string                            `json:"early_return_risk_status"`
+	FoundryRollupStatus           string                            `json:"foundry_rollup_status"`
+	FoundryTerminalStatusReadback map[string]string                 `json:"foundry_terminal_status_readback"`
+	PromoterReadbackStatus        string                            `json:"promoter_readback_status"`
+	PromoterNoPromotionStatus     string                            `json:"promoter_no_promotion_status"`
+	CommandReadbackStatus         string                            `json:"command_readback_status"`
+	CommandTimelineStatus         string                            `json:"command_timeline_status"`
+	PublicSafetyScanStatus        string                            `json:"public_safety_scan_status"`
+	FinalResponseAllowed          bool                              `json:"final_response_allowed"`
+	FinalResponseReason           string                            `json:"final_response_reason"`
+	ExactNextAction               string                            `json:"exact_next_action"`
+	NodeEvidence                  []AtlasRecommendationNodeEvidence `json:"node_evidence"`
+	FeatureDepthRecommendations   []string                          `json:"feature_depth_recommendations"`
+	SafetyBoundaries              map[string]bool                   `json:"safety_boundaries"`
+	SchedulesWork                 bool                              `json:"schedules_work"`
+	ExecutesWork                  bool                              `json:"executes_work"`
+	ApprovesWork                  bool                              `json:"approves_work"`
+}
+
+type AtlasRecommendationNodeEvidence struct {
+	NodeID                 string   `json:"node_id"`
+	TaskID                 string   `json:"task_id"`
+	Status                 string   `json:"status"`
+	NodeGate               string   `json:"node_gate"`
+	CandidateRecord        string   `json:"candidate_record"`
+	RollbackRecord         string   `json:"rollback_record"`
+	ImplementationEvidence string   `json:"implementation_evidence"`
+	Tests                  string   `json:"tests"`
+	Verification           string   `json:"verification"`
+	PublicSafetyWording    string   `json:"public_safety_wording"`
+	PromoterReadback       string   `json:"promoter_readback"`
+	CommandReadback        string   `json:"command_readback"`
+	RequiredGates          []string `json:"required_gates"`
+	VerificationCommands   []string `json:"verification_commands"`
+}
+
 type AOMissionSourceArtifact struct {
 	Name   string `json:"name"`
 	Path   string `json:"path"`
