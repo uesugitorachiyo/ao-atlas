@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-39",
+  "selected_candidate": "2-3 hour long-run recommendation wave evidence README section",
+  "owner": "AO Atlas",
+  "docs_scope": "docs/evidence/ao-atlas-lease-resume-wave-v01/README.md",
+  "blueprint_route": "not_required",
+  "summary": "The ready Atlas-owned task already included objective, scope, gates, safety limits, and digest-bound source evidence, so Blueprint was skipped and the evidence README section was added directly."
+}

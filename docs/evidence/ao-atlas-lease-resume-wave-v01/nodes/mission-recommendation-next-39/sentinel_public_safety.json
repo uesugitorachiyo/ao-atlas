@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-39",
+  "public_safety_scope": "evidence README documentation",
+  "forbidden_claims": [
+    "no broad RSI claim",
+    "no provider-call permission",
+    "no credential inspection permission",
+    "no direct-main mutation permission",
+    "no release/deploy/publish/upload/tag permission"
+  ],
+  "summary": "The section documents final-response gates and no-promotion boundaries only; RSI remains denied and no AO authority is widened."
+}

@@ -7,26 +7,43 @@ persisted lease-start and resume machinery. The wave starts at
 `2026-07-04T08:34:04-07:00`, has a 120-minute minimum, and remains final-denied
 because ready nodes remain.
 
+## 2-3 Hour Long-Run Recommendation Wave Evidence
+
+This wave is the durable evidence root for the operator-requested 2-3 hour
+Atlas recommendation run. It uses the long-run supervisor defaults: 40 generated
+nodes, 30-node minimum, 120-minute minimum lease, 180-minute maximum lease, and
+checkpoint policy `after_each_node_or_timed_interval`. The lease start is
+preserved in `lease-start.json`; every completed node records a Foundry import,
+run-link, checkpoint readback, Command readback, Promoter no-promotion readback,
+rollback record, public-safety evidence, tests, and verification output.
+
+The final response gate is evidence-bound. A final answer is denied while ready
+nodes or an exact next action remain, even when the minimum lease time is met.
+When all 40 nodes complete, the final readback must show zero ready nodes,
+`min_minutes_met=true`, `return_gate_status=final_response_allowed`, matching
+Command/Foundry/Promoter/reconciliation artifacts, and no authority or RSI
+promotion claim.
+
 ## Current Readback
 
 - Total nodes: 40
-- Completed nodes: 38
-- Ready nodes: 2
+- Completed nodes: 39
+- Ready nodes: 1
 - Blocked nodes: 0
 - Failed nodes: 0
-- Elapsed minutes: 465
+- Elapsed minutes: 478
 - Minimum minutes met: true
 - Lease health status: `minimum_met_continue_if_fast`
 - Checkpoint freshness status: `fresh_checkpoint_required_after_each_node_or_timed_interval`
 - Stale route decision status: `fresh_atlas_supervises_foundry_owns_one_active_node`
 - Early-return risk status: `blocked_final_response_ready_nodes_remain`
 - Return gate status: `blocked_ready_nodes_remain`
-- Checkpoint count: 38
+- Checkpoint count: 39
 - Final response allowed: false
-- Exact next action: emit Foundry import for `mission-recommendation-next-39`
+- Exact next action: emit Foundry import for `mission-recommendation-next-40`
   and execute exactly one active node.
 - Exact next action readback: `continuation_required`, bound to
-  `mission-recommendation-next-39`, `blocked_ready_nodes_remain`, and
+  `mission-recommendation-next-40`, `blocked_ready_nodes_remain`, and
   `final_response_allowed=false`.
 - Command timeline placeholders: `checkpoint`, `exact_next_action`, and
   `return_gate` are pending Command timeline slots required before final
@@ -63,6 +80,9 @@ because ready nodes remain.
   the generated recommendation workgraph has exactly 40 ready nodes with stable
   ids, a linear dependency chain, source digest evidence, required gates, safety
   limits, Atlas planning boundary, and no scheduling/execution/approval flags.
+- Evidence README long-run section: this file now documents the 40-node,
+  120-180 minute lease, checkpoint evidence requirements, final-response gate,
+  cross-artifact agreement, no-promotion boundary, and RSI-denied boundary.
 - Foundry terminal examples: `completed`, `promoted`, `denied`, and `blocked`
   are explicit in the recommendation readback. `promoted` normalizes to
   `completed` only when Promoter and Command agree and RSI remains denied.

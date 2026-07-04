@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-39",
+  "rollback_scope": [
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/README.md",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-39"
+  ],
+  "rollback_action": "Revert the node 39 evidence README section/readiness assertion and evidence changes without touching earlier completed node evidence.",
+  "summary": "Rollback is limited to the 2-3 hour evidence README section, readiness assertion, and node-specific evidence bundle."
+}

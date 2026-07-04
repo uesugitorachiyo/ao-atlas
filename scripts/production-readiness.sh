@@ -221,6 +221,7 @@ grep -q "90-minute wave is too small for this path" docs/sdd/AO-ATLAS-LONG-RUN-R
 grep -q "prior wave was too short" README.md
 grep -q "Foundry import ownership stays single-node" README.md
 grep -q "Command readback requirements stay compact and gate-bound" README.md
+grep -q "## 2-3 Hour Long-Run Recommendation Wave Evidence" docs/evidence/ao-atlas-lease-resume-wave-v01/README.md
 pass "required-docs-and-contracts"
 
 for file in schemas/*.json examples/valid/*.json examples/invalid/*.json; do

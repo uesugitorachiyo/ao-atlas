@@ -1,0 +1,9 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-39",
+  "red_test": "scripts/production-readiness.sh failed after adding the grep for \"## 2-3 Hour Long-Run Recommendation Wave Evidence\" because the evidence README did not yet contain that section.",
+  "tests": [
+    "scripts/production-readiness.sh passed after adding the evidence README section and readiness assertion."
+  ],
+  "summary": "Production readiness now asserts the evidence README contains a dedicated 2-3 hour long-run recommendation wave section."
+}
