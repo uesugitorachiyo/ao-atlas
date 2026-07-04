@@ -1,0 +1,11 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-14",
+  "rollback_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01"
+  ],
+  "rollback_action": "Revert the schema required-field coverage helper, production readiness schema coverage assertions, and node 14 evidence/readback refresh.",
+  "direct_main_mutation": false
+}

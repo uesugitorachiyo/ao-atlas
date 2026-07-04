@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "node_id": "mission-recommendation-next-14",
+  "red_phase": "Coverage gap identified: generated Atlas recommendation readback artifacts were not checked against the required fields listed by their schema files.",
+  "green_phase": "Focused recommendation tests passed after adding schema required-field coverage for generated readback artifacts.",
+  "tests": [
+    "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt schema required-field coverage",
+    "production-readiness recommendation-readback-schema-coverage"
+  ]
+}

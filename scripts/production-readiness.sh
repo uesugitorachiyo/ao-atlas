@@ -57,6 +57,25 @@ reject_generated_recommendation_prompt_public_safety() {
   done
 }
 
+assert_schema_required_fields_present() {
+  local schema="$1"
+  local artifact="$2"
+  local label="$3"
+  test -s "$schema"
+  test -s "$artifact"
+  jq -e --slurpfile schema "$schema" '
+    . as $artifact |
+    ($schema[0].required // []) as $required |
+    [ $required[] as $key | select(($artifact | has($key)) | not) ] as $missing |
+    if ($missing | length) == 0 then true
+    else error("missing required schema fields: \($missing | join(","))")
+    end
+  ' "$artifact" >/dev/null || {
+    echo "$label does not cover required fields from $schema" >&2
+    exit 1
+  }
+}
+
 go test ./...
 pass "go-test"
 
@@ -260,6 +279,13 @@ jq -e '.schema == "ao.atlas.recommendation-promoter-readback.v0.1" and .promotio
 jq -e '.no_promotion_summary == "No mutation authority promotion claimed; RSI remains denied." and .next_denied_class == "RSI"' "$OUT/mission-recommendations/promoter-readback-resumed.json" >/dev/null
 jq -e '.schema == "ao.atlas.recommendation-foundry-rollup.v0.1" and .node_completion_status == "nodes_in_progress" and .lease_completion_status == "minimum_minutes_unmet" and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false and .claims_authority_advance == false' "$OUT/mission-recommendations/foundry-rollup-resumed.json" >/dev/null
 jq -e '.schema == "ao.atlas.recommendation-reconciliation-packet.v0.1" and .status == "continuation_required" and .checkpoint_count == 1 and .return_gate_status == "blocked_ready_nodes_remain" and .command_return_gate_status == "blocked_ready_nodes_remain" and .foundry_return_gate_status == "blocked_ready_nodes_remain" and .artifacts_agree == true and .promotion_claimed == false and .rsi_remains_denied == true and .claims_authority_advance == false' "$OUT/mission-recommendations/reconciliation-packet-resumed.json" >/dev/null
+assert_schema_required_fields_present schemas/recommendation-readback.schema.json "$OUT/mission-recommendations/recommendation-readback-resumed.json" "recommendation readback"
+assert_schema_required_fields_present schemas/recommendation-checkpoint-readback.schema.json "$OUT/mission-recommendations/checkpoint-readback-after-node-01.json" "recommendation checkpoint readback"
+assert_schema_required_fields_present schemas/recommendation-command-readback.schema.json "$OUT/mission-recommendations/command-readback-resumed.json" "recommendation command readback"
+assert_schema_required_fields_present schemas/recommendation-promoter-readback.schema.json "$OUT/mission-recommendations/promoter-readback-resumed.json" "recommendation promoter readback"
+assert_schema_required_fields_present schemas/recommendation-foundry-rollup.schema.json "$OUT/mission-recommendations/foundry-rollup-resumed.json" "recommendation Foundry rollup"
+assert_schema_required_fields_present schemas/recommendation-reconciliation-packet.schema.json "$OUT/mission-recommendations/reconciliation-packet-resumed.json" "recommendation reconciliation packet"
+pass "recommendation-readback-schema-coverage"
 "$BIN" blueprint-request validate --request examples/valid/blueprint-request.json >/dev/null
 "$BIN" blueprint import \
   --pack examples/valid/blueprint-import-low-risk-code/blueprint-pack \
