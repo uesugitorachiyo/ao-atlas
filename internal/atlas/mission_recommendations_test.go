@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -422,7 +423,7 @@ func TestMissionRecommendationsImportArtifactsAreDigestBound(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	workgraphDigest, err := digestFile(workgraphPath)
+	workgraphDigest, err := digestFileWithNormalizedLineEndings(workgraphPath)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -1233,6 +1234,117 @@ func TestRecommendationExecutionReadbackArtifactsStayConsistent(t *testing.T) {
 	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
 		t.Fatalf("v0.3 execution ledger is inconsistent with recommendation readback: %v", err)
 	}
+}
+
+func TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-lease-resume-wave-v01")
+	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "recommendation-readback.json"))
+	var synthesis struct {
+		CompletedNodes        int    `json:"completed_nodes"`
+		TotalNodes            int    `json:"total_nodes"`
+		ReadyNodes            int    `json:"ready_nodes"`
+		CheckpointCount       int    `json:"checkpoint_count"`
+		ElapsedMinutes        int    `json:"elapsed_minutes"`
+		ReturnGateStatus      string `json:"return_gate_status"`
+		FinalResponseAllowed  bool   `json:"final_response_allowed"`
+		ExactNextAction       string `json:"exact_next_action"`
+		NextRecommendedPrompt string `json:"next_recommended_prompt"`
+	}
+	synthesis = mustLoadJSON[struct {
+		CompletedNodes        int    `json:"completed_nodes"`
+		TotalNodes            int    `json:"total_nodes"`
+		ReadyNodes            int    `json:"ready_nodes"`
+		CheckpointCount       int    `json:"checkpoint_count"`
+		ElapsedMinutes        int    `json:"elapsed_minutes"`
+		ReturnGateStatus      string `json:"return_gate_status"`
+		FinalResponseAllowed  bool   `json:"final_response_allowed"`
+		ExactNextAction       string `json:"exact_next_action"`
+		NextRecommendedPrompt string `json:"next_recommended_prompt"`
+	}](t, filepath.Join(root, "final-synthesis.json"))
+	if err := ValidateAtlasRecommendationWave(wave); err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
+		t.Fatal(err)
+	}
+	workgraphPath := filepath.Join(root, "recommendation-workgraph.json")
+	if readback.CompletedNodes > 0 {
+		workgraphPath = filepath.Join(root, "nodes", "mission-recommendation-next-"+twoDigit(readback.CompletedNodes), "workgraph-after.json")
+	}
+	workgraph := mustLoadJSON[Workgraph](t, workgraphPath)
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		t.Fatal(err)
+	}
+	workgraphDigest, err := digestFileWithNormalizedLineEndings(workgraphPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.WorkgraphDigest != workgraphDigest {
+		t.Fatalf("root readback workgraph digest does not match latest workgraph: readback=%s latest=%s path=%s", readback.WorkgraphDigest, workgraphDigest, workgraphPath)
+	}
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if wave.TotalTasks != readback.TotalNodes ||
+		len(workgraph.Nodes) != readback.TotalNodes ||
+		state.NodeCounts["completed"] != readback.CompletedNodes ||
+		state.NodeCounts["ready"] != readback.ReadyNodes ||
+		len(state.ExecutableReadyNodeIDs) != readback.ExecutableReadyNodes {
+		t.Fatalf("wave, workgraph, and readback disagree: wave=%#v state=%#v readback=%#v", wave, state, readback)
+	}
+	if readback.FirstExecutableNode != "" && (len(state.ExecutableReadyNodeIDs) == 0 || state.ExecutableReadyNodeIDs[0] != readback.FirstExecutableNode) {
+		t.Fatalf("readback first executable node disagrees with workgraph state: state=%#v readback=%#v", state.ExecutableReadyNodeIDs, readback.FirstExecutableNode)
+	}
+	if synthesis.CompletedNodes != readback.CompletedNodes ||
+		synthesis.TotalNodes != readback.TotalNodes ||
+		synthesis.ReadyNodes != readback.ReadyNodes ||
+		synthesis.CheckpointCount != readback.CheckpointCount ||
+		synthesis.ElapsedMinutes != readback.ElapsedMinutes ||
+		synthesis.ReturnGateStatus != readback.ReturnGateStatus ||
+		synthesis.FinalResponseAllowed != readback.FinalResponseAllowed ||
+		synthesis.ExactNextAction != readback.ExactNextAction {
+		t.Fatalf("final synthesis does not match root readback: synthesis=%#v readback=%#v", synthesis, readback)
+	}
+	promptPath := filepath.Join(root, "next-recommended-prompt.md")
+	if synthesis.NextRecommendedPrompt != "docs/evidence/ao-atlas-lease-resume-wave-v01/next-recommended-prompt.md" {
+		t.Fatalf("final synthesis points at wrong prompt: %#v", synthesis.NextRecommendedPrompt)
+	}
+	promptBytes, err := os.ReadFile(promptPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	prompt := string(promptBytes)
+	workgraphRef := filepath.ToSlash(workgraphPath)
+	if idx := strings.Index(workgraphRef, "docs/"); idx >= 0 {
+		workgraphRef = workgraphRef[idx:]
+	}
+	for _, want := range []string{
+		"Current workgraph: `" + workgraphRef + "`",
+		"Completed nodes: " + strconv.Itoa(readback.CompletedNodes) + " / " + strconv.Itoa(readback.TotalNodes),
+		"Ready nodes: " + strconv.Itoa(readback.ReadyNodes),
+		"Elapsed minutes at latest checkpoint: " + strconv.Itoa(readback.ElapsedMinutes),
+		"`final_response_allowed=" + strconv.FormatBool(readback.FinalResponseAllowed) + "`",
+		"Return gate: `" + readback.ReturnGateStatus + "`",
+		"Checkpoint count: " + strconv.Itoa(readback.CheckpointCount),
+		"Next executable node: `" + readback.FirstExecutableNode + "`",
+		readback.ExactNextAction,
+		"If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("continuation prompt missing final-state evidence %q:\n%s", want, prompt)
+		}
+	}
+}
+
+func digestFileWithNormalizedLineEndings(path string) (string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	data = bytes.ReplaceAll(data, []byte("\r\n"), []byte("\n"))
+	return DigestBytes(data), nil
 }
 
 func TestMissionRecommendationsRejectMixedOwnerDefaultWaveWithExactReadback(t *testing.T) {

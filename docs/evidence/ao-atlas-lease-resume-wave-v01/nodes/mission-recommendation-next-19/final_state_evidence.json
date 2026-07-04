@@ -1,0 +1,16 @@
+{
+  "status": "recorded",
+  "node_id": "mission-recommendation-next-19",
+  "wave": "recommendation-wave.json",
+  "workgraph": "nodes/mission-recommendation-next-19/workgraph-after.json",
+  "readback": "recommendation-readback.json",
+  "prompt": "next-recommended-prompt.md",
+  "completed_nodes": 19,
+  "ready_nodes": 21,
+  "checkpoint_count": 19,
+  "elapsed_minutes": 180,
+  "return_gate_status": "blocked_ready_nodes_remain",
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-next-20 and execute exactly one active node.",
+  "summary": "Post-completion final-state comparison aligns the recommendation wave, node 19 workgraph, root readback, final synthesis, and next recommended prompt."
+}
