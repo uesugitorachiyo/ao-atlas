@@ -2664,6 +2664,7 @@ func BuildAtlasRecommendationResumePrompt(readback AtlasRecommendationReadback, 
 	b.WriteString(fmt.Sprintf("- `min_minutes_met=%t`\n", readback.MinMinutesMet))
 	b.WriteString(fmt.Sprintf("- `final_response_allowed=%t`\n", readback.FinalResponseAllowed))
 	b.WriteString(fmt.Sprintf("- Return gate: `%s`\n", readback.ReturnGateStatus))
+	b.WriteString(fmt.Sprintf("- Continuation contract reason: `%s`\n", readback.ContinuationContract.Reason))
 	b.WriteString(fmt.Sprintf("- Early-return risk: `%s`\n", readback.EarlyReturnRiskStatus))
 	b.WriteString(fmt.Sprintf("- Checkpoint count: %d\n", readback.CheckpointCount))
 	b.WriteString(fmt.Sprintf("- Next executable node: `%s`\n\n", nextNode))

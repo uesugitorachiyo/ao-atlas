@@ -1,0 +1,17 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-38-next-prompt-continuation-reason",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Implement generated resume prompt continuation reason wording.",
+  "inputs": [
+    "Recommendation readback continuation contract",
+    "Generated resume prompt"
+  ],
+  "outputs": [
+    "Prompt current-status reason line",
+    "Prompt regression assertion",
+    "Production readiness prompt assertion"
+  ]
+}
