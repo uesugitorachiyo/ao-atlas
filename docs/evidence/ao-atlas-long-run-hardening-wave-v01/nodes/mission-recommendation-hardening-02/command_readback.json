@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-02",
+  "task_id": "mission-recommendation-hardening-02-task",
+  "evidence_key": "command_readback",
+  "status": "recorded",
+  "objective": "Add an until-done continuation fixture proving one governed handoff cannot end a mission.",
+  "readback": {
+    "completed_nodes_after_this_node": 2,
+    "target_nodes": 40,
+    "ready_nodes_after_this_node": 38,
+    "next_executable_node": "mission-recommendation-hardening-03",
+    "final_response_allowed": false,
+    "exact_next_action_after_merge": "Continue to mission-recommendation-hardening-03 and add the Command exact-next-action final-response denial fixture."
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-02",
+  "task_id": "mission-recommendation-hardening-02-task",
+  "evidence_key": "verification",
+  "status": "passed",
+  "objective": "Add an until-done continuation fixture proving one governed handoff cannot end a mission.",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run TestLongRunHardeningWaveUntilDoneContinuesAfterOneHandoff -count=1",
+      "status": "red_then_green",
+      "output": "RED failed on missing until-done-one-handoff-fixture.json; GREEN passed after fixture and node 2 readback generation"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestMissionRecommendationsFirstNodeFoundryImportSmoke -count=1",
+      "status": "red_then_green",
+      "output": "RED failed on unsafe generated RSI wording; GREEN passed after generator wording fix"
+    },
+    {
+      "command": "jq -e . node 2 hardening-wave JSON artifacts",
+      "status": "passed",
+      "output": "valid JSON"
+    },
+    {
+      "command": "public-safety wording scan over node 2 artifacts and foundry_handoff.go",
+      "status": "passed",
+      "output": "no matches"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed",
+      "output": "cmd/atlas no test files; internal/atlas ok"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed",
+      "output": "no output"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed",
+      "output": "no output; generated local atlas binary removed before commit"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed",
+      "output": "status=ready; mode=fixture_only_readback; summary=target/atlas-foundry-roundtrip/summary.json"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "output": "status=ready; score=100/100; summary=target/production-readiness/summary.json"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed",
+      "output": "no whitespace errors"
+    }
+  ]
+}

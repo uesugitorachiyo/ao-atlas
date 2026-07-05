@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-02",
+  "task_id": "mission-recommendation-hardening-02-task",
+  "evidence_key": "sentinel_public_safety",
+  "status": "recorded",
+  "objective": "Add an until-done continuation fixture proving one governed handoff cannot end a mission.",
+  "scan_scope": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-02",
+    "internal/atlas/foundry_handoff.go"
+  ],
+  "scan_result": "passed_no_matches",
+  "scan_note": "Foundry continuation generator now avoids unsafe RSI proof wording before prompt artifacts are emitted.",
+  "rsi_remains_denied": true
+}

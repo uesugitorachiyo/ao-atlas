@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-02",
+  "task_id": "mission-recommendation-hardening-02-task",
+  "evidence_key": "implementation_evidence",
+  "status": "recorded",
+  "objective": "Add an until-done continuation fixture proving one governed handoff cannot end a mission.",
+  "changes": [
+    "Added until-done governed handoff fixture binding node 1 completion readback to node 2 continuation.",
+    "Added regression coverage proving a single governed handoff cannot allow final response while ready nodes remain.",
+    "Added Foundry continuation prompt wording regression and generator fix to avoid unsafe RSI proof wording.",
+    "Generated node 2 Foundry import from the node 1 workgraph checkpoint."
+  ],
+  "rsi_remains_denied": true
+}

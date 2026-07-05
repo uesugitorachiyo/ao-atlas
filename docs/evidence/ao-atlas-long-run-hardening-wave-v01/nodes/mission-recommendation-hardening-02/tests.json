@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-02",
+  "task_id": "mission-recommendation-hardening-02-task",
+  "evidence_key": "tests",
+  "status": "recorded",
+  "objective": "Add an until-done continuation fixture proving one governed handoff cannot end a mission.",
+  "red_green": {
+    "until_done_red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveUntilDoneContinuesAfterOneHandoff -count=1",
+    "until_done_red_result": "failed because until-done-one-handoff-fixture.json did not exist",
+    "prompt_red_command": "go test ./internal/atlas -run TestMissionRecommendationsFirstNodeFoundryImportSmoke -count=1",
+    "prompt_red_result": "failed because generated Foundry continuation prompt contained unsafe RSI proof wording",
+    "green_result": "both targeted regressions passed after fixture generation and generator wording fix"
+  },
+  "results": {
+    "until_done_regression": "passed",
+    "foundry_prompt_wording_regression": "passed",
+    "go_test_all": "passed",
+    "go_vet": "passed",
+    "go_build_cmd_atlas": "passed",
+    "production_readiness": "status=ready score=100/100",
+    "atlas_foundry_roundtrip_smoke": "status=ready mode=fixture_only_readback",
+    "public_safety_scan": "passed"
+  }
+}
