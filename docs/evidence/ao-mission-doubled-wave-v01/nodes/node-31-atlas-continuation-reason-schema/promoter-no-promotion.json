@@ -1,0 +1,11 @@
+{
+  "schema": "ao.promoter.no-promotion-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-31-atlas-continuation-reason-schema",
+  "status": "no_promotion_requested",
+  "reason": "The continuation reason schema binding improves readback contract quality only; it does not request mutation authority promotion.",
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "next_denied_class": "RSI",
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-31-atlas-continuation-reason-schema",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Added an enum for continuation_contract.reason in schemas/recommendation-readback.schema.json.",
+    "Added a schema helper and regression test that require exact_next_action_remains plus the other Atlas continuation reason values.",
+    "Production readiness now asserts the reason enum directly in the recommendation-readback schema."
+  ],
+  "schema_values": [
+    "ready_nodes_or_exact_next_action_remain",
+    "ready_nodes_remain",
+    "exact_next_action_remains",
+    "final response allowed by recommendation readback",
+    "blocked_hard_blocker",
+    "blocked_lease_timing_missing",
+    "blocked_minimum_minutes_unmet",
+    "blocked_ready_nodes_remain",
+    "blocked_no_executable_ready_node"
+  ]
+}

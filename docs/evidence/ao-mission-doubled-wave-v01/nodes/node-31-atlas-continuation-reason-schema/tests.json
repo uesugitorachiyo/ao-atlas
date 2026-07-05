@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-31-atlas-continuation-reason-schema",
+  "status": "focused_and_full_tests_passed",
+  "red_state": {
+    "command": "go test ./internal/atlas -run TestRecommendationReadbackSchemaBindsContinuationContractReasonEnum -count=1",
+    "result": "failed_before_schema_enum",
+    "output": "schema recommendation-readback nested property continuation_contract.reason missing enum"
+  },
+  "focused_green": {
+    "command": "go test ./internal/atlas -run TestRecommendationReadbackSchemaBindsContinuationContractReasonEnum -count=1",
+    "result": "passed",
+    "summary": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.192s"
+  },
+  "full_green": {
+    "command": "go test ./... -count=1",
+    "result": "passed",
+    "summary": "? github.com/uesugitorachiyo/ao-atlas/cmd/atlas [no test files]; ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.465s"
+  },
+  "coverage": [
+    "continuation_contract.reason enum exists",
+    "exact_next_action_remains is schema-bound",
+    "ready-node and return-gate reason values are schema-bound",
+    "production readiness asserts the same enum values"
+  ]
+}
