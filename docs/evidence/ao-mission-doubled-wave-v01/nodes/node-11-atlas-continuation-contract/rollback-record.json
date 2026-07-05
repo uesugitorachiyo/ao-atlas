@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-11-atlas-continuation-contract",
+  "status": "ready",
+  "rollback": "Revert the node branch or remove AtlasContinuationContract, its readback field, validation, schema requirement, readiness smoke, and node 11 evidence.",
+  "state_to_preserve": "Existing recommendation final-response denial, exact-next-action readback, and long-run safety flags remain readback-only.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

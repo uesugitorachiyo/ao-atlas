@@ -107,6 +107,10 @@ func TestRecommendationReadbackSchemaRequiresExactNextActionReadback(t *testing.
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "exact_next_action_readback")
 }
 
+func TestRecommendationReadbackSchemaRequiresContinuationContract(t *testing.T) {
+	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "continuation_contract")
+}
+
 func TestRecommendationReadbackSchemaRequiresCommandTimelinePlaceholders(t *testing.T) {
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "command_timeline_placeholders")
 }
@@ -437,7 +441,23 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 	if readback.FinalResponseAllowed || readback.ExactNextAction != "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node." {
 		t.Fatalf("readback must deny final response with exact next node: %#v", readback)
 	}
+	if readback.ContinuationContract.ContractVersion != "ao.atlas.continuation-contract.v0.1" ||
+		readback.ContinuationContract.Status != "continuation_required" ||
+		!readback.ContinuationContract.RefusesFinalResponse ||
+		readback.ContinuationContract.ReadyNodes != readback.ReadyNodes ||
+		readback.ContinuationContract.ExactNextAction != readback.ExactNextAction ||
+		readback.ContinuationContract.FinalResponseAllowed != readback.FinalResponseAllowed {
+		t.Fatalf("readback missing Atlas continuation contract: %#v", readback.ContinuationContract)
+	}
 	rawReadback := mustLoadJSON[map[string]any](t, filepath.Join(outDir, "recommendation-readback.json"))
+	continuationContract, ok := rawReadback["continuation_contract"].(map[string]any)
+	if !ok ||
+		continuationContract["status"] != "continuation_required" ||
+		continuationContract["refuses_final_response"] != true ||
+		continuationContract["ready_nodes"] != float64(readback.ReadyNodes) ||
+		continuationContract["exact_next_action"] != readback.ExactNextAction {
+		t.Fatalf("raw readback missing continuation contract: %#v", rawReadback["continuation_contract"])
+	}
 	exactNextActionReadback, ok := rawReadback["exact_next_action_readback"].(map[string]any)
 	if !ok ||
 		exactNextActionReadback["action"] != readback.ExactNextAction ||

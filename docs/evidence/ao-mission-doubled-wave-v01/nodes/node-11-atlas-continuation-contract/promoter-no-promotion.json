@@ -1,0 +1,9 @@
+{
+  "schema": "ao.promoter.no-promotion-readback.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-11-atlas-continuation-contract",
+  "status": "no_promotion_requested",
+  "reason": "This node strengthens Atlas continuation readback and final-response denial only; it does not request or prove a capability promotion.",
+  "highest_proven_live_class_unchanged": true,
+  "rsi_remains_denied": true
+}

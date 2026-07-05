@@ -1,0 +1,13 @@
+{
+  "schema": "ao.command.node-readback.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-11-atlas-continuation-contract",
+  "status": "ready",
+  "summary": "Atlas recommendation readbacks now carry a continuation contract that refuses final response while ready nodes or exact next actions remain.",
+  "exact_next_action": "Continue node-12: add Atlas final-state reconciliation packet comparing workgraph, Foundry rollup, Promoter verdict, and Command readback.",
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "rsi_remains_denied": true
+}

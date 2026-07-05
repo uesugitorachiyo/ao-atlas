@@ -1,0 +1,29 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-11-atlas-continuation-contract",
+  "status": "passed",
+  "evidence_key": "verification",
+  "commands": [
+    "go test ./internal/atlas -run 'TestRecommendationReadbackSchemaRequiresContinuationContract|TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "rg -n 'RSI is proven|RSI proven|provider_calls\\\": true|credential_use\\\": true|release_or_publish\\\": true|direct_main_mutation\\\": true|mutates_repositories\\\": true|approves_work\\\": true|executes_work\\\": true' internal/atlas/mission_recommendations.go internal/atlas/models.go schemas/recommendation-readback.schema.json docs/evidence/ao-mission-doubled-wave-v01/nodes/node-11-atlas-continuation-contract"
+  ],
+  "results": [
+    "targeted continuation contract regression passed",
+    "go test ./... -count=1 passed",
+    "go vet ./... passed",
+    "go build ./cmd/atlas passed",
+    "scripts/production-readiness.sh returned status=ready score=100/100",
+    "scripts/atlas-foundry-roundtrip-smoke.sh returned status=ready",
+    "public-safety wording scan returned no matches"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

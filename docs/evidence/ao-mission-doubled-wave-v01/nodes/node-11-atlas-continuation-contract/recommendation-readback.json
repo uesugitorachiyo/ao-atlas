@@ -1,12 +1,12 @@
 {
   "contract_version": "ao.atlas.recommendation-readback.v0.1",
   "mission_id": "mission-long-wave",
-  "target_instance": "demo-stack",
-  "status": "completed",
+  "target_instance": "ao-atlas",
+  "status": "ready",
   "source_digest": "sha256:19f532e9dd6e6c1fc3bc1d6f0da69cf95f7480949cef698bc499685074c9a434",
-  "wave_digest": "sha256:a0a2fe236ef5cd4094cd27ce0b3b8955bb4aa0666a2aa3f2358ba0a9cf402a86",
-  "workgraph_digest": "sha256:a589778aa9c557db8fd65d33ad8b28c222e76505e93127ac37d7659022d0243b",
-  "evidence_root": "docs/evidence/ao-atlas-lease-resume-wave-v01",
+  "wave_digest": "sha256:9c170882ad9118d432c443a73652288e02db51742161c471e2987c5cf71dad17",
+  "workgraph_digest": "sha256:a9cfffacfa80e97e99fb8b69265483e0294ec9a50557c848e31f92f60f71dc38",
+  "evidence_root": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-11-atlas-continuation-contract/generated",
   "supervisor": {
     "contract_version": "ao.atlas.long-run-supervisor.v0.2",
     "min_nodes": 30,
@@ -18,23 +18,22 @@
     "evidence_policy": "node_gate_candidate_rollback_tests_verification_public_safety_promoter_command",
     "final_report_contract": "ao.atlas.long-run-final-report.v0.2"
   },
-  "started_at": "2026-07-04T08:34:04-07:00",
-  "completed_at": "2026-07-04T16:44:29-07:00",
-  "elapsed_minutes": 491,
-  "min_minutes_met": true,
-  "lease_time_status": "minimum_minutes_met",
+  "elapsed_minutes": 0,
+  "min_minutes_met": false,
+  "lease_time_status": "in_progress_timing_pending",
   "total_nodes": 40,
   "minimum_nodes": 30,
-  "completed_nodes": 40,
-  "ready_nodes": 0,
+  "completed_nodes": 0,
+  "ready_nodes": 40,
   "blocked_nodes": 0,
   "failed_nodes": 0,
-  "executable_ready_nodes": 0,
-  "lease_health_status": "all_generated_nodes_complete",
+  "executable_ready_nodes": 1,
+  "first_executable_node": "mission-recommendation-next-01",
+  "lease_health_status": "minimum_unmet",
   "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
   "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
-  "early_return_risk_status": "cleared_no_ready_nodes_remain",
-  "foundry_rollup_status": "completed_all_node_run_links_recorded",
+  "early_return_risk_status": "blocked_final_response_ready_nodes_remain",
+  "foundry_rollup_status": "required_pending_first_node_import",
   "foundry_terminal_status_readback": {
     "blocked": "terminal_blocker_requires_repair_or_checkpoint_resume",
     "completed": "terminal_success_can_close_when_all_nodes_and_readbacks_are_complete",
@@ -103,8 +102,8 @@
       "authority_advance_claimed": false
     }
   ],
-  "promoter_readback_status": "no_promotion_recorded",
-  "promoter_no_promotion_status": "recorded_no_promotion_for_recommendation_wave",
+  "promoter_readback_status": "required_not_bound",
+  "promoter_no_promotion_status": "required_not_bound_until_promotion_evidence_exists",
   "promoter_no_promotion_placeholders": [
     {
       "slot": "promotion_claim",
@@ -128,8 +127,8 @@
       "required_before_final_response": true
     }
   ],
-  "command_readback_status": "compact_timeline_recorded",
-  "command_timeline_status": "recorded_compact_timeline_for_completed_wave",
+  "command_readback_status": "required_not_bound",
+  "command_timeline_status": "compact_timeline_required_before_closure",
   "command_timeline_placeholders": [
     {
       "slot": "checkpoint",
@@ -154,25 +153,36 @@
     }
   ],
   "public_safety_scan_status": "required_pending_verification",
-  "return_gate_status": "final_response_allowed",
-  "checkpoint_count": 40,
-  "final_response_allowed": true,
-  "final_response_denial_gate": "allow_final_response",
-  "final_response_reason": "all generated nodes complete and no ready nodes remain",
-  "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
+  "return_gate_status": "blocked_ready_nodes_remain",
+  "checkpoint_count": 0,
+  "final_response_allowed": false,
+  "final_response_denial_gate": "deny_ready_nodes_or_exact_next_action_remain",
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.",
+  "continuation_contract": {
+    "contract_version": "ao.atlas.continuation-contract.v0.1",
+    "status": "continuation_required",
+    "ready_nodes": 40,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "final_response_allowed": false,
+    "refuses_final_response": true,
+    "reason": "ready_nodes_or_exact_next_action_remain",
+    "source": "recommendation_readback"
+  },
   "exact_next_action_readback": {
-    "status": "ready_for_final_response",
-    "action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
-    "next_executable_node": "",
-    "return_gate_status": "final_response_allowed",
-    "final_response_allowed": true,
+    "status": "continuation_required",
+    "action": "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.",
+    "next_executable_node": "mission-recommendation-next-01",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "final_response_allowed": false,
     "source": "recommendation_readback"
   },
   "node_evidence": [
     {
       "node_id": "mission-recommendation-next-01",
       "task_id": "mission-recommendation-next-01-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -203,7 +213,7 @@
     {
       "node_id": "mission-recommendation-next-02",
       "task_id": "mission-recommendation-next-02-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -234,7 +244,7 @@
     {
       "node_id": "mission-recommendation-next-03",
       "task_id": "mission-recommendation-next-03-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -265,7 +275,7 @@
     {
       "node_id": "mission-recommendation-next-04",
       "task_id": "mission-recommendation-next-04-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -296,7 +306,7 @@
     {
       "node_id": "mission-recommendation-next-05",
       "task_id": "mission-recommendation-next-05-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -327,7 +337,7 @@
     {
       "node_id": "mission-recommendation-next-06",
       "task_id": "mission-recommendation-next-06-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -358,7 +368,7 @@
     {
       "node_id": "mission-recommendation-next-07",
       "task_id": "mission-recommendation-next-07-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -389,7 +399,7 @@
     {
       "node_id": "mission-recommendation-next-08",
       "task_id": "mission-recommendation-next-08-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -420,7 +430,7 @@
     {
       "node_id": "mission-recommendation-next-09",
       "task_id": "mission-recommendation-next-09-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -451,7 +461,7 @@
     {
       "node_id": "mission-recommendation-next-10",
       "task_id": "mission-recommendation-next-10-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -482,7 +492,7 @@
     {
       "node_id": "mission-recommendation-next-11",
       "task_id": "mission-recommendation-next-11-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -513,7 +523,7 @@
     {
       "node_id": "mission-recommendation-next-12",
       "task_id": "mission-recommendation-next-12-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -544,7 +554,7 @@
     {
       "node_id": "mission-recommendation-next-13",
       "task_id": "mission-recommendation-next-13-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -575,7 +585,7 @@
     {
       "node_id": "mission-recommendation-next-14",
       "task_id": "mission-recommendation-next-14-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -606,7 +616,7 @@
     {
       "node_id": "mission-recommendation-next-15",
       "task_id": "mission-recommendation-next-15-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -637,7 +647,7 @@
     {
       "node_id": "mission-recommendation-next-16",
       "task_id": "mission-recommendation-next-16-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -668,7 +678,7 @@
     {
       "node_id": "mission-recommendation-next-17",
       "task_id": "mission-recommendation-next-17-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -699,7 +709,7 @@
     {
       "node_id": "mission-recommendation-next-18",
       "task_id": "mission-recommendation-next-18-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -730,7 +740,7 @@
     {
       "node_id": "mission-recommendation-next-19",
       "task_id": "mission-recommendation-next-19-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -761,7 +771,7 @@
     {
       "node_id": "mission-recommendation-next-20",
       "task_id": "mission-recommendation-next-20-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -792,7 +802,7 @@
     {
       "node_id": "mission-recommendation-next-21",
       "task_id": "mission-recommendation-next-21-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -823,7 +833,7 @@
     {
       "node_id": "mission-recommendation-next-22",
       "task_id": "mission-recommendation-next-22-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -854,7 +864,7 @@
     {
       "node_id": "mission-recommendation-next-23",
       "task_id": "mission-recommendation-next-23-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -885,7 +895,7 @@
     {
       "node_id": "mission-recommendation-next-24",
       "task_id": "mission-recommendation-next-24-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -916,7 +926,7 @@
     {
       "node_id": "mission-recommendation-next-25",
       "task_id": "mission-recommendation-next-25-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -947,7 +957,7 @@
     {
       "node_id": "mission-recommendation-next-26",
       "task_id": "mission-recommendation-next-26-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -978,7 +988,7 @@
     {
       "node_id": "mission-recommendation-next-27",
       "task_id": "mission-recommendation-next-27-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1009,7 +1019,7 @@
     {
       "node_id": "mission-recommendation-next-28",
       "task_id": "mission-recommendation-next-28-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1040,7 +1050,7 @@
     {
       "node_id": "mission-recommendation-next-29",
       "task_id": "mission-recommendation-next-29-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1071,7 +1081,7 @@
     {
       "node_id": "mission-recommendation-next-30",
       "task_id": "mission-recommendation-next-30-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1102,7 +1112,7 @@
     {
       "node_id": "mission-recommendation-next-31",
       "task_id": "mission-recommendation-next-31-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1133,7 +1143,7 @@
     {
       "node_id": "mission-recommendation-next-32",
       "task_id": "mission-recommendation-next-32-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1164,7 +1174,7 @@
     {
       "node_id": "mission-recommendation-next-33",
       "task_id": "mission-recommendation-next-33-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1195,7 +1205,7 @@
     {
       "node_id": "mission-recommendation-next-34",
       "task_id": "mission-recommendation-next-34-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1226,7 +1236,7 @@
     {
       "node_id": "mission-recommendation-next-35",
       "task_id": "mission-recommendation-next-35-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1257,7 +1267,7 @@
     {
       "node_id": "mission-recommendation-next-36",
       "task_id": "mission-recommendation-next-36-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1288,7 +1298,7 @@
     {
       "node_id": "mission-recommendation-next-37",
       "task_id": "mission-recommendation-next-37-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1319,7 +1329,7 @@
     {
       "node_id": "mission-recommendation-next-38",
       "task_id": "mission-recommendation-next-38-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1350,7 +1360,7 @@
     {
       "node_id": "mission-recommendation-next-39",
       "task_id": "mission-recommendation-next-39-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1381,7 +1391,7 @@
     {
       "node_id": "mission-recommendation-next-40",
       "task_id": "mission-recommendation-next-40-task",
-      "status": "completed",
+      "status": "ready",
       "node_gate": "recorded",
       "candidate_record": "recorded",
       "rollback_record": "recorded",
@@ -1435,16 +1445,5 @@
   },
   "schedules_work": false,
   "executes_work": false,
-  "approves_work": false,
-  "continuation_contract": {
-    "contract_version": "ao.atlas.continuation-contract.v0.1",
-    "status": "ready_for_final_response",
-    "ready_nodes": 0,
-    "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
-    "return_gate_status": "final_response_allowed",
-    "final_response_allowed": true,
-    "refuses_final_response": false,
-    "reason": "final response allowed by recommendation readback",
-    "source": "recommendation_readback"
-  }
+  "approves_work": false
 }
