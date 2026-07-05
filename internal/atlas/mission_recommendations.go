@@ -2112,6 +2112,21 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 	if execution.CheckpointFreshnessStatus != readback.CheckpointFreshnessStatus {
 		errs = append(errs, "checkpoint_freshness_status must match recommendation readback")
 	}
+	if execution.ReturnGateStatus != readback.ReturnGateStatus {
+		errs = append(errs, "return_gate_status must match recommendation readback")
+	}
+	if execution.ContinuationContractReason != readback.ContinuationContract.Reason {
+		errs = append(errs, "continuation_contract_reason must match recommendation readback")
+	}
+	if execution.ExactNextAction != readback.ExactNextAction {
+		errs = append(errs, "exact_next_action must match recommendation readback")
+	}
+	if execution.FinalResponseAllowed != readback.FinalResponseAllowed {
+		errs = append(errs, "final_response_allowed must match recommendation readback")
+	}
+	if execution.RefusesFinalResponse != readback.ContinuationContract.RefusesFinalResponse {
+		errs = append(errs, "refuses_final_response must match recommendation readback")
+	}
 	if execution.GeneratedWorkgraph.TotalNodes != readback.TotalNodes {
 		errs = append(errs, "generated_workgraph.total_nodes must match recommendation readback total_nodes")
 	}
@@ -2552,6 +2567,11 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 		EvidenceRoot:                 readback.EvidenceRoot,
 		LeaseHealthStatus:            readback.LeaseHealthStatus,
 		CheckpointFreshnessStatus:    readback.CheckpointFreshnessStatus,
+		ReturnGateStatus:             readback.ReturnGateStatus,
+		ContinuationContractReason:   readback.ContinuationContract.Reason,
+		ExactNextAction:              readback.ExactNextAction,
+		FinalResponseAllowed:         readback.FinalResponseAllowed,
+		RefusesFinalResponse:         readback.ContinuationContract.RefusesFinalResponse,
 		CompletedRecommendationNodes: readback.CompletedNodes,
 		TotalRecommendationNodes:     readback.TotalNodes,
 		GeneratedWorkgraph: AtlasRecommendationGeneratedWorkgraphReadback{

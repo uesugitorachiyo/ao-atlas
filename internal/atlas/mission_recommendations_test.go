@@ -1276,6 +1276,11 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	resumeExecution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, resumeExecutionPath)
 	if resumeExecution.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		resumeExecution.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		resumeExecution.ReturnGateStatus != resumeReadback.ReturnGateStatus ||
+		resumeExecution.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		resumeExecution.ExactNextAction != resumeReadback.ExactNextAction ||
+		resumeExecution.FinalResponseAllowed != resumeReadback.FinalResponseAllowed ||
+		resumeExecution.RefusesFinalResponse != resumeReadback.ContinuationContract.RefusesFinalResponse ||
 		resumeExecution.GeneratedWorkgraph.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		resumeExecution.GeneratedWorkgraph.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		resumeExecution.FoundryRunLinkReadinessSummary.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
@@ -2198,6 +2203,24 @@ func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T)
 	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
 	if err == nil || !strings.Contains(err.Error(), "checkpoint_freshness_status must match recommendation readback") {
 		t.Fatalf("expected stale execution checkpoint freshness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ContinuationContractReason = "ready_nodes_remain"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "continuation_contract_reason must match recommendation readback") {
+		t.Fatalf("expected stale execution continuation reason rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ExactNextAction = "stale exact next action"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "exact_next_action must match recommendation readback") {
+		t.Fatalf("expected stale execution exact next action rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.RefusesFinalResponse = !readback.ContinuationContract.RefusesFinalResponse
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "refuses_final_response must match recommendation readback") {
+		t.Fatalf("expected stale execution final refusal rejection, got %v", err)
 	}
 	execution = BuildAtlasRecommendationExecutionReadback(readback)
 	execution.GeneratedWorkgraph.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
