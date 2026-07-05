@@ -2986,6 +2986,111 @@ func TestLongRunHardeningWaveFinalStateReconciliationBindsClosureArtifacts(t *te
 	}
 }
 
+func TestLongRunHardeningWaveCommandTimelineSummarizesDoubledWave(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeEightReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-08", "recommendation-readback-after.json"))
+	sourceSummary := mustLoadJSON[struct {
+		Schema                               string `json:"schema"`
+		MissionID                            string `json:"mission_id"`
+		TargetNodes                          int    `json:"target_nodes"`
+		CompletedNodesAfterNode50Merge       int    `json:"completed_nodes_after_node_50_merge"`
+		ReadyNodesAfterNode50Merge           int    `json:"ready_nodes_after_node_50_merge"`
+		BlockedNodesAfterNode50Merge         int    `json:"blocked_nodes_after_node_50_merge"`
+		FinalResponseAllowedAfterNode50Merge bool   `json:"final_response_allowed_after_node_50_merge"`
+		ExactNextActionAfterNode50Merge      string `json:"exact_next_action_after_node_50_merge"`
+	}](t, filepath.Join(repoRoot(t), "docs", "evidence", "ao-mission-doubled-wave-v01", "final-summary.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-09")
+	timeline := mustLoadJSON[struct {
+		Schema                     string `json:"schema"`
+		NodeID                     string `json:"node_id"`
+		Status                     string `json:"status"`
+		SourceMissionID            string `json:"source_mission_id"`
+		SourceFinalSummary         string `json:"source_final_summary"`
+		TargetNodes                int    `json:"target_nodes"`
+		CompletedNodes             int    `json:"completed_nodes"`
+		ReadyNodes                 int    `json:"ready_nodes"`
+		BlockedNodes               int    `json:"blocked_nodes"`
+		FinalResponseAllowed       bool   `json:"final_response_allowed"`
+		ExactNextAction            string `json:"exact_next_action"`
+		CurrentHardeningCheckpoint struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		NodeCoverage struct {
+			FirstNode    int   `json:"first_node"`
+			LastNode     int   `json:"last_node"`
+			TotalCovered int   `json:"total_covered"`
+			CoveredNodes []int `json:"covered_nodes"`
+		} `json:"node_coverage"`
+		TimelineSegments []struct {
+			Range    string `json:"range"`
+			Summary  string `json:"summary"`
+			Evidence string `json:"evidence"`
+		} `json:"timeline_segments"`
+	}](t, filepath.Join(nodeDir, "doubled-wave-command-timeline.json"))
+
+	if sourceSummary.Schema != "ao.atlas.doubled-wave-final-summary.v0.1" ||
+		sourceSummary.MissionID != "ao-mission-doubled-wave-v01" ||
+		sourceSummary.TargetNodes != 50 ||
+		sourceSummary.CompletedNodesAfterNode50Merge != 50 ||
+		sourceSummary.ReadyNodesAfterNode50Merge != 0 ||
+		sourceSummary.BlockedNodesAfterNode50Merge != 0 ||
+		!sourceSummary.FinalResponseAllowedAfterNode50Merge {
+		t.Fatalf("source doubled-wave summary must describe a completed 50-node wave: %#v", sourceSummary)
+	}
+	if timeline.Schema != "ao.atlas.command-compact-timeline.v0.1" ||
+		timeline.NodeID != "mission-recommendation-hardening-09" ||
+		timeline.Status != "recorded" ||
+		timeline.SourceMissionID != sourceSummary.MissionID ||
+		timeline.SourceFinalSummary != "docs/evidence/ao-mission-doubled-wave-v01/final-summary.json" ||
+		timeline.TargetNodes != sourceSummary.TargetNodes ||
+		timeline.CompletedNodes != sourceSummary.CompletedNodesAfterNode50Merge ||
+		timeline.ReadyNodes != sourceSummary.ReadyNodesAfterNode50Merge ||
+		timeline.BlockedNodes != sourceSummary.BlockedNodesAfterNode50Merge ||
+		timeline.FinalResponseAllowed != sourceSummary.FinalResponseAllowedAfterNode50Merge ||
+		timeline.ExactNextAction != sourceSummary.ExactNextActionAfterNode50Merge {
+		t.Fatalf("Command timeline must bind doubled-wave final summary: %#v", timeline)
+	}
+	if timeline.CurrentHardeningCheckpoint.CompletedNodes != nodeEightReadback.CompletedNodes ||
+		timeline.CurrentHardeningCheckpoint.ReadyNodes != nodeEightReadback.ReadyNodes ||
+		timeline.CurrentHardeningCheckpoint.FirstExecutableNode != nodeEightReadback.FirstExecutableNode ||
+		timeline.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeEightReadback.FinalResponseAllowed ||
+		timeline.CurrentHardeningCheckpoint.ExactNextAction != nodeEightReadback.ExactNextAction {
+		t.Fatalf("Command timeline must bind current hardening checkpoint: %#v", timeline.CurrentHardeningCheckpoint)
+	}
+	if timeline.NodeCoverage.FirstNode != 1 ||
+		timeline.NodeCoverage.LastNode != 50 ||
+		timeline.NodeCoverage.TotalCovered != 50 ||
+		len(timeline.NodeCoverage.CoveredNodes) != 50 ||
+		timeline.NodeCoverage.CoveredNodes[0] != 1 ||
+		timeline.NodeCoverage.CoveredNodes[len(timeline.NodeCoverage.CoveredNodes)-1] != 50 {
+		t.Fatalf("Command timeline must explicitly cover nodes 1 through 50: %#v", timeline.NodeCoverage)
+	}
+	if len(timeline.TimelineSegments) != 5 {
+		t.Fatalf("Command timeline should summarize five 10-node segments, got %#v", timeline.TimelineSegments)
+	}
+	for _, segment := range timeline.TimelineSegments {
+		if segment.Range == "" || segment.Summary == "" || segment.Evidence == "" {
+			t.Fatalf("timeline segment must include range, summary, and evidence: %#v", segment)
+		}
+	}
+
+	nodeNineReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeNineReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeNineReadback.CompletedNodes != 9 ||
+		nodeNineReadback.ReadyNodes != 31 ||
+		nodeNineReadback.FirstExecutableNode != "mission-recommendation-hardening-10" ||
+		nodeNineReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeNineReadback.ExactNextAction, "mission-recommendation-hardening-10") {
+		t.Fatalf("node 9 readback must continue to node 10 without final response: %#v", nodeNineReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

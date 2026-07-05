@@ -1,0 +1,111 @@
+{
+  "schema": "ao.atlas.command-compact-timeline.v0.1",
+  "node_id": "mission-recommendation-hardening-09",
+  "status": "recorded",
+  "source_mission_id": "ao-mission-doubled-wave-v01",
+  "source_final_summary": "docs/evidence/ao-mission-doubled-wave-v01/final-summary.json",
+  "source_next_prompt": "docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md",
+  "target_nodes": 50,
+  "completed_nodes": 50,
+  "ready_nodes": 0,
+  "blocked_nodes": 0,
+  "final_response_allowed": true,
+  "exact_next_action": "Use docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md to start the next AO Atlas long-run wave, or stop because this 50-node wave is complete.",
+  "current_hardening_checkpoint": {
+    "completed_nodes": 8,
+    "ready_nodes": 32,
+    "first_executable_node": "mission-recommendation-hardening-09",
+    "final_response_allowed": false,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-09 and execute exactly one active node."
+  },
+  "node_coverage": {
+    "first_node": 1,
+    "last_node": 50,
+    "total_covered": 50,
+    "covered_nodes": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ]
+  },
+  "timeline_segments": [
+    {
+      "range": "node-01..node-10",
+      "summary": "Seeded the doubled wave, bound continuation prompts, checkpoints, execution readbacks, Foundry readiness, lease resume, Command timeline, and Promoter no-promotion evidence.",
+      "evidence": "docs/evidence/ao-mission-doubled-wave-v01/final-summary.json#merged_pr_ledger_before_node_50"
+    },
+    {
+      "range": "node-11..node-20",
+      "summary": "Hardened Atlas continuation contracts, final-state reconciliation, long-run status readback, and route/readback consistency.",
+      "evidence": "docs/evidence/ao-mission-doubled-wave-v01/nodes"
+    },
+    {
+      "range": "node-21..node-30",
+      "summary": "Improved prompt and readback quality, checkpoint resume evidence, and command timeline placeholders for ongoing continuation.",
+      "evidence": "docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-29/command_timeline_placeholders_evidence.json"
+    },
+    {
+      "range": "node-31..node-40",
+      "summary": "Bound Foundry continuation reason evidence, feature-depth sizing, checkpoint freshness, and final response denial while work remained ready.",
+      "evidence": "docs/evidence/ao-mission-doubled-wave-v01/nodes"
+    },
+    {
+      "range": "node-41..node-50",
+      "summary": "Closed the wave with Command compact timeline reason binding, Promoter reason summary, stale reconciliation fixtures, prompt safety fixtures, execution reason agreement, and final readiness prompt evidence.",
+      "evidence": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/command-readback.json"
+    }
+  ],
+  "command_readback": "50/50 doubled-wave nodes complete; final_response_allowed=true for the completed source wave; current hardening wave remains in progress at 8/40 with Node 9 active.",
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false
+}
