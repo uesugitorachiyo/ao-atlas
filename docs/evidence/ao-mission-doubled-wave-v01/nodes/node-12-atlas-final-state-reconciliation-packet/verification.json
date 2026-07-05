@@ -1,0 +1,34 @@
+{
+  "schema": "ao.atlas.verification.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-12-atlas-final-state-reconciliation-packet",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run 'TestRecommendationReconciliationSchemaRequiresFinalStateReconciliation|TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestMissionRecommendationsDetectStaleClosureArtifacts' -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "summary": "status=ready; score=100/100"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed",
+      "summary": "status=ready; mode=fixture_only_readback"
+    }
+  ]
+}

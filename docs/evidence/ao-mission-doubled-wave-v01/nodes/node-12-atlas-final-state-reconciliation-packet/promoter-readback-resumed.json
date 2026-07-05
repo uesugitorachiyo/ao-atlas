@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.recommendation-promoter-readback.v0.1",
+  "status": "no_promotion",
+  "mission_id": "mission-long-wave",
+  "evidence_root": "target/production-readiness/mission-recommendations",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true,
+  "no_promotion_summary": "No mutation authority promotion claimed; RSI remains denied.",
+  "next_denied_class": "RSI",
+  "reason": "Recommendation wave records no mutation authority promotion; RSI remains denied.",
+  "elapsed_minutes": 25,
+  "min_minutes_met": false,
+  "lease_health_status": "minimum_unmet",
+  "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+  "final_response_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false
+}

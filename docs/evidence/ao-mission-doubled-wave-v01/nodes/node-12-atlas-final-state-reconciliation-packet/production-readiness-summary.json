@@ -1,0 +1,6 @@
+{
+  "schema_version": "ao.atlas.production-readiness.v0.1",
+  "status": "ready",
+  "score": "100/100",
+  "checks": 17
+}

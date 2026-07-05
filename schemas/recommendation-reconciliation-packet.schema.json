@@ -6,6 +6,7 @@
     "schema",
     "status",
     "mission_id",
+    "final_state_reconciliation",
     "completed_nodes",
     "ready_nodes",
     "blocked_nodes",
@@ -42,6 +43,34 @@
     "status": { "enum": ["continuation_required", "ready", "blocked_stale_artifact"] },
     "mission_id": { "type": "string", "minLength": 1 },
     "evidence_root": { "type": "string" },
+    "final_state_reconciliation": {
+      "type": "object",
+      "required": [
+        "contract_version",
+        "status",
+        "workgraph_status",
+        "foundry_rollup_status",
+        "promoter_verdict_status",
+        "command_readback_status",
+        "exact_next_action",
+        "schedules_work",
+        "executes_work",
+        "approves_work"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": { "const": "ao.atlas.final-state-reconciliation.v0.1" },
+        "status": { "enum": ["continuation_required", "ready", "blocked_stale_artifact"] },
+        "workgraph_status": { "type": "string", "minLength": 1 },
+        "foundry_rollup_status": { "type": "string", "minLength": 1 },
+        "promoter_verdict_status": { "type": "string", "minLength": 1 },
+        "command_readback_status": { "type": "string", "minLength": 1 },
+        "exact_next_action": { "type": "string", "minLength": 1 },
+        "schedules_work": { "const": false },
+        "executes_work": { "const": false },
+        "approves_work": { "const": false }
+      }
+    },
     "completed_nodes": { "type": "integer", "minimum": 0 },
     "ready_nodes": { "type": "integer", "minimum": 0 },
     "blocked_nodes": { "type": "integer", "minimum": 0 },

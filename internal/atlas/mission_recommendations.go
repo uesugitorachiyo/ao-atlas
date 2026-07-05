@@ -1827,6 +1827,7 @@ func BuildAtlasRecommendationReconciliationPacket(readback AtlasRecommendationRe
 		Status:                       status,
 		MissionID:                    readback.MissionID,
 		EvidenceRoot:                 readback.EvidenceRoot,
+		FinalStateReconciliation:     buildRecommendationFinalStateReconciliation(readback, command, promoter, foundry, status),
 		CompletedNodes:               readback.CompletedNodes,
 		ReadyNodes:                   readback.ReadyNodes,
 		BlockedNodes:                 readback.BlockedNodes,
@@ -1859,6 +1860,21 @@ func BuildAtlasRecommendationReconciliationPacket(readback AtlasRecommendationRe
 	}
 }
 
+func buildRecommendationFinalStateReconciliation(readback AtlasRecommendationReadback, command AtlasRecommendationCommandReadback, promoter AtlasRecommendationPromoterReadback, foundry AtlasRecommendationFoundryRollup, status string) AtlasFinalStateReconciliation {
+	return AtlasFinalStateReconciliation{
+		ContractVersion:       "ao.atlas.final-state-reconciliation.v0.1",
+		Status:                status,
+		WorkgraphStatus:       readback.Status,
+		FoundryRollupStatus:   foundry.Status,
+		PromoterVerdictStatus: promoter.Status,
+		CommandReadbackStatus: command.Status,
+		ExactNextAction:       readback.ExactNextAction,
+		SchedulesWork:         false,
+		ExecutesWork:          false,
+		ApprovesWork:          false,
+	}
+}
+
 func ValidateAtlasRecommendationReconciliationPacket(readback AtlasRecommendationReadback, command AtlasRecommendationCommandReadback, promoter AtlasRecommendationPromoterReadback, foundry AtlasRecommendationFoundryRollup, packet AtlasRecommendationReconciliationPacket) error {
 	var errs []string
 	if packet.Schema != "ao.atlas.recommendation-reconciliation-packet.v0.1" {
@@ -1867,6 +1883,7 @@ func ValidateAtlasRecommendationReconciliationPacket(readback AtlasRecommendatio
 	if packet.MissionID != readback.MissionID {
 		errs = append(errs, "reconciliation mission_id disagrees")
 	}
+	validateRecommendationFinalStateReconciliation(&errs, readback, command, promoter, foundry, packet)
 	if packet.CompletedNodes != readback.CompletedNodes || packet.ReadyNodes != readback.ReadyNodes || packet.TotalNodes != readback.TotalNodes {
 		errs = append(errs, "reconciliation node counts disagree")
 	}
@@ -1921,6 +1938,39 @@ func ValidateAtlasRecommendationReconciliationPacket(readback AtlasRecommendatio
 		errs = append(errs, "reconciliation packet must not schedule, execute, approve, or claim authority advance")
 	}
 	return joinErrors(errs)
+}
+
+func validateRecommendationFinalStateReconciliation(errs *[]string, readback AtlasRecommendationReadback, command AtlasRecommendationCommandReadback, promoter AtlasRecommendationPromoterReadback, foundry AtlasRecommendationFoundryRollup, packet AtlasRecommendationReconciliationPacket) {
+	finalState := packet.FinalStateReconciliation
+	if finalState.ContractVersion != "ao.atlas.final-state-reconciliation.v0.1" {
+		*errs = append(*errs, "final_state_reconciliation.contract_version must be ao.atlas.final-state-reconciliation.v0.1")
+	}
+	if finalState.Status != packet.Status {
+		*errs = append(*errs, "final_state_reconciliation.status must match reconciliation status")
+	}
+	if finalState.WorkgraphStatus != readback.Status {
+		*errs = append(*errs, "final_state_reconciliation.workgraph_status disagrees")
+	}
+	if finalState.FoundryRollupStatus != foundry.Status {
+		*errs = append(*errs, "final_state_reconciliation.foundry_rollup_status disagrees")
+	}
+	if finalState.PromoterVerdictStatus != promoter.Status {
+		*errs = append(*errs, "final_state_reconciliation.promoter_verdict_status disagrees")
+	}
+	if finalState.CommandReadbackStatus != command.Status {
+		*errs = append(*errs, "final_state_reconciliation.command_readback_status disagrees")
+	}
+	if finalState.ExactNextAction != readback.ExactNextAction {
+		*errs = append(*errs, "final_state_reconciliation.exact_next_action disagrees")
+	}
+	if finalState.SchedulesWork || finalState.ExecutesWork || finalState.ApprovesWork {
+		*errs = append(*errs, "final_state_reconciliation must not schedule, execute, or approve work")
+	}
+	if (readback.ReadyNodes > 0 || strings.TrimSpace(readback.ExactNextAction) != "") &&
+		!readback.FinalResponseAllowed &&
+		finalState.Status != "continuation_required" {
+		*errs = append(*errs, "final_state_reconciliation must require continuation while ready nodes or exact next action remain")
+	}
 }
 
 func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationExecutionReadback, readback AtlasRecommendationReadback) error {

@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-12-atlas-final-state-reconciliation-packet",
+  "status": "passed",
+  "focused_tests": [
+    "TestRecommendationReconciliationSchemaRequiresFinalStateReconciliation",
+    "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+    "TestMissionRecommendationsDetectStaleClosureArtifacts"
+  ],
+  "regression_coverage": [
+    "Schema requires final_state_reconciliation.",
+    "Generated reconciliation packet binds source-specific final-state statuses.",
+    "Validator rejects stale Command readback status.",
+    "Validator rejects stale Foundry rollup status.",
+    "Validator rejects final-state ready status while continuation is still required."
+  ]
+}
