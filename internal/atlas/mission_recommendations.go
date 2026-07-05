@@ -1697,27 +1697,28 @@ func BuildAtlasRecommendationFoundryRollup(readback AtlasRecommendationReadback)
 		status = "blocked"
 	}
 	return AtlasRecommendationFoundryRollup{
-		Schema:                    "ao.atlas.recommendation-foundry-rollup.v0.1",
-		Status:                    status,
-		MissionID:                 readback.MissionID,
-		EvidenceRoot:              readback.EvidenceRoot,
-		CompletedNodes:            readback.CompletedNodes,
-		ReadyNodes:                readback.ReadyNodes,
-		BlockedNodes:              readback.BlockedNodes,
-		FailedNodes:               readback.FailedNodes,
-		TotalNodes:                readback.TotalNodes,
-		NodeCompletionStatus:      nodeStatus,
-		LeaseCompletionStatus:     readback.LeaseTimeStatus,
-		LeaseHealthStatus:         readback.LeaseHealthStatus,
-		CheckpointFreshnessStatus: readback.CheckpointFreshnessStatus,
-		ReturnGateStatus:          readback.ReturnGateStatus,
-		CheckpointCount:           readback.CheckpointCount,
-		FinalResponseAllowed:      readback.FinalResponseAllowed,
-		ExactNextAction:           readback.ExactNextAction,
-		SchedulesWork:             false,
-		ExecutesWork:              false,
-		ApprovesWork:              false,
-		ClaimsAuthorityAdvance:    false,
+		Schema:                     "ao.atlas.recommendation-foundry-rollup.v0.1",
+		Status:                     status,
+		MissionID:                  readback.MissionID,
+		EvidenceRoot:               readback.EvidenceRoot,
+		CompletedNodes:             readback.CompletedNodes,
+		ReadyNodes:                 readback.ReadyNodes,
+		BlockedNodes:               readback.BlockedNodes,
+		FailedNodes:                readback.FailedNodes,
+		TotalNodes:                 readback.TotalNodes,
+		NodeCompletionStatus:       nodeStatus,
+		LeaseCompletionStatus:      readback.LeaseTimeStatus,
+		LeaseHealthStatus:          readback.LeaseHealthStatus,
+		CheckpointFreshnessStatus:  readback.CheckpointFreshnessStatus,
+		ReturnGateStatus:           readback.ReturnGateStatus,
+		CheckpointCount:            readback.CheckpointCount,
+		FinalResponseAllowed:       readback.FinalResponseAllowed,
+		ExactNextAction:            readback.ExactNextAction,
+		ContinuationContractReason: readback.ContinuationContract.Reason,
+		SchedulesWork:              false,
+		ExecutesWork:               false,
+		ApprovesWork:               false,
+		ClaimsAuthorityAdvance:     false,
 	}
 }
 
@@ -1749,6 +1750,9 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	}
 	if foundry.CompletedNodes != readback.CompletedNodes || foundry.ReadyNodes != readback.ReadyNodes || foundry.TotalNodes != readback.TotalNodes {
 		errs = append(errs, "foundry rollup node counts disagree")
+	}
+	if foundry.ContinuationContractReason != readback.ContinuationContract.Reason {
+		errs = append(errs, "foundry rollup continuation_contract_reason disagrees")
 	}
 	if command.FinalResponseAllowed != readback.FinalResponseAllowed {
 		errs = append(errs, "command readback final_response_allowed disagrees")

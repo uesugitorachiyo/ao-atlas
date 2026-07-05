@@ -180,6 +180,10 @@ func TestRecommendationCommandReadbackSchemaRequiresContinuationReasonBinding(t 
 	assertNestedSchemaRequiresField(t, root, "command_timeline_binding", "continuation_contract_reason")
 }
 
+func TestRecommendationFoundryRollupSchemaRequiresContinuationReason(t *testing.T) {
+	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-foundry-rollup.schema.json"), "continuation_contract_reason")
+}
+
 func TestRecommendationReadbackSchemaRequiresPromoterNoPromotionPlaceholders(t *testing.T) {
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "promoter_no_promotion_placeholders")
 }
@@ -1159,6 +1163,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		foundry.NodeCompletionStatus != "nodes_in_progress" ||
 		foundry.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		foundry.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		foundry.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
 		foundry.LeaseCompletionStatus != "minimum_minutes_unmet" {
 		t.Fatalf("bad resume closure artifacts: command=%#v promoter=%#v foundry=%#v", command, promoter, foundry)
 	}
@@ -1555,6 +1560,13 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 		!strings.Contains(err.Error(), "command readback status disagrees") {
 		t.Fatalf("expected stale command status rejection, got %v", err)
 	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	foundry.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "foundry rollup continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale foundry continuation reason rejection, got %v", err)
+	}
+	foundry = BuildAtlasRecommendationFoundryRollup(readback)
 	command = BuildAtlasRecommendationCommandReadback(readback)
 	command.CommandTimelineBinding.ExactNextAction = "stale next action"
 	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||

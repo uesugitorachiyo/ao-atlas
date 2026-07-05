@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-33-foundry-continuation-reason",
+  "status": "open",
+  "owner": "ao-atlas",
+  "objective": "Bind continuation_contract.reason into Atlas-generated Foundry rollups so Foundry closure/readiness evidence exposes why final response is still denied.",
+  "entry_conditions": [
+    "node-32-command-continuation-reason merged in AO Atlas PR #245",
+    "AO Atlas main synced before creating this node branch",
+    "exactly one executable mutation node is active for this branch"
+  ],
+  "exit_conditions": [
+    "Foundry rollup carries continuation_contract_reason",
+    "closure validation rejects stale Foundry continuation reason",
+    "recommendation-foundry-rollup schema requires the binding",
+    "production readiness asserts the resumed Foundry rollup reason"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

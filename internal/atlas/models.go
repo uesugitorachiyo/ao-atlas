@@ -598,27 +598,28 @@ type AtlasRecommendationPromoterReadback struct {
 }
 
 type AtlasRecommendationFoundryRollup struct {
-	Schema                    string `json:"schema"`
-	Status                    string `json:"status"`
-	MissionID                 string `json:"mission_id"`
-	EvidenceRoot              string `json:"evidence_root,omitempty"`
-	CompletedNodes            int    `json:"completed_nodes"`
-	ReadyNodes                int    `json:"ready_nodes"`
-	BlockedNodes              int    `json:"blocked_nodes"`
-	FailedNodes               int    `json:"failed_nodes"`
-	TotalNodes                int    `json:"total_nodes"`
-	NodeCompletionStatus      string `json:"node_completion_status"`
-	LeaseCompletionStatus     string `json:"lease_completion_status"`
-	LeaseHealthStatus         string `json:"lease_health_status"`
-	CheckpointFreshnessStatus string `json:"checkpoint_freshness_status"`
-	ReturnGateStatus          string `json:"return_gate_status,omitempty"`
-	CheckpointCount           int    `json:"checkpoint_count"`
-	FinalResponseAllowed      bool   `json:"final_response_allowed"`
-	ExactNextAction           string `json:"exact_next_action"`
-	SchedulesWork             bool   `json:"schedules_work"`
-	ExecutesWork              bool   `json:"executes_work"`
-	ApprovesWork              bool   `json:"approves_work"`
-	ClaimsAuthorityAdvance    bool   `json:"claims_authority_advance"`
+	Schema                     string `json:"schema"`
+	Status                     string `json:"status"`
+	MissionID                  string `json:"mission_id"`
+	EvidenceRoot               string `json:"evidence_root,omitempty"`
+	CompletedNodes             int    `json:"completed_nodes"`
+	ReadyNodes                 int    `json:"ready_nodes"`
+	BlockedNodes               int    `json:"blocked_nodes"`
+	FailedNodes                int    `json:"failed_nodes"`
+	TotalNodes                 int    `json:"total_nodes"`
+	NodeCompletionStatus       string `json:"node_completion_status"`
+	LeaseCompletionStatus      string `json:"lease_completion_status"`
+	LeaseHealthStatus          string `json:"lease_health_status"`
+	CheckpointFreshnessStatus  string `json:"checkpoint_freshness_status"`
+	ReturnGateStatus           string `json:"return_gate_status,omitempty"`
+	CheckpointCount            int    `json:"checkpoint_count"`
+	FinalResponseAllowed       bool   `json:"final_response_allowed"`
+	ExactNextAction            string `json:"exact_next_action"`
+	ContinuationContractReason string `json:"continuation_contract_reason"`
+	SchedulesWork              bool   `json:"schedules_work"`
+	ExecutesWork               bool   `json:"executes_work"`
+	ApprovesWork               bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance     bool   `json:"claims_authority_advance"`
 }
 
 type AtlasRecommendationReconciliationPacket struct {

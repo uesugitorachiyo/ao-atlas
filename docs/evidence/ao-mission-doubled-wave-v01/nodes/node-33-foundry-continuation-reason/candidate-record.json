@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-33-foundry-continuation-reason",
+  "status": "selected",
+  "selected_candidate": "Add continuation_contract_reason to AtlasRecommendationFoundryRollup and require it in schema and closure validation.",
+  "alternatives_rejected": [
+    "Rely on Command readback only; rejected because Foundry rollup is an independent closure artifact.",
+    "Only add schema; rejected because generated Foundry rollups and validation needed the binding.",
+    "Encode the reason inside exact_next_action text; rejected because the reason must be structured and comparable."
+  ],
+  "decision": "Generate, validate, schema-bind, and production-readiness assert Foundry rollup continuation_contract_reason."
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-33-foundry-continuation-reason",
+  "status": "ready",
+  "rollback_scope": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "schemas/recommendation-foundry-rollup.schema.json",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-33-foundry-continuation-reason"
+  ],
+  "rollback_action": "Revert the node-33 commit or remove the Foundry continuation reason field, schema binding, validation check, tests, readiness assertion, and evidence.",
+  "data_migration": "none",
+  "release_or_deploy": "none"
+}
