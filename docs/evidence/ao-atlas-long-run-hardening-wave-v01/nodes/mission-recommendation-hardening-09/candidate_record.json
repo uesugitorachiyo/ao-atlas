@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-09",
+  "candidate": "doubled-wave-command-compact-timeline",
+  "status": "selected",
+  "objective": "Add a Command compact timeline artifact summarizing the previous 50-node doubled wave.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-09"
+  ],
+  "acceptance_criteria": [
+    "timeline binds ao-mission-doubled-wave-v01 final summary",
+    "timeline explicitly covers nodes 1 through 50",
+    "timeline preserves current hardening wave continuation state"
+  ],
+  "selected_at": "2026-07-05T15:00:18Z"
+}
