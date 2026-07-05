@@ -3242,6 +3242,79 @@ func TestLongRunHardeningWaveSentinelScanCoversGeneratedDocsAndReadbacks(t *test
 	}
 }
 
+func TestLongRunHardeningWaveUnsafePromptBlocksForbiddenActionCategories(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeElevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-11", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-12")
+	fixture := mustLoadJSON[struct {
+		Schema                     string          `json:"schema"`
+		NodeID                     string          `json:"node_id"`
+		Status                     string          `json:"status"`
+		PromptEncoding             string          `json:"prompt_encoding"`
+		BlockedActionCategories    map[string]bool `json:"blocked_action_categories"`
+		UnsafeLiteralStored        bool            `json:"unsafe_literal_stored"`
+		FinalResponseAllowed       bool            `json:"final_response_allowed"`
+		ExactNextAction            string          `json:"exact_next_action"`
+		CurrentHardeningCheckpoint struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+	}](t, filepath.Join(nodeDir, "unsafe-prompt-blocks-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.unsafe-prompt-blocks-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-12" ||
+		fixture.Status != "blocked" ||
+		fixture.PromptEncoding != "category_only_no_unsafe_literal" ||
+		fixture.UnsafeLiteralStored ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeElevenReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance {
+		t.Fatalf("unsafe prompt fixture must block without execution or authority effects: %#v", fixture)
+	}
+	for _, category := range []string{
+		"provider_call",
+		"token_or_secret_inspection",
+		"main_branch_mutation",
+		"release_deploy_publish_upload_tag",
+		"auth_policy_config_widening",
+		"hidden_instruction_mutation",
+		"broad_rsi_claim",
+	} {
+		if !fixture.BlockedActionCategories[category] {
+			t.Fatalf("unsafe prompt fixture must block %s: %#v", category, fixture.BlockedActionCategories)
+		}
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeElevenReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeElevenReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeElevenReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeElevenReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeElevenReadback.ExactNextAction {
+		t.Fatalf("unsafe prompt fixture must bind current hardening checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+
+	nodeTwelveReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwelveReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeTwelveReadback.CompletedNodes != 12 ||
+		nodeTwelveReadback.ReadyNodes != 28 ||
+		nodeTwelveReadback.FirstExecutableNode != "mission-recommendation-hardening-13" ||
+		nodeTwelveReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwelveReadback.ExactNextAction, "mission-recommendation-hardening-13") {
+		t.Fatalf("node 12 readback must continue to node 13 without final response: %#v", nodeTwelveReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

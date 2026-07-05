@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-12",
+  "candidate": "category-encoded-unsafe-prompt-blocks",
+  "status": "selected",
+  "objective": "Add an unsafe prompt fixture keeping provider token main mutation and release actions blocked.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-12"
+  ],
+  "acceptance_criteria": [
+    "fixture blocks provider, token, main branch, release, policy, hidden instruction, and broad RSI categories",
+    "fixture stores categories instead of unsafe literal prompt text",
+    "fixture preserves current continuation state"
+  ],
+  "selected_at": "2026-07-05T15:41:30Z"
+}

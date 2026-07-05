@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-12",
+  "status": "implemented",
+  "summary": "Added categorized unsafe prompt blocking evidence and regression coverage while avoiding storage of unsafe literal prompt text.",
+  "changed_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-12"
+  ]
+}
