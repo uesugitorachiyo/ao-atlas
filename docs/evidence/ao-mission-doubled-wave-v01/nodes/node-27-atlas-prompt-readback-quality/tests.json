@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-27-atlas-prompt-readback-quality",
+  "red_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestMissionFinalSynthesisReadbackUsesReadyNodeDenialQuality -count=1",
+      "result": "failed_before_fixture",
+      "output": "open ../../examples/valid/ao-mission/final-synthesis-ready-node-denial.json: no such file or directory"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestMissionFinalSynthesisReadbackUsesReadyNodeDenialQuality -count=1",
+      "result": "failed_before_return_gate_fix",
+      "output": "return_gate_status was blocked_source_final_response_denied instead of blocked_ready_nodes_remain"
+    }
+  ],
+  "green_tests": [
+    {
+      "command": "go test ./internal/atlas -run 'TestMissionFinalSynthesisReadbackUsesReadyNodeDenialQuality|TestMissionFinalSynthesisImportRoundtripsCompletedWave|TestMissionFinalSynthesisImportRejectsReadyNodeFinalGateDrift' -count=1",
+      "result": "passed"
+    }
+  ],
+  "remaining_checks": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "GitHub CI after PR"
+  ]
+}

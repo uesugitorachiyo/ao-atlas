@@ -1,0 +1,18 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-27-atlas-prompt-readback-quality",
+  "owner": "ao-atlas",
+  "task": "Implement only the Atlas prompt/readback quality pass over current Mission final rollup.",
+  "inputs": [
+    "internal/atlas/mission_final_synthesis.go",
+    "examples/valid/ao-mission/final-synthesis-ready-node-denial.json",
+    "schemas/ao-mission-final-synthesis-readback.schema.json"
+  ],
+  "constraints": [
+    "readback only",
+    "no provider calls",
+    "no authority promotion",
+    "RSI remains denied"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-27-atlas-prompt-readback-quality",
+  "status": "ready",
+  "summary": "AO Atlas final-synthesis readback now preserves blocked_ready_nodes_remain, ready_nodes=34, exact next action, and 10 Feature Depth tasks for the current Mission final rollup.",
+  "exact_next_action": "Continue node-28: AO Atlas workgraph readiness packet with 40-node continuation budget.",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "rsi_remains_denied": true
+}

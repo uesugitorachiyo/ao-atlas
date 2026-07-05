@@ -1,0 +1,98 @@
+{
+  "schema": "ao.mission.atlas-wave-final-synthesis.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "status": "blocked",
+  "completed_nodes": 26,
+  "ready_nodes": 34,
+  "blocked_nodes": 0,
+  "minimum_nodes": 60,
+  "target_minutes": 120,
+  "max_minutes": 180,
+  "final_response_allowed": false,
+  "atlas_workgraph_status": "active",
+  "foundry_rollup": "ready nodes remain; Foundry owns exactly one bounded implementation node at a time",
+  "promoter_status": "no_promotion_requested",
+  "command_readback": "ready",
+  "event_search_bound": true,
+  "branch_cleanup_bound_through_previous_node": true,
+  "merged_prs_final": [
+    62,
+    63,
+    64,
+    65,
+    66,
+    67
+  ],
+  "current_node_branch": "codex/doubled-wave-node-27-prompt-readback-quality",
+  "current_node_pr_pending": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "feature_depth_recommendations": [
+    {
+      "id": "node-27-atlas-prompt-readback-quality",
+      "owner": "ao-atlas",
+      "task": "Improve Atlas prompt/readback quality over the current Mission final rollup so ready-node denial stays explicit.",
+      "exact_next_action": "Continue node-27: AO Atlas prompt-readback quality pass over current Mission final rollup."
+    },
+    {
+      "id": "node-28-atlas-workgraph-readiness-packet",
+      "owner": "ao-atlas",
+      "task": "Emit an Atlas workgraph readiness packet with the remaining 34 ready nodes and 40-node continuation budget.",
+      "exact_next_action": "Continue node-28: AO Atlas workgraph readiness packet with 40-node continuation budget."
+    },
+    {
+      "id": "node-29-atlas-command-mismatch-fixture",
+      "owner": "ao-atlas",
+      "task": "Add final-state reconciliation mismatch fixture for stale Command status against the current Mission rollup.",
+      "exact_next_action": "Continue node-29: AO Atlas final-state reconciliation mismatch fixture for stale Command status."
+    },
+    {
+      "id": "node-30-atlas-continuation-contract-smoke",
+      "owner": "ao-atlas",
+      "task": "Add continuation-contract smoke proving exact next action still blocks final response.",
+      "exact_next_action": "Continue node-30: AO Atlas continuation contract smoke with exact next action still present."
+    },
+    {
+      "id": "node-31-foundry-run-link-binding",
+      "owner": "ao-foundry",
+      "task": "Bind Foundry run-link evidence for one Atlas ready implementation node.",
+      "exact_next_action": "Continue node-31: AO Foundry run-link binding for one Atlas ready implementation node."
+    },
+    {
+      "id": "node-32-foundry-terminal-rollup-fixture",
+      "owner": "ao-foundry",
+      "task": "Add terminal rollup fixture covering promoted and completed closure plus denied and blocked blockers.",
+      "exact_next_action": "Continue node-32: AO Foundry terminal rollup fixture with promoted/completed closure and denied/blocked blockers."
+    },
+    {
+      "id": "node-33-foundry-denied-readiness-ledger",
+      "owner": "ao-foundry",
+      "task": "Add readiness ledger regression for denied terminal support repair.",
+      "exact_next_action": "Continue node-33: AO Foundry readiness ledger regression for denied terminal support repair."
+    },
+    {
+      "id": "node-34-command-compact-status-fixture",
+      "owner": "ao-command",
+      "task": "Add compact Mission status fixture over the node 20 closure state and current continuation readback.",
+      "exact_next_action": "Continue node-34: AO Command compact Mission status fixture over node 20 closure state."
+    },
+    {
+      "id": "node-35-command-timeline-event-index-binding",
+      "owner": "ao-command",
+      "task": "Bind Command timeline readback to Mission event index search results.",
+      "exact_next_action": "Continue node-35: AO Command timeline readback binding Mission event index search results."
+    },
+    {
+      "id": "node-36-command-final-response-denial",
+      "owner": "ao-command",
+      "task": "Add Command readback fixture proving final_response_allowed=false propagates while ready nodes remain.",
+      "exact_next_action": "Continue node-36: AO Command final response denial readback when ready nodes remain."
+    }
+  ],
+  "exact_next_action": "Continue node-27: AO Atlas prompt-readback quality pass over current Mission final rollup."
+}

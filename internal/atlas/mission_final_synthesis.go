@@ -220,9 +220,6 @@ func ValidateAOMissionFinalSynthesisReadback(readback AOMissionFinalSynthesisRea
 }
 
 func aoMissionFinalSynthesisReturnGate(synthesis AOMissionFinalSynthesis) (bool, string, string) {
-	if !synthesis.FinalResponseAllowed {
-		return false, "Mission final synthesis denies final response", "blocked_source_final_response_denied"
-	}
 	if synthesis.ReadyNodes > 0 {
 		return false, "ready nodes remain", "blocked_ready_nodes_remain"
 	}
@@ -231,6 +228,9 @@ func aoMissionFinalSynthesisReturnGate(synthesis AOMissionFinalSynthesis) (bool,
 	}
 	if synthesis.CompletedNodes < synthesis.MinimumNodes {
 		return false, "minimum nodes unmet", "blocked_minimum_nodes_unmet"
+	}
+	if !synthesis.FinalResponseAllowed {
+		return false, "Mission final synthesis denies final response", "blocked_source_final_response_denied"
 	}
 	return true, "completed Mission final synthesis has zero ready nodes and required closure evidence", "final_response_allowed"
 }
