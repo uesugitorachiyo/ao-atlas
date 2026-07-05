@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-32-command-continuation-reason",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Added continuation_contract_reason to AtlasRecommendationCommandReadback.",
+    "Added continuation_contract_reason to AtlasRecommendationCommandTimelineBinding.",
+    "BuildAtlasRecommendationCommandReadback mirrors readback.continuation_contract.reason into both Command fields.",
+    "ValidateAtlasRecommendationClosureArtifacts rejects stale top-level or timeline Command continuation reason values.",
+    "recommendation-command-readback schema and production readiness require the binding."
+  ],
+  "command_binding": {
+    "source": "recommendation_readback.continuation_contract.reason",
+    "top_level_field": "continuation_contract_reason",
+    "timeline_field": "command_timeline_binding.continuation_contract_reason"
+  }
+}

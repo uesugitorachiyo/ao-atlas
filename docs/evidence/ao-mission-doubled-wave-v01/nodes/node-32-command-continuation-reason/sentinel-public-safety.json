@@ -1,0 +1,24 @@
+{
+  "schema": "ao.sentinel.public-safety-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-32-command-continuation-reason",
+  "status": "passed",
+  "scan_summary": "Node 32 schema and evidence scan found no local absolute paths, credentials, forbidden authority widening, or RSI promotion wording.",
+  "scope": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "schemas/recommendation-command-readback.schema.json",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-32-command-continuation-reason"
+  ],
+  "provider_calls": false,
+  "credential_inspection": false,
+  "direct_main_mutation": false,
+  "release_deploy_publish_upload_tag": false,
+  "dependency_updates": false,
+  "auth_policy_config_widening": false,
+  "hidden_instruction_mutation": false,
+  "broad_rsi_claim": false,
+  "rsi_remains_denied": true
+}

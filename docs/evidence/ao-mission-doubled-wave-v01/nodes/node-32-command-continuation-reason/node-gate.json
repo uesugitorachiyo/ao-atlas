@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-32-command-continuation-reason",
+  "status": "open",
+  "owner": "ao-atlas",
+  "objective": "Bind continuation_contract.reason into AO Command readbacks so compact status can distinguish ready-node continuation from exact-next-action-only denial.",
+  "entry_conditions": [
+    "node-31-atlas-continuation-reason-schema merged in AO Atlas PR #244",
+    "AO Atlas main synced before creating this node branch",
+    "exactly one executable mutation node is active for this branch"
+  ],
+  "exit_conditions": [
+    "Command readback carries continuation_contract_reason",
+    "command_timeline_binding carries the same continuation_contract_reason",
+    "closure validation rejects stale Command continuation reason",
+    "schema and production readiness require the binding"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
