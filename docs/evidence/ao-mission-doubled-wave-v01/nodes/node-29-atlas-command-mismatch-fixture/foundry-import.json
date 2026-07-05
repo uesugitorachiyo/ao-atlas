@@ -1,0 +1,15 @@
+{
+  "schema": "ao.foundry.import-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-29-atlas-command-mismatch-fixture",
+  "status": "recorded",
+  "owner": "ao-atlas",
+  "active_mutation_nodes": [
+    "node-29-atlas-command-mismatch-fixture"
+  ],
+  "bounded_task": "Add stale Command mismatch validation and fixture for Atlas recommendation reconciliation packets.",
+  "target_repo": "ao-atlas",
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false
+}

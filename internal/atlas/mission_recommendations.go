@@ -1716,6 +1716,9 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	if command.MissionID != readback.MissionID {
 		errs = append(errs, "command readback mission_id disagrees")
 	}
+	if command.Status != readback.Status {
+		errs = append(errs, "command readback status disagrees")
+	}
 	if promoter.MissionID != readback.MissionID {
 		errs = append(errs, "promoter readback mission_id disagrees")
 	}
@@ -1945,8 +1948,14 @@ func ValidateAtlasRecommendationReconciliationPacket(readback AtlasRecommendatio
 	if closureErr == nil && !packet.ArtifactsAgree {
 		errs = append(errs, "reconciliation artifacts_agree must be true when closure artifacts agree")
 	}
+	if closureErr == nil && packet.Status == "blocked_stale_artifact" {
+		errs = append(errs, "reconciliation status blocked_stale_artifact requires stale closure artifacts")
+	}
 	if closureErr != nil && packet.ArtifactsAgree {
 		errs = append(errs, "reconciliation artifacts_agree must be false when closure artifacts disagree")
+	}
+	if closureErr != nil && packet.Status != "blocked_stale_artifact" {
+		errs = append(errs, "reconciliation status must be blocked_stale_artifact when closure artifacts disagree")
 	}
 	if packet.Status == "ready" && !packet.FinalResponseAllowed {
 		errs = append(errs, "reconciliation ready status requires final_response_allowed")
@@ -1985,7 +1994,7 @@ func validateRecommendationFinalStateReconciliation(errs *[]string, readback Atl
 	}
 	if (readback.ReadyNodes > 0 || strings.TrimSpace(readback.ExactNextAction) != "") &&
 		!readback.FinalResponseAllowed &&
-		finalState.Status != "continuation_required" {
+		!oneOf(finalState.Status, "continuation_required", "blocked_stale_artifact") {
 		*errs = append(*errs, "final_state_reconciliation must require continuation while ready nodes or exact next action remain")
 	}
 }

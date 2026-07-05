@@ -1,0 +1,11 @@
+{
+  "schema": "ao.promoter.no-promotion-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-29-atlas-command-mismatch-fixture",
+  "status": "no_promotion_requested",
+  "reason": "The stale Command mismatch fixture improves readback correctness only; it does not request mutation authority promotion.",
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "next_denied_class": "RSI",
+  "rsi_remains_denied": true
+}

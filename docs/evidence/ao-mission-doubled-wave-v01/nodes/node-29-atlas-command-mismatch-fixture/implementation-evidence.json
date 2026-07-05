@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-29-atlas-command-mismatch-fixture",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "ValidateAtlasRecommendationClosureArtifacts now rejects command.status that disagrees with the current recommendation readback status.",
+    "ValidateAtlasRecommendationReconciliationPacket now requires blocked_stale_artifact when closure artifacts disagree and rejects blocked_stale_artifact when artifacts agree.",
+    "Final-state reconciliation can carry blocked_stale_artifact while ready nodes remain, but only through the stale-artifact validation path.",
+    "Added examples/invalid/recommendation-reconciliation-stale-command-status.json with command_readback_status=completed against an in_progress readback.",
+    "Added focused regression and production-readiness assertion for the stale Command fixture."
+  ],
+  "fixture": {
+    "path": "examples/invalid/recommendation-reconciliation-stale-command-status.json",
+    "status": "blocked_stale_artifact",
+    "artifacts_agree": false,
+    "workgraph_status": "in_progress",
+    "command_readback_status": "completed",
+    "ready_nodes": 39,
+    "return_gate_status": "blocked_ready_nodes_remain"
+  }
+}
