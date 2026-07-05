@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-34-promoter-continuation-reason",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Added continuation_contract_reason to AtlasRecommendationPromoterReadback.",
+    "BuildAtlasRecommendationPromoterReadback mirrors readback.continuation_contract.reason into the Promoter no-promotion readback.",
+    "ValidateAtlasRecommendationClosureArtifacts rejects stale Promoter continuation reason values.",
+    "recommendation-promoter-readback schema and production readiness require the binding."
+  ],
+  "promoter_binding": {
+    "source": "recommendation_readback.continuation_contract.reason",
+    "readback_field": "continuation_contract_reason",
+    "authority_boundary": "no_promotion_rsi_denied"
+  }
+}

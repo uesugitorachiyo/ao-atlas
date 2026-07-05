@@ -63,6 +63,36 @@ func assertNestedSchemaRequiresField(t *testing.T, schemaPath, property, field s
 	t.Fatalf("schema %s nested property %q does not require %q", schemaPath, property, field)
 }
 
+func assertSchemaEnumContains(t *testing.T, schemaPath, property string, values ...string) {
+	t.Helper()
+	schema := mustLoadJSON[map[string]any](t, schemaPath)
+	properties, ok := schema["properties"].(map[string]any)
+	if !ok {
+		t.Fatalf("schema %s missing properties", schemaPath)
+	}
+	field, ok := properties[property].(map[string]any)
+	if !ok {
+		t.Fatalf("schema %s missing property %q", schemaPath, property)
+	}
+	rawEnum, ok := field["enum"].([]any)
+	if !ok || len(rawEnum) == 0 {
+		t.Fatalf("schema %s property %q missing enum", schemaPath, property)
+	}
+	enum := map[string]bool{}
+	for _, value := range rawEnum {
+		text, ok := value.(string)
+		if !ok {
+			t.Fatalf("schema %s property %q has non-string enum value %#v", schemaPath, property, value)
+		}
+		enum[text] = true
+	}
+	for _, value := range values {
+		if !enum[value] {
+			t.Fatalf("schema %s property %q enum missing %q", schemaPath, property, value)
+		}
+	}
+}
+
 func assertNestedSchemaEnumContains(t *testing.T, schemaPath, property, nestedProperty string, values ...string) {
 	t.Helper()
 	schema := mustLoadJSON[map[string]any](t, schemaPath)
@@ -182,6 +212,22 @@ func TestRecommendationCommandReadbackSchemaRequiresContinuationReasonBinding(t 
 
 func TestRecommendationFoundryRollupSchemaRequiresContinuationReason(t *testing.T) {
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-foundry-rollup.schema.json"), "continuation_contract_reason")
+}
+
+func TestRecommendationPromoterReadbackSchemaRequiresContinuationReason(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "schemas", "recommendation-promoter-readback.schema.json")
+	assertSchemaRequiresField(t, root, "continuation_contract_reason")
+	assertSchemaEnumContains(t, root, "continuation_contract_reason",
+		"ready_nodes_or_exact_next_action_remain",
+		"ready_nodes_remain",
+		"exact_next_action_remains",
+		"final response allowed by recommendation readback",
+		"blocked_hard_blocker",
+		"blocked_lease_timing_missing",
+		"blocked_minimum_minutes_unmet",
+		"blocked_ready_nodes_remain",
+		"blocked_no_executable_ready_node",
+	)
 }
 
 func TestRecommendationReadbackSchemaRequiresPromoterNoPromotionPlaceholders(t *testing.T) {
@@ -1159,6 +1205,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		command.CommandTimelineBinding.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
 		promoter.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		promoter.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		promoter.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
 		promoter.PromotionClaimed || !promoter.RSIRemainsDenied ||
 		foundry.NodeCompletionStatus != "nodes_in_progress" ||
 		foundry.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
@@ -1567,6 +1614,13 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 		t.Fatalf("expected stale foundry continuation reason rejection, got %v", err)
 	}
 	foundry = BuildAtlasRecommendationFoundryRollup(readback)
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	promoter.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "promoter readback continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale promoter continuation reason rejection, got %v", err)
+	}
+	promoter = BuildAtlasRecommendationPromoterReadback(readback)
 	command = BuildAtlasRecommendationCommandReadback(readback)
 	command.CommandTimelineBinding.ExactNextAction = "stale next action"
 	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||

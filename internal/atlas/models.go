@@ -577,24 +577,25 @@ type AtlasRecommendationCommandTimelineBinding struct {
 }
 
 type AtlasRecommendationPromoterReadback struct {
-	Schema                    string `json:"schema"`
-	Status                    string `json:"status"`
-	MissionID                 string `json:"mission_id"`
-	EvidenceRoot              string `json:"evidence_root,omitempty"`
-	PromotionClaimed          bool   `json:"promotion_claimed"`
-	RSIRemainsDenied          bool   `json:"rsi_remains_denied"`
-	NoPromotionSummary        string `json:"no_promotion_summary"`
-	NextDeniedClass           string `json:"next_denied_class"`
-	Reason                    string `json:"reason"`
-	ElapsedMinutes            int    `json:"elapsed_minutes"`
-	MinMinutesMet             bool   `json:"min_minutes_met"`
-	LeaseHealthStatus         string `json:"lease_health_status"`
-	CheckpointFreshnessStatus string `json:"checkpoint_freshness_status"`
-	FinalResponseAllowed      bool   `json:"final_response_allowed"`
-	SchedulesWork             bool   `json:"schedules_work"`
-	ExecutesWork              bool   `json:"executes_work"`
-	ApprovesWork              bool   `json:"approves_work"`
-	ClaimsAuthorityAdvance    bool   `json:"claims_authority_advance"`
+	Schema                     string `json:"schema"`
+	Status                     string `json:"status"`
+	MissionID                  string `json:"mission_id"`
+	EvidenceRoot               string `json:"evidence_root,omitempty"`
+	PromotionClaimed           bool   `json:"promotion_claimed"`
+	RSIRemainsDenied           bool   `json:"rsi_remains_denied"`
+	NoPromotionSummary         string `json:"no_promotion_summary"`
+	NextDeniedClass            string `json:"next_denied_class"`
+	Reason                     string `json:"reason"`
+	ElapsedMinutes             int    `json:"elapsed_minutes"`
+	MinMinutesMet              bool   `json:"min_minutes_met"`
+	LeaseHealthStatus          string `json:"lease_health_status"`
+	CheckpointFreshnessStatus  string `json:"checkpoint_freshness_status"`
+	ContinuationContractReason string `json:"continuation_contract_reason"`
+	FinalResponseAllowed       bool   `json:"final_response_allowed"`
+	SchedulesWork              bool   `json:"schedules_work"`
+	ExecutesWork               bool   `json:"executes_work"`
+	ApprovesWork               bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance     bool   `json:"claims_authority_advance"`
 }
 
 type AtlasRecommendationFoundryRollup struct {

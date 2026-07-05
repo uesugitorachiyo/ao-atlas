@@ -1,0 +1,42 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-34-promoter-continuation-reason",
+  "status": "focused_and_full_tests_passed",
+  "focused_tests": [
+    {
+      "name": "TestRecommendationPromoterReadbackSchemaRequiresContinuationReason",
+      "coverage": "Promoter schema requires continuation_contract_reason and binds the shared reason enum."
+    },
+    {
+      "name": "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+      "coverage": "Generated Promoter readback mirrors the resumed Atlas continuation reason."
+    },
+    {
+      "name": "TestMissionRecommendationsDetectStaleClosureArtifacts",
+      "coverage": "Closure validation rejects stale Promoter continuation_contract_reason."
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-34-promoter-continuation-reason",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Implement Promoter continuation_contract_reason binding for Atlas recommendation closure artifacts.",
+  "inputs": [
+    "AO Atlas recommendation readback continuation contract",
+    "Promoter no-promotion readback schema",
+    "Closure artifact stale validation"
+  ],
+  "outputs": [
+    "Promoter readback field",
+    "Schema requirement",
+    "Focused regression tests",
+    "Production readiness assertion"
+  ]
+}
