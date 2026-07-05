@@ -1,0 +1,55 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-04",
+  "task_id": "mission-recommendation-hardening-04-task",
+  "evidence_key": "verification",
+  "status": "passed",
+  "objective": "Add a resume bundle fixture requiring fresh checkpoints before any final answer.",
+  "commands": [
+    {
+      "command": "go run ./cmd/atlas mission recommendations resume",
+      "result": "passed; generated resumed Atlas, Command, Promoter, Foundry, reconciliation, and prompt artifacts"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations complete-node",
+      "result": "passed after run-link included required Foundry import and node evidence bindings"
+    },
+    {
+      "command": "find docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-04 -name '*.json' -print0 | xargs -0 jq -e . >/dev/null",
+      "result": "passed"
+    },
+    {
+      "command": "public-safety negative wording scan over node 4 evidence",
+      "result": "passed_no_matches"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestLongRunHardeningWaveResumeBundleRequiresFreshCheckpoint -count=1",
+      "result": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "result": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "result": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "result": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "result": "passed status=ready mode=fixture_only_readback"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "result": "passed status=ready score=100/100"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ]
+}

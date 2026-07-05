@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-04",
+  "task_id": "mission-recommendation-hardening-04-task",
+  "evidence_key": "rollback_record",
+  "status": "recorded",
+  "objective": "Add a resume bundle fixture requiring fresh checkpoints before any final answer.",
+  "rollback": {
+    "type": "revert_node_4_branch_changes",
+    "files_to_remove": [
+      "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-04/",
+      "internal/atlas/mission_recommendations_test.go node 4 regression changes"
+    ],
+    "data_loss_expected": false
+  }
+}
