@@ -2787,6 +2787,59 @@ func TestLongRunHardeningWaveResumeBundleRequiresFreshCheckpoint(t *testing.T) {
 	}
 }
 
+func TestLongRunHardeningWaveRouteReconciliationStaysFreshAcrossArtifacts(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeFourReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-04", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-05")
+	routeReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "route-recommendation-readback.json"))
+	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, filepath.Join(nodeDir, "route-command-readback.json"))
+	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, filepath.Join(nodeDir, "route-promoter-readback.json"))
+	foundry := mustLoadJSON[AtlasRecommendationFoundryRollup](t, filepath.Join(nodeDir, "route-foundry-rollup.json"))
+	reconciliation := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, filepath.Join(nodeDir, "route-reconciliation-packet.json"))
+	fixture := mustLoadJSON[map[string]any](t, filepath.Join(nodeDir, "route-reconciliation-fixture.json"))
+
+	if err := ValidateAtlasRecommendationClosureArtifacts(routeReadback, command, promoter, foundry); err != nil {
+		t.Fatalf("route closure artifacts should agree: %v", err)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(routeReadback, command, promoter, foundry, reconciliation); err != nil {
+		t.Fatalf("route reconciliation packet should agree: %v", err)
+	}
+	if routeReadback.StaleRouteDecisionStatus != nodeFourReadback.StaleRouteDecisionStatus ||
+		reconciliation.StaleRouteDecisionStatus != routeReadback.StaleRouteDecisionStatus ||
+		fixture["stale_route_decision_status"] != routeReadback.StaleRouteDecisionStatus ||
+		fixture["schema"] != "ao.atlas.route-reconciliation-fixture.v0.1" ||
+		fixture["status"] != "reconciled" ||
+		fixture["artifact_agreement"] != true ||
+		fixture["continuation_reason_agreement"] != true ||
+		fixture["final_response_allowed"] != false {
+		t.Fatalf("route reconciliation fixture must bind fresh route status across artifacts: fixture=%#v readback=%#v reconciliation=%#v", fixture, routeReadback, reconciliation)
+	}
+	if command.ExactNextAction != routeReadback.ExactNextAction ||
+		foundry.ExactNextAction != routeReadback.ExactNextAction ||
+		reconciliation.ExactNextAction != routeReadback.ExactNextAction ||
+		!strings.Contains(routeReadback.ExactNextAction, "mission-recommendation-hardening-05") {
+		t.Fatalf("route artifacts must preserve node 5 exact next action: command=%q foundry=%q reconciliation=%q readback=%q", command.ExactNextAction, foundry.ExactNextAction, reconciliation.ExactNextAction, routeReadback.ExactNextAction)
+	}
+	if command.ContinuationContractReason != routeReadback.ContinuationContract.Reason ||
+		promoter.ContinuationContractReason != routeReadback.ContinuationContract.Reason ||
+		foundry.ContinuationContractReason != routeReadback.ContinuationContract.Reason ||
+		reconciliation.ContinuationContractReason != routeReadback.ContinuationContract.Reason {
+		t.Fatalf("route artifacts must agree on continuation reason")
+	}
+
+	nodeFiveReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeFiveReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeFiveReadback.CompletedNodes != 5 ||
+		nodeFiveReadback.ReadyNodes != 35 ||
+		nodeFiveReadback.FirstExecutableNode != "mission-recommendation-hardening-06" ||
+		nodeFiveReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeFiveReadback.ExactNextAction, "mission-recommendation-hardening-06") {
+		t.Fatalf("node 5 readback must continue to node 6 without final response: %#v", nodeFiveReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

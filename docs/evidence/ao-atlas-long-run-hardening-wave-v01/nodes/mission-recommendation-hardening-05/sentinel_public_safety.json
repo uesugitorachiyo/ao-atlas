@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-05",
+  "task_id": "mission-recommendation-hardening-05-task",
+  "evidence_key": "sentinel_public_safety",
+  "status": "recorded",
+  "objective": "Reconcile stale route decisions across Atlas Foundry Promoter and Command artifacts.",
+  "scan_scope": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-05"
+  ],
+  "scan_command": "public-safety negative wording scan over node 5 evidence",
+  "scan_result": "passed_no_matches",
+  "rsi_remains_denied": true
+}
