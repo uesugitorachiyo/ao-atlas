@@ -1,0 +1,16 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-47-reconciliation-reason-fixture",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Add invalid reconciliation packet coverage for stale Command continuation_contract_reason disagreement and bind it into production readiness.",
+  "inputs": [
+    "examples/invalid/recommendation-reconciliation-stale-command-status.json",
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh"
+  ],
+  "single_active_node": true,
+  "provider_calls": false,
+  "credential_inspection": false
+}

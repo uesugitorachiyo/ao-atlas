@@ -1957,6 +1957,55 @@ func TestRecommendationReconciliationStaleCommandStatusFixture(t *testing.T) {
 	}
 }
 
+func TestRecommendationReconciliationStaleContinuationReasonFixture(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	inProgress := completeRecommendationNodes(result.Workgraph, 1)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, inProgress, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T08:00:00-07:00",
+		CompletedAt:     "2026-07-04T08:25:00-07:00",
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := BuildAtlasRecommendationCommandReadback(readback)
+	promoter := BuildAtlasRecommendationPromoterReadback(readback)
+	foundry := BuildAtlasRecommendationFoundryRollup(readback)
+	command.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale command continuation reason rejection, got %v", err)
+	}
+
+	fixture := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, filepath.Join(repoRoot(t), "examples", "invalid", "recommendation-reconciliation-stale-continuation-reason.json"))
+	if fixture.Status != "blocked_stale_artifact" ||
+		fixture.ArtifactsAgree ||
+		fixture.ContinuationReasonAgreement ||
+		fixture.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		fixture.CommandContinuationReason != "ready_nodes_remain" ||
+		fixture.PromoterContinuationReason != readback.ContinuationContract.Reason ||
+		fixture.FoundryContinuationReason != readback.ContinuationContract.Reason ||
+		fixture.FinalStateReconciliation.ContinuationAgreement ||
+		fixture.FinalStateReconciliation.CommandReadbackStatus != command.Status ||
+		fixture.ReadyNodes != 39 ||
+		fixture.ExactNextAction != readback.ExactNextAction ||
+		fixture.RSIRemainsDenied != true {
+		t.Fatalf("stale continuation reason fixture lost mismatch readback: %#v", fixture)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, fixture); err != nil {
+		t.Fatalf("stale continuation reason fixture should validate as blocked stale artifact: %v", err)
+	}
+}
+
 func TestRecommendationCompleteNodeRejectsMissingGateEvidence(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")

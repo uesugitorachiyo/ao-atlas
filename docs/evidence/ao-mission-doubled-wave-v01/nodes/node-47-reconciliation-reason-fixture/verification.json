@@ -1,0 +1,41 @@
+{
+  "schema": "ao.atlas.verification.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-47-reconciliation-reason-fixture",
+  "status": "local_verification_passed_ci_pending",
+  "commands": [
+    {
+      "cmd": "jq -e . examples/invalid/recommendation-reconciliation-stale-continuation-reason.json",
+      "result": "passed"
+    },
+    {
+      "cmd": "go test ./internal/atlas -run 'TestRecommendationReconciliationStaleCommandStatusFixture|TestRecommendationReconciliationStaleContinuationReasonFixture' -count=1",
+      "result": "passed"
+    },
+    {
+      "cmd": "scripts/production-readiness.sh",
+      "result": "passed status=ready score=100/100"
+    },
+    {
+      "cmd": "git diff --check && go test ./... -count=1",
+      "result": "passed"
+    },
+    {
+      "cmd": "go vet ./...",
+      "result": "passed"
+    },
+    {
+      "cmd": "go build ./cmd/atlas && rm -f atlas",
+      "result": "passed"
+    },
+    {
+      "cmd": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "result": "passed status=ready"
+    },
+    {
+      "cmd": "scoped public-safety wording scan over the invalid fixture and changed regression tests",
+      "result": "passed"
+    }
+  ],
+  "ci_status": "pending_pr"
+}
