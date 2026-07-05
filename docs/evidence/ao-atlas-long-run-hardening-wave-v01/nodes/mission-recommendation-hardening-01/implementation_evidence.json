@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-01",
+  "task_id": "mission-recommendation-hardening-01-task",
+  "evidence_key": "implementation_evidence",
+  "status": "recorded",
+  "objective": "Create a new Atlas workgraph lease seeded from the completed 50-node doubled wave summary.",
+  "changes": [
+    "Added source seed binding this wave to ao-mission-doubled-wave-v01 final summary and closure PR.",
+    "Added 40-task Feature Depth recommendation source bundle for the long-run hardening wave.",
+    "Generated recommendation wave, workgraph, lease start, recommendation readback, readiness packet, and next prompt with a 120 to 180 minute supervisor budget.",
+    "Generated a Foundry import for exactly one executable node: mission-recommendation-hardening-01.",
+    "Added a regression test covering seed binding, lease budget, single executable node, and node 1 completion readback."
+  ],
+  "rsi_remains_denied": true
+}

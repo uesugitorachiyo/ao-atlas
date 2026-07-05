@@ -1,0 +1,215 @@
+{
+  "schema": "ao.mission.feature-depth-recommendations.v0.3",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "status": "ready",
+  "minimum_tasks": 30,
+  "recommendation_count": 40,
+  "seeded_from": "docs/evidence/ao-mission-doubled-wave-v01/final-summary.json",
+  "tasks": [
+    {
+      "id": "hardening-01",
+      "owner": "ao-atlas",
+      "task": "Create a new Atlas workgraph lease seeded from the completed 50-node doubled wave summary."
+    },
+    {
+      "id": "hardening-02",
+      "owner": "ao-atlas",
+      "task": "Add an until-done continuation fixture proving one governed handoff cannot end a mission."
+    },
+    {
+      "id": "hardening-03",
+      "owner": "ao-atlas",
+      "task": "Add a Command readback fixture denying final response while exact next actions remain."
+    },
+    {
+      "id": "hardening-04",
+      "owner": "ao-atlas",
+      "task": "Add a resume bundle fixture requiring fresh checkpoints before any final answer."
+    },
+    {
+      "id": "hardening-05",
+      "owner": "ao-atlas",
+      "task": "Reconcile stale route decisions across Atlas Foundry Promoter and Command artifacts."
+    },
+    {
+      "id": "hardening-06",
+      "owner": "ao-atlas",
+      "task": "Extend event index bindings for route node pull request CI rollup blocker and next action evidence."
+    },
+    {
+      "id": "hardening-07",
+      "owner": "ao-atlas",
+      "task": "Generate a Foundry import that proves exactly one bounded mutation node is active."
+    },
+    {
+      "id": "hardening-08",
+      "owner": "ao-atlas",
+      "task": "Add an Atlas final-state reconciliation packet comparing workgraph Foundry Promoter and Command readbacks."
+    },
+    {
+      "id": "hardening-09",
+      "owner": "ao-atlas",
+      "task": "Add a Command compact timeline artifact summarizing the previous 50-node doubled wave."
+    },
+    {
+      "id": "hardening-10",
+      "owner": "ao-atlas",
+      "task": "Add Promoter no-promotion summary coverage for supervisor hardening without capability promotion."
+    },
+    {
+      "id": "hardening-11",
+      "owner": "ao-atlas",
+      "task": "Add Sentinel public-safety wording scan coverage over generated docs and readbacks."
+    },
+    {
+      "id": "hardening-12",
+      "owner": "ao-atlas",
+      "task": "Add an unsafe prompt fixture keeping provider token main mutation and release actions blocked."
+    },
+    {
+      "id": "hardening-13",
+      "owner": "ao-atlas",
+      "task": "Add stale Foundry rollup fixture coverage for promoted denied and blocked terminal normalization."
+    },
+    {
+      "id": "hardening-14",
+      "owner": "ao-atlas",
+      "task": "Add completed Foundry rollup fixture coverage where promoted closes only with Command agreement."
+    },
+    {
+      "id": "hardening-15",
+      "owner": "ao-atlas",
+      "task": "Add denied Foundry rollup fixture coverage that reports exact missing evidence."
+    },
+    {
+      "id": "hardening-16",
+      "owner": "ao-atlas",
+      "task": "Add blocked Foundry rollup fixture coverage preserving blocker details and safe next action."
+    },
+    {
+      "id": "hardening-17",
+      "owner": "ao-atlas",
+      "task": "Require Feature Depth Recommendations to return at least 20 actionable tasks by default."
+    },
+    {
+      "id": "hardening-18",
+      "owner": "ao-atlas",
+      "task": "Require doubled Feature Depth Recommendations to return at least 40 concrete tasks."
+    },
+    {
+      "id": "hardening-19",
+      "owner": "ao-atlas",
+      "task": "Add Atlas prompt generator coverage for target duration node floor stop gates and safety boundaries."
+    },
+    {
+      "id": "hardening-20",
+      "owner": "ao-atlas",
+      "task": "Add Command readback coverage allowing final response only after zero ready nodes and met lease minimums."
+    },
+    {
+      "id": "hardening-21",
+      "owner": "ao-atlas",
+      "task": "Add production readiness summary tying verification CI merge cleanup and evidence roots together."
+    },
+    {
+      "id": "hardening-22",
+      "owner": "ao-atlas",
+      "task": "Add evidence digest summary for route readback and prompt artifacts without absolute paths."
+    },
+    {
+      "id": "hardening-23",
+      "owner": "ao-atlas",
+      "task": "Add artifact agreement fixture tying generated prompt Command next action and workgraph status."
+    },
+    {
+      "id": "hardening-24",
+      "owner": "ao-atlas",
+      "task": "Add rollback record fixture for prompt-only nodes with no data loss boundary."
+    },
+    {
+      "id": "hardening-25",
+      "owner": "ao-atlas",
+      "task": "Add node gate fixture proving support evidence nodes cannot widen authority boundaries."
+    },
+    {
+      "id": "hardening-26",
+      "owner": "ao-atlas",
+      "task": "Add branch cleanup evidence check for local and remote codex branch removal."
+    },
+    {
+      "id": "hardening-27",
+      "owner": "ao-atlas",
+      "task": "Add GitHub pull request ledger fixture with number merge commit CI status and cleanup state."
+    },
+    {
+      "id": "hardening-28",
+      "owner": "ao-atlas",
+      "task": "Add CI readback fixture distinguishing local pass CI pending CI pass and CI failure states."
+    },
+    {
+      "id": "hardening-29",
+      "owner": "ao-atlas",
+      "task": "Add route decision readback explaining why Blueprint was not used for normal Foundry implementation."
+    },
+    {
+      "id": "hardening-30",
+      "owner": "ao-atlas",
+      "task": "Add Atlas resume prompt that continues after compaction without rerunning completed nodes."
+    },
+    {
+      "id": "hardening-31",
+      "owner": "ao-atlas",
+      "task": "Document when operators should use Mission Atlas Blueprint Foundry Promoter Command Sentinel and Architecture."
+    },
+    {
+      "id": "hardening-32",
+      "owner": "ao-atlas",
+      "task": "Document why 14 to 20 minute loops are premature returns for a 2 to 3 hour workgraph."
+    },
+    {
+      "id": "hardening-33",
+      "owner": "ao-atlas",
+      "task": "Add doctor readiness fixture for lease health checkpoint freshness stale routes shallow recommendations and early return risk."
+    },
+    {
+      "id": "hardening-34",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage for early-return risk when min nodes or min minutes are unmet."
+    },
+    {
+      "id": "hardening-35",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage that exact next actions carry into summaries and generated prompts."
+    },
+    {
+      "id": "hardening-36",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage that public docs cannot claim RSI or unsupervised promotion without evidence."
+    },
+    {
+      "id": "hardening-37",
+      "owner": "ao-atlas",
+      "task": "Add closure regression proving Mission Atlas closes only with complete evidence CI cleanup and no forbidden surfaces."
+    },
+    {
+      "id": "hardening-38",
+      "owner": "ao-atlas",
+      "task": "Add end-to-end smoke artifact for Mission supervising Atlas through multiple Foundry imports."
+    },
+    {
+      "id": "hardening-39",
+      "owner": "ao-atlas",
+      "task": "Run full relevant verification and public-safety scans over changed docs and readbacks."
+    },
+    {
+      "id": "hardening-40",
+      "owner": "ao-atlas",
+      "task": "Build final closure artifacts with recommendations verification clean repo status and exact next action."
+    }
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

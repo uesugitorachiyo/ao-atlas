@@ -2584,6 +2584,89 @@ func TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt(t *testing.T) {
 	}
 }
 
+func TestLongRunHardeningWaveLeaseSeedAndNodeOneReadback(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	seed := mustLoadJSON[map[string]any](t, filepath.Join(root, "source-seed.json"))
+	seededFrom, ok := seed["seeded_from"].(map[string]any)
+	if !ok || seededFrom["mission_id"] != "ao-mission-doubled-wave-v01" || seededFrom["completed_nodes"] != float64(50) {
+		t.Fatalf("hardening wave seed must bind to completed 50-node doubled wave: %#v", seed["seeded_from"])
+	}
+	target, ok := seed["target"].(map[string]any)
+	if !ok ||
+		target["min_nodes"] != float64(30) ||
+		target["node_budget"] != float64(40) ||
+		target["min_minutes"] != float64(120) ||
+		target["max_minutes"] != float64(180) ||
+		target["continue_if_fast_target"] != float64(40) {
+		t.Fatalf("hardening wave seed lost 2-3 hour budget: %#v", seed["target"])
+	}
+
+	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))
+	if err := ValidateAtlasRecommendationWave(wave); err != nil {
+		t.Fatal(err)
+	}
+	if wave.MissionID != "ao-atlas-long-run-hardening-wave-v01" ||
+		wave.TotalTasks != 40 ||
+		wave.MinimumTasks != 30 ||
+		wave.NodeBudget != 40 ||
+		wave.EstimatedMinutes != 120 ||
+		wave.Supervisor == nil ||
+		wave.Supervisor.MinMinutes != 120 ||
+		wave.Supervisor.MaxMinutes != 180 ||
+		wave.Supervisor.ContinueIfFastTarget != 40 ||
+		wave.FinalResponseAllowed {
+		t.Fatalf("hardening wave lost long-run lease settings: %#v", wave)
+	}
+
+	lease := mustLoadJSON[AtlasRecommendationLeaseStart](t, filepath.Join(root, "lease-start.json"))
+	if err := ValidateAtlasRecommendationLeaseStart(lease); err != nil {
+		t.Fatal(err)
+	}
+	if lease.MinMinutes != 120 ||
+		lease.MaxMinutes != 180 ||
+		lease.ContinueIfFastTarget != 40 ||
+		lease.FinalResponseAllowed ||
+		lease.MutatesRepositories ||
+		lease.CallsProviders ||
+		lease.ClaimsAuthorityAdvance {
+		t.Fatalf("hardening lease widened authority or lost budget: %#v", lease)
+	}
+
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join(root, "recommendation-workgraph.json"))
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(workgraph.Nodes) != 40 ||
+		len(state.ExecutableReadyNodeIDs) != 1 ||
+		state.ExecutableReadyNodeIDs[0] != "mission-recommendation-hardening-01" {
+		t.Fatalf("hardening workgraph must expose exactly one executable node: nodes=%d executable=%#v", len(workgraph.Nodes), state.ExecutableReadyNodeIDs)
+	}
+
+	foundryImport := mustLoadJSON[FoundryImport](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-01", "foundry-import.json"))
+	if err := ValidateFoundryImport(foundryImport); err != nil {
+		t.Fatal(err)
+	}
+	if len(foundryImport.Tasks) != 1 || foundryImport.Tasks[0].NodeID != "mission-recommendation-hardening-01" {
+		t.Fatalf("node 1 Foundry import must contain exactly the active node: %#v", foundryImport.Tasks)
+	}
+
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-01", "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
+		t.Fatal(err)
+	}
+	if readback.CompletedNodes != 1 ||
+		readback.ReadyNodes != 39 ||
+		readback.ExecutableReadyNodes != 1 ||
+		readback.FirstExecutableNode != "mission-recommendation-hardening-02" ||
+		readback.FinalResponseAllowed ||
+		readback.LeaseHealthStatus != "minimum_unmet" ||
+		readback.EarlyReturnRiskStatus != "blocked_final_response_ready_nodes_remain" ||
+		!strings.Contains(readback.ExactNextAction, "mission-recommendation-hardening-02") {
+		t.Fatalf("node 1 completion readback must continue to node 2 without final response: %#v", readback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

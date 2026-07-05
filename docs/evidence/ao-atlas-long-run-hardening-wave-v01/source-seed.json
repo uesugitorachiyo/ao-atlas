@@ -1,0 +1,36 @@
+{
+  "schema": "ao.atlas.long-run-hardening-seed.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "status": "ready",
+  "seeded_from": {
+    "mission_id": "ao-mission-doubled-wave-v01",
+    "completed_nodes": 50,
+    "target_nodes": 50,
+    "ready_nodes": 0,
+    "blocked_nodes": 0,
+    "final_summary": "docs/evidence/ao-mission-doubled-wave-v01/final-summary.json",
+    "next_recommended_prompt": "docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md",
+    "closure_pr": "https://github.com/uesugitorachiyo/ao-atlas/pull/263",
+    "closure_merge_commit": "51b693591c4447e607b0f59ce23834aac84fde21"
+  },
+  "target": {
+    "min_nodes": 30,
+    "node_budget": 40,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 40,
+    "return_only_when": "all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker",
+    "checkpoint_policy": "after_each_node_or_timed_interval"
+  },
+  "safety": {
+    "rsi_remains_denied": true,
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "policy_auth_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false
+  }
+}

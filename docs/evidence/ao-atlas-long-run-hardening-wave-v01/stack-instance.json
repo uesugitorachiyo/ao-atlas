@@ -1,0 +1,13 @@
+{
+  "contract_version": "ao.atlas.stack-instance.v0.1",
+  "id": "ao-atlas-long-run-hardening-wave-v01",
+  "state_root": ".atlas-local/state/ao-atlas-long-run-hardening-wave-v01",
+  "toolchain_root": "../shared-ao-toolchain",
+  "roots": {
+    "mission": ".atlas-local/state/ao-atlas-long-run-hardening-wave-v01/mission",
+    "workgraph": ".atlas-local/state/ao-atlas-long-run-hardening-wave-v01/workgraph",
+    "context": ".atlas-local/state/ao-atlas-long-run-hardening-wave-v01/context",
+    "evidence": ".atlas-local/state/ao-atlas-long-run-hardening-wave-v01/evidence",
+    "worktree": ".atlas-local/state/ao-atlas-long-run-hardening-wave-v01/worktree"
+  }
+}

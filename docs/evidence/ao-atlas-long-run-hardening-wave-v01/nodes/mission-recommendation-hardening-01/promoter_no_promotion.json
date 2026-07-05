@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-01",
+  "task_id": "mission-recommendation-hardening-01-task",
+  "evidence_key": "promoter_no_promotion",
+  "status": "recorded",
+  "objective": "Create a new Atlas workgraph lease seeded from the completed 50-node doubled wave summary.",
+  "promotion_decision": {
+    "requested": false,
+    "granted": false,
+    "highest_proven_live_class_changed": false,
+    "rsi_status": "denied"
+  },
+  "reason": "Node 1 creates lease and workgraph evidence for a hardening wave; it does not request a capability promotion."
+}

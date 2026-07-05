@@ -1,0 +1,1514 @@
+{
+  "contract_version": "ao.atlas.recommendation-wave.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "target_instance": "ao-atlas-long-run-hardening-wave-v01",
+  "status": "ready",
+  "source_digest": "sha256:c30756397352c16576216236568a34337900d81bc83b6600f43ffa710ef6cf82",
+  "minimum_tasks": 30,
+  "total_tasks": 40,
+  "node_budget": 40,
+  "estimated_minutes": 120,
+  "supervisor": {
+    "contract_version": "ao.atlas.long-run-supervisor.v0.2",
+    "min_nodes": 30,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 40,
+    "return_only_when": "all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker",
+    "checkpoint_policy": "after_each_node_or_timed_interval",
+    "evidence_policy": "node_gate_candidate_rollback_tests_verification_public_safety_promoter_command",
+    "final_report_contract": "ao.atlas.long-run-final-report.v0.2"
+  },
+  "tasks": [
+    {
+      "id": "hardening-01",
+      "owner": "ao-atlas",
+      "task": "Create a new Atlas workgraph lease seeded from the completed 50-node doubled wave summary.",
+      "node_id": "mission-recommendation-hardening-01",
+      "task_id": "mission-recommendation-hardening-01-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:622175469dc901dbdd904c00f24dfa2d7ebe5a824d02dcbcebd819a88322c10f",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-01",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-02",
+      "owner": "ao-atlas",
+      "task": "Add an until-done continuation fixture proving one governed handoff cannot end a mission.",
+      "node_id": "mission-recommendation-hardening-02",
+      "task_id": "mission-recommendation-hardening-02-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:ddfe66a8249123781c23672764e1acaa6d6a260084e42b031f64d79ca4466bda",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-02",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-03",
+      "owner": "ao-atlas",
+      "task": "Add a Command readback fixture denying final response while exact next actions remain.",
+      "node_id": "mission-recommendation-hardening-03",
+      "task_id": "mission-recommendation-hardening-03-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c2bd0caa2f6b1d7b08974d8d9213ed677250cdd191e892fd702a0e49187ef220",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-03",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-04",
+      "owner": "ao-atlas",
+      "task": "Add a resume bundle fixture requiring fresh checkpoints before any final answer.",
+      "node_id": "mission-recommendation-hardening-04",
+      "task_id": "mission-recommendation-hardening-04-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:86ef7b0bd3b087fc0fa42fd3d8e0a36231b70568af05e3effa4f5af80d5f46bc",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-04",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-05",
+      "owner": "ao-atlas",
+      "task": "Reconcile stale route decisions across Atlas Foundry Promoter and Command artifacts.",
+      "node_id": "mission-recommendation-hardening-05",
+      "task_id": "mission-recommendation-hardening-05-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:11c3be10bda075bbc90f3f212987fbac0379610d3f33c863a78e765f31dcc23d",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-05",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-06",
+      "owner": "ao-atlas",
+      "task": "Extend event index bindings for route node pull request CI rollup blocker and next action evidence.",
+      "node_id": "mission-recommendation-hardening-06",
+      "task_id": "mission-recommendation-hardening-06-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:0019d722c6119b3f111021ce124a0f4132748d24e20783dee2e561587e948308",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-06",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-07",
+      "owner": "ao-atlas",
+      "task": "Generate a Foundry import that proves exactly one bounded mutation node is active.",
+      "node_id": "mission-recommendation-hardening-07",
+      "task_id": "mission-recommendation-hardening-07-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1fa4aa79435a3f5a6d69bef1bc4c8bca6a8bb46f5aefde6f418b3323d526764c",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-07",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-08",
+      "owner": "ao-atlas",
+      "task": "Add an Atlas final-state reconciliation packet comparing workgraph Foundry Promoter and Command readbacks.",
+      "node_id": "mission-recommendation-hardening-08",
+      "task_id": "mission-recommendation-hardening-08-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:41726b374cd6570c7ca9df568bf906d98ce29088b2611edd7f22414c3e5ff98f",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-08",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-09",
+      "owner": "ao-atlas",
+      "task": "Add a Command compact timeline artifact summarizing the previous 50-node doubled wave.",
+      "node_id": "mission-recommendation-hardening-09",
+      "task_id": "mission-recommendation-hardening-09-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:3b46a36b3ce45f0a77cc860bc2be579a421f626325eff3f0bdf3b9f35c055172",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-09",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-10",
+      "owner": "ao-atlas",
+      "task": "Add Promoter no-promotion summary coverage for supervisor hardening without capability promotion.",
+      "node_id": "mission-recommendation-hardening-10",
+      "task_id": "mission-recommendation-hardening-10-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:ac0a8a2f3a9130ca562adee3d4f450c526293751ecb7a316427c077b21ae62b8",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-10",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-11",
+      "owner": "ao-atlas",
+      "task": "Add Sentinel public-safety wording scan coverage over generated docs and readbacks.",
+      "node_id": "mission-recommendation-hardening-11",
+      "task_id": "mission-recommendation-hardening-11-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:6f5310bdd9a058fa1409f56b269e05063f9c9661948968548cd969829d03eb3b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-11",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-12",
+      "owner": "ao-atlas",
+      "task": "Add an unsafe prompt fixture keeping provider token main mutation and release actions blocked.",
+      "node_id": "mission-recommendation-hardening-12",
+      "task_id": "mission-recommendation-hardening-12-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f0837a53c91c98456f9faf0e3659fe148ccf364cf7e80dedcf922bb7fe311530",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-12",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-13",
+      "owner": "ao-atlas",
+      "task": "Add stale Foundry rollup fixture coverage for promoted denied and blocked terminal normalization.",
+      "node_id": "mission-recommendation-hardening-13",
+      "task_id": "mission-recommendation-hardening-13-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b843b3728a6154759ec728911e870cc4db2a23205e1123d8352ee08fd72a24e6",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-13",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-14",
+      "owner": "ao-atlas",
+      "task": "Add completed Foundry rollup fixture coverage where promoted closes only with Command agreement.",
+      "node_id": "mission-recommendation-hardening-14",
+      "task_id": "mission-recommendation-hardening-14-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:399962ea70ef42f4316e3d15d572b3363896c23f976c7a53b179e094926c94b0",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-14",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-15",
+      "owner": "ao-atlas",
+      "task": "Add denied Foundry rollup fixture coverage that reports exact missing evidence.",
+      "node_id": "mission-recommendation-hardening-15",
+      "task_id": "mission-recommendation-hardening-15-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:64785db482fdfbe01fe6e94ea8ab0ff246911c6c316f6fd11da69913bc4d3c9b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-15",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-16",
+      "owner": "ao-atlas",
+      "task": "Add blocked Foundry rollup fixture coverage preserving blocker details and safe next action.",
+      "node_id": "mission-recommendation-hardening-16",
+      "task_id": "mission-recommendation-hardening-16-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:a3db2e8f04fc2ab51fea85e94592e7bcd4babdc607aed32589501d75d8c2ae52",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-16",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-17",
+      "owner": "ao-atlas",
+      "task": "Require Feature Depth Recommendations to return at least 20 actionable tasks by default.",
+      "node_id": "mission-recommendation-hardening-17",
+      "task_id": "mission-recommendation-hardening-17-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:588356e85601087470375db4f492642cc542b12a1b80422878a16b15feaf6f19",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-17",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-18",
+      "owner": "ao-atlas",
+      "task": "Require doubled Feature Depth Recommendations to return at least 40 concrete tasks.",
+      "node_id": "mission-recommendation-hardening-18",
+      "task_id": "mission-recommendation-hardening-18-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:3c0253a9a3f8f1c8aa4b4e2da42adabf191842c124066d56f63641286074c903",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-18",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-19",
+      "owner": "ao-atlas",
+      "task": "Add Atlas prompt generator coverage for target duration node floor stop gates and safety boundaries.",
+      "node_id": "mission-recommendation-hardening-19",
+      "task_id": "mission-recommendation-hardening-19-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:884b6d066abbf9cf8a02f2f9e655381916d3bad23c5ebed41d2157cb2ec9b3fb",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-19",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-20",
+      "owner": "ao-atlas",
+      "task": "Add Command readback coverage allowing final response only after zero ready nodes and met lease minimums.",
+      "node_id": "mission-recommendation-hardening-20",
+      "task_id": "mission-recommendation-hardening-20-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7f570d2ba04f02c9e30f765054b34399b91e6ea6e1ef364ae12d07b6182ec212",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-20",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-21",
+      "owner": "ao-atlas",
+      "task": "Add production readiness summary tying verification CI merge cleanup and evidence roots together.",
+      "node_id": "mission-recommendation-hardening-21",
+      "task_id": "mission-recommendation-hardening-21-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:db5e6f7eb37ef915d68cb8dd71523dc371dd158f4c2f54c57cd8eb5a5521629e",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-21",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-22",
+      "owner": "ao-atlas",
+      "task": "Add evidence digest summary for route readback and prompt artifacts without absolute paths.",
+      "node_id": "mission-recommendation-hardening-22",
+      "task_id": "mission-recommendation-hardening-22-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:56361d8a7cc2609f01c24014ab472aaa8b0c414e10306ca26d953385a68e6d31",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-22",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-23",
+      "owner": "ao-atlas",
+      "task": "Add artifact agreement fixture tying generated prompt Command next action and workgraph status.",
+      "node_id": "mission-recommendation-hardening-23",
+      "task_id": "mission-recommendation-hardening-23-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f8813af60b9a815676a117015908573ab86fff2d968c3fbd9a0223e49f01f745",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-23",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-24",
+      "owner": "ao-atlas",
+      "task": "Add rollback record fixture for prompt-only nodes with no data loss boundary.",
+      "node_id": "mission-recommendation-hardening-24",
+      "task_id": "mission-recommendation-hardening-24-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:e4a331a7688e8a8bfd8c1bf78b55ce20385ef6f5a1e50d67269ef00595b534c4",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-24",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-25",
+      "owner": "ao-atlas",
+      "task": "Add node gate fixture proving support evidence nodes cannot widen authority boundaries.",
+      "node_id": "mission-recommendation-hardening-25",
+      "task_id": "mission-recommendation-hardening-25-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:2ebbe248969eb48521858622dcb2c3ad93584979ea609a8761990f95aff0bf20",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-25",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-26",
+      "owner": "ao-atlas",
+      "task": "Add branch cleanup evidence check for local and remote codex branch removal.",
+      "node_id": "mission-recommendation-hardening-26",
+      "task_id": "mission-recommendation-hardening-26-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:fd4b9ce39b4e303d6e3bd1509cfbb38df6eca4b50de837c057bb13f3274258ab",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-26",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-27",
+      "owner": "ao-atlas",
+      "task": "Add GitHub pull request ledger fixture with number merge commit CI status and cleanup state.",
+      "node_id": "mission-recommendation-hardening-27",
+      "task_id": "mission-recommendation-hardening-27-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b30b90c4839ccfd2f454b7cae3a84b2a2f61bded2585e86b8037dbb4ec6b1fb0",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-27",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-28",
+      "owner": "ao-atlas",
+      "task": "Add CI readback fixture distinguishing local pass CI pending CI pass and CI failure states.",
+      "node_id": "mission-recommendation-hardening-28",
+      "task_id": "mission-recommendation-hardening-28-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:125a620a166889718886711c53ab2060d64000b86c66d8814bcfed6f030371fa",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-28",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-29",
+      "owner": "ao-atlas",
+      "task": "Add route decision readback explaining why Blueprint was not used for normal Foundry implementation.",
+      "node_id": "mission-recommendation-hardening-29",
+      "task_id": "mission-recommendation-hardening-29-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:da585ce154250fb010304e183da5c1e2db9d49b9aa67019ae32e4a9abc9b45ef",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-29",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-30",
+      "owner": "ao-atlas",
+      "task": "Add Atlas resume prompt that continues after compaction without rerunning completed nodes.",
+      "node_id": "mission-recommendation-hardening-30",
+      "task_id": "mission-recommendation-hardening-30-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c750779a2a5dc34fa027e5bba4fc046479b7bbbdaea4e6150deec4402a2972b1",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-30",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-31",
+      "owner": "ao-atlas",
+      "task": "Document when operators should use Mission Atlas Blueprint Foundry Promoter Command Sentinel and Architecture.",
+      "node_id": "mission-recommendation-hardening-31",
+      "task_id": "mission-recommendation-hardening-31-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:85a45b554e929a3e295f1af5c562b806dd92c5cfd8a8bf1f252021cd9fe15846",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-31",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-32",
+      "owner": "ao-atlas",
+      "task": "Document why 14 to 20 minute loops are premature returns for a 2 to 3 hour workgraph.",
+      "node_id": "mission-recommendation-hardening-32",
+      "task_id": "mission-recommendation-hardening-32-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f551045ce8fccbdd0900c95dc7de37029c08cbf9e7d3b9a3aa16190369c919c0",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-32",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-33",
+      "owner": "ao-atlas",
+      "task": "Add doctor readiness fixture for lease health checkpoint freshness stale routes shallow recommendations and early return risk.",
+      "node_id": "mission-recommendation-hardening-33",
+      "task_id": "mission-recommendation-hardening-33-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:d5ce6c277c5a32da84d9da83a801469280d8bee0d55a5b9b3de883e77dfb6633",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-33",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-34",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage for early-return risk when min nodes or min minutes are unmet.",
+      "node_id": "mission-recommendation-hardening-34",
+      "task_id": "mission-recommendation-hardening-34-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:99e7c6315abbe2d33d0dbaf578fd11006571c510e7efbdbdd5ba365b81a1e388",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-34",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-35",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage that exact next actions carry into summaries and generated prompts.",
+      "node_id": "mission-recommendation-hardening-35",
+      "task_id": "mission-recommendation-hardening-35-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:0f1d2655a73e3a014eef821a2b42e2e500febe5d36089b35d89556d7f28f11c4",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-35",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-36",
+      "owner": "ao-atlas",
+      "task": "Add regression coverage that public docs cannot claim RSI or unsupervised promotion without evidence.",
+      "node_id": "mission-recommendation-hardening-36",
+      "task_id": "mission-recommendation-hardening-36-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:046f4fab5a9cfb19914c31a4c0f81eee247c215b0a9cd5f657d2e22d3e8b0aa5",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-36",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-37",
+      "owner": "ao-atlas",
+      "task": "Add closure regression proving Mission Atlas closes only with complete evidence CI cleanup and no forbidden surfaces.",
+      "node_id": "mission-recommendation-hardening-37",
+      "task_id": "mission-recommendation-hardening-37-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:249f1d830476395d5f09168ccfc173fa00072677b8186b9d5f7c1dee69451321",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-37",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-38",
+      "owner": "ao-atlas",
+      "task": "Add end-to-end smoke artifact for Mission supervising Atlas through multiple Foundry imports.",
+      "node_id": "mission-recommendation-hardening-38",
+      "task_id": "mission-recommendation-hardening-38-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:eef5fb4cd721a86181a1b99a3c85d4c68d8fa633bf56bd27c27bd67d43dea618",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-38",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-39",
+      "owner": "ao-atlas",
+      "task": "Run full relevant verification and public-safety scans over changed docs and readbacks.",
+      "node_id": "mission-recommendation-hardening-39",
+      "task_id": "mission-recommendation-hardening-39-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:36b0dabdddfefb97aaf76c2db0530cd7df636e1df7315290b5cac0f408c10ccd",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-39",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "hardening-40",
+      "owner": "ao-atlas",
+      "task": "Build final closure artifacts with recommendations verification clean repo status and exact next action.",
+      "node_id": "mission-recommendation-hardening-40",
+      "task_id": "mission-recommendation-hardening-40-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f25ded98155fcec8bf83167b4e0282505f52c56c939f8a2e178ccb6a7c60e4b0",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/hardening-40",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    }
+  ],
+  "next_recommended_prompt": "You are AO Atlas, coordinating AO Foundry, AO Promoter, AO Command, and AO Architecture for a long-run Atlas-owned correction wave.\n\nDo not ask the operator for permission. Do not stop after one repo, one PR, one CI pass, one Foundry import, one route decision, one evidence artifact, or one short batch. Continue until the workgraph is completed with evidence, at least the lease minimum is met, or a true hard blocker remains after all safe repair, repack, and support work has been attempted.\n\nCurrent state:\n- Mission: ao-atlas-long-run-hardening-wave-v01.\n- Target instance: ao-atlas-long-run-hardening-wave-v01.\n- Generated Atlas-owned nodes: 40.\n- Lease minimum: 30 nodes, 120 to 180 minutes.\n- Continue-if-fast target: 40 nodes.\n- Final response allowed: false, because ready nodes or exact next actions remain.\n- Source digest: sha256:c30756397352c16576216236568a34337900d81bc83b6600f43ffa710ef6cf82.\n\nProblem:\n- Recent AO Atlas/Mission recommendation prompts returned after short batches instead of sustaining 2-3 hour workgraphs.\n- Double the previous short batch when explicitly requested, and otherwise use the v0.2 2-3 hour supervisor default.\n- This continuation must behave like a long-run supervisor: Atlas owns sequencing, Foundry owns bounded implementation nodes, and Blueprint is used only for genuinely new requirements or authorization.\n\nGoal:\n- Target 2-3 hours and complete a durable AO Atlas long-run wave for ao-atlas-long-run-hardening-wave-v01.\n- Execute at least 30 bounded Atlas nodes from the generated workgraph.\n- Complete at least 30 bounded implementation/evidence nodes before final response unless a true hard blocker remains.\n- If the first 30 nodes finish quickly and no blocker remains, continue through the 40-node continue-if-fast target.\n\nReturn only after all generated nodes complete, at least 30 bounded Atlas nodes complete, or a true hard blocker remains after safe repair attempts.\n\nMinimum work budget:\n- min_nodes: 30\n- min_minutes: 120\n- max_minutes: 180\n- max_iterations: 40\n- return_only_when: all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker\n- checkpoint_policy: after_each_node_or_timed_interval\n\nSafety boundaries:\n- Keep exactly one executable mutation node active at a time.\n- Preserve no provider calls, no credential inspection, no direct main mutation, no release/deploy/publish/upload/tag, no dependency updates, no auth/policy/config widening, and no broad RSI claim.\n- RSI remains denied unless separate governed evidence proves otherwise.\n- Use existing repo auth only for normal PR, CI, and merge if available without exposing credentials.\n\nRequired work:\nhardening-01. Create a new Atlas workgraph lease seeded from the completed 50-node doubled wave summary.\nhardening-02. Add an until-done continuation fixture proving one governed handoff cannot end a mission.\nhardening-03. Add a Command readback fixture denying final response while exact next actions remain.\nhardening-04. Add a resume bundle fixture requiring fresh checkpoints before any final answer.\nhardening-05. Reconcile stale route decisions across Atlas Foundry Promoter and Command artifacts.\nhardening-06. Extend event index bindings for route node pull request CI rollup blocker and next action evidence.\nhardening-07. Generate a Foundry import that proves exactly one bounded mutation node is active.\nhardening-08. Add an Atlas final-state reconciliation packet comparing workgraph Foundry Promoter and Command readbacks.\nhardening-09. Add a Command compact timeline artifact summarizing the previous 50-node doubled wave.\nhardening-10. Add Promoter no-promotion summary coverage for supervisor hardening without capability promotion.\nhardening-11. Add Sentinel public-safety wording scan coverage over generated docs and readbacks.\nhardening-12. Add an unsafe prompt fixture keeping provider token main mutation and release actions blocked.\nhardening-13. Add stale Foundry rollup fixture coverage for promoted denied and blocked terminal normalization.\nhardening-14. Add completed Foundry rollup fixture coverage where promoted closes only with Command agreement.\nhardening-15. Add denied Foundry rollup fixture coverage that reports exact missing evidence.\nhardening-16. Add blocked Foundry rollup fixture coverage preserving blocker details and safe next action.\nhardening-17. Require Feature Depth Recommendations to return at least 20 actionable tasks by default.\nhardening-18. Require doubled Feature Depth Recommendations to return at least 40 concrete tasks.\nhardening-19. Add Atlas prompt generator coverage for target duration node floor stop gates and safety boundaries.\nhardening-20. Add Command readback coverage allowing final response only after zero ready nodes and met lease minimums.\nhardening-21. Add production readiness summary tying verification CI merge cleanup and evidence roots together.\nhardening-22. Add evidence digest summary for route readback and prompt artifacts without absolute paths.\nhardening-23. Add artifact agreement fixture tying generated prompt Command next action and workgraph status.\nhardening-24. Add rollback record fixture for prompt-only nodes with no data loss boundary.\nhardening-25. Add node gate fixture proving support evidence nodes cannot widen authority boundaries.\nhardening-26. Add branch cleanup evidence check for local and remote codex branch removal.\nhardening-27. Add GitHub pull request ledger fixture with number merge commit CI status and cleanup state.\nhardening-28. Add CI readback fixture distinguishing local pass CI pending CI pass and CI failure states.\nhardening-29. Add route decision readback explaining why Blueprint was not used for normal Foundry implementation.\nhardening-30. Add Atlas resume prompt that continues after compaction without rerunning completed nodes.\nhardening-31. Document when operators should use Mission Atlas Blueprint Foundry Promoter Command Sentinel and Architecture.\nhardening-32. Document why 14 to 20 minute loops are premature returns for a 2 to 3 hour workgraph.\nhardening-33. Add doctor readiness fixture for lease health checkpoint freshness stale routes shallow recommendations and early return risk.\nhardening-34. Add regression coverage for early-return risk when min nodes or min minutes are unmet.\nhardening-35. Add regression coverage that exact next actions carry into summaries and generated prompts.\nhardening-36. Add regression coverage that public docs cannot claim RSI or unsupervised promotion without evidence.\nhardening-37. Add closure regression proving Mission Atlas closes only with complete evidence CI cleanup and no forbidden surfaces.\nhardening-38. Add end-to-end smoke artifact for Mission supervising Atlas through multiple Foundry imports.\nhardening-39. Run full relevant verification and public-safety scans over changed docs and readbacks.\nhardening-40. Build final closure artifacts with recommendations verification clean repo status and exact next action.\n\nPer-node requirements:\n- Generate or validate node gate, candidate record, rollback record, implementation evidence, tests, verification command output, Sentinel/public-safety wording evidence where applicable, Promoter/no-promotion or promotion-readiness evidence where applicable, and Command/readback evidence where applicable.\n- Emit a Foundry import for exactly one active node at a time, execute the node, verify locally, record run-link evidence, complete the node in Atlas, evaluate the next stop gate, and continue.\n\nRegression tests:\n- Prove the recommendation wave defaults to at least 30 nodes and 120 minutes.\n- Prove the continue-if-fast target generates 40 bounded Atlas-owned tasks.\n- Prove mixed-owner default waves are rejected with exact readback.\n- Prove final response remains denied while ready nodes or exact next actions remain.\n\nVerification:\n- go test ./... -count=1\n- go vet ./...\n- go build ./cmd/atlas\n- scripts/production-readiness.sh\n- scripts/atlas-foundry-roundtrip-smoke.sh\n- Public-safety wording scan over changed docs and readbacks.\n\nFinal response only after completion or true hard blocker:\n- Include `early_return_risk_status` in continuation prompts and treat any blocked risk status as final-response denial evidence.\n- If ready_nodes \u003e 0 or exact_next_action is non-empty, do not produce a final response.\n- If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.\n- completed nodes / total nodes\n- list of node statuses\n- merged PRs by repo or local commits if remote lifecycle is blocked\n- evidence roots\n- final AO Atlas long-run supervisor status\n- Foundry rollup\n- Command readback\n- Feature Depth Recommendations, at least 10 tasks\n- verification results\n- clean/synced repo status\n- exact next action\n",
+  "final_response_allowed": false,
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "promoter_readback_status": "required_not_bound",
+  "command_readback_status": "required_not_bound",
+  "public_safety_scan_status": "required_pending_verification",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

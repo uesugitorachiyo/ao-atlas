@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-01",
+  "task_id": "mission-recommendation-hardening-01-task",
+  "evidence_key": "candidate_record",
+  "status": "recorded",
+  "objective": "Create a new Atlas workgraph lease seeded from the completed 50-node doubled wave summary.",
+  "candidate": {
+    "repo": "ao-atlas",
+    "branch": "codex/hardening-wave-node-01-lease-workgraph",
+    "scope": "Create hardening-wave source recommendations, generated lease/workgraph/readbacks, matching stack instance, and node 1 evidence.",
+    "requires_code_change": true,
+    "requires_provider_call": false,
+    "requires_dependency_update": false,
+    "requires_release_action": false,
+    "requires_policy_or_auth_widening": false
+  },
+  "selected_reason": "Node 1 establishes the long-run lease and single-active-node workgraph before any downstream hardening nodes execute."
+}
