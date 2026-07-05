@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-35-reconciliation-reason-agreement",
+  "status": "selected",
+  "candidate": {
+    "title": "Bind continuation reason agreement into reconciliation packet",
+    "why": "Command, Promoter, and Foundry now each expose continuation_contract_reason. The reconciliation packet must read back all three values and whether they agree with Atlas before final closure can be trusted.",
+    "bounded_files": [
+      "internal/atlas/models.go",
+      "internal/atlas/mission_recommendations.go",
+      "internal/atlas/mission_recommendations_test.go",
+      "schemas/recommendation-reconciliation-packet.schema.json",
+      "scripts/production-readiness.sh",
+      "examples/invalid/recommendation-reconciliation-stale-command-status.json"
+    ]
+  },
+  "route": {
+    "atlas_owns": "final reconciliation contract and stale artifact validation",
+    "foundry_owns": "bounded implementation node execution",
+    "blueprint_required": false
+  }
+}

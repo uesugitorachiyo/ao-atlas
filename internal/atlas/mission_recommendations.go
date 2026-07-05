@@ -1869,6 +1869,9 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 
 func BuildAtlasRecommendationReconciliationPacket(readback AtlasRecommendationReadback, command AtlasRecommendationCommandReadback, promoter AtlasRecommendationPromoterReadback, foundry AtlasRecommendationFoundryRollup) AtlasRecommendationReconciliationPacket {
 	artifactsAgree := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry) == nil
+	continuationReasonAgreement := command.ContinuationContractReason == readback.ContinuationContract.Reason &&
+		promoter.ContinuationContractReason == readback.ContinuationContract.Reason &&
+		foundry.ContinuationContractReason == readback.ContinuationContract.Reason
 	status := "continuation_required"
 	if !artifactsAgree {
 		status = "blocked_stale_artifact"
@@ -1895,16 +1898,21 @@ func BuildAtlasRecommendationReconciliationPacket(readback AtlasRecommendationRe
 		FinalResponseAllowed:         readback.FinalResponseAllowed,
 		FinalResponseReason:          readback.FinalResponseReason,
 		ExactNextAction:              readback.ExactNextAction,
+		ContinuationContractReason:   readback.ContinuationContract.Reason,
 		CommandReturnGateStatus:      command.ReturnGateStatus,
+		CommandContinuationReason:    command.ContinuationContractReason,
 		CommandFinalResponseAllowed:  command.FinalResponseAllowed,
 		PromoterStatus:               promoter.Status,
+		PromoterContinuationReason:   promoter.ContinuationContractReason,
 		PromotionClaimed:             promoter.PromotionClaimed,
 		RSIRemainsDenied:             promoter.RSIRemainsDenied,
 		FoundryStatus:                foundry.Status,
 		FoundryReturnGateStatus:      foundry.ReturnGateStatus,
+		FoundryContinuationReason:    foundry.ContinuationContractReason,
 		FoundryNodeCompletionStatus:  foundry.NodeCompletionStatus,
 		FoundryLeaseCompletionStatus: foundry.LeaseCompletionStatus,
 		FoundryFinalResponseAllowed:  foundry.FinalResponseAllowed,
+		ContinuationReasonAgreement:  continuationReasonAgreement,
 		ArtifactsAgree:               artifactsAgree,
 		SchedulesWork:                false,
 		ExecutesWork:                 false,
@@ -1964,11 +1972,20 @@ func ValidateAtlasRecommendationReconciliationPacket(readback AtlasRecommendatio
 	if packet.ExactNextAction != readback.ExactNextAction {
 		errs = append(errs, "reconciliation exact_next_action disagrees")
 	}
+	if packet.ContinuationContractReason != readback.ContinuationContract.Reason {
+		errs = append(errs, "reconciliation continuation_contract_reason disagrees")
+	}
 	if packet.CommandReturnGateStatus != command.ReturnGateStatus || packet.CommandFinalResponseAllowed != command.FinalResponseAllowed {
 		errs = append(errs, "reconciliation command fields disagree")
 	}
+	if packet.CommandContinuationReason != command.ContinuationContractReason {
+		errs = append(errs, "reconciliation command_continuation_contract_reason disagrees")
+	}
 	if packet.PromoterStatus != promoter.Status || packet.PromotionClaimed != promoter.PromotionClaimed || packet.RSIRemainsDenied != promoter.RSIRemainsDenied {
 		errs = append(errs, "reconciliation promoter fields disagree")
+	}
+	if packet.PromoterContinuationReason != promoter.ContinuationContractReason {
+		errs = append(errs, "reconciliation promoter_continuation_contract_reason disagrees")
 	}
 	if packet.FoundryStatus != foundry.Status ||
 		packet.FoundryReturnGateStatus != foundry.ReturnGateStatus ||
@@ -1977,9 +1994,21 @@ func ValidateAtlasRecommendationReconciliationPacket(readback AtlasRecommendatio
 		packet.FoundryFinalResponseAllowed != foundry.FinalResponseAllowed {
 		errs = append(errs, "reconciliation foundry fields disagree")
 	}
+	if packet.FoundryContinuationReason != foundry.ContinuationContractReason {
+		errs = append(errs, "reconciliation foundry_continuation_contract_reason disagrees")
+	}
+	expectedContinuationReasonAgreement := command.ContinuationContractReason == readback.ContinuationContract.Reason &&
+		promoter.ContinuationContractReason == readback.ContinuationContract.Reason &&
+		foundry.ContinuationContractReason == readback.ContinuationContract.Reason
+	if packet.ContinuationReasonAgreement != expectedContinuationReasonAgreement {
+		errs = append(errs, "reconciliation continuation_reason_agreement disagrees")
+	}
 	closureErr := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry)
 	if closureErr == nil && !packet.ArtifactsAgree {
 		errs = append(errs, "reconciliation artifacts_agree must be true when closure artifacts agree")
+	}
+	if closureErr == nil && !packet.ContinuationReasonAgreement {
+		errs = append(errs, "reconciliation continuation_reason_agreement must be true when closure artifacts agree")
 	}
 	if closureErr == nil && packet.Status == "blocked_stale_artifact" {
 		errs = append(errs, "reconciliation status blocked_stale_artifact requires stale closure artifacts")

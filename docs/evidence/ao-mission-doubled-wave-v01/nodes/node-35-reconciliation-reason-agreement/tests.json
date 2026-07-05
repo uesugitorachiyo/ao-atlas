@@ -1,0 +1,46 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-35-reconciliation-reason-agreement",
+  "status": "focused_and_full_tests_passed",
+  "focused_tests": [
+    {
+      "name": "TestRecommendationReconciliationSchemaRequiresContinuationReasonAgreement",
+      "coverage": "Reconciliation schema requires reason fields and the shared reason enum."
+    },
+    {
+      "name": "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+      "coverage": "Generated reconciliation packet records Atlas, Command, Promoter, and Foundry continuation reasons with agreement true."
+    },
+    {
+      "name": "TestMissionRecommendationsDetectStaleClosureArtifacts",
+      "coverage": "Validation rejects stale reconciliation reason fields and agreement flags."
+    },
+    {
+      "name": "TestRecommendationReconciliationStaleCommandStatusFixture",
+      "coverage": "Stale Command status fixture remains valid while carrying reason agreement evidence."
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    }
+  ]
+}

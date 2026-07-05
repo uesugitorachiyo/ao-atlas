@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-35-reconciliation-reason-agreement",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Added Atlas, Command, Promoter, and Foundry continuation reason fields to AtlasRecommendationReconciliationPacket.",
+    "BuildAtlasRecommendationReconciliationPacket records the source reason values and a continuation_reason_agreement flag.",
+    "ValidateAtlasRecommendationReconciliationPacket rejects stale reason fields and mismatched agreement flags.",
+    "Reconciliation schema, production readiness, and stale Command fixture require the agreement readback."
+  ],
+  "agreement_contract": {
+    "atlas_source": "recommendation_readback.continuation_contract.reason",
+    "command_source": "recommendation_command_readback.continuation_contract_reason",
+    "promoter_source": "recommendation_promoter_readback.continuation_contract_reason",
+    "foundry_source": "recommendation_foundry_rollup.continuation_contract_reason",
+    "agreement_field": "continuation_reason_agreement"
+  }
+}
