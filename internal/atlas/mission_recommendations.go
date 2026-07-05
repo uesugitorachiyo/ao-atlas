@@ -1618,7 +1618,7 @@ func BuildAtlasRecommendationCommandReadback(readback AtlasRecommendationReadbac
 	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
 		nodeStatus = "blocked_or_failed_nodes_present"
 	}
-	compactTimeline := fmt.Sprintf("%d/%d recommendation nodes complete; elapsed_minutes=%d; lease_time_status=%s; final_response_allowed=%t", readback.CompletedNodes, readback.TotalNodes, readback.ElapsedMinutes, readback.LeaseTimeStatus, readback.FinalResponseAllowed)
+	compactTimeline := fmt.Sprintf("%d/%d recommendation nodes complete; elapsed_minutes=%d; lease_time_status=%s; final_response_allowed=%t; continuation_contract_reason=%s; exact_next_action=%s", readback.CompletedNodes, readback.TotalNodes, readback.ElapsedMinutes, readback.LeaseTimeStatus, readback.FinalResponseAllowed, readback.ContinuationContract.Reason, readback.ExactNextAction)
 	return AtlasRecommendationCommandReadback{
 		Schema:                     "ao.atlas.recommendation-command-readback.v0.1",
 		Status:                     readback.Status,
@@ -1791,6 +1791,12 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	}
 	if command.CommandTimelineBinding.Summary != command.CompactTimeline {
 		errs = append(errs, "command timeline binding summary disagrees")
+	}
+	if !strings.Contains(command.CompactTimeline, "continuation_contract_reason="+readback.ContinuationContract.Reason) {
+		errs = append(errs, "command compact timeline continuation_contract_reason missing")
+	}
+	if !strings.Contains(command.CompactTimeline, "exact_next_action="+readback.ExactNextAction) {
+		errs = append(errs, "command compact timeline exact_next_action missing")
 	}
 	if command.CommandTimelineBinding.FirstExecutableNode != readback.FirstExecutableNode {
 		errs = append(errs, "command timeline binding first_executable_node disagrees")

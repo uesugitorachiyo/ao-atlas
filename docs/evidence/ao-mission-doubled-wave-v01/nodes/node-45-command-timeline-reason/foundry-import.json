@@ -1,0 +1,15 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-45-command-timeline-reason",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Make Command compact mission timeline carry continuation reason and exact next action, with validator and readiness coverage.",
+  "inputs": [
+    "internal/atlas/mission_recommendations.go",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/command-readback.json"
+  ],
+  "single_active_node": true,
+  "provider_calls": false,
+  "credential_inspection": false
+}

@@ -1,0 +1,37 @@
+{
+  "schema": "ao.atlas.verification.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-45-command-timeline-reason",
+  "status": "local_verification_passed_ci_pending",
+  "commands": [
+    {
+      "cmd": "go test ./internal/atlas -run 'TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestRecommendationClosureArtifactsRejectStaleStatuses|TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt' -count=1",
+      "result": "passed"
+    },
+    {
+      "cmd": "scripts/production-readiness.sh",
+      "result": "passed status=ready score=100/100"
+    },
+    {
+      "cmd": "git diff --check && go test ./... -count=1",
+      "result": "passed"
+    },
+    {
+      "cmd": "go vet ./...",
+      "result": "passed"
+    },
+    {
+      "cmd": "go build ./cmd/atlas && rm -f atlas",
+      "result": "passed"
+    },
+    {
+      "cmd": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "result": "passed status=ready"
+    },
+    {
+      "cmd": "scoped public-safety wording scan over changed Command docs/readbacks and code",
+      "result": "passed"
+    }
+  ],
+  "ci_status": "pending_pr"
+}

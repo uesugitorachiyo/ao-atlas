@@ -23,9 +23,9 @@
   "final_response_reason": "all generated nodes complete and no ready nodes remain",
   "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
   "continuation_contract_reason": "final response allowed by recommendation readback",
-  "compact_timeline": "40/40 recommendation nodes complete; elapsed_minutes=491; lease_time_status=minimum_minutes_met; final_response_allowed=true",
+  "compact_timeline": "40/40 recommendation nodes complete; elapsed_minutes=491; lease_time_status=minimum_minutes_met; final_response_allowed=true; continuation_contract_reason=final response allowed by recommendation readback; exact_next_action=Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
   "command_timeline_binding": {
-    "summary": "40/40 recommendation nodes complete; elapsed_minutes=491; lease_time_status=minimum_minutes_met; final_response_allowed=true",
+    "summary": "40/40 recommendation nodes complete; elapsed_minutes=491; lease_time_status=minimum_minutes_met; final_response_allowed=true; continuation_contract_reason=final response allowed by recommendation readback; exact_next_action=Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
     "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
     "continuation_contract_reason": "final response allowed by recommendation readback",
     "return_gate_status": "final_response_allowed",

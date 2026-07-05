@@ -1,0 +1,11 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-45-command-timeline-reason",
+  "status": "continuation_required",
+  "completed_nodes_after_this_node": 45,
+  "target_nodes": 50,
+  "readback": "Command compact timeline now includes continuation_contract_reason and exact_next_action, with validator/readiness coverage.",
+  "exact_next_action_after_merge": "Continue to node 46 and bind Promoter no-promotion summary reason readback.",
+  "final_response_allowed": false
+}
