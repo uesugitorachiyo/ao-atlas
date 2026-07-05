@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-01",
+  "task_id": "mission-recommendation-hardening-01-task",
+  "evidence_key": "tests",
+  "status": "recorded",
+  "objective": "Create a new Atlas workgraph lease seeded from the completed 50-node doubled wave summary.",
+  "red_green": {
+    "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveLeaseSeedAndNodeOneReadback -count=1",
+    "red_result": "failed because recommendation-readback-after.json did not exist before node completion artifacts were generated",
+    "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveLeaseSeedAndNodeOneReadback -count=1",
+    "green_result": "passed after node 1 completion artifacts generated recommendation-readback-after.json"
+  },
+  "required_verification": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "public-safety wording scan over changed hardening-wave docs"
+  ],
+  "results": {
+    "targeted_regression": "passed",
+    "go_test_all": "passed",
+    "go_vet": "passed",
+    "go_build_cmd_atlas": "passed",
+    "production_readiness": "status=ready score=100/100",
+    "atlas_foundry_roundtrip_smoke": "status=ready mode=fixture_only_readback",
+    "public_safety_scan": "passed"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-lease-start.v0.1",
+  "status": "started",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "target_instance": "ao-atlas-long-run-hardening-wave-v01",
+  "evidence_root": "docs/evidence/ao-atlas-long-run-hardening-wave-v01",
+  "started_at": "2026-07-05T13:01:08Z",
+  "min_minutes": 120,
+  "max_minutes": 180,
+  "continue_if_fast_target": 40,
+  "checkpoint_policy": "after_each_node_or_timed_interval",
+  "wave_digest": "sha256:b35cbd637b91ec9da2adefaea125349cbcbef7948b681a31df0c3a0f3e112144",
+  "workgraph_digest": "sha256:1a6071201c528db04ebe532c08767a39dc1182a1d9cecb225944fa941986a86d",
+  "final_response_allowed": false,
+  "final_response_reason": "lease start marker does not allow final response",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "claims_authority_advance": false
+}
