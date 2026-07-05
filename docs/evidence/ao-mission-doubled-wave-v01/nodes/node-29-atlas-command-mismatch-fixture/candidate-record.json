@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-29-atlas-command-mismatch-fixture",
+  "status": "selected",
+  "selected_candidate": "Reject stale Command readback status and persist an invalid reconciliation fixture.",
+  "alternatives_rejected": [
+    "Only add a fixture without validation repair; rejected because stale Command status was not blocked.",
+    "Only add another in-memory unit test; rejected because node 29 requires a durable fixture.",
+    "Change Command readback generation; rejected because generation already mirrors readback status and the gap was validation."
+  ],
+  "decision": "Extend closure validation, allow blocked_stale_artifact final-state packets for stale artifacts, add fixture, tests, and production-readiness assertion."
+}

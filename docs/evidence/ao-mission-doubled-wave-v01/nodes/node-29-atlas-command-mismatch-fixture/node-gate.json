@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-29-atlas-command-mismatch-fixture",
+  "status": "open",
+  "owner": "ao-atlas",
+  "objective": "Add a stale Command status mismatch fixture and repair Atlas recommendation reconciliation validation so stale Command readback status cannot agree with an in-progress Mission rollup.",
+  "entry_conditions": [
+    "node-28-atlas-workgraph-readiness-packet merged in AO Atlas PR #241",
+    "AO Atlas main synced before creating this node branch",
+    "exactly one executable mutation node is active for this branch"
+  ],
+  "exit_conditions": [
+    "stale Command status is rejected by closure-artifact validation",
+    "stale Command reconciliation fixture validates only as blocked_stale_artifact with artifacts_agree=false",
+    "production readiness asserts the stale Command fixture shape"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

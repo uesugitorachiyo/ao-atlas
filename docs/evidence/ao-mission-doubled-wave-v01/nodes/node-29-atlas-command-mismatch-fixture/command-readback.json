@@ -1,0 +1,14 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-29-atlas-command-mismatch-fixture",
+  "status": "ready",
+  "summary": "Atlas reconciliation now blocks stale Command status when Command reports completed against an in-progress workgraph/readback.",
+  "exact_next_action": "Continue node-30: AO Atlas continuation-contract smoke proving exact next action still blocks final response.",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "rsi_remains_denied": true
+}

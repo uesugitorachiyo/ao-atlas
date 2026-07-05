@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-29-atlas-command-mismatch-fixture",
+  "status": "focused_and_full_tests_passed",
+  "red_state": {
+    "command": "go test ./internal/atlas -run 'TestMissionRecommendationsDetectStaleClosureArtifacts|TestRecommendationReconciliationStaleCommandStatusFixture' -count=1",
+    "result": "failed_before_validation_repair",
+    "output": "expected stale command status rejection, got <nil>"
+  },
+  "focused_green": {
+    "command": "go test ./internal/atlas -run 'TestMissionRecommendationsDetectStaleClosureArtifacts|TestRecommendationReconciliationStaleCommandStatusFixture' -count=1",
+    "result": "passed",
+    "summary": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.313s"
+  },
+  "full_green": {
+    "command": "go test ./... -count=1",
+    "result": "passed",
+    "summary": "? github.com/uesugitorachiyo/ao-atlas/cmd/atlas [no test files]; ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.468s"
+  },
+  "coverage": [
+    "stale command.status rejects closure artifacts",
+    "stale Command reconciliation fixture is blocked_stale_artifact",
+    "blocked_stale_artifact final-state status is allowed only for stale artifacts",
+    "production readiness asserts fixture status, artifacts_agree=false, and RSI denial"
+  ]
+}

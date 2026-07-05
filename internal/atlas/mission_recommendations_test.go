@@ -1472,6 +1472,12 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 		t.Fatalf("expected stale foundry rollup rejection, got %v", err)
 	}
 	foundry = BuildAtlasRecommendationFoundryRollup(readback)
+	command.Status = "completed"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback status disagrees") {
+		t.Fatalf("expected stale command status rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
 	command.CommandTimelineBinding.ExactNextAction = "stale next action"
 	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
 		!strings.Contains(err.Error(), "command timeline binding exact_next_action disagrees") {
@@ -1549,6 +1555,52 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
 		!strings.Contains(err.Error(), "final_state_reconciliation.status must match reconciliation status") {
 		t.Fatalf("expected stale final-state status rejection, got %v", err)
+	}
+}
+
+func TestRecommendationReconciliationStaleCommandStatusFixture(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	inProgress := completeRecommendationNodes(result.Workgraph, 1)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, inProgress, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T08:00:00-07:00",
+		CompletedAt:     "2026-07-04T08:25:00-07:00",
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := BuildAtlasRecommendationCommandReadback(readback)
+	promoter := BuildAtlasRecommendationPromoterReadback(readback)
+	foundry := BuildAtlasRecommendationFoundryRollup(readback)
+	command.Status = "completed"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback status disagrees") {
+		t.Fatalf("expected stale command status closure rejection, got %v", err)
+	}
+
+	fixture := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, filepath.Join(repoRoot(t), "examples", "invalid", "recommendation-reconciliation-stale-command-status.json"))
+	if fixture.Status != "blocked_stale_artifact" ||
+		fixture.ArtifactsAgree ||
+		fixture.FinalStateReconciliation.CommandReadbackStatus != "completed" ||
+		fixture.CommandFinalResponseAllowed ||
+		fixture.FinalResponseAllowed ||
+		fixture.ReadyNodes != 39 ||
+		fixture.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		fixture.ExactNextAction != readback.ExactNextAction ||
+		fixture.RSIRemainsDenied != true {
+		t.Fatalf("stale Command fixture lost mismatch readback: %#v", fixture)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, fixture); err != nil {
+		t.Fatalf("stale Command fixture should validate as blocked stale artifact: %v", err)
 	}
 }
 
