@@ -30,10 +30,41 @@
     "checkpoint_count": 0,
     "final_response_allowed": false
   },
+  "continuation_reason_coverage": {
+    "status": "coverage_sources_indexed",
+    "expected_reason": "ready_nodes_or_exact_next_action_remain",
+    "indexed_sources": [
+      "recommendation_readback",
+      "checkpoint_readback",
+      "workgraph_readiness_packet",
+      "command_readback",
+      "command_timeline_binding",
+      "promoter_readback",
+      "foundry_rollup",
+      "reconciliation_packet",
+      "reconciliation_command",
+      "reconciliation_promoter",
+      "reconciliation_foundry",
+      "final_state_reconciliation",
+      "resume_prompt"
+    ],
+    "source_count": 13,
+    "final_response_allowed": false,
+    "refuses_final_response": true,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.",
+    "lease_health_status": "minimum_unmet",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  },
   "source_artifacts": [
     {
       "ref": "foundry_run_link_readiness_summary",
       "digest": "sha256:14ec346d83a72920d0039508f7b59be09c75d02e61cb72d8bfb3f08dc9bb1579"
+    },
+    {
+      "ref": "continuation_reason_coverage",
+      "digest": "sha256:675f59709c786505a698fe79fb6caa74177d1334684797f9b92eb734e6328d29"
     }
   ],
   "implemented_bindings": [

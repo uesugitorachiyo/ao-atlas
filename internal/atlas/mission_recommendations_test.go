@@ -1283,8 +1283,13 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		resumeExecution.FoundryRunLinkReadinessSummary.CompletedRunLinks != resumeReadback.CompletedNodes ||
 		resumeExecution.FoundryRunLinkReadinessSummary.RequiredRunLinks != resumeReadback.TotalNodes ||
 		resumeExecution.FoundryRunLinkReadinessSummary.NextExecutableNode != resumeReadback.FirstExecutableNode ||
+		resumeExecution.ContinuationReasonCoverage.ExpectedReason != resumeReadback.ContinuationContract.Reason ||
+		resumeExecution.ContinuationReasonCoverage.SourceCount != 13 ||
+		!containsString(resumeExecution.ContinuationReasonCoverage.IndexedSources, "checkpoint_readback") ||
+		!containsString(resumeExecution.ContinuationReasonCoverage.IndexedSources, "resume_prompt") ||
+		!hasSourceArtifact(resumeExecution.SourceArtifacts, "continuation_reason_coverage") ||
 		!hasSourceArtifact(resumeExecution.SourceArtifacts, "foundry_run_link_readiness_summary") {
-		t.Fatalf("execution readback missing Foundry run-link readiness source artifact: %#v", resumeExecution)
+		t.Fatalf("execution readback missing source artifact coverage: %#v", resumeExecution)
 	}
 	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, commandPath)
 	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, promoterPath)
@@ -2205,6 +2210,28 @@ func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T)
 	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
 	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness checkpoint_freshness_status must match recommendation readback") {
 		t.Fatalf("expected stale Foundry checkpoint freshness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ContinuationReasonCoverage.ExpectedReason = "ready_nodes_remain"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "continuation_reason_coverage.expected_reason must match recommendation readback") {
+		t.Fatalf("expected stale continuation reason coverage rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ContinuationReasonCoverage.IndexedSources = execution.ContinuationReasonCoverage.IndexedSources[:12]
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "continuation_reason_coverage.source_count must match indexed_sources length") {
+		t.Fatalf("expected stale continuation source count rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	for i := range execution.SourceArtifacts {
+		if execution.SourceArtifacts[i].Ref == "continuation_reason_coverage" {
+			execution.SourceArtifacts[i].Digest = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+		}
+	}
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "continuation_reason_coverage source artifact digest disagrees") {
+		t.Fatalf("expected stale continuation source artifact digest rejection, got %v", err)
 	}
 }
 

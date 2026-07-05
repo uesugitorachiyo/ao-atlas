@@ -406,7 +406,23 @@ type AtlasRecommendationExecutionReadback struct {
 	TotalRecommendationNodes       int                                               `json:"total_recommendation_nodes"`
 	GeneratedWorkgraph             AtlasRecommendationGeneratedWorkgraphReadback     `json:"generated_workgraph"`
 	FoundryRunLinkReadinessSummary AtlasRecommendationFoundryRunLinkReadinessSummary `json:"foundry_run_link_readiness_summary"`
+	ContinuationReasonCoverage     AtlasRecommendationContinuationReasonCoverage     `json:"continuation_reason_coverage"`
 	SourceArtifacts                []SourceRef                                       `json:"source_artifacts"`
+}
+
+type AtlasRecommendationContinuationReasonCoverage struct {
+	Status                    string   `json:"status"`
+	ExpectedReason            string   `json:"expected_reason"`
+	IndexedSources            []string `json:"indexed_sources"`
+	SourceCount               int      `json:"source_count"`
+	FinalResponseAllowed      bool     `json:"final_response_allowed"`
+	RefusesFinalResponse      bool     `json:"refuses_final_response"`
+	ExactNextAction           string   `json:"exact_next_action"`
+	ReturnGateStatus          string   `json:"return_gate_status,omitempty"`
+	LeaseHealthStatus         string   `json:"lease_health_status"`
+	CheckpointFreshnessStatus string   `json:"checkpoint_freshness_status"`
+	ClaimsAuthorityAdvance    bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool     `json:"rsi_remains_denied"`
 }
 
 type AtlasRecommendationFoundryRunLinkReadinessSummary struct {

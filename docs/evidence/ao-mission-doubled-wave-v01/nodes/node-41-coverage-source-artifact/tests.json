@@ -1,0 +1,42 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-41-coverage-source-artifact",
+  "status": "focused_and_full_tests_passed",
+  "focused_tests": [
+    {
+      "name": "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+      "coverage": "Generated execution readback includes continuation reason coverage source artifact."
+    },
+    {
+      "name": "TestRecommendationExecutionReadbackRejectsStaleNodeCounts",
+      "coverage": "Execution validator rejects stale continuation coverage summaries and source artifact digests."
+    },
+    {
+      "name": "TestRecommendationExecutionReadbackArtifactsStayConsistent",
+      "coverage": "Committed v0.3 execution ledger fixture includes digest-bound coverage source artifact."
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    }
+  ]
+}

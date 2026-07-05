@@ -2170,10 +2170,89 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 	} else if sourceDigest != digestValue(execution.FoundryRunLinkReadinessSummary) {
 		errs = append(errs, "foundry_run_link_readiness_summary source artifact digest disagrees")
 	}
+	validateContinuationReasonCoverageSummary(&errs, execution.ContinuationReasonCoverage, readback)
+	if sourceDigest, ok := sourceArtifactDigest(execution.SourceArtifacts, "continuation_reason_coverage"); !ok {
+		errs = append(errs, "source_artifacts must include continuation_reason_coverage")
+	} else if sourceDigest != digestValue(execution.ContinuationReasonCoverage) {
+		errs = append(errs, "continuation_reason_coverage source artifact digest disagrees")
+	}
 	if execution.Status == "completed" && !readback.FinalResponseAllowed {
 		errs = append(errs, "status completed requires recommendation readback final_response_allowed")
 	}
 	return joinErrors(errs)
+}
+
+func validateContinuationReasonCoverageSummary(errs *[]string, coverage AtlasRecommendationContinuationReasonCoverage, readback AtlasRecommendationReadback) {
+	requireField(errs, "continuation_reason_coverage.status", coverage.Status)
+	if coverage.Status != "coverage_sources_indexed" {
+		*errs = append(*errs, "continuation_reason_coverage.status must be coverage_sources_indexed")
+	}
+	if coverage.ExpectedReason != readback.ContinuationContract.Reason {
+		*errs = append(*errs, "continuation_reason_coverage.expected_reason must match recommendation readback")
+	}
+	requiredSources := continuationReasonCoverageRequiredSources()
+	if coverage.SourceCount != len(coverage.IndexedSources) {
+		*errs = append(*errs, "continuation_reason_coverage.source_count must match indexed_sources length")
+	}
+	if coverage.SourceCount != len(requiredSources) {
+		*errs = append(*errs, "continuation_reason_coverage.source_count must cover required sources")
+	}
+	for _, source := range requiredSources {
+		if !containsStringValue(coverage.IndexedSources, source) {
+			*errs = append(*errs, "continuation_reason_coverage.indexed_sources missing "+source)
+		}
+	}
+	if coverage.FinalResponseAllowed != readback.FinalResponseAllowed {
+		*errs = append(*errs, "continuation_reason_coverage.final_response_allowed must match recommendation readback")
+	}
+	if coverage.RefusesFinalResponse != readback.ContinuationContract.RefusesFinalResponse {
+		*errs = append(*errs, "continuation_reason_coverage.refuses_final_response must match recommendation readback")
+	}
+	if coverage.ExactNextAction != readback.ExactNextAction {
+		*errs = append(*errs, "continuation_reason_coverage.exact_next_action must match recommendation readback")
+	}
+	if coverage.ReturnGateStatus != readback.ReturnGateStatus {
+		*errs = append(*errs, "continuation_reason_coverage.return_gate_status must match recommendation readback")
+	}
+	if coverage.LeaseHealthStatus != readback.LeaseHealthStatus {
+		*errs = append(*errs, "continuation_reason_coverage.lease_health_status must match recommendation readback")
+	}
+	if coverage.CheckpointFreshnessStatus != readback.CheckpointFreshnessStatus {
+		*errs = append(*errs, "continuation_reason_coverage.checkpoint_freshness_status must match recommendation readback")
+	}
+	if coverage.ClaimsAuthorityAdvance {
+		*errs = append(*errs, "continuation_reason_coverage.claims_authority_advance must be false")
+	}
+	if !coverage.RSIRemainsDenied {
+		*errs = append(*errs, "continuation_reason_coverage.rsi_remains_denied must be true")
+	}
+}
+
+func continuationReasonCoverageRequiredSources() []string {
+	return []string{
+		"recommendation_readback",
+		"checkpoint_readback",
+		"workgraph_readiness_packet",
+		"command_readback",
+		"command_timeline_binding",
+		"promoter_readback",
+		"foundry_rollup",
+		"reconciliation_packet",
+		"reconciliation_command",
+		"reconciliation_promoter",
+		"reconciliation_foundry",
+		"final_state_reconciliation",
+		"resume_prompt",
+	}
+}
+
+func containsStringValue(values []string, want string) bool {
+	for _, value := range values {
+		if value == want {
+			return true
+		}
+	}
+	return false
 }
 
 func BuildAtlasRecommendationWorkgraphReadinessPacket(readback AtlasRecommendationReadback, options AtlasRecommendationWorkgraphReadinessPacketOptions) (AtlasRecommendationWorkgraphReadinessPacket, error) {
@@ -2452,6 +2531,20 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 		CheckpointCount:           readback.CheckpointCount,
 		FinalResponseAllowed:      readback.FinalResponseAllowed,
 	}
+	continuationReasonCoverage := AtlasRecommendationContinuationReasonCoverage{
+		Status:                    "coverage_sources_indexed",
+		ExpectedReason:            readback.ContinuationContract.Reason,
+		IndexedSources:            continuationReasonCoverageRequiredSources(),
+		SourceCount:               len(continuationReasonCoverageRequiredSources()),
+		FinalResponseAllowed:      readback.FinalResponseAllowed,
+		RefusesFinalResponse:      readback.ContinuationContract.RefusesFinalResponse,
+		ExactNextAction:           readback.ExactNextAction,
+		ReturnGateStatus:          readback.ReturnGateStatus,
+		LeaseHealthStatus:         readback.LeaseHealthStatus,
+		CheckpointFreshnessStatus: readback.CheckpointFreshnessStatus,
+		ClaimsAuthorityAdvance:    false,
+		RSIRemainsDenied:          true,
+	}
 	return AtlasRecommendationExecutionReadback{
 		Schema:                       "ao.atlas.long-recommendation-wave-execution.v0.3",
 		Status:                       status,
@@ -2474,8 +2567,10 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 			FinalResponseReason:       readback.FinalResponseReason,
 		},
 		FoundryRunLinkReadinessSummary: runLinkSummary,
+		ContinuationReasonCoverage:     continuationReasonCoverage,
 		SourceArtifacts: []SourceRef{
 			{Ref: "foundry_run_link_readiness_summary", Digest: digestValue(runLinkSummary)},
+			{Ref: "continuation_reason_coverage", Digest: digestValue(continuationReasonCoverage)},
 		},
 	}
 }

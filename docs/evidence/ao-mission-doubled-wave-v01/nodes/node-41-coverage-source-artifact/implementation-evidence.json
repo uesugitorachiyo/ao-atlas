@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-41-coverage-source-artifact",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Execution readback now includes continuation_reason_coverage with required source names.",
+    "Execution source_artifacts now includes a digest-bound continuation_reason_coverage entry.",
+    "Execution validator rejects stale coverage summaries and stale coverage source digests.",
+    "Production readiness asserts generated execution readbacks carry the indexed coverage source artifact.",
+    "The v0.3 execution ledger fixture was updated with the digest-bound coverage summary."
+  ],
+  "source_artifact": {
+    "ref": "continuation_reason_coverage",
+    "fixture_digest": "sha256:675f59709c786505a698fe79fb6caa74177d1334684797f9b92eb734e6328d29"
+  }
+}
