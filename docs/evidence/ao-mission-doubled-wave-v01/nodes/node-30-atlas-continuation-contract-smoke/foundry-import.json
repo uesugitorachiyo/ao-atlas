@@ -1,0 +1,15 @@
+{
+  "schema": "ao.foundry.import-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-30-atlas-continuation-contract-smoke",
+  "status": "recorded",
+  "owner": "ao-atlas",
+  "active_mutation_nodes": [
+    "node-30-atlas-continuation-contract-smoke"
+  ],
+  "bounded_task": "Add exact-next-action-only final-response denial smoke coverage to Atlas recommendation continuation contracts.",
+  "target_repo": "ao-atlas",
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false
+}

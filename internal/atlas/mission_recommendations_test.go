@@ -1342,12 +1342,26 @@ func TestMissionRecommendationsDenyFinalResponseWhenLeaseMinutesUnmet(t *testing
 	if !strings.Contains(readback.ExactNextAction, "Generate and execute the next useful Atlas recommendation wave") {
 		t.Fatalf("readback missing continuation action after short run: %#v", readback)
 	}
+	if readback.ReadyNodes != 0 ||
+		readback.ContinuationContract.Status != "continuation_required" ||
+		!readback.ContinuationContract.RefusesFinalResponse ||
+		readback.ContinuationContract.Reason != "exact_next_action_remains" ||
+		readback.ContinuationContract.ExactNextAction != readback.ExactNextAction {
+		t.Fatalf("exact next action must keep final response denied after a short completed wave: %#v", readback.ContinuationContract)
+	}
 	execution := BuildAtlasRecommendationExecutionReadback(readback)
 	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
 		t.Fatalf("execution ledger should stay consistent for early timing denial: %v", err)
 	}
 	if execution.Status == "completed" {
 		t.Fatalf("execution ledger cannot be completed before min_minutes: %#v", execution)
+	}
+
+	tampered := readback
+	tampered.ContinuationContract.Reason = "ready_nodes_or_exact_next_action_remain"
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "continuation_contract.reason must be exact_next_action_remains") {
+		t.Fatalf("expected exact-next-action continuation reason rejection, got %v", err)
 	}
 }
 

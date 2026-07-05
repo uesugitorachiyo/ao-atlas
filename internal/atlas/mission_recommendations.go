@@ -912,10 +912,9 @@ func buildAtlasContinuationContract(readyNodes int, exactNextAction, returnGateS
 	if !finalResponseAllowed {
 		status = "continuation_required"
 		refusesFinalResponse = true
-		reason = "ready_nodes_or_exact_next_action_remain"
+		reason = atlasContinuationContractReason(readyNodes, exactNextAction, returnGateStatus)
 		if readyNodes == 0 && strings.TrimSpace(exactNextAction) == "" {
 			status = "blocked"
-			reason = returnGateStatus
 		}
 	}
 	return AtlasContinuationContract{
@@ -928,6 +927,20 @@ func buildAtlasContinuationContract(readyNodes int, exactNextAction, returnGateS
 		RefusesFinalResponse: refusesFinalResponse,
 		Reason:               reason,
 		Source:               "recommendation_readback",
+	}
+}
+
+func atlasContinuationContractReason(readyNodes int, exactNextAction, returnGateStatus string) string {
+	hasExactNextAction := strings.TrimSpace(exactNextAction) != ""
+	switch {
+	case readyNodes > 0 && hasExactNextAction:
+		return "ready_nodes_or_exact_next_action_remain"
+	case readyNodes > 0:
+		return "ready_nodes_remain"
+	case hasExactNextAction:
+		return "exact_next_action_remains"
+	default:
+		return returnGateStatus
 	}
 }
 
@@ -1222,6 +1235,10 @@ func validateAtlasContinuationContract(readback AtlasRecommendationReadback) err
 		}
 		if !contract.RefusesFinalResponse {
 			return fmt.Errorf("continuation_contract.refuses_final_response must be true while ready nodes or exact next action remain")
+		}
+		expectedReason := atlasContinuationContractReason(readback.ReadyNodes, readback.ExactNextAction, readback.ReturnGateStatus)
+		if contract.Reason != expectedReason {
+			return fmt.Errorf("continuation_contract.reason must be %s while ready nodes or exact next action remain", expectedReason)
 		}
 	}
 	return nil
