@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-35-reconciliation-reason-agreement",
+  "status": "recorded",
+  "rollback": {
+    "strategy": "Revert the node commit or remove the reconciliation continuation reason fields, schema requirements, fixture updates, and focused tests.",
+    "blast_radius": "AO Atlas recommendation reconciliation packets only.",
+    "data_migration_required": false
+  }
+}

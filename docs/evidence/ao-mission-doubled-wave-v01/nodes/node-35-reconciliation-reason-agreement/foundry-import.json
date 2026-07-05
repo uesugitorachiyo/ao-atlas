@@ -1,0 +1,20 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-35-reconciliation-reason-agreement",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Implement reconciliation packet continuation reason agreement binding.",
+  "inputs": [
+    "Atlas recommendation readback continuation contract",
+    "Command readback continuation reason",
+    "Promoter no-promotion continuation reason",
+    "Foundry rollup continuation reason"
+  ],
+  "outputs": [
+    "Reconciliation reason fields",
+    "Agreement flag",
+    "Stale validation",
+    "Schema and production readiness coverage"
+  ]
+}

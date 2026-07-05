@@ -643,16 +643,21 @@ type AtlasRecommendationReconciliationPacket struct {
 	FinalResponseAllowed         bool                          `json:"final_response_allowed"`
 	FinalResponseReason          string                        `json:"final_response_reason"`
 	ExactNextAction              string                        `json:"exact_next_action"`
+	ContinuationContractReason   string                        `json:"continuation_contract_reason"`
 	CommandReturnGateStatus      string                        `json:"command_return_gate_status"`
+	CommandContinuationReason    string                        `json:"command_continuation_contract_reason"`
 	CommandFinalResponseAllowed  bool                          `json:"command_final_response_allowed"`
 	PromoterStatus               string                        `json:"promoter_status"`
+	PromoterContinuationReason   string                        `json:"promoter_continuation_contract_reason"`
 	PromotionClaimed             bool                          `json:"promotion_claimed"`
 	RSIRemainsDenied             bool                          `json:"rsi_remains_denied"`
 	FoundryStatus                string                        `json:"foundry_status"`
 	FoundryReturnGateStatus      string                        `json:"foundry_return_gate_status"`
+	FoundryContinuationReason    string                        `json:"foundry_continuation_contract_reason"`
 	FoundryNodeCompletionStatus  string                        `json:"foundry_node_completion_status"`
 	FoundryLeaseCompletionStatus string                        `json:"foundry_lease_completion_status"`
 	FoundryFinalResponseAllowed  bool                          `json:"foundry_final_response_allowed"`
+	ContinuationReasonAgreement  bool                          `json:"continuation_reason_agreement"`
 	ArtifactsAgree               bool                          `json:"artifacts_agree"`
 	SchedulesWork                bool                          `json:"schedules_work"`
 	ExecutesWork                 bool                          `json:"executes_work"`
