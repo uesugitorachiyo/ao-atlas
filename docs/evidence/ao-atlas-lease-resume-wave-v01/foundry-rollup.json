@@ -16,6 +16,7 @@
   "checkpoint_count": 40,
   "final_response_allowed": true,
   "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
+  "continuation_contract_reason": "final response allowed by recommendation readback",
   "schedules_work": false,
   "executes_work": false,
   "approves_work": false,

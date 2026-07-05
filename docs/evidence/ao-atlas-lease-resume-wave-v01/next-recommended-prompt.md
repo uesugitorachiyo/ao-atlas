@@ -15,6 +15,7 @@ Current status:
 - `min_minutes_met=true`
 - `final_response_allowed=true`
 - Return gate: `final_response_allowed`
+- Continuation contract reason: `final response allowed by recommendation readback`
 - Early-return risk: `cleared_no_ready_nodes_remain`
 - Checkpoint count: 40
 - Next executable node: `none`
