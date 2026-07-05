@@ -412,6 +412,7 @@ type AtlasRecommendationExecutionReadback struct {
 	GeneratedWorkgraph             AtlasRecommendationGeneratedWorkgraphReadback     `json:"generated_workgraph"`
 	FoundryRunLinkReadinessSummary AtlasRecommendationFoundryRunLinkReadinessSummary `json:"foundry_run_link_readiness_summary"`
 	ContinuationReasonCoverage     AtlasRecommendationContinuationReasonCoverage     `json:"continuation_reason_coverage"`
+	ReasonArtifactAgreementSummary AtlasRecommendationReasonArtifactAgreementSummary `json:"reason_artifact_agreement_summary"`
 	SourceArtifacts                []SourceRef                                       `json:"source_artifacts"`
 }
 
@@ -428,6 +429,25 @@ type AtlasRecommendationContinuationReasonCoverage struct {
 	CheckpointFreshnessStatus string   `json:"checkpoint_freshness_status"`
 	ClaimsAuthorityAdvance    bool     `json:"claims_authority_advance"`
 	RSIRemainsDenied          bool     `json:"rsi_remains_denied"`
+}
+
+type AtlasRecommendationReasonArtifactAgreementSummary struct {
+	Status                           string   `json:"status"`
+	ExpectedReason                   string   `json:"expected_reason"`
+	IndexedSources                   []string `json:"indexed_sources"`
+	SourceCount                      int      `json:"source_count"`
+	AllRequiredSourcesIndexed        bool     `json:"all_required_sources_indexed"`
+	SourceArtifactRefs               []string `json:"source_artifact_refs"`
+	SourceArtifactCount              int      `json:"source_artifact_count"`
+	SourceArtifactsAgree             bool     `json:"source_artifacts_agree"`
+	FoundryRunLinkReadinessDigest    string   `json:"foundry_run_link_readiness_digest"`
+	ContinuationReasonCoverageDigest string   `json:"continuation_reason_coverage_digest"`
+	FinalResponseAllowed             bool     `json:"final_response_allowed"`
+	RefusesFinalResponse             bool     `json:"refuses_final_response"`
+	ExactNextAction                  string   `json:"exact_next_action"`
+	ReturnGateStatus                 string   `json:"return_gate_status,omitempty"`
+	ClaimsAuthorityAdvance           bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied                 bool     `json:"rsi_remains_denied"`
 }
 
 type AtlasRecommendationFoundryRunLinkReadinessSummary struct {

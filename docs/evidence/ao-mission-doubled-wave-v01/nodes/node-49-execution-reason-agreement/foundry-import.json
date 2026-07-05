@@ -1,0 +1,16 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-49-execution-reason-agreement",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Add compact final execution readback summary binding all continuation reason artifact agreement sources and digests.",
+  "inputs": [
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/models.go",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/execution-readback.json"
+  ],
+  "single_active_node": true,
+  "provider_calls": false,
+  "credential_inspection": false
+}

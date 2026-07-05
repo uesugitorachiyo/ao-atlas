@@ -111,5 +111,40 @@
     "broad_rsi_claim": false,
     "rsi_remains_denied": true
   },
-  "ledger_correction": "The implementation wave added recommendation readback machinery and generated a 40-node workgraph, but it did not execute the generated workgraph nodes. Recommendation node completion must come from recommendation-readback.completed_nodes and per-node run-link evidence."
+  "ledger_correction": "The implementation wave added recommendation readback machinery and generated a 40-node workgraph, but it did not execute the generated workgraph nodes. Recommendation node completion must come from recommendation-readback.completed_nodes and per-node run-link evidence.",
+  "reason_artifact_agreement_summary": {
+    "status": "agreement",
+    "expected_reason": "ready_nodes_or_exact_next_action_remain",
+    "indexed_sources": [
+      "recommendation_readback",
+      "checkpoint_readback",
+      "workgraph_readiness_packet",
+      "command_readback",
+      "command_timeline_binding",
+      "promoter_readback",
+      "foundry_rollup",
+      "reconciliation_packet",
+      "reconciliation_command",
+      "reconciliation_promoter",
+      "reconciliation_foundry",
+      "final_state_reconciliation",
+      "resume_prompt"
+    ],
+    "source_count": 13,
+    "all_required_sources_indexed": true,
+    "source_artifact_refs": [
+      "foundry_run_link_readiness_summary",
+      "continuation_reason_coverage"
+    ],
+    "source_artifact_count": 2,
+    "source_artifacts_agree": true,
+    "foundry_run_link_readiness_digest": "sha256:8e058a1c2aafa040bda39dfe9dc6a95acf6d48312c42380c86c685e56c7ca807",
+    "continuation_reason_coverage_digest": "sha256:675f59709c786505a698fe79fb6caa74177d1334684797f9b92eb734e6328d29",
+    "final_response_allowed": false,
+    "refuses_final_response": true,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.",
+    "return_gate_status": null,
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  }
 }

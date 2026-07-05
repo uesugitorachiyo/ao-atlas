@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-49-execution-reason-agreement",
+  "status": "selected",
+  "title": "Add final execution readback reason artifact agreement summary",
+  "why": "Execution readbacks carried continuation reason coverage and source artifact digests separately, but lacked a compact final summary proving all reason artifacts agree.",
+  "bounded_files": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-long-recommendation-wave-v03/execution-readback.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/execution-readback.json"
+  ],
+  "blueprint_required": false,
+  "foundry_import_required": true
+}

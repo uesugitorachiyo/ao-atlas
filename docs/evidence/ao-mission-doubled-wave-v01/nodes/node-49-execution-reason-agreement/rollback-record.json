@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-49-execution-reason-agreement",
+  "status": "recorded",
+  "rollback_strategy": "Revert the node commit to remove reason_artifact_agreement_summary from the model, builder, validator, CLI output, production readiness, tests, and refreshed execution readbacks.",
+  "safe_repack": "If only historical execution readbacks drift, regenerate from the latest completed workgraph or mechanically refresh the summary from existing continuation_reason_coverage and source_artifacts.",
+  "forbidden_surfaces": []
+}

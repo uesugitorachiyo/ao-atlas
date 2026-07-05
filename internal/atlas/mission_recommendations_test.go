@@ -1270,6 +1270,31 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		!strings.Contains(out.String(), "next_recommended_prompt=") {
 		t.Fatalf("resume output did not preserve lease timing: %s", out.String())
 	}
+	readbackExecutionPath := filepath.Join(dir, "readback-execution-readback.json")
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "readback",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", updatedWorkgraphPath,
+		"--evidence-root", "docs/evidence/test-wave",
+		"--started-at", "2026-07-04T08:00:00-07:00",
+		"--completed-at", "2026-07-04T08:25:00-07:00",
+		"--elapsed-minutes", "25",
+		"--lease-timing-mode", "actual",
+		"--out-execution-readback", readbackExecutionPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("readback execution output failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "execution_readback="+filepath.ToSlash(readbackExecutionPath)) {
+		t.Fatalf("readback output missing execution readback path: %s", out.String())
+	}
+	readbackExecution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, readbackExecutionPath)
+	if readbackExecution.ReasonArtifactAgreementSummary.Status != "agreement" ||
+		readbackExecution.ReasonArtifactAgreementSummary.SourceArtifactCount != len(readbackExecution.SourceArtifacts) ||
+		!readbackExecution.ReasonArtifactAgreementSummary.SourceArtifactsAgree {
+		t.Fatalf("readback command execution output missing agreement summary: %#v", readbackExecution)
+	}
 	resumeReadback := mustLoadJSON[AtlasRecommendationReadback](t, resumeReadbackPath)
 	if resumeReadback.StartedAt != leaseStart.StartedAt || resumeReadback.ElapsedMinutes != 25 {
 		t.Fatalf("resume readback lost lease start: %#v", resumeReadback)
@@ -1297,6 +1322,14 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		resumeExecution.ContinuationReasonCoverage.SourceCount != 13 ||
 		!containsString(resumeExecution.ContinuationReasonCoverage.IndexedSources, "checkpoint_readback") ||
 		!containsString(resumeExecution.ContinuationReasonCoverage.IndexedSources, "resume_prompt") ||
+		resumeExecution.ReasonArtifactAgreementSummary.Status != "agreement" ||
+		resumeExecution.ReasonArtifactAgreementSummary.ExpectedReason != resumeReadback.ContinuationContract.Reason ||
+		resumeExecution.ReasonArtifactAgreementSummary.SourceCount != resumeExecution.ContinuationReasonCoverage.SourceCount ||
+		!resumeExecution.ReasonArtifactAgreementSummary.AllRequiredSourcesIndexed ||
+		!resumeExecution.ReasonArtifactAgreementSummary.SourceArtifactsAgree ||
+		resumeExecution.ReasonArtifactAgreementSummary.SourceArtifactCount != len(resumeExecution.SourceArtifacts) ||
+		!containsString(resumeExecution.ReasonArtifactAgreementSummary.SourceArtifactRefs, "continuation_reason_coverage") ||
+		!containsString(resumeExecution.ReasonArtifactAgreementSummary.SourceArtifactRefs, "foundry_run_link_readiness_summary") ||
 		!hasSourceArtifact(resumeExecution.SourceArtifacts, "continuation_reason_coverage") ||
 		!hasSourceArtifact(resumeExecution.SourceArtifacts, "foundry_run_link_readiness_summary") {
 		t.Fatalf("execution readback missing source artifact coverage: %#v", resumeExecution)
@@ -2351,6 +2384,12 @@ func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T)
 	if err == nil || !strings.Contains(err.Error(), "continuation_reason_coverage source artifact digest disagrees") {
 		t.Fatalf("expected stale continuation source artifact digest rejection, got %v", err)
 	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ReasonArtifactAgreementSummary.SourceArtifactCount = 1
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "reason_artifact_agreement_summary.source_artifact_count must match source_artifacts length") {
+		t.Fatalf("expected stale reason artifact summary rejection, got %v", err)
+	}
 }
 
 func TestRecommendationWorkgraphReadinessPacketRejectsStaleReadyNodeState(t *testing.T) {
@@ -2637,6 +2676,9 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 		"next-recommended-prompt.md",
 		"reject_generated_recommendation_prompt_public_safety",
 		"recommendation-prompt-public-safety-scan",
+		"execution-readback-regenerated.json",
+		"reason_artifact_agreement_summary",
+		"generated-recommendation-prompt-continuation-reason-negative-scan",
 		"lease-resume-wave-public-safety-readback",
 		"lease_resume_root=\"docs/evidence/ao-atlas-lease-resume-wave-v01\"",
 		"final-synthesis.json",
