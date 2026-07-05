@@ -1,0 +1,11 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-47-reconciliation-reason-fixture",
+  "status": "continuation_required",
+  "completed_nodes_after_this_node": 47,
+  "target_nodes": 50,
+  "readback": "Reconciliation fixture coverage now includes a stale Command continuation_contract_reason mismatch and keeps final response blocked while ready nodes remain.",
+  "exact_next_action_after_merge": "Continue to node 48 and bind generated prompt public-safety negative fixture for continuation reason wording.",
+  "final_response_allowed": false
+}

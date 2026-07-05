@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-47-reconciliation-reason-fixture",
+  "status": "recorded",
+  "rollback_strategy": "Revert the node commit to remove the stale continuation reason fixture, its regression test, and the production readiness assertion.",
+  "safe_repack": "If the fixture drifts from generated readback semantics, regenerate the invalid reconciliation packet from a one-node-complete wave before reverting validation code.",
+  "forbidden_surfaces": []
+}

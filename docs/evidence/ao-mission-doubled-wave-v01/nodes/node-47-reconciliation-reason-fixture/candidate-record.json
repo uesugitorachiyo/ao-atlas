@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-47-reconciliation-reason-fixture",
+  "status": "selected",
+  "title": "Add stale reconciliation fixture for continuation reason disagreement",
+  "why": "Reconciliation already rejected stale Command status, but lacked a negative fixture proving a stale Command continuation_contract_reason cannot look closed while Atlas, Foundry, and Promoter still require continuation.",
+  "bounded_files": [
+    "examples/invalid/recommendation-reconciliation-stale-continuation-reason.json",
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh"
+  ],
+  "blueprint_required": false,
+  "foundry_import_required": true
+}
