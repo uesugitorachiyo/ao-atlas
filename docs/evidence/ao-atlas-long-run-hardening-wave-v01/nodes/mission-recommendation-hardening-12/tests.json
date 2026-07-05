@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-12",
+  "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveUnsafePromptBlocksForbiddenActionCategories -count=1",
+  "red_result": "failed before unsafe-prompt-blocks-fixture.json existed",
+  "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveUnsafePromptBlocksForbiddenActionCategories -count=1",
+  "green_result": "passed"
+}
