@@ -3167,6 +3167,81 @@ func TestLongRunHardeningWavePromoterNoPromotionSummaryDeniesAuthorityAdvance(t 
 	}
 }
 
+func TestLongRunHardeningWaveSentinelScanCoversGeneratedDocsAndReadbacks(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-10", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-11")
+	scan := mustLoadJSON[struct {
+		Schema                     string   `json:"schema"`
+		NodeID                     string   `json:"node_id"`
+		Status                     string   `json:"status"`
+		ScannedScope               []string `json:"scanned_scope"`
+		EvidenceRoots              []string `json:"evidence_roots"`
+		NegativeScanTermsRedacted  bool     `json:"negative_scan_terms_redacted"`
+		UnsafeMatchCount           int      `json:"unsafe_match_count"`
+		PublicDocsScanPassed       bool     `json:"public_docs_scan_passed"`
+		GeneratedReadbacksPassed   bool     `json:"generated_readbacks_scan_passed"`
+		RSIRemainsDenied           bool     `json:"rsi_remains_denied"`
+		CurrentHardeningCheckpoint struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+	}](t, filepath.Join(nodeDir, "sentinel-wording-scan.json"))
+
+	if scan.Schema != "ao.atlas.sentinel-wording-scan.v0.1" ||
+		scan.NodeID != "mission-recommendation-hardening-11" ||
+		scan.Status != "passed" ||
+		!scan.NegativeScanTermsRedacted ||
+		scan.UnsafeMatchCount != 0 ||
+		!scan.PublicDocsScanPassed ||
+		!scan.GeneratedReadbacksPassed ||
+		!scan.RSIRemainsDenied ||
+		scan.SchedulesWork ||
+		scan.ExecutesWork ||
+		scan.ApprovesWork ||
+		scan.ClaimsAuthorityAdvance {
+		t.Fatalf("Sentinel scan summary must pass without authority effects: %#v", scan)
+	}
+	scopeSeen := map[string]bool{}
+	for _, scope := range scan.ScannedScope {
+		scopeSeen[scope] = true
+	}
+	if !scopeSeen["generated_docs"] || !scopeSeen["generated_readbacks"] {
+		t.Fatalf("Sentinel scan must cover generated docs and readbacks: %#v", scan.ScannedScope)
+	}
+	for _, root := range scan.EvidenceRoots {
+		if root == "" || strings.HasPrefix(root, "/") {
+			t.Fatalf("Sentinel scan evidence roots must be relative: %#v", scan.EvidenceRoots)
+		}
+	}
+	if scan.CurrentHardeningCheckpoint.CompletedNodes != nodeTenReadback.CompletedNodes ||
+		scan.CurrentHardeningCheckpoint.ReadyNodes != nodeTenReadback.ReadyNodes ||
+		scan.CurrentHardeningCheckpoint.FirstExecutableNode != nodeTenReadback.FirstExecutableNode ||
+		scan.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeTenReadback.FinalResponseAllowed ||
+		scan.CurrentHardeningCheckpoint.ExactNextAction != nodeTenReadback.ExactNextAction {
+		t.Fatalf("Sentinel scan must bind current hardening checkpoint: %#v", scan.CurrentHardeningCheckpoint)
+	}
+
+	nodeElevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeElevenReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeElevenReadback.CompletedNodes != 11 ||
+		nodeElevenReadback.ReadyNodes != 29 ||
+		nodeElevenReadback.FirstExecutableNode != "mission-recommendation-hardening-12" ||
+		nodeElevenReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeElevenReadback.ExactNextAction, "mission-recommendation-hardening-12") {
+		t.Fatalf("node 11 readback must continue to node 12 without final response: %#v", nodeElevenReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
