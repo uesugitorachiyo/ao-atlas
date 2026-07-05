@@ -1,0 +1,16 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-46-promoter-reason-summary",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Add Promoter no-promotion reason summary binding for continuation_contract_reason and final_response_allowed state.",
+  "inputs": [
+    "internal/atlas/mission_recommendations.go",
+    "schemas/recommendation-promoter-readback.schema.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/promoter-readback.json"
+  ],
+  "single_active_node": true,
+  "provider_calls": false,
+  "credential_inspection": false
+}

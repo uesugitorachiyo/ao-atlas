@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-46-promoter-reason-summary",
+  "status": "recorded",
+  "rollback_strategy": "Revert the node commit to remove no_promotion_reason_summary from model, schema, generated fixtures, tests, and readiness checks.",
+  "safe_repack": "If only generated Promoter fixtures drift, regenerate from lease-start and final workgraph before reverting code.",
+  "forbidden_surfaces": []
+}

@@ -613,6 +613,7 @@ type AtlasRecommendationPromoterReadback struct {
 	PromotionClaimed           bool   `json:"promotion_claimed"`
 	RSIRemainsDenied           bool   `json:"rsi_remains_denied"`
 	NoPromotionSummary         string `json:"no_promotion_summary"`
+	NoPromotionReasonSummary   string `json:"no_promotion_reason_summary"`
 	NextDeniedClass            string `json:"next_denied_class"`
 	Reason                     string `json:"reason"`
 	ElapsedMinutes             int    `json:"elapsed_minutes"`

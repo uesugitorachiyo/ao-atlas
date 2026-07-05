@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-46-promoter-reason-summary",
+  "status": "selected",
+  "title": "Bind Promoter no-promotion summary to continuation reason",
+  "why": "Promoter had structured continuation reason fields, but the no-promotion readback lacked a compact reason summary that preserved final-response state for operator readback.",
+  "bounded_files": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "schemas/recommendation-promoter-readback.schema.json",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/promoter-readback.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/final-synthesis.json"
+  ],
+  "blueprint_required": false,
+  "foundry_import_required": true
+}

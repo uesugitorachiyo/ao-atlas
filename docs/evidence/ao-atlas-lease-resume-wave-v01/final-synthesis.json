@@ -189,6 +189,7 @@
     "promoter_status": "no_promotion",
     "promotion_claimed": false,
     "no_promotion_summary": "No mutation authority promotion claimed; RSI remains denied.",
+    "no_promotion_reason_summary": "No authority promotion claimed; RSI remains denied; continuation_contract_reason=final response allowed by recommendation readback; final_response_allowed=true.",
     "next_denied_class": "RSI",
     "rsi_remains_denied": true,
     "foundry_status": "completed",

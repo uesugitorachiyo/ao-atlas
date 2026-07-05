@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-46-promoter-reason-summary",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Added no_promotion_reason_summary to Promoter readback model and schema.",
+    "Generated no_promotion_reason_summary with continuation_contract_reason and final_response_allowed state.",
+    "Validated Promoter no-promotion reason summary in closure checks.",
+    "Extended tests and production readiness to reject missing reason summaries.",
+    "Updated lease-resume and historical Promoter readback evidence to remain schema-valid."
+  ],
+  "rsi_remains_denied": true
+}

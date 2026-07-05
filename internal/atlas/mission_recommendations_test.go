@@ -258,6 +258,7 @@ func TestRecommendationFoundryRollupSchemaRequiresContinuationReason(t *testing.
 func TestRecommendationPromoterReadbackSchemaRequiresContinuationReason(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "schemas", "recommendation-promoter-readback.schema.json")
 	assertSchemaRequiresField(t, root, "continuation_contract_reason")
+	assertSchemaRequiresField(t, root, "no_promotion_reason_summary")
 	assertSchemaEnumContains(t, root, "continuation_contract_reason",
 		"ready_nodes_or_exact_next_action_remain",
 		"ready_nodes_remain",
@@ -1312,6 +1313,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	}
 	rawPromoter := mustLoadJSON[map[string]any](t, promoterPath)
 	if rawPromoter["no_promotion_summary"] != "No mutation authority promotion claimed; RSI remains denied." ||
+		!strings.Contains(rawPromoter["no_promotion_reason_summary"].(string), "continuation_contract_reason="+resumeReadback.ContinuationContract.Reason) ||
 		rawPromoter["next_denied_class"] != "RSI" {
 		t.Fatalf("promoter readback missing no-promotion summary fields: %#v", rawPromoter)
 	}
@@ -1760,6 +1762,12 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
 		!strings.Contains(err.Error(), "promoter readback continuation_contract_reason disagrees") {
 		t.Fatalf("expected stale promoter continuation reason rejection, got %v", err)
+	}
+	promoter = BuildAtlasRecommendationPromoterReadback(readback)
+	promoter.NoPromotionReasonSummary = "No authority promotion claimed; RSI remains denied."
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "promoter readback no_promotion_reason_summary must include continuation_contract_reason") {
+		t.Fatalf("expected stale promoter reason summary rejection, got %v", err)
 	}
 	promoter = BuildAtlasRecommendationPromoterReadback(readback)
 	command = BuildAtlasRecommendationCommandReadback(readback)
