@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-43-foundry-readiness-reason",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Foundry run-link readiness summaries now expose return_gate_status, continuation_contract_reason, exact_next_action, and refuses_final_response.",
+    "Execution validator rejects stale Foundry readiness continuation reason, exact next action, and refusal fields.",
+    "Production readiness asserts generated Foundry readiness summaries carry the continuation fields.",
+    "The v0.3 execution ledger fixture source artifact digest was updated for the expanded Foundry readiness summary."
+  ],
+  "source_artifact": {
+    "ref": "foundry_run_link_readiness_summary",
+    "fixture_digest": "sha256:8e058a1c2aafa040bda39dfe9dc6a95acf6d48312c42380c86c685e56c7ca807"
+  }
+}

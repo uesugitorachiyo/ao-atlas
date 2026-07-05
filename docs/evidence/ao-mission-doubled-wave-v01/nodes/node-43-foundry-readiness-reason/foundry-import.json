@@ -1,0 +1,17 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-43-foundry-readiness-reason",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Implement Foundry run-link readiness continuation reason binding.",
+  "inputs": [
+    "Recommendation readback continuation contract",
+    "Foundry run-link readiness summary"
+  ],
+  "outputs": [
+    "Foundry readiness continuation fields",
+    "Validator and production readiness assertions",
+    "Fixture digest and node evidence updates"
+  ]
+}
