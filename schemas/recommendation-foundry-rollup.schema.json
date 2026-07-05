@@ -18,6 +18,7 @@
     "checkpoint_count",
     "final_response_allowed",
     "exact_next_action",
+    "continuation_contract_reason",
     "schedules_work",
     "executes_work",
     "approves_work",
@@ -42,6 +43,19 @@
     "checkpoint_count": { "type": "integer", "minimum": 0 },
     "final_response_allowed": { "type": "boolean" },
     "exact_next_action": { "type": "string", "minLength": 1 },
+    "continuation_contract_reason": {
+      "enum": [
+        "ready_nodes_or_exact_next_action_remain",
+        "ready_nodes_remain",
+        "exact_next_action_remains",
+        "final response allowed by recommendation readback",
+        "blocked_hard_blocker",
+        "blocked_lease_timing_missing",
+        "blocked_minimum_minutes_unmet",
+        "blocked_ready_nodes_remain",
+        "blocked_no_executable_ready_node"
+      ]
+    },
     "schedules_work": { "const": false },
     "executes_work": { "const": false },
     "approves_work": { "const": false },

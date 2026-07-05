@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-33-foundry-continuation-reason",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Added continuation_contract_reason to AtlasRecommendationFoundryRollup.",
+    "BuildAtlasRecommendationFoundryRollup mirrors readback.continuation_contract.reason into the rollup.",
+    "ValidateAtlasRecommendationClosureArtifacts rejects stale Foundry rollup continuation reason values.",
+    "recommendation-foundry-rollup schema and production readiness require the binding."
+  ],
+  "foundry_binding": {
+    "source": "recommendation_readback.continuation_contract.reason",
+    "rollup_field": "continuation_contract_reason"
+  }
+}
