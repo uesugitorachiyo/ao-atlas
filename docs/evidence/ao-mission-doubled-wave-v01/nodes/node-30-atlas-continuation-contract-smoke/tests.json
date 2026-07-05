@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-30-atlas-continuation-contract-smoke",
+  "status": "focused_and_full_tests_passed",
+  "red_state": {
+    "command": "go test ./internal/atlas -run TestMissionRecommendationsDenyFinalResponseWhenLeaseMinutesUnmet -count=1",
+    "result": "failed_before_contract_reason_repair",
+    "output": "exact next action must keep final response denied after a short completed wave: continuation_contract.reason was ready_nodes_or_exact_next_action_remain"
+  },
+  "focused_green": {
+    "command": "go test ./internal/atlas -run TestMissionRecommendationsDenyFinalResponseWhenLeaseMinutesUnmet -count=1",
+    "result": "passed",
+    "summary": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.285s"
+  },
+  "full_green": {
+    "command": "go test ./... -count=1",
+    "result": "passed",
+    "summary": "? github.com/uesugitorachiyo/ao-atlas/cmd/atlas [no test files]; ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.422s"
+  },
+  "coverage": [
+    "short completed wave with elapsed_minutes=22 denies final response",
+    "ready_nodes=0 plus exact_next_action still yields continuation_required",
+    "continuation_contract.reason is exact_next_action_remains",
+    "validator rejects stale generic continuation reason for this state"
+  ]
+}

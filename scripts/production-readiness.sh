@@ -311,7 +311,7 @@ jq '.nodes |= map(.status = "completed")' "$OUT/mission-recommendations/recommen
   --completed-at 2026-07-04T07:42:06-07:00 \
   --lease-timing-mode actual \
   --out "$OUT/mission-recommendations/recommendation-readback-completed-short.json" >/dev/null
-jq -e '.completed_nodes == 40 and .ready_nodes == 0 and .checkpoint_count == 40 and .return_gate_status == "blocked_minimum_minutes_unmet" and .elapsed_minutes == 22 and .min_minutes_met == false and .lease_time_status == "minimum_minutes_unmet" and .final_response_allowed == false and .final_response_reason == "minimum lease minutes unmet"' "$OUT/mission-recommendations/recommendation-readback-completed-short.json" >/dev/null
+jq -e '.completed_nodes == 40 and .ready_nodes == 0 and .checkpoint_count == 40 and .return_gate_status == "blocked_minimum_minutes_unmet" and .elapsed_minutes == 22 and .min_minutes_met == false and .lease_time_status == "minimum_minutes_unmet" and .final_response_allowed == false and .final_response_reason == "minimum lease minutes unmet" and .continuation_contract.status == "continuation_required" and .continuation_contract.refuses_final_response == true and .continuation_contract.reason == "exact_next_action_remains" and .continuation_contract.exact_next_action == .exact_next_action' "$OUT/mission-recommendations/recommendation-readback-completed-short.json" >/dev/null
 "$BIN" mission recommendations readback \
   --wave "$OUT/mission-recommendations/recommendation-wave.json" \
   --workgraph "$completed_recommendation_workgraph" \

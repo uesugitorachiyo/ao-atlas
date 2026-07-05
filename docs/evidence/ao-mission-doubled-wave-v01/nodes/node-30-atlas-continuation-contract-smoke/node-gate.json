@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-30-atlas-continuation-contract-smoke",
+  "status": "open",
+  "owner": "ao-atlas",
+  "objective": "Add a continuation-contract smoke proving exact_next_action blocks final response after a short completed wave with no ready nodes.",
+  "entry_conditions": [
+    "node-29-atlas-command-mismatch-fixture merged in AO Atlas PR #242",
+    "AO Atlas main synced before creating this node branch",
+    "exactly one executable mutation node is active for this branch"
+  ],
+  "exit_conditions": [
+    "short completed recommendation wave records final_response_allowed=false",
+    "continuation_contract.reason distinguishes exact_next_action_remains from ready nodes",
+    "validator rejects stale generic continuation reason for exact-next-action-only denial",
+    "production readiness asserts the exact-next-action-only continuation contract"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

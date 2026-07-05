@@ -1,0 +1,14 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-30-atlas-continuation-contract-smoke",
+  "status": "ready",
+  "summary": "Atlas continuation contracts now distinguish exact-next-action-only denial from ready-node denial, preventing short completed waves from looking final.",
+  "exact_next_action": "Continue node-31: add the next AO Atlas long-run continuation evidence node from the doubled recommendation wave.",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "rsi_remains_denied": true
+}

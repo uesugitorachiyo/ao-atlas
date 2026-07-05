@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-30-atlas-continuation-contract-smoke",
+  "status": "selected",
+  "selected_candidate": "Make exact-next-action-only continuation a distinct Atlas continuation-contract reason and bind it into tests and production readiness.",
+  "alternatives_rejected": [
+    "Only add another prompt sentence; rejected because the machine-readable readback still needed a distinct reason.",
+    "Treat short completed waves as ready-node denials; rejected because ready_nodes is zero in this failure mode.",
+    "Change final_response_allowed semantics broadly; rejected because final closure remains valid when all nodes complete and the lease minimum is met."
+  ],
+  "decision": "Extend continuation contract reason derivation and validation, then assert the short completed wave keeps final response denied while exact_next_action remains."
+}
