@@ -1684,6 +1684,7 @@ func BuildAtlasRecommendationPromoterReadback(readback AtlasRecommendationReadba
 		PromotionClaimed:           false,
 		RSIRemainsDenied:           true,
 		NoPromotionSummary:         "No mutation authority promotion claimed; RSI remains denied.",
+		NoPromotionReasonSummary:   fmt.Sprintf("No authority promotion claimed; RSI remains denied; continuation_contract_reason=%s; final_response_allowed=%t.", readback.ContinuationContract.Reason, readback.FinalResponseAllowed),
 		NextDeniedClass:            "RSI",
 		Reason:                     reason,
 		ElapsedMinutes:             readback.ElapsedMinutes,
@@ -1873,6 +1874,12 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	}
 	if promoter.NoPromotionSummary != "No mutation authority promotion claimed; RSI remains denied." {
 		errs = append(errs, "promoter readback must include no-promotion summary")
+	}
+	if !strings.Contains(promoter.NoPromotionReasonSummary, "continuation_contract_reason="+readback.ContinuationContract.Reason) {
+		errs = append(errs, "promoter readback no_promotion_reason_summary must include continuation_contract_reason")
+	}
+	if !strings.Contains(promoter.NoPromotionReasonSummary, fmt.Sprintf("final_response_allowed=%t", readback.FinalResponseAllowed)) {
+		errs = append(errs, "promoter readback no_promotion_reason_summary must include final_response_allowed")
 	}
 	if promoter.NextDeniedClass != "RSI" {
 		errs = append(errs, "promoter readback next_denied_class must be RSI")

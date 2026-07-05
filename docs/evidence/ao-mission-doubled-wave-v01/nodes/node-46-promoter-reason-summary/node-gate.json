@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-46-promoter-reason-summary",
+  "status": "opened",
+  "owner": "ao-atlas",
+  "active_mutation_nodes": 1,
+  "branch": "codex/doubled-wave-node-46-promoter-reason-summary",
+  "entry_gate": {
+    "main_synced": true,
+    "local_codex_branches": 0,
+    "remote_codex_branches": 0,
+    "previous_node": "node-45-command-timeline-reason",
+    "previous_pr": 258
+  },
+  "return_gate": "blocked_until_local_verification_and_ci_merge",
+  "final_response_allowed": false
+}
