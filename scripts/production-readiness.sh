@@ -257,6 +257,11 @@ test -s "$OUT/ao-mission-import.json"
   --out "$OUT/ao-mission-final-synthesis-readback.json" >/dev/null
 test -s "$OUT/ao-mission-final-synthesis-readback.json"
 jq -e '.contract_version == "ao.atlas.ao-mission-final-synthesis-readback.v0.1" and .completed_nodes == 26 and .ready_nodes == 0 and .blocked_nodes == 0 and .final_response_allowed == true and .return_gate_status == "final_response_allowed" and .rsi_remains_denied == true and .promotion_claimed == false and .claims_authority_advance == false and (.feature_depth_next_tasks | length) == 10' "$OUT/ao-mission-final-synthesis-readback.json" >/dev/null
+"$BIN" mission final-synthesis import \
+  --synthesis examples/valid/ao-mission/final-synthesis-ready-node-denial.json \
+  --out "$OUT/ao-mission-final-synthesis-ready-node-denial-readback.json" >/dev/null
+test -s "$OUT/ao-mission-final-synthesis-ready-node-denial-readback.json"
+jq -e '.contract_version == "ao.atlas.ao-mission-final-synthesis-readback.v0.1" and .completed_nodes == 26 and .ready_nodes == 34 and .blocked_nodes == 0 and .final_response_allowed == false and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_reason == "ready nodes remain" and (.exact_next_action | contains("node-27")) and (.feature_depth_next_tasks | length) == 10 and .rsi_remains_denied == true and .promotion_claimed == false and .claims_authority_advance == false and .safe_to_execute == false and .executes_work == false and .approves_work == false' "$OUT/ao-mission-final-synthesis-ready-node-denial-readback.json" >/dev/null
 "$BIN" mission recommendations import --recommendations examples/valid/ao-mission/feature-depth-recommendations.json --target-instance demo-stack --min-tasks 30 --node-budget 40 --min-minutes 120 --max-minutes 180 --continue-if-fast-target 40 --started-at 2026-07-04T08:00:00-07:00 --out "$OUT/mission-recommendations" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-wave.json"
 test -s "$OUT/mission-recommendations/recommendation-workgraph.json"

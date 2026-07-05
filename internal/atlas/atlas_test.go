@@ -1007,6 +1007,24 @@ func TestMissionFinalSynthesisImportRejectsReadyNodeFinalGateDrift(t *testing.T)
 	}
 }
 
+func TestMissionFinalSynthesisReadbackUsesReadyNodeDenialQuality(t *testing.T) {
+	readback, err := BuildAOMissionFinalSynthesisReadback(filepath.Join("..", "..", "examples", "valid", "ao-mission", "final-synthesis-ready-node-denial.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.FinalResponseAllowed ||
+		readback.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		readback.FinalResponseReason != "ready nodes remain" ||
+		readback.ReadyNodes != 34 ||
+		!strings.Contains(readback.ExactNextAction, "node-27") ||
+		len(readback.FeatureDepthNextTasks) != 10 {
+		t.Fatalf("ready-node denial readback lost prompt quality: %#v", readback)
+	}
+	if readback.SafeToExecute || readback.SchedulesWork || readback.ExecutesWork || readback.ApprovesWork || readback.MutatesRepositories || !readback.RSIRemainsDenied {
+		t.Fatalf("readback widened authority or failed RSI denial: %#v", readback)
+	}
+}
+
 func TestMissionImportBindsOptionalRouteHistoryProvenance(t *testing.T) {
 	dir := t.TempDir()
 	record := filepath.Join(dir, "mission-record.json")

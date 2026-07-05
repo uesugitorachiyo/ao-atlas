@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-27-atlas-prompt-readback-quality",
+  "branch": "codex/doubled-wave-node-27-prompt-readback-quality",
+  "rollback": "Revert the node-27 branch or remove the ready-node denial fixture, return-gate priority change, production-readiness assertion, tests, and evidence before merge.",
+  "files": [
+    "internal/atlas/mission_final_synthesis.go",
+    "internal/atlas/atlas_test.go",
+    "examples/valid/ao-mission/final-synthesis-ready-node-denial.json",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-27-atlas-prompt-readback-quality"
+  ],
+  "requires_release": false
+}
