@@ -1,0 +1,16 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-48-prompt-safety-reason-fixture",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Add a generated recommendation prompt public-safety negative fixture for unsafe continuation_contract_reason wording.",
+  "inputs": [
+    "scripts/production-readiness.sh",
+    "internal/atlas/mission_recommendations_test.go",
+    "examples/invalid"
+  ],
+  "single_active_node": true,
+  "provider_calls": false,
+  "credential_inspection": false
+}

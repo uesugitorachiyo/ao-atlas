@@ -52,7 +52,7 @@ reject_generated_recommendation_prompt_public_safety() {
   for phrase in "${forbidden[@]}"; do
     if grep -niF "$phrase" "$prompt" >/dev/null; then
       echo "generated recommendation prompt contains unsafe wording '$phrase' in $prompt" >&2
-      exit 1
+      return 1
     fi
   done
 }
@@ -163,6 +163,16 @@ if reject_generated_continuation_prompt_public_safety "$unsafe_continuation_prom
 fi
 grep -q "generated continuation prompt contains unsafe wording" "$unsafe_continuation_scan"
 pass "generated-continuation-prompt-negative-scan"
+
+unsafe_recommendation_reason_prompt="examples/invalid/recommendation-prompt-unsafe-continuation-reason.md"
+unsafe_recommendation_reason_scan="$OUT/generated-recommendation-prompt-unsafe-continuation-reason.out"
+grep -qF 'Continuation contract reason: `fully_unsupervised_complex_mutation is proven`' "$unsafe_recommendation_reason_prompt"
+if reject_generated_recommendation_prompt_public_safety "$unsafe_recommendation_reason_prompt" >"$unsafe_recommendation_reason_scan" 2>&1; then
+  echo "unsafe generated recommendation prompt continuation reason was accepted" >&2
+  exit 1
+fi
+grep -q "generated recommendation prompt contains unsafe wording" "$unsafe_recommendation_reason_scan"
+pass "generated-recommendation-prompt-continuation-reason-negative-scan"
 
 required_files=(
   README.md

@@ -1,0 +1,22 @@
+{
+  "schema": "ao.sentinel.public-safety.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-48-prompt-safety-reason-fixture",
+  "status": "passed",
+  "scope": [
+    "invalid generated recommendation prompt fixture",
+    "production readiness negative scan",
+    "changed public docs/readbacks"
+  ],
+  "negative_fixture": "examples/invalid/recommendation-prompt-unsafe-continuation-reason.md",
+  "negative_fixture_rejected": true,
+  "changed_public_scope": "none",
+  "negative_claims": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "authority_promotion": false,
+    "rsi_proven": false
+  },
+  "rsi_remains_denied": true
+}

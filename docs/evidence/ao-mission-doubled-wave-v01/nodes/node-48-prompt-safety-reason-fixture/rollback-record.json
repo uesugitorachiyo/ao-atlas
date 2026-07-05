@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-48-prompt-safety-reason-fixture",
+  "status": "recorded",
+  "rollback_strategy": "Revert the node commit to remove the invalid prompt fixture, its Go coverage, and the production readiness negative scan.",
+  "safe_repack": "If the invalid fixture wording drifts, preserve the scanner behavior and replace only the fixture text with a fresh rejected continuation reason line.",
+  "forbidden_surfaces": []
+}

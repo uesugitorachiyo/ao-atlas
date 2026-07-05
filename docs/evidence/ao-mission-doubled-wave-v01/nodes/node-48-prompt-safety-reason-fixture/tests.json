@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-48-prompt-safety-reason-fixture",
+  "status": "red_green_and_full_tests_passed",
+  "focused_tests": [
+    "go test ./internal/atlas -run TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture -count=1 failed before fixture with missing examples/invalid/recommendation-prompt-unsafe-continuation-reason.md",
+    "go test ./internal/atlas -run TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture -count=1 passed after fixture and readiness hook"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ]
+}
