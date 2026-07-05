@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-hardening-10",
+  "rollback_scope": [
+    "revert the Node 10 Promoter no-promotion regression",
+    "remove Node 10 generated evidence artifacts"
+  ],
+  "safe_to_revert": true,
+  "no_release_or_deploy_performed": true
+}

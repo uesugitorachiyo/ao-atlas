@@ -1,0 +1,26 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-hardening-10-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/command_readback.json",
+    "foundry_continuation_handoff": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/foundry-continuation-handoff.json",
+    "foundry_continuation_prompt": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/foundry-continuation-prompt.md",
+    "foundry_import": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/promoter_no_promotion.json",
+    "promoter_no_promotion_summary": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/promoter-no-promotion-summary.json",
+    "rollback_record": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/sentinel_public_safety.json",
+    "supervisor_command_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/supervisor-command-readback.json",
+    "supervisor_foundry_rollup": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/supervisor-foundry-rollup.json",
+    "supervisor_promoter_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/supervisor-promoter-readback.json",
+    "supervisor_reconciliation_packet": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/supervisor-reconciliation-packet.json",
+    "tests": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/tests.json",
+    "verification": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10/verification.json"
+  },
+  "digest": "sha256:63a800d816e3de1d1a7abc0a730e3f91bca219a206edf3ca02ea8f33c6193be9"
+}

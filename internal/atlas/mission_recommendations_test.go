@@ -3091,6 +3091,82 @@ func TestLongRunHardeningWaveCommandTimelineSummarizesDoubledWave(t *testing.T) 
 	}
 }
 
+func TestLongRunHardeningWavePromoterNoPromotionSummaryDeniesAuthorityAdvance(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeNineReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-09", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-10")
+	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, filepath.Join(nodeDir, "supervisor-promoter-readback.json"))
+	summary := mustLoadJSON[struct {
+		Schema                                        string `json:"schema"`
+		NodeID                                        string `json:"node_id"`
+		Status                                        string `json:"status"`
+		MissionID                                     string `json:"mission_id"`
+		CompletedNodesBeforeNode                      int    `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode                          int    `json:"ready_nodes_before_node"`
+		PromotionClaimed                              bool   `json:"promotion_claimed"`
+		RSIRemainsDenied                              bool   `json:"rsi_remains_denied"`
+		NextDeniedClass                               string `json:"next_denied_class"`
+		SupervisorHardeningWithoutCapabilityPromotion bool   `json:"supervisor_hardening_without_capability_promotion"`
+		FinalResponseAllowed                          bool   `json:"final_response_allowed"`
+		ContinuationContractReason                    string `json:"continuation_contract_reason"`
+		ExactNextAction                               string `json:"exact_next_action"`
+		NoPromotionReasonSummary                      string `json:"no_promotion_reason_summary"`
+		SchedulesWork                                 bool   `json:"schedules_work"`
+		ExecutesWork                                  bool   `json:"executes_work"`
+		ApprovesWork                                  bool   `json:"approves_work"`
+		ClaimsAuthorityAdvance                        bool   `json:"claims_authority_advance"`
+	}](t, filepath.Join(nodeDir, "promoter-no-promotion-summary.json"))
+
+	if err := ValidateAtlasRecommendationReadback(nodeNineReadback); err != nil {
+		t.Fatal(err)
+	}
+	if promoter.Schema != "ao.atlas.recommendation-promoter-readback.v0.1" ||
+		promoter.Status != "no_promotion" ||
+		promoter.PromotionClaimed ||
+		!promoter.RSIRemainsDenied ||
+		promoter.NextDeniedClass != "RSI" ||
+		promoter.FinalResponseAllowed ||
+		promoter.ContinuationContractReason != nodeNineReadback.ContinuationContract.Reason ||
+		promoter.ClaimsAuthorityAdvance {
+		t.Fatalf("promoter readback must deny promotion and authority advance: %#v", promoter)
+	}
+	if summary.Schema != "ao.atlas.promoter-no-promotion-summary.v0.1" ||
+		summary.NodeID != "mission-recommendation-hardening-10" ||
+		summary.Status != "no_promotion" ||
+		summary.MissionID != nodeNineReadback.MissionID ||
+		summary.CompletedNodesBeforeNode != nodeNineReadback.CompletedNodes ||
+		summary.ReadyNodesBeforeNode != nodeNineReadback.ReadyNodes ||
+		summary.PromotionClaimed ||
+		!summary.RSIRemainsDenied ||
+		summary.NextDeniedClass != "RSI" ||
+		!summary.SupervisorHardeningWithoutCapabilityPromotion ||
+		summary.FinalResponseAllowed ||
+		summary.ContinuationContractReason != nodeNineReadback.ContinuationContract.Reason ||
+		summary.ExactNextAction != nodeNineReadback.ExactNextAction ||
+		summary.SchedulesWork ||
+		summary.ExecutesWork ||
+		summary.ApprovesWork ||
+		summary.ClaimsAuthorityAdvance {
+		t.Fatalf("no-promotion summary must bind continuation state without authority advance: %#v", summary)
+	}
+	if !strings.Contains(summary.NoPromotionReasonSummary, "ready_nodes=31") ||
+		!strings.Contains(summary.NoPromotionReasonSummary, "final_response_allowed=false") {
+		t.Fatalf("no-promotion summary must include exact denial counts and final gate: %q", summary.NoPromotionReasonSummary)
+	}
+
+	nodeTenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTenReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeTenReadback.CompletedNodes != 10 ||
+		nodeTenReadback.ReadyNodes != 30 ||
+		nodeTenReadback.FirstExecutableNode != "mission-recommendation-hardening-11" ||
+		nodeTenReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTenReadback.ExactNextAction, "mission-recommendation-hardening-11") {
+		t.Fatalf("node 10 readback must continue to node 11 without final response: %#v", nodeTenReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

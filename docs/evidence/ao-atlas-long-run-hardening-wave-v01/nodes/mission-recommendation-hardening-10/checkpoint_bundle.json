@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-hardening-10",
+  "status": "completed",
+  "checkpoint_policy": "after_each_node_or_timed_interval",
+  "source_workgraph": "../mission-recommendation-hardening-09/workgraph-after.json",
+  "promoter_no_promotion_summary": "promoter-no-promotion-summary.json",
+  "post_node_workgraph": "workgraph-after.json",
+  "post_node_readback": "recommendation-readback-after.json"
+}
