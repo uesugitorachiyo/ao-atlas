@@ -109,7 +109,7 @@
     "status": "recorded",
     "runbook": "docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md",
     "readme": "README.md",
-    "rule": "Command readback requirements stay compact and gate-bound: Command reports node counts, lease status, checkpoint freshness, return gate, exact next action, first executable node, and final-response allowance without replacing Atlas workgraph or Foundry run-link evidence."
+    "rule": "Command readback requirements stay compact and gate-bound: Command reports node counts, lease status, checkpoint freshness, return gate, continuation contract reason, exact next action, first executable node, and final-response allowance without replacing Atlas workgraph or Foundry run-link evidence."
   },
   "generated_continuation_prompt_public_safety_scan": {
     "status": "recorded",

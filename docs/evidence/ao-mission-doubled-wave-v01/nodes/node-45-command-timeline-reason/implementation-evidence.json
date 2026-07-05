@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-45-command-timeline-reason",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Expanded Command compact_timeline to include continuation_contract_reason and exact_next_action.",
+    "Added closure validation that rejects compact timelines missing the continuation reason or exact next action.",
+    "Added regression coverage for stale compact timeline reason/action removal.",
+    "Updated production readiness to assert compact timeline reason/action containment for generated and lease-resume Command readbacks.",
+    "Regenerated the lease-resume Command readback fixture and updated final synthesis wording."
+  ],
+  "rsi_remains_denied": true
+}

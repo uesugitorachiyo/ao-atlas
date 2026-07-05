@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-45-command-timeline-reason",
+  "status": "selected",
+  "title": "Bind Command compact timeline to continuation reason and exact next action",
+  "why": "Command readbacks had structured reason/action fields, but the compact timeline string could omit them. The compact readback itself must preserve why final response is denied or allowed and what action remains.",
+  "bounded_files": [
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/command-readback.json",
+    "docs/evidence/ao-atlas-lease-resume-wave-v01/final-synthesis.json"
+  ],
+  "blueprint_required": false,
+  "foundry_import_required": true
+}

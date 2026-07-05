@@ -1331,6 +1331,8 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		command.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		command.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		command.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		!strings.Contains(command.CompactTimeline, "continuation_contract_reason="+resumeReadback.ContinuationContract.Reason) ||
+		!strings.Contains(command.CompactTimeline, "exact_next_action="+resumeReadback.ExactNextAction) ||
 		command.CommandTimelineBinding.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		command.CommandTimelineBinding.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		command.CommandTimelineBinding.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
@@ -1777,6 +1779,20 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
 		!strings.Contains(err.Error(), "command timeline binding continuation_contract_reason disagrees") {
 		t.Fatalf("expected stale command timeline continuation reason rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CompactTimeline = strings.Replace(command.CompactTimeline, "; continuation_contract_reason="+readback.ContinuationContract.Reason, "", 1)
+	command.CommandTimelineBinding.Summary = command.CompactTimeline
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command compact timeline continuation_contract_reason missing") {
+		t.Fatalf("expected stale command compact continuation reason rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CompactTimeline = strings.Replace(command.CompactTimeline, "; exact_next_action="+readback.ExactNextAction, "", 1)
+	command.CommandTimelineBinding.Summary = command.CompactTimeline
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command compact timeline exact_next_action missing") {
+		t.Fatalf("expected stale command compact exact next action rejection, got %v", err)
 	}
 	command = BuildAtlasRecommendationCommandReadback(readback)
 	command.LeaseHealthStatus = "stale_lease_health"

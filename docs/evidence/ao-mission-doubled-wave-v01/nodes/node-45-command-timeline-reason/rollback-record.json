@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-45-command-timeline-reason",
+  "status": "recorded",
+  "rollback_strategy": "Revert the node commit to restore the previous compact timeline string, validators, production-readiness checks, and lease-resume Command fixture.",
+  "safe_repack": "If generated Command fixtures drift, regenerate them from the lease-start and final workgraph before reverting code.",
+  "forbidden_surfaces": []
+}
