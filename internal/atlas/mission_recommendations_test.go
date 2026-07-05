@@ -174,6 +174,12 @@ func TestRecommendationReadbackSchemaRequiresCommandTimelinePlaceholders(t *test
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "command_timeline_placeholders")
 }
 
+func TestRecommendationCommandReadbackSchemaRequiresContinuationReasonBinding(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "schemas", "recommendation-command-readback.schema.json")
+	assertSchemaRequiresField(t, root, "continuation_contract_reason")
+	assertNestedSchemaRequiresField(t, root, "command_timeline_binding", "continuation_contract_reason")
+}
+
 func TestRecommendationReadbackSchemaRequiresPromoterNoPromotionPlaceholders(t *testing.T) {
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "promoter_no_promotion_placeholders")
 }
@@ -1136,14 +1142,17 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		binding["checkpoint_freshness_status"] != resumeReadback.CheckpointFreshnessStatus ||
 		binding["first_executable_node"] != resumeReadback.FirstExecutableNode ||
 		binding["exact_next_action"] != resumeReadback.ExactNextAction ||
-		binding["return_gate_status"] != resumeReadback.ReturnGateStatus {
+		binding["return_gate_status"] != resumeReadback.ReturnGateStatus ||
+		binding["continuation_contract_reason"] != resumeReadback.ContinuationContract.Reason {
 		t.Fatalf("command readback missing structured timeline binding: %#v", rawCommand)
 	}
 	if command.ElapsedMinutes != 25 || command.FinalResponseAllowed ||
 		command.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		command.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		command.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
 		command.CommandTimelineBinding.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		command.CommandTimelineBinding.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		command.CommandTimelineBinding.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
 		promoter.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		promoter.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		promoter.PromotionClaimed || !promoter.RSIRemainsDenied ||
@@ -1551,6 +1560,18 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
 		!strings.Contains(err.Error(), "command timeline binding exact_next_action disagrees") {
 		t.Fatalf("expected stale command timeline binding rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale command continuation reason rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CommandTimelineBinding.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command timeline binding continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale command timeline continuation reason rejection, got %v", err)
 	}
 	command = BuildAtlasRecommendationCommandReadback(readback)
 	command.LeaseHealthStatus = "stale_lease_health"

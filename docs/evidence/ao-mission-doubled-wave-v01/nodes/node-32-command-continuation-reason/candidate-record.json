@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-32-command-continuation-reason",
+  "status": "selected",
+  "selected_candidate": "Add continuation_contract_reason to AO Command readback and its command_timeline_binding.",
+  "alternatives_rejected": [
+    "Leave Command to infer the reason from exact_next_action; rejected because exact action text is not a stable contract.",
+    "Only add the top-level field; rejected because Command timeline binding is the compact readback used by closure reconciliation.",
+    "Only update schema; rejected because generated Command artifacts and closure validation also needed the binding."
+  ],
+  "decision": "Generate, validate, schema-bind, and production-readiness assert Command continuation_contract_reason."
+}

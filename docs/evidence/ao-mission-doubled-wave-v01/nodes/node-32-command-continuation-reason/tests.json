@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-32-command-continuation-reason",
+  "status": "focused_and_full_tests_passed",
+  "red_state": {
+    "command": "go test ./internal/atlas -run 'TestRecommendationCommandReadbackSchemaRequiresContinuationReasonBinding|TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestMissionRecommendationsDetectStaleClosureArtifacts' -count=1",
+    "result": "failed_before_command_binding",
+    "output": "AtlasRecommendationCommandReadback and AtlasRecommendationCommandTimelineBinding lacked ContinuationContractReason fields"
+  },
+  "focused_green": {
+    "command": "go test ./internal/atlas -run 'TestRecommendationCommandReadbackSchemaRequiresContinuationReasonBinding|TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestMissionRecommendationsDetectStaleClosureArtifacts' -count=1",
+    "result": "passed",
+    "summary": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.463s"
+  },
+  "full_green": {
+    "command": "go test ./... -count=1",
+    "result": "passed",
+    "summary": "? github.com/uesugitorachiyo/ao-atlas/cmd/atlas [no test files]; ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.428s"
+  },
+  "coverage": [
+    "Command schema requires continuation_contract_reason",
+    "resumed Command readback mirrors recommendation continuation reason",
+    "command_timeline_binding mirrors the same reason",
+    "closure validation rejects stale Command continuation reason"
+  ]
+}
