@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.recommendation-continuation-reason-coverage.v0.1",
+  "status": "agreement",
+  "expected_reason": "ready_nodes_or_exact_next_action_remain",
+  "sources": {
+    "recommendation_readback": "ready_nodes_or_exact_next_action_remain",
+    "checkpoint_readback": "ready_nodes_or_exact_next_action_remain",
+    "workgraph_readiness_packet": "ready_nodes_or_exact_next_action_remain",
+    "command_readback": "ready_nodes_or_exact_next_action_remain",
+    "command_timeline_binding": "ready_nodes_or_exact_next_action_remain",
+    "promoter_readback": "ready_nodes_or_exact_next_action_remain",
+    "foundry_rollup": "ready_nodes_or_exact_next_action_remain",
+    "reconciliation_packet": "ready_nodes_or_exact_next_action_remain",
+    "reconciliation_command": "ready_nodes_or_exact_next_action_remain",
+    "reconciliation_promoter": "ready_nodes_or_exact_next_action_remain",
+    "reconciliation_foundry": "ready_nodes_or_exact_next_action_remain",
+    "final_state_reconciliation": "ready_nodes_or_exact_next_action_remain",
+    "resume_prompt": "ready_nodes_or_exact_next_action_remain"
+  },
+  "all_sources_agree": true,
+  "final_response_allowed": false,
+  "refuses_final_response": true,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-next-02 and execute exactly one active node.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

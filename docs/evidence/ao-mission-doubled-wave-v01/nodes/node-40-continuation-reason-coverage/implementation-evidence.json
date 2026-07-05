@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-40-continuation-reason-coverage",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Added recommendation continuation reason coverage schema.",
+    "Added schema regression coverage for all required agreement sources.",
+    "Production readiness now generates continuation-reason-coverage.json from live generated artifacts.",
+    "Production readiness blocks if checkpoint, readiness, Command, Promoter, Foundry, reconciliation, final-state, or prompt reason sources disagree."
+  ],
+  "generated_readback": "target/production-readiness/mission-recommendations/continuation-reason-coverage.json"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-40-continuation-reason-coverage",
+  "status": "selected",
+  "candidate": {
+    "title": "Generate continuation reason coverage readback",
+    "why": "Operators need one compact artifact proving the continuation reason agrees across checkpoint, readiness, Command, Promoter, Foundry, reconciliation, final-state, and prompt readbacks.",
+    "bounded_files": [
+      "schemas/recommendation-continuation-reason-coverage.schema.json",
+      "internal/atlas/mission_recommendations_test.go",
+      "scripts/production-readiness.sh",
+      "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-40-continuation-reason-coverage"
+    ]
+  },
+  "route": {
+    "atlas_owns": "continuation reason coverage schema and production readiness readback",
+    "foundry_owns": "bounded implementation node execution",
+    "blueprint_required": false
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-40-continuation-reason-coverage",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Implement continuation reason coverage schema and production-readiness readback.",
+  "inputs": [
+    "Generated recommendation readback",
+    "Generated checkpoint readback",
+    "Generated Command, Promoter, Foundry, reconciliation, readiness, and prompt artifacts"
+  ],
+  "outputs": [
+    "Continuation reason coverage schema",
+    "Production readiness coverage artifact",
+    "Regression and node evidence"
+  ]
+}

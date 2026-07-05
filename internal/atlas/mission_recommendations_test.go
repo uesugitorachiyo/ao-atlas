@@ -287,6 +287,52 @@ func TestRecommendationCheckpointReadbackSchemaRequiresContinuationReason(t *tes
 	)
 }
 
+func TestRecommendationContinuationReasonCoverageSchemaRequiresAgreementSources(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "schemas", "recommendation-continuation-reason-coverage.schema.json")
+	for _, field := range []string{
+		"schema",
+		"status",
+		"expected_reason",
+		"sources",
+		"all_sources_agree",
+		"final_response_allowed",
+		"refuses_final_response",
+		"exact_next_action",
+		"claims_authority_advance",
+		"rsi_remains_denied",
+	} {
+		assertSchemaRequiresField(t, root, field)
+	}
+	for _, field := range []string{
+		"recommendation_readback",
+		"checkpoint_readback",
+		"workgraph_readiness_packet",
+		"command_readback",
+		"command_timeline_binding",
+		"promoter_readback",
+		"foundry_rollup",
+		"reconciliation_packet",
+		"reconciliation_command",
+		"reconciliation_promoter",
+		"reconciliation_foundry",
+		"final_state_reconciliation",
+		"resume_prompt",
+	} {
+		assertNestedSchemaRequiresField(t, root, "sources", field)
+	}
+	assertSchemaEnumContains(t, root, "expected_reason",
+		"ready_nodes_or_exact_next_action_remain",
+		"ready_nodes_remain",
+		"exact_next_action_remains",
+		"final response allowed by recommendation readback",
+		"blocked_hard_blocker",
+		"blocked_lease_timing_missing",
+		"blocked_minimum_minutes_unmet",
+		"blocked_ready_nodes_remain",
+		"blocked_no_executable_ready_node",
+	)
+}
+
 func TestRecommendationReadbackSchemaRequiresPromoterNoPromotionPlaceholders(t *testing.T) {
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "promoter_no_promotion_placeholders")
 }

@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-40-continuation-reason-coverage",
+  "status": "recorded",
+  "rollback": {
+    "strategy": "Revert the node commit or remove the continuation reason coverage schema, production-readiness generator, tests, and evidence snapshot.",
+    "blast_radius": "AO Atlas recommendation production-readiness coverage readback only.",
+    "data_migration_required": false
+  }
+}
