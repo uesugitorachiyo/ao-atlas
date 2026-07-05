@@ -1523,32 +1523,33 @@ func BuildAtlasRecommendationCheckpointReadback(readback AtlasRecommendationRead
 		status = "blocked"
 	}
 	return AtlasRecommendationCheckpointReadback{
-		Schema:                    "ao.atlas.recommendation-checkpoint-readback.v0.1",
-		Status:                    status,
-		MissionID:                 readback.MissionID,
-		EvidenceRoot:              readback.EvidenceRoot,
-		StartedAt:                 readback.StartedAt,
-		CompletedAt:               readback.CompletedAt,
-		ElapsedMinutes:            readback.ElapsedMinutes,
-		MinMinutes:                minMinutes,
-		MaxMinutes:                maxMinutes,
-		MinMinutesMet:             readback.MinMinutesMet,
-		LeaseTimeStatus:           readback.LeaseTimeStatus,
-		LeaseHealthStatus:         readback.LeaseHealthStatus,
-		CheckpointFreshnessStatus: "elapsed_minutes_recorded_after_node_checkpoint",
-		CompletedNodes:            readback.CompletedNodes,
-		ReadyNodes:                readback.ReadyNodes,
-		BlockedNodes:              readback.BlockedNodes,
-		FailedNodes:               readback.FailedNodes,
-		TotalNodes:                readback.TotalNodes,
-		FirstExecutableNode:       readback.FirstExecutableNode,
-		FinalResponseAllowed:      readback.FinalResponseAllowed,
-		FinalResponseReason:       readback.FinalResponseReason,
-		ExactNextAction:           readback.ExactNextAction,
-		SchedulesWork:             false,
-		ExecutesWork:              false,
-		ApprovesWork:              false,
-		ClaimsAuthorityAdvance:    false,
+		Schema:                     "ao.atlas.recommendation-checkpoint-readback.v0.1",
+		Status:                     status,
+		MissionID:                  readback.MissionID,
+		EvidenceRoot:               readback.EvidenceRoot,
+		StartedAt:                  readback.StartedAt,
+		CompletedAt:                readback.CompletedAt,
+		ElapsedMinutes:             readback.ElapsedMinutes,
+		MinMinutes:                 minMinutes,
+		MaxMinutes:                 maxMinutes,
+		MinMinutesMet:              readback.MinMinutesMet,
+		LeaseTimeStatus:            readback.LeaseTimeStatus,
+		LeaseHealthStatus:          readback.LeaseHealthStatus,
+		CheckpointFreshnessStatus:  "elapsed_minutes_recorded_after_node_checkpoint",
+		ContinuationContractReason: readback.ContinuationContract.Reason,
+		CompletedNodes:             readback.CompletedNodes,
+		ReadyNodes:                 readback.ReadyNodes,
+		BlockedNodes:               readback.BlockedNodes,
+		FailedNodes:                readback.FailedNodes,
+		TotalNodes:                 readback.TotalNodes,
+		FirstExecutableNode:        readback.FirstExecutableNode,
+		FinalResponseAllowed:       readback.FinalResponseAllowed,
+		FinalResponseReason:        readback.FinalResponseReason,
+		ExactNextAction:            readback.ExactNextAction,
+		SchedulesWork:              false,
+		ExecutesWork:               false,
+		ApprovesWork:               false,
+		ClaimsAuthorityAdvance:     false,
 	}
 }
 
@@ -1570,6 +1571,21 @@ func ValidateAtlasRecommendationCheckpointReadback(checkpoint AtlasRecommendatio
 	requireField(&errs, "lease_time_status", checkpoint.LeaseTimeStatus)
 	requireField(&errs, "lease_health_status", checkpoint.LeaseHealthStatus)
 	requireField(&errs, "checkpoint_freshness_status", checkpoint.CheckpointFreshnessStatus)
+	requireField(&errs, "continuation_contract_reason", checkpoint.ContinuationContractReason)
+	if strings.TrimSpace(checkpoint.ContinuationContractReason) != "" &&
+		!oneOf(checkpoint.ContinuationContractReason,
+			"ready_nodes_or_exact_next_action_remain",
+			"ready_nodes_remain",
+			"exact_next_action_remains",
+			"final response allowed by recommendation readback",
+			"blocked_hard_blocker",
+			"blocked_lease_timing_missing",
+			"blocked_minimum_minutes_unmet",
+			"blocked_ready_nodes_remain",
+			"blocked_no_executable_ready_node",
+		) {
+		errs = append(errs, "continuation_contract_reason has unsupported value")
+	}
 	requireField(&errs, "final_response_reason", checkpoint.FinalResponseReason)
 	requireField(&errs, "exact_next_action", checkpoint.ExactNextAction)
 	if checkpoint.FinalResponseAllowed && !checkpoint.MinMinutesMet {

@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-39-checkpoint-continuation-reason",
+  "status": "implemented_focused_verified",
+  "changes": [
+    "Checkpoint readback model now carries continuation_contract_reason.",
+    "Checkpoint builder copies the reason from recommendation_readback.continuation_contract.reason.",
+    "Checkpoint validator and schema require the reason and restrict it to the shared continuation reason vocabulary.",
+    "Focused regression coverage and production readiness assertions verify generated checkpoint artifacts include the reason."
+  ],
+  "binding": {
+    "source": "recommendation_readback.continuation_contract.reason",
+    "checkpoint_field": "continuation_contract_reason",
+    "expected_in_progress_reason": "ready_nodes_or_exact_next_action_remain"
+  }
+}

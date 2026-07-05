@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-39-checkpoint-continuation-reason",
+  "status": "recorded",
+  "rollback": {
+    "strategy": "Revert the node commit or remove the checkpoint continuation_contract_reason field, schema requirement, and associated test/readiness assertions.",
+    "blast_radius": "AO Atlas recommendation checkpoint readback artifacts only.",
+    "data_migration_required": false
+  }
+}
