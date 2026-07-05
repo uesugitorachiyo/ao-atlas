@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-50-final-readiness-prompt",
+  "status": "passed",
+  "test_surface": "docs and evidence artifacts",
+  "commands": [
+    "jq -e . docs/evidence/ao-mission-doubled-wave-v01/final-summary.json docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/*.json",
+    "public-safety wording scan over node 50 artifacts",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ],
+  "behavioral_coverage": [
+    "The next prompt encodes the larger 2-3 hour continuation shape with at least 40 bounded nodes.",
+    "The final summary denies final response until node 50 PR merge.",
+    "Node 50 readback gives an exact next action after merge.",
+    "Safety wording preserves no-provider, no-secret, no-release, no-policy-widening, and RSI-denied boundaries."
+  ],
+  "results": {
+    "json_syntax": "passed",
+    "public_safety_scan": "passed",
+    "next_prompt_numbered_items": 52,
+    "production_readiness": "status=ready score=100/100 checks=18",
+    "go_test": "passed",
+    "go_vet": "passed",
+    "go_build_cmd_atlas": "passed",
+    "atlas_foundry_roundtrip_smoke": "status=ready mode=fixture_only_readback"
+  }
+}

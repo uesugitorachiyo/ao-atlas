@@ -1,0 +1,139 @@
+{
+  "schema": "ao.atlas.doubled-wave-final-summary.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "generated_at": "2026-07-05T10:40:56Z",
+  "status": "node_50_local_verification_passed_ci_pending",
+  "target_nodes": 50,
+  "completed_nodes_after_node_50_merge": 50,
+  "ready_nodes_after_node_50_merge": 0,
+  "blocked_nodes_after_node_50_merge": 0,
+  "final_response_allowed_after_node_50_merge": true,
+  "authority_boundaries": {
+    "atlas_owns": "workgraph and context-heavy sequencing",
+    "foundry_owns": "bounded implementation node execution",
+    "blueprint_use": "only for genuinely new requirements or authorization",
+    "exactly_one_mutation_node_active": true,
+    "rsi_status": "denied"
+  },
+  "merged_pr_ledger_before_node_50": [
+    {
+      "number": 251,
+      "title": "Add continuation reason to resume prompt",
+      "state": "MERGED",
+      "merge_commit": "538effc5031b",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/251"
+    },
+    {
+      "number": 252,
+      "title": "Bind checkpoint continuation reason",
+      "state": "MERGED",
+      "merge_commit": "dee4e49b4d34",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/252"
+    },
+    {
+      "number": 253,
+      "title": "Add continuation reason coverage readback",
+      "state": "MERGED",
+      "merge_commit": "f7f737545072",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/253"
+    },
+    {
+      "number": 254,
+      "title": "Index continuation reason coverage source artifact",
+      "state": "MERGED",
+      "merge_commit": "56bccbd53f01",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/254"
+    },
+    {
+      "number": 255,
+      "title": "Bind execution exact next action",
+      "state": "MERGED",
+      "merge_commit": "cf2c0b6108cb",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/255"
+    },
+    {
+      "number": 256,
+      "title": "Bind Foundry readiness continuation reason",
+      "state": "MERGED",
+      "merge_commit": "7d586bf10675",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/256"
+    },
+    {
+      "number": 257,
+      "title": "Bind lease resume continuation reason readbacks",
+      "state": "MERGED",
+      "merge_commit": "2b1c25cc9beb",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/257"
+    },
+    {
+      "number": 258,
+      "title": "Bind Command compact timeline continuation reason",
+      "state": "MERGED",
+      "merge_commit": "7afe6064bc10",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/258"
+    },
+    {
+      "number": 259,
+      "title": "Bind Promoter no-promotion reason summary",
+      "state": "MERGED",
+      "merge_commit": "b61d5b7c63ec",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/259"
+    },
+    {
+      "number": 260,
+      "title": "Add stale reconciliation reason fixture",
+      "state": "MERGED",
+      "merge_commit": "606f147bc6f9",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/260"
+    },
+    {
+      "number": 261,
+      "title": "Add unsafe prompt reason fixture",
+      "state": "MERGED",
+      "merge_commit": "b68e74b81cb2",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/261"
+    },
+    {
+      "number": 262,
+      "title": "Add execution reason agreement summary",
+      "state": "MERGED",
+      "merge_commit": "2b3e138279a4",
+      "url": "https://github.com/uesugitorachiyo/ao-atlas/pull/262"
+    }
+  ],
+  "node_50_artifacts": {
+    "node_gate": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/node-gate.json",
+    "candidate_record": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/candidate-record.json",
+    "rollback_record": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/rollback-record.json",
+    "foundry_import": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/implementation-evidence.json",
+    "verification": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/verification.json",
+    "sentinel_public_safety": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/sentinel-public-safety.json",
+    "promoter_no_promotion": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/promoter-no-promotion.json",
+    "command_readback": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/command-readback.json"
+  },
+  "evidence_roots": [
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes",
+    "docs/evidence/ao-mission-doubled-wave-v01/final-summary.json",
+    "docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md"
+  ],
+  "final_readiness": {
+    "long_run_supervisor_status": "local_verification_passed_complete_after_node_50_pr_merge",
+    "atlas_workgraph_status": "local_verification_passed_complete_after_node_50_pr_merge",
+    "foundry_rollup": "bounded Atlas support wave complete; no promotion requested; RSI remains denied",
+    "command_readback": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/command-readback.json",
+    "next_prompt": "docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md"
+  },
+  "local_verification": {
+    "json_syntax": "passed",
+    "public_safety_scan": "passed",
+    "next_prompt_numbered_items": 52,
+    "git_diff_check": "passed",
+    "production_readiness": "status=ready score=100/100 checks=18",
+    "go_test": "passed",
+    "go_vet": "passed",
+    "go_build_cmd_atlas": "passed",
+    "atlas_foundry_roundtrip_smoke": "status=ready mode=fixture_only_readback"
+  },
+  "exact_next_action_after_node_50_merge": "Use docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md to start the next AO Atlas long-run wave, or stop because this 50-node wave is complete."
+}

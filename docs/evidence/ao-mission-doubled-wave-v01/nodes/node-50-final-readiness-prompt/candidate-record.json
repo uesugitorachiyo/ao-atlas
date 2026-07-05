@@ -1,0 +1,22 @@
+{
+  "schema": "ao.foundry.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-50-final-readiness-prompt",
+  "candidate": {
+    "title": "Add doubled-wave final readiness summary and long next recommended prompt",
+    "repo": "ao-atlas",
+    "scope": "evidence and operator handoff artifacts only",
+    "files": [
+      "docs/evidence/ao-mission-doubled-wave-v01/final-summary.json",
+      "docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md",
+      "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/*.json"
+    ],
+    "risk": "low",
+    "requires_code_change": false,
+    "requires_provider_call": false,
+    "requires_dependency_update": false,
+    "requires_release_action": false,
+    "requires_policy_or_auth_widening": false
+  },
+  "selection_reason": "This candidate closes the 50-node wave with durable evidence and gives the operator a larger 2-3 hour continuation prompt instead of another short loop."
+}

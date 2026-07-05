@@ -1,0 +1,25 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-50-final-readiness-prompt",
+  "owner": "Foundry",
+  "atlas_route": {
+    "atlas_owns": "sequence, stop gate, final closure evidence, and next prompt",
+    "foundry_owns": "bounded evidence artifact implementation",
+    "blueprint_used": false,
+    "blueprint_reason": "No new requirements or authorization are needed for the closure node."
+  },
+  "bounded_task": {
+    "description": "Create final readiness summary, public-safety closure evidence, command readback, and a larger next recommended prompt for the operator.",
+    "repo": "ao-atlas",
+    "active_node_count": 1,
+    "mutation_scope": "docs/evidence/ao-mission-doubled-wave-v01 only"
+  },
+  "acceptance": [
+    "Final summary points at all node 50 evidence artifacts.",
+    "Next recommended prompt contains at least 40 bounded tasks and a 2-3 hour target.",
+    "Command readback allows final response only after node 50 PR merge.",
+    "Public-safety wording scan covers the changed docs/readbacks.",
+    "Verification commands pass before PR merge."
+  ]
+}

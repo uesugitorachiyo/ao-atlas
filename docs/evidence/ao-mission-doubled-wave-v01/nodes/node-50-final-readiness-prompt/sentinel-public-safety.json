@@ -1,0 +1,26 @@
+{
+  "schema": "ao.sentinel.public-safety.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-50-final-readiness-prompt",
+  "status": "passed",
+  "scope": [
+    "docs/evidence/ao-mission-doubled-wave-v01/final-summary.json",
+    "docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt"
+  ],
+  "requirements": {
+    "no_absolute_local_paths": true,
+    "no_secret_or_token_exposure": true,
+    "no_provider_call_instruction": true,
+    "no_release_or_publish_instruction": true,
+    "no_policy_or_auth_widening": true,
+    "no_hidden_instruction_mutation": true,
+    "no_broad_rsi_claim": true,
+    "rsi_status": "denied"
+  },
+  "scan_result": {
+    "command": "rg negative public-safety wording scan over node 50 artifacts",
+    "status": "passed",
+    "matches": 0
+  }
+}

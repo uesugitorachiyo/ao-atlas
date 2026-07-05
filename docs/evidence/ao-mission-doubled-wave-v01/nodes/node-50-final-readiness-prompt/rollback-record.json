@@ -1,0 +1,24 @@
+{
+  "schema": "ao.foundry.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-50-final-readiness-prompt",
+  "rollback": {
+    "type": "remove_added_evidence_artifacts",
+    "files_to_remove": [
+      "docs/evidence/ao-mission-doubled-wave-v01/final-summary.json",
+      "docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md",
+      "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/"
+    ],
+    "data_loss_expected": false,
+    "code_behavior_reverted": "none; this node adds evidence and operator handoff artifacts only"
+  },
+  "safety": {
+    "no_direct_main_mutation": true,
+    "no_credentials_or_tokens": true,
+    "no_provider_calls": true,
+    "no_release_or_publish": true,
+    "no_dependency_updates": true,
+    "no_policy_or_auth_widening": true,
+    "rsi_remains_denied": true
+  }
+}

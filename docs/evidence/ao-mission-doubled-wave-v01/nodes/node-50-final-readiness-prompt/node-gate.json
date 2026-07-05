@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-50-final-readiness-prompt",
+  "status": "gate_open",
+  "gate": {
+    "active_mutation_node": "node-50-final-readiness-prompt",
+    "ready_to_execute": true,
+    "requires_new_authorization": false,
+    "blueprint_required": false,
+    "repo": "ao-atlas",
+    "branch": "codex/doubled-wave-node-50-final-readiness-prompt",
+    "forbidden_surfaces_touched": false,
+    "rsi_status": "denied"
+  },
+  "entry_conditions": [
+    "Nodes 1 through 49 are already complete.",
+    "Node 49 command readback requires node 50 for production readiness, public-safety wording scan, final evidence summary, and next recommended prompt.",
+    "No remote codex branch existed before node 50 started."
+  ],
+  "stop_gate": {
+    "final_response_allowed_before_merge": false,
+    "final_response_allowed_after_merge": true,
+    "reason": "node 50 is the final closure/readiness prompt node for the 50-node doubled wave"
+  }
+}
