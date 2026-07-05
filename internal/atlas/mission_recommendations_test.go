@@ -2840,6 +2840,56 @@ func TestLongRunHardeningWaveRouteReconciliationStaysFreshAcrossArtifacts(t *tes
 	}
 }
 
+func TestLongRunHardeningWaveEventIndexBindsEvidenceSlots(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeFiveReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-05", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-06")
+	fixture := mustLoadJSON[map[string]any](t, filepath.Join(nodeDir, "event-index-bindings-fixture.json"))
+	if fixture["schema"] != "ao.atlas.event-index-bindings-fixture.v0.1" ||
+		fixture["status"] != "indexed" ||
+		fixture["completed_nodes"] != float64(nodeFiveReadback.CompletedNodes) ||
+		fixture["ready_nodes"] != float64(nodeFiveReadback.ReadyNodes) ||
+		fixture["first_executable_node"] != nodeFiveReadback.FirstExecutableNode ||
+		fixture["exact_next_action"] != nodeFiveReadback.ExactNextAction ||
+		fixture["final_response_allowed"] != false {
+		t.Fatalf("event index fixture must bind node 5 continuation readback: %#v", fixture)
+	}
+	events, ok := fixture["events"].([]any)
+	if !ok {
+		t.Fatalf("event index fixture missing events array: %#v", fixture)
+	}
+	seen := map[string]bool{}
+	for _, raw := range events {
+		event, ok := raw.(map[string]any)
+		if !ok {
+			t.Fatalf("event index entry is not an object: %#v", raw)
+		}
+		slot, _ := event["slot"].(string)
+		path, _ := event["evidence_path"].(string)
+		if slot == "" || path == "" || strings.HasPrefix(path, "/") {
+			t.Fatalf("event index entry must have slot and relative evidence_path: %#v", event)
+		}
+		seen[slot] = true
+	}
+	for _, want := range []string{"route", "node", "pull_request", "ci", "rollup", "blocker", "next_action"} {
+		if !seen[want] {
+			t.Fatalf("event index fixture missing %s slot: %#v", want, fixture)
+		}
+	}
+
+	nodeSixReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeSixReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeSixReadback.CompletedNodes != 6 ||
+		nodeSixReadback.ReadyNodes != 34 ||
+		nodeSixReadback.FirstExecutableNode != "mission-recommendation-hardening-07" ||
+		nodeSixReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeSixReadback.ExactNextAction, "mission-recommendation-hardening-07") {
+		t.Fatalf("node 6 readback must continue to node 7 without final response: %#v", nodeSixReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
