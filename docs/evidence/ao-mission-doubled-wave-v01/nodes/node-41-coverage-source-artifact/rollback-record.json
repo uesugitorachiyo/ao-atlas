@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-41-coverage-source-artifact",
+  "status": "recorded",
+  "rollback": {
+    "strategy": "Revert the node commit or remove the execution readback continuation_reason_coverage summary, source artifact digest binding, readiness assertions, and fixture update.",
+    "blast_radius": "AO Atlas recommendation execution readback artifacts only.",
+    "data_migration_required": false
+  }
+}
