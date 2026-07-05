@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-05",
+  "task_id": "mission-recommendation-hardening-05-task",
+  "evidence_key": "checkpoint_bundle",
+  "status": "recorded",
+  "objective": "Reconcile stale route decisions across Atlas Foundry Promoter and Command artifacts.",
+  "checkpoint": {
+    "source_workgraph": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-04/workgraph-after.json",
+    "route_reconciliation_bundle": [
+      "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-05/route-recommendation-readback.json",
+      "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-05/route-command-readback.json",
+      "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-05/route-promoter-readback.json",
+      "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-05/route-foundry-rollup.json",
+      "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-05/route-reconciliation-packet.json",
+      "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-05/route-next-recommended-prompt.md"
+    ],
+    "completed_nodes": 5,
+    "ready_nodes": 35,
+    "next_executable_node": "mission-recommendation-hardening-06",
+    "final_response_allowed": false
+  }
+}
