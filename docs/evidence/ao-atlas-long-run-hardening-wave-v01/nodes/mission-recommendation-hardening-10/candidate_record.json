@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-10",
+  "candidate": "supervisor-hardening-no-promotion-summary",
+  "status": "selected",
+  "objective": "Add Promoter no-promotion summary coverage for supervisor hardening without capability promotion.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-10"
+  ],
+  "acceptance_criteria": [
+    "generated Promoter readback denies promotion",
+    "summary records ready-node and final-response denial counts",
+    "summary does not schedule, execute, approve, or claim authority advance"
+  ],
+  "selected_at": "2026-07-05T15:13:05Z"
+}
