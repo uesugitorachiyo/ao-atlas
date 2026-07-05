@@ -508,7 +508,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		maxLeaseMinutes = result.Wave.Supervisor.MaxMinutes
 		continueTarget = result.Wave.Supervisor.ContinueIfFastTarget
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nrecommendation_tasks=%d\nnode_budget=%d\nestimated_minutes=%d\nmin_minutes=%d\nmax_minutes=%d\ncontinue_if_fast_target=%d\nfinal_response_allowed=%t\nrecommendation_wave=%s\nrecommendation_workgraph=%s\nlease_start=%s\nrecommendation_readback=%s\nnext_recommended_prompt=%s\n",
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nrecommendation_tasks=%d\nnode_budget=%d\nestimated_minutes=%d\nmin_minutes=%d\nmax_minutes=%d\ncontinue_if_fast_target=%d\nfinal_response_allowed=%t\nrecommendation_wave=%s\nrecommendation_workgraph=%s\nlease_start=%s\nrecommendation_readback=%s\nworkgraph_readiness_packet=%s\nnext_recommended_prompt=%s\n",
 		result.Wave.Status,
 		result.Wave.MissionID,
 		result.Wave.TotalTasks,
@@ -522,6 +522,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-workgraph.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "lease-start.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-readback.json")),
+		filepath.ToSlash(filepath.Join(*outDir, "workgraph-readiness-packet.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "next-recommended-prompt.md")),
 	)
 	return nil
@@ -820,6 +821,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	elapsedMinutes := fs.Int("elapsed-minutes", 0, "long-run lease elapsed minutes")
 	leaseTimingMode := fs.String("lease-timing-mode", "", "lease timing evidence mode")
 	outPath := fs.String("out", "", "output path")
+	outWorkgraphReadinessPacketPath := fs.String("out-workgraph-readiness-packet", "", "generated workgraph readiness packet output path")
 	jsonOut := fs.Bool("json", false, "json output")
 	if err := fs.Parse(args); err != nil {
 		return err
@@ -833,8 +835,13 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
 		return fmt.Errorf("--out or --json is required")
 	}
-	if *outPath != "" && (samePath(*wavePath, *outPath) || samePath(*workgraphPath, *outPath)) {
-		return fmt.Errorf("refusing to overwrite input artifact")
+	for _, out := range []string{*outPath, *outWorkgraphReadinessPacketPath} {
+		if strings.TrimSpace(out) == "" {
+			continue
+		}
+		if samePath(*wavePath, out) || samePath(*workgraphPath, out) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
 	}
 	wave, err := LoadJSON[AtlasRecommendationWave](*wavePath)
 	if err != nil {
@@ -861,10 +868,23 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 			return err
 		}
 	}
+	if strings.TrimSpace(*outWorkgraphReadinessPacketPath) != "" {
+		packet, err := BuildAtlasRecommendationWorkgraphReadinessPacket(readback, AtlasRecommendationWorkgraphReadinessPacketOptions{
+			WavePath:      *wavePath,
+			WorkgraphPath: *workgraphPath,
+			ReadbackPath:  *outPath,
+		})
+		if err != nil {
+			return err
+		}
+		if err := WriteJSON(*outWorkgraphReadinessPacketPath, packet); err != nil {
+			return err
+		}
+	}
 	if *jsonOut {
 		return printJSON(stdout, readback)
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\n",
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nworkgraph_readiness_packet=%s\n",
 		readback.Status,
 		readback.MissionID,
 		readback.TotalNodes,
@@ -880,6 +900,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 		readback.FinalResponseAllowed,
 		readback.ExactNextAction,
 		filepath.ToSlash(*outPath),
+		filepath.ToSlash(*outWorkgraphReadinessPacketPath),
 	)
 	return nil
 }

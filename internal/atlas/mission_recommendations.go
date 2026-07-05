@@ -46,6 +46,12 @@ type AtlasRecommendationLeaseStartOptions struct {
 	StartedAt     string
 }
 
+type AtlasRecommendationWorkgraphReadinessPacketOptions struct {
+	WavePath      string
+	WorkgraphPath string
+	ReadbackPath  string
+}
+
 type AtlasRecommendationCompleteNodeOptions struct {
 	ExpectedNodeID string
 	EvidenceRoot   string
@@ -452,6 +458,17 @@ func WriteAtlasRecommendationWaveArtifacts(outDir string, result AtlasRecommenda
 		return err
 	}
 	if err := WriteJSON(filepath.Join(outDir, "recommendation-readback.json"), readback); err != nil {
+		return err
+	}
+	readinessPacket, err := BuildAtlasRecommendationWorkgraphReadinessPacket(readback, AtlasRecommendationWorkgraphReadinessPacketOptions{
+		WavePath:      filepath.Join(outDir, "recommendation-wave.json"),
+		WorkgraphPath: filepath.Join(outDir, "recommendation-workgraph.json"),
+		ReadbackPath:  filepath.Join(outDir, "recommendation-readback.json"),
+	})
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(filepath.Join(outDir, "workgraph-readiness-packet.json"), readinessPacket); err != nil {
 		return err
 	}
 	return os.WriteFile(filepath.Join(outDir, "next-recommended-prompt.md"), []byte(result.Prompt), 0o644)
@@ -2054,6 +2071,244 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 	}
 	if execution.Status == "completed" && !readback.FinalResponseAllowed {
 		errs = append(errs, "status completed requires recommendation readback final_response_allowed")
+	}
+	return joinErrors(errs)
+}
+
+func BuildAtlasRecommendationWorkgraphReadinessPacket(readback AtlasRecommendationReadback, options AtlasRecommendationWorkgraphReadinessPacketOptions) (AtlasRecommendationWorkgraphReadinessPacket, error) {
+	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
+		return AtlasRecommendationWorkgraphReadinessPacket{}, err
+	}
+	waveDigest := readback.WaveDigest
+	if strings.TrimSpace(options.WavePath) != "" {
+		digest, err := digestFile(options.WavePath)
+		if err != nil {
+			return AtlasRecommendationWorkgraphReadinessPacket{}, err
+		}
+		waveDigest = digest
+	}
+	if strings.TrimSpace(waveDigest) == "" {
+		waveDigest = digestValue(readback.MissionID + readback.SourceDigest)
+	}
+	workgraphDigest := readback.WorkgraphDigest
+	if strings.TrimSpace(options.WorkgraphPath) != "" {
+		digest, err := digestFile(options.WorkgraphPath)
+		if err != nil {
+			return AtlasRecommendationWorkgraphReadinessPacket{}, err
+		}
+		workgraphDigest = digest
+	}
+	if strings.TrimSpace(workgraphDigest) == "" {
+		workgraphDigest = digestValue(readback.TotalNodes)
+	}
+	readbackDigest := digestValue(readback)
+	if strings.TrimSpace(options.ReadbackPath) != "" {
+		digest, err := digestFile(options.ReadbackPath)
+		if err != nil {
+			return AtlasRecommendationWorkgraphReadinessPacket{}, err
+		}
+		readbackDigest = digest
+	}
+	continueIfFastTarget := readback.TotalNodes
+	if readback.Supervisor != nil && readback.Supervisor.ContinueIfFastTarget > 0 {
+		continueIfFastTarget = readback.Supervisor.ContinueIfFastTarget
+	}
+	status := "continuation_required"
+	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
+		status = "blocked"
+	}
+	if readback.FinalResponseAllowed {
+		status = "ready_for_final_response"
+	}
+	packet := AtlasRecommendationWorkgraphReadinessPacket{
+		Schema:                          "ao.atlas.recommendation-workgraph-readiness-packet.v0.1",
+		Status:                          status,
+		MissionID:                       readback.MissionID,
+		TargetInstance:                  readback.TargetInstance,
+		EvidenceRoot:                    readback.EvidenceRoot,
+		WaveDigest:                      waveDigest,
+		WorkgraphDigest:                 workgraphDigest,
+		ReadbackDigest:                  readbackDigest,
+		TotalNodes:                      readback.TotalNodes,
+		MinimumNodes:                    readback.MinimumNodes,
+		NodeBudget:                      readback.TotalNodes,
+		ContinueIfFastTarget:            continueIfFastTarget,
+		CompletedNodes:                  readback.CompletedNodes,
+		ReadyNodes:                      readback.ReadyNodes,
+		BlockedNodes:                    readback.BlockedNodes,
+		FailedNodes:                     readback.FailedNodes,
+		ExecutableReadyNodes:            readback.ExecutableReadyNodes,
+		FirstExecutableNode:             readback.FirstExecutableNode,
+		LeaseHealthStatus:               readback.LeaseHealthStatus,
+		CheckpointFreshnessStatus:       readback.CheckpointFreshnessStatus,
+		ReturnGateStatus:                readback.ReturnGateStatus,
+		CheckpointCount:                 readback.CheckpointCount,
+		EarlyReturnRiskStatus:           readback.EarlyReturnRiskStatus,
+		ContinuationBudgetStatus:        recommendationContinuationBudgetStatus(readback, continueIfFastTarget),
+		FinalResponseAllowed:            readback.FinalResponseAllowed,
+		FinalResponseReason:             readback.FinalResponseReason,
+		ExactNextAction:                 readback.ExactNextAction,
+		OneExecutableMutationNodeActive: readback.ExecutableReadyNodes == 1,
+		RefusesFinalResponse:            !readback.FinalResponseAllowed,
+		SchedulesWork:                   false,
+		ExecutesWork:                    false,
+		ApprovesWork:                    false,
+		ClaimsAuthorityAdvance:          false,
+		RSIRemainsDenied:                true,
+	}
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(packet, readback); err != nil {
+		return AtlasRecommendationWorkgraphReadinessPacket{}, err
+	}
+	return packet, nil
+}
+
+func recommendationContinuationBudgetStatus(readback AtlasRecommendationReadback, continueIfFastTarget int) string {
+	if readback.FinalResponseAllowed {
+		return "all_generated_nodes_complete"
+	}
+	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
+		return "hard_blocker_requires_repair"
+	}
+	if readback.ReadyNodes > 0 && readback.CompletedNodes < readback.MinimumNodes {
+		return "minimum_nodes_unmet_continue_to_40_node_budget"
+	}
+	if readback.ReadyNodes > 0 && readback.CompletedNodes >= readback.MinimumNodes && readback.CompletedNodes < continueIfFastTarget {
+		return "minimum_met_continue_if_fast_budget_open"
+	}
+	if readback.ReadyNodes == 0 && !readback.MinMinutesMet {
+		return "node_budget_complete_waiting_for_lease_evidence"
+	}
+	return "continuation_required"
+}
+
+func ValidateAtlasRecommendationWorkgraphReadinessPacket(packet AtlasRecommendationWorkgraphReadinessPacket, readback AtlasRecommendationReadback) error {
+	var errs []string
+	if packet.Schema != "ao.atlas.recommendation-workgraph-readiness-packet.v0.1" {
+		errs = append(errs, "schema must be ao.atlas.recommendation-workgraph-readiness-packet.v0.1")
+	}
+	if !oneOf(packet.Status, "continuation_required", "ready_for_final_response", "blocked") {
+		errs = append(errs, "status must be continuation_required, ready_for_final_response, or blocked")
+	}
+	if packet.MissionID != readback.MissionID {
+		errs = append(errs, "mission_id must match recommendation readback")
+	}
+	if packet.TargetInstance != readback.TargetInstance {
+		errs = append(errs, "target_instance must match recommendation readback")
+	}
+	for field, digest := range map[string]string{
+		"wave_digest":      packet.WaveDigest,
+		"workgraph_digest": packet.WorkgraphDigest,
+		"readback_digest":  packet.ReadbackDigest,
+	} {
+		if !digestPattern.MatchString(digest) {
+			errs = append(errs, field+" must be sha256 digest")
+		}
+	}
+	if packet.TotalNodes != readback.TotalNodes {
+		errs = append(errs, "total_nodes must match recommendation readback")
+	}
+	if packet.MinimumNodes != readback.MinimumNodes {
+		errs = append(errs, "minimum_nodes must match recommendation readback")
+	}
+	if packet.NodeBudget != readback.TotalNodes {
+		errs = append(errs, "node_budget must match recommendation readback total_nodes")
+	}
+	expectedContinueTarget := readback.TotalNodes
+	if readback.Supervisor != nil && readback.Supervisor.ContinueIfFastTarget > 0 {
+		expectedContinueTarget = readback.Supervisor.ContinueIfFastTarget
+	}
+	if packet.ContinueIfFastTarget != expectedContinueTarget {
+		errs = append(errs, "continue_if_fast_target must match supervisor continue_if_fast_target")
+	}
+	if packet.CompletedNodes != readback.CompletedNodes {
+		errs = append(errs, "completed_nodes must match recommendation readback")
+	}
+	if packet.ReadyNodes != readback.ReadyNodes {
+		errs = append(errs, "ready_nodes must match recommendation readback")
+	}
+	if packet.BlockedNodes != readback.BlockedNodes {
+		errs = append(errs, "blocked_nodes must match recommendation readback")
+	}
+	if packet.FailedNodes != readback.FailedNodes {
+		errs = append(errs, "failed_nodes must match recommendation readback")
+	}
+	if packet.ExecutableReadyNodes != readback.ExecutableReadyNodes {
+		errs = append(errs, "executable_ready_nodes must match recommendation readback")
+	}
+	if packet.FirstExecutableNode != readback.FirstExecutableNode {
+		errs = append(errs, "first_executable_node must match recommendation readback")
+	}
+	if packet.LeaseHealthStatus != readback.LeaseHealthStatus {
+		errs = append(errs, "lease_health_status must match recommendation readback")
+	}
+	if packet.CheckpointFreshnessStatus != readback.CheckpointFreshnessStatus {
+		errs = append(errs, "checkpoint_freshness_status must match recommendation readback")
+	}
+	if packet.ReturnGateStatus != readback.ReturnGateStatus {
+		errs = append(errs, "return_gate_status must match recommendation readback")
+	}
+	if packet.CheckpointCount != readback.CheckpointCount {
+		errs = append(errs, "checkpoint_count must match recommendation readback")
+	}
+	if packet.EarlyReturnRiskStatus != readback.EarlyReturnRiskStatus {
+		errs = append(errs, "early_return_risk_status must match recommendation readback")
+	}
+	expectedBudgetStatus := recommendationContinuationBudgetStatus(readback, expectedContinueTarget)
+	if packet.ContinuationBudgetStatus != expectedBudgetStatus {
+		errs = append(errs, "continuation_budget_status must match recommendation readback")
+	}
+	if packet.FinalResponseAllowed != readback.FinalResponseAllowed {
+		errs = append(errs, "final_response_allowed must match recommendation readback")
+	}
+	if packet.FinalResponseReason != readback.FinalResponseReason {
+		errs = append(errs, "final_response_reason must match recommendation readback")
+	}
+	if packet.ExactNextAction != readback.ExactNextAction {
+		errs = append(errs, "exact_next_action must match recommendation readback")
+	}
+	if readback.ReadyNodes > 0 {
+		if packet.ReturnGateStatus != "blocked_ready_nodes_remain" {
+			errs = append(errs, "ready nodes require return_gate_status=blocked_ready_nodes_remain")
+		}
+		if !packet.OneExecutableMutationNodeActive {
+			errs = append(errs, "ready nodes require one_executable_mutation_node_active=true")
+		}
+		if readback.FirstExecutableNode != "" && !strings.Contains(packet.ExactNextAction, readback.FirstExecutableNode) {
+			errs = append(errs, "ready nodes require exact_next_action to name first_executable_node")
+		}
+		if packet.FinalResponseAllowed {
+			errs = append(errs, "ready nodes require final_response_allowed=false")
+		}
+	}
+	if readback.FinalResponseAllowed {
+		if packet.Status != "ready_for_final_response" {
+			errs = append(errs, "final_response_allowed requires status=ready_for_final_response")
+		}
+		if packet.RefusesFinalResponse {
+			errs = append(errs, "final_response_allowed requires refuses_final_response=false")
+		}
+	} else {
+		if packet.Status == "ready_for_final_response" {
+			errs = append(errs, "status ready_for_final_response requires final_response_allowed=true")
+		}
+		if !packet.RefusesFinalResponse {
+			errs = append(errs, "final_response_allowed=false requires refuses_final_response=true")
+		}
+	}
+	if packet.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if packet.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if packet.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	if packet.ClaimsAuthorityAdvance {
+		errs = append(errs, "claims_authority_advance must be false")
+	}
+	if !packet.RSIRemainsDenied {
+		errs = append(errs, "rsi_remains_denied must be true")
 	}
 	return joinErrors(errs)
 }

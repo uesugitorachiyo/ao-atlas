@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-28-atlas-workgraph-readiness-packet",
+  "status": "selected",
+  "selected_candidate": "Add a first-class recommendation workgraph readiness packet in AO Atlas.",
+  "alternatives_rejected": [
+    "Only rely on recommendation-readback.json; rejected because node 28 requires a separate workgraph readiness packet.",
+    "Only document the current readback fields; rejected because production readiness needs executable artifact coverage.",
+    "Emit a packet from AO Mission; rejected because this node is Atlas-owned and derives from Atlas recommendation workgraph state."
+  ],
+  "decision": "Implement a typed packet, validator, schema, CLI emission, tests, and production-readiness assertions in AO Atlas."
+}

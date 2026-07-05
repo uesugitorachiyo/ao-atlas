@@ -1,0 +1,56 @@
+{
+  "schema": "ao.atlas.verification.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-28-atlas-workgraph-readiness-packet",
+  "status": "local_verification_passed_ci_pending",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run 'TestRecommendationWorkgraphReadiness|TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave|TestMissionRecommendationsImportArtifactsAreDigestBound|TestMissionRecommendationsReadbackCLIWritesWorkgraphReadinessPacket' -count=1",
+      "status": "passed",
+      "summary": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.351s"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations import --recommendations examples/valid/ao-mission/feature-depth-recommendations.json --target-instance demo-stack --min-tasks 30 --node-budget 40 --min-minutes 120 --max-minutes 180 --continue-if-fast-target 40 --started-at 2026-07-04T08:00:00-07:00 --out target/node-28-workgraph-readiness-packet",
+      "status": "passed",
+      "summary": "workgraph_readiness_packet=target/node-28-workgraph-readiness-packet/workgraph-readiness-packet.json"
+    },
+    {
+      "command": "jq packet shape assertion over target/node-28-workgraph-readiness-packet/workgraph-readiness-packet.json",
+      "status": "passed",
+      "summary": "schema, 40-node budget, one executable-ready node, blocked_ready_nodes_remain, refusal to finalize, and RSI denial verified"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed",
+      "summary": "? github.com/uesugitorachiyo/ao-atlas/cmd/atlas [no test files]; ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.471s"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed",
+      "summary": "no output"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed",
+      "summary": "no output"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "summary": "status=ready; score=100/100; summary=target/production-readiness/summary.json"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed",
+      "summary": "status=ready; mode=fixture_only_readback; summary=target/atlas-foundry-roundtrip/summary.json"
+    },
+    {
+      "command": "public-facing artifact safety scans over schema, node evidence, and generated readiness packet",
+      "status": "passed",
+      "summary": "no sensitive paths, credentials, forbidden authority claims, or RSI promotion wording found"
+    }
+  ],
+  "remaining_checks": [
+    "GitHub CI after PR"
+  ]
+}

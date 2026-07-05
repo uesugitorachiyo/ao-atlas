@@ -1,0 +1,15 @@
+{
+  "schema": "ao.foundry.import-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-28-atlas-workgraph-readiness-packet",
+  "status": "recorded",
+  "owner": "ao-atlas",
+  "active_mutation_nodes": [
+    "node-28-atlas-workgraph-readiness-packet"
+  ],
+  "bounded_task": "Add and verify a digest-bound Atlas workgraph readiness packet for recommendation workgraphs.",
+  "target_repo": "ao-atlas",
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false
+}
