@@ -191,6 +191,23 @@ func TestRecommendationReconciliationSchemaRequiresContinuationReasonAgreement(t
 	)
 }
 
+func TestRecommendationReconciliationSchemaRequiresFinalStateContinuationReason(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "schemas", "recommendation-reconciliation-packet.schema.json")
+	assertNestedSchemaRequiresField(t, root, "final_state_reconciliation", "continuation_contract_reason")
+	assertNestedSchemaRequiresField(t, root, "final_state_reconciliation", "continuation_reason_agreement")
+	assertNestedSchemaEnumContains(t, root, "final_state_reconciliation", "continuation_contract_reason",
+		"ready_nodes_or_exact_next_action_remain",
+		"ready_nodes_remain",
+		"exact_next_action_remains",
+		"final response allowed by recommendation readback",
+		"blocked_hard_blocker",
+		"blocked_lease_timing_missing",
+		"blocked_minimum_minutes_unmet",
+		"blocked_ready_nodes_remain",
+		"blocked_no_executable_ready_node",
+	)
+}
+
 func TestRecommendationReadbackSchemaRequiresFoundryTerminalExamples(t *testing.T) {
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "foundry_terminal_status_examples")
 }
@@ -1247,6 +1264,8 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		reconciliation.FinalStateReconciliation.PromoterVerdictStatus != promoter.Status ||
 		reconciliation.FinalStateReconciliation.CommandReadbackStatus != command.Status ||
 		reconciliation.FinalStateReconciliation.ExactNextAction != resumeReadback.ExactNextAction ||
+		reconciliation.FinalStateReconciliation.ContinuationReason != resumeReadback.ContinuationContract.Reason ||
+		!reconciliation.FinalStateReconciliation.ContinuationAgreement ||
 		reconciliation.FinalStateReconciliation.SchedulesWork ||
 		reconciliation.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		reconciliation.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
@@ -1759,6 +1778,18 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 		!strings.Contains(err.Error(), "final_state_reconciliation.status must match reconciliation status") {
 		t.Fatalf("expected stale final-state status rejection, got %v", err)
 	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.ContinuationReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale final-state continuation reason rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.ContinuationAgreement = false
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.continuation_reason_agreement disagrees") {
+		t.Fatalf("expected stale final-state continuation agreement rejection, got %v", err)
+	}
 }
 
 func TestRecommendationReconciliationStaleCommandStatusFixture(t *testing.T) {
@@ -1794,6 +1825,8 @@ func TestRecommendationReconciliationStaleCommandStatusFixture(t *testing.T) {
 	if fixture.Status != "blocked_stale_artifact" ||
 		fixture.ArtifactsAgree ||
 		fixture.FinalStateReconciliation.CommandReadbackStatus != "completed" ||
+		fixture.FinalStateReconciliation.ContinuationReason != readback.ContinuationContract.Reason ||
+		!fixture.FinalStateReconciliation.ContinuationAgreement ||
 		fixture.CommandFinalResponseAllowed ||
 		fixture.FinalResponseAllowed ||
 		!fixture.ContinuationReasonAgreement ||

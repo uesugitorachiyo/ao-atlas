@@ -1,0 +1,46 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-36-final-state-continuation-reason",
+  "status": "focused_and_full_tests_passed",
+  "focused_tests": [
+    {
+      "name": "TestRecommendationReconciliationSchemaRequiresFinalStateContinuationReason",
+      "coverage": "Nested final_state_reconciliation requires continuation reason and agreement fields."
+    },
+    {
+      "name": "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+      "coverage": "Generated final-state reconciliation mirrors the continuation reason and agreement."
+    },
+    {
+      "name": "TestMissionRecommendationsDetectStaleClosureArtifacts",
+      "coverage": "Validation rejects stale nested final-state reason and agreement fields."
+    },
+    {
+      "name": "TestRecommendationReconciliationStaleCommandStatusFixture",
+      "coverage": "Stale Command fixture carries nested final-state continuation reason evidence."
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    }
+  ]
+}

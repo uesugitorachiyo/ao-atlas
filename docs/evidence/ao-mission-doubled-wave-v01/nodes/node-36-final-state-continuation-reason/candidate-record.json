@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-36-final-state-continuation-reason",
+  "status": "selected",
+  "candidate": {
+    "title": "Bind continuation reason into final-state reconciliation",
+    "why": "The top-level reconciliation packet now records reason agreement, but the nested final-state reconciliation summary must carry the same denial reason so compact final closure cannot omit it.",
+    "bounded_files": [
+      "internal/atlas/models.go",
+      "internal/atlas/mission_recommendations.go",
+      "internal/atlas/mission_recommendations_test.go",
+      "schemas/recommendation-reconciliation-packet.schema.json",
+      "scripts/production-readiness.sh",
+      "examples/invalid/recommendation-reconciliation-stale-command-status.json"
+    ]
+  },
+  "route": {
+    "atlas_owns": "final-state reconciliation summary contract",
+    "foundry_owns": "bounded implementation node execution",
+    "blueprint_required": false
+  }
+}

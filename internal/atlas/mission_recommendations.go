@@ -1922,6 +1922,9 @@ func BuildAtlasRecommendationReconciliationPacket(readback AtlasRecommendationRe
 }
 
 func buildRecommendationFinalStateReconciliation(readback AtlasRecommendationReadback, command AtlasRecommendationCommandReadback, promoter AtlasRecommendationPromoterReadback, foundry AtlasRecommendationFoundryRollup, status string) AtlasFinalStateReconciliation {
+	continuationReasonAgreement := command.ContinuationContractReason == readback.ContinuationContract.Reason &&
+		promoter.ContinuationContractReason == readback.ContinuationContract.Reason &&
+		foundry.ContinuationContractReason == readback.ContinuationContract.Reason
 	return AtlasFinalStateReconciliation{
 		ContractVersion:       "ao.atlas.final-state-reconciliation.v0.1",
 		Status:                status,
@@ -1930,6 +1933,8 @@ func buildRecommendationFinalStateReconciliation(readback AtlasRecommendationRea
 		PromoterVerdictStatus: promoter.Status,
 		CommandReadbackStatus: command.Status,
 		ExactNextAction:       readback.ExactNextAction,
+		ContinuationReason:    readback.ContinuationContract.Reason,
+		ContinuationAgreement: continuationReasonAgreement,
 		SchedulesWork:         false,
 		ExecutesWork:          false,
 		ApprovesWork:          false,
@@ -2050,6 +2055,15 @@ func validateRecommendationFinalStateReconciliation(errs *[]string, readback Atl
 	}
 	if finalState.ExactNextAction != readback.ExactNextAction {
 		*errs = append(*errs, "final_state_reconciliation.exact_next_action disagrees")
+	}
+	if finalState.ContinuationReason != readback.ContinuationContract.Reason {
+		*errs = append(*errs, "final_state_reconciliation.continuation_contract_reason disagrees")
+	}
+	expectedContinuationReasonAgreement := command.ContinuationContractReason == readback.ContinuationContract.Reason &&
+		promoter.ContinuationContractReason == readback.ContinuationContract.Reason &&
+		foundry.ContinuationContractReason == readback.ContinuationContract.Reason
+	if finalState.ContinuationAgreement != expectedContinuationReasonAgreement {
+		*errs = append(*errs, "final_state_reconciliation.continuation_reason_agreement disagrees")
 	}
 	if finalState.SchedulesWork || finalState.ExecutesWork || finalState.ApprovesWork {
 		*errs = append(*errs, "final_state_reconciliation must not schedule, execute, or approve work")

@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-36-final-state-continuation-reason",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Added optional continuation reason and agreement fields to AtlasFinalStateReconciliation.",
+    "Recommendation final-state reconciliation now records continuation_contract_reason and continuation_reason_agreement.",
+    "Recommendation final-state validation rejects stale nested reason or agreement fields.",
+    "Reconciliation schema, production readiness, and stale Command fixture require the nested binding."
+  ],
+  "binding": {
+    "source": "recommendation_readback.continuation_contract.reason",
+    "nested_packet": "final_state_reconciliation",
+    "agreement_field": "continuation_reason_agreement"
+  }
+}
