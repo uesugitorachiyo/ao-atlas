@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-03",
+  "task_id": "mission-recommendation-hardening-03-task",
+  "evidence_key": "node_gate",
+  "status": "recorded",
+  "objective": "Add a Command readback fixture denying final response while exact next actions remain.",
+  "foundry_import": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-03/foundry-import.json",
+  "checkpoint_bundle": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-03/checkpoint_bundle.json",
+  "gate": {
+    "active_mutation_node": "mission-recommendation-hardening-03",
+    "ready_to_execute": true,
+    "blueprint_required": false,
+    "requires_new_authorization": false,
+    "source_checkpoint": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-02/workgraph-after.json",
+    "ready_nodes": 38,
+    "executable_ready_nodes": 1,
+    "first_executable_node": "mission-recommendation-hardening-03",
+    "final_response_allowed": false
+  }
+}

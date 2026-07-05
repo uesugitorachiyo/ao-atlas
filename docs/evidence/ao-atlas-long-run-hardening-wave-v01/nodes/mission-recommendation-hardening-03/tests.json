@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-03",
+  "task_id": "mission-recommendation-hardening-03-task",
+  "evidence_key": "tests",
+  "status": "recorded",
+  "objective": "Add a Command readback fixture denying final response while exact next actions remain.",
+  "red_green": {
+    "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveCommandReadbackDeniesFinalWithExactNextAction -count=1",
+    "red_result": "failed because command-final-denial-fixture.json did not exist",
+    "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveCommandReadbackDeniesFinalWithExactNextAction -count=1",
+    "green_result": "passed",
+    "full_regression_command": "go test ./... -count=1",
+    "full_regression_result": "passed"
+  }
+}

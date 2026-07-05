@@ -2710,6 +2710,44 @@ func TestLongRunHardeningWaveUntilDoneContinuesAfterOneHandoff(t *testing.T) {
 	}
 }
 
+func TestLongRunHardeningWaveCommandReadbackDeniesFinalWithExactNextAction(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwoReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-02", "recommendation-readback-after.json"))
+	fixture := mustLoadJSON[map[string]any](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-03", "command-final-denial-fixture.json"))
+	if fixture["schema"] != "ao.command.final-response-denial.v0.1" ||
+		fixture["status"] != "continuation_required" ||
+		fixture["source"] != "command_readback" ||
+		fixture["completed_nodes"] != float64(nodeTwoReadback.CompletedNodes) ||
+		fixture["ready_nodes"] != float64(nodeTwoReadback.ReadyNodes) ||
+		fixture["first_executable_node"] != nodeTwoReadback.FirstExecutableNode ||
+		fixture["final_response_allowed"] != false {
+		t.Fatalf("Command final denial fixture must mirror node 2 continuation readback: %#v", fixture)
+	}
+	exactNextAction, _ := fixture["exact_next_action"].(string)
+	if exactNextAction != nodeTwoReadback.ExactNextAction ||
+		!strings.Contains(exactNextAction, "mission-recommendation-hardening-03") {
+		t.Fatalf("Command final denial fixture must preserve node 3 exact next action: fixture=%q readback=%q", exactNextAction, nodeTwoReadback.ExactNextAction)
+	}
+	if denialGate, _ := fixture["final_response_denial_gate"].(string); denialGate != "deny_ready_nodes_or_exact_next_action_remain" {
+		t.Fatalf("Command fixture must use exact final-response denial gate: %#v", fixture)
+	}
+	if reason, _ := fixture["command_denial_reason"].(string); !strings.Contains(reason, "exact next action") || !strings.Contains(reason, "ready nodes") {
+		t.Fatalf("Command fixture must explain both exact next action and ready-node denial: %#v", fixture)
+	}
+
+	nodeThreeReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-03", "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThreeReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeThreeReadback.CompletedNodes != 3 ||
+		nodeThreeReadback.ReadyNodes != 37 ||
+		nodeThreeReadback.FirstExecutableNode != "mission-recommendation-hardening-04" ||
+		nodeThreeReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThreeReadback.ExactNextAction, "mission-recommendation-hardening-04") {
+		t.Fatalf("node 3 readback must continue to node 4 without final response: %#v", nodeThreeReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

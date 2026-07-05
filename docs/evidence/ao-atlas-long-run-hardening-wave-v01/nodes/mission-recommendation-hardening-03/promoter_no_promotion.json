@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-03",
+  "task_id": "mission-recommendation-hardening-03-task",
+  "evidence_key": "promoter_no_promotion",
+  "status": "recorded",
+  "objective": "Add a Command readback fixture denying final response while exact next actions remain.",
+  "promotion_decision": {
+    "requested": false,
+    "granted": false,
+    "highest_proven_live_class_changed": false,
+    "rsi_status": "denied"
+  }
+}
