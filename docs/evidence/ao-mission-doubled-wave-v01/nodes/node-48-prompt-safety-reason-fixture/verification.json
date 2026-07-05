@@ -1,0 +1,45 @@
+{
+  "schema": "ao.atlas.verification.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-48-prompt-safety-reason-fixture",
+  "status": "local_verification_passed_ci_pending",
+  "commands": [
+    {
+      "cmd": "go test ./internal/atlas -run TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture -count=1",
+      "result": "failed before implementation because the invalid prompt fixture did not exist; passed after implementation"
+    },
+    {
+      "cmd": "bash -n scripts/production-readiness.sh",
+      "result": "passed"
+    },
+    {
+      "cmd": "scripts/production-readiness.sh",
+      "result": "passed status=ready score=100/100 with ok generated-recommendation-prompt-continuation-reason-negative-scan"
+    },
+    {
+      "cmd": "cat target/production-readiness/generated-recommendation-prompt-unsafe-continuation-reason.out",
+      "result": "passed; output reported generated recommendation prompt contains unsafe wording for the invalid fixture"
+    },
+    {
+      "cmd": "git diff --check && go test ./... -count=1",
+      "result": "passed"
+    },
+    {
+      "cmd": "go vet ./...",
+      "result": "passed"
+    },
+    {
+      "cmd": "go build ./cmd/atlas && rm -f atlas",
+      "result": "passed"
+    },
+    {
+      "cmd": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "result": "passed status=ready"
+    },
+    {
+      "cmd": "changed public docs/readbacks public-safety scan",
+      "result": "passed with changed_public_scope=none; unsafe wording is confined to an invalid fixture rejected by production readiness"
+    }
+  ],
+  "ci_status": "pending_pr"
+}

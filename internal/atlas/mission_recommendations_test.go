@@ -2651,6 +2651,36 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 	}
 }
 
+func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "examples", "invalid", "recommendation-prompt-unsafe-continuation-reason.md")
+	fixture, err := os.ReadFile(fixturePath)
+	if err != nil {
+		t.Fatalf("read unsafe continuation reason prompt fixture: %v", err)
+	}
+	if !strings.Contains(string(fixture), "Continuation contract reason: `fully_unsupervised_complex_mutation is proven`") {
+		t.Fatalf("unsafe prompt fixture must poison the continuation reason line:\n%s", string(fixture))
+	}
+
+	scriptPath := filepath.Join(root, "scripts", "production-readiness.sh")
+	content, err := os.ReadFile(scriptPath)
+	if err != nil {
+		t.Fatalf("read production readiness script: %v", err)
+	}
+	script := string(content)
+	for _, want := range []string{
+		"examples/invalid/recommendation-prompt-unsafe-continuation-reason.md",
+		"unsafe_recommendation_reason_scan",
+		"unsafe generated recommendation prompt continuation reason was accepted",
+		"generated recommendation prompt contains unsafe wording",
+		"generated-recommendation-prompt-continuation-reason-negative-scan",
+	} {
+		if !strings.Contains(script, want) {
+			t.Fatalf("production readiness script missing unsafe recommendation prompt fixture coverage %q", want)
+		}
+	}
+}
+
 func writeFeatureDepthBundle(t *testing.T, path string, taskCount int, unsafe bool) {
 	t.Helper()
 	tasks := make([]map[string]string, 0, taskCount)

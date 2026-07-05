@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-48-prompt-safety-reason-fixture",
+  "status": "selected",
+  "title": "Add generated prompt negative fixture for unsafe continuation reason wording",
+  "why": "Generated recommendation prompts had public-safety scans, but no persisted invalid fixture proving unsafe authority wording in the continuation reason line is rejected.",
+  "bounded_files": [
+    "examples/invalid/recommendation-prompt-unsafe-continuation-reason.md",
+    "internal/atlas/mission_recommendations_test.go",
+    "scripts/production-readiness.sh"
+  ],
+  "blueprint_required": false,
+  "foundry_import_required": true
+}
