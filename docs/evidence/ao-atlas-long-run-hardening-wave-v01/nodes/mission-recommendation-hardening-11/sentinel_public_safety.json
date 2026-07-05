@@ -1,0 +1,7 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-11",
+  "status": "passed",
+  "scan": "public-safety negative wording scan over node 11 evidence",
+  "rsi_remains_denied": true
+}
