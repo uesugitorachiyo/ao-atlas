@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-38-next-prompt-continuation-reason",
+  "status": "selected",
+  "candidate": {
+    "title": "Add continuation reason to generated resume prompt",
+    "why": "The prompt that resumes a long-run wave must preserve the exact continuation contract reason, not only the return gate and early-return risk.",
+    "bounded_files": [
+      "internal/atlas/mission_recommendations.go",
+      "internal/atlas/mission_recommendations_test.go",
+      "scripts/production-readiness.sh"
+    ]
+  },
+  "route": {
+    "atlas_owns": "generated continuation prompt readback",
+    "foundry_owns": "bounded implementation node execution",
+    "blueprint_required": false
+  }
+}

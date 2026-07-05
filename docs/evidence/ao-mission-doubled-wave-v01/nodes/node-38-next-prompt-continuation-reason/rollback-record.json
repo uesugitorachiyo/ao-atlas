@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-38-next-prompt-continuation-reason",
+  "status": "recorded",
+  "rollback": {
+    "strategy": "Revert the node commit or remove the generated prompt line and associated test/readiness assertions.",
+    "blast_radius": "AO Atlas generated recommendation resume prompts only.",
+    "data_migration_required": false
+  }
+}

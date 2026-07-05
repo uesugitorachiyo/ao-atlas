@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-38-next-prompt-continuation-reason",
+  "status": "continuation_required",
+  "readback": {
+    "completed_nodes_after_this_node": 38,
+    "target_nodes": 50,
+    "active_mutation_nodes": 1,
+    "exact_next_action_after_merge": "Continue to node 39 and bind continuation reason into checkpoint readback."
+  }
+}

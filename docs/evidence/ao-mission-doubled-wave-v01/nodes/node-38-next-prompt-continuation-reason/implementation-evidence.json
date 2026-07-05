@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-38-next-prompt-continuation-reason",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Generated resume prompts now include Continuation contract reason in Current status.",
+    "Resume prompt tests assert the reason line matches readback.continuation_contract.reason.",
+    "Production readiness asserts resumed prompts carry ready_nodes_or_exact_next_action_remain."
+  ],
+  "binding": {
+    "source": "recommendation_readback.continuation_contract.reason",
+    "prompt_line": "Continuation contract reason"
+  }
+}

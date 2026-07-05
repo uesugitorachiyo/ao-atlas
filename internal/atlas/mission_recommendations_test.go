@@ -1301,6 +1301,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	for _, want := range []string{
 		"Current status:",
 		"Completed nodes: 1 / 40",
+		"Continuation contract reason: `" + resumeReadback.ContinuationContract.Reason + "`",
 		"Early-return risk: `" + resumeReadback.EarlyReturnRiskStatus + "`",
 		"Next executable node: `mission-recommendation-next-02`",
 		"Exact next action:",
