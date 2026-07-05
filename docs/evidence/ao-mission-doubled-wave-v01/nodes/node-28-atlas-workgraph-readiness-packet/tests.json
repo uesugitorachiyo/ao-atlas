@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-28-atlas-workgraph-readiness-packet",
+  "status": "focused_and_full_tests_passed",
+  "red_state": {
+    "command": "go test ./internal/atlas -run 'TestRecommendationWorkgraphReadiness|TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave|TestMissionRecommendationsImportArtifactsAreDigestBound|TestMissionRecommendationsReadbackCLIWritesWorkgraphReadinessPacket' -count=1",
+    "result": "failed_before_implementation",
+    "output": "undefined AtlasRecommendationWorkgraphReadinessPacket, ValidateAtlasRecommendationWorkgraphReadinessPacket, BuildAtlasRecommendationWorkgraphReadinessPacket, and AtlasRecommendationWorkgraphReadinessPacketOptions"
+  },
+  "focused_green": {
+    "command": "go test ./internal/atlas -run 'TestRecommendationWorkgraphReadiness|TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave|TestMissionRecommendationsImportArtifactsAreDigestBound|TestMissionRecommendationsReadbackCLIWritesWorkgraphReadinessPacket' -count=1",
+    "result": "passed",
+    "summary": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.351s"
+  },
+  "full_green": {
+    "command": "go test ./... -count=1",
+    "result": "passed",
+    "summary": "? github.com/uesugitorachiyo/ao-atlas/cmd/atlas [no test files]; ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.471s"
+  },
+  "coverage": [
+    "schema required budget and return-gate fields",
+    "default 2-3 hour supervisor wave emits readiness packet",
+    "packet binds wave, workgraph, and readback digests",
+    "readback CLI regenerates packet",
+    "validator rejects stale ready-node, one-active-node, and final-response fields"
+  ]
+}

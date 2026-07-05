@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-28-atlas-workgraph-readiness-packet",
+  "status": "ready",
+  "rollback_scope": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "schemas/recommendation-workgraph-readiness-packet.schema.json",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-28-atlas-workgraph-readiness-packet"
+  ],
+  "rollback_action": "Revert the node-28 commit or remove the workgraph readiness packet type, schema, CLI emission, tests, production-readiness assertions, and node evidence.",
+  "data_migration": "none",
+  "release_or_deploy": "none"
+}

@@ -486,6 +486,43 @@ type AtlasRecommendationGeneratedWorkgraphReadback struct {
 	FinalResponseReason       string `json:"final_response_reason,omitempty"`
 }
 
+type AtlasRecommendationWorkgraphReadinessPacket struct {
+	Schema                          string `json:"schema"`
+	Status                          string `json:"status"`
+	MissionID                       string `json:"mission_id"`
+	TargetInstance                  string `json:"target_instance"`
+	EvidenceRoot                    string `json:"evidence_root,omitempty"`
+	WaveDigest                      string `json:"wave_digest"`
+	WorkgraphDigest                 string `json:"workgraph_digest"`
+	ReadbackDigest                  string `json:"readback_digest"`
+	TotalNodes                      int    `json:"total_nodes"`
+	MinimumNodes                    int    `json:"minimum_nodes"`
+	NodeBudget                      int    `json:"node_budget"`
+	ContinueIfFastTarget            int    `json:"continue_if_fast_target"`
+	CompletedNodes                  int    `json:"completed_nodes"`
+	ReadyNodes                      int    `json:"ready_nodes"`
+	BlockedNodes                    int    `json:"blocked_nodes"`
+	FailedNodes                     int    `json:"failed_nodes"`
+	ExecutableReadyNodes            int    `json:"executable_ready_nodes"`
+	FirstExecutableNode             string `json:"first_executable_node,omitempty"`
+	LeaseHealthStatus               string `json:"lease_health_status"`
+	CheckpointFreshnessStatus       string `json:"checkpoint_freshness_status"`
+	ReturnGateStatus                string `json:"return_gate_status"`
+	CheckpointCount                 int    `json:"checkpoint_count"`
+	EarlyReturnRiskStatus           string `json:"early_return_risk_status"`
+	ContinuationBudgetStatus        string `json:"continuation_budget_status"`
+	FinalResponseAllowed            bool   `json:"final_response_allowed"`
+	FinalResponseReason             string `json:"final_response_reason"`
+	ExactNextAction                 string `json:"exact_next_action"`
+	OneExecutableMutationNodeActive bool   `json:"one_executable_mutation_node_active"`
+	RefusesFinalResponse            bool   `json:"refuses_final_response"`
+	SchedulesWork                   bool   `json:"schedules_work"`
+	ExecutesWork                    bool   `json:"executes_work"`
+	ApprovesWork                    bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance          bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied                bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasRecommendationCommandReadback struct {
 	Schema                    string                                    `json:"schema"`
 	Status                    string                                    `json:"status"`

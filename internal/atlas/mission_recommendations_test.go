@@ -123,6 +123,34 @@ func TestRecommendationReadbackSchemaRequiresPromoterNoPromotionPlaceholders(t *
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "promoter_no_promotion_placeholders")
 }
 
+func TestRecommendationWorkgraphReadinessPacketSchemaRequiresBudgetAndReturnGate(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "schemas", "recommendation-workgraph-readiness-packet.schema.json")
+	for _, field := range []string{
+		"schema",
+		"status",
+		"mission_id",
+		"target_instance",
+		"wave_digest",
+		"workgraph_digest",
+		"readback_digest",
+		"total_nodes",
+		"minimum_nodes",
+		"node_budget",
+		"continue_if_fast_target",
+		"ready_nodes",
+		"executable_ready_nodes",
+		"return_gate_status",
+		"early_return_risk_status",
+		"final_response_allowed",
+		"exact_next_action",
+		"one_executable_mutation_node_active",
+		"refuses_final_response",
+		"rsi_remains_denied",
+	} {
+		assertSchemaRequiresField(t, root, field)
+	}
+}
+
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
@@ -433,8 +461,29 @@ func TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave(t *testing.
 	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
 		t.Fatal(err)
 	}
+	readinessPacket := mustLoadJSON[AtlasRecommendationWorkgraphReadinessPacket](t, filepath.Join(outDir, "workgraph-readiness-packet.json"))
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(readinessPacket, readback); err != nil {
+		t.Fatal(err)
+	}
 	if readback.TotalNodes != 40 || readback.CompletedNodes != 0 || readback.ReadyNodes != 40 || readback.ExecutableReadyNodes != 1 {
 		t.Fatalf("bad default readback node counts: %#v", readback)
+	}
+	if readinessPacket.Status != "continuation_required" ||
+		readinessPacket.TotalNodes != 40 ||
+		readinessPacket.MinimumNodes != 30 ||
+		readinessPacket.NodeBudget != 40 ||
+		readinessPacket.ContinueIfFastTarget != 40 ||
+		readinessPacket.ReadyNodes != 40 ||
+		readinessPacket.ExecutableReadyNodes != 1 ||
+		readinessPacket.FirstExecutableNode != "mission-recommendation-next-01" ||
+		readinessPacket.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		readinessPacket.ContinuationBudgetStatus != "minimum_nodes_unmet_continue_to_40_node_budget" ||
+		!readinessPacket.OneExecutableMutationNodeActive ||
+		!readinessPacket.RefusesFinalResponse ||
+		readinessPacket.FinalResponseAllowed ||
+		!strings.Contains(readinessPacket.ExactNextAction, readinessPacket.FirstExecutableNode) ||
+		!readinessPacket.RSIRemainsDenied {
+		t.Fatalf("readiness packet lost 40-node continuation budget: %#v", readinessPacket)
 	}
 	if readback.LeaseHealthStatus != "minimum_unmet" ||
 		readback.CheckpointFreshnessStatus != "fresh_checkpoint_required_after_each_node_or_timed_interval" ||
@@ -661,11 +710,21 @@ func TestMissionRecommendationsImportArtifactsAreDigestBound(t *testing.T) {
 
 	leaseStart := mustLoadJSON[AtlasRecommendationLeaseStart](t, filepath.Join(outDir, "lease-start.json"))
 	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(outDir, "recommendation-readback.json"))
+	readinessPacket := mustLoadJSON[AtlasRecommendationWorkgraphReadinessPacket](t, filepath.Join(outDir, "workgraph-readiness-packet.json"))
 	if leaseStart.WaveDigest != waveDigest || leaseStart.WorkgraphDigest != workgraphDigest {
 		t.Fatalf("lease start digests do not bind generated artifacts: lease=%#v wave=%s workgraph=%s", leaseStart, waveDigest, workgraphDigest)
 	}
 	if readback.WaveDigest != waveDigest || readback.WorkgraphDigest != workgraphDigest {
 		t.Fatalf("recommendation readback digests do not bind generated artifacts: readback=%#v wave=%s workgraph=%s", readback, waveDigest, workgraphDigest)
+	}
+	readbackDigest, err := digestFile(filepath.Join(outDir, "recommendation-readback.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readinessPacket.WaveDigest != waveDigest ||
+		readinessPacket.WorkgraphDigest != workgraphDigest ||
+		readinessPacket.ReadbackDigest != readbackDigest {
+		t.Fatalf("readiness packet does not bind source digests: packet=%#v wave=%s workgraph=%s readback=%s", readinessPacket, waveDigest, workgraphDigest, readbackDigest)
 	}
 }
 
@@ -822,6 +881,53 @@ func TestMissionRecommendationsReadbackCLIMatchesGeneratedArtifacts(t *testing.T
 	}
 	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 0 {
 		t.Fatalf("readback must expose return gate status and checkpoint count: %#v", readback)
+	}
+}
+
+func TestMissionRecommendationsReadbackCLIWritesWorkgraphReadinessPacket(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	readbackPath := filepath.Join(dir, "readback.json")
+	packetPath := filepath.Join(dir, "workgraph-readiness-packet.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "readback",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--out", readbackPath,
+		"--out-workgraph-readiness-packet", packetPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation readback failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "workgraph_readiness_packet=") {
+		t.Fatalf("readback output missing workgraph readiness packet path: %s", out.String())
+	}
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, readbackPath)
+	packet := mustLoadJSON[AtlasRecommendationWorkgraphReadinessPacket](t, packetPath)
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(packet, readback); err != nil {
+		t.Fatalf("bad workgraph readiness packet: %v", err)
+	}
+	if packet.NodeBudget != 40 ||
+		packet.ContinueIfFastTarget != 40 ||
+		packet.ReadyNodes != 40 ||
+		packet.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		packet.FinalResponseAllowed {
+		t.Fatalf("packet lost 40-node ready workgraph denial: %#v", packet)
 	}
 }
 
@@ -1732,6 +1838,48 @@ func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T)
 	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
 	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness checkpoint_freshness_status must match recommendation readback") {
 		t.Fatalf("expected stale Foundry checkpoint freshness rejection, got %v", err)
+	}
+}
+
+func TestRecommendationWorkgraphReadinessPacketRejectsStaleReadyNodeState(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	packet, err := BuildAtlasRecommendationWorkgraphReadinessPacket(readback, AtlasRecommendationWorkgraphReadinessPacketOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	stale := packet
+	stale.ReadyNodes = 0
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(stale, readback); err == nil ||
+		!strings.Contains(err.Error(), "ready_nodes must match recommendation readback") {
+		t.Fatalf("expected stale ready node rejection, got %v", err)
+	}
+
+	stale = packet
+	stale.OneExecutableMutationNodeActive = false
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(stale, readback); err == nil ||
+		!strings.Contains(err.Error(), "ready nodes require one_executable_mutation_node_active=true") {
+		t.Fatalf("expected missing one-active-node rejection, got %v", err)
+	}
+
+	stale = packet
+	stale.FinalResponseAllowed = true
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(stale, readback); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed must match recommendation readback") {
+		t.Fatalf("expected stale final response rejection, got %v", err)
 	}
 }
 

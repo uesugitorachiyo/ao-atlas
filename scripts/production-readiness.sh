@@ -201,6 +201,7 @@ required_files=(
   schemas/ao-mission-feature-depth-recommendations.schema.json
   schemas/recommendation-wave.schema.json
   schemas/recommendation-readback.schema.json
+  schemas/recommendation-workgraph-readiness-packet.schema.json
   schemas/recommendation-lease-start.schema.json
   schemas/recommendation-checkpoint-readback.schema.json
   schemas/recommendation-command-readback.schema.json
@@ -267,6 +268,7 @@ test -s "$OUT/mission-recommendations/recommendation-wave.json"
 test -s "$OUT/mission-recommendations/recommendation-workgraph.json"
 test -s "$OUT/mission-recommendations/lease-start.json"
 test -s "$OUT/mission-recommendations/recommendation-readback.json"
+test -s "$OUT/mission-recommendations/workgraph-readiness-packet.json"
 test -s "$OUT/mission-recommendations/next-recommended-prompt.md"
 jq -e '.minimum_tasks == 30 and .total_tasks == 40 and .node_budget == 40 and .estimated_minutes == 120 and .supervisor.min_minutes == 120 and .supervisor.max_minutes == 180 and .supervisor.continue_if_fast_target == 40 and .final_response_allowed == false' "$OUT/mission-recommendations/recommendation-wave.json" >/dev/null
 jq -e '(.tasks | length) == 40 and all(.tasks[]; (.source_task_digest | test("^sha256:[0-9a-f]{64}$")))' "$OUT/mission-recommendations/recommendation-wave.json" >/dev/null
@@ -275,6 +277,7 @@ jq -e 'all(.nodes[]; any(.factory_task.required_evidence[]; startswith("source_t
 assert_40_node_recommendation_workgraph "$OUT/mission-recommendations/recommendation-workgraph.json"
 jq -e '.schema == "ao.atlas.recommendation-lease-start.v0.1" and .started_at == "2026-07-04T08:00:00-07:00" and .min_minutes == 120 and .max_minutes == 180 and .final_response_allowed == false and .schedules_work == false and .executes_work == false and .approves_work == false' "$OUT/mission-recommendations/lease-start.json" >/dev/null
 jq -e '.total_nodes == 40 and .minimum_nodes == 30 and .ready_nodes == 40 and .executable_ready_nodes == 1 and .checkpoint_count == 0 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false and .lease_health_status == "minimum_unmet" and .early_return_risk_status == "blocked_final_response_ready_nodes_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
+jq -e '.schema == "ao.atlas.recommendation-workgraph-readiness-packet.v0.1" and .status == "continuation_required" and .total_nodes == 40 and .minimum_nodes == 30 and .node_budget == 40 and .continue_if_fast_target == 40 and .ready_nodes == 40 and .executable_ready_nodes == 1 and .first_executable_node == "mission-recommendation-next-01" and .return_gate_status == "blocked_ready_nodes_remain" and .early_return_risk_status == "blocked_final_response_ready_nodes_remain" and .continuation_budget_status == "minimum_nodes_unmet_continue_to_40_node_budget" and .final_response_allowed == false and .one_executable_mutation_node_active == true and .refuses_final_response == true and .schedules_work == false and .executes_work == false and .approves_work == false and .claims_authority_advance == false and .rsi_remains_denied == true and (.wave_digest | test("^sha256:[0-9a-f]{64}$")) and (.workgraph_digest | test("^sha256:[0-9a-f]{64}$")) and (.readback_digest | test("^sha256:[0-9a-f]{64}$"))' "$OUT/mission-recommendations/workgraph-readiness-packet.json" >/dev/null
 jq -e '.final_response_denial_gate == "deny_ready_nodes_or_exact_next_action_remain"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 jq -e '.continuation_contract.contract_version == "ao.atlas.continuation-contract.v0.1" and .continuation_contract.status == "continuation_required" and .continuation_contract.refuses_final_response == true and .continuation_contract.ready_nodes == .ready_nodes and .continuation_contract.exact_next_action == .exact_next_action and .continuation_contract.return_gate_status == .return_gate_status and .continuation_contract.final_response_allowed == .final_response_allowed and .continuation_contract.source == "recommendation_readback"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 jq -e '.exact_next_action_readback.status == "continuation_required" and .exact_next_action_readback.action == .exact_next_action and .exact_next_action_readback.next_executable_node == .first_executable_node and .exact_next_action_readback.return_gate_status == .return_gate_status and .exact_next_action_readback.final_response_allowed == .final_response_allowed and .exact_next_action_readback.source == "recommendation_readback"' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
@@ -284,6 +287,7 @@ jq -e '([.foundry_terminal_status_examples[].source_status] | sort) == ["blocked
 jq -e '([.foundry_denied_terminal_examples[].denial_reason] | sort) == ["forbidden_surface_or_rsi_claim","missing_node_evidence","missing_stop_gate_evidence"] and all(.foundry_denied_terminal_examples[]; .normalized_status == "denied" and .terminal == true and .can_close_mission == true and .requires_exact_missing_evidence == true and .rsi_remains_denied == true and .authority_advance_claimed == false) and any(.foundry_denied_terminal_examples[]; .denial_reason == "missing_node_evidence" and (.required_readback | contains("missing node id"))) and any(.foundry_denied_terminal_examples[]; .denial_reason == "forbidden_surface_or_rsi_claim" and (.required_readback | contains("RSI")))' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
 jq -e '(.wave_digest | test("^sha256:[0-9a-f]{64}$")) and (.workgraph_digest | test("^sha256:[0-9a-f]{64}$"))' "$OUT/mission-recommendations/lease-start.json" >/dev/null
 jq -e --slurpfile lease "$OUT/mission-recommendations/lease-start.json" '.wave_digest == $lease[0].wave_digest and .workgraph_digest == $lease[0].workgraph_digest' "$OUT/mission-recommendations/recommendation-readback.json" >/dev/null
+jq -e --slurpfile readback "$OUT/mission-recommendations/recommendation-readback.json" '.wave_digest == $readback[0].wave_digest and .workgraph_digest == $readback[0].workgraph_digest and .total_nodes == $readback[0].total_nodes and .ready_nodes == $readback[0].ready_nodes and .exact_next_action == $readback[0].exact_next_action and .final_response_allowed == $readback[0].final_response_allowed' "$OUT/mission-recommendations/workgraph-readiness-packet.json" >/dev/null
 pass "recommendation-import-artifact-binding"
 grep -q "Target 2-3 hours" "$OUT/mission-recommendations/next-recommended-prompt.md"
 grep -q "\`early_return_risk_status\`" "$OUT/mission-recommendations/next-recommended-prompt.md"
@@ -291,8 +295,10 @@ grep -q "If ready_nodes > 0 or exact_next_action is non-empty, do not produce a 
 grep -q "If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair." "$OUT/mission-recommendations/next-recommended-prompt.md"
 reject_generated_recommendation_prompt_public_safety "$OUT/mission-recommendations/next-recommended-prompt.md"
 pass "recommendation-prompt-public-safety-scan"
-"$BIN" mission recommendations readback --wave "$OUT/mission-recommendations/recommendation-wave.json" --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --evidence-root target/production-readiness/mission-recommendations --out "$OUT/mission-recommendations/recommendation-readback-regenerated.json" >/dev/null
+"$BIN" mission recommendations readback --wave "$OUT/mission-recommendations/recommendation-wave.json" --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" --evidence-root target/production-readiness/mission-recommendations --out "$OUT/mission-recommendations/recommendation-readback-regenerated.json" --out-workgraph-readiness-packet "$OUT/mission-recommendations/workgraph-readiness-packet-regenerated.json" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-readback-regenerated.json"
+test -s "$OUT/mission-recommendations/workgraph-readiness-packet-regenerated.json"
+jq -e '.node_budget == 40 and .continue_if_fast_target == 40 and .return_gate_status == "blocked_ready_nodes_remain" and .final_response_allowed == false' "$OUT/mission-recommendations/workgraph-readiness-packet-regenerated.json" >/dev/null
 "$BIN" workgraph validate --workgraph "$OUT/mission-recommendations/recommendation-workgraph.json" >/dev/null
 completed_recommendation_workgraph="$OUT/mission-recommendations/recommendation-workgraph-completed.json"
 jq '.nodes |= map(.status = "completed")' "$OUT/mission-recommendations/recommendation-workgraph.json" >"$completed_recommendation_workgraph"
@@ -405,6 +411,7 @@ grep -q "If a node becomes blocked or failed, record the exact blocked node id, 
 grep -q "If \`ready_nodes > 0\` or \`exact_next_action\` is non-empty, do not produce a final response." "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 reject_generated_recommendation_prompt_public_safety "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 assert_schema_required_fields_present schemas/recommendation-readback.schema.json "$OUT/mission-recommendations/recommendation-readback-resumed.json" "recommendation readback"
+assert_schema_required_fields_present schemas/recommendation-workgraph-readiness-packet.schema.json "$OUT/mission-recommendations/workgraph-readiness-packet.json" "recommendation workgraph readiness packet"
 assert_schema_required_fields_present schemas/recommendation-checkpoint-readback.schema.json "$OUT/mission-recommendations/checkpoint-readback-after-node-01.json" "recommendation checkpoint readback"
 assert_schema_required_fields_present schemas/recommendation-command-readback.schema.json "$OUT/mission-recommendations/command-readback-resumed.json" "recommendation command readback"
 assert_schema_required_fields_present schemas/recommendation-promoter-readback.schema.json "$OUT/mission-recommendations/promoter-readback-resumed.json" "recommendation promoter readback"
