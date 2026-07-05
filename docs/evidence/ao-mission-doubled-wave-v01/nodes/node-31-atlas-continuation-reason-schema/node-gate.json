@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-31-atlas-continuation-reason-schema",
+  "status": "open",
+  "owner": "ao-atlas",
+  "objective": "Bind Atlas continuation_contract.reason values into the public recommendation-readback schema so exact-next-action denial cannot drift to arbitrary wording.",
+  "entry_conditions": [
+    "node-30-atlas-continuation-contract-smoke merged in AO Atlas PR #243",
+    "AO Atlas main synced before creating this node branch",
+    "exactly one executable mutation node is active for this branch"
+  ],
+  "exit_conditions": [
+    "recommendation-readback schema enumerates continuation_contract.reason values",
+    "focused schema regression proves exact_next_action_remains is part of the contract",
+    "production readiness asserts the continuation reason enum",
+    "public-safety wording remains clean"
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

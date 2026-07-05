@@ -235,7 +235,19 @@
         "return_gate_status": { "type": "string", "minLength": 1 },
         "final_response_allowed": { "type": "boolean" },
         "refuses_final_response": { "type": "boolean" },
-        "reason": { "type": "string", "minLength": 1 },
+        "reason": {
+          "enum": [
+            "ready_nodes_or_exact_next_action_remain",
+            "ready_nodes_remain",
+            "exact_next_action_remains",
+            "final response allowed by recommendation readback",
+            "blocked_hard_blocker",
+            "blocked_lease_timing_missing",
+            "blocked_minimum_minutes_unmet",
+            "blocked_ready_nodes_remain",
+            "blocked_no_executable_ready_node"
+          ]
+        },
         "source": { "const": "recommendation_readback" }
       }
     },

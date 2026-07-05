@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-31-atlas-continuation-reason-schema",
+  "status": "selected",
+  "selected_candidate": "Add a continuation_contract.reason enum to schemas/recommendation-readback.schema.json and test the enum values.",
+  "alternatives_rejected": [
+    "Rely only on Go validation; rejected because public readback consumers also need schema-level reason bindings.",
+    "Add free-form documentation only; rejected because it would not catch schema drift.",
+    "Attempt cross-field schema conditions now; rejected as broader than this bounded node and already covered in Go validation."
+  ],
+  "decision": "Bind the allowed reason vocabulary in schema, unit test it, and assert it during production readiness."
+}

@@ -63,6 +63,44 @@ func assertNestedSchemaRequiresField(t *testing.T, schemaPath, property, field s
 	t.Fatalf("schema %s nested property %q does not require %q", schemaPath, property, field)
 }
 
+func assertNestedSchemaEnumContains(t *testing.T, schemaPath, property, nestedProperty string, values ...string) {
+	t.Helper()
+	schema := mustLoadJSON[map[string]any](t, schemaPath)
+	properties, ok := schema["properties"].(map[string]any)
+	if !ok {
+		t.Fatalf("schema %s missing properties", schemaPath)
+	}
+	parent, ok := properties[property].(map[string]any)
+	if !ok {
+		t.Fatalf("schema %s missing property %q", schemaPath, property)
+	}
+	parentProperties, ok := parent["properties"].(map[string]any)
+	if !ok {
+		t.Fatalf("schema %s property %q missing nested properties", schemaPath, property)
+	}
+	nested, ok := parentProperties[nestedProperty].(map[string]any)
+	if !ok {
+		t.Fatalf("schema %s property %q missing nested property %q", schemaPath, property, nestedProperty)
+	}
+	rawEnum, ok := nested["enum"].([]any)
+	if !ok || len(rawEnum) == 0 {
+		t.Fatalf("schema %s nested property %q.%q missing enum", schemaPath, property, nestedProperty)
+	}
+	enum := map[string]bool{}
+	for _, value := range rawEnum {
+		text, ok := value.(string)
+		if !ok {
+			t.Fatalf("schema %s nested property %q.%q has non-string enum value %#v", schemaPath, property, nestedProperty, value)
+		}
+		enum[text] = true
+	}
+	for _, value := range values {
+		if !enum[value] {
+			t.Fatalf("schema %s nested property %q.%q enum missing %q", schemaPath, property, nestedProperty, value)
+		}
+	}
+}
+
 func TestRecommendationDerivedReadbackSchemasRequireLeaseHealthStatus(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "schemas")
 	for _, schemaName := range []string{
@@ -113,6 +151,23 @@ func TestRecommendationReadbackSchemaRequiresExactNextActionReadback(t *testing.
 
 func TestRecommendationReadbackSchemaRequiresContinuationContract(t *testing.T) {
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "continuation_contract")
+}
+
+func TestRecommendationReadbackSchemaBindsContinuationContractReasonEnum(t *testing.T) {
+	assertNestedSchemaEnumContains(t,
+		filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"),
+		"continuation_contract",
+		"reason",
+		"ready_nodes_or_exact_next_action_remain",
+		"ready_nodes_remain",
+		"exact_next_action_remains",
+		"final response allowed by recommendation readback",
+		"blocked_hard_blocker",
+		"blocked_lease_timing_missing",
+		"blocked_minimum_minutes_unmet",
+		"blocked_ready_nodes_remain",
+		"blocked_no_executable_ready_node",
+	)
 }
 
 func TestRecommendationReadbackSchemaRequiresCommandTimelinePlaceholders(t *testing.T) {
