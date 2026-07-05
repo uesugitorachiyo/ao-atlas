@@ -1,0 +1,53 @@
+{
+  "schema": "ao.atlas.verification.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-50-final-readiness-prompt",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "jq -e . docs/evidence/ao-mission-doubled-wave-v01/final-summary.json docs/evidence/ao-mission-doubled-wave-v01/nodes/node-50-final-readiness-prompt/*.json >/dev/null",
+      "status": "passed",
+      "output": "valid JSON"
+    },
+    {
+      "command": "rg public-safety negative pattern scan over node 50 artifacts",
+      "status": "passed",
+      "output": "no matches"
+    },
+    {
+      "command": "rg -n '^\\d+\\. ' docs/evidence/ao-mission-doubled-wave-v01/next-recommended-prompt.md | wc -l | tr -d ' '",
+      "status": "passed",
+      "output": "52"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed",
+      "output": "no whitespace errors"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "output": "status=ready; score=100/100; summary=target/production-readiness/summary.json"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed",
+      "output": "cmd/atlas no test files; internal/atlas ok"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed",
+      "output": "no output"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed",
+      "output": "no output; generated local atlas binary removed before commit"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed",
+      "output": "status=ready; mode=fixture_only_readback; summary=target/atlas-foundry-roundtrip/summary.json"
+    }
+  ]
+}

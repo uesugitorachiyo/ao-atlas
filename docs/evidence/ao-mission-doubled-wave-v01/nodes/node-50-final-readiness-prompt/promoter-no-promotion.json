@@ -1,0 +1,13 @@
+{
+  "schema": "ao.promoter.no-promotion.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-50-final-readiness-prompt",
+  "status": "no_promotion_requested",
+  "summary": "Node 50 closes a bounded AO Atlas support wave with evidence and a larger continuation prompt. It does not request a capability promotion.",
+  "promotion_decision": {
+    "requested": false,
+    "granted": false,
+    "highest_proven_live_class_changed": false,
+    "rsi_status": "denied"
+  }
+}
