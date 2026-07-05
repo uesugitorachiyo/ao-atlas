@@ -12,6 +12,7 @@
   "min_minutes_met": true,
   "lease_health_status": "all_generated_nodes_complete",
   "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+  "continuation_contract_reason": "final response allowed by recommendation readback",
   "final_response_allowed": true,
   "schedules_work": false,
   "executes_work": false,

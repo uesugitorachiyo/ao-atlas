@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-44-lease-resume-doc-reason",
+  "status": "implemented_verified_locally",
+  "changes": [
+    "Regenerated lease-resume execution, Command, Promoter, Foundry, and reconciliation readbacks with continuation_contract_reason and refusal agreement fields.",
+    "Added final-synthesis continuation_contract_reason and refuses_final_response fields.",
+    "Added continuation contract reason to the lease-resume next recommended prompt.",
+    "Extended lease-resume Go regression coverage to validate final execution, closure, and reconciliation artifacts against the recommendation readback.",
+    "Extended production readiness to require lease-resume execution source-artifact coverage and prompt continuation reason wording."
+  ],
+  "generated_from": {
+    "command": "go run ./cmd/atlas mission recommendations resume",
+    "workgraph": "docs/evidence/ao-atlas-lease-resume-wave-v01/nodes/mission-recommendation-next-40/workgraph-after.json",
+    "lease_start": "docs/evidence/ao-atlas-lease-resume-wave-v01/lease-start.json"
+  },
+  "rsi_remains_denied": true
+}

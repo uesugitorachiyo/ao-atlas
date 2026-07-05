@@ -1,0 +1,11 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-44-lease-resume-doc-reason",
+  "status": "continuation_required",
+  "completed_nodes_after_this_node": 44,
+  "target_nodes": 50,
+  "readback": "Lease-resume final docs and root execution artifacts now carry continuation_contract_reason and refusal state consistently.",
+  "exact_next_action_after_merge": "Continue to node 45 and bind Command compact mission timeline reason roundtrip.",
+  "final_response_allowed": false
+}

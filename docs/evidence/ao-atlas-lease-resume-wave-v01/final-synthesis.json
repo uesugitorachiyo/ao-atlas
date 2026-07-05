@@ -22,6 +22,8 @@
   "return_gate_status": "final_response_allowed",
   "final_response_allowed": true,
   "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
+  "continuation_contract_reason": "final response allowed by recommendation readback",
+  "refuses_final_response": false,
   "exact_next_action_readback": {
     "status": "finalization_ready",
     "action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
@@ -148,7 +150,7 @@
     "promoter_readback": "docs/evidence/ao-atlas-lease-resume-wave-v01/promoter-readback.json",
     "foundry_rollup": "docs/evidence/ao-atlas-lease-resume-wave-v01/foundry-rollup.json",
     "reconciliation_packet": "docs/evidence/ao-atlas-lease-resume-wave-v01/reconciliation-packet.json",
-    "summary": "Final readbacks report 40/40 recommendation nodes complete, ready_nodes=0, checkpoint_count=40, minimum lease met, final_response_allowed=true, promotion_claimed=false, and RSI remains denied."
+    "summary": "Final readbacks report 40/40 recommendation nodes complete, ready_nodes=0, checkpoint_count=40, minimum lease met, final_response_allowed=true, continuation_contract_reason=final response allowed by recommendation readback, promotion_claimed=false, and RSI remains denied."
   },
   "blocked_node_continuation_prompt": "If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.",
   "foundry_terminal_status_examples": [

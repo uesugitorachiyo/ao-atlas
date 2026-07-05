@@ -2342,33 +2342,51 @@ func TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-lease-resume-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))
 	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "recommendation-readback.json"))
+	execution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, filepath.Join(root, "execution-readback.json"))
+	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, filepath.Join(root, "command-readback.json"))
+	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, filepath.Join(root, "promoter-readback.json"))
+	foundry := mustLoadJSON[AtlasRecommendationFoundryRollup](t, filepath.Join(root, "foundry-rollup.json"))
+	reconciliation := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, filepath.Join(root, "reconciliation-packet.json"))
 	var synthesis struct {
-		CompletedNodes        int    `json:"completed_nodes"`
-		TotalNodes            int    `json:"total_nodes"`
-		ReadyNodes            int    `json:"ready_nodes"`
-		CheckpointCount       int    `json:"checkpoint_count"`
-		ElapsedMinutes        int    `json:"elapsed_minutes"`
-		ReturnGateStatus      string `json:"return_gate_status"`
-		FinalResponseAllowed  bool   `json:"final_response_allowed"`
-		ExactNextAction       string `json:"exact_next_action"`
-		NextRecommendedPrompt string `json:"next_recommended_prompt"`
+		CompletedNodes             int    `json:"completed_nodes"`
+		TotalNodes                 int    `json:"total_nodes"`
+		ReadyNodes                 int    `json:"ready_nodes"`
+		CheckpointCount            int    `json:"checkpoint_count"`
+		ElapsedMinutes             int    `json:"elapsed_minutes"`
+		ReturnGateStatus           string `json:"return_gate_status"`
+		FinalResponseAllowed       bool   `json:"final_response_allowed"`
+		ExactNextAction            string `json:"exact_next_action"`
+		ContinuationContractReason string `json:"continuation_contract_reason"`
+		RefusesFinalResponse       bool   `json:"refuses_final_response"`
+		NextRecommendedPrompt      string `json:"next_recommended_prompt"`
 	}
 	synthesis = mustLoadJSON[struct {
-		CompletedNodes        int    `json:"completed_nodes"`
-		TotalNodes            int    `json:"total_nodes"`
-		ReadyNodes            int    `json:"ready_nodes"`
-		CheckpointCount       int    `json:"checkpoint_count"`
-		ElapsedMinutes        int    `json:"elapsed_minutes"`
-		ReturnGateStatus      string `json:"return_gate_status"`
-		FinalResponseAllowed  bool   `json:"final_response_allowed"`
-		ExactNextAction       string `json:"exact_next_action"`
-		NextRecommendedPrompt string `json:"next_recommended_prompt"`
+		CompletedNodes             int    `json:"completed_nodes"`
+		TotalNodes                 int    `json:"total_nodes"`
+		ReadyNodes                 int    `json:"ready_nodes"`
+		CheckpointCount            int    `json:"checkpoint_count"`
+		ElapsedMinutes             int    `json:"elapsed_minutes"`
+		ReturnGateStatus           string `json:"return_gate_status"`
+		FinalResponseAllowed       bool   `json:"final_response_allowed"`
+		ExactNextAction            string `json:"exact_next_action"`
+		ContinuationContractReason string `json:"continuation_contract_reason"`
+		RefusesFinalResponse       bool   `json:"refuses_final_response"`
+		NextRecommendedPrompt      string `json:"next_recommended_prompt"`
 	}](t, filepath.Join(root, "final-synthesis.json"))
 	if err := ValidateAtlasRecommendationWave(wave); err != nil {
 		t.Fatal(err)
 	}
 	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
 		t.Fatal(err)
+	}
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("final execution readback should agree with lease-resume readback: %v", err)
+	}
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err != nil {
+		t.Fatalf("final closure artifacts should agree with lease-resume readback: %v", err)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, reconciliation); err != nil {
+		t.Fatalf("final reconciliation packet should agree with lease-resume readback: %v", err)
 	}
 	workgraphPath := filepath.Join(root, "recommendation-workgraph.json")
 	if readback.CompletedNodes > 0 {
@@ -2406,8 +2424,16 @@ func TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt(t *testing.T) {
 		synthesis.ElapsedMinutes != readback.ElapsedMinutes ||
 		synthesis.ReturnGateStatus != readback.ReturnGateStatus ||
 		synthesis.FinalResponseAllowed != readback.FinalResponseAllowed ||
-		synthesis.ExactNextAction != readback.ExactNextAction {
+		synthesis.ExactNextAction != readback.ExactNextAction ||
+		synthesis.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		synthesis.RefusesFinalResponse != readback.ContinuationContract.RefusesFinalResponse {
 		t.Fatalf("final synthesis does not match root readback: synthesis=%#v readback=%#v", synthesis, readback)
+	}
+	if execution.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		execution.RefusesFinalResponse != readback.ContinuationContract.RefusesFinalResponse ||
+		execution.FoundryRunLinkReadinessSummary.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		execution.ContinuationReasonCoverage.ExpectedReason != readback.ContinuationContract.Reason {
+		t.Fatalf("execution readback lost lease-resume continuation reason: execution=%#v readback=%#v", execution, readback)
 	}
 	promptPath := filepath.Join(root, "next-recommended-prompt.md")
 	if synthesis.NextRecommendedPrompt != "docs/evidence/ao-atlas-lease-resume-wave-v01/next-recommended-prompt.md" {
@@ -2433,6 +2459,7 @@ func TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt(t *testing.T) {
 		"Elapsed minutes at latest checkpoint: " + strconv.Itoa(readback.ElapsedMinutes),
 		"`final_response_allowed=" + strconv.FormatBool(readback.FinalResponseAllowed) + "`",
 		"Return gate: `" + readback.ReturnGateStatus + "`",
+		"Continuation contract reason: `" + readback.ContinuationContract.Reason + "`",
 		"Early-return risk: `" + readback.EarlyReturnRiskStatus + "`",
 		"Checkpoint count: " + strconv.Itoa(readback.CheckpointCount),
 		"Next executable node: `" + nextExecutableNode + "`",

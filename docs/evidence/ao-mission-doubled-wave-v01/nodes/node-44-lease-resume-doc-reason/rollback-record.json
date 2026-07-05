@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-44-lease-resume-doc-reason",
+  "status": "recorded",
+  "rollback_strategy": "Revert the node commit to restore the previous lease-resume fixture artifacts, prompt wording, test assertions, and production-readiness checks.",
+  "safe_repack": "If only a generated fixture digest is stale, regenerate the lease-resume artifacts from the final workgraph and lease-start before reverting code.",
+  "forbidden_surfaces": []
+}

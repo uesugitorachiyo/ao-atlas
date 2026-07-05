@@ -693,9 +693,11 @@ pass "recommendation-ledger-consistency"
 
 lease_resume_root="docs/evidence/ao-atlas-lease-resume-wave-v01"
 lease_resume_readback="$lease_resume_root/recommendation-readback.json"
+lease_resume_execution="$lease_resume_root/execution-readback.json"
 lease_resume_synthesis="$lease_resume_root/final-synthesis.json"
 lease_resume_prompt="$lease_resume_root/next-recommended-prompt.md"
 if [ -f "$lease_resume_readback" ]; then
+  test -s "$lease_resume_execution"
   test -s "$lease_resume_synthesis"
   test -s "$lease_resume_prompt"
   jq -e --slurpfile synthesis "$lease_resume_synthesis" '
@@ -707,6 +709,8 @@ if [ -f "$lease_resume_readback" ]; then
     .return_gate_status == $synthesis[0].return_gate_status and
     .final_response_allowed == $synthesis[0].final_response_allowed and
     .exact_next_action == $synthesis[0].exact_next_action and
+    .continuation_contract.reason == $synthesis[0].continuation_contract_reason and
+    .continuation_contract.refuses_final_response == $synthesis[0].refuses_final_response and
     (
       (
         .final_response_allowed == false and
@@ -734,14 +738,42 @@ if [ -f "$lease_resume_readback" ]; then
     .lease_time_status == "minimum_minutes_met" and
     .return_gate_status == "final_response_allowed" and
     .final_response_allowed == true and
-    .exact_next_action == "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
+    .exact_next_action == "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks." and
+    .continuation_contract.status == "ready_for_final_response" and
+    .continuation_contract.reason == "final response allowed by recommendation readback" and
+    .continuation_contract.refuses_final_response == false
   ' "$lease_resume_readback" >/dev/null
+  jq -e --slurpfile readback "$lease_resume_readback" '
+    .status == "completed" and
+    .completed_recommendation_nodes == $readback[0].completed_nodes and
+    .total_recommendation_nodes == $readback[0].total_nodes and
+    .lease_health_status == $readback[0].lease_health_status and
+    .checkpoint_freshness_status == $readback[0].checkpoint_freshness_status and
+    .return_gate_status == $readback[0].return_gate_status and
+    .continuation_contract_reason == $readback[0].continuation_contract.reason and
+    .exact_next_action == $readback[0].exact_next_action and
+    .final_response_allowed == $readback[0].final_response_allowed and
+    .refuses_final_response == $readback[0].continuation_contract.refuses_final_response and
+    .generated_workgraph.return_gate_status == .return_gate_status and
+    .foundry_run_link_readiness_summary.return_gate_status == .return_gate_status and
+    .foundry_run_link_readiness_summary.continuation_contract_reason == .continuation_contract_reason and
+    .foundry_run_link_readiness_summary.exact_next_action == .exact_next_action and
+    .foundry_run_link_readiness_summary.refuses_final_response == .refuses_final_response and
+    .continuation_reason_coverage.expected_reason == .continuation_contract_reason and
+    .continuation_reason_coverage.source_count == 13 and
+    (.continuation_reason_coverage.indexed_sources | index("resume_prompt") != null) and
+    .continuation_reason_coverage.final_response_allowed == .final_response_allowed and
+    .continuation_reason_coverage.refuses_final_response == .refuses_final_response and
+    (.source_artifacts[] | select(.ref == "foundry_run_link_readiness_summary" and (.digest | test("^sha256:[0-9a-f]{64}$")))) and
+    (.source_artifacts[] | select(.ref == "continuation_reason_coverage" and (.digest | test("^sha256:[0-9a-f]{64}$"))))
+  ' "$lease_resume_execution" >/dev/null
   lease_resume_completed_nodes="$(jq -r '.completed_nodes' "$lease_resume_readback")"
   lease_resume_total_nodes="$(jq -r '.total_nodes' "$lease_resume_readback")"
   lease_resume_ready_nodes="$(jq -r '.ready_nodes' "$lease_resume_readback")"
   lease_resume_elapsed_minutes="$(jq -r '.elapsed_minutes' "$lease_resume_readback")"
   lease_resume_checkpoint_count="$(jq -r '.checkpoint_count' "$lease_resume_readback")"
   lease_resume_early_return_risk="$(jq -r '.early_return_risk_status' "$lease_resume_readback")"
+  lease_resume_continuation_reason="$(jq -r '.continuation_contract.reason' "$lease_resume_readback")"
   lease_resume_next_action="$(jq -r '.exact_next_action' "$lease_resume_readback")"
   lease_resume_node_suffix="$(printf "%02d" "$lease_resume_completed_nodes")"
   lease_resume_workgraph="$lease_resume_root/nodes/mission-recommendation-next-$lease_resume_node_suffix/workgraph-after.json"
@@ -751,6 +783,7 @@ if [ -f "$lease_resume_readback" ]; then
   grep -qF "Ready nodes: $lease_resume_ready_nodes" "$lease_resume_prompt"
   grep -qF "Elapsed minutes at latest checkpoint: $lease_resume_elapsed_minutes" "$lease_resume_prompt"
   grep -qF "Checkpoint count: $lease_resume_checkpoint_count" "$lease_resume_prompt"
+  grep -qF "Continuation contract reason: \`$lease_resume_continuation_reason\`" "$lease_resume_prompt"
   grep -qF "Early-return risk: \`$lease_resume_early_return_risk\`" "$lease_resume_prompt"
   grep -qF "$lease_resume_next_action" "$lease_resume_prompt"
   grep -qF 'If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.' "$lease_resume_prompt"
