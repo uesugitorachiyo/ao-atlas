@@ -821,6 +821,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	elapsedMinutes := fs.Int("elapsed-minutes", 0, "long-run lease elapsed minutes")
 	leaseTimingMode := fs.String("lease-timing-mode", "", "lease timing evidence mode")
 	outPath := fs.String("out", "", "output path")
+	outExecutionReadbackPath := fs.String("out-execution-readback", "", "execution readback output path")
 	outWorkgraphReadinessPacketPath := fs.String("out-workgraph-readiness-packet", "", "generated workgraph readiness packet output path")
 	jsonOut := fs.Bool("json", false, "json output")
 	if err := fs.Parse(args); err != nil {
@@ -832,10 +833,10 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	if strings.TrimSpace(*workgraphPath) == "" {
 		return fmt.Errorf("--workgraph is required")
 	}
-	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+	if strings.TrimSpace(*outPath) == "" && strings.TrimSpace(*outExecutionReadbackPath) == "" && strings.TrimSpace(*outWorkgraphReadinessPacketPath) == "" && !*jsonOut {
 		return fmt.Errorf("--out or --json is required")
 	}
-	for _, out := range []string{*outPath, *outWorkgraphReadinessPacketPath} {
+	for _, out := range []string{*outPath, *outExecutionReadbackPath, *outWorkgraphReadinessPacketPath} {
 		if strings.TrimSpace(out) == "" {
 			continue
 		}
@@ -868,6 +869,12 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 			return err
 		}
 	}
+	if strings.TrimSpace(*outExecutionReadbackPath) != "" {
+		execution := BuildAtlasRecommendationExecutionReadback(readback)
+		if err := WriteJSON(*outExecutionReadbackPath, execution); err != nil {
+			return err
+		}
+	}
 	if strings.TrimSpace(*outWorkgraphReadinessPacketPath) != "" {
 		packet, err := BuildAtlasRecommendationWorkgraphReadinessPacket(readback, AtlasRecommendationWorkgraphReadinessPacketOptions{
 			WavePath:      *wavePath,
@@ -884,7 +891,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	if *jsonOut {
 		return printJSON(stdout, readback)
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nworkgraph_readiness_packet=%s\n",
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\nworkgraph_readiness_packet=%s\n",
 		readback.Status,
 		readback.MissionID,
 		readback.TotalNodes,
@@ -900,6 +907,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 		readback.FinalResponseAllowed,
 		readback.ExactNextAction,
 		filepath.ToSlash(*outPath),
+		filepath.ToSlash(*outExecutionReadbackPath),
 		filepath.ToSlash(*outWorkgraphReadinessPacketPath),
 	)
 	return nil

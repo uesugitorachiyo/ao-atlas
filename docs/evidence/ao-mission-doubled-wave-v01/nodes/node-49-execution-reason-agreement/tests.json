@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-49-execution-reason-agreement",
+  "status": "focused_and_full_tests_passed",
+  "focused_tests": [
+    "go test ./internal/atlas -run 'TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestRecommendationExecutionReadbackRejectsFalseCompletedNodes' -count=1 failed before implementation because reason_artifact_agreement_summary did not exist",
+    "go test ./internal/atlas -run 'TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestRecommendationExecutionReadbackRejectsFalseCompletedNodes|TestRecommendationExecutionReadbackArtifactsStayConsistent|TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt|TestProductionReadinessExercisesMissionRecommendationsImport' -count=1 passed after implementation"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ]
+}
