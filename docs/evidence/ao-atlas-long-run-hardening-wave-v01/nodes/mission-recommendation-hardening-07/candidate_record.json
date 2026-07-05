@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-07",
+  "task_id": "mission-recommendation-hardening-07-task",
+  "evidence_key": "candidate_record",
+  "status": "recorded",
+  "objective": "Generate a Foundry import that proves exactly one bounded mutation node is active.",
+  "candidate": {
+    "repo": "ao-atlas",
+    "branch": "codex/hardening-wave-node-07-single-foundry-import",
+    "scope": "Add single-active Foundry import fixture, node 7 run-link evidence, and post-node readbacks.",
+    "requires_code_change": true,
+    "requires_provider_call": false,
+    "requires_dependency_update": false,
+    "requires_release_action": false,
+    "requires_policy_or_auth_widening": false
+  }
+}
