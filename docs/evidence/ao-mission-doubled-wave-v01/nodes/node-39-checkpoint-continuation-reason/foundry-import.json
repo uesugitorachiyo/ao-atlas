@@ -1,0 +1,17 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-39-checkpoint-continuation-reason",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Implement checkpoint readback continuation reason binding.",
+  "inputs": [
+    "Recommendation readback continuation contract",
+    "Checkpoint readback artifact"
+  ],
+  "outputs": [
+    "Checkpoint continuation_contract_reason field",
+    "Schema requirement and enum",
+    "Focused regression and production readiness assertion"
+  ]
+}

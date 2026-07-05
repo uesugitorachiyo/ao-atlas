@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-39-checkpoint-continuation-reason",
+  "status": "selected",
+  "candidate": {
+    "title": "Add continuation reason to checkpoint readback",
+    "why": "Durable checkpoints must preserve the same continuation contract reason as recommendation, Command, Promoter, Foundry, reconciliation, and prompt readbacks.",
+    "bounded_files": [
+      "internal/atlas/models.go",
+      "internal/atlas/mission_recommendations.go",
+      "internal/atlas/mission_recommendations_test.go",
+      "schemas/recommendation-checkpoint-readback.schema.json",
+      "scripts/production-readiness.sh"
+    ]
+  },
+  "route": {
+    "atlas_owns": "checkpoint readback contract and validation",
+    "foundry_owns": "bounded implementation node execution",
+    "blueprint_required": false
+  }
+}

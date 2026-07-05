@@ -271,6 +271,22 @@ func TestRecommendationPromoterReadbackSchemaRequiresContinuationReason(t *testi
 	)
 }
 
+func TestRecommendationCheckpointReadbackSchemaRequiresContinuationReason(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "schemas", "recommendation-checkpoint-readback.schema.json")
+	assertSchemaRequiresField(t, root, "continuation_contract_reason")
+	assertSchemaEnumContains(t, root, "continuation_contract_reason",
+		"ready_nodes_or_exact_next_action_remain",
+		"ready_nodes_remain",
+		"exact_next_action_remains",
+		"final response allowed by recommendation readback",
+		"blocked_hard_blocker",
+		"blocked_lease_timing_missing",
+		"blocked_minimum_minutes_unmet",
+		"blocked_ready_nodes_remain",
+		"blocked_no_executable_ready_node",
+	)
+}
+
 func TestRecommendationReadbackSchemaRequiresPromoterNoPromotionPlaceholders(t *testing.T) {
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "promoter_no_promotion_placeholders")
 }
@@ -1169,6 +1185,7 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	if checkpoint.StartedAt != leaseStart.StartedAt ||
 		checkpoint.ElapsedMinutes != 17 ||
 		checkpoint.LeaseHealthStatus != "minimum_unmet" ||
+		checkpoint.ContinuationContractReason != "ready_nodes_or_exact_next_action_remain" ||
 		checkpoint.CompletedNodes != 1 ||
 		checkpoint.ReadyNodes != 39 ||
 		checkpoint.FinalResponseAllowed {

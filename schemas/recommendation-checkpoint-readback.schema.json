@@ -13,6 +13,7 @@
     "lease_time_status",
     "lease_health_status",
     "checkpoint_freshness_status",
+    "continuation_contract_reason",
     "completed_nodes",
     "ready_nodes",
     "blocked_nodes",
@@ -41,6 +42,19 @@
     "lease_time_status": { "type": "string", "minLength": 1 },
     "lease_health_status": { "type": "string", "minLength": 1 },
     "checkpoint_freshness_status": { "type": "string", "minLength": 1 },
+    "continuation_contract_reason": {
+      "enum": [
+        "ready_nodes_or_exact_next_action_remain",
+        "ready_nodes_remain",
+        "exact_next_action_remains",
+        "final response allowed by recommendation readback",
+        "blocked_hard_blocker",
+        "blocked_lease_timing_missing",
+        "blocked_minimum_minutes_unmet",
+        "blocked_ready_nodes_remain",
+        "blocked_no_executable_ready_node"
+      ]
+    },
     "completed_nodes": { "type": "integer", "minimum": 0 },
     "ready_nodes": { "type": "integer", "minimum": 0 },
     "blocked_nodes": { "type": "integer", "minimum": 0 },
