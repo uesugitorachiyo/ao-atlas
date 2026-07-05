@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-04",
+  "task_id": "mission-recommendation-hardening-04-task",
+  "evidence_key": "implementation_evidence",
+  "status": "recorded",
+  "objective": "Add a resume bundle fixture requiring fresh checkpoints before any final answer.",
+  "changes": [
+    "Added resume freshness fixture tied to the node 3 checkpoint readback.",
+    "Generated resumed Atlas, Command, Promoter, Foundry, and reconciliation readbacks from the node 3 workgraph checkpoint.",
+    "Added regression coverage proving final response remains denied on resume while ready nodes and exact next action remain."
+  ],
+  "rsi_remains_denied": true
+}

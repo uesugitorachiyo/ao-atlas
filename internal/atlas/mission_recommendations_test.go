@@ -2748,6 +2748,45 @@ func TestLongRunHardeningWaveCommandReadbackDeniesFinalWithExactNextAction(t *te
 	}
 }
 
+func TestLongRunHardeningWaveResumeBundleRequiresFreshCheckpoint(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThreeReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-03", "recommendation-readback-after.json"))
+	nodeThreeCheckpoint := mustLoadJSON[AtlasRecommendationCheckpointReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-03", "checkpoint-readback-after.json"))
+	fixture := mustLoadJSON[map[string]any](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-04", "resume-fresh-checkpoint-fixture.json"))
+	if fixture["schema"] != "ao.atlas.resume-fresh-checkpoint-fixture.v0.1" ||
+		fixture["status"] != "continuation_required" ||
+		fixture["source_checkpoint_status"] != nodeThreeCheckpoint.Status ||
+		fixture["checkpoint_freshness_status"] != nodeThreeCheckpoint.CheckpointFreshnessStatus ||
+		fixture["completed_nodes"] != float64(nodeThreeReadback.CompletedNodes) ||
+		fixture["ready_nodes"] != float64(nodeThreeReadback.ReadyNodes) ||
+		fixture["first_executable_node"] != nodeThreeReadback.FirstExecutableNode ||
+		fixture["resume_uses_latest_checkpoint"] != true ||
+		fixture["requires_fresh_checkpoint_before_final_answer"] != true ||
+		fixture["final_response_allowed"] != false {
+		t.Fatalf("resume freshness fixture must bind node 3 checkpoint to continuation state: %#v", fixture)
+	}
+	exactNextAction, _ := fixture["exact_next_action"].(string)
+	if exactNextAction != nodeThreeReadback.ExactNextAction ||
+		!strings.Contains(exactNextAction, "mission-recommendation-hardening-04") {
+		t.Fatalf("resume freshness fixture must preserve node 4 exact next action: fixture=%q readback=%q", exactNextAction, nodeThreeReadback.ExactNextAction)
+	}
+	if policy, _ := fixture["checkpoint_policy"].(string); policy != "after_each_node_or_timed_interval" {
+		t.Fatalf("resume freshness fixture must require the long-run checkpoint policy: %#v", fixture)
+	}
+
+	nodeFourReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-04", "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeFourReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeFourReadback.CompletedNodes != 4 ||
+		nodeFourReadback.ReadyNodes != 36 ||
+		nodeFourReadback.FirstExecutableNode != "mission-recommendation-hardening-05" ||
+		nodeFourReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeFourReadback.ExactNextAction, "mission-recommendation-hardening-05") {
+		t.Fatalf("node 4 readback must continue to node 5 without final response: %#v", nodeFourReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
