@@ -1,0 +1,34 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-40-continuation-reason-coverage",
+  "status": "focused_and_full_tests_passed",
+  "focused_tests": [
+    {
+      "name": "TestRecommendationContinuationReasonCoverageSchemaRequiresAgreementSources",
+      "coverage": "Coverage schema requires every continuation reason source and shared reason enum."
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    }
+  ]
+}

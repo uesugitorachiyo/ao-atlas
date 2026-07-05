@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.recommendation-continuation-reason-coverage.v0.1",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "expected_reason",
+    "sources",
+    "all_sources_agree",
+    "final_response_allowed",
+    "refuses_final_response",
+    "exact_next_action",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "ao.atlas.recommendation-continuation-reason-coverage.v0.1" },
+    "status": { "enum": ["agreement", "blocked_disagreement"] },
+    "expected_reason": {
+      "enum": [
+        "ready_nodes_or_exact_next_action_remain",
+        "ready_nodes_remain",
+        "exact_next_action_remains",
+        "final response allowed by recommendation readback",
+        "blocked_hard_blocker",
+        "blocked_lease_timing_missing",
+        "blocked_minimum_minutes_unmet",
+        "blocked_ready_nodes_remain",
+        "blocked_no_executable_ready_node"
+      ]
+    },
+    "sources": {
+      "type": "object",
+      "required": [
+        "recommendation_readback",
+        "checkpoint_readback",
+        "workgraph_readiness_packet",
+        "command_readback",
+        "command_timeline_binding",
+        "promoter_readback",
+        "foundry_rollup",
+        "reconciliation_packet",
+        "reconciliation_command",
+        "reconciliation_promoter",
+        "reconciliation_foundry",
+        "final_state_reconciliation",
+        "resume_prompt"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "recommendation_readback": { "$ref": "#/properties/expected_reason" },
+        "checkpoint_readback": { "$ref": "#/properties/expected_reason" },
+        "workgraph_readiness_packet": { "$ref": "#/properties/expected_reason" },
+        "command_readback": { "$ref": "#/properties/expected_reason" },
+        "command_timeline_binding": { "$ref": "#/properties/expected_reason" },
+        "promoter_readback": { "$ref": "#/properties/expected_reason" },
+        "foundry_rollup": { "$ref": "#/properties/expected_reason" },
+        "reconciliation_packet": { "$ref": "#/properties/expected_reason" },
+        "reconciliation_command": { "$ref": "#/properties/expected_reason" },
+        "reconciliation_promoter": { "$ref": "#/properties/expected_reason" },
+        "reconciliation_foundry": { "$ref": "#/properties/expected_reason" },
+        "final_state_reconciliation": { "$ref": "#/properties/expected_reason" },
+        "resume_prompt": { "$ref": "#/properties/expected_reason" }
+      }
+    },
+    "all_sources_agree": { "type": "boolean" },
+    "final_response_allowed": { "const": false },
+    "refuses_final_response": { "const": true },
+    "exact_next_action": { "type": "string", "minLength": 1 },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  }
+}

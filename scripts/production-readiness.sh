@@ -204,6 +204,7 @@ required_files=(
   schemas/recommendation-workgraph-readiness-packet.schema.json
   schemas/recommendation-lease-start.schema.json
   schemas/recommendation-checkpoint-readback.schema.json
+  schemas/recommendation-continuation-reason-coverage.schema.json
   schemas/recommendation-command-readback.schema.json
   schemas/recommendation-promoter-readback.schema.json
   schemas/recommendation-foundry-rollup.schema.json
@@ -412,6 +413,48 @@ grep -q "Early-return risk: \`blocked_final_response_ready_nodes_remain\`" "$OUT
 grep -q "If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair." "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 grep -q "If \`ready_nodes > 0\` or \`exact_next_action\` is non-empty, do not produce a final response." "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
 reject_generated_recommendation_prompt_public_safety "$OUT/mission-recommendations/next-recommended-prompt-resumed.md"
+resume_prompt_reason="$(grep -m1 '^[-] Continuation contract reason:' "$OUT/mission-recommendations/next-recommended-prompt-resumed.md" | sed -E 's/^- Continuation contract reason: `([^`]+)`.*/\1/')"
+jq -n \
+  --slurpfile readback "$OUT/mission-recommendations/recommendation-readback-resumed.json" \
+  --slurpfile checkpoint "$OUT/mission-recommendations/checkpoint-readback-after-node-01.json" \
+  --slurpfile readiness "$OUT/mission-recommendations/workgraph-readiness-packet.json" \
+  --slurpfile command "$OUT/mission-recommendations/command-readback-resumed.json" \
+  --slurpfile promoter "$OUT/mission-recommendations/promoter-readback-resumed.json" \
+  --slurpfile foundry "$OUT/mission-recommendations/foundry-rollup-resumed.json" \
+  --slurpfile reconciliation "$OUT/mission-recommendations/reconciliation-packet-resumed.json" \
+  --arg resume_prompt_reason "$resume_prompt_reason" '
+    ($readback[0].continuation_contract.reason) as $expected |
+    {
+      schema: "ao.atlas.recommendation-continuation-reason-coverage.v0.1",
+      status: "agreement",
+      expected_reason: $expected,
+      sources: {
+        recommendation_readback: $readback[0].continuation_contract.reason,
+        checkpoint_readback: $checkpoint[0].continuation_contract_reason,
+        workgraph_readiness_packet: $readiness[0].continuation_contract_reason,
+        command_readback: $command[0].continuation_contract_reason,
+        command_timeline_binding: $command[0].command_timeline_binding.continuation_contract_reason,
+        promoter_readback: $promoter[0].continuation_contract_reason,
+        foundry_rollup: $foundry[0].continuation_contract_reason,
+        reconciliation_packet: $reconciliation[0].continuation_contract_reason,
+        reconciliation_command: $reconciliation[0].command_continuation_contract_reason,
+        reconciliation_promoter: $reconciliation[0].promoter_continuation_contract_reason,
+        reconciliation_foundry: $reconciliation[0].foundry_continuation_contract_reason,
+        final_state_reconciliation: $reconciliation[0].final_state_reconciliation.continuation_contract_reason,
+        resume_prompt: $resume_prompt_reason
+      },
+      all_sources_agree: false,
+      final_response_allowed: $readback[0].final_response_allowed,
+      refuses_final_response: $readback[0].continuation_contract.refuses_final_response,
+      exact_next_action: $readback[0].exact_next_action,
+      claims_authority_advance: false,
+      rsi_remains_denied: true
+    }
+    | .all_sources_agree = ([.sources[]] | all(. == $expected))
+    | .status = (if .all_sources_agree then "agreement" else "blocked_disagreement" end)
+  ' >"$OUT/mission-recommendations/continuation-reason-coverage.json"
+test -s "$OUT/mission-recommendations/continuation-reason-coverage.json"
+jq -e '.expected_reason as $expected | .schema == "ao.atlas.recommendation-continuation-reason-coverage.v0.1" and .status == "agreement" and .expected_reason == "ready_nodes_or_exact_next_action_remain" and .all_sources_agree == true and all(.sources[]; . == $expected) and .final_response_allowed == false and .refuses_final_response == true and (.exact_next_action | length) > 0 and .claims_authority_advance == false and .rsi_remains_denied == true' "$OUT/mission-recommendations/continuation-reason-coverage.json" >/dev/null
 assert_schema_required_fields_present schemas/recommendation-readback.schema.json "$OUT/mission-recommendations/recommendation-readback-resumed.json" "recommendation readback"
 jq -e '.properties.continuation_contract.properties.reason.enum as $enum | all(["ready_nodes_or_exact_next_action_remain","ready_nodes_remain","exact_next_action_remains","final response allowed by recommendation readback","blocked_hard_blocker","blocked_lease_timing_missing","blocked_minimum_minutes_unmet","blocked_ready_nodes_remain","blocked_no_executable_ready_node"][]; . as $value | ($enum | index($value)) != null)' schemas/recommendation-readback.schema.json >/dev/null
 assert_schema_required_fields_present schemas/recommendation-workgraph-readiness-packet.schema.json "$OUT/mission-recommendations/workgraph-readiness-packet.json" "recommendation workgraph readiness packet"
@@ -422,6 +465,7 @@ assert_schema_required_fields_present schemas/recommendation-promoter-readback.s
 jq -e '.properties.continuation_contract_reason.enum as $enum | all(["ready_nodes_or_exact_next_action_remain","ready_nodes_remain","exact_next_action_remains","final response allowed by recommendation readback","blocked_hard_blocker","blocked_lease_timing_missing","blocked_minimum_minutes_unmet","blocked_ready_nodes_remain","blocked_no_executable_ready_node"][]; . as $value | ($enum | index($value)) != null)' schemas/recommendation-promoter-readback.schema.json >/dev/null
 assert_schema_required_fields_present schemas/recommendation-foundry-rollup.schema.json "$OUT/mission-recommendations/foundry-rollup-resumed.json" "recommendation Foundry rollup"
 assert_schema_required_fields_present schemas/recommendation-reconciliation-packet.schema.json "$OUT/mission-recommendations/reconciliation-packet-resumed.json" "recommendation reconciliation packet"
+assert_schema_required_fields_present schemas/recommendation-continuation-reason-coverage.schema.json "$OUT/mission-recommendations/continuation-reason-coverage.json" "recommendation continuation reason coverage"
 jq -e '.properties.continuation_contract_reason.enum as $enum | all(["ready_nodes_or_exact_next_action_remain","ready_nodes_remain","exact_next_action_remains","final response allowed by recommendation readback","blocked_hard_blocker","blocked_lease_timing_missing","blocked_minimum_minutes_unmet","blocked_ready_nodes_remain","blocked_no_executable_ready_node"][]; . as $value | ($enum | index($value)) != null)' schemas/recommendation-reconciliation-packet.schema.json >/dev/null
 jq -e '.properties.final_state_reconciliation.properties.continuation_contract_reason.enum as $enum | all(["ready_nodes_or_exact_next_action_remain","ready_nodes_remain","exact_next_action_remains","final response allowed by recommendation readback","blocked_hard_blocker","blocked_lease_timing_missing","blocked_minimum_minutes_unmet","blocked_ready_nodes_remain","blocked_no_executable_ready_node"][]; . as $value | ($enum | index($value)) != null)' schemas/recommendation-reconciliation-packet.schema.json >/dev/null
 pass "recommendation-readback-schema-coverage"
