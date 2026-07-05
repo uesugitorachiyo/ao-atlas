@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-07",
+  "task_id": "mission-recommendation-hardening-07-task",
+  "evidence_key": "implementation_evidence",
+  "status": "recorded",
+  "objective": "Generate a Foundry import that proves exactly one bounded mutation node is active.",
+  "changes": [
+    "Generated Foundry import from the node 6 checkpoint for node 7 only.",
+    "Added single-active Foundry import fixture proving exactly one bounded task is active.",
+    "Added regression coverage preserving the node 7 exact next action and final-response denial."
+  ],
+  "rsi_remains_denied": true
+}

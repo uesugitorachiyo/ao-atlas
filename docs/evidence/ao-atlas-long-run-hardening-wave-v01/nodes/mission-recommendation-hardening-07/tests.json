@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-07",
+  "task_id": "mission-recommendation-hardening-07-task",
+  "evidence_key": "tests",
+  "status": "recorded",
+  "objective": "Generate a Foundry import that proves exactly one bounded mutation node is active.",
+  "red_green": {
+    "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveFoundryImportKeepsOneActiveNode -count=1",
+    "red_result": "failed because foundry-import.json did not exist",
+    "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveFoundryImportKeepsOneActiveNode -count=1",
+    "green_result": "passed",
+    "full_regression_command": "go test ./... -count=1",
+    "full_regression_result": "passed"
+  }
+}

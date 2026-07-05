@@ -2890,6 +2890,46 @@ func TestLongRunHardeningWaveEventIndexBindsEvidenceSlots(t *testing.T) {
 	}
 }
 
+func TestLongRunHardeningWaveFoundryImportKeepsOneActiveNode(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeSixReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-06", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-07")
+	foundryImport := mustLoadJSON[FoundryImport](t, filepath.Join(nodeDir, "foundry-import.json"))
+	if err := ValidateFoundryImport(foundryImport); err != nil {
+		t.Fatal(err)
+	}
+	fixture := mustLoadJSON[map[string]any](t, filepath.Join(nodeDir, "single-active-foundry-import-fixture.json"))
+	if len(foundryImport.Tasks) != 1 ||
+		foundryImport.Tasks[0].NodeID != "mission-recommendation-hardening-07" ||
+		foundryImport.Tasks[0].Task.ID != "mission-recommendation-hardening-07-task" ||
+		fixture["schema"] != "ao.atlas.single-active-foundry-import-fixture.v0.1" ||
+		fixture["status"] != "single_active_node_confirmed" ||
+		fixture["active_node"] != foundryImport.Tasks[0].NodeID ||
+		fixture["active_task"] != foundryImport.Tasks[0].Task.ID ||
+		fixture["foundry_task_count"] != float64(1) ||
+		fixture["completed_nodes"] != float64(nodeSixReadback.CompletedNodes) ||
+		fixture["ready_nodes"] != float64(nodeSixReadback.ReadyNodes) ||
+		fixture["final_response_allowed"] != false {
+		t.Fatalf("Foundry import must bind exactly one active node: fixture=%#v import=%#v", fixture, foundryImport)
+	}
+	if exactNextAction, _ := fixture["exact_next_action"].(string); exactNextAction != nodeSixReadback.ExactNextAction ||
+		!strings.Contains(exactNextAction, "mission-recommendation-hardening-07") {
+		t.Fatalf("single-active fixture must preserve node 7 exact next action: %#v", fixture)
+	}
+
+	nodeSevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeSevenReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeSevenReadback.CompletedNodes != 7 ||
+		nodeSevenReadback.ReadyNodes != 33 ||
+		nodeSevenReadback.FirstExecutableNode != "mission-recommendation-hardening-08" ||
+		nodeSevenReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeSevenReadback.ExactNextAction, "mission-recommendation-hardening-08") {
+		t.Fatalf("node 7 readback must continue to node 8 without final response: %#v", nodeSevenReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
