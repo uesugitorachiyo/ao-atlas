@@ -516,6 +516,7 @@ type AtlasRecommendationWorkgraphReadinessPacket struct {
 	FinalResponseAllowed            bool   `json:"final_response_allowed"`
 	FinalResponseReason             string `json:"final_response_reason"`
 	ExactNextAction                 string `json:"exact_next_action"`
+	ContinuationContractReason      string `json:"continuation_contract_reason"`
 	OneExecutableMutationNodeActive bool   `json:"one_executable_mutation_node_active"`
 	RefusesFinalResponse            bool   `json:"refuses_final_response"`
 	SchedulesWork                   bool   `json:"schedules_work"`

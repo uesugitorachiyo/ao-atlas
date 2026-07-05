@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-37-workgraph-readiness-reason",
+  "status": "recorded",
+  "rollback": {
+    "strategy": "Revert the node commit or remove continuation_contract_reason from the readiness packet model, builder, validator, schema, readiness assertions, and focused tests.",
+    "blast_radius": "AO Atlas recommendation workgraph readiness packets only.",
+    "data_migration_required": false
+  }
+}
