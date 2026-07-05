@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-04-atlas-final-synthesis-roundtrip",
+  "status": "selected",
+  "evidence_key": "candidate_record",
+  "branch": "codex/doubled-wave-node-04-atlas-final-synthesis-roundtrip",
+  "selected_candidate": "Add AO Atlas Mission final-synthesis import/readback support with regression tests and production-readiness coverage.",
+  "alternatives_rejected": [
+    "Treat the completed Mission synthesis as generic AO Mission import provenance; rejected because it would not verify zero ready nodes or final gate consistency.",
+    "Mutate AO Mission again to generate a new synthesis; rejected because node 4 ownership is AO Atlas and the current doubled wave remains active."
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

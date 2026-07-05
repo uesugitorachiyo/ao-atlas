@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.doubled-wave.foundry-import.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-04-atlas-final-synthesis-roundtrip",
+  "status": "imported",
+  "owner": "ao-atlas",
+  "target_factory_repo": "ao-atlas",
+  "task": "Implement a bounded AO Atlas final-synthesis readback import for completed AO Mission waves.",
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "expected_outputs": [
+    "mission-final-synthesis-readback.json",
+    "CLI regression tests",
+    "production-readiness smoke"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

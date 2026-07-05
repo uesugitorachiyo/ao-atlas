@@ -123,6 +123,78 @@ type AOMissionProvenanceRender struct {
 	ApprovesWork             bool           `json:"approves_work"`
 }
 
+type AOMissionFinalSynthesis struct {
+	Schema                                string                                  `json:"schema"`
+	Mission                               string                                  `json:"mission"`
+	Status                                string                                  `json:"status"`
+	CompletedNodes                        int                                     `json:"completed_nodes"`
+	ReadyNodes                            int                                     `json:"ready_nodes"`
+	BlockedNodes                          int                                     `json:"blocked_nodes"`
+	MinimumNodes                          int                                     `json:"minimum_nodes"`
+	TargetMinutes                         int                                     `json:"target_minutes"`
+	MaxMinutes                            int                                     `json:"max_minutes"`
+	FinalResponseAllowed                  bool                                    `json:"final_response_allowed"`
+	AtlasWorkgraphStatus                  string                                  `json:"atlas_workgraph_status"`
+	FoundryRollup                         string                                  `json:"foundry_rollup"`
+	PromoterStatus                        string                                  `json:"promoter_status"`
+	CommandReadback                       string                                  `json:"command_readback"`
+	EventSearchBound                      bool                                    `json:"event_search_bound"`
+	BranchCleanupBoundThroughPreviousNode bool                                    `json:"branch_cleanup_bound_through_previous_node"`
+	MergedPRsFinal                        []int                                   `json:"merged_prs_final"`
+	CurrentNodeBranch                     string                                  `json:"current_node_branch"`
+	CurrentNodePRPending                  bool                                    `json:"current_node_pr_pending"`
+	PromotionClaimed                      bool                                    `json:"promotion_claimed"`
+	ClaimsAuthorityAdvance                bool                                    `json:"claims_authority_advance"`
+	RSIRemainsDenied                      bool                                    `json:"rsi_remains_denied"`
+	SafeToExecute                         bool                                    `json:"safe_to_execute"`
+	ExecutesWork                          bool                                    `json:"executes_work"`
+	ApprovesWork                          bool                                    `json:"approves_work"`
+	MutatesRepositories                   bool                                    `json:"mutates_repositories"`
+	FeatureDepthRecommendations           []AOMissionFinalSynthesisRecommendation `json:"feature_depth_recommendations"`
+	ExactNextAction                       string                                  `json:"exact_next_action"`
+}
+
+type AOMissionFinalSynthesisRecommendation struct {
+	ID              string `json:"id"`
+	Owner           string `json:"owner"`
+	Task            string `json:"task"`
+	ExactNextAction string `json:"exact_next_action"`
+}
+
+type AOMissionFinalSynthesisReadback struct {
+	ContractVersion        string   `json:"contract_version"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	SourceDigest           string   `json:"source_digest"`
+	TotalNodes             int      `json:"total_nodes"`
+	CompletedNodes         int      `json:"completed_nodes"`
+	ReadyNodes             int      `json:"ready_nodes"`
+	BlockedNodes           int      `json:"blocked_nodes"`
+	MinimumNodes           int      `json:"minimum_nodes"`
+	TargetMinutes          int      `json:"target_minutes"`
+	MaxMinutes             int      `json:"max_minutes"`
+	ReturnGateStatus       string   `json:"return_gate_status"`
+	FinalResponseAllowed   bool     `json:"final_response_allowed"`
+	FinalResponseReason    string   `json:"final_response_reason"`
+	AtlasWorkgraphStatus   string   `json:"atlas_workgraph_status"`
+	FoundryRollup          string   `json:"foundry_rollup"`
+	PromoterStatus         string   `json:"promoter_status"`
+	CommandReadback        string   `json:"command_readback"`
+	EventSearchBound       bool     `json:"event_search_bound"`
+	BranchCleanupBound     bool     `json:"branch_cleanup_bound"`
+	MergedPRsFinal         []int    `json:"merged_prs_final"`
+	ExactNextAction        string   `json:"exact_next_action"`
+	FeatureDepthNextTasks  []string `json:"feature_depth_next_tasks"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	PromotionClaimed       bool     `json:"promotion_claimed"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+	SchedulesWork          bool     `json:"schedules_work"`
+	ExecutesWork           bool     `json:"executes_work"`
+	ApprovesWork           bool     `json:"approves_work"`
+	MutatesRepositories    bool     `json:"mutates_repositories"`
+}
+
 type AOMissionFeatureDepthRecommendations struct {
 	Schema              string                      `json:"schema"`
 	MissionID           string                      `json:"mission_id"`

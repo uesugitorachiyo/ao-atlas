@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-04-atlas-final-synthesis-roundtrip",
+  "status": "no_promotion_requested",
+  "evidence_key": "promoter_no_promotion",
+  "reason": "Node 4 adds readback and gate validation only. It does not request live-class promotion or authority advance.",
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

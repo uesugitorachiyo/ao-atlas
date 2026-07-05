@@ -1,0 +1,19 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "node-04-atlas-final-synthesis-roundtrip-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/candidate-record.json",
+    "command_readback": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/command-readback.json",
+    "foundry_import": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/implementation-evidence.json",
+    "mission_final_synthesis_readback": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/mission-final-synthesis-readback.json",
+    "node_gate": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/node-gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/promoter-no-promotion.json",
+    "rollback_record": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/rollback-record.json",
+    "sentinel_public_safety": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/sentinel-public-safety.json",
+    "tests": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/tests.json",
+    "verification": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/verification.json"
+  },
+  "digest": "sha256:1afabac321efe88ebc9717b96a7c256e8fd9e0f310b077f4e94ef00da5a4c5a4"
+}

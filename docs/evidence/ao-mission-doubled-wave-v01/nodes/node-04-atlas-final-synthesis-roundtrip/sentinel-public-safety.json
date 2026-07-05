@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-04-atlas-final-synthesis-roundtrip",
+  "status": "passed",
+  "evidence_key": "sentinel_public_safety",
+  "scan_scope": [
+    "examples/valid/ao-mission/final-synthesis.json",
+    "schemas/ao-mission-final-synthesis-readback.schema.json",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip"
+  ],
+  "public_wording_result": "No provider-call permission, credential inspection, release, deployment, authority-advance, or RSI proof claim was introduced.",
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
