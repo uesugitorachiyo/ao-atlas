@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-36-final-state-continuation-reason",
+  "status": "no_promotion",
+  "promotion_claimed": false,
+  "next_denied_class": "RSI",
+  "rsi_remains_denied": true,
+  "summary": "Nested final-state continuation readback does not promote mutation authority; it keeps RSI denied."
+}

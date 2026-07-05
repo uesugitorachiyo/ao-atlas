@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-36-final-state-continuation-reason",
+  "status": "recorded",
+  "rollback": {
+    "strategy": "Revert the node commit or remove final_state_reconciliation continuation reason fields, schema requirements, fixture updates, and focused tests.",
+    "blast_radius": "Nested AO Atlas recommendation final-state reconciliation readback only.",
+    "data_migration_required": false
+  }
+}

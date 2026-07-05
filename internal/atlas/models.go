@@ -69,6 +69,8 @@ type AtlasFinalStateReconciliation struct {
 	PromoterVerdictStatus string `json:"promoter_verdict_status"`
 	CommandReadbackStatus string `json:"command_readback_status"`
 	ExactNextAction       string `json:"exact_next_action"`
+	ContinuationReason    string `json:"continuation_contract_reason,omitempty"`
+	ContinuationAgreement bool   `json:"continuation_reason_agreement,omitempty"`
 	SchedulesWork         bool   `json:"schedules_work"`
 	ExecutesWork          bool   `json:"executes_work"`
 	ApprovesWork          bool   `json:"approves_work"`

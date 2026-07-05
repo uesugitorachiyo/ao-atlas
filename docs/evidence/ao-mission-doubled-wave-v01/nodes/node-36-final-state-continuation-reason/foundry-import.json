@@ -1,0 +1,18 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-36-final-state-continuation-reason",
+  "status": "imported",
+  "owner": "ao-foundry",
+  "bounded_task": "Implement nested final-state continuation reason binding.",
+  "inputs": [
+    "Atlas recommendation readback continuation contract",
+    "Reconciliation packet agreement fields",
+    "Nested final-state reconciliation schema"
+  ],
+  "outputs": [
+    "Final-state continuation reason fields",
+    "Nested stale validation",
+    "Schema and production readiness coverage"
+  ]
+}

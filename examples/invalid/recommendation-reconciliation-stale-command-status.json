@@ -10,6 +10,8 @@
     "promoter_verdict_status": "no_promotion",
     "command_readback_status": "completed",
     "exact_next_action": "Emit Foundry import for mission-recommendation-next-02 and execute exactly one active node.",
+    "continuation_contract_reason": "ready_nodes_or_exact_next_action_remain",
+    "continuation_reason_agreement": true,
     "schedules_work": false,
     "executes_work": false,
     "approves_work": false
