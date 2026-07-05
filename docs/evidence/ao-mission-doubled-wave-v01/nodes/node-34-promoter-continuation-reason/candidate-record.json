@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-34-promoter-continuation-reason",
+  "status": "selected",
+  "candidate": {
+    "title": "Bind continuation contract reason into Promoter no-promotion readback",
+    "why": "Command and Foundry closure artifacts already expose continuation_contract_reason. Promoter readback must carry the same reason so final closure cannot ignore why Atlas is refusing early final response.",
+    "bounded_files": [
+      "internal/atlas/models.go",
+      "internal/atlas/mission_recommendations.go",
+      "internal/atlas/mission_recommendations_test.go",
+      "schemas/recommendation-promoter-readback.schema.json",
+      "scripts/production-readiness.sh"
+    ]
+  },
+  "route": {
+    "atlas_owns": "workgraph sequencing and closure contract",
+    "foundry_owns": "bounded implementation node execution",
+    "blueprint_required": false
+  }
+}

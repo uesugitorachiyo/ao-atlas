@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-34-promoter-continuation-reason",
+  "status": "recorded",
+  "rollback": {
+    "strategy": "Revert the node commit or remove continuation_contract_reason from the Promoter model, builder, schema, production readiness assertion, and focused tests.",
+    "blast_radius": "AO Atlas recommendation Promoter readback generation and closure validation only.",
+    "data_migration_required": false
+  }
+}

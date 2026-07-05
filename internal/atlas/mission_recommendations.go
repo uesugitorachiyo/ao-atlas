@@ -1661,24 +1661,25 @@ func BuildAtlasRecommendationPromoterReadback(readback AtlasRecommendationReadba
 		reason = "Recommendation wave may close its readback lease, but it does not promote mutation authority; RSI remains denied."
 	}
 	return AtlasRecommendationPromoterReadback{
-		Schema:                    "ao.atlas.recommendation-promoter-readback.v0.1",
-		Status:                    "no_promotion",
-		MissionID:                 readback.MissionID,
-		EvidenceRoot:              readback.EvidenceRoot,
-		PromotionClaimed:          false,
-		RSIRemainsDenied:          true,
-		NoPromotionSummary:        "No mutation authority promotion claimed; RSI remains denied.",
-		NextDeniedClass:           "RSI",
-		Reason:                    reason,
-		ElapsedMinutes:            readback.ElapsedMinutes,
-		MinMinutesMet:             readback.MinMinutesMet,
-		LeaseHealthStatus:         readback.LeaseHealthStatus,
-		CheckpointFreshnessStatus: readback.CheckpointFreshnessStatus,
-		FinalResponseAllowed:      readback.FinalResponseAllowed,
-		SchedulesWork:             false,
-		ExecutesWork:              false,
-		ApprovesWork:              false,
-		ClaimsAuthorityAdvance:    false,
+		Schema:                     "ao.atlas.recommendation-promoter-readback.v0.1",
+		Status:                     "no_promotion",
+		MissionID:                  readback.MissionID,
+		EvidenceRoot:               readback.EvidenceRoot,
+		PromotionClaimed:           false,
+		RSIRemainsDenied:           true,
+		NoPromotionSummary:         "No mutation authority promotion claimed; RSI remains denied.",
+		NextDeniedClass:            "RSI",
+		Reason:                     reason,
+		ElapsedMinutes:             readback.ElapsedMinutes,
+		MinMinutesMet:              readback.MinMinutesMet,
+		LeaseHealthStatus:          readback.LeaseHealthStatus,
+		CheckpointFreshnessStatus:  readback.CheckpointFreshnessStatus,
+		ContinuationContractReason: readback.ContinuationContract.Reason,
+		FinalResponseAllowed:       readback.FinalResponseAllowed,
+		SchedulesWork:              false,
+		ExecutesWork:               false,
+		ApprovesWork:               false,
+		ClaimsAuthorityAdvance:     false,
 	}
 }
 
@@ -1753,6 +1754,9 @@ func ValidateAtlasRecommendationClosureArtifacts(readback AtlasRecommendationRea
 	}
 	if foundry.ContinuationContractReason != readback.ContinuationContract.Reason {
 		errs = append(errs, "foundry rollup continuation_contract_reason disagrees")
+	}
+	if promoter.ContinuationContractReason != readback.ContinuationContract.Reason {
+		errs = append(errs, "promoter readback continuation_contract_reason disagrees")
 	}
 	if command.FinalResponseAllowed != readback.FinalResponseAllowed {
 		errs = append(errs, "command readback final_response_allowed disagrees")
