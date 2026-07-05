@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-11-atlas-continuation-contract",
+  "status": "accepted",
+  "candidate": "Atlas recommendation readbacks denied final response, but the refusal contract was spread across separate fields and could drift.",
+  "selected_change": "Add a continuation_contract object that mirrors ready_nodes, exact_next_action, return_gate_status, and final_response_allowed.",
+  "rejected_scope": [
+    "no provider calls",
+    "no dependency updates",
+    "no auth or policy widening",
+    "no direct main mutation"
+  ]
+}

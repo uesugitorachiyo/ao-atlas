@@ -699,6 +699,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		FinalResponseDenialGate:         recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
 		FinalResponseReason:             finalReason,
 		ExactNextAction:                 exactNextAction,
+		ContinuationContract:            buildAtlasContinuationContract(ready, exactNextAction, returnGateStatus, finalAllowed),
 		ExactNextActionReadback:         buildExactNextActionReadback(exactNextAction, firstExecutable, returnGateStatus, finalAllowed),
 		NodeEvidence:                    recommendationNodeEvidence(workgraph),
 		FeatureDepthRecommendations:     featureDepthRecommendationReadback(wave.Tasks, 10),
@@ -887,6 +888,32 @@ func recommendationFinalResponseDenialGate(finalAllowed bool, returnGateStatus s
 	return "deny_ready_nodes_or_exact_next_action_remain"
 }
 
+func buildAtlasContinuationContract(readyNodes int, exactNextAction, returnGateStatus string, finalResponseAllowed bool) AtlasContinuationContract {
+	status := "ready_for_final_response"
+	refusesFinalResponse := false
+	reason := "final response allowed by recommendation readback"
+	if !finalResponseAllowed {
+		status = "continuation_required"
+		refusesFinalResponse = true
+		reason = "ready_nodes_or_exact_next_action_remain"
+		if readyNodes == 0 && strings.TrimSpace(exactNextAction) == "" {
+			status = "blocked"
+			reason = returnGateStatus
+		}
+	}
+	return AtlasContinuationContract{
+		ContractVersion:      "ao.atlas.continuation-contract.v0.1",
+		Status:               status,
+		ReadyNodes:           readyNodes,
+		ExactNextAction:      exactNextAction,
+		ReturnGateStatus:     returnGateStatus,
+		FinalResponseAllowed: finalResponseAllowed,
+		RefusesFinalResponse: refusesFinalResponse,
+		Reason:               reason,
+		Source:               "recommendation_readback",
+	}
+}
+
 type atlasRecommendationLeaseTiming struct {
 	StartedAt       string
 	CompletedAt     string
@@ -1057,6 +1084,9 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 	requireField(&errs, "final_response_denial_gate", readback.FinalResponseDenialGate)
 	requireField(&errs, "final_response_reason", readback.FinalResponseReason)
 	requireField(&errs, "exact_next_action", readback.ExactNextAction)
+	if err := validateAtlasContinuationContract(readback); err != nil {
+		errs = append(errs, err.Error())
+	}
 	if err := validateExactNextActionReadback(readback); err != nil {
 		errs = append(errs, err.Error())
 	}
@@ -1135,6 +1165,49 @@ func ValidateAtlasRecommendationReadback(readback AtlasRecommendationReadback) e
 		requireList(&errs, prefix+".verification_commands", evidence.VerificationCommands)
 	}
 	return joinErrors(errs)
+}
+
+func validateAtlasContinuationContract(readback AtlasRecommendationReadback) error {
+	contract := readback.ContinuationContract
+	if contract.ContractVersion != "ao.atlas.continuation-contract.v0.1" {
+		return fmt.Errorf("continuation_contract.contract_version must be ao.atlas.continuation-contract.v0.1")
+	}
+	if contract.Source != "recommendation_readback" {
+		return fmt.Errorf("continuation_contract.source must be recommendation_readback")
+	}
+	if contract.ReadyNodes != readback.ReadyNodes {
+		return fmt.Errorf("continuation_contract.ready_nodes must match ready_nodes")
+	}
+	if contract.ExactNextAction != readback.ExactNextAction {
+		return fmt.Errorf("continuation_contract.exact_next_action must match exact_next_action")
+	}
+	if contract.ReturnGateStatus != readback.ReturnGateStatus {
+		return fmt.Errorf("continuation_contract.return_gate_status must match return_gate_status")
+	}
+	if contract.FinalResponseAllowed != readback.FinalResponseAllowed {
+		return fmt.Errorf("continuation_contract.final_response_allowed must match final_response_allowed")
+	}
+	if strings.TrimSpace(contract.Reason) == "" {
+		return fmt.Errorf("continuation_contract.reason is required")
+	}
+	if readback.FinalResponseAllowed {
+		if contract.Status != "ready_for_final_response" {
+			return fmt.Errorf("continuation_contract.status must be ready_for_final_response when final response is allowed")
+		}
+		if contract.RefusesFinalResponse {
+			return fmt.Errorf("continuation_contract.refuses_final_response must be false when final response is allowed")
+		}
+		return nil
+	}
+	if readback.ReadyNodes > 0 || strings.TrimSpace(readback.ExactNextAction) != "" {
+		if contract.Status != "continuation_required" {
+			return fmt.Errorf("continuation_contract.status must be continuation_required while ready nodes or exact next action remain")
+		}
+		if !contract.RefusesFinalResponse {
+			return fmt.Errorf("continuation_contract.refuses_final_response must be true while ready nodes or exact next action remain")
+		}
+	}
+	return nil
 }
 
 func validateExactNextActionReadback(readback AtlasRecommendationReadback) error {

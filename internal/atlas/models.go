@@ -310,6 +310,7 @@ type AtlasRecommendationReadback struct {
 	FinalResponseDenialGate         string                                `json:"final_response_denial_gate"`
 	FinalResponseReason             string                                `json:"final_response_reason"`
 	ExactNextAction                 string                                `json:"exact_next_action"`
+	ContinuationContract            AtlasContinuationContract             `json:"continuation_contract"`
 	ExactNextActionReadback         AtlasExactNextActionReadback          `json:"exact_next_action_readback"`
 	NodeEvidence                    []AtlasRecommendationNodeEvidence     `json:"node_evidence"`
 	FeatureDepthRecommendations     []string                              `json:"feature_depth_recommendations"`
@@ -336,6 +337,18 @@ type AtlasFoundryDeniedTerminalExample struct {
 	RequiredReadback             string `json:"required_readback"`
 	RSIRemainsDenied             bool   `json:"rsi_remains_denied"`
 	AuthorityAdvanceClaimed      bool   `json:"authority_advance_claimed"`
+}
+
+type AtlasContinuationContract struct {
+	ContractVersion      string `json:"contract_version"`
+	Status               string `json:"status"`
+	ReadyNodes           int    `json:"ready_nodes"`
+	ExactNextAction      string `json:"exact_next_action"`
+	ReturnGateStatus     string `json:"return_gate_status"`
+	FinalResponseAllowed bool   `json:"final_response_allowed"`
+	RefusesFinalResponse bool   `json:"refuses_final_response"`
+	Reason               string `json:"reason"`
+	Source               string `json:"source"`
 }
 
 type AtlasExactNextActionReadback struct {

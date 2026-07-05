@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-11-atlas-continuation-contract",
+  "status": "passed",
+  "evidence_key": "tests",
+  "red_test": "go test ./internal/atlas -run 'TestRecommendationReadbackSchemaRequiresContinuationContract|TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave' -count=1 failed before implementation because AtlasRecommendationReadback had no ContinuationContract field.",
+  "green_tests": [
+    "TestRecommendationReadbackSchemaRequiresContinuationContract",
+    "TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

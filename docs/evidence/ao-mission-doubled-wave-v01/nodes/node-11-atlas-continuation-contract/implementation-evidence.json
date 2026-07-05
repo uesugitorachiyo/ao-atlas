@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-11-atlas-continuation-contract",
+  "status": "implemented",
+  "evidence_key": "implementation_evidence",
+  "implemented_changes": [
+    "Added AtlasContinuationContract to recommendation readbacks.",
+    "Built the contract from ready_nodes, exact_next_action, return_gate_status, and final_response_allowed.",
+    "Validated the contract cannot drift from the parent readback.",
+    "Updated the recommendation-readback schema and production-readiness smoke."
+  ],
+  "generated_readback": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-11-atlas-continuation-contract/recommendation-readback.json",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}
