@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.recommendation-node-evidence.v0.1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "node_id": "mission-recommendation-hardening-03",
+  "task_id": "mission-recommendation-hardening-03-task",
+  "evidence_key": "implementation_evidence",
+  "status": "recorded",
+  "objective": "Add a Command readback fixture denying final response while exact next actions remain.",
+  "changes": [
+    "Added Command final-response denial fixture tied to node 2 readback.",
+    "Added regression coverage proving final response remains denied while ready nodes and exact next action remain.",
+    "Generated node 3 Foundry import from the node 2 workgraph checkpoint."
+  ],
+  "rsi_remains_denied": true
+}
