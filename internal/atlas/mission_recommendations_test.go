@@ -2930,6 +2930,62 @@ func TestLongRunHardeningWaveFoundryImportKeepsOneActiveNode(t *testing.T) {
 	}
 }
 
+func TestLongRunHardeningWaveFinalStateReconciliationBindsClosureArtifacts(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeSevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-07", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-08")
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "final-state-recommendation-readback.json"))
+	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, filepath.Join(nodeDir, "final-state-command-readback.json"))
+	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, filepath.Join(nodeDir, "final-state-promoter-readback.json"))
+	foundry := mustLoadJSON[AtlasRecommendationFoundryRollup](t, filepath.Join(nodeDir, "final-state-foundry-rollup.json"))
+	reconciliation := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, filepath.Join(nodeDir, "final-state-reconciliation-packet.json"))
+	fixture := mustLoadJSON[map[string]any](t, filepath.Join(nodeDir, "final-state-reconciliation-fixture.json"))
+
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err != nil {
+		t.Fatalf("final-state closure artifacts should agree: %v", err)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, reconciliation); err != nil {
+		t.Fatalf("final-state reconciliation packet should agree: %v", err)
+	}
+	finalState := reconciliation.FinalStateReconciliation
+	if finalState.ContractVersion != "ao.atlas.final-state-reconciliation.v0.1" ||
+		finalState.Status != reconciliation.Status ||
+		finalState.WorkgraphStatus != readback.Status ||
+		finalState.FoundryRollupStatus != foundry.Status ||
+		finalState.PromoterVerdictStatus != promoter.Status ||
+		finalState.CommandReadbackStatus != command.Status ||
+		finalState.ExactNextAction != readback.ExactNextAction ||
+		finalState.ContinuationReason != readback.ContinuationContract.Reason ||
+		!finalState.ContinuationAgreement ||
+		finalState.SchedulesWork ||
+		finalState.ExecutesWork ||
+		finalState.ApprovesWork {
+		t.Fatalf("embedded final-state reconciliation must bind workgraph, Foundry, Promoter, and Command state: %#v", finalState)
+	}
+	if fixture["schema"] != "ao.atlas.final-state-reconciliation-fixture.v0.1" ||
+		fixture["status"] != "continuation_required" ||
+		fixture["artifacts_agree"] != true ||
+		fixture["continuation_reason_agreement"] != true ||
+		fixture["completed_nodes"] != float64(nodeSevenReadback.CompletedNodes) ||
+		fixture["ready_nodes"] != float64(nodeSevenReadback.ReadyNodes) ||
+		fixture["exact_next_action"] != nodeSevenReadback.ExactNextAction ||
+		fixture["final_response_allowed"] != false {
+		t.Fatalf("final-state fixture must bind node 7 continuation state: %#v", fixture)
+	}
+
+	nodeEightReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeEightReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeEightReadback.CompletedNodes != 8 ||
+		nodeEightReadback.ReadyNodes != 32 ||
+		nodeEightReadback.FirstExecutableNode != "mission-recommendation-hardening-09" ||
+		nodeEightReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeEightReadback.ExactNextAction, "mission-recommendation-hardening-09") {
+		t.Fatalf("node 8 readback must continue to node 9 without final response: %#v", nodeEightReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
