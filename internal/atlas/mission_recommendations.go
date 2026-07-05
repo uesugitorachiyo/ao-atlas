@@ -2180,6 +2180,18 @@ func ValidateAtlasRecommendationExecutionReadback(execution AtlasRecommendationE
 	if execution.FoundryRunLinkReadinessSummary.CheckpointFreshnessStatus != readback.CheckpointFreshnessStatus {
 		errs = append(errs, "foundry run-link readiness checkpoint_freshness_status must match recommendation readback")
 	}
+	if execution.FoundryRunLinkReadinessSummary.ReturnGateStatus != readback.ReturnGateStatus {
+		errs = append(errs, "foundry run-link readiness return_gate_status must match recommendation readback")
+	}
+	if execution.FoundryRunLinkReadinessSummary.ContinuationContractReason != readback.ContinuationContract.Reason {
+		errs = append(errs, "foundry run-link readiness continuation_contract_reason must match recommendation readback")
+	}
+	if execution.FoundryRunLinkReadinessSummary.ExactNextAction != readback.ExactNextAction {
+		errs = append(errs, "foundry run-link readiness exact_next_action must match recommendation readback")
+	}
+	if execution.FoundryRunLinkReadinessSummary.RefusesFinalResponse != readback.ContinuationContract.RefusesFinalResponse {
+		errs = append(errs, "foundry run-link readiness refuses_final_response must match recommendation readback")
+	}
 	if sourceDigest, ok := sourceArtifactDigest(execution.SourceArtifacts, "foundry_run_link_readiness_summary"); !ok {
 		errs = append(errs, "source_artifacts must include foundry_run_link_readiness_summary")
 	} else if sourceDigest != digestValue(execution.FoundryRunLinkReadinessSummary) {
@@ -2534,17 +2546,21 @@ func BuildAtlasRecommendationExecutionReadback(readback AtlasRecommendationReadb
 		readinessStatus = "blocked_or_failed_run_links_need_repair"
 	}
 	runLinkSummary := AtlasRecommendationFoundryRunLinkReadinessSummary{
-		Status:                    readinessStatus,
-		Summary:                   fmt.Sprintf("%d/%d Foundry run-links recorded; ready_nodes=%d; next_executable_node=%s", readback.CompletedNodes, readback.TotalNodes, readback.ReadyNodes, readback.FirstExecutableNode),
-		CompletedRunLinks:         readback.CompletedNodes,
-		RequiredRunLinks:          readback.TotalNodes,
-		MissingRunLinks:           readback.TotalNodes - readback.CompletedNodes,
-		ReadyNodes:                readback.ReadyNodes,
-		NextExecutableNode:        readback.FirstExecutableNode,
-		LeaseHealthStatus:         readback.LeaseHealthStatus,
-		CheckpointFreshnessStatus: readback.CheckpointFreshnessStatus,
-		CheckpointCount:           readback.CheckpointCount,
-		FinalResponseAllowed:      readback.FinalResponseAllowed,
+		Status:                     readinessStatus,
+		Summary:                    fmt.Sprintf("%d/%d Foundry run-links recorded; ready_nodes=%d; next_executable_node=%s", readback.CompletedNodes, readback.TotalNodes, readback.ReadyNodes, readback.FirstExecutableNode),
+		CompletedRunLinks:          readback.CompletedNodes,
+		RequiredRunLinks:           readback.TotalNodes,
+		MissingRunLinks:            readback.TotalNodes - readback.CompletedNodes,
+		ReadyNodes:                 readback.ReadyNodes,
+		NextExecutableNode:         readback.FirstExecutableNode,
+		LeaseHealthStatus:          readback.LeaseHealthStatus,
+		CheckpointFreshnessStatus:  readback.CheckpointFreshnessStatus,
+		ReturnGateStatus:           readback.ReturnGateStatus,
+		ContinuationContractReason: readback.ContinuationContract.Reason,
+		ExactNextAction:            readback.ExactNextAction,
+		RefusesFinalResponse:       readback.ContinuationContract.RefusesFinalResponse,
+		CheckpointCount:            readback.CheckpointCount,
+		FinalResponseAllowed:       readback.FinalResponseAllowed,
 	}
 	continuationReasonCoverage := AtlasRecommendationContinuationReasonCoverage{
 		Status:                    "coverage_sources_indexed",

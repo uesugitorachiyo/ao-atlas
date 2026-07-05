@@ -31,6 +31,9 @@
     "next_executable_node": "mission-recommendation-next-01",
     "lease_health_status": "minimum_unmet",
     "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "continuation_contract_reason": "ready_nodes_or_exact_next_action_remain",
+    "exact_next_action": "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.",
+    "refuses_final_response": true,
     "checkpoint_count": 0,
     "final_response_allowed": false
   },
@@ -64,7 +67,7 @@
   "source_artifacts": [
     {
       "ref": "foundry_run_link_readiness_summary",
-      "digest": "sha256:14ec346d83a72920d0039508f7b59be09c75d02e61cb72d8bfb3f08dc9bb1579"
+      "digest": "sha256:8e058a1c2aafa040bda39dfe9dc6a95acf6d48312c42380c86c685e56c7ca807"
     },
     {
       "ref": "continuation_reason_coverage",

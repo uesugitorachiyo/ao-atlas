@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-43-foundry-readiness-reason",
+  "status": "opened",
+  "owner": "ao-atlas",
+  "active_mutation_nodes": [
+    "node-43-foundry-readiness-reason"
+  ],
+  "gate": {
+    "direct_main_mutation": "denied",
+    "provider_calls": "denied",
+    "credential_inspection": "denied",
+    "release_deploy_publish_upload_tag": "denied",
+    "dependency_updates": "denied",
+    "policy_auth_config_widening": "denied",
+    "hidden_instruction_mutation": "denied",
+    "rsi_claim": "denied"
+  },
+  "entry_state": {
+    "repository": "ao-atlas",
+    "branch": "codex/doubled-wave-node-43-foundry-readiness-reason",
+    "base": "main",
+    "worktree_status": "clean_before_node",
+    "remote_codex_branches": "none_observed_before_node"
+  }
+}

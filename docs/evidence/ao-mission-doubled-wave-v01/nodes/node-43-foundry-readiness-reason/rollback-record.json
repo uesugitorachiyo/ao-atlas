@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-43-foundry-readiness-reason",
+  "status": "recorded",
+  "rollback": {
+    "strategy": "Revert the node commit or remove Foundry run-link readiness continuation fields, validator checks, readiness assertions, and fixture digest update.",
+    "blast_radius": "AO Atlas recommendation execution readback Foundry readiness summary only.",
+    "data_migration_required": false
+  }
+}

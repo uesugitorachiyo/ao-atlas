@@ -1288,6 +1288,10 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 		resumeExecution.FoundryRunLinkReadinessSummary.CompletedRunLinks != resumeReadback.CompletedNodes ||
 		resumeExecution.FoundryRunLinkReadinessSummary.RequiredRunLinks != resumeReadback.TotalNodes ||
 		resumeExecution.FoundryRunLinkReadinessSummary.NextExecutableNode != resumeReadback.FirstExecutableNode ||
+		resumeExecution.FoundryRunLinkReadinessSummary.ReturnGateStatus != resumeReadback.ReturnGateStatus ||
+		resumeExecution.FoundryRunLinkReadinessSummary.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		resumeExecution.FoundryRunLinkReadinessSummary.ExactNextAction != resumeReadback.ExactNextAction ||
+		resumeExecution.FoundryRunLinkReadinessSummary.RefusesFinalResponse != resumeReadback.ContinuationContract.RefusesFinalResponse ||
 		resumeExecution.ContinuationReasonCoverage.ExpectedReason != resumeReadback.ContinuationContract.Reason ||
 		resumeExecution.ContinuationReasonCoverage.SourceCount != 13 ||
 		!containsString(resumeExecution.ContinuationReasonCoverage.IndexedSources, "checkpoint_readback") ||
@@ -2233,6 +2237,24 @@ func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T)
 	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
 	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness checkpoint_freshness_status must match recommendation readback") {
 		t.Fatalf("expected stale Foundry checkpoint freshness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.ContinuationContractReason = "ready_nodes_remain"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness continuation_contract_reason must match recommendation readback") {
+		t.Fatalf("expected stale Foundry continuation reason rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.ExactNextAction = "stale exact next action"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness exact_next_action must match recommendation readback") {
+		t.Fatalf("expected stale Foundry exact next action rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.RefusesFinalResponse = !readback.ContinuationContract.RefusesFinalResponse
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness refuses_final_response must match recommendation readback") {
+		t.Fatalf("expected stale Foundry refusal rejection, got %v", err)
 	}
 	execution = BuildAtlasRecommendationExecutionReadback(readback)
 	execution.ContinuationReasonCoverage.ExpectedReason = "ready_nodes_remain"
