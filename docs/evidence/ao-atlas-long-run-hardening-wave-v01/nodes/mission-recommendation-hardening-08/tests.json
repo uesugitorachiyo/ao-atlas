@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-08",
+  "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveFinalStateReconciliationBindsClosureArtifacts -count=1",
+  "red_result": "failed before Node 8 final-state artifacts existed",
+  "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveFinalStateReconciliationBindsClosureArtifacts -count=1",
+  "green_result": "passed"
+}

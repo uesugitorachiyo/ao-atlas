@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-08",
+  "candidate": "final-state-reconciliation-packet",
+  "status": "selected",
+  "objective": "Add an Atlas final-state reconciliation packet comparing workgraph Foundry Promoter and Command readbacks.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-08"
+  ],
+  "acceptance_criteria": [
+    "closure artifacts validate against the latest Node 7 readback",
+    "embedded final-state reconciliation binds workgraph, Foundry, Promoter, and Command statuses",
+    "final response remains denied while ready nodes and exact next action remain"
+  ],
+  "selected_at": "2026-07-05T14:45:25Z"
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-hardening-08",
+  "rollback_scope": [
+    "revert the Node 8 test addition",
+    "remove Node 8 generated evidence artifacts"
+  ],
+  "safe_to_revert": true,
+  "no_release_or_deploy_performed": true
+}

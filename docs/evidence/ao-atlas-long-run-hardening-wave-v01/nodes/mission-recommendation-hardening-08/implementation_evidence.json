@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-08",
+  "status": "implemented",
+  "summary": "Added a regression fixture proving final-state reconciliation binds the latest recommendation readback, Command readback, Promoter no-promotion readback, and Foundry rollup before allowing continuation.",
+  "changed_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-08"
+  ],
+  "generated_artifacts": [
+    "final-state-recommendation-readback.json",
+    "final-state-command-readback.json",
+    "final-state-promoter-readback.json",
+    "final-state-foundry-rollup.json",
+    "final-state-reconciliation-packet.json",
+    "final-state-reconciliation-fixture.json"
+  ]
+}
