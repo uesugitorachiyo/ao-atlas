@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-04-atlas-final-synthesis-roundtrip",
+  "status": "passed",
+  "gate": "single_active_mutation_node",
+  "owner": "ao-atlas",
+  "objective": "Roundtrip a completed AO Mission final synthesis into AO Atlas and verify zero ready nodes.",
+  "source_synthesis": "examples/valid/ao-mission/final-synthesis.json",
+  "generated_readback": "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip/mission-final-synthesis-readback.json",
+  "ready_nodes_verified_zero": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

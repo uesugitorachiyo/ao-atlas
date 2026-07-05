@@ -197,6 +197,7 @@ required_files=(
   schemas/foundry-continuation-handoff.schema.json
   schemas/run-link.schema.json
   schemas/ao-mission-import.schema.json
+  schemas/ao-mission-final-synthesis-readback.schema.json
   schemas/ao-mission-feature-depth-recommendations.schema.json
   schemas/recommendation-wave.schema.json
   schemas/recommendation-readback.schema.json
@@ -208,6 +209,7 @@ required_files=(
   schemas/recommendation-reconciliation-packet.schema.json
   examples/valid/recommendation-wave-long-run-supervisor.json
   examples/valid/recommendation-lease-start-long-run.json
+  examples/valid/ao-mission/final-synthesis.json
 )
 for file in "${required_files[@]}"; do
   test -s "$file"
@@ -250,6 +252,11 @@ test -s "$OUT/mission-status.json"
   --ledger-compaction examples/valid/ao-mission/ledger-compaction-readback.json \
   --out "$OUT/ao-mission-import.json" >/dev/null
 test -s "$OUT/ao-mission-import.json"
+"$BIN" mission final-synthesis import \
+  --synthesis examples/valid/ao-mission/final-synthesis.json \
+  --out "$OUT/ao-mission-final-synthesis-readback.json" >/dev/null
+test -s "$OUT/ao-mission-final-synthesis-readback.json"
+jq -e '.contract_version == "ao.atlas.ao-mission-final-synthesis-readback.v0.1" and .completed_nodes == 26 and .ready_nodes == 0 and .blocked_nodes == 0 and .final_response_allowed == true and .return_gate_status == "final_response_allowed" and .rsi_remains_denied == true and .promotion_claimed == false and .claims_authority_advance == false and (.feature_depth_next_tasks | length) == 10' "$OUT/ao-mission-final-synthesis-readback.json" >/dev/null
 "$BIN" mission recommendations import --recommendations examples/valid/ao-mission/feature-depth-recommendations.json --target-instance demo-stack --min-tasks 30 --node-budget 40 --min-minutes 120 --max-minutes 180 --continue-if-fast-target 40 --started-at 2026-07-04T08:00:00-07:00 --out "$OUT/mission-recommendations" >/dev/null
 test -s "$OUT/mission-recommendations/recommendation-wave.json"
 test -s "$OUT/mission-recommendations/recommendation-workgraph.json"

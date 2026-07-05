@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-04-atlas-final-synthesis-roundtrip",
+  "status": "recorded",
+  "evidence_key": "rollback_record",
+  "rollback_scope": [
+    "internal/atlas/mission_final_synthesis.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/atlas_test.go",
+    "schemas/ao-mission-final-synthesis-readback.schema.json",
+    "examples/valid/ao-mission/final-synthesis.json",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-04-atlas-final-synthesis-roundtrip"
+  ],
+  "rollback_action": "Revert the node-04 commit or remove the listed files and CLI branch if validation fails before merge.",
+  "data_migration_required": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

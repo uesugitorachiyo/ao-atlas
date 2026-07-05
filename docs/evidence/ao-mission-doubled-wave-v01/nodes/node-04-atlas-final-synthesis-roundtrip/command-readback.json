@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.doubled-wave.command-readback.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-04-atlas-final-synthesis-roundtrip",
+  "status": "ready",
+  "summary": "AO Atlas can now import AO Mission final-synthesis evidence and emit a readback that verifies completed_nodes=26, ready_nodes=0, blocked_nodes=0, final_response_allowed=true, and RSI remains denied.",
+  "exact_next_action": "Return to AO Mission for node-05 stale route/readback reconciliation against the new Atlas final-synthesis readback.",
+  "final_response_allowed_for_doubled_wave": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

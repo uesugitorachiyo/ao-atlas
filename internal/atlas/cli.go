@@ -300,10 +300,13 @@ func runIntake(args []string, stdout io.Writer) error {
 
 func runMission(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission requires status, import, workgraph-metadata, provenance, or recommendations")
+		return fmt.Errorf("mission requires status, import, final-synthesis, workgraph-metadata, provenance, or recommendations")
 	}
 	if args[0] == "import" {
 		return runMissionImport(args[1:], stdout)
+	}
+	if args[0] == "final-synthesis" {
+		return runMissionFinalSynthesis(args[1:], stdout)
 	}
 	if args[0] == "workgraph-metadata" {
 		return runMissionWorkgraphMetadata(args[1:], stdout)
@@ -315,7 +318,7 @@ func runMission(args []string, stdout io.Writer) error {
 		return runMissionRecommendations(args[1:], stdout)
 	}
 	if args[0] != "status" {
-		return fmt.Errorf("mission requires status, import, workgraph-metadata, provenance, or recommendations")
+		return fmt.Errorf("mission requires status, import, final-synthesis, workgraph-metadata, provenance, or recommendations")
 	}
 	fs := flag.NewFlagSet("mission status", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -363,6 +366,50 @@ func runMission(args []string, stdout io.Writer) error {
 		return printJSON(stdout, status)
 	}
 	fmt.Fprintf(stdout, "status=%s\nintake=%s\nworkgraph=%s\n", status.CompletionStatus, status.IntakeID, status.WorkgraphID)
+	return nil
+}
+
+func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
+	if len(args) == 0 || args[0] != "import" {
+		return fmt.Errorf("mission final-synthesis requires import")
+	}
+	fs := flag.NewFlagSet("mission final-synthesis import", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	synthesisPath := fs.String("synthesis", "", "AO Mission final synthesis path")
+	outPath := fs.String("out", "", "output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*synthesisPath) == "" {
+		return fmt.Errorf("--synthesis is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if *outPath != "" && samePath(*synthesisPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	readback, err := BuildAOMissionFinalSynthesisReadback(*synthesisPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, readback); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, readback)
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ncompleted_nodes=%d\nready_nodes=%d\nfinal_response_allowed=%t\nao_mission_final_synthesis_readback=%s\n",
+		readback.Status,
+		readback.MissionID,
+		readback.CompletedNodes,
+		readback.ReadyNodes,
+		readback.FinalResponseAllowed,
+		filepath.ToSlash(*outPath),
+	)
 	return nil
 }
 

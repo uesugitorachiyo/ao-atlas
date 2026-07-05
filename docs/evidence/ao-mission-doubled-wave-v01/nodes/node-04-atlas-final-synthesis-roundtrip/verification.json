@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.doubled-wave.node-evidence.v0.1",
+  "mission": "ao-mission-doubled-wave-v01",
+  "node_id": "node-04-atlas-final-synthesis-roundtrip",
+  "status": "passed",
+  "evidence_key": "verification",
+  "commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ],
+  "command_output_summary": [
+    "go test ./... -count=1: passed",
+    "go vet ./...: passed",
+    "go build ./cmd/atlas: passed",
+    "scripts/production-readiness.sh: status=ready score=100/100",
+    "scripts/atlas-foundry-roundtrip-smoke.sh: status=ready mode=fixture_only_readback"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

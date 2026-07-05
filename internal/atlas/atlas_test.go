@@ -903,6 +903,110 @@ func TestMissionImportBindsAOMissionArtifacts(t *testing.T) {
 	}
 }
 
+func TestMissionFinalSynthesisImportRoundtripsCompletedWave(t *testing.T) {
+	dir := t.TempDir()
+	outPath := filepath.Join(dir, "mission-final-synthesis-readback.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "final-synthesis", "import",
+		"--synthesis", filepath.Join("..", "..", "examples", "valid", "ao-mission", "final-synthesis.json"),
+		"--out", outPath,
+		"--json",
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission final synthesis import failed: %s", out.String())
+	}
+	var readback struct {
+		ContractVersion       string   `json:"contract_version"`
+		MissionID             string   `json:"mission_id"`
+		Status                string   `json:"status"`
+		SourceDigest          string   `json:"source_digest"`
+		TotalNodes            int      `json:"total_nodes"`
+		CompletedNodes        int      `json:"completed_nodes"`
+		ReadyNodes            int      `json:"ready_nodes"`
+		BlockedNodes          int      `json:"blocked_nodes"`
+		MinimumNodes          int      `json:"minimum_nodes"`
+		FinalResponseAllowed  bool     `json:"final_response_allowed"`
+		ExactNextAction       string   `json:"exact_next_action"`
+		FeatureDepthNextTasks []string `json:"feature_depth_next_tasks"`
+		RSIRemainsDenied      bool     `json:"rsi_remains_denied"`
+		SafeToExecute         bool     `json:"safe_to_execute"`
+		SchedulesWork         bool     `json:"schedules_work"`
+		ExecutesWork          bool     `json:"executes_work"`
+		ApprovesWork          bool     `json:"approves_work"`
+	}
+	if err := json.Unmarshal(out.Bytes(), &readback); err != nil {
+		t.Fatalf("mission final synthesis readback did not emit json: %v\n%s", err, out.String())
+	}
+	if readback.ContractVersion != "ao.atlas.ao-mission-final-synthesis-readback.v0.1" ||
+		readback.MissionID != "ao-mission-atlas-wave-import-v01" ||
+		readback.Status != "completed" ||
+		readback.TotalNodes != 26 ||
+		readback.CompletedNodes != 26 ||
+		readback.ReadyNodes != 0 ||
+		readback.BlockedNodes != 0 ||
+		readback.MinimumNodes != 25 ||
+		!readback.FinalResponseAllowed ||
+		!strings.HasPrefix(readback.SourceDigest, "sha256:") ||
+		!strings.Contains(readback.ExactNextAction, "next-wave-recommended-prompt.md") ||
+		len(readback.FeatureDepthNextTasks) != 10 ||
+		!readback.RSIRemainsDenied ||
+		readback.SafeToExecute ||
+		readback.SchedulesWork ||
+		readback.ExecutesWork ||
+		readback.ApprovesWork {
+		t.Fatalf("bad mission final synthesis readback: %#v", readback)
+	}
+	if _, err := os.Stat(outPath); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestMissionFinalSynthesisImportRejectsReadyNodeFinalGateDrift(t *testing.T) {
+	dir := t.TempDir()
+	synthesisPath := filepath.Join(dir, "final-synthesis.json")
+	if err := WriteJSON(synthesisPath, map[string]any{
+		"schema":                 "ao.mission.atlas-wave-final-synthesis.v0.1",
+		"mission":                "ao-mission-drift",
+		"status":                 "completed",
+		"completed_nodes":        25,
+		"ready_nodes":            1,
+		"blocked_nodes":          0,
+		"minimum_nodes":          25,
+		"target_minutes":         120,
+		"max_minutes":            180,
+		"final_response_allowed": true,
+		"atlas_workgraph_status": "completed",
+		"foundry_rollup":         "readback-only wave; no promotion requested",
+		"promoter_status":        "no_promotion_requested",
+		"command_readback":       "ready",
+		"event_search_bound":     true,
+		"branch_cleanup_bound_through_previous_node": true,
+		"current_node_branch":                        "none",
+		"current_node_pr_pending":                    false,
+		"promotion_claimed":                          false,
+		"claims_authority_advance":                   false,
+		"rsi_remains_denied":                         true,
+		"safe_to_execute":                            false,
+		"executes_work":                              false,
+		"approves_work":                              false,
+		"mutates_repositories":                       false,
+		"feature_depth_recommendations":              []any{},
+		"exact_next_action":                          "should not be final while ready nodes remain",
+	}); err != nil {
+		t.Fatal(err)
+	}
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "final-synthesis", "import",
+		"--synthesis", synthesisPath,
+		"--out", filepath.Join(dir, "readback.json"),
+	}, &out, &out)
+	if code == 0 || !strings.Contains(out.String(), "final response cannot be allowed while ready nodes remain") {
+		t.Fatalf("expected ready-node final gate rejection, code=%d output=%s", code, out.String())
+	}
+}
+
 func TestMissionImportBindsOptionalRouteHistoryProvenance(t *testing.T) {
 	dir := t.TempDir()
 	record := filepath.Join(dir, "mission-record.json")
