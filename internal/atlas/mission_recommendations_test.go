@@ -1067,6 +1067,9 @@ func TestMissionRecommendationsFirstNodeFoundryImportSmoke(t *testing.T) {
 			t.Fatalf("Foundry continuation prompt missing %q:\n%s", want, string(prompt))
 		}
 	}
+	if strings.Contains(string(prompt), "RSI is proven") || strings.Contains(handoff.Prompt, "RSI is proven") {
+		t.Fatalf("Foundry continuation prompt must avoid unsafe RSI proof wording:\n%s", string(prompt))
+	}
 }
 
 func TestMissionRecommendationsReadbackCLIMatchesGeneratedArtifacts(t *testing.T) {
@@ -2664,6 +2667,46 @@ func TestLongRunHardeningWaveLeaseSeedAndNodeOneReadback(t *testing.T) {
 		readback.EarlyReturnRiskStatus != "blocked_final_response_ready_nodes_remain" ||
 		!strings.Contains(readback.ExactNextAction, "mission-recommendation-hardening-02") {
 		t.Fatalf("node 1 completion readback must continue to node 2 without final response: %#v", readback)
+	}
+}
+
+func TestLongRunHardeningWaveUntilDoneContinuesAfterOneHandoff(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeOneReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-01", "recommendation-readback-after.json"))
+	fixture := mustLoadJSON[map[string]any](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-02", "until-done-one-handoff-fixture.json"))
+	if fixture["schema"] != "ao.atlas.until-done-governed-handoff-fixture.v0.1" ||
+		fixture["status"] != "continuation_required" ||
+		fixture["mode"] != "continue_until_done" ||
+		fixture["governed_handoffs_recorded"] != float64(1) ||
+		fixture["completed_nodes"] != float64(nodeOneReadback.CompletedNodes) ||
+		fixture["ready_nodes_after_handoff"] != float64(nodeOneReadback.ReadyNodes) ||
+		fixture["first_executable_node"] != nodeOneReadback.FirstExecutableNode ||
+		fixture["final_response_allowed"] != false {
+		t.Fatalf("until-done fixture must bind one governed handoff to continuation state: %#v", fixture)
+	}
+	exactNextAction, _ := fixture["exact_next_action"].(string)
+	if exactNextAction != nodeOneReadback.ExactNextAction ||
+		!strings.Contains(exactNextAction, "mission-recommendation-hardening-02") {
+		t.Fatalf("until-done fixture must preserve node 2 exact next action: fixture=%q readback=%q", exactNextAction, nodeOneReadback.ExactNextAction)
+	}
+	returnGate, _ := fixture["return_gate_status"].(string)
+	if returnGate != "blocked_ready_nodes_remain" || nodeOneReadback.FinalResponseAllowed {
+		t.Fatalf("until-done fixture must block final response while ready nodes remain: fixture=%#v readback=%#v", fixture, nodeOneReadback)
+	}
+	if stopReason, _ := fixture["premature_stop_reason"].(string); !strings.Contains(stopReason, "one governed handoff") {
+		t.Fatalf("until-done fixture must explain why one handoff is insufficient: %#v", fixture)
+	}
+
+	nodeTwoReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-02", "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwoReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeTwoReadback.CompletedNodes != 2 ||
+		nodeTwoReadback.ReadyNodes != 38 ||
+		nodeTwoReadback.FirstExecutableNode != "mission-recommendation-hardening-03" ||
+		nodeTwoReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwoReadback.ExactNextAction, "mission-recommendation-hardening-03") {
+		t.Fatalf("node 2 readback must continue to node 3 without final response: %#v", nodeTwoReadback)
 	}
 }
 
