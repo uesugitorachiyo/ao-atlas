@@ -95,6 +95,10 @@ func TestRecommendationReconciliationSchemaRequiresStaleRouteDecisionStatus(t *t
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-reconciliation-packet.schema.json"), "stale_route_decision_status")
 }
 
+func TestRecommendationReconciliationSchemaRequiresFinalStateReconciliation(t *testing.T) {
+	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-reconciliation-packet.schema.json"), "final_state_reconciliation")
+}
+
 func TestRecommendationReadbackSchemaRequiresFoundryTerminalExamples(t *testing.T) {
 	assertSchemaRequiresField(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "foundry_terminal_status_examples")
 }
@@ -990,6 +994,14 @@ func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testin
 	}
 	if reconciliation.ReturnGateStatus != "blocked_ready_nodes_remain" ||
 		reconciliation.CheckpointCount != 1 ||
+		reconciliation.FinalStateReconciliation.ContractVersion != "ao.atlas.final-state-reconciliation.v0.1" ||
+		reconciliation.FinalStateReconciliation.Status != reconciliation.Status ||
+		reconciliation.FinalStateReconciliation.WorkgraphStatus != resumeReadback.Status ||
+		reconciliation.FinalStateReconciliation.FoundryRollupStatus != foundry.Status ||
+		reconciliation.FinalStateReconciliation.PromoterVerdictStatus != promoter.Status ||
+		reconciliation.FinalStateReconciliation.CommandReadbackStatus != command.Status ||
+		reconciliation.FinalStateReconciliation.ExactNextAction != resumeReadback.ExactNextAction ||
+		reconciliation.FinalStateReconciliation.SchedulesWork ||
 		reconciliation.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
 		reconciliation.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
 		reconciliation.StaleRouteDecisionStatus != resumeReadback.StaleRouteDecisionStatus ||
@@ -1413,6 +1425,24 @@ func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
 	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
 		!strings.Contains(err.Error(), "reconciliation stale_route_decision_status disagrees") {
 		t.Fatalf("expected stale reconciliation route decision rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.CommandReadbackStatus = "stale_command_readback"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.command_readback_status disagrees") {
+		t.Fatalf("expected stale final-state command rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.FoundryRollupStatus = "stale_foundry_rollup"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.foundry_rollup_status disagrees") {
+		t.Fatalf("expected stale final-state Foundry rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.Status = "ready"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.status must match reconciliation status") {
+		t.Fatalf("expected stale final-state status rejection, got %v", err)
 	}
 }
 

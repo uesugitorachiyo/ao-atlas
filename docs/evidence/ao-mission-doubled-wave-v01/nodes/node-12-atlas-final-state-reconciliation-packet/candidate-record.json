@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-12-atlas-final-state-reconciliation-packet",
+  "candidate": "Bind final_state_reconciliation into Atlas recommendation reconciliation packets and validate source-specific workgraph, Foundry, Promoter, and Command statuses.",
+  "selected_files": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "schemas/recommendation-reconciliation-packet.schema.json",
+    "scripts/production-readiness.sh"
+  ],
+  "reason": "The existing reconciliation packet compared closure artifacts but did not expose a named final-state packet for long-run closure readback."
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "ao.atlas.foundry-roundtrip-smoke.v0.1",
+  "status": "ready",
+  "mode": "fixture_only_readback",
+  "atlas_handoff": "target/atlas-foundry-roundtrip/atlas-foundry-handoff.json",
+  "atlas_foundry_import": "target/atlas-foundry-roundtrip/atlas-foundry-import/foundry-import.json",
+  "foundry_validation": "target/atlas-foundry-roundtrip/foundry-registry-validate.txt",
+  "foundry_import_validation": "target/atlas-foundry-roundtrip/foundry-import-validate.txt",
+  "run_link": "target/atlas-foundry-roundtrip/run-link.json",
+  "foundry_readback": "target/atlas-foundry-roundtrip/foundry-atlas-readback.json",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

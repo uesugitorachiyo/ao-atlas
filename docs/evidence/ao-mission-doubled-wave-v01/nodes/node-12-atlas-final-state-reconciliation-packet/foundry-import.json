@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.import-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-12-atlas-final-state-reconciliation-packet",
+  "owner": "ao-foundry",
+  "status": "imported_for_single_node",
+  "active_mutation_node": "node-12-atlas-final-state-reconciliation-packet",
+  "task": "Implement Atlas final-state reconciliation packet binding for one node with tests and readiness evidence.",
+  "one_executable_mutation_node": true,
+  "blueprint_required": false
+}

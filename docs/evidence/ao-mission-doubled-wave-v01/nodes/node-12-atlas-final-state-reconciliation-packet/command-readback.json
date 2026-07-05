@@ -1,0 +1,8 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-12-atlas-final-state-reconciliation-packet",
+  "status": "ready_for_pr",
+  "summary": "Atlas recommendation reconciliation now emits and validates final_state_reconciliation across workgraph, Foundry, Promoter, and Command statuses.",
+  "exact_next_action": "Open PR for node-12-atlas-final-state-reconciliation-packet, wait for CI, merge, sync, then continue to node 13."
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "ao.sentinel.public-safety-readback.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-12-atlas-final-state-reconciliation-packet",
+  "status": "passed",
+  "scope": [
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/models.go",
+    "schemas/recommendation-reconciliation-packet.schema.json",
+    "scripts/production-readiness.sh",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-12-atlas-final-state-reconciliation-packet"
+  ],
+  "provider_calls": false,
+  "credential_inspection": false,
+  "release_or_publish": false,
+  "rsi_claim": false,
+  "rsi_remains_denied": true
+}

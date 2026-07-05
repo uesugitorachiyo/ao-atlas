@@ -1,0 +1,9 @@
+{
+  "schema": "ao.promoter.no-promotion.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-12-atlas-final-state-reconciliation-packet",
+  "status": "no_promotion",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true,
+  "reason": "This node improves long-run reconciliation readback only and does not advance mutation authority."
+}
