@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-37-workgraph-readiness-reason",
+  "status": "passed",
+  "scope": [
+    "schemas/recommendation-workgraph-readiness-packet.schema.json",
+    "docs/evidence/ao-mission-doubled-wave-v01/nodes/node-37-workgraph-readiness-reason"
+  ],
+  "wording": {
+    "broad_rsi_claim": "absent",
+    "rsi_boundary": "RSI remains denied",
+    "credential_or_secret_material": "absent",
+    "provider_call_permission": "absent",
+    "release_or_deploy_claim": "absent"
+  },
+  "verification_command": "public-safety marker scan over the workgraph readiness schema and node 37 evidence",
+  "verification_result": "no matches"
+}

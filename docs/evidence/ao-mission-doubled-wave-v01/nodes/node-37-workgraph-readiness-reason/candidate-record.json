@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-37-workgraph-readiness-reason",
+  "status": "selected",
+  "candidate": {
+    "title": "Bind continuation reason into workgraph readiness packet",
+    "why": "Workgraph readiness decides whether Atlas can final or must continue. It must carry the same continuation reason used by the readback return gate.",
+    "bounded_files": [
+      "internal/atlas/models.go",
+      "internal/atlas/mission_recommendations.go",
+      "internal/atlas/mission_recommendations_test.go",
+      "schemas/recommendation-workgraph-readiness-packet.schema.json",
+      "scripts/production-readiness.sh"
+    ]
+  },
+  "route": {
+    "atlas_owns": "workgraph readiness and route correctness",
+    "foundry_owns": "bounded implementation node execution",
+    "blueprint_required": false
+  }
+}

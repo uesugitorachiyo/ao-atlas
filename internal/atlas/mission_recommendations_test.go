@@ -295,12 +295,24 @@ func TestRecommendationWorkgraphReadinessPacketSchemaRequiresBudgetAndReturnGate
 		"early_return_risk_status",
 		"final_response_allowed",
 		"exact_next_action",
+		"continuation_contract_reason",
 		"one_executable_mutation_node_active",
 		"refuses_final_response",
 		"rsi_remains_denied",
 	} {
 		assertSchemaRequiresField(t, root, field)
 	}
+	assertSchemaEnumContains(t, root, "continuation_contract_reason",
+		"ready_nodes_or_exact_next_action_remain",
+		"ready_nodes_remain",
+		"exact_next_action_remains",
+		"final response allowed by recommendation readback",
+		"blocked_hard_blocker",
+		"blocked_lease_timing_missing",
+		"blocked_minimum_minutes_unmet",
+		"blocked_ready_nodes_remain",
+		"blocked_no_executable_ready_node",
+	)
 }
 
 func TestMissionRecommendationsImportBuildsDoubleSizeWaveAndWorkgraph(t *testing.T) {
@@ -1078,6 +1090,7 @@ func TestMissionRecommendationsReadbackCLIWritesWorkgraphReadinessPacket(t *test
 		packet.ContinueIfFastTarget != 40 ||
 		packet.ReadyNodes != 40 ||
 		packet.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		packet.ContinuationContractReason != readback.ContinuationContract.Reason ||
 		packet.FinalResponseAllowed {
 		t.Fatalf("packet lost 40-node ready workgraph denial: %#v", packet)
 	}
@@ -2170,6 +2183,13 @@ func TestRecommendationWorkgraphReadinessPacketRejectsStaleReadyNodeState(t *tes
 	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(stale, readback); err == nil ||
 		!strings.Contains(err.Error(), "final_response_allowed must match recommendation readback") {
 		t.Fatalf("expected stale final response rejection, got %v", err)
+	}
+
+	stale = packet
+	stale.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(stale, readback); err == nil ||
+		!strings.Contains(err.Error(), "continuation_contract_reason must match recommendation readback") {
+		t.Fatalf("expected stale continuation reason rejection, got %v", err)
 	}
 }
 

@@ -1,0 +1,42 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-37-workgraph-readiness-reason",
+  "status": "focused_and_full_tests_passed",
+  "focused_tests": [
+    {
+      "name": "TestRecommendationWorkgraphReadinessPacketSchemaRequiresBudgetAndReturnGate",
+      "coverage": "Readiness schema requires continuation_contract_reason and the shared reason enum."
+    },
+    {
+      "name": "TestMissionRecommendationsReadbackCLIWritesWorkgraphReadinessPacket",
+      "coverage": "CLI-generated readiness packets mirror the recommendation readback continuation reason."
+    },
+    {
+      "name": "TestRecommendationWorkgraphReadinessPacketRejectsStaleReadyNodeState",
+      "coverage": "Validation rejects stale readiness continuation reason values."
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    }
+  ]
+}

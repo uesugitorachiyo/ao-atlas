@@ -2233,6 +2233,7 @@ func BuildAtlasRecommendationWorkgraphReadinessPacket(readback AtlasRecommendati
 		FinalResponseAllowed:            readback.FinalResponseAllowed,
 		FinalResponseReason:             readback.FinalResponseReason,
 		ExactNextAction:                 readback.ExactNextAction,
+		ContinuationContractReason:      readback.ContinuationContract.Reason,
 		OneExecutableMutationNodeActive: readback.ExecutableReadyNodes == 1,
 		RefusesFinalResponse:            !readback.FinalResponseAllowed,
 		SchedulesWork:                   false,
@@ -2350,6 +2351,9 @@ func ValidateAtlasRecommendationWorkgraphReadinessPacket(packet AtlasRecommendat
 	}
 	if packet.ExactNextAction != readback.ExactNextAction {
 		errs = append(errs, "exact_next_action must match recommendation readback")
+	}
+	if packet.ContinuationContractReason != readback.ContinuationContract.Reason {
+		errs = append(errs, "continuation_contract_reason must match recommendation readback")
 	}
 	if readback.ReadyNodes > 0 {
 		if packet.ReturnGateStatus != "blocked_ready_nodes_remain" {
