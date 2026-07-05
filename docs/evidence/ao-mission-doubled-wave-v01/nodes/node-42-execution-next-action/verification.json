@@ -1,0 +1,51 @@
+{
+  "schema": "ao.atlas.verification.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-42-execution-next-action",
+  "status": "local_verification_passed_ci_pending",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run 'TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt|TestRecommendationExecutionReadbackRejectsFalseCompletedNodes|TestRecommendationExecutionReadbackArtifactsStayConsistent' -count=1",
+      "status": "passed",
+      "summary": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.305s"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "summary": "status=ready; score=100/100; summary=target/production-readiness/summary.json"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed",
+      "summary": "no output"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed",
+      "summary": "? github.com/uesugitorachiyo/ao-atlas/cmd/atlas [no test files]; ok github.com/uesugitorachiyo/ao-atlas/internal/atlas 0.426s"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed",
+      "summary": "no output"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed",
+      "summary": "no output"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed",
+      "summary": "status=ready; mode=fixture_only_readback; summary=target/atlas-foundry-roundtrip/summary.json"
+    },
+    {
+      "command": "public-facing artifact safety scan over updated execution ledger fixture",
+      "status": "passed",
+      "summary": "no local path, credential, provider-permission, release, forbidden authority, or RSI promotion markers found"
+    }
+  ],
+  "remaining_checks": [
+    "GitHub CI after PR"
+  ]
+}

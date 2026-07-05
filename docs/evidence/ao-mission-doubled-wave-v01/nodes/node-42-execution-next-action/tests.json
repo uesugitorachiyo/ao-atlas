@@ -1,0 +1,42 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "mission_id": "ao-mission-doubled-wave-v01",
+  "node_id": "node-42-execution-next-action",
+  "status": "focused_and_full_tests_passed",
+  "focused_tests": [
+    {
+      "name": "TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt",
+      "coverage": "Generated execution readback top-level fields match resumed recommendation readback."
+    },
+    {
+      "name": "TestRecommendationExecutionReadbackRejectsFalseCompletedNodes",
+      "coverage": "Execution validator rejects stale continuation reason, exact next action, and refusal fields."
+    },
+    {
+      "name": "TestRecommendationExecutionReadbackArtifactsStayConsistent",
+      "coverage": "Committed v0.3 execution ledger fixture stays consistent with recommendation readback."
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    }
+  ]
+}

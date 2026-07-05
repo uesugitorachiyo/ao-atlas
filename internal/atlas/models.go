@@ -402,6 +402,11 @@ type AtlasRecommendationExecutionReadback struct {
 	EvidenceRoot                   string                                            `json:"evidence_root,omitempty"`
 	LeaseHealthStatus              string                                            `json:"lease_health_status"`
 	CheckpointFreshnessStatus      string                                            `json:"checkpoint_freshness_status"`
+	ReturnGateStatus               string                                            `json:"return_gate_status,omitempty"`
+	ContinuationContractReason     string                                            `json:"continuation_contract_reason"`
+	ExactNextAction                string                                            `json:"exact_next_action"`
+	FinalResponseAllowed           bool                                              `json:"final_response_allowed"`
+	RefusesFinalResponse           bool                                              `json:"refuses_final_response"`
 	CompletedRecommendationNodes   int                                               `json:"completed_recommendation_nodes"`
 	TotalRecommendationNodes       int                                               `json:"total_recommendation_nodes"`
 	GeneratedWorkgraph             AtlasRecommendationGeneratedWorkgraphReadback     `json:"generated_workgraph"`
