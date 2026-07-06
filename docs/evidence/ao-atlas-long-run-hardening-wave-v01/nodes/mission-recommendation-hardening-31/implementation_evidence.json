@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-31",
+  "status": "implemented",
+  "changed_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-31"
+  ],
+  "implementation_summary": "Added an operator routing guide fixture covering AO Mission, Atlas, Blueprint, Foundry, Promoter, Command, Sentinel, and Architecture responsibilities.",
+  "authority_effect": "none",
+  "implemented_at": "2026-07-06T06:17:04Z"
+}

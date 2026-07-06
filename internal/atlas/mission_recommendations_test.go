@@ -5272,6 +5272,110 @@ func TestLongRunHardeningWaveCompactionResumePromptSkipsCompletedNodes(t *testin
 	}
 }
 
+func TestLongRunHardeningWaveOperatorRoutingGuideCoversAORoles(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-30", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-31")
+	fixture := mustLoadJSON[struct {
+		Schema               string `json:"schema"`
+		NodeID               string `json:"node_id"`
+		Status               string `json:"status"`
+		GuidePath            string `json:"guide_path"`
+		CompletedNodesBefore int    `json:"completed_nodes_before_node"`
+		ReadyNodesBefore     int    `json:"ready_nodes_before_node"`
+		FirstExecutableNode  string `json:"first_executable_node"`
+		FinalResponseAllowed bool   `json:"final_response_allowed"`
+		ExactNextAction      string `json:"exact_next_action"`
+		BlueprintBoundary    string `json:"blueprint_boundary"`
+		FoundryBoundary      string `json:"foundry_boundary"`
+		Roles                []struct {
+			Name     string `json:"name"`
+			UseWhen  string `json:"use_when"`
+			Boundary string `json:"boundary"`
+		} `json:"roles"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "operator-routing-guide-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.operator-routing-guide-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-31" ||
+		fixture.Status != "operator_routing_documented" ||
+		fixture.CompletedNodesBefore != nodeThirtyReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtyReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtyReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirtyReadback.ExactNextAction ||
+		!strings.Contains(fixture.BlueprintBoundary, "new authorization") ||
+		!strings.Contains(fixture.FoundryBoundary, "bounded implementation") ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("operator routing fixture must bind node 30 checkpoint without authority effects: %#v", fixture)
+	}
+
+	expected := map[string]string{
+		"AO Mission":      "operator-facing loop",
+		"AO Atlas":        "workgraph state",
+		"AO Blueprint":    "new authorization",
+		"AO Foundry":      "bounded implementation",
+		"AO Promoter":     "promotion",
+		"AO Command":      "readback",
+		"AO Sentinel":     "public-safety",
+		"AO Architecture": "capability map",
+	}
+	if len(fixture.Roles) != len(expected) {
+		t.Fatalf("operator routing fixture must cover all AO roles, got %d roles: %#v", len(fixture.Roles), fixture.Roles)
+	}
+	guideData, err := os.ReadFile(filepath.Join(repoRoot(t), fixture.GuidePath))
+	if err != nil {
+		t.Fatal(err)
+	}
+	guide := string(guideData)
+	for _, role := range fixture.Roles {
+		want, ok := expected[role.Name]
+		if !ok {
+			t.Fatalf("unexpected AO role in routing guide fixture: %#v", role)
+		}
+		if !strings.Contains(role.UseWhen, want) ||
+			role.Boundary == "" ||
+			!strings.Contains(guide, "## "+role.Name) {
+			t.Fatalf("role %q missing expected routing guidance: %#v", role.Name, role)
+		}
+		delete(expected, role.Name)
+	}
+	if len(expected) != 0 {
+		t.Fatalf("missing AO roles in routing guide fixture: %#v", expected)
+	}
+	for _, phrase := range []string{
+		"Blueprint only when new authorization or governed planning is required",
+		"Foundry for ready bounded implementation",
+		"Atlas owns workgraph state and next-node continuation",
+		"Mission is the operator-facing loop",
+	} {
+		if !strings.Contains(guide, phrase) {
+			t.Fatalf("operator routing guide missing %q", phrase)
+		}
+	}
+
+	nodeThirtyOneReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtyOneReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtyOneReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtyOneReadback.CompletedNodes != 31 ||
+		nodeThirtyOneReadback.ReadyNodes != 9 ||
+		nodeThirtyOneReadback.FirstExecutableNode != "mission-recommendation-hardening-32" ||
+		nodeThirtyOneReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtyOneReadback.ExactNextAction, "mission-recommendation-hardening-32") {
+		t.Fatalf("node 31 readback must carry operator routing evidence and continue to node 32: %#v", nodeThirtyOneReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
