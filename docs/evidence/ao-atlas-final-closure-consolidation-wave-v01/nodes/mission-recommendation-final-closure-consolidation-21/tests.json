@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-21",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationMissionDashboardRegressionCoversCoreBindings -count=1",
+      "status": "failed_before_implementation",
+      "failure": "missing node 20 post-merge lifecycle and node 21 Mission dashboard regression fixture"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationMissionDashboardRegressionCoversCoreBindings -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Dashboard regression covers Atlas, Foundry, Promoter, Command, and Sentinel bindings.",
+    "Each required binding keeps its expected role, status, and source path.",
+    "Mission continuation context remains present without promotion."
+  ]
+}
