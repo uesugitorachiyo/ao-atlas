@@ -6182,6 +6182,89 @@ func TestLongRunHardeningWaveFinalClosureArtifactsAllowFinalResponseOnlyAtComple
 	}
 }
 
+func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))
+	if err := ValidateAtlasRecommendationWave(wave); err != nil {
+		t.Fatal(err)
+	}
+	if wave.MissionID != "ao-atlas-final-closure-consolidation-wave-v01" ||
+		wave.TotalTasks != 24 ||
+		wave.MinimumTasks != 24 ||
+		wave.NodeBudget != 24 ||
+		wave.EstimatedMinutes != 150 ||
+		wave.FinalResponseAllowed ||
+		wave.PublicSafetyScanStatus != "required_pending_verification" ||
+		wave.PromoterReadbackStatus != "required_not_bound" ||
+		wave.CommandReadbackStatus != "required_not_bound" {
+		t.Fatalf("consolidation wave must preserve the 24-node closure budget and blocked final response: %#v", wave)
+	}
+	if wave.Supervisor == nil ||
+		wave.Supervisor.MinMinutes != 120 ||
+		wave.Supervisor.MaxMinutes != 180 ||
+		wave.Supervisor.ContinueIfFastTarget != 24 ||
+		wave.Supervisor.ReturnOnlyWhen != "all_24_nodes_complete_or_true_hard_blocker" {
+		t.Fatalf("consolidation supervisor must preserve the long-run lease contract: %#v", wave.Supervisor)
+	}
+	for _, want := range []string{
+		"Bind final readback public safety scan status",
+		"Generate post merge cleanup evidence",
+		"machine readable pull request and continuous integration ledger",
+		"compaction resume prompt",
+		"at least forty ranked Feature Depth tasks",
+	} {
+		found := false
+		for _, task := range wave.Tasks {
+			if strings.Contains(task.Task, want) {
+				found = true
+				break
+			}
+		}
+		if !found {
+			t.Fatalf("consolidation wave missing task theme %q", want)
+		}
+	}
+
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join(root, "recommendation-workgraph.json"))
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		t.Fatal(err)
+	}
+	if len(workgraph.Nodes) != 24 ||
+		workgraph.Nodes[0].ID != "mission-recommendation-final-closure-consolidation-01" ||
+		workgraph.Nodes[23].ID != "mission-recommendation-final-closure-consolidation-24" {
+		t.Fatalf("consolidation workgraph must contain the expected serialized node ids: %#v", workgraph.Nodes)
+	}
+	for i, node := range workgraph.Nodes {
+		if node.Status != "ready" {
+			t.Fatalf("node %d must start ready: %#v", i, node)
+		}
+		if i == 0 && len(node.Dependencies) != 0 {
+			t.Fatalf("first node must have no dependency: %#v", node)
+		}
+		if i > 0 {
+			wantDependency := workgraph.Nodes[i-1].ID
+			if len(node.Dependencies) != 1 || node.Dependencies[0] != wantDependency {
+				t.Fatalf("node %s must depend on %s: %#v", node.ID, wantDependency, node.Dependencies)
+			}
+		}
+	}
+
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "recommendation-readback.json"))
+	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
+		t.Fatal(err)
+	}
+	if readback.CompletedNodes != 0 ||
+		readback.ReadyNodes != 24 ||
+		readback.BlockedNodes != 0 ||
+		readback.FailedNodes != 0 ||
+		readback.FirstExecutableNode != "mission-recommendation-final-closure-consolidation-01" ||
+		readback.FinalResponseAllowed ||
+		readback.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		len(readback.FeatureDepthRecommendations) != 24 {
+		t.Fatalf("initial consolidation readback must point at node 1 and deny final response: %#v", readback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

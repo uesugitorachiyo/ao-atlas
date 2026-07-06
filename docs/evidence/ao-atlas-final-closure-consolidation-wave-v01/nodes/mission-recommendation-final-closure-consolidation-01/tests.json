@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-01",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Consolidation wave has exactly twenty four tasks and nodes.",
+    "Supervisor preserves a 120 to 180 minute long-run lease.",
+    "Initial readback keeps final response blocked and points to node 1.",
+    "Serialized workgraph dependencies keep one active executable node."
+  ]
+}

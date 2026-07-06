@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-01",
+  "status": "ready",
+  "rollback_scope": [
+    "Remove docs/evidence/ao-atlas-final-closure-consolidation-wave-v01 generated seed artifacts.",
+    "Remove TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes from internal/atlas/mission_recommendations_test.go."
+  ],
+  "rollback_command": "git revert <merge_commit_for_node_01>",
+  "data_loss_risk": "none; generated evidence and regression-only change",
+  "requires_blueprint": false
+}
