@@ -1,0 +1,2817 @@
+{
+  "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+  "status": "passed",
+  "evidence_root": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01",
+  "node_root": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes",
+  "node_count": 17,
+  "json_file_count": 342,
+  "validated_json_files": 342,
+  "schema_bound_files": 342,
+  "typed_validator_files": 136,
+  "generic_schema_files": 206,
+  "missing_schema_files": [],
+  "failed_files": [],
+  "missing_required_files": [],
+  "required_filenames": [
+    "node_gate.json",
+    "candidate_record.json",
+    "rollback_record.json",
+    "tests.json",
+    "verification.json",
+    "sentinel_public_safety.json",
+    "promoter_no_promotion.json",
+    "command_readback.json",
+    "run-link.json",
+    "recommendation-readback-after.json",
+    "checkpoint-readback-after.json"
+  ],
+  "required_filenames_covered": true,
+  "schema_counts": {
+    "ao.atlas.aggregate-promoter-command-rollup.v0.1": 1,
+    "ao.atlas.aggregate-rollup-regression.v0.1": 1,
+    "ao.atlas.branch-cleanup-handoff-regression.v0.1": 1,
+    "ao.atlas.build-artifact-guard.v0.1": 1,
+    "ao.atlas.build-artifact-promotion-closure-regression.v0.1": 1,
+    "ao.atlas.candidate-record.v0.1": 17,
+    "ao.atlas.checkpoint-bundle.v0.1": 17,
+    "ao.atlas.factory-task.v0.1": 17,
+    "ao.atlas.final-operator-summary.v0.1": 1,
+    "ao.atlas.foundry-continuation-handoff.v0.1": 17,
+    "ao.atlas.foundry-import.v0.1": 17,
+    "ao.atlas.implementation-evidence.v0.1": 17,
+    "ao.atlas.long-recommendation-wave-execution.v0.3": 17,
+    "ao.atlas.node-gate.v0.1": 17,
+    "ao.atlas.operator-summary-regression.v0.1": 1,
+    "ao.atlas.post-merge-cleanup-rollup.v0.1": 1,
+    "ao.atlas.post-merge-lifecycle.v0.1": 16,
+    "ao.atlas.pr-ci-ledger-regression.v0.1": 1,
+    "ao.atlas.pr-ci-ledger.v0.1": 1,
+    "ao.atlas.public-safety-pending-closure-guard.v0.1": 1,
+    "ao.atlas.public-safety-readback-binding.v0.1": 1,
+    "ao.atlas.recommendation-checkpoint-readback.v0.1": 17,
+    "ao.atlas.recommendation-evidence-validation-report.v0.1": 4,
+    "ao.atlas.recommendation-readback.v0.1": 17,
+    "ao.atlas.rollback-record.v0.1": 17,
+    "ao.atlas.run-link.v0.1": 17,
+    "ao.atlas.schema-validation-command-fixture.v0.1": 1,
+    "ao.atlas.schema-validation-coverage-regression.v0.1": 1,
+    "ao.atlas.tests-evidence.v0.1": 17,
+    "ao.atlas.verification-evidence.v0.1": 17,
+    "ao.atlas.windows-ci-state-regression.v0.1": 1,
+    "ao.atlas.windows-ci-wait-state-telemetry.v0.1": 1,
+    "ao.atlas.workgraph.v0.1": 17,
+    "ao.command.readback.v0.1": 17,
+    "ao.promoter.no-promotion-readback.v0.1": 17,
+    "ao.sentinel.public-safety-readback.v0.1": 11,
+    "ao.sentinel.public-safety-scan.v0.1": 6
+  },
+  "validators": {
+    "generic:schema-marker": 206,
+    "typed:factory-task": 17,
+    "typed:foundry-continuation-handoff": 17,
+    "typed:foundry-import": 17,
+    "typed:recommendation-checkpoint-readback": 17,
+    "typed:recommendation-execution-readback": 17,
+    "typed:recommendation-readback": 17,
+    "typed:run-link": 17,
+    "typed:workgraph": 17
+  },
+  "entries": [
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-scan.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/tasks/mission-recommendation-final-closure-consolidation-01-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "mission-recommendation-final-closure-consolidation-01-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-01",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-scan.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/tasks/mission-recommendation-final-closure-consolidation-02-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "mission-recommendation-final-closure-consolidation-02-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/public-safety-pending-closure-guard.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "public-safety-pending-closure-guard.json",
+      "schema": "ao.atlas.public-safety-pending-closure-guard.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-scan.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/tasks/mission-recommendation-final-closure-consolidation-03-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "mission-recommendation-final-closure-consolidation-03-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-03",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/post-merge-cleanup-rollup.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "post-merge-cleanup-rollup.json",
+      "schema": "ao.atlas.post-merge-cleanup-rollup.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-scan.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/tasks/mission-recommendation-final-closure-consolidation-04-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "mission-recommendation-final-closure-consolidation-04-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-04",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/branch-cleanup-handoff-regression.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "branch-cleanup-handoff-regression.json",
+      "schema": "ao.atlas.branch-cleanup-handoff-regression.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-scan.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/tasks/mission-recommendation-final-closure-consolidation-05-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "mission-recommendation-final-closure-consolidation-05-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-05",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/aggregate-promoter-command-rollup.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "aggregate-promoter-command-rollup.json",
+      "schema": "ao.atlas.aggregate-promoter-command-rollup.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-scan.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/tasks/mission-recommendation-final-closure-consolidation-06-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "mission-recommendation-final-closure-consolidation-06-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-06",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/aggregate-rollup-regression.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "aggregate-rollup-regression.json",
+      "schema": "ao.atlas.aggregate-rollup-regression.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/tasks/mission-recommendation-final-closure-consolidation-07-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "mission-recommendation-final-closure-consolidation-07-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-07",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/hardening-nodes-28-40-pr-ci-ledger.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "hardening-nodes-28-40-pr-ci-ledger.json",
+      "schema": "ao.atlas.pr-ci-ledger.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/tasks/mission-recommendation-final-closure-consolidation-08-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "mission-recommendation-final-closure-consolidation-08-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-08",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/pr-ci-ledger-regression.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "pr-ci-ledger-regression.json",
+      "schema": "ao.atlas.pr-ci-ledger-regression.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/tasks/mission-recommendation-final-closure-consolidation-09-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "mission-recommendation-final-closure-consolidation-09-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-09",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/final-operator-summary.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "final-operator-summary.json",
+      "schema": "ao.atlas.final-operator-summary.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/tasks/mission-recommendation-final-closure-consolidation-10-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "mission-recommendation-final-closure-consolidation-10-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-10",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/operator-summary-regression.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "operator-summary-regression.json",
+      "schema": "ao.atlas.operator-summary-regression.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/tasks/mission-recommendation-final-closure-consolidation-11-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "mission-recommendation-final-closure-consolidation-11-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-11",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/completed-wave-evidence-validation-report.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "completed-wave-evidence-validation-report.json",
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/schema-validation-command-fixture.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "schema-validation-command-fixture.json",
+      "schema": "ao.atlas.schema-validation-command-fixture.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/tasks/mission-recommendation-final-closure-consolidation-12-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "mission-recommendation-final-closure-consolidation-12-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-12",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/schema-validation-coverage-regression.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "schema-validation-coverage-regression.json",
+      "schema": "ao.atlas.schema-validation-coverage-regression.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/tasks/mission-recommendation-final-closure-consolidation-13-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "mission-recommendation-final-closure-consolidation-13-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-13",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/build-artifact-guard.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "build-artifact-guard.json",
+      "schema": "ao.atlas.build-artifact-guard.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/tasks/mission-recommendation-final-closure-consolidation-14-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "mission-recommendation-final-closure-consolidation-14-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-14",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/build-artifact-promotion-closure-regression.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "build-artifact-promotion-closure-regression.json",
+      "schema": "ao.atlas.build-artifact-promotion-closure-regression.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/consolidation-evidence-validation-report.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "consolidation-evidence-validation-report.json",
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/tasks/mission-recommendation-final-closure-consolidation-15-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "mission-recommendation-final-closure-consolidation-15-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-15",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/consolidation-evidence-validation-report.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "consolidation-evidence-validation-report.json",
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/tasks/mission-recommendation-final-closure-consolidation-16-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "mission-recommendation-final-closure-consolidation-16-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/windows-ci-wait-state-telemetry.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "windows-ci-wait-state-telemetry.json",
+      "schema": "ao.atlas.windows-ci-wait-state-telemetry.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-16",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/candidate_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/command_readback.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "command_readback.json",
+      "schema": "ao.command.readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/consolidation-evidence-validation-report.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "consolidation-evidence-validation-report.json",
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/execution-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/foundry-import.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/implementation_evidence.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/node_gate.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.promoter.no-promotion-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/rollback_record.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/run-link.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.sentinel.public-safety-readback.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/tasks/mission-recommendation-final-closure-consolidation-17-task.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "mission-recommendation-final-closure-consolidation-17-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/tests.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/verification.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/windows-ci-state-regression.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "windows-ci-state-regression.json",
+      "schema": "ao.atlas.windows-ci-state-regression.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/workgraph-after.json",
+      "node_id": "mission-recommendation-final-closure-consolidation-17",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    }
+  ]
+}

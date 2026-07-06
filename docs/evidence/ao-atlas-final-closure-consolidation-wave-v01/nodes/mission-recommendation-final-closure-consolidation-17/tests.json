@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-17",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationWindowsCIStateRegressionCoversPendingPassingAndFailingStates -count=1",
+      "status": "failed_before_implementation",
+      "failure": "missing node 16 post-merge lifecycle and node 17 Windows CI state regression fixture"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationWindowsCIStateRegressionCoversPendingPassingAndFailingStates -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Pending Windows CI keeps the operator in wait-for-CI state.",
+    "Passing Windows CI allows merge only after all required checks pass.",
+    "Failing Windows CI requires repair before merge.",
+    "No state sample permits final response while ready work remains."
+  ]
+}

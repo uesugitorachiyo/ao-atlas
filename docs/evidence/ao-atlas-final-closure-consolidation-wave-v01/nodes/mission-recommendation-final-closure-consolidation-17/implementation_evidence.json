@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-17",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T17:58:44Z",
+  "summary": "Node 17 records a Windows CI telemetry state regression matrix covering pending, passing, and failing check states.",
+  "authority_boundary": "atlas_recommendation_planning_only"
+}

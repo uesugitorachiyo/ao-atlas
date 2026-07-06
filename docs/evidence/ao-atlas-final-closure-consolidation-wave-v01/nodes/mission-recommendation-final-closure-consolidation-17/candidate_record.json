@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-17",
+  "status": "implemented",
+  "objective": "Add telemetry regression evidence for pending passing and failing Windows check states.",
+  "implementation": [
+    "Added node 16 post-merge lifecycle evidence after PR 319 CI, merge, sync, and branch cleanup.",
+    "Added a Windows CI state regression fixture covering pending, passing, and failing check states.",
+    "Bound the state matrix to node 16 Windows wait telemetry and node 16 readback continuity.",
+    "Added a regression test that requires pending to wait, passing to merge only after all required checks, and failing to repair before merge."
+  ],
+  "files_changed": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-16/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-17/windows-ci-state-regression.json"
+  ],
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
