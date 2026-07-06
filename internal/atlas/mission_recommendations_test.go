@@ -5088,6 +5088,113 @@ func TestLongRunHardeningWaveCIReadbackFixtureDistinguishesLocalPendingPassFailu
 	}
 }
 
+func TestLongRunHardeningWaveRouteDecisionReadbackExplainsBlueprintBypassForFoundryImplementation(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentyEightReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-28", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-29")
+	fixture := mustLoadJSON[struct {
+		Schema               string `json:"schema"`
+		NodeID               string `json:"node_id"`
+		Status               string `json:"status"`
+		ReadbackScope        string `json:"readback_scope"`
+		SelectedRoute        string `json:"selected_route"`
+		BlueprintRouteStatus string `json:"blueprint_route_status"`
+		CompletedNodesBefore int    `json:"completed_nodes_before_node"`
+		ReadyNodesBefore     int    `json:"ready_nodes_before_node"`
+		FinalResponseAllowed bool   `json:"final_response_allowed"`
+		ExactNextAction      string `json:"exact_next_action"`
+		CurrentCheckpoint    struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		RouteDecisions []struct {
+			Owner                 string `json:"owner"`
+			Status                string `json:"status"`
+			Reason                string `json:"reason"`
+			RequiresAuthorization bool   `json:"requires_new_authorization"`
+			RequiresGovernedPlan  bool   `json:"requires_new_governed_plan"`
+			ExactlyOneActiveNode  bool   `json:"exactly_one_active_node"`
+		} `json:"route_decisions"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "route-decision-readback-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.route-decision-readback-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-29" ||
+		fixture.Status != "route_decision_recorded" ||
+		fixture.ReadbackScope != "atlas_to_foundry_without_blueprint_for_ready_bounded_implementation" ||
+		fixture.SelectedRoute != "ao-foundry" ||
+		fixture.BlueprintRouteStatus != "not_required_for_ready_bounded_implementation" ||
+		fixture.CompletedNodesBefore != nodeTwentyEightReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeTwentyEightReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentyEightReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("route decision fixture must bind checkpoint state without authority effects: %#v", fixture)
+	}
+	if fixture.CurrentCheckpoint.CompletedNodes != nodeTwentyEightReadback.CompletedNodes ||
+		fixture.CurrentCheckpoint.ReadyNodes != nodeTwentyEightReadback.ReadyNodes ||
+		fixture.CurrentCheckpoint.FirstExecutableNode != nodeTwentyEightReadback.FirstExecutableNode ||
+		fixture.CurrentCheckpoint.FinalResponseAllowed != nodeTwentyEightReadback.FinalResponseAllowed ||
+		fixture.CurrentCheckpoint.ExactNextAction != nodeTwentyEightReadback.ExactNextAction {
+		t.Fatalf("route decision fixture must bind node 28 checkpoint: %#v", fixture.CurrentCheckpoint)
+	}
+
+	decisions := map[string]struct {
+		status          string
+		reasonContains  string
+		newAuth         bool
+		newGovernedPlan bool
+	}{
+		"ao-atlas":     {"coordinate", "workgraph", false, false},
+		"ao-foundry":   {"selected", "ready bounded implementation", false, false},
+		"ao-blueprint": {"bypassed", "new authorization", false, false},
+	}
+	if len(fixture.RouteDecisions) != len(decisions) {
+		t.Fatalf("route decision fixture must contain exactly %d decisions, got %d", len(decisions), len(fixture.RouteDecisions))
+	}
+	for _, decision := range fixture.RouteDecisions {
+		want, ok := decisions[decision.Owner]
+		if !ok {
+			t.Fatalf("unexpected route decision owner %q", decision.Owner)
+		}
+		if decision.Status != want.status ||
+			!strings.Contains(decision.Reason, want.reasonContains) ||
+			decision.RequiresAuthorization != want.newAuth ||
+			decision.RequiresGovernedPlan != want.newGovernedPlan ||
+			!decision.ExactlyOneActiveNode {
+			t.Fatalf("route decision %q mismatch: %#v", decision.Owner, decision)
+		}
+		delete(decisions, decision.Owner)
+	}
+	if len(decisions) != 0 {
+		t.Fatalf("missing route decisions: %#v", decisions)
+	}
+
+	nodeTwentyNineReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentyNineReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentyNineReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentyNineReadback.CompletedNodes != 29 ||
+		nodeTwentyNineReadback.ReadyNodes != 11 ||
+		nodeTwentyNineReadback.FirstExecutableNode != "mission-recommendation-hardening-30" ||
+		nodeTwentyNineReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentyNineReadback.ExactNextAction, "mission-recommendation-hardening-30") {
+		t.Fatalf("node 29 readback must carry route decision evidence and continue to node 30: %#v", nodeTwentyNineReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
