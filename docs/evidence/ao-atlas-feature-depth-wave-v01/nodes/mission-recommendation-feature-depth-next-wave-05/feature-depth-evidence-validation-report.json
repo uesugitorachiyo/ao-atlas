@@ -1,0 +1,931 @@
+{
+  "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+  "status": "passed",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-wave-v01",
+  "node_root": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes",
+  "node_count": 5,
+  "json_file_count": 107,
+  "validated_json_files": 107,
+  "schema_bound_files": 107,
+  "typed_validator_files": 63,
+  "generic_schema_files": 44,
+  "missing_schema_files": [],
+  "failed_files": [],
+  "missing_required_files": [],
+  "required_filenames": [
+    "node_gate.json",
+    "candidate_record.json",
+    "rollback_record.json",
+    "tests.json",
+    "verification.json",
+    "sentinel_public_safety.json",
+    "promoter_no_promotion.json",
+    "command_readback.json",
+    "run-link.json",
+    "recommendation-readback-after.json",
+    "checkpoint-readback-after.json"
+  ],
+  "required_filenames_covered": true,
+  "schema_counts": {
+    "ao.atlas.candidate-record.v0.1": 5,
+    "ao.atlas.checkpoint-bundle.v0.1": 5,
+    "ao.atlas.command-readback.v0.1": 5,
+    "ao.atlas.factory-task.v0.1": 5,
+    "ao.atlas.foundry-continuation-handoff.v0.1": 5,
+    "ao.atlas.foundry-import.v0.1": 5,
+    "ao.atlas.implementation-evidence.v0.1": 5,
+    "ao.atlas.long-recommendation-wave-execution.v0.3": 5,
+    "ao.atlas.mission-operator-summary-check.v0.1": 1,
+    "ao.atlas.mission-readback-delta.v0.1": 5,
+    "ao.atlas.mission-readback-diff-fixture.v0.1": 1,
+    "ao.atlas.mission-stale-checkpoint-rejection.v0.1": 1,
+    "ao.atlas.node-gate.v0.1": 5,
+    "ao.atlas.post-merge-lifecycle.v0.1": 4,
+    "ao.atlas.promoter-no-promotion.v0.1": 5,
+    "ao.atlas.recommendation-checkpoint-readback.v0.1": 5,
+    "ao.atlas.recommendation-evidence-validation-report.v0.1": 5,
+    "ao.atlas.recommendation-readback.v0.1": 5,
+    "ao.atlas.rollback-record.v0.1": 5,
+    "ao.atlas.run-link.v0.1": 5,
+    "ao.atlas.sentinel-public-safety.v0.1": 5,
+    "ao.atlas.tests-evidence.v0.1": 5,
+    "ao.atlas.verification-evidence.v0.1": 5,
+    "ao.atlas.workgraph.v0.1": 5
+  },
+  "validators": {
+    "generic:schema-marker": 44,
+    "typed:command-readback": 5,
+    "typed:factory-task": 5,
+    "typed:foundry-continuation-handoff": 5,
+    "typed:foundry-import": 5,
+    "typed:mission-operator-summary-check": 1,
+    "typed:mission-readback-delta": 5,
+    "typed:mission-readback-diff-fixture": 1,
+    "typed:mission-stale-checkpoint-rejection": 1,
+    "typed:promoter-no-promotion": 5,
+    "typed:recommendation-checkpoint-readback": 5,
+    "typed:recommendation-execution-readback": 5,
+    "typed:recommendation-readback": 5,
+    "typed:run-link": 5,
+    "typed:sentinel-public-safety": 5,
+    "typed:workgraph": 5
+  },
+  "entries": [
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/candidate_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/command_readback.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/execution-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/feature-depth-evidence-validation-report.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "feature-depth-evidence-validation-report.json",
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/foundry-import.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/implementation_evidence.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/mission-readback-delta.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "mission-readback-delta.json",
+      "schema": "ao.atlas.mission-readback-delta.v0.1",
+      "validator": "typed:mission-readback-delta",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/node_gate.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/rollback_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/run-link.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/tasks/mission-recommendation-feature-depth-next-wave-01-task.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "mission-recommendation-feature-depth-next-wave-01-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/tests.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/verification.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/workgraph-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/candidate_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/command_readback.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/execution-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/feature-depth-evidence-validation-report.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "feature-depth-evidence-validation-report.json",
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/foundry-import.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/implementation_evidence.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/mission-readback-delta.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "mission-readback-delta.json",
+      "schema": "ao.atlas.mission-readback-delta.v0.1",
+      "validator": "typed:mission-readback-delta",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/node_gate.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/resumable-readback-diff-fixture.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "resumable-readback-diff-fixture.json",
+      "schema": "ao.atlas.mission-readback-diff-fixture.v0.1",
+      "validator": "typed:mission-readback-diff-fixture",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/rollback_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/run-link.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/tasks/mission-recommendation-feature-depth-next-wave-02-task.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "mission-recommendation-feature-depth-next-wave-02-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/tests.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/verification.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/workgraph-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-02",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/candidate_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/command_readback.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/execution-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/feature-depth-evidence-validation-report.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "feature-depth-evidence-validation-report.json",
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/foundry-import.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/implementation_evidence.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/mission-readback-delta.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "mission-readback-delta.json",
+      "schema": "ao.atlas.mission-readback-delta.v0.1",
+      "validator": "typed:mission-readback-delta",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/node_gate.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/rollback_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/run-link.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/stale-checkpoint-rejection.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "stale-checkpoint-rejection.json",
+      "schema": "ao.atlas.mission-stale-checkpoint-rejection.v0.1",
+      "validator": "typed:mission-stale-checkpoint-rejection",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/tasks/mission-recommendation-feature-depth-next-wave-03-task.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "mission-recommendation-feature-depth-next-wave-03-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/tests.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/verification.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/workgraph-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-03",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/candidate_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/command_readback.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/execution-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/feature-depth-evidence-validation-report.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "feature-depth-evidence-validation-report.json",
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/foundry-import.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/implementation_evidence.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/mission-readback-delta.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "mission-readback-delta.json",
+      "schema": "ao.atlas.mission-readback-delta.v0.1",
+      "validator": "typed:mission-readback-delta",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/node_gate.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/operator-summary-check.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "operator-summary-check.json",
+      "schema": "ao.atlas.mission-operator-summary-check.v0.1",
+      "validator": "typed:mission-operator-summary-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "post-merge-lifecycle.json",
+      "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/rollback_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/run-link.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/tasks/mission-recommendation-feature-depth-next-wave-04-task.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "mission-recommendation-feature-depth-next-wave-04-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/tests.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/verification.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/workgraph-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-04",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/candidate_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/command_readback.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/execution-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/feature-depth-evidence-validation-report.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "feature-depth-evidence-validation-report.json",
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/foundry-import.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/implementation_evidence.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/mission-readback-delta.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "mission-readback-delta.json",
+      "schema": "ao.atlas.mission-readback-delta.v0.1",
+      "validator": "typed:mission-readback-delta",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/node_gate.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/rollback_record.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/run-link.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/tasks/mission-recommendation-feature-depth-next-wave-05-task.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "mission-recommendation-feature-depth-next-wave-05-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/tests.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/verification.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/workgraph-after.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    }
+  ]
+}
