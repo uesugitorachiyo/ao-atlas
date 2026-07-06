@@ -1,0 +1,84 @@
+{
+  "schema": "ao.atlas.mission-dashboard-binding.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-20",
+  "status": "bound",
+  "dashboard_markdown_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-20/mission-dashboard.md",
+  "source_final_readback_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/recommendation-readback-after.json",
+  "source_closure_fixture_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/final-closure-artifacts-fixture.json",
+  "source_operator_summary_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-10/final-operator-summary.json",
+  "source_promoter_command_rollup_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/aggregate-promoter-command-rollup.json",
+  "source_schema_validation_report_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12/completed-wave-evidence-validation-report.json",
+  "source_post_merge_cleanup_rollup_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-04/post-merge-cleanup-rollup.json",
+  "source_consolidation_readback_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-19/recommendation-readback-after.json",
+  "dashboard_scope": [
+    "ao-atlas",
+    "ao-foundry",
+    "ao-promoter",
+    "ao-command",
+    "ao-sentinel",
+    "ao-mission"
+  ],
+  "repo_bindings": [
+    {
+      "repo": "ao-atlas",
+      "owner": "AO Atlas",
+      "evidence_role": "final_readback_and_closure",
+      "source_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/recommendation-readback-after.json",
+      "status": "final_response_allowed"
+    },
+    {
+      "repo": "ao-foundry",
+      "owner": "AO Foundry",
+      "evidence_role": "bounded_import_run_link_coverage",
+      "source_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-13/schema-validation-coverage-regression.json",
+      "status": "40_foundry_imports_and_run_links_bound"
+    },
+    {
+      "repo": "ao-promoter",
+      "owner": "AO Promoter",
+      "evidence_role": "no_promotion_rollup",
+      "source_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/promoter_no_promotion.json",
+      "status": "no_promotion_requested"
+    },
+    {
+      "repo": "ao-command",
+      "owner": "AO Command",
+      "evidence_role": "class_decision_readback",
+      "source_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/command_readback.json",
+      "status": "readback_agrees_no_promotion"
+    },
+    {
+      "repo": "ao-sentinel",
+      "owner": "AO Sentinel",
+      "evidence_role": "public_safety_scan",
+      "source_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/sentinel_public_safety.json",
+      "status": "passed"
+    },
+    {
+      "repo": "ao-mission",
+      "owner": "AO Mission",
+      "evidence_role": "supervised_continuation_state",
+      "source_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-19/recommendation-readback-after.json",
+      "status": "continuation_required"
+    }
+  ],
+  "component_count": 6,
+  "all_source_paths_exist": true,
+  "final_wave_completed_nodes": 40,
+  "final_wave_ready_nodes": 0,
+  "final_wave_blocked_nodes": 0,
+  "final_wave_failed_nodes": 0,
+  "final_wave_final_response_allowed": true,
+  "consolidation_completed_before": 19,
+  "consolidation_ready_before": 5,
+  "consolidation_first_executable_node_before": "mission-recommendation-final-closure-consolidation-20",
+  "consolidation_final_response_allowed_before": false,
+  "next_consolidation_node": "mission-recommendation-final-closure-consolidation-21",
+  "public_safety_scan_status": "passed",
+  "promoter_no_promotion_status": "no_promotion_requested",
+  "command_readback_status": "readback_agrees_no_promotion",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
