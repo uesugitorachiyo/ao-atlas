@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-18",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T18:18:54Z",
+  "summary": "Node 18 generates a compaction resume prompt from the latest consolidation readback so Atlas can resume at node 18 after context compaction.",
+  "authority_boundary": "atlas_recommendation_planning_only"
+}

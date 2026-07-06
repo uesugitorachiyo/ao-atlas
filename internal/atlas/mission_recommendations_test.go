@@ -7735,6 +7735,104 @@ func TestFinalClosureConsolidationWindowsCIStateRegressionCoversPendingPassingAn
 	}
 }
 
+func TestFinalClosureConsolidationCompactionResumePromptBindsLatestReadback(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeSeventeenDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-17")
+	nodeEighteenDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-18")
+
+	nodeSeventeenLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(nodeSeventeenDir, "post-merge-lifecycle.json"))
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeSeventeenDir, "recommendation-readback-after.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                        string `json:"schema"`
+		NodeID                        string `json:"node_id"`
+		Status                        string `json:"status"`
+		SourceReadbackPath            string `json:"source_readback_path"`
+		PromptPath                    string `json:"prompt_path"`
+		CompletedNodes                int    `json:"completed_nodes"`
+		TotalNodes                    int    `json:"total_nodes"`
+		ReadyNodes                    int    `json:"ready_nodes"`
+		BlockedNodes                  int    `json:"blocked_nodes"`
+		FailedNodes                   int    `json:"failed_nodes"`
+		FirstExecutableNode           string `json:"first_executable_node"`
+		ExactNextAction               string `json:"exact_next_action"`
+		ReturnGateStatus              string `json:"return_gate_status"`
+		ContinuationContractReason    string `json:"continuation_contract_reason"`
+		EarlyReturnRiskStatus         string `json:"early_return_risk_status"`
+		FinalResponseAllowed          bool   `json:"final_response_allowed"`
+		RefusesFinalResponse          bool   `json:"refuses_final_response"`
+		ExpectedNextNodeAfterComplete string `json:"expected_next_node_after_completion"`
+		PromotionRequested            bool   `json:"promotion_requested"`
+		PromotionGranted              bool   `json:"promotion_granted"`
+		RSIRemainsDenied              bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeEighteenDir, "compaction-resume-prompt.json"))
+	promptBytes, err := os.ReadFile(filepath.Join(repoRoot(t), filepath.FromSlash(fixture.PromptPath)))
+	if err != nil {
+		t.Fatalf("read compaction resume prompt: %v", err)
+	}
+	prompt := string(promptBytes)
+
+	if nodeSeventeenLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeSeventeenLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-17" ||
+		nodeSeventeenLifecycle.Status != "merged_and_cleaned" ||
+		nodeSeventeenLifecycle.PRNumber != 320 ||
+		nodeSeventeenLifecycle.MergeCommit != "f12cb80dd960055fe51764d54570b5aa6affefee" ||
+		nodeSeventeenLifecycle.CIStatus != "passed" ||
+		!nodeSeventeenLifecycle.LocalMainSynced ||
+		!nodeSeventeenLifecycle.LocalBranchDeleted ||
+		!nodeSeventeenLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 17 lifecycle evidence must prove clean branch handoff before node 18 resume prompt: %#v", nodeSeventeenLifecycle)
+	}
+	if fixture.Schema != "ao.atlas.compaction-resume-prompt.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-18" ||
+		fixture.Status != "generated" ||
+		fixture.SourceReadbackPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-17/recommendation-readback-after.json" ||
+		fixture.PromptPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-18/compaction-resume-prompt.md" ||
+		fixture.CompletedNodes != readback.CompletedNodes ||
+		fixture.TotalNodes != readback.TotalNodes ||
+		fixture.ReadyNodes != readback.ReadyNodes ||
+		fixture.BlockedNodes != readback.BlockedNodes ||
+		fixture.FailedNodes != readback.FailedNodes ||
+		fixture.FirstExecutableNode != readback.FirstExecutableNode ||
+		fixture.ExactNextAction != readback.ExactNextAction ||
+		fixture.ReturnGateStatus != readback.ReturnGateStatus ||
+		fixture.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		fixture.EarlyReturnRiskStatus != readback.EarlyReturnRiskStatus ||
+		fixture.FinalResponseAllowed != readback.FinalResponseAllowed ||
+		!fixture.RefusesFinalResponse ||
+		fixture.ExpectedNextNodeAfterComplete != "mission-recommendation-final-closure-consolidation-19" ||
+		fixture.PromotionRequested ||
+		fixture.PromotionGranted ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("node 18 compaction resume prompt fixture must bind latest readback without promotion: %#v", fixture)
+	}
+	for _, want := range []string{
+		"You are AO Atlas, resuming the AO Atlas final-closure consolidation wave after context compaction.",
+		"Current readback: `docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-17/recommendation-readback-after.json`",
+		"Completed nodes: 17 / 24",
+		"Ready nodes: 7",
+		"Next executable node: `mission-recommendation-final-closure-consolidation-18`",
+		"Final response allowed: `false`",
+		"Early-return risk: `blocked_final_response_ready_nodes_remain`",
+		"Emit Foundry import for mission-recommendation-final-closure-consolidation-18 and execute exactly one active node.",
+		"Do not produce a final response while ready nodes or exact next action remain.",
+		"RSI remains denied.",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("compaction resume prompt missing %q:\n%s", want, prompt)
+		}
+	}
+}
+
 func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "examples", "invalid", "recommendation-prompt-unsafe-continuation-reason.md")
