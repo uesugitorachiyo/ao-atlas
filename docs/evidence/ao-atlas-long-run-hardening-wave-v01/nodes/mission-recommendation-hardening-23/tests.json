@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-23",
+  "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveArtifactAgreementTiesPromptCommandAndWorkgraphStatus -count=1",
+  "red_result": "failed while artifact agreement fixture was missing",
+  "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveArtifactAgreementTiesPromptCommandAndWorkgraphStatus -count=1",
+  "green_result": "passed"
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-23",
+  "candidate": "artifact-agreement-prompt-command-workgraph",
+  "status": "selected",
+  "objective": "Add artifact agreement fixture tying generated prompt Command next action and workgraph status.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-23"
+  ],
+  "acceptance_criteria": [
+    "artifact agreement fixture binds generated Foundry continuation prompt to the current Atlas readback",
+    "artifact agreement fixture binds Command exact next action to the current Atlas readback",
+    "artifact agreement fixture binds post-node workgraph status to the completed node and next ready node",
+    "artifact agreement fixture has no scheduling, execution, approval, or authority-advance effect"
+  ],
+  "selected_at": "2026-07-06T03:43:28Z"
+}
