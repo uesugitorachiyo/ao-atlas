@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-28",
+  "status": "passed",
+  "red_result": "failed_missing_ci_readback_state_fixture",
+  "targeted_test": "go test ./internal/atlas -run TestLongRunHardeningWaveCIReadbackFixtureDistinguishesLocalPendingPassFailureStates -count=1",
+  "green_result": "passed"
+}

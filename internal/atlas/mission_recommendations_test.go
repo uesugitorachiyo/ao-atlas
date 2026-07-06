@@ -4977,6 +4977,117 @@ func TestLongRunHardeningWavePRLedgerFixtureBindsMergeCIAndCleanupEvidence(t *te
 	}
 }
 
+func TestLongRunHardeningWaveCIReadbackFixtureDistinguishesLocalPendingPassFailureStates(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentySevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-27", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-28")
+	fixture := mustLoadJSON[struct {
+		Schema                 string `json:"schema"`
+		NodeID                 string `json:"node_id"`
+		Status                 string `json:"status"`
+		ReadbackScope          string `json:"readback_scope"`
+		CompletedNodesBefore   int    `json:"completed_nodes_before_node"`
+		ReadyNodesBefore       int    `json:"ready_nodes_before_node"`
+		FinalResponseAllowed   bool   `json:"final_response_allowed"`
+		ExactNextAction        string `json:"exact_next_action"`
+		CurrentCheckpoint      struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		States []struct {
+			Name                    string `json:"name"`
+			LocalVerificationStatus string `json:"local_verification_status"`
+			GitHubCIStatus          string `json:"github_ci_status"`
+			MergeAllowed            bool   `json:"merge_allowed"`
+			NodeClosureAllowed      bool   `json:"node_closure_allowed"`
+			FinalResponseAllowed    bool   `json:"final_response_allowed"`
+			RequiresRepair          bool   `json:"requires_repair"`
+			ExactNextAction         string `json:"exact_next_action"`
+		} `json:"states"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "ci-readback-state-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.ci-readback-state-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-28" ||
+		fixture.Status != "ci_readback_states_recorded" ||
+		fixture.ReadbackScope != "local_verification_and_remote_ci_lifecycle" ||
+		fixture.CompletedNodesBefore != nodeTwentySevenReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeTwentySevenReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentySevenReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("CI readback fixture must bind checkpoint state without authority effects: %#v", fixture)
+	}
+	if fixture.CurrentCheckpoint.CompletedNodes != nodeTwentySevenReadback.CompletedNodes ||
+		fixture.CurrentCheckpoint.ReadyNodes != nodeTwentySevenReadback.ReadyNodes ||
+		fixture.CurrentCheckpoint.FirstExecutableNode != nodeTwentySevenReadback.FirstExecutableNode ||
+		fixture.CurrentCheckpoint.FinalResponseAllowed != nodeTwentySevenReadback.FinalResponseAllowed ||
+		fixture.CurrentCheckpoint.ExactNextAction != nodeTwentySevenReadback.ExactNextAction {
+		t.Fatalf("CI readback fixture must bind node 27 checkpoint: %#v", fixture.CurrentCheckpoint)
+	}
+
+	states := map[string]struct {
+		local       string
+		ci          string
+		merge       bool
+		closeNode   bool
+		final       bool
+		repair      bool
+		actionMatch string
+	}{
+		"local_pass": {"passed", "not_started", false, false, false, false, "open PR"},
+		"ci_pending": {"passed", "pending", false, false, false, false, "wait for CI"},
+		"ci_pass": {"passed", "passed", true, true, false, false, "merge PR"},
+		"ci_failure": {"passed", "failed", false, false, false, true, "repair failing CI"},
+	}
+	if len(fixture.States) != len(states) {
+		t.Fatalf("CI readback fixture must contain exactly %d states, got %d", len(states), len(fixture.States))
+	}
+	for _, state := range fixture.States {
+		want, ok := states[state.Name]
+		if !ok {
+			t.Fatalf("unexpected CI readback state %q", state.Name)
+		}
+		if state.LocalVerificationStatus != want.local ||
+			state.GitHubCIStatus != want.ci ||
+			state.MergeAllowed != want.merge ||
+			state.NodeClosureAllowed != want.closeNode ||
+			state.FinalResponseAllowed != want.final ||
+			state.RequiresRepair != want.repair ||
+			!strings.Contains(state.ExactNextAction, want.actionMatch) {
+			t.Fatalf("CI readback state %q mismatch: %#v", state.Name, state)
+		}
+		delete(states, state.Name)
+	}
+	if len(states) != 0 {
+		t.Fatalf("missing CI readback states: %#v", states)
+	}
+
+	nodeTwentyEightReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentyEightReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentyEightReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentyEightReadback.CompletedNodes != 28 ||
+		nodeTwentyEightReadback.ReadyNodes != 12 ||
+		nodeTwentyEightReadback.FirstExecutableNode != "mission-recommendation-hardening-29" ||
+		nodeTwentyEightReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentyEightReadback.ExactNextAction, "mission-recommendation-hardening-29") {
+		t.Fatalf("node 28 readback must carry CI readback states and continue to node 29: %#v", nodeTwentyEightReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
