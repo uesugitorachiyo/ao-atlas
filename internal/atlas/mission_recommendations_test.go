@@ -7420,6 +7420,90 @@ func TestProductionReadinessGuardsCommittedBuildArtifacts(t *testing.T) {
 	}
 }
 
+func TestFinalClosureConsolidationBuildArtifactGuardRegressionReportsBeforePromotionClosure(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeFourteenDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-final-closure-consolidation-14")
+	nodeFifteenDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-final-closure-consolidation-15")
+
+	guard := mustLoadJSON[struct {
+		Schema             string   `json:"schema"`
+		NodeID             string   `json:"node_id"`
+		Status             string   `json:"status"`
+		ReadinessCheckName string   `json:"readiness_check_name"`
+		GuardedArtifacts   []string `json:"guarded_artifacts"`
+		FailureMessages    []string `json:"failure_messages"`
+		RunsBeforeGoBuild  bool     `json:"runs_before_go_build"`
+		RSIRemainsDenied   bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeFourteenDir, "build-artifact-guard.json"))
+
+	fixture := mustLoadJSON[struct {
+		Schema                        string   `json:"schema"`
+		NodeID                        string   `json:"node_id"`
+		Status                        string   `json:"status"`
+		SourceGuardNodeID             string   `json:"source_guard_node_id"`
+		SourceGuardArtifact           string   `json:"source_guard_artifact"`
+		ReadinessCheckName            string   `json:"readiness_check_name"`
+		ReportedBeforePromotionClose  bool     `json:"reported_before_promotion_closure"`
+		PromotionClosureDependsOn     []string `json:"promotion_closure_depends_on"`
+		GuardedArtifacts              []string `json:"guarded_artifacts"`
+		FailureMessages               []string `json:"failure_messages"`
+		PromotionRequested            bool     `json:"promotion_requested"`
+		PromotionGranted              bool     `json:"promotion_granted"`
+		FinalResponseAllowed          bool     `json:"final_response_allowed"`
+		ExpectedNextNodeAfterComplete string   `json:"expected_next_node_after_completion"`
+		RSIRemainsDenied              bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeFifteenDir, "build-artifact-promotion-closure-regression.json"))
+
+	if guard.Schema != "ao.atlas.build-artifact-guard.v0.1" ||
+		guard.NodeID != "mission-recommendation-final-closure-consolidation-14" ||
+		guard.Status != "guarded" ||
+		guard.ReadinessCheckName != "build-artifact-guard" ||
+		!guard.RunsBeforeGoBuild ||
+		!guard.RSIRemainsDenied {
+		t.Fatalf("node 14 guard artifact is not promotion-closure ready: %#v", guard)
+	}
+	if !containsString(guard.GuardedArtifacts, "atlas") ||
+		!containsString(guard.GuardedArtifacts, "atlas.exe") ||
+		!containsString(guard.FailureMessages, "tracked build artifact present") ||
+		!containsString(guard.FailureMessages, "local build artifact present") {
+		t.Fatalf("node 14 guard must report local and tracked build artifact failures: %#v", guard)
+	}
+	if fixture.Schema != "ao.atlas.build-artifact-promotion-closure-regression.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-15" ||
+		fixture.Status != "guarded" ||
+		fixture.SourceGuardNodeID != guard.NodeID ||
+		fixture.SourceGuardArtifact != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-14/build-artifact-guard.json" ||
+		fixture.ReadinessCheckName != guard.ReadinessCheckName ||
+		!fixture.ReportedBeforePromotionClose ||
+		fixture.PromotionRequested ||
+		fixture.PromotionGranted ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExpectedNextNodeAfterComplete != "mission-recommendation-final-closure-consolidation-16" ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("node 15 build-artifact promotion closure regression is not guarded: %#v", fixture)
+	}
+	for _, requiredDependency := range []string{
+		"build-artifact-guard",
+		"promoter_no_promotion",
+		"command_readback",
+	} {
+		if !containsString(fixture.PromotionClosureDependsOn, requiredDependency) {
+			t.Fatalf("node 15 fixture must bind promotion closure dependency %q: %#v", requiredDependency, fixture.PromotionClosureDependsOn)
+		}
+	}
+	for _, artifact := range guard.GuardedArtifacts {
+		if !containsString(fixture.GuardedArtifacts, artifact) {
+			t.Fatalf("node 15 fixture lost guarded artifact %q: %#v", artifact, fixture.GuardedArtifacts)
+		}
+	}
+	for _, message := range guard.FailureMessages {
+		if !containsString(fixture.FailureMessages, message) {
+			t.Fatalf("node 15 fixture lost guard failure message %q: %#v", message, fixture.FailureMessages)
+		}
+	}
+}
+
 func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "examples", "invalid", "recommendation-prompt-unsafe-continuation-reason.md")
