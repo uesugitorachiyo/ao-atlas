@@ -1,0 +1,9 @@
+{
+  "schema": "ao.promoter.no-promotion-readback.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-08",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "reason": "PR/CI ledger evidence requests no promotion.",
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-08",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationPRCILedgerCoversHardeningNodesTwentyEightThroughForty -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 7 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationPRCILedgerCoversHardeningNodesTwentyEightThroughForty -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Nodes 28 through 40 map to PRs 291 through 303.",
+    "Every ledger entry records a merge commit and nine successful readiness checks.",
+    "Final hardening merge head remains bound to node 40."
+  ]
+}
