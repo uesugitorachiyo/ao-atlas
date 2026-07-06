@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-28",
+  "status": "implemented",
+  "changed_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-28"
+  ],
+  "implementation_summary": "Added a CI readback state fixture and regression coverage for local pass, CI pending, CI pass, and CI failure states.",
+  "authority_effect": "none",
+  "implemented_at": "2026-07-06T05:19:00Z"
+}

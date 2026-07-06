@@ -1,0 +1,64 @@
+{
+  "schema": "ao.atlas.ci-readback-state-fixture.v0.1",
+  "node_id": "mission-recommendation-hardening-28",
+  "status": "ci_readback_states_recorded",
+  "readback_scope": "local_verification_and_remote_ci_lifecycle",
+  "completed_nodes_before_node": 27,
+  "ready_nodes_before_node": 13,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-28 and execute exactly one active node.",
+  "current_hardening_checkpoint": {
+    "completed_nodes": 27,
+    "ready_nodes": 13,
+    "first_executable_node": "mission-recommendation-hardening-28",
+    "final_response_allowed": false,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-28 and execute exactly one active node."
+  },
+  "states": [
+    {
+      "name": "local_pass",
+      "local_verification_status": "passed",
+      "github_ci_status": "not_started",
+      "merge_allowed": false,
+      "node_closure_allowed": false,
+      "final_response_allowed": false,
+      "requires_repair": false,
+      "exact_next_action": "open PR and wait for CI"
+    },
+    {
+      "name": "ci_pending",
+      "local_verification_status": "passed",
+      "github_ci_status": "pending",
+      "merge_allowed": false,
+      "node_closure_allowed": false,
+      "final_response_allowed": false,
+      "requires_repair": false,
+      "exact_next_action": "wait for CI to reach pass or failure"
+    },
+    {
+      "name": "ci_pass",
+      "local_verification_status": "passed",
+      "github_ci_status": "passed",
+      "merge_allowed": true,
+      "node_closure_allowed": true,
+      "final_response_allowed": false,
+      "requires_repair": false,
+      "exact_next_action": "merge PR, sync main, delete branches, and continue to the next ready node"
+    },
+    {
+      "name": "ci_failure",
+      "local_verification_status": "passed",
+      "github_ci_status": "failed",
+      "merge_allowed": false,
+      "node_closure_allowed": false,
+      "final_response_allowed": false,
+      "requires_repair": true,
+      "exact_next_action": "repair failing CI before merge or node closure"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

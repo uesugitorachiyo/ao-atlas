@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-28",
+  "task_id": "mission-recommendation-hardening-28-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-27/recommendation-readback-after.json",
+  "objective": "Add CI readback fixture distinguishing local pass CI pending CI pass and CI failure states.",
+  "candidate_reason": "The long-run supervisor needs explicit readback states so local success cannot be mistaken for remote CI completion.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T05:19:00Z"
+}
