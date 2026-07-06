@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-19",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T18:41:10Z",
+  "summary": "Node 19 adds regression evidence that the compaction resume prompt preserves the exact next node and return-gate denial before continuing to node 20.",
+  "authority_boundary": "atlas_recommendation_planning_only"
+}

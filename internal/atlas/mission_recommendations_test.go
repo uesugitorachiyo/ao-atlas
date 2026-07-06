@@ -7833,6 +7833,139 @@ func TestFinalClosureConsolidationCompactionResumePromptBindsLatestReadback(t *t
 	}
 }
 
+func TestFinalClosureConsolidationCompactionResumeRegressionPreservesNextNodeAndReturnGate(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeEighteenDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-18")
+	nodeNineteenDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-19")
+
+	nodeEighteenLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(nodeEighteenDir, "post-merge-lifecycle.json"))
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeEighteenDir, "recommendation-readback-after.json"))
+	promptFixture := mustLoadJSON[struct {
+		Schema                string `json:"schema"`
+		NodeID                string `json:"node_id"`
+		FirstExecutableNode   string `json:"first_executable_node"`
+		ExactNextAction       string `json:"exact_next_action"`
+		ReturnGateStatus      string `json:"return_gate_status"`
+		FinalResponseAllowed  bool   `json:"final_response_allowed"`
+		RefusesFinalResponse  bool   `json:"refuses_final_response"`
+		ExpectedNextNodeAfter string `json:"expected_next_node_after_completion"`
+		ContinuationReason    string `json:"continuation_contract_reason"`
+		EarlyReturnRiskStatus string `json:"early_return_risk_status"`
+		RSIRemainsDenied      bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeEighteenDir, "compaction-resume-prompt.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                           string   `json:"schema"`
+		NodeID                           string   `json:"node_id"`
+		Status                           string   `json:"status"`
+		SourcePromptFixturePath          string   `json:"source_prompt_fixture_path"`
+		SourcePromptMarkdownPath         string   `json:"source_prompt_markdown_path"`
+		SourceReadbackPath               string   `json:"source_readback_path"`
+		CompletedNodesBefore             int      `json:"completed_nodes_before"`
+		TotalNodes                       int      `json:"total_nodes"`
+		ReadyNodesBefore                 int      `json:"ready_nodes_before"`
+		BlockedNodesBefore               int      `json:"blocked_nodes_before"`
+		FailedNodesBefore                int      `json:"failed_nodes_before"`
+		FirstExecutableNodeBefore        string   `json:"first_executable_node_before"`
+		ExactNextActionBefore            string   `json:"exact_next_action_before"`
+		ReturnGateStatusBefore           string   `json:"return_gate_status_before"`
+		ContinuationContractReasonBefore string   `json:"continuation_contract_reason_before"`
+		EarlyReturnRiskStatusBefore      string   `json:"early_return_risk_status_before"`
+		FinalResponseAllowedBefore       bool     `json:"final_response_allowed_before"`
+		RefusesFinalResponseBefore       bool     `json:"refuses_final_response_before"`
+		RegressionAssertions             []string `json:"regression_assertions"`
+		ExpectedNextNodeAfterComplete    string   `json:"expected_next_node_after_completion"`
+		PromotionRequested               bool     `json:"promotion_requested"`
+		PromotionGranted                 bool     `json:"promotion_granted"`
+		RSIRemainsDenied                 bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeNineteenDir, "compaction-resume-regression.json"))
+	promptBytes, err := os.ReadFile(filepath.Join(repoRoot(t), filepath.FromSlash(fixture.SourcePromptMarkdownPath)))
+	if err != nil {
+		t.Fatalf("read compaction resume markdown: %v", err)
+	}
+	prompt := string(promptBytes)
+
+	if nodeEighteenLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeEighteenLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-18" ||
+		nodeEighteenLifecycle.Status != "merged_and_cleaned" ||
+		nodeEighteenLifecycle.PRNumber != 321 ||
+		nodeEighteenLifecycle.MergeCommit != "73928367bbc4c456564738e35d35e95fa04f7086" ||
+		nodeEighteenLifecycle.CIStatus != "passed" ||
+		!nodeEighteenLifecycle.LocalMainSynced ||
+		!nodeEighteenLifecycle.LocalBranchDeleted ||
+		!nodeEighteenLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 18 lifecycle evidence must prove clean branch handoff before node 19 regression: %#v", nodeEighteenLifecycle)
+	}
+	if promptFixture.Schema != "ao.atlas.compaction-resume-prompt.v0.1" ||
+		promptFixture.NodeID != "mission-recommendation-final-closure-consolidation-18" ||
+		promptFixture.FirstExecutableNode != "mission-recommendation-final-closure-consolidation-18" ||
+		promptFixture.ExactNextAction != "Emit Foundry import for mission-recommendation-final-closure-consolidation-18 and execute exactly one active node." ||
+		promptFixture.ReturnGateStatus != readback.ReturnGateStatus ||
+		promptFixture.ContinuationReason != readback.ContinuationContract.Reason ||
+		promptFixture.EarlyReturnRiskStatus != readback.EarlyReturnRiskStatus ||
+		promptFixture.FinalResponseAllowed ||
+		!promptFixture.RefusesFinalResponse ||
+		promptFixture.ExpectedNextNodeAfter != "mission-recommendation-final-closure-consolidation-19" ||
+		!promptFixture.RSIRemainsDenied {
+		t.Fatalf("source compaction resume prompt must preserve node 19 continuation fields: %#v", promptFixture)
+	}
+	if fixture.Schema != "ao.atlas.compaction-resume-regression.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-19" ||
+		fixture.Status != "guarded" ||
+		fixture.SourcePromptFixturePath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-18/compaction-resume-prompt.json" ||
+		fixture.SourcePromptMarkdownPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-18/compaction-resume-prompt.md" ||
+		fixture.SourceReadbackPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-18/recommendation-readback-after.json" ||
+		fixture.CompletedNodesBefore != readback.CompletedNodes ||
+		fixture.TotalNodes != readback.TotalNodes ||
+		fixture.ReadyNodesBefore != readback.ReadyNodes ||
+		fixture.BlockedNodesBefore != readback.BlockedNodes ||
+		fixture.FailedNodesBefore != readback.FailedNodes ||
+		fixture.FirstExecutableNodeBefore != readback.FirstExecutableNode ||
+		fixture.ExactNextActionBefore != readback.ExactNextAction ||
+		fixture.ReturnGateStatusBefore != readback.ReturnGateStatus ||
+		fixture.ContinuationContractReasonBefore != readback.ContinuationContract.Reason ||
+		fixture.EarlyReturnRiskStatusBefore != readback.EarlyReturnRiskStatus ||
+		fixture.FinalResponseAllowedBefore != readback.FinalResponseAllowed ||
+		!fixture.RefusesFinalResponseBefore ||
+		fixture.ExpectedNextNodeAfterComplete != "mission-recommendation-final-closure-consolidation-20" ||
+		fixture.PromotionRequested ||
+		fixture.PromotionGranted ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("node 19 compaction resume regression must preserve exact next-node and return-gate state: %#v", fixture)
+	}
+	for _, want := range []string{
+		"first_executable_node_preserved",
+		"exact_next_action_preserved",
+		"return_gate_status_preserved",
+		"final_response_denied_until_ready_work_consumed",
+		"rsi_denial_preserved",
+	} {
+		if !containsString(fixture.RegressionAssertions, want) {
+			t.Fatalf("node 19 regression missing assertion %q: %#v", want, fixture.RegressionAssertions)
+		}
+	}
+	for _, want := range []string{
+		"Next executable node: `mission-recommendation-final-closure-consolidation-18`",
+		"Final response allowed: `false`",
+		"Emit Foundry import for mission-recommendation-final-closure-consolidation-18 and execute exactly one active node.",
+		"Do not produce a final response while ready nodes or exact next action remain.",
+		"RSI remains denied.",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("node 19 regression source prompt missing %q:\n%s", want, prompt)
+		}
+	}
+}
+
 func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "examples", "invalid", "recommendation-prompt-unsafe-continuation-reason.md")

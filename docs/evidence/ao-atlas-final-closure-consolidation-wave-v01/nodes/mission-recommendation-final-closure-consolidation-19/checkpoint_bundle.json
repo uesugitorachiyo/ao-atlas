@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-19",
+  "status": "completed",
+  "checkpoint_before": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-18/recommendation-readback-after.json",
+  "expected_checkpoint_after": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-19/recommendation-readback-after.json",
+  "expected_next_node": "mission-recommendation-final-closure-consolidation-20"
+}
