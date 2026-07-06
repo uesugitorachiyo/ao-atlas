@@ -1,6 +1,7 @@
 package atlas
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -2983,12 +2984,32 @@ func validateRecommendationRunLinkEvidence(task FactoryTask, link RunLink, evide
 		if filepath.IsAbs(clean) || clean == ".." || strings.HasPrefix(clean, ".."+string(os.PathSeparator)) {
 			return fmt.Errorf("evidence %s must stay inside evidence root", key)
 		}
-		if _, err := os.Stat(filepath.Join(evidenceRoot, clean)); err != nil {
+		fullPath := filepath.Join(evidenceRoot, clean)
+		if _, err := os.Stat(fullPath); err != nil {
 			if os.IsNotExist(err) {
 				return fmt.Errorf("evidence %s path does not exist: %s", key, filepath.ToSlash(clean))
 			}
 			return err
 		}
+		if err := validateRecommendationEvidenceRequiredFields(key, fullPath); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func validateRecommendationEvidenceRequiredFields(key, path string) error {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+	var raw map[string]any
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return fmt.Errorf("evidence %s must be a JSON object: %w", key, err)
+	}
+	status, ok := raw["status"].(string)
+	if !ok || strings.TrimSpace(status) == "" {
+		return fmt.Errorf("evidence %s missing required field status", key)
 	}
 	return nil
 }

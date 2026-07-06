@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-07",
+  "task_id": "mission-recommendation-feature-depth-next-wave-07-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "internal/atlas/mission_run_link_schema_coverage_test.go"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-07/tests.json"
+  ],
+  "summary": "Node 07 requires every run-link evidence file to carry a non-empty status field before recommendation completion can advance the readback, and keeps historical run-link coverage fixtures scoped to their checkpoint.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
