@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-07",
+  "task_id": "mission-recommendation-feature-depth-next-wave-07-task",
+  "status": "ready_for_completion_readback",
+  "checkpoint_before": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-06/recommendation-readback-after.json",
+  "expected_checkpoint_after": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-07/recommendation-readback-after.json",
+  "expected_delta": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-07/mission-readback-delta.json",
+  "next_expected_node": "mission-recommendation-feature-depth-next-wave-08",
+  "final_response_allowed": false
+}

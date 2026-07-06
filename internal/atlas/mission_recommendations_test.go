@@ -2077,6 +2077,34 @@ func TestRecommendationCompleteNodeRejectsMissingGateEvidence(t *testing.T) {
 	}
 }
 
+func TestRecommendationCompleteNodeRejectsEvidenceMissingRequiredFields(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	node := result.Workgraph.Nodes[0]
+	evidence := recommendationEvidenceFiles(t, "missing-required-fields", node.ID)
+	candidatePath := filepath.Join(repoRoot(t), filepath.FromSlash(evidence["candidate_record"]))
+	if err := os.WriteFile(candidatePath, []byte(`{"schema":"ao.atlas.node-candidate.v0.1"}`+"\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	link := recommendationRunLink(t, node.FactoryTask.ID, evidence)
+
+	_, _, err = CompleteAtlasRecommendationNodeWithRunLink(result.Wave, result.Workgraph, link, AtlasRecommendationCompleteNodeOptions{
+		ExpectedNodeID: node.ID,
+		EvidenceRoot:   repoRoot(t),
+	})
+	if err == nil || !strings.Contains(err.Error(), "evidence candidate_record missing required field status") {
+		t.Fatalf("expected missing required evidence field rejection, got %v", err)
+	}
+}
+
 func TestRecommendationCompleteNodeRejectsOutOfOrderRunLink(t *testing.T) {
 	dir := t.TempDir()
 	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")

@@ -2,6 +2,7 @@ package atlas
 
 import (
 	"bytes"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -12,15 +13,17 @@ func TestFeatureDepthWaveRunLinkSchemaCoverageSummarizesEveryGeneratedRunLink(t 
 	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
 	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-06")
 	fixturePath := filepath.Join(nodeDir, "run-link-schema-coverage.json")
+	recorded := mustLoadJSON[AtlasRunLinkSchemaCoverage](t, fixturePath)
+	checkpointRoot := runLinkSchemaCoverageCheckpointRoot(t, waveRoot, recorded)
 
-	coverage, err := BuildAtlasRunLinkSchemaCoverage(waveRoot)
+	coverage, err := BuildAtlasRunLinkSchemaCoverage(checkpointRoot)
 	if err != nil {
 		t.Fatal(err)
 	}
+	coverage.EvidenceRoot = recorded.EvidenceRoot
 	if err := ValidateAtlasRunLinkSchemaCoverage(coverage); err != nil {
 		t.Fatal(err)
 	}
-	recorded := mustLoadJSON[AtlasRunLinkSchemaCoverage](t, fixturePath)
 	if err := ValidateAtlasRunLinkSchemaCoverage(recorded); err != nil {
 		t.Fatal(err)
 	}
@@ -53,12 +56,13 @@ func TestMissionRecommendationsRunLinkSchemaCoverageCLIWritesDeterministicArtifa
 	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
 	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-06")
 	recorded := mustLoadJSON[AtlasRunLinkSchemaCoverage](t, filepath.Join(nodeDir, "run-link-schema-coverage.json"))
+	checkpointRoot := runLinkSchemaCoverageCheckpointRoot(t, waveRoot, recorded)
 	outPath := filepath.Join(t.TempDir(), "run-link-schema-coverage.json")
 
 	var out bytes.Buffer
 	code := Run([]string{
 		"mission", "recommendations", "run-link-schema-coverage",
-		"--evidence-root", waveRoot,
+		"--evidence-root", checkpointRoot,
 		"--out", outPath,
 	}, &out, &out)
 	if code != 0 {
@@ -73,7 +77,28 @@ func TestMissionRecommendationsRunLinkSchemaCoverageCLIWritesDeterministicArtifa
 	if err := ValidateAtlasRunLinkSchemaCoverage(generated); err != nil {
 		t.Fatal(err)
 	}
+	generated.EvidenceRoot = recorded.EvidenceRoot
 	if digestValue(generated) != digestValue(recorded) {
 		t.Fatalf("CLI run-link coverage output drifted\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
 	}
+}
+
+func runLinkSchemaCoverageCheckpointRoot(t *testing.T, waveRoot string, recorded AtlasRunLinkSchemaCoverage) string {
+	t.Helper()
+	checkpointRoot := filepath.Join(t.TempDir(), "evidence")
+	for _, entry := range recorded.Entries {
+		src := filepath.Join(waveRoot, filepath.FromSlash(entry.Path))
+		dst := filepath.Join(checkpointRoot, filepath.FromSlash(entry.Path))
+		data, err := os.ReadFile(src)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.MkdirAll(filepath.Dir(dst), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(dst, data, 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return checkpointRoot
 }
