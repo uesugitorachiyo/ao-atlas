@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.public-safety-pending-closure-guard.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-03",
+  "status": "guarded",
+  "source_readback_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/recommendation-readback-after.json",
+  "final_response_allowed": true,
+  "bound_public_safety_scan_status": "passed",
+  "rejected_public_safety_scan_statuses": [
+    "required_pending_verification"
+  ],
+  "requires_non_pending_status_before_final_response": true,
+  "sentinel_evidence_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/sentinel_public_safety.json",
+  "production_verification_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/final-verification-summary.json",
+  "rsi_remains_denied": true
+}

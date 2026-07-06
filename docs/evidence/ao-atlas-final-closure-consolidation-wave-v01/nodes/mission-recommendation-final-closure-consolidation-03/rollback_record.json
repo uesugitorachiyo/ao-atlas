@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-03",
+  "status": "ready",
+  "rollback_scope": [
+    "Remove node 3 pending-status guard fixture and regression test.",
+    "Remove node 2 post-merge lifecycle evidence if PR lifecycle data is invalidated."
+  ],
+  "rollback_command": "git revert <merge_commit_for_node_03>",
+  "data_loss_risk": "none; evidence and regression-only change",
+  "requires_blueprint": false
+}
