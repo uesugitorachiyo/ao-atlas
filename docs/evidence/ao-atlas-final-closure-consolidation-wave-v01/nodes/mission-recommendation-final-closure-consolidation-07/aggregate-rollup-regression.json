@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.aggregate-rollup-regression.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-07",
+  "status": "guarded",
+  "source_rollup_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/aggregate-promoter-command-rollup.json",
+  "source_readback_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/recommendation-readback-after.json",
+  "promoter_status": "no_promotion_requested",
+  "command_status": "readback_agrees_no_promotion",
+  "aggregate_promotion_status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "command_agrees_no_promotion": true,
+  "completed_nodes_before": 6,
+  "ready_nodes_before": 18,
+  "first_executable_node_before": "mission-recommendation-final-closure-consolidation-07",
+  "final_response_allowed_before": false,
+  "regression_blocks_promotion_drift": true,
+  "rsi_remains_denied": true
+}

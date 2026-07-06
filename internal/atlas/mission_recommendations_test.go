@@ -6528,6 +6528,86 @@ func TestFinalClosureConsolidationAggregatePromoterCommandRollupBindsFinalWave(t
 	}
 }
 
+func TestFinalClosureConsolidationAggregateRollupRegressionPreservesNoPromotionAgreement(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeSixLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+		LocalCodexBranches  int    `json:"local_codex_branches"`
+		RemoteCodexBranches int    `json:"remote_codex_branches"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-06", "post-merge-lifecycle.json"))
+	nodeSixRollup := mustLoadJSON[struct {
+		PromoterStatus           string `json:"promoter_status"`
+		CommandStatus            string `json:"command_status"`
+		AggregatePromotionStatus string `json:"aggregate_promotion_status"`
+		PromotionRequested       bool   `json:"promotion_requested"`
+		PromotionGranted         bool   `json:"promotion_granted"`
+		CommandAgreesNoPromotion bool   `json:"command_agrees_no_promotion"`
+		RSIRemainsDenied         bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-06", "aggregate-promoter-command-rollup.json"))
+	nodeSixReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-06", "recommendation-readback-after.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                         string `json:"schema"`
+		NodeID                         string `json:"node_id"`
+		Status                         string `json:"status"`
+		SourceRollupPath               string `json:"source_rollup_path"`
+		SourceReadbackPath             string `json:"source_readback_path"`
+		PromoterStatus                 string `json:"promoter_status"`
+		CommandStatus                  string `json:"command_status"`
+		AggregatePromotionStatus       string `json:"aggregate_promotion_status"`
+		PromotionRequested             bool   `json:"promotion_requested"`
+		PromotionGranted               bool   `json:"promotion_granted"`
+		CommandAgreesNoPromotion       bool   `json:"command_agrees_no_promotion"`
+		CompletedNodesBefore           int    `json:"completed_nodes_before"`
+		ReadyNodesBefore               int    `json:"ready_nodes_before"`
+		FirstExecutableNodeBefore      string `json:"first_executable_node_before"`
+		FinalResponseAllowedBefore     bool   `json:"final_response_allowed_before"`
+		RegressionBlocksPromotionDrift bool   `json:"regression_blocks_promotion_drift"`
+		RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-07", "aggregate-rollup-regression.json"))
+
+	if nodeSixLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeSixLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-06" ||
+		nodeSixLifecycle.Status != "merged_and_cleaned" ||
+		nodeSixLifecycle.PRNumber != 309 ||
+		nodeSixLifecycle.MergeCommit != "6140ee3ac7c167d6ff3f6f0ea0c9a927f2020c3e" ||
+		nodeSixLifecycle.CIStatus != "passed" ||
+		!nodeSixLifecycle.LocalMainSynced ||
+		!nodeSixLifecycle.LocalBranchDeleted ||
+		!nodeSixLifecycle.RemoteBranchDeleted ||
+		nodeSixLifecycle.LocalCodexBranches != 0 ||
+		nodeSixLifecycle.RemoteCodexBranches != 0 {
+		t.Fatalf("node 6 lifecycle evidence must prove clean branch handoff: %#v", nodeSixLifecycle)
+	}
+	if fixture.Schema != "ao.atlas.aggregate-rollup-regression.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-07" ||
+		fixture.Status != "guarded" ||
+		fixture.SourceRollupPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/aggregate-promoter-command-rollup.json" ||
+		fixture.SourceReadbackPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/recommendation-readback-after.json" ||
+		fixture.PromoterStatus != nodeSixRollup.PromoterStatus ||
+		fixture.CommandStatus != nodeSixRollup.CommandStatus ||
+		fixture.AggregatePromotionStatus != nodeSixRollup.AggregatePromotionStatus ||
+		fixture.PromotionRequested != nodeSixRollup.PromotionRequested ||
+		fixture.PromotionGranted != nodeSixRollup.PromotionGranted ||
+		fixture.CommandAgreesNoPromotion != nodeSixRollup.CommandAgreesNoPromotion ||
+		fixture.CompletedNodesBefore != nodeSixReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeSixReadback.ReadyNodes ||
+		fixture.FirstExecutableNodeBefore != nodeSixReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowedBefore != nodeSixReadback.FinalResponseAllowed ||
+		!fixture.RegressionBlocksPromotionDrift ||
+		!fixture.RSIRemainsDenied ||
+		!nodeSixRollup.RSIRemainsDenied {
+		t.Fatalf("aggregate rollup regression must preserve no-promotion, Command agreement, and RSI denial: %#v", fixture)
+	}
+}
+
 func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))

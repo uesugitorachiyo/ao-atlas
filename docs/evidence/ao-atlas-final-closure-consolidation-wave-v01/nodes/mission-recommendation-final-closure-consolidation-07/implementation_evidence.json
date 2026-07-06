@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-07",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T14:43:13Z",
+  "summary": "Node 7 adds a regression fixture and test that bind aggregate Promoter no-promotion, Command agreement, and RSI denial to node 6 closure evidence.",
+  "authority_boundary": "atlas_recommendation_planning_only"
+}
