@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-34",
+  "status": "no_promotion",
+  "reason": "Node 34 records early-return risk regression evidence only; it does not promote capability class or authority.",
+  "highest_proven_live_class_unchanged": true,
+  "rsi_remains_denied": true
+}

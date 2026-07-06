@@ -5555,6 +5555,89 @@ func TestLongRunHardeningWaveDoctorReadinessFixtureCoversContinuationRisks(t *te
 	}
 }
 
+func TestLongRunHardeningWaveEarlyReturnRiskDeniesUnmetMinimums(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtyThreeReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-33", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-34")
+	fixture := mustLoadJSON[struct {
+		Schema               string `json:"schema"`
+		NodeID               string `json:"node_id"`
+		Status               string `json:"status"`
+		CompletedNodesBefore int    `json:"completed_nodes_before_node"`
+		ReadyNodesBefore     int    `json:"ready_nodes_before_node"`
+		FirstExecutableNode  string `json:"first_executable_node"`
+		FinalResponseAllowed bool   `json:"final_response_allowed"`
+		ExactNextAction      string `json:"exact_next_action"`
+		Cases                []struct {
+			Name                 string `json:"name"`
+			CompletedNodes       int    `json:"completed_nodes"`
+			ElapsedMinutes       int    `json:"elapsed_minutes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			ExactNextAction      string `json:"exact_next_action"`
+			MinNodesMet          bool   `json:"min_nodes_met"`
+			MinMinutesMet        bool   `json:"min_minutes_met"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ReturnGateStatus     string `json:"return_gate_status"`
+		} `json:"cases"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "early-return-risk-regression-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.early-return-risk-regression-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-34" ||
+		fixture.Status != "early_return_risk_cases_recorded" ||
+		fixture.CompletedNodesBefore != nodeThirtyThreeReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtyThreeReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtyThreeReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirtyThreeReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("early-return fixture must bind node 33 checkpoint without authority effects: %#v", fixture)
+	}
+	cases := map[string]string{
+		"min_nodes_unmet":                          "blocked_minimum_nodes_unmet",
+		"min_minutes_unmet":                        "blocked_minimum_minutes_unmet",
+		"ready_nodes_remain_after_minimums":        "blocked_ready_nodes_remain",
+		"exact_next_action_remains_after_minimums": "blocked_exact_next_action_remains",
+	}
+	if len(fixture.Cases) != len(cases) {
+		t.Fatalf("early-return fixture must include all cases, got %d: %#v", len(fixture.Cases), fixture.Cases)
+	}
+	for _, item := range fixture.Cases {
+		want, ok := cases[item.Name]
+		if !ok {
+			t.Fatalf("unexpected early-return case: %#v", item)
+		}
+		if item.FinalResponseAllowed || item.ReturnGateStatus != want {
+			t.Fatalf("early-return case %q should deny final response with %q: %#v", item.Name, want, item)
+		}
+		delete(cases, item.Name)
+	}
+	if len(cases) != 0 {
+		t.Fatalf("missing early-return cases: %#v", cases)
+	}
+
+	nodeThirtyFourReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtyFourReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtyFourReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtyFourReadback.CompletedNodes != 34 ||
+		nodeThirtyFourReadback.ReadyNodes != 6 ||
+		nodeThirtyFourReadback.FirstExecutableNode != "mission-recommendation-hardening-35" ||
+		nodeThirtyFourReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtyFourReadback.ExactNextAction, "mission-recommendation-hardening-35") {
+		t.Fatalf("node 34 readback must carry early-return regression evidence and continue to node 35: %#v", nodeThirtyFourReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

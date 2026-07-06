@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-34",
+  "status": "implemented",
+  "changed_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-34"
+  ],
+  "implementation_summary": "Added early-return risk regression fixture cases for unmet node minimums, unmet minute minimums, ready work, and exact next actions.",
+  "authority_effect": "none",
+  "implemented_at": "2026-07-06T07:06:29Z"
+}
