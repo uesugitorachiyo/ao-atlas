@@ -1,0 +1,48 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-12",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationEvidenceValidationCommandCoversCompletedHardeningWave -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-long-run-hardening-wave-v01 --out docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12/completed-wave-evidence-validation-report.json",
+      "status": "passed"
+    },
+    {
+      "command": "find docs/evidence/ao-atlas-final-closure-consolidation-wave-v01 docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40 -name '*.json' -print0 | xargs -0 jq -e . >/dev/null",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "score": "100/100"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    }
+  ],
+  "public_safety_scan": "passed",
+  "scoped_public_safety_scan_exit_code": 1,
+  "verified_at": "2026-07-06T16:26:02Z",
+  "notes": "Node 12 verification completed before commit."
+}

@@ -7033,6 +7033,66 @@ func TestFinalClosureConsolidationOperatorSummaryRegressionPreservesCountsNextAc
 	}
 }
 
+func TestFinalClosureConsolidationEvidenceValidationCommandCoversCompletedHardeningWave(t *testing.T) {
+	repoRoot := repoRoot(t)
+	hardeningRoot := filepath.Join(repoRoot, "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	outPath := filepath.Join(t.TempDir(), "evidence-validation-report.json")
+	var stdout, stderr bytes.Buffer
+	exitCode := Run([]string{
+		"mission", "recommendations", "validate-evidence",
+		"--evidence-root", hardeningRoot,
+		"--out", outPath,
+	}, &stdout, &stderr)
+	if exitCode != 0 {
+		t.Fatalf("validate-evidence failed: stdout=%s stderr=%s", stdout.String(), stderr.String())
+	}
+
+	report := mustLoadJSON[struct {
+		Schema                   string         `json:"schema"`
+		Status                   string         `json:"status"`
+		EvidenceRoot             string         `json:"evidence_root"`
+		NodeCount                int            `json:"node_count"`
+		JSONFileCount            int            `json:"json_file_count"`
+		ValidatedJSONFiles       int            `json:"validated_json_files"`
+		SchemaBoundFiles         int            `json:"schema_bound_files"`
+		TypedValidatorFiles      int            `json:"typed_validator_files"`
+		GenericSchemaFiles       int            `json:"generic_schema_files"`
+		MissingSchemaFiles       []string       `json:"missing_schema_files"`
+		FailedFiles              []string       `json:"failed_files"`
+		RequiredFilenames        []string       `json:"required_filenames"`
+		RequiredFilenamesCovered bool           `json:"required_filenames_covered"`
+		SchemaCounts             map[string]int `json:"schema_counts"`
+		Validators               map[string]int `json:"validators"`
+	}](t, outPath)
+	if report.Schema != "ao.atlas.recommendation-evidence-validation-report.v0.1" ||
+		report.Status != "passed" ||
+		report.EvidenceRoot != filepath.ToSlash(hardeningRoot) ||
+		report.NodeCount != 40 ||
+		report.JSONFileCount != 786 ||
+		report.ValidatedJSONFiles != report.JSONFileCount ||
+		report.SchemaBoundFiles != report.JSONFileCount ||
+		report.TypedValidatorFiles < 240 ||
+		report.GenericSchemaFiles <= 0 ||
+		len(report.MissingSchemaFiles) != 0 ||
+		len(report.FailedFiles) != 0 ||
+		!report.RequiredFilenamesCovered ||
+		len(report.RequiredFilenames) < 8 ||
+		report.SchemaCounts["ao.atlas.run-link.v0.1"] != 40 ||
+		report.SchemaCounts["ao.atlas.workgraph.v0.1"] != 40 ||
+		report.SchemaCounts["ao.atlas.recommendation-readback.v0.1"] != 44 ||
+		report.SchemaCounts["ao.atlas.long-recommendation-wave-execution.v0.3"] != 44 ||
+		report.Validators["typed:run-link"] != 40 ||
+		report.Validators["typed:workgraph"] != 40 ||
+		report.Validators["typed:recommendation-readback"] != 44 {
+		t.Fatalf("evidence validation report must cover every completed hardening node evidence JSON: %#v", report)
+	}
+	if !strings.Contains(stdout.String(), "status=passed") ||
+		!strings.Contains(stdout.String(), "json_files=786") ||
+		!strings.Contains(stdout.String(), "node_count=40") {
+		t.Fatalf("validate-evidence stdout missing summary: %s", stdout.String())
+	}
+}
+
 func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))
