@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-17",
+  "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveFeatureDepthDefaultsToTwentyTasks -count=1",
+  "red_result": "failed while readback generator returned 10 feature-depth recommendations by default",
+  "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveFeatureDepthDefaultsToTwentyTasks -count=1",
+  "green_result": "passed"
+}

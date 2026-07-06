@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-17",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T01:57:15Z",
+  "changes": [
+    "raised generated Atlas recommendation readback feature-depth default from 10 to 20 tasks",
+    "updated generated resume prompt wording to state a 20-task feature-depth recommendation floor",
+    "added regression coverage and node 17 evidence proving the 20-task default"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-17"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}

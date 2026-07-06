@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-hardening-17",
+  "status": "opened",
+  "opened_at": "2026-07-06T01:57:15Z",
+  "owner": "atlas",
+  "one_executable_mutation_node_active": true,
+  "previous_checkpoint": "../mission-recommendation-hardening-16/recommendation-readback-after.json",
+  "entry_readiness": {
+    "completed_nodes": 16,
+    "ready_nodes": 24,
+    "first_executable_node": "mission-recommendation-hardening-17",
+    "final_response_allowed": false
+  },
+  "safety_limits": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates without separate authorization",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ]
+}
