@@ -4195,6 +4195,119 @@ func TestLongRunHardeningWaveCommandReadbackFinalGateRequiresZeroReadyAndLeaseMi
 	}
 }
 
+func TestLongRunHardeningWaveProductionReadinessSummaryBindsVerificationCIMergeCleanupAndEvidenceRoots(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-20", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-21")
+	fixture := mustLoadJSON[struct {
+		Schema                         string   `json:"schema"`
+		NodeID                         string   `json:"node_id"`
+		Status                         string   `json:"status"`
+		LocalVerificationCommands       []string `json:"local_verification_commands"`
+		ProductionReadinessSummary      string   `json:"production_readiness_summary"`
+		CIRequiredBeforeMerge           bool     `json:"ci_required_before_merge"`
+		MergeRequiredBeforeCompletion   bool     `json:"merge_required_before_completion"`
+		RemoteBranchCleanupRequired     bool     `json:"remote_branch_cleanup_required"`
+		LocalBranchCleanupRequired      bool     `json:"local_branch_cleanup_required"`
+		EvidenceRoots                   []string `json:"evidence_roots"`
+		PriorMergedPRs                  []int    `json:"prior_merged_prs"`
+		PriorMergedPRCIPassed           bool     `json:"prior_merged_pr_ci_passed"`
+		PriorMergedPRBranchCleanup      bool     `json:"prior_merged_pr_branch_cleanup"`
+		CompletedNodesBeforeNode        int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode            int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed            bool     `json:"final_response_allowed"`
+		ExactNextAction                 string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint      struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "production-readiness-summary-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.production-readiness-summary-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-21" ||
+		fixture.Status != "production_readiness_summary_recorded" ||
+		fixture.ProductionReadinessSummary != "status=ready; score=100/100" ||
+		!fixture.CIRequiredBeforeMerge ||
+		!fixture.MergeRequiredBeforeCompletion ||
+		!fixture.RemoteBranchCleanupRequired ||
+		!fixture.LocalBranchCleanupRequired ||
+		!fixture.PriorMergedPRCIPassed ||
+		!fixture.PriorMergedPRBranchCleanup ||
+		fixture.CompletedNodesBeforeNode != nodeTwentyReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeTwentyReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentyReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("production readiness summary fixture must bind verification, CI, merge cleanup, and evidence roots without authority effects: %#v", fixture)
+	}
+	for _, want := range []string{
+		"go test ./... -count=1",
+		"go vet ./...",
+		"go build ./cmd/atlas",
+		"scripts/production-readiness.sh",
+		"scripts/atlas-foundry-roundtrip-smoke.sh",
+		"git diff --check",
+	} {
+		if !containsString(fixture.LocalVerificationCommands, want) {
+			t.Fatalf("production readiness fixture missing verification command %s: %#v", want, fixture.LocalVerificationCommands)
+		}
+	}
+	for _, want := range []string{
+		"docs/evidence/ao-atlas-long-run-hardening-wave-v01",
+		"docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-21",
+		"target/production-readiness/summary.json",
+		"target/atlas-foundry-roundtrip/summary.json",
+	} {
+		if !containsString(fixture.EvidenceRoots, want) {
+			t.Fatalf("production readiness fixture missing evidence root %s: %#v", want, fixture.EvidenceRoots)
+		}
+	}
+	for _, want := range []int{276, 277, 278, 279, 280, 281, 282, 283} {
+		found := false
+		for _, pr := range fixture.PriorMergedPRs {
+			if pr == want {
+				found = true
+				break
+			}
+		}
+		if !found {
+			t.Fatalf("production readiness fixture missing prior merged PR #%d: %#v", want, fixture.PriorMergedPRs)
+		}
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeTwentyReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeTwentyReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeTwentyReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeTwentyReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeTwentyReadback.ExactNextAction {
+		t.Fatalf("production readiness fixture must bind node 20 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+
+	nodeTwentyOneReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentyOneReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentyOneReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentyOneReadback.CompletedNodes != 21 ||
+		nodeTwentyOneReadback.ReadyNodes != 19 ||
+		nodeTwentyOneReadback.FirstExecutableNode != "mission-recommendation-hardening-22" ||
+		nodeTwentyOneReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentyOneReadback.ExactNextAction, "mission-recommendation-hardening-22") {
+		t.Fatalf("node 21 readback must carry production readiness summary and continue to node 22: %#v", nodeTwentyOneReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
