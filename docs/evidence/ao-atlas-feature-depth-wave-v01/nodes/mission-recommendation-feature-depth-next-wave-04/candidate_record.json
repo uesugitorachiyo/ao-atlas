@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-04",
+  "task_id": "mission-recommendation-feature-depth-next-wave-04-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-04",
+  "source_task_digest": "sha256:8621cb334655cdb1d05b11d1e42f8ad7f9aa95b132ed41131c7e6cc720d55134",
+  "selected_work": [
+    "Add deterministic operator summary rendering for Mission recommendation readbacks.",
+    "Add typed operator summary check fixture that verifies exact next action wording appears once.",
+    "Generate node 04 summary/check evidence from node 03 recommendation readback."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

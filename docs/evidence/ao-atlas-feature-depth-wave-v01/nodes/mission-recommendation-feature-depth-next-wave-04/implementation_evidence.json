@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-04",
+  "task_id": "mission-recommendation-feature-depth-next-wave-04-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_operator_summary_check.go",
+    "internal/atlas/mission_operator_summary_check_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "schemas/mission-operator-summary-check.schema.json"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-04/operator-summary.md",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-04/operator-summary-check.json"
+  ],
+  "summary": "Node 04 adds operator summary checks that preserve exact next action wording.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

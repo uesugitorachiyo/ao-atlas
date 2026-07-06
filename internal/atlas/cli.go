@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -428,6 +428,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	}
 	if args[0] == "stale-checkpoint-rejection" {
 		return runMissionRecommendationsStaleCheckpointRejection(args[1:], stdout)
+	}
+	if args[0] == "operator-summary-check" {
+		return runMissionRecommendationsOperatorSummaryCheck(args[1:], stdout)
 	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
@@ -442,7 +445,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -770,6 +773,63 @@ func runMissionRecommendationsStaleCheckpointRejection(args []string, stdout io.
 		fixture.ExpectedCurrentNextExecutableNode,
 		fixture.StaleReadbackPath,
 		fixture.LatestReadbackPath,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsOperatorSummaryCheck(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations operator-summary-check", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	readbackPath := fs.String("readback", "", "source recommendation readback path")
+	summaryOutPath := fs.String("summary-out", "", "operator summary markdown output path")
+	outPath := fs.String("out", "", "operator summary check output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*readbackPath) == "" {
+		return fmt.Errorf("--readback is required")
+	}
+	if strings.TrimSpace(*summaryOutPath) == "" {
+		return fmt.Errorf("--summary-out is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*summaryOutPath) != "" && samePath(*readbackPath, *summaryOutPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	if strings.TrimSpace(*outPath) != "" && (samePath(*readbackPath, *outPath) || samePath(*summaryOutPath, *outPath)) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	readback, err := LoadJSON[AtlasRecommendationReadback](*readbackPath)
+	if err != nil {
+		return err
+	}
+	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
+		return err
+	}
+	if err := WriteAtlasMissionOperatorSummary(*summaryOutPath, readback); err != nil {
+		return err
+	}
+	fixture, err := BuildAtlasMissionOperatorSummaryCheck(*readbackPath, *summaryOutPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, fixture); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, fixture)
+	}
+	fmt.Fprintf(stdout, "status=%s\nexact_next_action_occurrences=%d\nfirst_executable_node=%s\noperator_summary=%s\noperator_summary_check=%s\n",
+		fixture.Status,
+		fixture.ExactNextActionOccurrences,
+		fixture.FirstExecutableNode,
+		filepath.ToSlash(*summaryOutPath),
 		filepath.ToSlash(*outPath),
 	)
 	return nil
