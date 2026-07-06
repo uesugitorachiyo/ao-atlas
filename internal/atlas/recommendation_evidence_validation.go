@@ -245,6 +245,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:mission-readback-diff-fixture", err
 		}
 		return "typed:mission-readback-diff-fixture", ValidateAtlasMissionReadbackDiffFixture(value)
+	case AtlasMissionStaleCheckpointRejectionContract:
+		value, err := LoadJSON[AtlasMissionStaleCheckpointRejection](path)
+		if err != nil {
+			return "typed:mission-stale-checkpoint-rejection", err
+		}
+		return "typed:mission-stale-checkpoint-rejection", ValidateAtlasMissionStaleCheckpointRejection(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

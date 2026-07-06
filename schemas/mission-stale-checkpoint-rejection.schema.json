@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.mission-stale-checkpoint-rejection.v0.1",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "mission_id",
+    "target_instance",
+    "stale_readback_path",
+    "latest_readback_path",
+    "prompt_readback_path",
+    "stale_readback_digest",
+    "latest_readback_digest",
+    "prompt_readback_digest",
+    "stale_checkpoint",
+    "latest_checkpoint",
+    "prompt_next_executable_node",
+    "expected_current_next_executable_node",
+    "prompt_exact_next_action",
+    "expected_current_exact_next_action",
+    "rejection_reason",
+    "continuation_contract_reason",
+    "final_response_allowed",
+    "safety_boundaries",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "ao.atlas.mission-stale-checkpoint-rejection.v0.1" },
+    "status": { "const": "rejected" },
+    "mission_id": { "type": "string", "minLength": 1 },
+    "target_instance": { "type": "string", "minLength": 1 },
+    "stale_readback_path": { "type": "string", "minLength": 1 },
+    "latest_readback_path": { "type": "string", "minLength": 1 },
+    "prompt_readback_path": { "type": "string", "minLength": 1 },
+    "stale_readback_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "latest_readback_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "prompt_readback_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "stale_checkpoint": { "$ref": "#/$defs/checkpoint_snapshot" },
+    "latest_checkpoint": { "$ref": "#/$defs/checkpoint_snapshot" },
+    "prompt_next_executable_node": { "type": "string", "minLength": 1 },
+    "expected_current_next_executable_node": { "type": "string", "minLength": 1 },
+    "prompt_exact_next_action": { "type": "string", "minLength": 1 },
+    "expected_current_exact_next_action": { "type": "string", "minLength": 1 },
+    "rejection_reason": { "const": "stale_checkpoint" },
+    "continuation_contract_reason": { "type": "string", "minLength": 1 },
+    "final_response_allowed": { "const": false },
+    "safety_boundaries": {
+      "type": "object",
+      "required": [
+        "provider_calls",
+        "credential_inspection",
+        "direct_main_mutation",
+        "release_deploy_publish_upload_tag",
+        "dependency_updates",
+        "auth_policy_config_widening",
+        "hidden_instruction_mutation",
+        "broad_rsi_claim",
+        "rsi_remains_denied"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "provider_calls": { "const": false },
+        "credential_inspection": { "const": false },
+        "direct_main_mutation": { "const": false },
+        "release_deploy_publish_upload_tag": { "const": false },
+        "dependency_updates": { "const": false },
+        "auth_policy_config_widening": { "const": false },
+        "hidden_instruction_mutation": { "const": false },
+        "broad_rsi_claim": { "const": false },
+        "rsi_remains_denied": { "const": true }
+      }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "checkpoint_snapshot": {
+      "type": "object",
+      "required": [
+        "completed_nodes",
+        "ready_nodes",
+        "checkpoint_count",
+        "first_executable_node",
+        "exact_next_action",
+        "continuation_contract_reason",
+        "final_response_allowed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "completed_nodes": { "type": "integer", "minimum": 0 },
+        "ready_nodes": { "type": "integer", "minimum": 0 },
+        "checkpoint_count": { "type": "integer", "minimum": 0 },
+        "first_executable_node": { "type": "string", "minLength": 1 },
+        "exact_next_action": { "type": "string", "minLength": 1 },
+        "continuation_contract_reason": { "type": "string", "minLength": 1 },
+        "final_response_allowed": { "const": false }
+      }
+    }
+  }
+}

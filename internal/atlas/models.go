@@ -413,6 +413,44 @@ type AtlasMissionReadbackDiffFixture struct {
 	RSIRemainsDenied                 bool                                  `json:"rsi_remains_denied"`
 }
 
+type AtlasMissionStaleCheckpointRejection struct {
+	Schema                            string                         `json:"schema"`
+	Status                            string                         `json:"status"`
+	MissionID                         string                         `json:"mission_id"`
+	TargetInstance                    string                         `json:"target_instance"`
+	StaleReadbackPath                 string                         `json:"stale_readback_path"`
+	LatestReadbackPath                string                         `json:"latest_readback_path"`
+	PromptReadbackPath                string                         `json:"prompt_readback_path"`
+	StaleReadbackDigest               string                         `json:"stale_readback_digest"`
+	LatestReadbackDigest              string                         `json:"latest_readback_digest"`
+	PromptReadbackDigest              string                         `json:"prompt_readback_digest"`
+	StaleCheckpoint                   AtlasMissionCheckpointSnapshot `json:"stale_checkpoint"`
+	LatestCheckpoint                  AtlasMissionCheckpointSnapshot `json:"latest_checkpoint"`
+	PromptNextExecutableNode          string                         `json:"prompt_next_executable_node"`
+	ExpectedCurrentNextExecutableNode string                         `json:"expected_current_next_executable_node"`
+	PromptExactNextAction             string                         `json:"prompt_exact_next_action"`
+	ExpectedCurrentExactNextAction    string                         `json:"expected_current_exact_next_action"`
+	RejectionReason                   string                         `json:"rejection_reason"`
+	ContinuationContractReason        string                         `json:"continuation_contract_reason"`
+	FinalResponseAllowed              bool                           `json:"final_response_allowed"`
+	SafetyBoundaries                  map[string]bool                `json:"safety_boundaries"`
+	SchedulesWork                     bool                           `json:"schedules_work"`
+	ExecutesWork                      bool                           `json:"executes_work"`
+	ApprovesWork                      bool                           `json:"approves_work"`
+	ClaimsAuthorityAdvance            bool                           `json:"claims_authority_advance"`
+	RSIRemainsDenied                  bool                           `json:"rsi_remains_denied"`
+}
+
+type AtlasMissionCheckpointSnapshot struct {
+	CompletedNodes             int    `json:"completed_nodes"`
+	ReadyNodes                 int    `json:"ready_nodes"`
+	CheckpointCount            int    `json:"checkpoint_count"`
+	FirstExecutableNode        string `json:"first_executable_node"`
+	ExactNextAction            string `json:"exact_next_action"`
+	ContinuationContractReason string `json:"continuation_contract_reason"`
+	FinalResponseAllowed       bool   `json:"final_response_allowed"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
