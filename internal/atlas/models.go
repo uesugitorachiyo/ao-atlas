@@ -483,6 +483,42 @@ type AtlasMissionOperatorSummaryCheck struct {
 	RSIRemainsDenied                  bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasNodeCommandReadbackEvidence struct {
+	Schema                          string `json:"schema"`
+	NodeID                          string `json:"node_id"`
+	TaskID                          string `json:"task_id"`
+	Status                          string `json:"status"`
+	CompletedNodesBefore            int    `json:"completed_nodes_before"`
+	ReadyNodesBefore                int    `json:"ready_nodes_before"`
+	ExpectedCompletedNodesAfter     int    `json:"expected_completed_nodes_after"`
+	ExpectedReadyNodesAfter         int    `json:"expected_ready_nodes_after"`
+	ExpectedNextExecutableNodeAfter string `json:"expected_next_executable_node_after"`
+	FinalResponseAllowed            bool   `json:"final_response_allowed"`
+	RSIRemainsDenied                bool   `json:"rsi_remains_denied"`
+}
+
+type AtlasNodePromoterNoPromotionEvidence struct {
+	Schema                 string `json:"schema"`
+	NodeID                 string `json:"node_id"`
+	TaskID                 string `json:"task_id"`
+	Status                 string `json:"status"`
+	PromotionClaimed       bool   `json:"promotion_claimed"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+}
+
+type AtlasNodeSentinelPublicSafetyEvidence struct {
+	Schema                    string   `json:"schema"`
+	NodeID                    string   `json:"node_id"`
+	TaskID                    string   `json:"task_id"`
+	Status                    string   `json:"status"`
+	ScanScope                 []string `json:"scan_scope"`
+	UnsafePublicClaimDetected bool     `json:"unsafe_public_claim_detected"`
+	PromotionClaimDetected    bool     `json:"promotion_claim_detected"`
+	RSIClaimDetected          bool     `json:"rsi_claim_detected"`
+	RSIRemainsDenied          bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

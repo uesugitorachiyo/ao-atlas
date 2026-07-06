@@ -257,6 +257,24 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:mission-operator-summary-check", err
 		}
 		return "typed:mission-operator-summary-check", ValidateAtlasMissionOperatorSummaryCheck(value)
+	case AtlasNodeCommandReadbackContract:
+		value, err := LoadJSON[AtlasNodeCommandReadbackEvidence](path)
+		if err != nil {
+			return "typed:command-readback", err
+		}
+		return "typed:command-readback", ValidateAtlasNodeCommandReadbackEvidence(value)
+	case AtlasNodePromoterNoPromotionContract:
+		value, err := LoadJSON[AtlasNodePromoterNoPromotionEvidence](path)
+		if err != nil {
+			return "typed:promoter-no-promotion", err
+		}
+		return "typed:promoter-no-promotion", ValidateAtlasNodePromoterNoPromotionEvidence(value)
+	case AtlasNodeSentinelPublicSafetyContract:
+		value, err := LoadJSON[AtlasNodeSentinelPublicSafetyEvidence](path)
+		if err != nil {
+			return "typed:sentinel-public-safety", err
+		}
+		return "typed:sentinel-public-safety", ValidateAtlasNodeSentinelPublicSafetyEvidence(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {
