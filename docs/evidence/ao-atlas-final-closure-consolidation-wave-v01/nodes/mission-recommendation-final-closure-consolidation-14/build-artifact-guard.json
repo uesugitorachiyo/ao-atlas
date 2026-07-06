@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.build-artifact-guard.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-14",
+  "status": "guarded",
+  "script_path": "scripts/production-readiness.sh",
+  "guard_function": "reject_local_build_artifacts",
+  "readiness_check_name": "build-artifact-guard",
+  "guarded_artifacts": [
+    "atlas",
+    "atlas.exe",
+    "cmd/atlas/atlas",
+    "cmd/atlas/atlas.exe"
+  ],
+  "tracked_artifact_detection": "git ls-files --error-unmatch",
+  "local_artifact_detection": "[[ -e \"$artifact\" ]]",
+  "failure_messages": [
+    "tracked build artifact present",
+    "local build artifact present"
+  ],
+  "runs_before_go_build": true,
+  "build_output_remains_under_target": true,
+  "rsi_remains_denied": true
+}

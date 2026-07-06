@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-14",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestProductionReadinessGuardsCommittedBuildArtifacts -count=1",
+      "status": "failed_before_implementation",
+      "failure": "production-readiness.sh did not contain reject_local_build_artifacts"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestProductionReadinessGuardsCommittedBuildArtifacts -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "bash -n scripts/production-readiness.sh",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Production readiness includes a build-artifact guard.",
+    "The guard checks tracked artifacts with git ls-files.",
+    "The guard checks local generated binaries before go build runs."
+  ]
+}

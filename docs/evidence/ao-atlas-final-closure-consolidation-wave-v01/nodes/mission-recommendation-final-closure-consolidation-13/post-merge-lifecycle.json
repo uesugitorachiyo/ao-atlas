@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-13",
+  "status": "merged_and_cleaned",
+  "pr_number": 316,
+  "pr_url": "https://github.com/uesugitorachiyo/ao-atlas/pull/316",
+  "merge_commit": "4a620da060c5fc3bf71d8880dd1f9f516ebe58d4",
+  "merged_at": "2026-07-06T16:57:16Z",
+  "ci_status": "passed",
+  "local_main_synced": true,
+  "local_branch_deleted": true,
+  "remote_branch_deleted": true,
+  "local_codex_branches": 0,
+  "remote_codex_branches": 0,
+  "recorded_after_branch_deletion": true
+}

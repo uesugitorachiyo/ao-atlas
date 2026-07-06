@@ -7396,6 +7396,30 @@ func TestProductionReadinessExercisesMissionRecommendationsImport(t *testing.T) 
 	}
 }
 
+func TestProductionReadinessGuardsCommittedBuildArtifacts(t *testing.T) {
+	root := repoRoot(t)
+	scriptPath := filepath.Join(root, "scripts", "production-readiness.sh")
+	content, err := os.ReadFile(scriptPath)
+	if err != nil {
+		t.Fatalf("read production readiness script: %v", err)
+	}
+	script := string(content)
+	for _, want := range []string{
+		"reject_local_build_artifacts",
+		"build_artifacts=(",
+		"atlas.exe",
+		"cmd/atlas/atlas",
+		"git ls-files --error-unmatch",
+		"tracked build artifact present",
+		"local build artifact present",
+		"build-artifact-guard",
+	} {
+		if !strings.Contains(script, want) {
+			t.Fatalf("production readiness script missing build artifact guard coverage %q", want)
+		}
+	}
+}
+
 func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "examples", "invalid", "recommendation-prompt-unsafe-continuation-reason.md")

@@ -14,6 +14,26 @@ pass() {
   printf 'ok %s\n' "$1"
 }
 
+reject_local_build_artifacts() {
+  local build_artifacts=(
+    "atlas"
+    "atlas.exe"
+    "cmd/atlas/atlas"
+    "cmd/atlas/atlas.exe"
+  )
+  local artifact
+  for artifact in "${build_artifacts[@]}"; do
+    if git ls-files --error-unmatch "$artifact" >/dev/null 2>&1; then
+      echo "tracked build artifact present: $artifact" >&2
+      exit 1
+    fi
+    if [[ -e "$artifact" ]]; then
+      echo "local build artifact present: $artifact" >&2
+      exit 1
+    fi
+  done
+}
+
 reject_local_absolute_paths() {
   local label="$1"
   shift
@@ -139,6 +159,9 @@ assert_40_node_recommendation_workgraph() {
     exit 1
   }
 }
+
+reject_local_build_artifacts
+pass "build-artifact-guard"
 
 go test ./...
 pass "go-test"
