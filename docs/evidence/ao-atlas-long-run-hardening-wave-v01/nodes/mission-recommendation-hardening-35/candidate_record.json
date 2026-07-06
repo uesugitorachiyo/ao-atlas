@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-35",
+  "task_id": "mission-recommendation-hardening-35-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-34/recommendation-readback-after.json",
+  "objective": "Add regression coverage that exact next actions carry into summaries and generated prompts.",
+  "candidate_reason": "The supervisor needs summary and prompt artifacts to preserve the exact next action after every checkpoint.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T07:24:24Z"
+}

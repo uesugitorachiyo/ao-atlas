@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-35",
+  "status": "implemented",
+  "changed_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-35"
+  ],
+  "implementation_summary": "Added exact-next-action propagation fixtures proving summaries and generated prompts carry the checkpoint action forward.",
+  "authority_effect": "none",
+  "implemented_at": "2026-07-06T07:24:24Z"
+}
