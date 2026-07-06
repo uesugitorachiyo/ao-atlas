@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-19",
+  "red_command": "go test ./internal/atlas -run TestLongRunHardeningWavePromptGeneratorCoversDurationStopGatesAndSafetyBoundaries -count=1",
+  "red_result": "failed while generated prompt omitted explicit target-duration stop-gate coverage and before node 19 evidence existed",
+  "green_command": "go test ./internal/atlas -run TestLongRunHardeningWavePromptGeneratorCoversDurationStopGatesAndSafetyBoundaries -count=1",
+  "green_result": "passed"
+}
