@@ -5638,6 +5638,74 @@ func TestLongRunHardeningWaveEarlyReturnRiskDeniesUnmetMinimums(t *testing.T) {
 	}
 }
 
+func TestLongRunHardeningWaveExactNextActionPropagatesToSummaryAndPrompt(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtyFourReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-34", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-35")
+	fixture := mustLoadJSON[struct {
+		Schema                 string   `json:"schema"`
+		NodeID                 string   `json:"node_id"`
+		Status                 string   `json:"status"`
+		SummaryPath            string   `json:"summary_path"`
+		PromptPath             string   `json:"prompt_path"`
+		CompletedNodesBefore   int      `json:"completed_nodes_before_node"`
+		ReadyNodesBefore       int      `json:"ready_nodes_before_node"`
+		FirstExecutableNode    string   `json:"first_executable_node"`
+		FinalResponseAllowed   bool     `json:"final_response_allowed"`
+		ExactNextAction        string   `json:"exact_next_action"`
+		RequiredArtifacts      []string `json:"required_artifacts"`
+		SchedulesWork          bool     `json:"schedules_work"`
+		ExecutesWork           bool     `json:"executes_work"`
+		ApprovesWork           bool     `json:"approves_work"`
+		ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "exact-next-action-propagation-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.exact-next-action-propagation-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-35" ||
+		fixture.Status != "exact_next_action_propagated" ||
+		fixture.CompletedNodesBefore != nodeThirtyFourReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtyFourReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtyFourReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirtyFourReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("exact next action fixture must bind node 34 checkpoint without authority effects: %#v", fixture)
+	}
+	if !containsString(fixture.RequiredArtifacts, "summary") || !containsString(fixture.RequiredArtifacts, "generated_prompt") {
+		t.Fatalf("exact next action fixture must require summary and generated prompt artifacts: %#v", fixture.RequiredArtifacts)
+	}
+	for _, path := range []string{fixture.SummaryPath, fixture.PromptPath} {
+		data, err := os.ReadFile(filepath.Join(repoRoot(t), path))
+		if err != nil {
+			t.Fatal(err)
+		}
+		text := string(data)
+		if !strings.Contains(text, fixture.ExactNextAction) ||
+			!strings.Contains(text, "mission-recommendation-hardening-35") ||
+			!strings.Contains(text, "final_response_allowed=false") {
+			t.Fatalf("%s must carry exact next action and final-response denial", path)
+		}
+	}
+
+	nodeThirtyFiveReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtyFiveReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtyFiveReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtyFiveReadback.CompletedNodes != 35 ||
+		nodeThirtyFiveReadback.ReadyNodes != 5 ||
+		nodeThirtyFiveReadback.FirstExecutableNode != "mission-recommendation-hardening-36" ||
+		nodeThirtyFiveReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtyFiveReadback.ExactNextAction, "mission-recommendation-hardening-36") {
+		t.Fatalf("node 35 readback must carry exact-next-action propagation evidence and continue to node 36: %#v", nodeThirtyFiveReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
