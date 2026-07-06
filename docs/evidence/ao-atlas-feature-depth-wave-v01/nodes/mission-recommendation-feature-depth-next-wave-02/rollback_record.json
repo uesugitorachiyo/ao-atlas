@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-02",
+  "task_id": "mission-recommendation-feature-depth-next-wave-02-task",
+  "status": "available",
+  "rollback_scope": [
+    "internal/atlas/mission_readback_diff_fixture.go",
+    "internal/atlas/mission_readback_diff_fixture_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "schemas/mission-readback-diff-fixture.schema.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-02"
+  ],
+  "rollback_action": "Revert the node 02 commit before merge, or revert the merged PR if post-merge validation fails.",
+  "data_migration_required": false,
+  "dependency_change": false,
+  "config_or_policy_widening": false
+}

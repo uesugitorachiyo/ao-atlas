@@ -1,0 +1,56 @@
+{
+  "schema": "ao.atlas.mission-readback-diff-fixture.v0.1",
+  "status": "resumable",
+  "mission_id": "ao-atlas-next-feature-depth-wave-v01",
+  "target_instance": "ao-atlas-feature-depth-wave-v01",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-01/recommendation-readback-after.json",
+  "target_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-02/recommendation-readback-after.json",
+  "delta_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-02/mission-readback-delta.json",
+  "source_readback_digest": "sha256:ad71d7cf78592c6baae491d832eecdbb5c448c7290a5637d75275d1c1ac7049d",
+  "target_readback_digest": "sha256:04b8b511b7c77d3343b17f402bedc26d9b2658e359f67359c78f2575fa47f5ca",
+  "delta_digest": "sha256:e7fbe4cb8f0db88a073c34859d71d1cfe42ca663676fb0cc22c79aa7689584d7",
+  "completed_node_transition": {
+    "before": 1,
+    "after": 2,
+    "delta": 1
+  },
+  "ready_node_transition": {
+    "before": 39,
+    "after": 38,
+    "delta": -1
+  },
+  "checkpoint_transition": {
+    "before": 1,
+    "after": 2,
+    "delta": 1
+  },
+  "first_executable_node_before": "mission-recommendation-feature-depth-next-wave-02",
+  "first_executable_node_after": "mission-recommendation-feature-depth-next-wave-03",
+  "exact_next_action_before": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-02 and execute exactly one active node.",
+  "exact_next_action_after": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-03 and execute exactly one active node.",
+  "return_gate_status_before": "blocked_ready_nodes_remain",
+  "return_gate_status_after": "blocked_ready_nodes_remain",
+  "continuation_contract_reason_before": "ready_nodes_or_exact_next_action_remain",
+  "continuation_contract_reason_after": "ready_nodes_or_exact_next_action_remain",
+  "final_response_allowed_before": false,
+  "final_response_allowed_after": false,
+  "resume_required": true,
+  "resume_reason": "ready_nodes_or_exact_next_action_remain",
+  "expected_next_action": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-03 and execute exactly one active node.",
+  "safety_boundaries": {
+    "auth_policy_config_widening": false,
+    "broad_rsi_claim": false,
+    "credential_inspection": false,
+    "dependency_updates": false,
+    "direct_main_mutation": false,
+    "hidden_instruction_mutation": false,
+    "provider_calls": false,
+    "release_deploy_publish_upload_tag": false,
+    "rsi_remains_denied": true
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
