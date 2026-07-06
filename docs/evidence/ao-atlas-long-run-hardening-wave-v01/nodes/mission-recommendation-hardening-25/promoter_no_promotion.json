@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-25",
+  "status": "no_promotion",
+  "promotion_claimed": false,
+  "completed_nodes_before_node": 24,
+  "ready_nodes_before_node": 16,
+  "final_response_allowed": false,
+  "next_denied_class": "RSI",
+  "rsi_remains_denied": true,
+  "reason": "support evidence authority-boundary hardening does not promote authority while ready nodes remain",
+  "claims_authority_advance": false
+}

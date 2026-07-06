@@ -4669,6 +4669,124 @@ func TestLongRunHardeningWaveRollbackBoundaryForPromptOnlyNodes(t *testing.T) {
 	}
 }
 
+func TestLongRunHardeningWaveSupportEvidenceNodeGateCannotWidenAuthority(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentyFourReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-24", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-25")
+	fixture := mustLoadJSON[struct {
+		Schema                       string   `json:"schema"`
+		NodeID                       string   `json:"node_id"`
+		Status                       string   `json:"status"`
+		SupportEvidenceNode          bool     `json:"support_evidence_node"`
+		AuthorityBoundary            string   `json:"authority_boundary"`
+		NodeGateAuthorityBoundary    string   `json:"node_gate_authority_boundary"`
+		FoundryTaskAuthorityBoundary string   `json:"foundry_task_authority_boundary"`
+		AuthorityWideningAllowed     bool     `json:"authority_widening_allowed"`
+		AllowedWriteScopes           []string `json:"allowed_write_scopes"`
+		ForbiddenBoundaryClaims      []string `json:"forbidden_boundary_claims"`
+		CompletedNodesBeforeNode     int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode         int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed         bool     `json:"final_response_allowed"`
+		ExactNextAction              string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint   struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "authority-boundary-gate-fixture.json"))
+	nodeGate := mustLoadJSON[struct {
+		Schema                    string `json:"schema"`
+		NodeID                    string `json:"node_id"`
+		Status                    string `json:"status"`
+		SupportEvidenceNode       bool   `json:"support_evidence_node"`
+		AuthorityBoundary         string `json:"authority_boundary"`
+		AuthorityWideningAllowed  bool   `json:"authority_widening_allowed"`
+		OneExecutableMutationNode bool   `json:"one_executable_mutation_node_active"`
+		EntryReadiness            struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+		} `json:"entry_readiness"`
+	}](t, filepath.Join(nodeDir, "node_gate.json"))
+	foundryImport := mustLoadJSON[FoundryImport](t, filepath.Join(nodeDir, "foundry-import.json"))
+
+	if fixture.Schema != "ao.atlas.authority-boundary-gate-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-25" ||
+		fixture.Status != "authority_boundary_recorded" ||
+		!fixture.SupportEvidenceNode ||
+		fixture.AuthorityBoundary != "atlas_recommendation_planning_only" ||
+		fixture.NodeGateAuthorityBoundary != fixture.AuthorityBoundary ||
+		fixture.FoundryTaskAuthorityBoundary != fixture.AuthorityBoundary ||
+		fixture.AuthorityWideningAllowed ||
+		fixture.CompletedNodesBeforeNode != nodeTwentyFourReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeTwentyFourReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentyFourReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("authority boundary fixture must bind support evidence gate without widening authority: %#v", fixture)
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeTwentyFourReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeTwentyFourReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeTwentyFourReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeTwentyFourReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeTwentyFourReadback.ExactNextAction {
+		t.Fatalf("authority boundary fixture must bind node 24 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+	if nodeGate.Schema != "ao.atlas.node-gate.v0.1" ||
+		nodeGate.NodeID != fixture.NodeID ||
+		nodeGate.Status != "opened" ||
+		!nodeGate.SupportEvidenceNode ||
+		nodeGate.AuthorityBoundary != fixture.AuthorityBoundary ||
+		nodeGate.AuthorityWideningAllowed ||
+		!nodeGate.OneExecutableMutationNode ||
+		nodeGate.EntryReadiness.CompletedNodes != nodeTwentyFourReadback.CompletedNodes ||
+		nodeGate.EntryReadiness.ReadyNodes != nodeTwentyFourReadback.ReadyNodes ||
+		nodeGate.EntryReadiness.FirstExecutableNode != nodeTwentyFourReadback.FirstExecutableNode ||
+		nodeGate.EntryReadiness.FinalResponseAllowed {
+		t.Fatalf("node gate must preserve authority boundary and current readiness: %#v", nodeGate)
+	}
+	if len(foundryImport.Tasks) != 1 ||
+		foundryImport.Tasks[0].NodeID != fixture.NodeID ||
+		foundryImport.Tasks[0].AuthorityBoundary != fixture.AuthorityBoundary {
+		t.Fatalf("Foundry import task must preserve node authority boundary: %#v", foundryImport.Tasks)
+	}
+	for _, scope := range fixture.AllowedWriteScopes {
+		if scope != "internal/atlas" && scope != "schemas" && scope != "examples" && scope != "docs/evidence" {
+			t.Fatalf("authority boundary fixture contains unexpected write scope %q", scope)
+		}
+	}
+	for _, claim := range fixture.ForbiddenBoundaryClaims {
+		if claim == "" || strings.Contains(strings.ToLower(claim), "allowed") {
+			t.Fatalf("forbidden boundary claim must be explicit denial text, got %q", claim)
+		}
+	}
+
+	nodeTwentyFiveReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentyFiveReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentyFiveReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentyFiveReadback.CompletedNodes != 25 ||
+		nodeTwentyFiveReadback.ReadyNodes != 15 ||
+		nodeTwentyFiveReadback.FirstExecutableNode != "mission-recommendation-hardening-26" ||
+		nodeTwentyFiveReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentyFiveReadback.ExactNextAction, "mission-recommendation-hardening-26") {
+		t.Fatalf("node 25 readback must carry authority boundary gate and continue to node 26: %#v", nodeTwentyFiveReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

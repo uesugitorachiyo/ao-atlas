@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-25",
+  "candidate": "support-evidence-authority-boundary-gate",
+  "status": "selected",
+  "objective": "Add node gate fixture proving support evidence nodes cannot widen authority boundaries.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-25"
+  ],
+  "acceptance_criteria": [
+    "node gate records support evidence node and authority boundary",
+    "authority boundary fixture agrees with node gate and Foundry import task",
+    "authority widening remains denied",
+    "final response remains denied while ready nodes remain"
+  ],
+  "selected_at": "2026-07-06T04:21:28Z"
+}
