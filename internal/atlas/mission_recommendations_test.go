@@ -6107,6 +6107,81 @@ func TestLongRunHardeningWaveVerificationPublicSafetyRollupBindsChangedReadbacks
 	}
 }
 
+func TestLongRunHardeningWaveFinalClosureArtifactsAllowFinalResponseOnlyAtCompletion(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtyNineReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-39", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-40")
+	fixture := mustLoadJSON[struct {
+		Schema                     string   `json:"schema"`
+		NodeID                     string   `json:"node_id"`
+		Status                     string   `json:"status"`
+		CompletedNodesBefore       int      `json:"completed_nodes_before_node"`
+		ReadyNodesBefore           int      `json:"ready_nodes_before_node"`
+		FirstExecutableNode        string   `json:"first_executable_node"`
+		FinalResponseAllowedBefore bool     `json:"final_response_allowed_before_node"`
+		ExactNextActionBefore      string   `json:"exact_next_action_before_node"`
+		ClosureArtifactPaths       []string `json:"closure_artifact_paths"`
+		CleanRepoStatusPath        string   `json:"clean_repo_status_path"`
+		VerificationSummaryPath    string   `json:"verification_summary_path"`
+		PromoterNoPromotionStatus  string   `json:"promoter_no_promotion_status"`
+		CommandReadbackStatus      string   `json:"command_readback_status"`
+		FinalResponseAllowedAfter  bool     `json:"final_response_allowed_after_node"`
+		ReadyNodesAfter            int      `json:"ready_nodes_after_node"`
+		BlockedNodesAfter          int      `json:"blocked_nodes_after_node"`
+		SchedulesWork              bool     `json:"schedules_work"`
+		ExecutesWork               bool     `json:"executes_work"`
+		ApprovesWork               bool     `json:"approves_work"`
+		ClaimsAuthorityAdvance     bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied           bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "final-closure-artifacts-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.final-closure-artifacts-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-40" ||
+		fixture.Status != "final_closure_artifacts_recorded" ||
+		fixture.CompletedNodesBefore != nodeThirtyNineReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtyNineReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtyNineReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowedBefore ||
+		fixture.ExactNextActionBefore != nodeThirtyNineReadback.ExactNextAction ||
+		fixture.PromoterNoPromotionStatus != "no_promotion_requested" ||
+		fixture.CommandReadbackStatus != "readback_agrees_no_promotion" ||
+		!fixture.FinalResponseAllowedAfter ||
+		fixture.ReadyNodesAfter != 0 ||
+		fixture.BlockedNodesAfter != 0 ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("final closure fixture must bind node 39 checkpoint and final no-promotion closure: %#v", fixture)
+	}
+	if !containsString(fixture.ClosureArtifactPaths, fixture.CleanRepoStatusPath) ||
+		!containsString(fixture.ClosureArtifactPaths, fixture.VerificationSummaryPath) {
+		t.Fatalf("final closure fixture must include clean repo and verification summary artifacts: %#v", fixture.ClosureArtifactPaths)
+	}
+	for _, path := range fixture.ClosureArtifactPaths {
+		if !strings.HasPrefix(path, "docs/") {
+			t.Fatalf("final closure artifact path must stay under docs/: %s", path)
+		}
+		if _, err := os.Stat(filepath.Join(repoRoot(t), path)); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	nodeFortyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeFortyReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeFortyReadback.FeatureDepthRecommendations) < 40 ||
+		nodeFortyReadback.CompletedNodes != 40 ||
+		nodeFortyReadback.ReadyNodes != 0 ||
+		nodeFortyReadback.BlockedNodes != 0 ||
+		nodeFortyReadback.FirstExecutableNode != "" ||
+		!nodeFortyReadback.FinalResponseAllowed {
+		t.Fatalf("node 40 readback must close the wave and allow final response: %#v", nodeFortyReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
