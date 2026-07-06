@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.branch-cleanup-evidence-fixture.v0.1",
+  "node_id": "mission-recommendation-hardening-26",
+  "status": "branch_cleanup_recorded",
+  "cleanup_scope": "after_previous_node_merge_before_current_node",
+  "current_node_branch": "codex/hardening-wave-node-26-branch-cleanup",
+  "local_codex_branches_before_node": [],
+  "remote_codex_branches_before_node": [],
+  "local_codex_branch_count_before_node": 0,
+  "remote_codex_branch_count_before_node": 0,
+  "post_merge_cleanup_required": true,
+  "local_branch_cleanup_command": "git branch -d codex/hardening-wave-node-26-branch-cleanup",
+  "remote_branch_cleanup_command": "gh pr merge <node-26-pr> --merge --delete-branch",
+  "direct_main_mutation": false,
+  "completed_nodes_before_node": 25,
+  "ready_nodes_before_node": 15,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-26 and execute exactly one active node.",
+  "current_hardening_checkpoint": {
+    "completed_nodes": 25,
+    "ready_nodes": 15,
+    "first_executable_node": "mission-recommendation-hardening-26",
+    "final_response_allowed": false,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-26 and execute exactly one active node."
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
