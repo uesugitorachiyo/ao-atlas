@@ -378,6 +378,47 @@ type AtlasMissionReadbackStringTransition struct {
 	After  string `json:"after"`
 }
 
+type AtlasMissionReadbackDiffFixture struct {
+	Schema                           string                                `json:"schema"`
+	Status                           string                                `json:"status"`
+	MissionID                        string                                `json:"mission_id"`
+	TargetInstance                   string                                `json:"target_instance"`
+	SourceReadbackPath               string                                `json:"source_readback_path"`
+	TargetReadbackPath               string                                `json:"target_readback_path"`
+	DeltaPath                        string                                `json:"delta_path"`
+	SourceReadbackDigest             string                                `json:"source_readback_digest"`
+	TargetReadbackDigest             string                                `json:"target_readback_digest"`
+	DeltaDigest                      string                                `json:"delta_digest"`
+	CompletedNodeTransition          AtlasMissionReadbackNumericTransition `json:"completed_node_transition"`
+	ReadyNodeTransition              AtlasMissionReadbackNumericTransition `json:"ready_node_transition"`
+	CheckpointTransition             AtlasMissionReadbackNumericTransition `json:"checkpoint_transition"`
+	FirstExecutableNodeBefore        string                                `json:"first_executable_node_before"`
+	FirstExecutableNodeAfter         string                                `json:"first_executable_node_after"`
+	ExactNextActionBefore            string                                `json:"exact_next_action_before"`
+	ExactNextActionAfter             string                                `json:"exact_next_action_after"`
+	ReturnGateStatusBefore           string                                `json:"return_gate_status_before"`
+	ReturnGateStatusAfter            string                                `json:"return_gate_status_after"`
+	ContinuationContractReasonBefore string                                `json:"continuation_contract_reason_before"`
+	ContinuationContractReasonAfter  string                                `json:"continuation_contract_reason_after"`
+	FinalResponseAllowedBefore       bool                                  `json:"final_response_allowed_before"`
+	FinalResponseAllowedAfter        bool                                  `json:"final_response_allowed_after"`
+	ResumeRequired                   bool                                  `json:"resume_required"`
+	ResumeReason                     string                                `json:"resume_reason"`
+	ExpectedNextAction               string                                `json:"expected_next_action"`
+	SafetyBoundaries                 map[string]bool                       `json:"safety_boundaries"`
+	SchedulesWork                    bool                                  `json:"schedules_work"`
+	ExecutesWork                     bool                                  `json:"executes_work"`
+	ApprovesWork                     bool                                  `json:"approves_work"`
+	ClaimsAuthorityAdvance           bool                                  `json:"claims_authority_advance"`
+	RSIRemainsDenied                 bool                                  `json:"rsi_remains_denied"`
+}
+
+type AtlasMissionReadbackNumericTransition struct {
+	Before int `json:"before"`
+	After  int `json:"after"`
+	Delta  int `json:"delta"`
+}
+
 type AtlasFoundryTerminalStatusExample struct {
 	SourceStatus     string `json:"source_status"`
 	NormalizedStatus string `json:"normalized_status"`

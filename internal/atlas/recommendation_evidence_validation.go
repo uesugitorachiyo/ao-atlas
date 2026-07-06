@@ -239,6 +239,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:mission-readback-delta", err
 		}
 		return "typed:mission-readback-delta", ValidateAtlasMissionReadbackDelta(value)
+	case AtlasMissionReadbackDiffFixtureContract:
+		value, err := LoadJSON[AtlasMissionReadbackDiffFixture](path)
+		if err != nil {
+			return "typed:mission-readback-diff-fixture", err
+		}
+		return "typed:mission-readback-diff-fixture", ValidateAtlasMissionReadbackDiffFixture(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {
