@@ -5817,6 +5817,115 @@ func TestLongRunHardeningWavePublicClaimGuardRejectsUnevidencedPromotionClaims(t
 	}
 }
 
+func TestLongRunHardeningWaveClosureGateRequiresEvidenceCIAndCleanup(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtySixReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-36", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-37")
+	fixture := mustLoadJSON[struct {
+		Schema                   string `json:"schema"`
+		NodeID                   string `json:"node_id"`
+		Status                   string `json:"status"`
+		CompletedNodesBefore     int    `json:"completed_nodes_before_node"`
+		ReadyNodesBefore         int    `json:"ready_nodes_before_node"`
+		FirstExecutableNode      string `json:"first_executable_node"`
+		FinalResponseAllowed     bool   `json:"final_response_allowed"`
+		ExactNextAction          string `json:"exact_next_action"`
+		ClosureAllowed           bool   `json:"closure_allowed"`
+		CompleteEvidenceRequired bool   `json:"complete_evidence_required"`
+		CIPassRequired           bool   `json:"ci_pass_required"`
+		BranchCleanupRequired    bool   `json:"branch_cleanup_required"`
+		PublicSafetyRequired     bool   `json:"public_safety_required"`
+		DenialCases              []struct {
+			Name             string `json:"name"`
+			MissingEvidence  bool   `json:"missing_evidence"`
+			CIPending        bool   `json:"ci_pending"`
+			CodexBranchFound bool   `json:"codex_branch_found"`
+			ForbiddenSurface bool   `json:"forbidden_surface"`
+			ClosureAllowed   bool   `json:"closure_allowed"`
+			Reason           string `json:"reason"`
+		} `json:"denial_cases"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "closure-gate-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.closure-gate-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-37" ||
+		fixture.Status != "closure_gate_recorded" ||
+		fixture.CompletedNodesBefore != nodeThirtySixReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtySixReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtySixReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirtySixReadback.ExactNextAction ||
+		fixture.ClosureAllowed ||
+		!fixture.CompleteEvidenceRequired ||
+		!fixture.CIPassRequired ||
+		!fixture.BranchCleanupRequired ||
+		!fixture.PublicSafetyRequired ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("closure gate must bind node 36 checkpoint without authority effects: %#v", fixture)
+	}
+	wantReasons := map[string]string{
+		"missing_evidence":       "blocked_missing_evidence",
+		"ci_pending":             "blocked_ci_not_green",
+		"codex_branch_remaining": "blocked_branch_cleanup",
+		"forbidden_surface":      "blocked_public_safety",
+	}
+	if len(fixture.DenialCases) != len(wantReasons) {
+		t.Fatalf("closure gate must include all denial cases, got %d: %#v", len(fixture.DenialCases), fixture.DenialCases)
+	}
+	for _, item := range fixture.DenialCases {
+		want, ok := wantReasons[item.Name]
+		if !ok {
+			t.Fatalf("unexpected closure denial case: %#v", item)
+		}
+		if item.ClosureAllowed || item.Reason != want {
+			t.Fatalf("closure denial case %q should deny closure with %q: %#v", item.Name, want, item)
+		}
+		switch item.Name {
+		case "missing_evidence":
+			if !item.MissingEvidence {
+				t.Fatalf("missing evidence case must mark missing evidence: %#v", item)
+			}
+		case "ci_pending":
+			if !item.CIPending {
+				t.Fatalf("CI pending case must mark CI pending: %#v", item)
+			}
+		case "codex_branch_remaining":
+			if !item.CodexBranchFound {
+				t.Fatalf("branch cleanup case must mark codex branch found: %#v", item)
+			}
+		case "forbidden_surface":
+			if !item.ForbiddenSurface {
+				t.Fatalf("public-safety case must mark forbidden surface: %#v", item)
+			}
+		}
+		delete(wantReasons, item.Name)
+	}
+	if len(wantReasons) != 0 {
+		t.Fatalf("missing closure denial cases: %#v", wantReasons)
+	}
+
+	nodeThirtySevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtySevenReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtySevenReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtySevenReadback.CompletedNodes != 37 ||
+		nodeThirtySevenReadback.ReadyNodes != 3 ||
+		nodeThirtySevenReadback.FirstExecutableNode != "mission-recommendation-hardening-38" ||
+		nodeThirtySevenReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtySevenReadback.ExactNextAction, "mission-recommendation-hardening-38") {
+		t.Fatalf("node 37 readback must carry closure-gate evidence and continue to node 38: %#v", nodeThirtySevenReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

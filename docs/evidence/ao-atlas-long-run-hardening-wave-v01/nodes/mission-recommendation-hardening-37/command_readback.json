@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.command-readback-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-37",
+  "status": "closure_gate_recorded",
+  "completed_nodes_before_node": 36,
+  "ready_nodes_before_node": 4,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-37 and execute exactly one active node."
+}
