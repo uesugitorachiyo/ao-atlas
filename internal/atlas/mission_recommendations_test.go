@@ -3526,6 +3526,98 @@ func TestLongRunHardeningWavePromotedFoundryRollupRequiresCommandAgreement(t *te
 	}
 }
 
+func TestLongRunHardeningWaveDeniedFoundryRollupReportsExactMissingEvidence(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeFourteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-14", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-15")
+	fixture := mustLoadJSON[struct {
+		Schema                         string   `json:"schema"`
+		NodeID                         string   `json:"node_id"`
+		Status                         string   `json:"status"`
+		SourceStatus                   string   `json:"source_status"`
+		NormalizedStatus               string   `json:"normalized_status"`
+		ClosesTask                     bool     `json:"closes_task"`
+		ClosesMission                  bool     `json:"closes_mission"`
+		ExactMissingEvidenceRequired   bool     `json:"exact_missing_evidence_required"`
+		GenericDenialAllowed           bool     `json:"generic_denial_allowed"`
+		SafeNextActionRequired         bool     `json:"safe_next_action_required"`
+		MissingEvidenceCategories      []string `json:"missing_evidence_categories"`
+		DeniedReasonReadback           string   `json:"denied_reason_readback"`
+		CompletedNodesBeforeNode       int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode           int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed           bool     `json:"final_response_allowed"`
+		ExactNextAction                string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint     struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "foundry-denied-exact-evidence-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.foundry-denied-exact-evidence-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-15" ||
+		fixture.Status != "exact_missing_evidence_required" ||
+		fixture.SourceStatus != "denied" ||
+		fixture.NormalizedStatus != "denied" ||
+		!fixture.ClosesTask ||
+		fixture.ClosesMission ||
+		!fixture.ExactMissingEvidenceRequired ||
+		fixture.GenericDenialAllowed ||
+		!fixture.SafeNextActionRequired ||
+		fixture.DeniedReasonReadback != "required_exact_missing_evidence_not_generic" ||
+		fixture.CompletedNodesBeforeNode != nodeFourteenReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeFourteenReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeFourteenReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("denied rollup fixture must require exact missing evidence without authority effects: %#v", fixture)
+	}
+	categories := map[string]bool{}
+	for _, category := range fixture.MissingEvidenceCategories {
+		categories[category] = true
+	}
+	for _, category := range []string{
+		"node_evidence",
+		"stop_gate",
+		"ci_pr_merge",
+		"command_readback_agreement",
+	} {
+		if !categories[category] {
+			t.Fatalf("denied rollup fixture missing evidence category %s: %#v", category, fixture.MissingEvidenceCategories)
+		}
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeFourteenReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeFourteenReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeFourteenReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeFourteenReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeFourteenReadback.ExactNextAction {
+		t.Fatalf("denied rollup fixture must bind node 14 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+
+	nodeFifteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeFifteenReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeFifteenReadback.CompletedNodes != 15 ||
+		nodeFifteenReadback.ReadyNodes != 25 ||
+		nodeFifteenReadback.FirstExecutableNode != "mission-recommendation-hardening-16" ||
+		nodeFifteenReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeFifteenReadback.ExactNextAction, "mission-recommendation-hardening-16") {
+		t.Fatalf("node 15 readback must continue to node 16 without final response: %#v", nodeFifteenReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
