@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-18",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T02:13:55Z",
+  "changes": [
+    "changed generated Atlas recommendation readbacks to emit the full generated task list",
+    "added regression coverage proving a 40-node doubled wave returns 40 concrete feature-depth recommendations",
+    "generated Foundry import, run-link, checkpoint, execution, and readback artifacts for node 18"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-18"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}

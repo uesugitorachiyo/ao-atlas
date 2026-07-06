@@ -3799,6 +3799,95 @@ func TestLongRunHardeningWaveFeatureDepthDefaultsToTwentyTasks(t *testing.T) {
 	}
 }
 
+func TestLongRunHardeningWaveDoubledFeatureDepthReturnsFortyTasks(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "feature-depth-doubled-40",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(readback.FeatureDepthRecommendations) < 40 {
+		t.Fatalf("doubled readback must carry all 40 feature-depth recommendations, got %d: %#v", len(readback.FeatureDepthRecommendations), readback.FeatureDepthRecommendations)
+	}
+	if !strings.Contains(readback.FeatureDepthRecommendations[39], "next-40") {
+		t.Fatalf("doubled readback must include the 40th concrete task: %#v", readback.FeatureDepthRecommendations[39])
+	}
+
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeSeventeenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-17", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-18")
+	fixture := mustLoadJSON[struct {
+		Schema                         string `json:"schema"`
+		NodeID                         string `json:"node_id"`
+		Status                         string `json:"status"`
+		DoubledRecommendationFloor     int    `json:"doubled_recommendation_floor"`
+		ObservedRecommendationCount    int    `json:"observed_recommendation_count"`
+		IncludesFortiethTask           bool   `json:"includes_fortieth_task"`
+		CompletedNodesBeforeNode       int    `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode           int    `json:"ready_nodes_before_node"`
+		FinalResponseAllowed           bool   `json:"final_response_allowed"`
+		ExactNextAction                string `json:"exact_next_action"`
+		CurrentHardeningCheckpoint     struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "feature-depth-doubled-40-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.feature-depth-doubled-40-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-18" ||
+		fixture.Status != "floor_met" ||
+		fixture.DoubledRecommendationFloor != 40 ||
+		fixture.ObservedRecommendationCount < 40 ||
+		!fixture.IncludesFortiethTask ||
+		fixture.CompletedNodesBeforeNode != nodeSeventeenReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeSeventeenReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeSeventeenReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("doubled feature-depth fixture must prove a 40-task floor without authority effects: %#v", fixture)
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeSeventeenReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeSeventeenReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeSeventeenReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeSeventeenReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeSeventeenReadback.ExactNextAction {
+		t.Fatalf("doubled feature-depth fixture must bind node 17 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+
+	nodeEighteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeEighteenReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeEighteenReadback.FeatureDepthRecommendations) < 40 ||
+		nodeEighteenReadback.CompletedNodes != 18 ||
+		nodeEighteenReadback.ReadyNodes != 22 ||
+		nodeEighteenReadback.FirstExecutableNode != "mission-recommendation-hardening-19" ||
+		nodeEighteenReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeEighteenReadback.ExactNextAction, "mission-recommendation-hardening-19") {
+		t.Fatalf("node 18 readback must carry 40 recommendations and continue to node 19: %#v", nodeEighteenReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
