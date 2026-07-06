@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-38",
+  "status": "implemented",
+  "changed_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-38"
+  ],
+  "implementation_summary": "Added a Mission-to-Atlas multi-import smoke fixture spanning three serialized Foundry imports.",
+  "authority_effect": "none",
+  "implemented_at": "2026-07-06T08:14:35Z"
+}

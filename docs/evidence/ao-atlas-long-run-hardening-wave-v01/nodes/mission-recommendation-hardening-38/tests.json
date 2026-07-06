@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-38",
+  "status": "passed",
+  "red_result": "failed_missing_multi_import_smoke_fixture",
+  "targeted_test": "go test ./internal/atlas -run TestLongRunHardeningWaveMissionAtlasMultiImportSmokeArtifact -count=1",
+  "green_result": "passed"
+}
