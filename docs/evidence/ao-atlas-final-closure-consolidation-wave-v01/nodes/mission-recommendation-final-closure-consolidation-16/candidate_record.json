@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-16",
+  "status": "implemented",
+  "objective": "Add wait state telemetry for long running Windows continuous integration checks.",
+  "implementation": [
+    "Added node 15 post-merge lifecycle evidence after PR 318 CI, merge, sync, and branch cleanup.",
+    "Added Windows CI wait-state telemetry over recent PR #317 and PR #318 production-readiness matrices.",
+    "Recorded pending-before-success wait states and observed Windows check durations above the 600 second long-running threshold.",
+    "Added a regression test that binds the telemetry to node 15 readback and confirms no promotion or RSI claim is introduced."
+  ],
+  "files_changed": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-15/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-16/windows-ci-wait-state-telemetry.json"
+  ],
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

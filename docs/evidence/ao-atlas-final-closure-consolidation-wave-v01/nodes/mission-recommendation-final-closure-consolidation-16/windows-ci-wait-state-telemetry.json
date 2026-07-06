@@ -1,0 +1,75 @@
+{
+  "schema": "ao.atlas.windows-ci-wait-state-telemetry.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-16",
+  "status": "recorded",
+  "source": "gh_pr_checks_317_318",
+  "long_running_os": "windows-latest",
+  "wait_threshold_seconds": 600,
+  "source_prs": [
+    317,
+    318
+  ],
+  "windows_check_sample_count": 6,
+  "pending_state_observed": true,
+  "completed_pass_state_observed": true,
+  "failed_state_observed": false,
+  "max_observed_duration_seconds": 737,
+  "completed_nodes_before": 15,
+  "ready_nodes_before": 9,
+  "first_executable_node_before": "mission-recommendation-final-closure-consolidation-16",
+  "final_response_allowed_before": false,
+  "expected_next_node_after_completion": "mission-recommendation-final-closure-consolidation-17",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "rsi_remains_denied": true,
+  "windows_check_duration_samples": [
+    {
+      "pr_number": 317,
+      "check_name": "Production readiness (windows-latest)",
+      "final_status": "COMPLETED",
+      "final_conclusion": "SUCCESS",
+      "duration_seconds": 647,
+      "wait_state": "long_running_pending_before_success"
+    },
+    {
+      "pr_number": 317,
+      "check_name": "production-readiness (windows-latest)",
+      "final_status": "COMPLETED",
+      "final_conclusion": "SUCCESS",
+      "duration_seconds": 656,
+      "wait_state": "long_running_pending_before_success"
+    },
+    {
+      "pr_number": 317,
+      "check_name": "production-readiness (windows-latest)",
+      "final_status": "COMPLETED",
+      "final_conclusion": "SUCCESS",
+      "duration_seconds": 674,
+      "wait_state": "long_running_pending_before_success"
+    },
+    {
+      "pr_number": 318,
+      "check_name": "Production readiness (windows-latest)",
+      "final_status": "COMPLETED",
+      "final_conclusion": "SUCCESS",
+      "duration_seconds": 684,
+      "wait_state": "long_running_pending_before_success"
+    },
+    {
+      "pr_number": 318,
+      "check_name": "production-readiness (windows-latest)",
+      "final_status": "COMPLETED",
+      "final_conclusion": "SUCCESS",
+      "duration_seconds": 687,
+      "wait_state": "long_running_pending_before_success"
+    },
+    {
+      "pr_number": 318,
+      "check_name": "production-readiness (windows-latest)",
+      "final_status": "COMPLETED",
+      "final_conclusion": "SUCCESS",
+      "duration_seconds": 737,
+      "wait_state": "long_running_pending_before_success"
+    }
+  ]
+}

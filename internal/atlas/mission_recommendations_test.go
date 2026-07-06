@@ -19,6 +19,15 @@ func containsStringPrefix(values []string, prefix string) bool {
 	return false
 }
 
+func containsInt(values []int, target int) bool {
+	for _, value := range values {
+		if value == target {
+			return true
+		}
+	}
+	return false
+}
+
 type requiredFieldSchema struct {
 	Required   []string                       `json:"required"`
 	Properties map[string]requiredFieldSchema `json:"properties"`
@@ -7500,6 +7509,103 @@ func TestFinalClosureConsolidationBuildArtifactGuardRegressionReportsBeforePromo
 	for _, message := range guard.FailureMessages {
 		if !containsString(fixture.FailureMessages, message) {
 			t.Fatalf("node 15 fixture lost guard failure message %q: %#v", message, fixture.FailureMessages)
+		}
+	}
+}
+
+func TestFinalClosureConsolidationWindowsCIWaitStateTelemetryRecordsLongRunningChecks(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeFifteenDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-15")
+	nodeSixteenDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-16")
+
+	nodeFifteenLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(nodeFifteenDir, "post-merge-lifecycle.json"))
+	nodeFifteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeFifteenDir, "recommendation-readback-after.json"))
+	telemetry := mustLoadJSON[struct {
+		Schema                         string `json:"schema"`
+		NodeID                         string `json:"node_id"`
+		Status                         string `json:"status"`
+		Source                         string `json:"source"`
+		LongRunningOS                  string `json:"long_running_os"`
+		WaitThresholdSeconds           int    `json:"wait_threshold_seconds"`
+		SourcePRs                      []int  `json:"source_prs"`
+		WindowsCheckSampleCount        int    `json:"windows_check_sample_count"`
+		PendingStateObserved           bool   `json:"pending_state_observed"`
+		CompletedPassStateObserved     bool   `json:"completed_pass_state_observed"`
+		FailedStateObserved            bool   `json:"failed_state_observed"`
+		MaxObservedDurationSeconds     int    `json:"max_observed_duration_seconds"`
+		CompletedNodesBefore           int    `json:"completed_nodes_before"`
+		ReadyNodesBefore               int    `json:"ready_nodes_before"`
+		FirstExecutableNodeBefore      string `json:"first_executable_node_before"`
+		FinalResponseAllowedBefore     bool   `json:"final_response_allowed_before"`
+		ExpectedNextNodeAfterComplete  string `json:"expected_next_node_after_completion"`
+		PromotionRequested             bool   `json:"promotion_requested"`
+		PromotionGranted               bool   `json:"promotion_granted"`
+		RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
+		WindowsCheckDurationSamples    []struct {
+			PRNumber        int    `json:"pr_number"`
+			CheckName       string `json:"check_name"`
+			FinalStatus     string `json:"final_status"`
+			FinalConclusion string `json:"final_conclusion"`
+			DurationSeconds int    `json:"duration_seconds"`
+			WaitState       string `json:"wait_state"`
+		} `json:"windows_check_duration_samples"`
+	}](t, filepath.Join(nodeSixteenDir, "windows-ci-wait-state-telemetry.json"))
+
+	if nodeFifteenLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeFifteenLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-15" ||
+		nodeFifteenLifecycle.Status != "merged_and_cleaned" ||
+		nodeFifteenLifecycle.PRNumber != 318 ||
+		nodeFifteenLifecycle.MergeCommit != "8c708461a563550e0e2df5fc8eed5774d23ca7fd" ||
+		nodeFifteenLifecycle.CIStatus != "passed" ||
+		!nodeFifteenLifecycle.LocalMainSynced ||
+		!nodeFifteenLifecycle.LocalBranchDeleted ||
+		!nodeFifteenLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 15 lifecycle evidence must prove clean branch handoff before node 16 telemetry: %#v", nodeFifteenLifecycle)
+	}
+	if telemetry.Schema != "ao.atlas.windows-ci-wait-state-telemetry.v0.1" ||
+		telemetry.NodeID != "mission-recommendation-final-closure-consolidation-16" ||
+		telemetry.Status != "recorded" ||
+		telemetry.Source != "gh_pr_checks_317_318" ||
+		telemetry.LongRunningOS != "windows-latest" ||
+		telemetry.WaitThresholdSeconds != 600 ||
+		telemetry.WindowsCheckSampleCount != len(telemetry.WindowsCheckDurationSamples) ||
+		telemetry.WindowsCheckSampleCount < 6 ||
+		!containsInt(telemetry.SourcePRs, 317) ||
+		!containsInt(telemetry.SourcePRs, 318) ||
+		!telemetry.PendingStateObserved ||
+		!telemetry.CompletedPassStateObserved ||
+		telemetry.FailedStateObserved ||
+		telemetry.MaxObservedDurationSeconds < telemetry.WaitThresholdSeconds ||
+		telemetry.CompletedNodesBefore != nodeFifteenReadback.CompletedNodes ||
+		telemetry.ReadyNodesBefore != nodeFifteenReadback.ReadyNodes ||
+		telemetry.FirstExecutableNodeBefore != nodeFifteenReadback.FirstExecutableNode ||
+		telemetry.FinalResponseAllowedBefore != nodeFifteenReadback.FinalResponseAllowed ||
+		telemetry.ExpectedNextNodeAfterComplete != "mission-recommendation-final-closure-consolidation-17" ||
+		telemetry.PromotionRequested ||
+		telemetry.PromotionGranted ||
+		!telemetry.RSIRemainsDenied {
+		t.Fatalf("node 16 telemetry fixture must bind long-running Windows CI state without promotion: %#v", telemetry)
+	}
+	for _, sample := range telemetry.WindowsCheckDurationSamples {
+		if sample.PRNumber != 317 && sample.PRNumber != 318 {
+			t.Fatalf("unexpected telemetry PR sample: %#v", sample)
+		}
+		if !strings.Contains(sample.CheckName, "windows-latest") ||
+			sample.FinalStatus != "COMPLETED" ||
+			sample.FinalConclusion != "SUCCESS" ||
+			sample.DurationSeconds < telemetry.WaitThresholdSeconds ||
+			sample.WaitState != "long_running_pending_before_success" {
+			t.Fatalf("Windows telemetry sample must report long-running pending-before-success state: %#v", sample)
 		}
 	}
 }
