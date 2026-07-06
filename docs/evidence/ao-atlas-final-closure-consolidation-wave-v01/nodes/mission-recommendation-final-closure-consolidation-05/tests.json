@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-05",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationBranchCleanupHandoffRegressionCoversNodeFive -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 4 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationBranchCleanupHandoffRegressionCoversNodeFive -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Node 5 starts from the node 4 readback checkpoint.",
+    "Node 4 lifecycle evidence records PR, CI, merge, sync, and branch deletion.",
+    "The handoff fixture requires zero local and remote codex branches."
+  ]
+}

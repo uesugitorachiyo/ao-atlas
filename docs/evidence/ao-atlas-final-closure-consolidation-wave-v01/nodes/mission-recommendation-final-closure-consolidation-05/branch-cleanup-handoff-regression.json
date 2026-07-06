@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.branch-cleanup-handoff-regression.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-05",
+  "status": "guarded",
+  "source_readback_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-04/recommendation-readback-after.json",
+  "completed_nodes_before": 4,
+  "ready_nodes_before": 20,
+  "first_executable_node_before": "mission-recommendation-final-closure-consolidation-05",
+  "local_codex_branches": 0,
+  "remote_codex_branches": 0,
+  "all_prior_cleanup_rollups_clean": true,
+  "next_node_requires_clean_branch_state": true,
+  "final_response_allowed_before": false,
+  "rsi_remains_denied": true
+}
