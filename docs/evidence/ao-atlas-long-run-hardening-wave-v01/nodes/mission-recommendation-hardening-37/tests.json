@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-37",
+  "status": "passed",
+  "red_result": "failed_missing_closure_gate_fixture",
+  "targeted_test": "go test ./internal/atlas -run TestLongRunHardeningWaveClosureGateRequiresEvidenceCIAndCleanup -count=1",
+  "green_result": "passed"
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-37",
+  "task_id": "mission-recommendation-hardening-37-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-36/recommendation-readback-after.json",
+  "objective": "Add closure regression proving Mission Atlas closes only with complete evidence CI cleanup and no forbidden surfaces.",
+  "candidate_reason": "The supervisor needs closure-denial evidence for incomplete artifacts, pending CI, remaining codex branches, and public-safety violations.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T07:58:32Z"
+}

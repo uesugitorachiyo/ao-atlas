@@ -1,0 +1,58 @@
+{
+  "schema": "ao.atlas.closure-gate-fixture.v0.1",
+  "node_id": "mission-recommendation-hardening-37",
+  "status": "closure_gate_recorded",
+  "completed_nodes_before_node": 36,
+  "ready_nodes_before_node": 4,
+  "first_executable_node": "mission-recommendation-hardening-37",
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-37 and execute exactly one active node.",
+  "closure_allowed": false,
+  "complete_evidence_required": true,
+  "ci_pass_required": true,
+  "branch_cleanup_required": true,
+  "public_safety_required": true,
+  "denial_cases": [
+    {
+      "name": "missing_evidence",
+      "missing_evidence": true,
+      "ci_pending": false,
+      "codex_branch_found": false,
+      "forbidden_surface": false,
+      "closure_allowed": false,
+      "reason": "blocked_missing_evidence"
+    },
+    {
+      "name": "ci_pending",
+      "missing_evidence": false,
+      "ci_pending": true,
+      "codex_branch_found": false,
+      "forbidden_surface": false,
+      "closure_allowed": false,
+      "reason": "blocked_ci_not_green"
+    },
+    {
+      "name": "codex_branch_remaining",
+      "missing_evidence": false,
+      "ci_pending": false,
+      "codex_branch_found": true,
+      "forbidden_surface": false,
+      "closure_allowed": false,
+      "reason": "blocked_branch_cleanup"
+    },
+    {
+      "name": "forbidden_surface",
+      "missing_evidence": false,
+      "ci_pending": false,
+      "codex_branch_found": false,
+      "forbidden_surface": true,
+      "closure_allowed": false,
+      "reason": "blocked_public_safety"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
