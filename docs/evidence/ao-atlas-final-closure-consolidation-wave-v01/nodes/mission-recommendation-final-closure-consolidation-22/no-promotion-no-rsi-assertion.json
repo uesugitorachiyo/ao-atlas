@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.no-promotion-no-rsi-assertion.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-22",
+  "status": "asserted",
+  "source_consolidation_workgraph_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-21/workgraph-after.json",
+  "source_hardening_workgraph_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/workgraph-after.json",
+  "completed_hardening_nodes": 40,
+  "completed_consolidation_nodes_before": 21,
+  "covered_completed_nodes_total": 61,
+  "promoter_no_promotion_files": 61,
+  "command_readback_files": 61,
+  "sentinel_public_safety_files": 61,
+  "promotion_requested_false_count": 61,
+  "promotion_granted_false_count": 61,
+  "sentinel_rsi_denied_count": 61,
+  "allowed_promoter_statuses": [
+    "no_promotion_requested",
+    "no_promotion",
+    "recorded"
+  ],
+  "allowed_command_status_prefixes": [
+    "readback_agrees_no_promotion",
+    "recorded"
+  ],
+  "no_promotion_invariant_holds": true,
+  "rsi_denial_invariant_holds": true,
+  "expected_next_node_after_completion": "mission-recommendation-final-closure-consolidation-23",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
