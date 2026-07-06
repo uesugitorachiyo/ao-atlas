@@ -1,0 +1,11 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-01",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 0,
+  "ready_nodes_before": 24,
+  "first_executable_node_before": "mission-recommendation-final-closure-consolidation-01",
+  "final_response_allowed_before": false,
+  "expected_next_node_after_completion": "mission-recommendation-final-closure-consolidation-02",
+  "compact_timeline": "0/24 consolidation nodes complete; node 1 seeds the wave and keeps final response denied until ready work is consumed."
+}
