@@ -108,7 +108,9 @@ func TestMissionRecommendationsOperatorSummaryCheckCLIWritesDeterministicArtifac
 	if err != nil {
 		t.Fatalf("read generated operator summary: %v", err)
 	}
-	if string(generatedSummary) != string(recordedSummary) {
-		t.Fatalf("CLI operator summary markdown drifted\nwant:\n%s\ngot:\n%s", string(recordedSummary), string(generatedSummary))
+	recordedSummaryText := strings.ReplaceAll(string(recordedSummary), "\r\n", "\n")
+	generatedSummaryText := strings.ReplaceAll(string(generatedSummary), "\r\n", "\n")
+	if generatedSummaryText != recordedSummaryText {
+		t.Fatalf("CLI operator summary markdown drifted\nwant:\n%s\ngot:\n%s", recordedSummaryText, generatedSummaryText)
 	}
 }
