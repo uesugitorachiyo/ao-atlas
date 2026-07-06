@@ -1,0 +1,37 @@
+{
+  "schema": "ao.atlas.mission-dashboard-regression.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-21",
+  "status": "guarded",
+  "source_dashboard_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-20/mission-dashboard-binding.json",
+  "source_dashboard_markdown_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-20/mission-dashboard.md",
+  "source_component_count": 6,
+  "required_binding_repos": [
+    "ao-atlas",
+    "ao-foundry",
+    "ao-promoter",
+    "ao-command",
+    "ao-sentinel"
+  ],
+  "required_evidence_roles": {
+    "ao-atlas": "final_readback_and_closure",
+    "ao-foundry": "bounded_import_run_link_coverage",
+    "ao-promoter": "no_promotion_rollup",
+    "ao-command": "class_decision_readback",
+    "ao-sentinel": "public_safety_scan"
+  },
+  "required_statuses": {
+    "ao-atlas": "final_response_allowed",
+    "ao-foundry": "40_foundry_imports_and_run_links_bound",
+    "ao-promoter": "no_promotion_requested",
+    "ao-command": "readback_agrees_no_promotion",
+    "ao-sentinel": "passed"
+  },
+  "required_bindings_present": true,
+  "required_binding_source_paths_set": true,
+  "mission_continuation_retained": true,
+  "all_source_paths_exist": true,
+  "expected_next_node_after_completion": "mission-recommendation-final-closure-consolidation-22",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "rsi_remains_denied": true
+}

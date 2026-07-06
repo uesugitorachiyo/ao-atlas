@@ -8128,6 +8128,130 @@ func TestFinalClosureConsolidationMissionDashboardBindsMultiRepoEvidence(t *test
 	}
 }
 
+func TestFinalClosureConsolidationMissionDashboardRegressionCoversCoreBindings(t *testing.T) {
+	root := repoRoot(t)
+	consolidationRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeTwentyDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-20")
+	nodeTwentyOneDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-21")
+
+	nodeTwentyLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(nodeTwentyDir, "post-merge-lifecycle.json"))
+	dashboard := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		DashboardMarkdown   string `json:"dashboard_markdown_path"`
+		ComponentCount      int    `json:"component_count"`
+		AllSourcePathsExist bool   `json:"all_source_paths_exist"`
+		PromotionRequested  bool   `json:"promotion_requested"`
+		PromotionGranted    bool   `json:"promotion_granted"`
+		RSIRemainsDenied    bool   `json:"rsi_remains_denied"`
+		RepoBindings        []struct {
+			Repo         string `json:"repo"`
+			Owner        string `json:"owner"`
+			EvidenceRole string `json:"evidence_role"`
+			SourcePath   string `json:"source_path"`
+			Status       string `json:"status"`
+		} `json:"repo_bindings"`
+	}](t, filepath.Join(nodeTwentyDir, "mission-dashboard-binding.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                        string            `json:"schema"`
+		NodeID                        string            `json:"node_id"`
+		Status                        string            `json:"status"`
+		SourceDashboardPath           string            `json:"source_dashboard_path"`
+		SourceDashboardMarkdownPath   string            `json:"source_dashboard_markdown_path"`
+		SourceComponentCount          int               `json:"source_component_count"`
+		RequiredBindingRepos          []string          `json:"required_binding_repos"`
+		RequiredEvidenceRoles         map[string]string `json:"required_evidence_roles"`
+		RequiredStatuses              map[string]string `json:"required_statuses"`
+		RequiredBindingsPresent       bool              `json:"required_bindings_present"`
+		RequiredBindingSourcePathsSet bool              `json:"required_binding_source_paths_set"`
+		MissionContinuationRetained   bool              `json:"mission_continuation_retained"`
+		AllSourcePathsExist           bool              `json:"all_source_paths_exist"`
+		ExpectedNextNodeAfterComplete string            `json:"expected_next_node_after_completion"`
+		PromotionRequested            bool              `json:"promotion_requested"`
+		PromotionGranted              bool              `json:"promotion_granted"`
+		RSIRemainsDenied              bool              `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeTwentyOneDir, "mission-dashboard-regression.json"))
+	markdownBytes, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(fixture.SourceDashboardMarkdownPath)))
+	if err != nil {
+		t.Fatalf("read mission dashboard markdown: %v", err)
+	}
+	markdown := string(markdownBytes)
+
+	if nodeTwentyLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeTwentyLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-20" ||
+		nodeTwentyLifecycle.Status != "merged_and_cleaned" ||
+		nodeTwentyLifecycle.PRNumber != 323 ||
+		nodeTwentyLifecycle.MergeCommit != "c60d7fb535373c93191e1d5883eef9fca713b249" ||
+		nodeTwentyLifecycle.CIStatus != "passed" ||
+		!nodeTwentyLifecycle.LocalMainSynced ||
+		!nodeTwentyLifecycle.LocalBranchDeleted ||
+		!nodeTwentyLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 20 lifecycle evidence must prove clean branch handoff before node 21 regression: %#v", nodeTwentyLifecycle)
+	}
+	if fixture.Schema != "ao.atlas.mission-dashboard-regression.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-21" ||
+		fixture.Status != "guarded" ||
+		fixture.SourceDashboardPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-20/mission-dashboard-binding.json" ||
+		fixture.SourceDashboardMarkdownPath != dashboard.DashboardMarkdown ||
+		fixture.SourceComponentCount != dashboard.ComponentCount ||
+		len(fixture.RequiredBindingRepos) != 5 ||
+		!fixture.RequiredBindingsPresent ||
+		!fixture.RequiredBindingSourcePathsSet ||
+		!fixture.MissionContinuationRetained ||
+		fixture.AllSourcePathsExist != dashboard.AllSourcePathsExist ||
+		fixture.ExpectedNextNodeAfterComplete != "mission-recommendation-final-closure-consolidation-22" ||
+		fixture.PromotionRequested ||
+		fixture.PromotionGranted ||
+		!fixture.RSIRemainsDenied ||
+		dashboard.Schema != "ao.atlas.mission-dashboard-binding.v0.1" ||
+		dashboard.NodeID != "mission-recommendation-final-closure-consolidation-20" ||
+		dashboard.Status != "bound" ||
+		dashboard.ComponentCount != 6 ||
+		dashboard.PromotionRequested ||
+		dashboard.PromotionGranted ||
+		!dashboard.RSIRemainsDenied {
+		t.Fatalf("node 21 dashboard regression must bind dashboard state without promotion: fixture=%#v dashboard=%#v", fixture, dashboard)
+	}
+	bindings := map[string]struct {
+		role       string
+		status     string
+		sourcePath string
+	}{}
+	for _, binding := range dashboard.RepoBindings {
+		bindings[binding.Repo] = struct {
+			role       string
+			status     string
+			sourcePath string
+		}{role: binding.EvidenceRole, status: binding.Status, sourcePath: binding.SourcePath}
+	}
+	for _, repo := range fixture.RequiredBindingRepos {
+		binding, ok := bindings[repo]
+		if !ok {
+			t.Fatalf("dashboard missing required repo binding %q: %#v", repo, dashboard.RepoBindings)
+		}
+		if binding.role != fixture.RequiredEvidenceRoles[repo] || binding.status != fixture.RequiredStatuses[repo] || binding.sourcePath == "" {
+			t.Fatalf("dashboard binding mismatch for %s: got %#v roles=%#v statuses=%#v", repo, binding, fixture.RequiredEvidenceRoles, fixture.RequiredStatuses)
+		}
+		if !strings.Contains(markdown, repo) || !strings.Contains(markdown, binding.status) {
+			t.Fatalf("dashboard markdown must include repo %s and status %s:\n%s", repo, binding.status, markdown)
+		}
+	}
+	if bindings["ao-mission"].status != "continuation_required" || !strings.Contains(markdown, "ao-mission") {
+		t.Fatalf("dashboard regression must preserve Mission continuation context: %#v\n%s", bindings["ao-mission"], markdown)
+	}
+}
+
 func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "examples", "invalid", "recommendation-prompt-unsafe-continuation-reason.md")

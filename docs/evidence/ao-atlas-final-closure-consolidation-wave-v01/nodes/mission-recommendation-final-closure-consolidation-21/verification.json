@@ -1,0 +1,60 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-21",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationMissionDashboardRegressionCoversCoreBindings -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "find docs/evidence/ao-atlas-final-closure-consolidation-wave-v01 docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40 -name '*.json' -print0 | xargs -0 jq -e . >/dev/null",
+      "status": "passed"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-final-closure-consolidation-wave-v01 --out docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-21/consolidation-evidence-validation-report.json",
+      "status": "passed",
+      "node_count": 21,
+      "json_files": 426,
+      "schema_bound_files": 426,
+      "typed_validator_files": 168,
+      "missing_schema_files": 0,
+      "failed_files": 0
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "score": "100/100",
+      "summary": "target/production-readiness/summary.json"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --unified=0 -- internal/atlas/mission_recommendations_test.go docs/evidence/ao-atlas-final-closure-consolidation-wave-v01 | rg denied-claim pattern list",
+      "status": "passed",
+      "exit_code": 1,
+      "blocked_terms_found": false
+    }
+  ],
+  "public_safety_scan": "passed",
+  "verified_at": "2026-07-06T19:25:56Z",
+  "notes": "Node 21 Mission dashboard regression evidence passed targeted regression, schema validation, full Atlas verification, production readiness, and scoped public-safety scan before PR."
+}
