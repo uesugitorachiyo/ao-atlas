@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-19",
+  "status": "ready",
+  "rollback_scope": [
+    "Remove node 19 compaction resume regression fixture and targeted regression test.",
+    "Remove node 19 generated evidence and readbacks.",
+    "Remove node 18 post-merge lifecycle evidence if PR lifecycle data is invalidated."
+  ],
+  "rollback_command": "git revert <merge_commit_for_node_19>",
+  "data_loss_risk": "none; regression/evidence-only change",
+  "requires_blueprint": false
+}

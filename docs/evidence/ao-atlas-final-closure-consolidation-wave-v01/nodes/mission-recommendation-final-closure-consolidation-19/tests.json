@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-19",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationCompactionResumeRegressionPreservesNextNodeAndReturnGate -count=1",
+      "status": "failed_before_implementation",
+      "failure": "missing node 18 post-merge lifecycle and node 19 compaction resume regression fixture"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationCompactionResumeRegressionPreservesNextNodeAndReturnGate -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Compaction resume regression binds node 18 readback and prompt evidence.",
+    "Exact next executable node and exact next action remain node 19 before execution.",
+    "Return gate remains blocked while ready work remains.",
+    "Final response remains denied and RSI remains denied."
+  ]
+}
