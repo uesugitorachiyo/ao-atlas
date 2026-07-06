@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-22",
+  "status": "implemented",
+  "objective": "Create a final no promotion and no RSI assertion fixture across all completed nodes.",
+  "implementation": [
+    "Added node 21 post-merge lifecycle evidence after PR 324 CI, merge, sync, and branch cleanup.",
+    "Added a combined hardening/consolidation no-promotion and no-RSI assertion fixture covering 61 completed nodes before node 22.",
+    "Added a regression test that derives completed-node counts and evidence file counts from the workgraphs and evidence roots."
+  ],
+  "files_changed": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-21/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json"
+  ],
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

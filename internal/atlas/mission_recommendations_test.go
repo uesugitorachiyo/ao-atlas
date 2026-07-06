@@ -8252,6 +8252,128 @@ func TestFinalClosureConsolidationMissionDashboardRegressionCoversCoreBindings(t
 	}
 }
 
+func TestFinalClosureConsolidationNoPromotionNoRSIAssertionCoversCompletedNodes(t *testing.T) {
+	root := repoRoot(t)
+	consolidationRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	hardeningRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentyOneDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-21")
+	nodeTwentyTwoDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-22")
+
+	nodeTwentyOneLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(nodeTwentyOneDir, "post-merge-lifecycle.json"))
+	consolidationWorkgraph := mustLoadJSON[Workgraph](t, filepath.Join(nodeTwentyOneDir, "workgraph-after.json"))
+	hardeningWorkgraph := mustLoadJSON[Workgraph](t, filepath.Join(hardeningRoot, "nodes", "mission-recommendation-hardening-40", "workgraph-after.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                        string   `json:"schema"`
+		NodeID                        string   `json:"node_id"`
+		Status                        string   `json:"status"`
+		SourceConsolidationWorkgraph  string   `json:"source_consolidation_workgraph_path"`
+		SourceHardeningWorkgraph      string   `json:"source_hardening_workgraph_path"`
+		CompletedHardeningNodes       int      `json:"completed_hardening_nodes"`
+		CompletedConsolidationBefore  int      `json:"completed_consolidation_nodes_before"`
+		CoveredCompletedNodesTotal    int      `json:"covered_completed_nodes_total"`
+		PromoterNoPromotionFiles      int      `json:"promoter_no_promotion_files"`
+		CommandReadbackFiles          int      `json:"command_readback_files"`
+		SentinelPublicSafetyFiles     int      `json:"sentinel_public_safety_files"`
+		PromotionRequestedFalseCount  int      `json:"promotion_requested_false_count"`
+		PromotionGrantedFalseCount    int      `json:"promotion_granted_false_count"`
+		SentinelRSIDeniedCount        int      `json:"sentinel_rsi_denied_count"`
+		AllowedPromoterStatuses       []string `json:"allowed_promoter_statuses"`
+		AllowedCommandStatusPrefixes  []string `json:"allowed_command_status_prefixes"`
+		NoPromotionInvariantHolds     bool     `json:"no_promotion_invariant_holds"`
+		RSIDenialInvariantHolds       bool     `json:"rsi_denial_invariant_holds"`
+		ExpectedNextNodeAfterComplete string   `json:"expected_next_node_after_completion"`
+		PromotionRequested            bool     `json:"promotion_requested"`
+		PromotionGranted              bool     `json:"promotion_granted"`
+		ClaimsAuthorityAdvance        bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied              bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeTwentyTwoDir, "no-promotion-no-rsi-assertion.json"))
+
+	countNamedFiles := func(rootDir, name string) int {
+		t.Helper()
+		count := 0
+		if err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
+			if strings.Contains(filepath.ToSlash(path), "mission-recommendation-final-closure-consolidation-22/") {
+				return nil
+			}
+			if !info.IsDir() && info.Name() == name {
+				count++
+			}
+			return nil
+		}); err != nil {
+			t.Fatalf("walk %s: %v", rootDir, err)
+		}
+		return count
+	}
+	countCompleted := func(workgraph Workgraph) int {
+		count := 0
+		for _, node := range workgraph.Nodes {
+			if node.Status == "completed" {
+				count++
+			}
+		}
+		return count
+	}
+
+	completedHardening := countCompleted(hardeningWorkgraph)
+	completedConsolidation := countCompleted(consolidationWorkgraph)
+	promoterFiles := countNamedFiles(filepath.Join(hardeningRoot, "nodes"), "promoter_no_promotion.json") + countNamedFiles(filepath.Join(consolidationRoot, "nodes"), "promoter_no_promotion.json")
+	commandFiles := countNamedFiles(filepath.Join(hardeningRoot, "nodes"), "command_readback.json") + countNamedFiles(filepath.Join(consolidationRoot, "nodes"), "command_readback.json")
+	sentinelFiles := countNamedFiles(filepath.Join(hardeningRoot, "nodes"), "sentinel_public_safety.json") + countNamedFiles(filepath.Join(consolidationRoot, "nodes"), "sentinel_public_safety.json")
+
+	if nodeTwentyOneLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeTwentyOneLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-21" ||
+		nodeTwentyOneLifecycle.Status != "merged_and_cleaned" ||
+		nodeTwentyOneLifecycle.PRNumber != 324 ||
+		nodeTwentyOneLifecycle.MergeCommit != "b7984846c9faeab349b8546646c10a9e050f2951" ||
+		nodeTwentyOneLifecycle.CIStatus != "passed" ||
+		!nodeTwentyOneLifecycle.LocalMainSynced ||
+		!nodeTwentyOneLifecycle.LocalBranchDeleted ||
+		!nodeTwentyOneLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 21 lifecycle evidence must prove clean branch handoff before node 22 assertion: %#v", nodeTwentyOneLifecycle)
+	}
+	if fixture.Schema != "ao.atlas.no-promotion-no-rsi-assertion.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-22" ||
+		fixture.Status != "asserted" ||
+		fixture.SourceConsolidationWorkgraph != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-21/workgraph-after.json" ||
+		fixture.SourceHardeningWorkgraph != "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/workgraph-after.json" ||
+		fixture.CompletedHardeningNodes != completedHardening ||
+		fixture.CompletedConsolidationBefore != completedConsolidation ||
+		fixture.CoveredCompletedNodesTotal != completedHardening+completedConsolidation ||
+		fixture.PromoterNoPromotionFiles != promoterFiles ||
+		fixture.CommandReadbackFiles != commandFiles ||
+		fixture.SentinelPublicSafetyFiles != sentinelFiles ||
+		fixture.PromotionRequestedFalseCount != promoterFiles ||
+		fixture.PromotionGrantedFalseCount != promoterFiles ||
+		fixture.SentinelRSIDeniedCount != sentinelFiles ||
+		!containsString(fixture.AllowedPromoterStatuses, "no_promotion_requested") ||
+		!containsString(fixture.AllowedPromoterStatuses, "no_promotion") ||
+		!containsString(fixture.AllowedPromoterStatuses, "recorded") ||
+		!containsString(fixture.AllowedCommandStatusPrefixes, "readback_agrees_no_promotion") ||
+		!containsString(fixture.AllowedCommandStatusPrefixes, "recorded") ||
+		!fixture.NoPromotionInvariantHolds ||
+		!fixture.RSIDenialInvariantHolds ||
+		fixture.ExpectedNextNodeAfterComplete != "mission-recommendation-final-closure-consolidation-23" ||
+		fixture.PromotionRequested ||
+		fixture.PromotionGranted ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("node 22 no-promotion/no-RSI assertion must cover completed node evidence: %#v", fixture)
+	}
+}
+
 func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "examples", "invalid", "recommendation-prompt-unsafe-continuation-reason.md")

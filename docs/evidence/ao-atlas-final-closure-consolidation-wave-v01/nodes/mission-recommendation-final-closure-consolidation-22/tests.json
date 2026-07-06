@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-22",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationNoPromotionNoRSIAssertionCoversCompletedNodes -count=1",
+      "status": "failed_before_implementation",
+      "failure": "missing node 21 post-merge lifecycle and node 22 no-promotion/no-RSI assertion fixture"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationNoPromotionNoRSIAssertionCoversCompletedNodes -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Assertion fixture covers 40 completed hardening nodes and 21 completed consolidation nodes before node 22.",
+    "Promoter evidence preserves promotion_requested=false and promotion_granted=false across covered completed nodes.",
+    "Sentinel evidence preserves RSI denial across covered completed nodes."
+  ]
+}
