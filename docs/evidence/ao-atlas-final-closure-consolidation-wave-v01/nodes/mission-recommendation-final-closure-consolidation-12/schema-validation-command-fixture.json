@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.schema-validation-command-fixture.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-12",
+  "status": "validated",
+  "command": "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-long-run-hardening-wave-v01 --out docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12/completed-wave-evidence-validation-report.json",
+  "source_wave_root": "docs/evidence/ao-atlas-long-run-hardening-wave-v01",
+  "report_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12/completed-wave-evidence-validation-report.json",
+  "completed_wave_nodes": 40,
+  "json_file_count": 786,
+  "schema_bound_files": 786,
+  "typed_validator_files": 328,
+  "generic_schema_files": 458,
+  "missing_schema_files": 0,
+  "failed_files": 0,
+  "required_filenames_covered": true,
+  "rsi_remains_denied": true
+}

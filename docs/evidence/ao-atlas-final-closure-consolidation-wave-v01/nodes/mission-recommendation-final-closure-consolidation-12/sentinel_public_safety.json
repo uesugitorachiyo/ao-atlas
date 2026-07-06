@@ -1,0 +1,16 @@
+{
+  "schema": "ao.sentinel.public-safety-readback.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-12",
+  "status": "passed",
+  "scan_scope": [
+    "internal/atlas/cli.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-11/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12"
+  ],
+  "scan_command_summary": "git diff --unified=0 over node 12 changed docs/readbacks/tests piped to rg denied-claim pattern list",
+  "scan_exit_code": 1,
+  "blocked_terms_found": false,
+  "rsi_remains_denied": true
+}

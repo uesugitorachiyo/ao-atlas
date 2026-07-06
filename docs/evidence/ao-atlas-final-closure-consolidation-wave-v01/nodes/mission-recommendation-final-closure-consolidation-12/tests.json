@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-12",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationEvidenceValidationCommandCoversCompletedHardeningWave -count=1",
+      "status": "failed_before_implementation",
+      "failure": "mission recommendations validate-evidence command was not available"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationEvidenceValidationCommandCoversCompletedHardeningWave -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "The command validates the completed hardening wave root.",
+    "The report covers 40 nodes and 786 node evidence JSON files.",
+    "The report rejects missing schema markers or typed validation failures."
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-12",
+  "status": "ready",
+  "rollback_scope": [
+    "Remove the mission recommendations validate-evidence CLI path and evidence validation helper.",
+    "Remove node 12 validation report, fixtures, and regression test.",
+    "Remove node 11 post-merge lifecycle evidence if PR lifecycle data is invalidated."
+  ],
+  "rollback_command": "git revert <merge_commit_for_node_12>",
+  "data_loss_risk": "none; command and evidence-only change",
+  "requires_blueprint": false
+}

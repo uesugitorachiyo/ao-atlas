@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, readback, complete-node, or resume")
+		return fmt.Errorf("mission recommendations requires import, readback, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -426,8 +426,11 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "resume" {
 		return runMissionRecommendationsResume(args[1:], stdout)
 	}
+	if args[0] == "validate-evidence" {
+		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
+	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, readback, complete-node, or resume")
+		return fmt.Errorf("mission recommendations requires import, readback, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -526,6 +529,49 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		filepath.ToSlash(filepath.Join(*outDir, "next-recommended-prompt.md")),
 	)
 	return nil
+}
+
+func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations validate-evidence", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	evidenceRoot := fs.String("evidence-root", "", "Atlas recommendation evidence root")
+	outPath := fs.String("out", "", "validation report output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*evidenceRoot) == "" {
+		return fmt.Errorf("--evidence-root is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*evidenceRoot, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	report, err := BuildAtlasRecommendationEvidenceValidationReport(*evidenceRoot)
+	if strings.TrimSpace(*outPath) != "" {
+		if writeErr := WriteJSON(*outPath, report); writeErr != nil {
+			return writeErr
+		}
+	}
+	if *jsonOut {
+		if printErr := printJSON(stdout, report); printErr != nil {
+			return printErr
+		}
+	} else {
+		fmt.Fprintf(stdout, "status=%s\nnode_count=%d\njson_files=%d\nschema_bound_files=%d\ntyped_validator_files=%d\nmissing_schema_files=%d\nfailed_files=%d\nrecommendation_evidence_validation_report=%s\n",
+			report.Status,
+			report.NodeCount,
+			report.JSONFileCount,
+			report.SchemaBoundFiles,
+			report.TypedValidatorFiles,
+			len(report.MissingSchemaFiles),
+			len(report.FailedFiles),
+			filepath.ToSlash(*outPath),
+		)
+	}
+	return err
 }
 
 func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) error {
