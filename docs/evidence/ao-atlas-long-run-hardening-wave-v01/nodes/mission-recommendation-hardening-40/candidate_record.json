@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-40",
+  "task_id": "mission-recommendation-hardening-40-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-39/recommendation-readback-after.json",
+  "objective": "Build final closure artifacts with recommendations verification clean repo status and exact next action.",
+  "candidate_reason": "The supervisor needs final closure evidence that ties the last exact next action to verified completion and post-merge cleanup requirements.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T08:48:36Z"
+}

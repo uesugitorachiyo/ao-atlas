@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.clean-repo-status.v0.1",
+  "node_id": "mission-recommendation-hardening-40",
+  "status": "pre_node_main_clean_and_post_merge_cleanup_required",
+  "pre_node_branch": "main",
+  "pre_node_head": "1fa518a96425bc8e5a99991c6e834c216b13fad1",
+  "pre_node_origin_main": "1fa518a96425bc8e5a99991c6e834c216b13fad1",
+  "pre_node_clean": true,
+  "post_merge_required_checks": [
+    "git status --short --branch",
+    "git rev-parse HEAD origin/main",
+    "git branch --list 'codex/*'",
+    "git ls-remote --heads origin 'codex/*'"
+  ],
+  "created_at": "2026-07-06T08:48:36Z"
+}
