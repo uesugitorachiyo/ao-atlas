@@ -3315,6 +3315,126 @@ func TestLongRunHardeningWaveUnsafePromptBlocksForbiddenActionCategories(t *test
 	}
 }
 
+func TestLongRunHardeningWaveFoundryRollupNormalizesTerminalStatuses(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwelveReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-12", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-13")
+	fixture := mustLoadJSON[struct {
+		Schema               string `json:"schema"`
+		NodeID               string `json:"node_id"`
+		Status               string `json:"status"`
+		SourceCompletedNodes int    `json:"source_completed_nodes"`
+		SourceReadyNodes     int    `json:"source_ready_nodes"`
+		FinalResponseAllowed bool   `json:"final_response_allowed"`
+		ExactNextAction      string `json:"exact_next_action"`
+		TerminalStatuses     []struct {
+			Status                       string `json:"status"`
+			NormalizedStatus             string `json:"normalized_status"`
+			Terminal                     bool   `json:"terminal"`
+			ClosesTask                   bool   `json:"closes_task"`
+			ClosesMission                bool   `json:"closes_mission"`
+			RequiresCommandAgreement     bool   `json:"requires_command_agreement"`
+			ExactMissingEvidenceRequired bool   `json:"exact_missing_evidence_required"`
+			BlockerDetailsRequired       bool   `json:"blocker_details_required"`
+			SafeNextActionRequired       bool   `json:"safe_next_action_required"`
+		} `json:"terminal_statuses"`
+		CurrentHardeningCheckpoint struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "foundry-terminal-normalization-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.foundry-terminal-normalization-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-13" ||
+		fixture.Status != "normalized" ||
+		fixture.SourceCompletedNodes != nodeTwelveReadback.CompletedNodes ||
+		fixture.SourceReadyNodes != nodeTwelveReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwelveReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("terminal normalization fixture must bind node 12 checkpoint without execution or authority effects: %#v", fixture)
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeTwelveReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeTwelveReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeTwelveReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeTwelveReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeTwelveReadback.ExactNextAction {
+		t.Fatalf("terminal normalization fixture must preserve the active checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+	statuses := map[string]struct {
+		NormalizedStatus             string
+		ClosesMission                bool
+		RequiresCommandAgreement     bool
+		ExactMissingEvidenceRequired bool
+		BlockerDetailsRequired       bool
+		SafeNextActionRequired       bool
+	}{}
+	for _, terminal := range fixture.TerminalStatuses {
+		if !terminal.Terminal || !terminal.ClosesTask {
+			t.Fatalf("terminal rollup status must close the task as a terminal Foundry result: %#v", terminal)
+		}
+		statuses[terminal.Status] = struct {
+			NormalizedStatus             string
+			ClosesMission                bool
+			RequiresCommandAgreement     bool
+			ExactMissingEvidenceRequired bool
+			BlockerDetailsRequired       bool
+			SafeNextActionRequired       bool
+		}{
+			NormalizedStatus:             terminal.NormalizedStatus,
+			ClosesMission:                terminal.ClosesMission,
+			RequiresCommandAgreement:     terminal.RequiresCommandAgreement,
+			ExactMissingEvidenceRequired: terminal.ExactMissingEvidenceRequired,
+			BlockerDetailsRequired:       terminal.BlockerDetailsRequired,
+			SafeNextActionRequired:       terminal.SafeNextActionRequired,
+		}
+	}
+	for _, status := range []string{"completed", "promoted", "denied", "blocked"} {
+		if _, ok := statuses[status]; !ok {
+			t.Fatalf("terminal normalization fixture missing %s status: %#v", status, statuses)
+		}
+	}
+	if statuses["completed"].NormalizedStatus != "completed" ||
+		statuses["completed"].ClosesMission ||
+		statuses["promoted"].NormalizedStatus != "completed" ||
+		statuses["promoted"].ClosesMission ||
+		!statuses["promoted"].RequiresCommandAgreement ||
+		statuses["denied"].NormalizedStatus != "denied" ||
+		statuses["denied"].ClosesMission ||
+		!statuses["denied"].ExactMissingEvidenceRequired ||
+		!statuses["denied"].SafeNextActionRequired ||
+		statuses["blocked"].NormalizedStatus != "blocked" ||
+		statuses["blocked"].ClosesMission ||
+		!statuses["blocked"].BlockerDetailsRequired ||
+		!statuses["blocked"].SafeNextActionRequired {
+		t.Fatalf("terminal statuses must normalize promoted/denied/blocked with exact closure requirements: %#v", statuses)
+	}
+
+	nodeThirteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirteenReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeThirteenReadback.CompletedNodes != 13 ||
+		nodeThirteenReadback.ReadyNodes != 27 ||
+		nodeThirteenReadback.FirstExecutableNode != "mission-recommendation-hardening-14" ||
+		nodeThirteenReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirteenReadback.ExactNextAction, "mission-recommendation-hardening-14") {
+		t.Fatalf("node 13 readback must continue to node 14 without final response: %#v", nodeThirteenReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
