@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-24",
+  "status": "passed",
+  "targeted_tests": [
+    "go test ./internal/atlas -run TestFinalClosureConsolidationFinalReadbackClosesAllNodes -count=1"
+  ],
+  "regression_assertions": [
+    "node 23 post-merge lifecycle evidence is present",
+    "node 23 exporter remains bound with forty ranked Feature Depth tasks",
+    "node 24 final recommendation readback closes all 24 nodes",
+    "final Command, Promoter, and Foundry rollups agree with no promotion",
+    "RSI remains denied"
+  ]
+}

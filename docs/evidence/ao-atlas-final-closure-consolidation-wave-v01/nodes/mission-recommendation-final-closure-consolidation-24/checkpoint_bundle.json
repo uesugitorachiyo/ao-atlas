@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-24",
+  "status": "ready_for_complete_node",
+  "checkpoint_before": 23,
+  "expected_checkpoint_after": 24,
+  "expected_next_node": "final_response_allowed"
+}

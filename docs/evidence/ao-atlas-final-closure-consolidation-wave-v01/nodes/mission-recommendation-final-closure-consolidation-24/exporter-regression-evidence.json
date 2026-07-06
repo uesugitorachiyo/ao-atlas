@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.exporter-regression-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-24",
+  "status": "passed",
+  "source_exporter_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-23/next-wave-recommendation-export.json",
+  "recommendation_count": 40,
+  "first_rank": 1,
+  "last_rank": 40,
+  "ranked_task_floor_met": true,
+  "expected_final_completed_nodes": 24,
+  "expected_final_ready_nodes": 0,
+  "expected_final_response_allowed": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

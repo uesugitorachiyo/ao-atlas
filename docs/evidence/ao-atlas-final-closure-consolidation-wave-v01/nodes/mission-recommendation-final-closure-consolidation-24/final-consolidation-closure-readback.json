@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.final-consolidation-closure.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-24",
+  "status": "closed",
+  "completed_nodes": 24,
+  "total_nodes": 24,
+  "ready_nodes": 0,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "final_response_allowed": true,
+  "return_gate_status": "final_response_allowed",
+  "promoter_status": "no_promotion",
+  "command_status": "completed",
+  "foundry_rollup_status": "completed",
+  "next_wave_recommendation_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-23/next-wave-feature-depth-recommendations.json",
+  "feature_depth_task_count": 40,
+  "feature_depth_sample_tasks": [
+    "feature-depth-next-wave-01: Bind AO Mission readback deltas to deterministic checkpoint comparison evidence.",
+    "feature-depth-next-wave-02: Add resumable readback diff fixtures for completed and ready node transitions.",
+    "feature-depth-next-wave-03: Create stale checkpoint rejection evidence for outdated Mission continuation prompts.",
+    "feature-depth-next-wave-04: Add operator summary checks that preserve exact next action wording.",
+    "feature-depth-next-wave-05: Extend evidence schema validation to typed node closure rollup artifacts.",
+    "feature-depth-next-wave-06: Add schema coverage summaries for every generated run link artifact.",
+    "feature-depth-next-wave-07: Validate required node evidence fields before recommendation readback advances.",
+    "feature-depth-next-wave-08: Record schema validator drift evidence for regenerated fixture directories.",
+    "feature-depth-next-wave-09: Build aggregate PR and CI timing summaries across consolidation wave nodes.",
+    "feature-depth-next-wave-10: Add long running Windows check threshold evidence to PR ledger rows."
+  ],
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

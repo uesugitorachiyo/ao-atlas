@@ -8529,6 +8529,159 @@ func TestFinalClosureConsolidationNextWaveExporterRanksFortyFeatureDepthTasks(t 
 	assertExport(t, fixture.FeatureDepthExport)
 }
 
+func TestFinalClosureConsolidationFinalReadbackClosesAllNodes(t *testing.T) {
+	root := repoRoot(t)
+	consolidationRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeTwentyThreeDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-23")
+	nodeTwentyFourDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-24")
+
+	nodeTwentyThreeLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(nodeTwentyThreeDir, "post-merge-lifecycle.json"))
+	exporter := mustLoadJSON[AtlasNextWaveRecommendationExport](t, filepath.Join(nodeTwentyThreeDir, "next-wave-recommendation-export.json"))
+	exporterRegression := mustLoadJSON[struct {
+		Schema                 string `json:"schema"`
+		NodeID                 string `json:"node_id"`
+		Status                 string `json:"status"`
+		SourceExporterPath     string `json:"source_exporter_path"`
+		RecommendationCount    int    `json:"recommendation_count"`
+		FirstRank              int    `json:"first_rank"`
+		LastRank               int    `json:"last_rank"`
+		RankedTaskFloorMet     bool   `json:"ranked_task_floor_met"`
+		ExpectedFinalCompleted int    `json:"expected_final_completed_nodes"`
+		ExpectedFinalReady     int    `json:"expected_final_ready_nodes"`
+		ExpectedFinalResponse  bool   `json:"expected_final_response_allowed"`
+		PromotionGranted       bool   `json:"promotion_granted"`
+		ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeTwentyFourDir, "exporter-regression-evidence.json"))
+	finalClosure := mustLoadJSON[struct {
+		Schema                  string   `json:"schema"`
+		NodeID                  string   `json:"node_id"`
+		Status                  string   `json:"status"`
+		CompletedNodes          int      `json:"completed_nodes"`
+		TotalNodes              int      `json:"total_nodes"`
+		ReadyNodes              int      `json:"ready_nodes"`
+		BlockedNodes            int      `json:"blocked_nodes"`
+		FailedNodes             int      `json:"failed_nodes"`
+		FinalResponseAllowed    bool     `json:"final_response_allowed"`
+		ReturnGateStatus        string   `json:"return_gate_status"`
+		PromoterStatus          string   `json:"promoter_status"`
+		CommandStatus           string   `json:"command_status"`
+		FoundryRollupStatus     string   `json:"foundry_rollup_status"`
+		NextWaveRecommendation  string   `json:"next_wave_recommendation_path"`
+		FeatureDepthTaskCount   int      `json:"feature_depth_task_count"`
+		FeatureDepthSampleTasks []string `json:"feature_depth_sample_tasks"`
+		PromotionGranted        bool     `json:"promotion_granted"`
+		ClaimsAuthorityAdvance  bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied        bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeTwentyFourDir, "final-consolidation-closure-readback.json"))
+	finalReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeTwentyFourDir, "recommendation-readback-after.json"))
+	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, filepath.Join(nodeTwentyFourDir, "final-command-readback.json"))
+	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, filepath.Join(nodeTwentyFourDir, "final-promoter-readback.json"))
+	foundry := mustLoadJSON[AtlasRecommendationFoundryRollup](t, filepath.Join(nodeTwentyFourDir, "final-foundry-rollup.json"))
+
+	if nodeTwentyThreeLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeTwentyThreeLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-23" ||
+		nodeTwentyThreeLifecycle.Status != "merged_and_cleaned" ||
+		nodeTwentyThreeLifecycle.PRNumber != 326 ||
+		nodeTwentyThreeLifecycle.MergeCommit != "28f4fb009d32e01529f8a009014c40bd5f4f2229" ||
+		nodeTwentyThreeLifecycle.CIStatus != "passed" ||
+		!nodeTwentyThreeLifecycle.LocalMainSynced ||
+		!nodeTwentyThreeLifecycle.LocalBranchDeleted ||
+		!nodeTwentyThreeLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 23 lifecycle evidence must prove clean branch handoff before final closure: %#v", nodeTwentyThreeLifecycle)
+	}
+	if exporter.Status != "exported" ||
+		exporter.RecommendationCount != 40 ||
+		!exporter.RankedTaskFloorMet ||
+		len(exporter.FeatureDepthExport.Tasks) != 40 {
+		t.Fatalf("node 24 final closure must bind the node 23 exporter: %#v", exporter)
+	}
+	if exporterRegression.Schema != "ao.atlas.exporter-regression-evidence.v0.1" ||
+		exporterRegression.NodeID != "mission-recommendation-final-closure-consolidation-24" ||
+		exporterRegression.Status != "passed" ||
+		exporterRegression.SourceExporterPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-23/next-wave-recommendation-export.json" ||
+		exporterRegression.RecommendationCount != 40 ||
+		exporterRegression.FirstRank != 1 ||
+		exporterRegression.LastRank != 40 ||
+		!exporterRegression.RankedTaskFloorMet ||
+		exporterRegression.ExpectedFinalCompleted != 24 ||
+		exporterRegression.ExpectedFinalReady != 0 ||
+		!exporterRegression.ExpectedFinalResponse ||
+		exporterRegression.PromotionGranted ||
+		exporterRegression.ClaimsAuthorityAdvance ||
+		!exporterRegression.RSIRemainsDenied {
+		t.Fatalf("node 24 exporter regression evidence must prove ranked exporter closure: %#v", exporterRegression)
+	}
+	if err := ValidateAtlasRecommendationReadback(finalReadback); err != nil {
+		t.Fatal(err)
+	}
+	if finalReadback.Status != "completed" ||
+		finalReadback.CompletedNodes != 24 ||
+		finalReadback.TotalNodes != 24 ||
+		finalReadback.ReadyNodes != 0 ||
+		finalReadback.BlockedNodes != 0 ||
+		finalReadback.FailedNodes != 0 ||
+		finalReadback.FirstExecutableNode != "" ||
+		!finalReadback.FinalResponseAllowed ||
+		finalReadback.ReturnGateStatus != "final_response_allowed" ||
+		finalReadback.ExactNextAction != "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks." ||
+		finalReadback.ContinuationContract.Status != "ready_for_final_response" ||
+		finalReadback.ContinuationContract.RefusesFinalResponse {
+		t.Fatalf("final node 24 readback must close all nodes: %#v", finalReadback)
+	}
+	if command.Status != "completed" ||
+		command.NodeCompletionStatus != "all_nodes_complete" ||
+		!command.FinalResponseAllowed ||
+		command.ReturnGateStatus != "final_response_allowed" ||
+		command.ReadyNodes != 0 {
+		t.Fatalf("final Command readback must agree with closure: %#v", command)
+	}
+	if promoter.Status != "no_promotion" ||
+		promoter.PromotionClaimed ||
+		promoter.ClaimsAuthorityAdvance ||
+		!promoter.RSIRemainsDenied ||
+		!promoter.FinalResponseAllowed {
+		t.Fatalf("final Promoter readback must preserve no-promotion/no-RSI boundary: %#v", promoter)
+	}
+	if foundry.Status != "completed" ||
+		foundry.NodeCompletionStatus != "all_nodes_complete" ||
+		!foundry.FinalResponseAllowed ||
+		foundry.ReadyNodes != 0 {
+		t.Fatalf("final Foundry rollup must report completed closure: %#v", foundry)
+	}
+	if finalClosure.Schema != "ao.atlas.final-consolidation-closure.v0.1" ||
+		finalClosure.NodeID != "mission-recommendation-final-closure-consolidation-24" ||
+		finalClosure.Status != "closed" ||
+		finalClosure.CompletedNodes != finalReadback.CompletedNodes ||
+		finalClosure.TotalNodes != finalReadback.TotalNodes ||
+		finalClosure.ReadyNodes != 0 ||
+		finalClosure.BlockedNodes != 0 ||
+		finalClosure.FailedNodes != 0 ||
+		!finalClosure.FinalResponseAllowed ||
+		finalClosure.ReturnGateStatus != finalReadback.ReturnGateStatus ||
+		finalClosure.PromoterStatus != promoter.Status ||
+		finalClosure.CommandStatus != command.Status ||
+		finalClosure.FoundryRollupStatus != foundry.Status ||
+		finalClosure.NextWaveRecommendation != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-23/next-wave-feature-depth-recommendations.json" ||
+		finalClosure.FeatureDepthTaskCount != 40 ||
+		len(finalClosure.FeatureDepthSampleTasks) < 10 ||
+		finalClosure.PromotionGranted ||
+		finalClosure.ClaimsAuthorityAdvance ||
+		!finalClosure.RSIRemainsDenied {
+		t.Fatalf("final closure artifact must bind readback, rollups, and next-wave recommendations: %#v", finalClosure)
+	}
+}
+
 func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "examples", "invalid", "recommendation-prompt-unsafe-continuation-reason.md")
