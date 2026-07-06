@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-20",
+  "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveCommandReadbackFinalGateRequiresZeroReadyAndLeaseMinimum -count=1",
+  "red_result": "failed while Command compact timeline omitted ready_nodes and explicit lease-floor gate fields",
+  "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveCommandReadbackFinalGateRequiresZeroReadyAndLeaseMinimum -count=1",
+  "green_result": "passed"
+}

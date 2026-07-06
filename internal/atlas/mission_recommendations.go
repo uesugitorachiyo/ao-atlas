@@ -1618,7 +1618,7 @@ func BuildAtlasRecommendationCommandReadback(readback AtlasRecommendationReadbac
 	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
 		nodeStatus = "blocked_or_failed_nodes_present"
 	}
-	compactTimeline := fmt.Sprintf("%d/%d recommendation nodes complete; elapsed_minutes=%d; lease_time_status=%s; final_response_allowed=%t; continuation_contract_reason=%s; exact_next_action=%s", readback.CompletedNodes, readback.TotalNodes, readback.ElapsedMinutes, readback.LeaseTimeStatus, readback.FinalResponseAllowed, readback.ContinuationContract.Reason, readback.ExactNextAction)
+	compactTimeline := fmt.Sprintf("%d/%d recommendation nodes complete; ready_nodes=%d; blocked_nodes=%d; failed_nodes=%d; elapsed_minutes=%d; min_minutes=%d; min_minutes_met=%t; node_completion_status=%s; lease_time_status=%s; final_response_allowed=%t; continuation_contract_reason=%s; exact_next_action=%s", readback.CompletedNodes, readback.TotalNodes, readback.ReadyNodes, readback.BlockedNodes, readback.FailedNodes, readback.ElapsedMinutes, minMinutes, readback.MinMinutesMet, nodeStatus, readback.LeaseTimeStatus, readback.FinalResponseAllowed, readback.ContinuationContract.Reason, readback.ExactNextAction)
 	return AtlasRecommendationCommandReadback{
 		Schema:                     "ao.atlas.recommendation-command-readback.v0.1",
 		Status:                     readback.Status,

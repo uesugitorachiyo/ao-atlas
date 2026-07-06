@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-20",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T02:49:51Z",
+  "changes": [
+    "expanded Command compact timelines with ready_nodes, blocked_nodes, failed_nodes, min_minutes, min_minutes_met, and node_completion_status",
+    "added regression coverage proving Command final response is allowed only when ready_nodes=0 and min_minutes_met=true",
+    "generated Foundry import, run-link, checkpoint, execution, and readback artifacts for node 20"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}
