@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-04",
+  "task_id": "mission-recommendation-feature-depth-next-wave-04-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveOperatorSummaryCheck|TestMissionRecommendationsOperatorSummaryCheck' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "undefined BuildAtlasMissionOperatorSummaryCheck, ValidateAtlasMissionOperatorSummaryCheck, and AtlasMissionOperatorSummaryCheck"
+  },
+  "fixture_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveOperatorSummaryCheck|TestMissionRecommendationsOperatorSummaryCheck' -count=1",
+    "status": "failed_before_fixture",
+    "failure": "missing docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-04/operator-summary.md and operator-summary-check.json"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveOperatorSummaryCheck|TestMissionRecommendationsOperatorSummaryCheck' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}

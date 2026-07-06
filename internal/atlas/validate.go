@@ -27,6 +27,7 @@ const (
 	AtlasMissionReadbackDeltaContract            = "ao.atlas.mission-readback-delta.v0.1"
 	AtlasMissionReadbackDiffFixtureContract      = "ao.atlas.mission-readback-diff-fixture.v0.1"
 	AtlasMissionStaleCheckpointRejectionContract = "ao.atlas.mission-stale-checkpoint-rejection.v0.1"
+	AtlasMissionOperatorSummaryCheckContract     = "ao.atlas.mission-operator-summary-check.v0.1"
 	WorkgraphContract                            = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract                  = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                          = "ao.atlas.factory-task.v0.1"
