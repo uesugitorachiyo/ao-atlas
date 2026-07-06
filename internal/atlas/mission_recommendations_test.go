@@ -5706,6 +5706,117 @@ func TestLongRunHardeningWaveExactNextActionPropagatesToSummaryAndPrompt(t *test
 	}
 }
 
+func TestLongRunHardeningWavePublicClaimGuardRejectsUnevidencedPromotionClaims(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtyFiveReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-35", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-36")
+	fixture := mustLoadJSON[struct {
+		Schema                          string   `json:"schema"`
+		NodeID                          string   `json:"node_id"`
+		Status                          string   `json:"status"`
+		CompletedNodesBefore            int      `json:"completed_nodes_before_node"`
+		ReadyNodesBefore                int      `json:"ready_nodes_before_node"`
+		FirstExecutableNode             string   `json:"first_executable_node"`
+		FinalResponseAllowed            bool     `json:"final_response_allowed"`
+		ExactNextAction                 string   `json:"exact_next_action"`
+		PublicDocsScanPath              string   `json:"public_docs_scan_path"`
+		PublicDocPaths                  []string `json:"public_doc_paths"`
+		ForbiddenClaimTokens            []string `json:"forbidden_claim_tokens"`
+		ForbiddenClaimMatches           int      `json:"forbidden_claim_matches"`
+		EvidenceRequiredBeforePromotion bool     `json:"evidence_required_before_promotion"`
+		PromoterNoPromotionRequired     bool     `json:"promoter_no_promotion_required"`
+		CommandReadbackRequired         bool     `json:"command_readback_required"`
+		SchedulesWork                   bool     `json:"schedules_work"`
+		ExecutesWork                    bool     `json:"executes_work"`
+		ApprovesWork                    bool     `json:"approves_work"`
+		ClaimsAuthorityAdvance          bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied                bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "public-claim-guard-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.public-claim-guard-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-36" ||
+		fixture.Status != "public_claim_guard_recorded" ||
+		fixture.CompletedNodesBefore != nodeThirtyFiveReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtyFiveReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtyFiveReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirtyFiveReadback.ExactNextAction ||
+		fixture.ForbiddenClaimMatches != 0 ||
+		!fixture.EvidenceRequiredBeforePromotion ||
+		!fixture.PromoterNoPromotionRequired ||
+		!fixture.CommandReadbackRequired ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("public claim guard must bind node 35 checkpoint without authority effects: %#v", fixture)
+	}
+	if !containsString(fixture.ForbiddenClaimTokens, "broad_rsi_proof_claim") ||
+		!containsString(fixture.ForbiddenClaimTokens, "unsupervised_promotion_live_claim") ||
+		!containsString(fixture.ForbiddenClaimTokens, "highest_live_unsupervised_claim") {
+		t.Fatalf("public claim guard must record all forbidden claim tokens: %#v", fixture.ForbiddenClaimTokens)
+	}
+	scan := mustLoadJSON[struct {
+		Schema                string   `json:"schema"`
+		NodeID                string   `json:"node_id"`
+		Status                string   `json:"status"`
+		ScannedPaths          []string `json:"scanned_paths"`
+		ForbiddenClaimMatches int      `json:"forbidden_claim_matches"`
+		PublicDocsScanPassed  bool     `json:"public_docs_scan_passed"`
+		PromoterStatus        string   `json:"promoter_status"`
+		CommandStatus         string   `json:"command_status"`
+		RSIRemainsDenied      bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(repoRoot(t), fixture.PublicDocsScanPath))
+	if scan.Schema != "ao.atlas.public-claim-guard-scan.v0.1" ||
+		scan.NodeID != fixture.NodeID ||
+		scan.Status != "passed" ||
+		scan.ForbiddenClaimMatches != 0 ||
+		!scan.PublicDocsScanPassed ||
+		scan.PromoterStatus != "no_promotion_requested" ||
+		scan.CommandStatus != "readback_agrees_no_promotion" ||
+		!scan.RSIRemainsDenied {
+		t.Fatalf("public claim guard scan must pass without promotion effects: %#v", scan)
+	}
+	if len(scan.ScannedPaths) != len(fixture.PublicDocPaths) {
+		t.Fatalf("public claim guard scan path count mismatch: scan=%#v fixture=%#v", scan.ScannedPaths, fixture.PublicDocPaths)
+	}
+
+	forbiddenClaims := []string{
+		strings.Join([]string{"RSI", "is", "proven"}, " "),
+		strings.Join([]string{"fully_unsupervised_complex_mutation", "is", "live-proven"}, " "),
+		"highest proven live class: " + "fully_unsupervised_complex_mutation",
+	}
+	for _, path := range fixture.PublicDocPaths {
+		if !strings.HasPrefix(path, "docs/") {
+			t.Fatalf("public doc scan path must stay under docs/: %s", path)
+		}
+		data, err := os.ReadFile(filepath.Join(repoRoot(t), path))
+		if err != nil {
+			t.Fatal(err)
+		}
+		text := string(data)
+		for _, claim := range forbiddenClaims {
+			if strings.Contains(text, claim) {
+				t.Fatalf("%s contains forbidden unevidenced public claim %q", path, claim)
+			}
+		}
+	}
+
+	nodeThirtySixReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtySixReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtySixReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtySixReadback.CompletedNodes != 36 ||
+		nodeThirtySixReadback.ReadyNodes != 4 ||
+		nodeThirtySixReadback.FirstExecutableNode != "mission-recommendation-hardening-37" ||
+		nodeThirtySixReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtySixReadback.ExactNextAction, "mission-recommendation-hardening-37") {
+		t.Fatalf("node 36 readback must carry public-claim guard evidence and continue to node 37: %#v", nodeThirtySixReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

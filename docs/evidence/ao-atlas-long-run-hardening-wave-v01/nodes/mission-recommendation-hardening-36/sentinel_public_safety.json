@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-36",
+  "status": "passed",
+  "scanned_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-36"
+  ],
+  "forbidden_claims_present": false,
+  "rsi_claim_present": false
+}

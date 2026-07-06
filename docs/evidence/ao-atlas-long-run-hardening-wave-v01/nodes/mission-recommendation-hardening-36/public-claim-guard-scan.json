@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.public-claim-guard-scan.v0.1",
+  "node_id": "mission-recommendation-hardening-36",
+  "status": "passed",
+  "scanned_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-36/public-claim-guard-summary.md",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-36/foundry-continuation-prompt.md",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-36/public-claim-guard-scan.json"
+  ],
+  "forbidden_claim_tokens": [
+    "broad_rsi_proof_claim",
+    "unsupervised_promotion_live_claim",
+    "highest_live_unsupervised_claim"
+  ],
+  "forbidden_claim_matches": 0,
+  "public_docs_scan_passed": true,
+  "intent_only_until_evidence": true,
+  "promoter_status": "no_promotion_requested",
+  "command_status": "readback_agrees_no_promotion",
+  "rsi_remains_denied": true
+}

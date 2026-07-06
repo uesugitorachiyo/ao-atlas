@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-36",
+  "task_id": "mission-recommendation-hardening-36-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-35/recommendation-readback-after.json",
+  "objective": "Add regression coverage that public docs cannot claim RSI or unsupervised promotion without evidence.",
+  "candidate_reason": "The supervisor needs public-facing recommendation artifacts to remain intent-only unless promotion evidence exists.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T07:41:26Z"
+}
