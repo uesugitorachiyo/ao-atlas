@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-33",
+  "task_id": "mission-recommendation-hardening-33-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-32/recommendation-readback-after.json",
+  "objective": "Add doctor readiness fixture for lease health checkpoint freshness stale routes shallow recommendations and early return risk.",
+  "candidate_reason": "The supervisor needs a single doctor readiness fixture that names every continuation risk that can deny a final response.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T06:50:02Z"
+}

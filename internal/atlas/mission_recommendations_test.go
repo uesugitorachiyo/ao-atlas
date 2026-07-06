@@ -5470,6 +5470,91 @@ func TestLongRunHardeningWavePrematureReturnGuideRejectsShortLoops(t *testing.T)
 	}
 }
 
+func TestLongRunHardeningWaveDoctorReadinessFixtureCoversContinuationRisks(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtyTwoReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-32", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-33")
+	fixture := mustLoadJSON[struct {
+		Schema               string `json:"schema"`
+		NodeID               string `json:"node_id"`
+		Status               string `json:"status"`
+		CompletedNodesBefore int    `json:"completed_nodes_before_node"`
+		ReadyNodesBefore     int    `json:"ready_nodes_before_node"`
+		FirstExecutableNode  string `json:"first_executable_node"`
+		FinalResponseAllowed bool   `json:"final_response_allowed"`
+		ExactNextAction      string `json:"exact_next_action"`
+		FinalResponseDenied  bool   `json:"final_response_denied"`
+		SafeNextAction       string `json:"safe_next_action"`
+		DoctorChecks         []struct {
+			Name             string `json:"name"`
+			Status           string `json:"status"`
+			BlocksIfStale    bool   `json:"blocks_if_stale"`
+			RequiredReadback string `json:"required_readback"`
+		} `json:"doctor_checks"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "doctor-readiness-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.doctor-readiness-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-33" ||
+		fixture.Status != "doctor_readiness_recorded" ||
+		fixture.CompletedNodesBefore != nodeThirtyTwoReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtyTwoReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtyTwoReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirtyTwoReadback.ExactNextAction ||
+		!fixture.FinalResponseDenied ||
+		!strings.Contains(fixture.SafeNextAction, "mission-recommendation-hardening-33") ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("doctor readiness fixture must bind node 32 checkpoint without authority effects: %#v", fixture)
+	}
+	expected := map[string]string{
+		"lease_health":            "lease_health_status",
+		"checkpoint_freshness":    "checkpoint_freshness_status",
+		"stale_routes":            "stale_route_decision_status",
+		"shallow_recommendations": "feature_depth_recommendations",
+		"early_return_risk":       "final_response_allowed",
+	}
+	if len(fixture.DoctorChecks) != len(expected) {
+		t.Fatalf("doctor readiness fixture must include all checks, got %d: %#v", len(fixture.DoctorChecks), fixture.DoctorChecks)
+	}
+	for _, check := range fixture.DoctorChecks {
+		want, ok := expected[check.Name]
+		if !ok {
+			t.Fatalf("unexpected doctor readiness check: %#v", check)
+		}
+		if check.Status != "ready" ||
+			!check.BlocksIfStale ||
+			check.RequiredReadback != want {
+			t.Fatalf("doctor readiness check %q mismatch: %#v", check.Name, check)
+		}
+		delete(expected, check.Name)
+	}
+	if len(expected) != 0 {
+		t.Fatalf("missing doctor readiness checks: %#v", expected)
+	}
+
+	nodeThirtyThreeReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtyThreeReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtyThreeReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtyThreeReadback.CompletedNodes != 33 ||
+		nodeThirtyThreeReadback.ReadyNodes != 7 ||
+		nodeThirtyThreeReadback.FirstExecutableNode != "mission-recommendation-hardening-34" ||
+		nodeThirtyThreeReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtyThreeReadback.ExactNextAction, "mission-recommendation-hardening-34") {
+		t.Fatalf("node 33 readback must carry doctor readiness evidence and continue to node 34: %#v", nodeThirtyThreeReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
