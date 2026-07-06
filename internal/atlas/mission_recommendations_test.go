@@ -6716,6 +6716,115 @@ func TestFinalClosureConsolidationPRCILedgerCoversHardeningNodesTwentyEightThrou
 	}
 }
 
+func TestFinalClosureConsolidationPRCILedgerRegressionLocksPRNumbersMergeHeadsAndCheckStates(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeEightLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+		LocalCodexBranches  int    `json:"local_codex_branches"`
+		RemoteCodexBranches int    `json:"remote_codex_branches"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-08", "post-merge-lifecycle.json"))
+	nodeEightReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-08", "recommendation-readback-after.json"))
+	ledger := mustLoadJSON[struct {
+		Entries []struct {
+			HardeningNode       int    `json:"hardening_node"`
+			PRNumber            int    `json:"pr_number"`
+			MergeCommit         string `json:"merge_commit"`
+			CheckCount          int    `json:"check_count"`
+			SuccessCount        int    `json:"success_count"`
+			UbuntuSuccessCount  int    `json:"ubuntu_success_count"`
+			MacOSSuccessCount   int    `json:"macos_success_count"`
+			WindowsSuccessCount int    `json:"windows_success_count"`
+			CIStatus            string `json:"ci_status"`
+		} `json:"entries"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-08", "hardening-nodes-28-40-pr-ci-ledger.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                         string `json:"schema"`
+		NodeID                         string `json:"node_id"`
+		Status                         string `json:"status"`
+		SourceLedgerPath               string `json:"source_ledger_path"`
+		CoveredEntryCount              int    `json:"covered_entry_count"`
+		FirstHardeningNode             int    `json:"first_hardening_node"`
+		LastHardeningNode              int    `json:"last_hardening_node"`
+		FirstPRNumber                  int    `json:"first_pr_number"`
+		LastPRNumber                   int    `json:"last_pr_number"`
+		FirstMergeCommit               string `json:"first_merge_commit"`
+		FinalMergeCommit               string `json:"final_merge_commit"`
+		ExpectedCheckCountPerEntry     int    `json:"expected_check_count_per_entry"`
+		ExpectedSuccessCountPerEntry   int    `json:"expected_success_count_per_entry"`
+		ExpectedOSSuccessCountPerEntry int    `json:"expected_os_success_count_per_entry"`
+		PRNumbersConsecutive           bool   `json:"pr_numbers_consecutive"`
+		MergeHeadsUnique               bool   `json:"merge_heads_unique"`
+		CIStatesAllPassed              bool   `json:"ci_states_all_passed"`
+		CompletedNodesBefore           int    `json:"completed_nodes_before"`
+		ReadyNodesBefore               int    `json:"ready_nodes_before"`
+		FirstExecutableNodeBefore      string `json:"first_executable_node_before"`
+		FinalResponseAllowedBefore     bool   `json:"final_response_allowed_before"`
+		RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-09", "pr-ci-ledger-regression.json"))
+
+	if nodeEightLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeEightLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-08" ||
+		nodeEightLifecycle.Status != "merged_and_cleaned" ||
+		nodeEightLifecycle.PRNumber != 311 ||
+		nodeEightLifecycle.MergeCommit != "89ce8cd3c727f5b5025058c6accafec6b645a63b" ||
+		nodeEightLifecycle.CIStatus != "passed" ||
+		!nodeEightLifecycle.LocalMainSynced ||
+		!nodeEightLifecycle.LocalBranchDeleted ||
+		!nodeEightLifecycle.RemoteBranchDeleted ||
+		nodeEightLifecycle.LocalCodexBranches != 0 ||
+		nodeEightLifecycle.RemoteCodexBranches != 0 {
+		t.Fatalf("node 8 lifecycle evidence must prove clean branch handoff: %#v", nodeEightLifecycle)
+	}
+	if fixture.Schema != "ao.atlas.pr-ci-ledger-regression.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-09" ||
+		fixture.Status != "guarded" ||
+		fixture.SourceLedgerPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-08/hardening-nodes-28-40-pr-ci-ledger.json" ||
+		fixture.CoveredEntryCount != len(ledger.Entries) ||
+		fixture.FirstHardeningNode != 28 ||
+		fixture.LastHardeningNode != 40 ||
+		fixture.FirstPRNumber != 291 ||
+		fixture.LastPRNumber != 303 ||
+		fixture.FirstMergeCommit != "a805a44bed4ecc5b7cde5ed38d9e5e0131ad8cae" ||
+		fixture.FinalMergeCommit != "1201070f2f68decab5c9156babaef506d0b67945" ||
+		fixture.ExpectedCheckCountPerEntry != 9 ||
+		fixture.ExpectedSuccessCountPerEntry != 9 ||
+		fixture.ExpectedOSSuccessCountPerEntry != 3 ||
+		!fixture.PRNumbersConsecutive ||
+		!fixture.MergeHeadsUnique ||
+		!fixture.CIStatesAllPassed ||
+		fixture.CompletedNodesBefore != nodeEightReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeEightReadback.ReadyNodes ||
+		fixture.FirstExecutableNodeBefore != nodeEightReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowedBefore != nodeEightReadback.FinalResponseAllowed ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("ledger regression fixture must lock PR, merge-head, CI state, and readback continuity: %#v", fixture)
+	}
+	seenMergeHeads := map[string]bool{}
+	for i, entry := range ledger.Entries {
+		if entry.HardeningNode != 28+i ||
+			entry.PRNumber != 291+i ||
+			entry.MergeCommit == "" ||
+			seenMergeHeads[entry.MergeCommit] ||
+			entry.CheckCount != fixture.ExpectedCheckCountPerEntry ||
+			entry.SuccessCount != fixture.ExpectedSuccessCountPerEntry ||
+			entry.UbuntuSuccessCount != fixture.ExpectedOSSuccessCountPerEntry ||
+			entry.MacOSSuccessCount != fixture.ExpectedOSSuccessCountPerEntry ||
+			entry.WindowsSuccessCount != fixture.ExpectedOSSuccessCountPerEntry ||
+			entry.CIStatus != "passed" {
+			t.Fatalf("ledger regression entry %d drifted from expected PR/CI continuity: %#v", i, entry)
+		}
+		seenMergeHeads[entry.MergeCommit] = true
+	}
+}
+
 func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))

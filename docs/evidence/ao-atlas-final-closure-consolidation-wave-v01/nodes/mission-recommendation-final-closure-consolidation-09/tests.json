@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-09",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationPRCILedgerRegressionLocksPRNumbersMergeHeadsAndCheckStates -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 8 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationPRCILedgerRegressionLocksPRNumbersMergeHeadsAndCheckStates -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Ledger PR numbers remain consecutive from 291 through 303.",
+    "Ledger merge heads are unique and preserve the first and final hardening merge commits.",
+    "Every ledger entry preserves nine passing checks with three per operating-system axis."
+  ]
+}
