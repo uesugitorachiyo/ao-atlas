@@ -719,7 +719,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		ContinuationContract:            buildAtlasContinuationContract(ready, exactNextAction, returnGateStatus, finalAllowed),
 		ExactNextActionReadback:         buildExactNextActionReadback(exactNextAction, firstExecutable, returnGateStatus, finalAllowed),
 		NodeEvidence:                    recommendationNodeEvidence(workgraph),
-		FeatureDepthRecommendations:     featureDepthRecommendationReadback(wave.Tasks, 10),
+		FeatureDepthRecommendations:     featureDepthRecommendationReadback(wave.Tasks, 20),
 		SafetyBoundaries: map[string]bool{
 			"provider_calls":                    false,
 			"credential_inspection":             false,
@@ -3024,7 +3024,7 @@ func buildAtlasRecommendationPrompt(wave AtlasRecommendationWave) string {
 	b.WriteString("- final AO Atlas long-run supervisor status\n")
 	b.WriteString("- Foundry rollup\n")
 	b.WriteString("- Command readback\n")
-	b.WriteString("- Feature Depth Recommendations, at least 10 tasks\n")
+	b.WriteString("- Feature Depth Recommendations, at least 20 tasks\n")
 	b.WriteString("- verification results\n")
 	b.WriteString("- clean/synced repo status\n")
 	b.WriteString("- exact next action\n")
