@@ -2,6 +2,7 @@ package atlas
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -6605,6 +6606,113 @@ func TestFinalClosureConsolidationAggregateRollupRegressionPreservesNoPromotionA
 		!fixture.RSIRemainsDenied ||
 		!nodeSixRollup.RSIRemainsDenied {
 		t.Fatalf("aggregate rollup regression must preserve no-promotion, Command agreement, and RSI denial: %#v", fixture)
+	}
+}
+
+func TestFinalClosureConsolidationPRCILedgerCoversHardeningNodesTwentyEightThroughForty(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeSevenLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+		LocalCodexBranches  int    `json:"local_codex_branches"`
+		RemoteCodexBranches int    `json:"remote_codex_branches"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-07", "post-merge-lifecycle.json"))
+	nodeSevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-07", "recommendation-readback-after.json"))
+	ledger := mustLoadJSON[struct {
+		Schema                     string `json:"schema"`
+		NodeID                     string `json:"node_id"`
+		Status                     string `json:"status"`
+		Source                     string `json:"source"`
+		CoveredHardeningNodeStart  int    `json:"covered_hardening_node_start"`
+		CoveredHardeningNodeEnd    int    `json:"covered_hardening_node_end"`
+		EntryCount                 int    `json:"entry_count"`
+		AllPRsMerged               bool   `json:"all_prs_merged"`
+		AllCIStatusesPassed        bool   `json:"all_ci_statuses_passed"`
+		AllMergeCommitsRecorded    bool   `json:"all_merge_commits_recorded"`
+		ReadyNodesBefore           int    `json:"ready_nodes_before"`
+		CompletedNodesBefore       int    `json:"completed_nodes_before"`
+		FirstExecutableNodeBefore  string `json:"first_executable_node_before"`
+		FinalResponseAllowedBefore bool   `json:"final_response_allowed_before"`
+		Entries                    []struct {
+			HardeningNode       int    `json:"hardening_node"`
+			NodeID              string `json:"node_id"`
+			PRNumber            int    `json:"pr_number"`
+			PRURL               string `json:"pr_url"`
+			Title               string `json:"title"`
+			HeadRef             string `json:"head_ref"`
+			State               string `json:"state"`
+			MergedAt            string `json:"merged_at"`
+			MergeCommit         string `json:"merge_commit"`
+			CheckCount          int    `json:"check_count"`
+			SuccessCount        int    `json:"success_count"`
+			UbuntuSuccessCount  int    `json:"ubuntu_success_count"`
+			MacOSSuccessCount   int    `json:"macos_success_count"`
+			WindowsSuccessCount int    `json:"windows_success_count"`
+			CIStatus            string `json:"ci_status"`
+		} `json:"entries"`
+		RSIRemainsDenied bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-08", "hardening-nodes-28-40-pr-ci-ledger.json"))
+
+	if nodeSevenLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeSevenLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-07" ||
+		nodeSevenLifecycle.Status != "merged_and_cleaned" ||
+		nodeSevenLifecycle.PRNumber != 310 ||
+		nodeSevenLifecycle.MergeCommit != "64c8cbac11e7ec752cda5e160a6fd4e8bfd59a65" ||
+		nodeSevenLifecycle.CIStatus != "passed" ||
+		!nodeSevenLifecycle.LocalMainSynced ||
+		!nodeSevenLifecycle.LocalBranchDeleted ||
+		!nodeSevenLifecycle.RemoteBranchDeleted ||
+		nodeSevenLifecycle.LocalCodexBranches != 0 ||
+		nodeSevenLifecycle.RemoteCodexBranches != 0 {
+		t.Fatalf("node 7 lifecycle evidence must prove clean branch handoff: %#v", nodeSevenLifecycle)
+	}
+	if ledger.Schema != "ao.atlas.pr-ci-ledger.v0.1" ||
+		ledger.NodeID != "mission-recommendation-final-closure-consolidation-08" ||
+		ledger.Status != "complete" ||
+		ledger.Source != "gh_pr_view_291_303" ||
+		ledger.CoveredHardeningNodeStart != 28 ||
+		ledger.CoveredHardeningNodeEnd != 40 ||
+		ledger.EntryCount != 13 ||
+		len(ledger.Entries) != 13 ||
+		!ledger.AllPRsMerged ||
+		!ledger.AllCIStatusesPassed ||
+		!ledger.AllMergeCommitsRecorded ||
+		ledger.CompletedNodesBefore != nodeSevenReadback.CompletedNodes ||
+		ledger.ReadyNodesBefore != nodeSevenReadback.ReadyNodes ||
+		ledger.FirstExecutableNodeBefore != nodeSevenReadback.FirstExecutableNode ||
+		ledger.FinalResponseAllowedBefore != nodeSevenReadback.FinalResponseAllowed ||
+		!ledger.RSIRemainsDenied {
+		t.Fatalf("node 8 ledger must summarize hardening nodes 28-40 from node 7 readback: %#v", ledger)
+	}
+	for i, entry := range ledger.Entries {
+		wantNode := 28 + i
+		wantPR := 291 + i
+		if entry.HardeningNode != wantNode ||
+			entry.NodeID != fmt.Sprintf("mission-recommendation-hardening-%02d", wantNode) ||
+			entry.PRNumber != wantPR ||
+			entry.PRURL != fmt.Sprintf("https://github.com/uesugitorachiyo/ao-atlas/pull/%d", wantPR) ||
+			entry.State != "MERGED" ||
+			entry.MergedAt == "" ||
+			entry.MergeCommit == "" ||
+			entry.CheckCount != 9 ||
+			entry.SuccessCount != 9 ||
+			entry.UbuntuSuccessCount != 3 ||
+			entry.MacOSSuccessCount != 3 ||
+			entry.WindowsSuccessCount != 3 ||
+			entry.CIStatus != "passed" {
+			t.Fatalf("ledger entry %d must bind hardening node %d to merged PR %d and 9 passing checks: %#v", i, wantNode, wantPR, entry)
+		}
+	}
+	if first, last := ledger.Entries[0], ledger.Entries[len(ledger.Entries)-1]; first.MergeCommit != "a805a44bed4ecc5b7cde5ed38d9e5e0131ad8cae" ||
+		last.MergeCommit != "1201070f2f68decab5c9156babaef506d0b67945" {
+		t.Fatalf("ledger must preserve first and final hardening merge commits: first=%#v last=%#v", first, last)
 	}
 }
 
