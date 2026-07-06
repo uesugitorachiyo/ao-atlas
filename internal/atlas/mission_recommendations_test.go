@@ -5376,6 +5376,100 @@ func TestLongRunHardeningWaveOperatorRoutingGuideCoversAORoles(t *testing.T) {
 	}
 }
 
+func TestLongRunHardeningWavePrematureReturnGuideRejectsShortLoops(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtyOneReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-31", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-32")
+	fixture := mustLoadJSON[struct {
+		Schema                           string   `json:"schema"`
+		NodeID                           string   `json:"node_id"`
+		Status                           string   `json:"status"`
+		GuidePath                        string   `json:"guide_path"`
+		CompletedNodesBefore             int      `json:"completed_nodes_before_node"`
+		ReadyNodesBefore                 int      `json:"ready_nodes_before_node"`
+		FirstExecutableNode              string   `json:"first_executable_node"`
+		FinalResponseAllowed             bool     `json:"final_response_allowed"`
+		ExactNextAction                  string   `json:"exact_next_action"`
+		PrematureLoopLowerMinutes        int      `json:"premature_loop_lower_minutes"`
+		PrematureLoopUpperMinutes        int      `json:"premature_loop_upper_minutes"`
+		RequiredMinimumMinutes           int      `json:"required_minimum_minutes"`
+		RequiredTargetMinutes            int      `json:"required_target_minutes"`
+		FinalResponseDeniedWithReadyWork bool     `json:"final_response_denied_with_ready_work"`
+		Reasons                          []string `json:"reasons"`
+		SchedulesWork                    bool     `json:"schedules_work"`
+		ExecutesWork                     bool     `json:"executes_work"`
+		ApprovesWork                     bool     `json:"approves_work"`
+		ClaimsAuthorityAdvance           bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied                 bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "premature-return-guide-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.premature-return-guide-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-32" ||
+		fixture.Status != "premature_return_documented" ||
+		fixture.CompletedNodesBefore != nodeThirtyOneReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtyOneReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtyOneReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirtyOneReadback.ExactNextAction ||
+		fixture.PrematureLoopLowerMinutes != 14 ||
+		fixture.PrematureLoopUpperMinutes != 20 ||
+		fixture.RequiredMinimumMinutes != 120 ||
+		fixture.RequiredTargetMinutes != 180 ||
+		!fixture.FinalResponseDeniedWithReadyWork ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("premature return fixture must bind node 31 checkpoint and deny short-loop closure: %#v", fixture)
+	}
+	reasons := map[string]bool{}
+	for _, reason := range fixture.Reasons {
+		reasons[reason] = true
+	}
+	for _, reason := range []string{
+		"minimum_minutes_unmet",
+		"ready_nodes_remain",
+		"exact_next_action_remains",
+		"single_pr_is_not_mission_completion",
+	} {
+		if !reasons[reason] {
+			t.Fatalf("premature return fixture missing reason %q: %#v", reason, fixture.Reasons)
+		}
+	}
+
+	guideData, err := os.ReadFile(filepath.Join(repoRoot(t), fixture.GuidePath))
+	if err != nil {
+		t.Fatal(err)
+	}
+	guide := string(guideData)
+	for _, phrase := range []string{
+		"14 to 20 minute loops are premature returns",
+		"2 to 3 hour workgraph",
+		"ready_nodes > 0",
+		"exact_next_action",
+		"final_response_allowed=false",
+		"one PR merge is not mission completion",
+	} {
+		if !strings.Contains(guide, phrase) {
+			t.Fatalf("premature return guide missing %q", phrase)
+		}
+	}
+
+	nodeThirtyTwoReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtyTwoReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtyTwoReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtyTwoReadback.CompletedNodes != 32 ||
+		nodeThirtyTwoReadback.ReadyNodes != 8 ||
+		nodeThirtyTwoReadback.FirstExecutableNode != "mission-recommendation-hardening-33" ||
+		nodeThirtyTwoReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtyTwoReadback.ExactNextAction, "mission-recommendation-hardening-33") {
+		t.Fatalf("node 32 readback must carry premature-return guide evidence and continue to node 33: %#v", nodeThirtyTwoReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
