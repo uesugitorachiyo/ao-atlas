@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-10",
+  "status": "implemented",
+  "objective": "Generate the final operator summary from the final recommendation readback and closure fixture.",
+  "implementation": [
+    "Added node 9 post-merge lifecycle evidence after PR 312 merge and branch cleanup.",
+    "Added a machine-readable final operator summary binding the completed 40-node readback and final closure fixture.",
+    "Added a Markdown operator summary handoff that preserves no-promotion and RSI denial wording."
+  ],
+  "files_changed": [
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-09/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-10/final-operator-summary.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-10/final-operator-summary.md",
+    "internal/atlas/mission_recommendations_test.go"
+  ],
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

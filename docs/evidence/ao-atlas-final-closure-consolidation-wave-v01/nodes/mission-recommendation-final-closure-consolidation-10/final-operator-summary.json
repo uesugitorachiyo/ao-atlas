@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.final-operator-summary.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-10",
+  "status": "generated",
+  "source_final_readback_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/recommendation-readback-after.json",
+  "source_closure_fixture_path": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/final-closure-artifacts-fixture.json",
+  "summary_markdown_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-10/final-operator-summary.md",
+  "final_wave_completed_nodes": 40,
+  "final_wave_ready_nodes": 0,
+  "final_wave_blocked_nodes": 0,
+  "final_wave_failed_nodes": 0,
+  "final_wave_final_response_allowed": true,
+  "public_safety_scan_status": "passed",
+  "promoter_no_promotion_status": "no_promotion_requested",
+  "command_readback_status": "readback_agrees_no_promotion",
+  "closure_artifact_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/clean-repo-status.json",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/final-verification-summary.json",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/final-closure-summary.md",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/promoter_no_promotion.json",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/command_readback.json"
+  ],
+  "consolidation_completed_before": 9,
+  "consolidation_ready_before": 15,
+  "consolidation_first_executable_node_before": "mission-recommendation-final-closure-consolidation-10",
+  "consolidation_final_response_allowed_before": false,
+  "next_consolidation_node": "mission-recommendation-final-closure-consolidation-11",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

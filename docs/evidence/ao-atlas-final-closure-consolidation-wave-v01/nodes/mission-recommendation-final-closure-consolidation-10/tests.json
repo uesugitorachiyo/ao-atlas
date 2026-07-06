@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-10",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationFinalOperatorSummaryBindsReadbackAndClosureFixture -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 9 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationFinalOperatorSummaryBindsReadbackAndClosureFixture -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Final operator summary binds the final 40-node readback and final closure fixture.",
+    "Summary preserves public-safety passed, no-promotion, Command agreement, and RSI denial.",
+    "Summary keeps consolidation continuation blocked while ready nodes remain."
+  ]
+}

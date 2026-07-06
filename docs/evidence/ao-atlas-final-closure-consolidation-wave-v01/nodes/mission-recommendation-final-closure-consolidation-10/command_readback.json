@@ -1,0 +1,11 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-10",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 9,
+  "ready_nodes_before": 15,
+  "first_executable_node_before": "mission-recommendation-final-closure-consolidation-10",
+  "final_response_allowed_before": false,
+  "expected_next_node_after_completion": "mission-recommendation-final-closure-consolidation-11",
+  "compact_timeline": "9/24 consolidation nodes complete; node 10 generates final operator summary from the completed 40-node wave."
+}
