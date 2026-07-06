@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-hardening-38",
+  "status": "available",
+  "rollback_scope": [
+    "revert node 38 regression test additions",
+    "remove node 38 multi-import smoke evidence artifacts"
+  ],
+  "safe_rollback_command": "git revert <node-38-commit>",
+  "requires_release_rollback": false,
+  "created_at": "2026-07-06T08:14:35Z"
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-38",
+  "task_id": "mission-recommendation-hardening-38-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-37/recommendation-readback-after.json",
+  "objective": "Add end-to-end smoke artifact for Mission supervising Atlas through multiple Foundry imports.",
+  "candidate_reason": "The supervisor needs an evidence artifact proving Mission-to-Atlas continuation can span multiple serialized Foundry imports without concurrent mutation.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T08:14:35Z"
+}

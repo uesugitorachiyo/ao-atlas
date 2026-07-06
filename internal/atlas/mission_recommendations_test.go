@@ -5926,6 +5926,102 @@ func TestLongRunHardeningWaveClosureGateRequiresEvidenceCIAndCleanup(t *testing.
 	}
 }
 
+func TestLongRunHardeningWaveMissionAtlasMultiImportSmokeArtifact(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtySevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-37", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-38")
+	fixture := mustLoadJSON[struct {
+		Schema                  string `json:"schema"`
+		NodeID                  string `json:"node_id"`
+		Status                  string `json:"status"`
+		Supervisor              string `json:"supervisor"`
+		AtlasOwner              string `json:"atlas_owner"`
+		CompletedNodesBefore    int    `json:"completed_nodes_before_node"`
+		ReadyNodesBefore        int    `json:"ready_nodes_before_node"`
+		FirstExecutableNode     string `json:"first_executable_node"`
+		FinalResponseAllowed    bool   `json:"final_response_allowed"`
+		ExactNextAction         string `json:"exact_next_action"`
+		OneExecutableNodeActive bool   `json:"one_executable_node_active"`
+		SerializedImportsOnly   bool   `json:"serialized_imports_only"`
+		Imports                 []struct {
+			NodeID         string `json:"node_id"`
+			FoundryImport  string `json:"foundry_import"`
+			RunLink        string `json:"run_link"`
+			Readback       string `json:"readback"`
+			ExactNextNode  string `json:"exact_next_node"`
+			ImportComplete bool   `json:"import_complete"`
+		} `json:"imports"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "mission-atlas-multi-import-smoke-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.mission-atlas-multi-import-smoke-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-38" ||
+		fixture.Status != "multi_import_smoke_recorded" ||
+		fixture.Supervisor != "ao-mission" ||
+		fixture.AtlasOwner != "ao-atlas" ||
+		fixture.CompletedNodesBefore != nodeThirtySevenReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtySevenReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtySevenReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirtySevenReadback.ExactNextAction ||
+		!fixture.OneExecutableNodeActive ||
+		!fixture.SerializedImportsOnly ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("multi-import smoke fixture must bind node 37 checkpoint without authority effects: %#v", fixture)
+	}
+	if len(fixture.Imports) < 3 {
+		t.Fatalf("multi-import smoke fixture must reference at least three serialized imports: %#v", fixture.Imports)
+	}
+	seenNodes := map[string]bool{}
+	for _, item := range fixture.Imports {
+		if seenNodes[item.NodeID] {
+			t.Fatalf("multi-import smoke fixture repeats node %s", item.NodeID)
+		}
+		seenNodes[item.NodeID] = true
+		if !item.ImportComplete || item.FoundryImport == "" || item.RunLink == "" || item.Readback == "" || item.ExactNextNode == "" {
+			t.Fatalf("multi-import smoke item must bind import, run-link, readback, and next node: %#v", item)
+		}
+		for _, path := range []string{item.FoundryImport, item.RunLink, item.Readback} {
+			if !strings.HasPrefix(path, "docs/") {
+				t.Fatalf("multi-import smoke artifact path must stay public-safe: %s", path)
+			}
+			if _, err := os.Stat(filepath.Join(repoRoot(t), path)); err != nil {
+				t.Fatal(err)
+			}
+		}
+	}
+	for _, nodeID := range []string{
+		"mission-recommendation-hardening-36",
+		"mission-recommendation-hardening-37",
+		"mission-recommendation-hardening-38",
+	} {
+		if !seenNodes[nodeID] {
+			t.Fatalf("multi-import smoke fixture missing node %s", nodeID)
+		}
+	}
+
+	nodeThirtyEightReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtyEightReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtyEightReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtyEightReadback.CompletedNodes != 38 ||
+		nodeThirtyEightReadback.ReadyNodes != 2 ||
+		nodeThirtyEightReadback.FirstExecutableNode != "mission-recommendation-hardening-39" ||
+		nodeThirtyEightReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtyEightReadback.ExactNextAction, "mission-recommendation-hardening-39") {
+		t.Fatalf("node 38 readback must carry multi-import smoke evidence and continue to node 39: %#v", nodeThirtyEightReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
