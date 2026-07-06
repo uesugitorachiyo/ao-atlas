@@ -4416,6 +4416,155 @@ func TestLongRunHardeningWaveEvidenceDigestSummaryUsesRelativeRouteAndPromptArti
 	}
 }
 
+func TestLongRunHardeningWaveArtifactAgreementTiesPromptCommandAndWorkgraphStatus(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentyTwoReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-22", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-23")
+	fixture := mustLoadJSON[struct {
+		Schema                     string `json:"schema"`
+		NodeID                     string `json:"node_id"`
+		Status                     string `json:"status"`
+		GeneratedPromptPath        string `json:"generated_prompt_path"`
+		CommandReadbackPath        string `json:"command_readback_path"`
+		WorkgraphAfterPath         string `json:"workgraph_after_path"`
+		SourceReadbackPath         string `json:"source_readback_path"`
+		PromptFirstSafeNode        string `json:"prompt_first_safe_node"`
+		PromptTotalNodes           int    `json:"prompt_total_nodes"`
+		PromptCompletedNodes       int    `json:"prompt_completed_nodes"`
+		PromptReadyNodes           int    `json:"prompt_ready_nodes"`
+		CommandExactNextAction     string `json:"command_exact_next_action"`
+		WorkgraphNodeStatus        string `json:"workgraph_node_status"`
+		WorkgraphNextReadyNode     string `json:"workgraph_next_ready_node"`
+		CompletedNodesBeforeNode   int    `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode       int    `json:"ready_nodes_before_node"`
+		FinalResponseAllowed       bool   `json:"final_response_allowed"`
+		ExactNextAction            string `json:"exact_next_action"`
+		CurrentHardeningCheckpoint struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "artifact-agreement-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.artifact-agreement-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-23" ||
+		fixture.Status != "artifact_agreement_recorded" ||
+		fixture.PromptFirstSafeNode != nodeTwentyTwoReadback.FirstExecutableNode ||
+		fixture.PromptTotalNodes != nodeTwentyTwoReadback.TotalNodes ||
+		fixture.PromptCompletedNodes != nodeTwentyTwoReadback.CompletedNodes ||
+		fixture.PromptReadyNodes != nodeTwentyTwoReadback.ReadyNodes ||
+		fixture.CommandExactNextAction != nodeTwentyTwoReadback.ExactNextAction ||
+		fixture.CompletedNodesBeforeNode != nodeTwentyTwoReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeTwentyTwoReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentyTwoReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("artifact agreement fixture must bind node 22 prompt and command state without authority effects: %#v", fixture)
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeTwentyTwoReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeTwentyTwoReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeTwentyTwoReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeTwentyTwoReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeTwentyTwoReadback.ExactNextAction {
+		t.Fatalf("artifact agreement fixture must bind node 22 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+	for _, artifactPath := range []string{
+		fixture.GeneratedPromptPath,
+		fixture.CommandReadbackPath,
+		fixture.WorkgraphAfterPath,
+		fixture.SourceReadbackPath,
+	} {
+		if artifactPath == "" || filepath.IsAbs(artifactPath) {
+			t.Fatalf("artifact agreement paths must be non-empty and relative: %#v", fixture)
+		}
+		forbiddenPathMarkers := []string{
+			string(filepath.Separator) + "Users" + string(filepath.Separator),
+			string(filepath.Separator) + "home" + string(filepath.Separator),
+			string(filepath.Separator) + "private" + string(filepath.Separator),
+			"file" + "://",
+		}
+		for _, marker := range forbiddenPathMarkers {
+			if strings.Contains(artifactPath, marker) {
+				t.Fatalf("artifact agreement path must be public-safe: %s", artifactPath)
+			}
+		}
+		if _, err := os.Stat(filepath.Join(repoRoot(t), filepath.FromSlash(artifactPath))); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	promptBytes, err := os.ReadFile(filepath.Join(repoRoot(t), filepath.FromSlash(fixture.GeneratedPromptPath)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	prompt := string(promptBytes)
+	wantPromptSnippets := []string{
+		"first safe node: " + nodeTwentyTwoReadback.FirstExecutableNode,
+		"total nodes: " + strconv.Itoa(nodeTwentyTwoReadback.TotalNodes),
+		"completed nodes: " + strconv.Itoa(nodeTwentyTwoReadback.CompletedNodes),
+		"ready nodes: " + strconv.Itoa(nodeTwentyTwoReadback.ReadyNodes),
+	}
+	for _, want := range wantPromptSnippets {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("generated prompt missing agreement snippet %q:\n%s", want, prompt)
+		}
+	}
+
+	command := mustLoadJSON[struct {
+		Status               string `json:"status"`
+		CompletedNodesBefore int    `json:"completed_nodes_before_node"`
+		ReadyNodesBefore     int    `json:"ready_nodes_before_node"`
+		FinalResponseAllowed bool   `json:"final_response_allowed"`
+		ExactNextAction      string `json:"exact_next_action"`
+	}](t, filepath.Join(repoRoot(t), filepath.FromSlash(fixture.CommandReadbackPath)))
+	if command.Status != "artifact_agreement_recorded" ||
+		command.CompletedNodesBefore != nodeTwentyTwoReadback.CompletedNodes ||
+		command.ReadyNodesBefore != nodeTwentyTwoReadback.ReadyNodes ||
+		command.FinalResponseAllowed ||
+		command.ExactNextAction != nodeTwentyTwoReadback.ExactNextAction {
+		t.Fatalf("artifact agreement command readback disagrees with node 22 readback: %#v", command)
+	}
+
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join(repoRoot(t), filepath.FromSlash(fixture.WorkgraphAfterPath)))
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		t.Fatal(err)
+	}
+	nodeStatus := map[string]string{}
+	for _, node := range workgraph.Nodes {
+		nodeStatus[node.ID] = node.Status
+	}
+	if fixture.WorkgraphNodeStatus != "completed" ||
+		nodeStatus["mission-recommendation-hardening-23"] != fixture.WorkgraphNodeStatus ||
+		fixture.WorkgraphNextReadyNode != "mission-recommendation-hardening-24" ||
+		nodeStatus[fixture.WorkgraphNextReadyNode] != "ready" {
+		t.Fatalf("artifact agreement workgraph status mismatch: fixture=%#v status=%#v", fixture, nodeStatus)
+	}
+
+	nodeTwentyThreeReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentyThreeReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentyThreeReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentyThreeReadback.CompletedNodes != 23 ||
+		nodeTwentyThreeReadback.ReadyNodes != 17 ||
+		nodeTwentyThreeReadback.FirstExecutableNode != "mission-recommendation-hardening-24" ||
+		nodeTwentyThreeReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentyThreeReadback.ExactNextAction, "mission-recommendation-hardening-24") {
+		t.Fatalf("node 23 readback must carry artifact agreement and continue to node 24: %#v", nodeTwentyThreeReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
