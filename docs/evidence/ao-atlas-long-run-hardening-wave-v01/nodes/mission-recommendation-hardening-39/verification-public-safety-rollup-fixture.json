@@ -1,0 +1,37 @@
+{
+  "schema": "ao.atlas.verification-public-safety-rollup-fixture.v0.1",
+  "node_id": "mission-recommendation-hardening-39",
+  "status": "verification_public_safety_rollup_recorded",
+  "completed_nodes_before_node": 38,
+  "ready_nodes_before_node": 2,
+  "first_executable_node": "mission-recommendation-hardening-39",
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-39 and execute exactly one active node.",
+  "changed_docs_readbacks_checked": true,
+  "local_verification_passed": true,
+  "public_safety_scan_passed": true,
+  "forbidden_claim_matches": 0,
+  "verification_commands": [
+    "find docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-39 -name '*.json' -print0 | xargs -0 jq -e . >/dev/null",
+    "go test ./internal/atlas -run TestLongRunHardeningWaveVerificationPublicSafetyRollupBindsChangedReadbacks -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "changed_docs_and_readback_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-36/recommendation-readback-after.json",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-37/recommendation-readback-after.json",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-38/recommendation-readback-after.json",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-39/foundry-continuation-prompt.md"
+  ],
+  "scoped_public_safety_scan": "scoped public-safety wording scan over node 39 changed tests docs and readbacks returned no matches",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
