@@ -4876,18 +4876,18 @@ func TestLongRunHardeningWavePRLedgerFixtureBindsMergeCIAndCleanupEvidence(t *te
 	nodeTwentySixReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-26", "recommendation-readback-after.json"))
 	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-27")
 	fixture := mustLoadJSON[struct {
-		Schema                   string `json:"schema"`
-		NodeID                   string `json:"node_id"`
-		Status                   string `json:"status"`
-		LedgerScope              string `json:"ledger_scope"`
-		PreviousNodeID           string `json:"previous_node_id"`
-		PreviousPRNumber         int    `json:"previous_pr_number"`
-		PreviousPRURL            string `json:"previous_pr_url"`
-		PreviousHeadBranch       string `json:"previous_head_branch"`
-		PreviousMergeCommit      string `json:"previous_merge_commit"`
-		PreviousPRState          string `json:"previous_pr_state"`
-		PreviousCIStatus         string `json:"previous_ci_status"`
-		PreviousBranchCleanup    struct {
+		Schema                string `json:"schema"`
+		NodeID                string `json:"node_id"`
+		Status                string `json:"status"`
+		LedgerScope           string `json:"ledger_scope"`
+		PreviousNodeID        string `json:"previous_node_id"`
+		PreviousPRNumber      int    `json:"previous_pr_number"`
+		PreviousPRURL         string `json:"previous_pr_url"`
+		PreviousHeadBranch    string `json:"previous_head_branch"`
+		PreviousMergeCommit   string `json:"previous_merge_commit"`
+		PreviousPRState       string `json:"previous_pr_state"`
+		PreviousCIStatus      string `json:"previous_ci_status"`
+		PreviousBranchCleanup struct {
 			LocalCodexBranchesAfterMerge  []string `json:"local_codex_branches_after_merge"`
 			RemoteCodexBranchesAfterMerge []string `json:"remote_codex_branches_after_merge"`
 			LocalCodexBranchCountAfter    int      `json:"local_codex_branch_count_after_merge"`
@@ -4982,15 +4982,15 @@ func TestLongRunHardeningWaveCIReadbackFixtureDistinguishesLocalPendingPassFailu
 	nodeTwentySevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-27", "recommendation-readback-after.json"))
 	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-28")
 	fixture := mustLoadJSON[struct {
-		Schema                 string `json:"schema"`
-		NodeID                 string `json:"node_id"`
-		Status                 string `json:"status"`
-		ReadbackScope          string `json:"readback_scope"`
-		CompletedNodesBefore   int    `json:"completed_nodes_before_node"`
-		ReadyNodesBefore       int    `json:"ready_nodes_before_node"`
-		FinalResponseAllowed   bool   `json:"final_response_allowed"`
-		ExactNextAction        string `json:"exact_next_action"`
-		CurrentCheckpoint      struct {
+		Schema               string `json:"schema"`
+		NodeID               string `json:"node_id"`
+		Status               string `json:"status"`
+		ReadbackScope        string `json:"readback_scope"`
+		CompletedNodesBefore int    `json:"completed_nodes_before_node"`
+		ReadyNodesBefore     int    `json:"ready_nodes_before_node"`
+		FinalResponseAllowed bool   `json:"final_response_allowed"`
+		ExactNextAction      string `json:"exact_next_action"`
+		CurrentCheckpoint    struct {
 			CompletedNodes       int    `json:"completed_nodes"`
 			ReadyNodes           int    `json:"ready_nodes"`
 			FirstExecutableNode  string `json:"first_executable_node"`
@@ -5048,7 +5048,7 @@ func TestLongRunHardeningWaveCIReadbackFixtureDistinguishesLocalPendingPassFailu
 	}{
 		"local_pass": {"passed", "not_started", false, false, false, false, "open PR"},
 		"ci_pending": {"passed", "pending", false, false, false, false, "wait for CI"},
-		"ci_pass": {"passed", "passed", true, true, false, false, "merge PR"},
+		"ci_pass":    {"passed", "passed", true, true, false, false, "merge PR"},
 		"ci_failure": {"passed", "failed", false, false, false, true, "repair failing CI"},
 	}
 	if len(fixture.States) != len(states) {
@@ -5192,6 +5192,83 @@ func TestLongRunHardeningWaveRouteDecisionReadbackExplainsBlueprintBypassForFoun
 		nodeTwentyNineReadback.FinalResponseAllowed ||
 		!strings.Contains(nodeTwentyNineReadback.ExactNextAction, "mission-recommendation-hardening-30") {
 		t.Fatalf("node 29 readback must carry route decision evidence and continue to node 30: %#v", nodeTwentyNineReadback)
+	}
+}
+
+func TestLongRunHardeningWaveCompactionResumePromptSkipsCompletedNodes(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentyNineReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-29", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-30")
+	fixture := mustLoadJSON[struct {
+		Schema                     string   `json:"schema"`
+		NodeID                     string   `json:"node_id"`
+		Status                     string   `json:"status"`
+		ResumePromptPath           string   `json:"resume_prompt_path"`
+		SourceCheckpointReadback   string   `json:"source_checkpoint_readback"`
+		CompletedNodesBefore       int      `json:"completed_nodes_before_node"`
+		ReadyNodesBefore           int      `json:"ready_nodes_before_node"`
+		FirstExecutableNode        string   `json:"first_executable_node"`
+		FinalResponseAllowed       bool     `json:"final_response_allowed"`
+		ExactNextAction            string   `json:"exact_next_action"`
+		ResumeUsesLatestCheckpoint bool     `json:"resume_uses_latest_checkpoint"`
+		CompletedNodesReadOnly     bool     `json:"completed_nodes_read_only"`
+		RerunCompletedNodes        bool     `json:"rerun_completed_nodes"`
+		FirstNodeToExecute         string   `json:"first_node_to_execute"`
+		PromptRequiredPhrases      []string `json:"prompt_required_phrases"`
+		SchedulesWork              bool     `json:"schedules_work"`
+		ExecutesWork               bool     `json:"executes_work"`
+		ApprovesWork               bool     `json:"approves_work"`
+		ClaimsAuthorityAdvance     bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied           bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "compaction-resume-prompt-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.compaction-resume-prompt-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-30" ||
+		fixture.Status != "resume_prompt_recorded" ||
+		fixture.SourceCheckpointReadback != "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-29/recommendation-readback-after.json" ||
+		fixture.CompletedNodesBefore != nodeTwentyNineReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeTwentyNineReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeTwentyNineReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentyNineReadback.ExactNextAction ||
+		!fixture.ResumeUsesLatestCheckpoint ||
+		!fixture.CompletedNodesReadOnly ||
+		fixture.RerunCompletedNodes ||
+		fixture.FirstNodeToExecute != "mission-recommendation-hardening-30" ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("compaction resume fixture must bind node 29 checkpoint and skip completed nodes: %#v", fixture)
+	}
+
+	prompt, err := os.ReadFile(filepath.Join(repoRoot(t), fixture.ResumePromptPath))
+	if err != nil {
+		t.Fatal(err)
+	}
+	promptText := string(prompt)
+	for _, phrase := range fixture.PromptRequiredPhrases {
+		if !strings.Contains(promptText, phrase) {
+			t.Fatalf("compaction resume prompt missing required phrase %q in %s", phrase, fixture.ResumePromptPath)
+		}
+	}
+	if strings.Contains(promptText, "Start from mission-recommendation-hardening-01") ||
+		strings.Contains(promptText, "rerun completed nodes") {
+		t.Fatalf("compaction resume prompt must not restart or rerun completed nodes: %s", fixture.ResumePromptPath)
+	}
+
+	nodeThirtyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtyReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtyReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtyReadback.CompletedNodes != 30 ||
+		nodeThirtyReadback.ReadyNodes != 10 ||
+		nodeThirtyReadback.FirstExecutableNode != "mission-recommendation-hardening-31" ||
+		nodeThirtyReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtyReadback.ExactNextAction, "mission-recommendation-hardening-31") {
+		t.Fatalf("node 30 readback must carry compaction resume prompt evidence and continue to node 31: %#v", nodeThirtyReadback)
 	}
 }
 
