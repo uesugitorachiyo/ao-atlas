@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-29",
+  "task_id": "mission-recommendation-hardening-29-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-28/recommendation-readback-after.json",
+  "objective": "Add route decision readback explaining why Blueprint was not used for normal Foundry implementation.",
+  "candidate_reason": "The long-run supervisor needs explicit route evidence so ready bounded implementation work continues through Foundry without unnecessary Blueprint replanning.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T05:42:41Z"
+}

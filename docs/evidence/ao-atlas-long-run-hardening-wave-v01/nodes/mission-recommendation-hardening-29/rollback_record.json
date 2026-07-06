@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-hardening-29",
+  "status": "available",
+  "rollback_scope": [
+    "revert node 29 regression test additions",
+    "remove node 29 evidence artifacts"
+  ],
+  "safe_rollback_command": "git revert <node-29-commit>",
+  "requires_release_rollback": false,
+  "created_at": "2026-07-06T05:42:41Z"
+}
