@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-06",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationAggregatePromoterCommandRollupBindsFinalWave -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 5 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationAggregatePromoterCommandRollupBindsFinalWave -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Promoter evidence reports no promotion requested.",
+    "Command readback agrees with no promotion.",
+    "Aggregate rollup records no promotion request or grant."
+  ]
+}

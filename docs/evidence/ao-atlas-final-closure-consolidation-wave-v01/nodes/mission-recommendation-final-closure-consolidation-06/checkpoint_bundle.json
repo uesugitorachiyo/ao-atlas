@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-06",
+  "status": "completed",
+  "input_workgraph": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-05/workgraph-after.json",
+  "output_workgraph": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/workgraph-after.json",
+  "output_readback": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/recommendation-readback-after.json",
+  "created_at": "2026-07-06T14:24:43Z"
+}
