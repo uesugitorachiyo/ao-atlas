@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-26",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T04:40:55Z",
+  "changes": [
+    "added branch cleanup evidence fixture for local and remote codex branch removal",
+    "added regression coverage that requires prior cleanup and current branch cleanup commands",
+    "generated Foundry import, run-link, checkpoint, execution, and readback artifacts for node 26"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-26"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}

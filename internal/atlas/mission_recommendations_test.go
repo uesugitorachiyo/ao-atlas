@@ -4787,6 +4787,90 @@ func TestLongRunHardeningWaveSupportEvidenceNodeGateCannotWidenAuthority(t *test
 	}
 }
 
+func TestLongRunHardeningWaveBranchCleanupEvidenceRequiresLocalAndRemoteCodexRemoval(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentyFiveReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-25", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-26")
+	fixture := mustLoadJSON[struct {
+		Schema                        string   `json:"schema"`
+		NodeID                        string   `json:"node_id"`
+		Status                        string   `json:"status"`
+		CleanupScope                  string   `json:"cleanup_scope"`
+		CurrentNodeBranch             string   `json:"current_node_branch"`
+		LocalCodexBranchesBeforeNode  []string `json:"local_codex_branches_before_node"`
+		RemoteCodexBranchesBeforeNode []string `json:"remote_codex_branches_before_node"`
+		LocalCodexBranchCountBefore   int      `json:"local_codex_branch_count_before_node"`
+		RemoteCodexBranchCountBefore  int      `json:"remote_codex_branch_count_before_node"`
+		PostMergeCleanupRequired      bool     `json:"post_merge_cleanup_required"`
+		LocalBranchCleanupCommand     string   `json:"local_branch_cleanup_command"`
+		RemoteBranchCleanupCommand    string   `json:"remote_branch_cleanup_command"`
+		DirectMainMutation            bool     `json:"direct_main_mutation"`
+		CompletedNodesBeforeNode      int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode          int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed          bool     `json:"final_response_allowed"`
+		ExactNextAction               string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint    struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "branch-cleanup-evidence-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.branch-cleanup-evidence-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-26" ||
+		fixture.Status != "branch_cleanup_recorded" ||
+		fixture.CleanupScope != "after_previous_node_merge_before_current_node" ||
+		fixture.CurrentNodeBranch != "codex/hardening-wave-node-26-branch-cleanup" ||
+		len(fixture.LocalCodexBranchesBeforeNode) != 0 ||
+		len(fixture.RemoteCodexBranchesBeforeNode) != 0 ||
+		fixture.LocalCodexBranchCountBefore != 0 ||
+		fixture.RemoteCodexBranchCountBefore != 0 ||
+		!fixture.PostMergeCleanupRequired ||
+		fixture.DirectMainMutation ||
+		fixture.CompletedNodesBeforeNode != nodeTwentyFiveReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeTwentyFiveReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentyFiveReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("branch cleanup fixture must prove prior codex branch cleanup without authority effects: %#v", fixture)
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeTwentyFiveReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeTwentyFiveReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeTwentyFiveReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeTwentyFiveReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeTwentyFiveReadback.ExactNextAction {
+		t.Fatalf("branch cleanup fixture must bind node 25 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+	if !strings.Contains(fixture.LocalBranchCleanupCommand, fixture.CurrentNodeBranch) ||
+		!strings.Contains(fixture.RemoteBranchCleanupCommand, "delete-branch") {
+		t.Fatalf("branch cleanup fixture must name local and remote cleanup commands: %#v", fixture)
+	}
+
+	nodeTwentySixReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentySixReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentySixReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentySixReadback.CompletedNodes != 26 ||
+		nodeTwentySixReadback.ReadyNodes != 14 ||
+		nodeTwentySixReadback.FirstExecutableNode != "mission-recommendation-hardening-27" ||
+		nodeTwentySixReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentySixReadback.ExactNextAction, "mission-recommendation-hardening-27") {
+		t.Fatalf("node 26 readback must carry branch cleanup evidence and continue to node 27: %#v", nodeTwentySixReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

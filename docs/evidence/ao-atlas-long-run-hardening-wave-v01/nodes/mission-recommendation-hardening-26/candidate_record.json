@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-26",
+  "candidate": "codex-branch-cleanup-evidence",
+  "status": "selected",
+  "objective": "Add branch cleanup evidence check for local and remote codex branch removal.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-26"
+  ],
+  "acceptance_criteria": [
+    "branch cleanup fixture records no local codex branches before the current node",
+    "branch cleanup fixture records no remote codex branches before the current node",
+    "branch cleanup fixture requires local and remote cleanup after the current node PR merge",
+    "final response remains denied while ready nodes remain"
+  ],
+  "selected_at": "2026-07-06T04:40:55Z"
+}
