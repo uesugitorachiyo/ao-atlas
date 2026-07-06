@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-14",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T01:06:57Z",
+  "changes": [
+    "added regression coverage for promoted Foundry rollup closure requiring Command agreement",
+    "added a node 14 fixture binding promoted terminal status to Command agreement and ready-node gates",
+    "generated Foundry import, run-link, checkpoint, execution, and readback artifacts for node 14"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-14"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}

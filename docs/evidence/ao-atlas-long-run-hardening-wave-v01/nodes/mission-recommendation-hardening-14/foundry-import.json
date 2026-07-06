@@ -1,0 +1,115 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-ao-atlas-long-run-hardening-wave-v01-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-ao-atlas-long-run-hardening-wave-v01",
+  "target_instance": "ao-atlas-long-run-hardening-wave-v01",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-13/workgraph-after.json",
+      "digest": "sha256:0c885adeaca87276713dc179e590205c253fcc75a696cecd8284a82b15564c05"
+    },
+    {
+      "ref": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/stack-instance.json",
+      "digest": "sha256:055f418eb6c844b852bb2ea7600b06f8e82f182cccb19b11861fb5ac1f5c99ef"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-hardening-14",
+      "task_id": "mission-recommendation-hardening-14-task",
+      "path": "tasks/mission-recommendation-hardening-14-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:c30756397352c16576216236568a34337900d81bc83b6600f43ffa710ef6cf82",
+        "source_recommendation:hardening-14",
+        "source_task_digest:sha256:399962ea70ef42f4316e3d15d572b3363896c23f976c7a53b179e094926c94b0"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-hardening-14-task",
+        "objective": "Add completed Foundry rollup fixture coverage where promoted closes only with Command agreement.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/hardening-14",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:c30756397352c16576216236568a34337900d81bc83b6600f43ffa710ef6cf82",
+          "source_recommendation:hardening-14",
+          "source_task_digest:sha256:399962ea70ef42f4316e3d15d572b3363896c23f976c7a53b179e094926c94b0"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-hardening-13"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:b72b819f2c31527cc783147ef83ecd019c3de2ddb40d1aa070a6ae1c948621b5"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

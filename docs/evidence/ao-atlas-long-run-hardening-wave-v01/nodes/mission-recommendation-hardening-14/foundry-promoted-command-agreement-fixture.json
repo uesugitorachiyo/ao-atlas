@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.foundry-promoted-command-agreement-fixture.v0.1",
+  "node_id": "mission-recommendation-hardening-14",
+  "status": "command_agreement_required",
+  "source_status": "promoted",
+  "normalized_status": "completed",
+  "closes_task": true,
+  "closes_mission": false,
+  "command_agreement_required": true,
+  "command_agreement_status": "required_before_mission_closure",
+  "disagreement_blocks_closure": true,
+  "closure_conditions": [
+    "command_readback_agrees",
+    "zero_ready_nodes",
+    "all_required_closure_evidence_exists",
+    "no_forbidden_surface",
+    "rsi_remains_denied"
+  ],
+  "completed_nodes_before_node": 13,
+  "ready_nodes_before_node": 27,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-14 and execute exactly one active node.",
+  "current_hardening_checkpoint": {
+    "completed_nodes": 13,
+    "ready_nodes": 27,
+    "first_executable_node": "mission-recommendation-hardening-14",
+    "final_response_allowed": false,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-14 and execute exactly one active node."
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
