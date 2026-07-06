@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-30",
+  "status": "no_promotion",
+  "reason": "Node 30 records a compaction resume prompt only; it does not promote capability class or authority.",
+  "highest_proven_live_class_unchanged": true,
+  "rsi_remains_denied": true
+}

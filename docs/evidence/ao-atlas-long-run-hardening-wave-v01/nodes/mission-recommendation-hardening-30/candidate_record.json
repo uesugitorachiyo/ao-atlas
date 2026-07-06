@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-30",
+  "task_id": "mission-recommendation-hardening-30-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-29/recommendation-readback-after.json",
+  "objective": "Add Atlas resume prompt that continues after compaction without rerunning completed nodes.",
+  "candidate_reason": "The long-run supervisor needs a compaction-safe resume prompt that trusts the latest checkpoint and resumes at the first executable node.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T06:00:46Z"
+}
