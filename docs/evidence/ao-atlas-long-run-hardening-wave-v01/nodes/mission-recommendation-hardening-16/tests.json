@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-16",
+  "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveBlockedFoundryRollupPreservesBlockerDetails -count=1",
+  "red_result": "failed before foundry-blocked-safe-next-action-fixture.json existed",
+  "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveBlockedFoundryRollupPreservesBlockerDetails -count=1",
+  "green_result": "passed"
+}

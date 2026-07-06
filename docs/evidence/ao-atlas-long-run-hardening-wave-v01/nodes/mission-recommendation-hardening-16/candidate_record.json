@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-16",
+  "candidate": "foundry-blocked-safe-next-action-fixture",
+  "status": "selected",
+  "objective": "Add blocked Foundry rollup fixture coverage preserving blocker details and safe next action.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-16"
+  ],
+  "acceptance_criteria": [
+    "fixture normalizes blocked Foundry rollups as blocked task-terminal evidence",
+    "fixture requires blocker detail categories and resume checkpoint evidence",
+    "fixture preserves safe next action and final-response denial while ready nodes remain"
+  ],
+  "selected_at": "2026-07-06T01:38:01Z"
+}
