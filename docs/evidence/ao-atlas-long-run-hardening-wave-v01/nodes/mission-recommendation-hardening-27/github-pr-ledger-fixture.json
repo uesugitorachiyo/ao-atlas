@@ -1,0 +1,94 @@
+{
+  "schema": "ao.atlas.github-pr-ledger-fixture.v0.1",
+  "node_id": "mission-recommendation-hardening-27",
+  "status": "pr_ledger_recorded",
+  "ledger_scope": "previous_node_merge_ci_and_cleanup",
+  "previous_node_id": "mission-recommendation-hardening-26",
+  "previous_pr_number": 289,
+  "previous_pr_url": "https://github.com/uesugitorachiyo/ao-atlas/pull/289",
+  "previous_head_branch": "codex/hardening-wave-node-26-branch-cleanup",
+  "previous_merge_commit": "b6f5ee71d716070e24201ff3c7d5e1e1d7b0f905",
+  "previous_pr_state": "MERGED",
+  "previous_pr_merged_at": "2026-07-06T04:58:09Z",
+  "previous_ci_status": "pass",
+  "previous_branch_cleanup": {
+    "cleanup_scope": "after_previous_node_merge_before_current_node_branch",
+    "local_codex_branches_after_merge": [],
+    "remote_codex_branches_after_merge": [],
+    "local_codex_branch_count_after_merge": 0,
+    "remote_codex_branch_count_after_merge": 0
+  },
+  "ci_checks": [
+    {
+      "name": "Production readiness (ubuntu-latest)",
+      "workflow": "Production Readiness Ops",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS"
+    },
+    {
+      "name": "production-readiness (ubuntu-latest)",
+      "workflow": "ci",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS"
+    },
+    {
+      "name": "production-readiness (ubuntu-latest)",
+      "workflow": "ci",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS"
+    },
+    {
+      "name": "Production readiness (macos-latest)",
+      "workflow": "Production Readiness Ops",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS"
+    },
+    {
+      "name": "production-readiness (macos-latest)",
+      "workflow": "ci",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS"
+    },
+    {
+      "name": "production-readiness (macos-latest)",
+      "workflow": "ci",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS"
+    },
+    {
+      "name": "Production readiness (windows-latest)",
+      "workflow": "Production Readiness Ops",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS"
+    },
+    {
+      "name": "production-readiness (windows-latest)",
+      "workflow": "ci",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS"
+    },
+    {
+      "name": "production-readiness (windows-latest)",
+      "workflow": "ci",
+      "status": "COMPLETED",
+      "conclusion": "SUCCESS"
+    }
+  ],
+  "direct_main_mutation": false,
+  "completed_nodes_before_node": 26,
+  "ready_nodes_before_node": 14,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-27 and execute exactly one active node.",
+  "current_hardening_checkpoint": {
+    "completed_nodes": 26,
+    "ready_nodes": 14,
+    "first_executable_node": "mission-recommendation-hardening-27",
+    "final_response_allowed": false,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-27 and execute exactly one active node."
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

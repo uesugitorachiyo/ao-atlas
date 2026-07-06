@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-hardening-27",
+  "status": "opened",
+  "support_evidence_node": true,
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "authority_widening_allowed": false,
+  "one_executable_mutation_node_active": true,
+  "entry_readiness": {
+    "completed_nodes": 26,
+    "ready_nodes": 14,
+    "first_executable_node": "mission-recommendation-hardening-27",
+    "final_response_allowed": false
+  },
+  "opened_at": "2026-07-06T05:00:51Z"
+}
