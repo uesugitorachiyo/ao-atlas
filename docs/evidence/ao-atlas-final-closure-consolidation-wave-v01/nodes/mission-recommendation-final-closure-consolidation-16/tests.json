@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-16",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationWindowsCIWaitStateTelemetryRecordsLongRunningChecks -count=1",
+      "status": "failed_before_implementation",
+      "failure": "missing node 15 post-merge lifecycle and node 16 Windows CI telemetry fixture"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationWindowsCIWaitStateTelemetryRecordsLongRunningChecks -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Windows CI checks above the 600 second threshold are reported as long-running pending-before-success states.",
+    "Telemetry is bound to PR #317 and PR #318 check readbacks.",
+    "Node 16 preserves no-promotion and RSI-denied safety boundaries.",
+    "Node 16 readback advances to node 17 while final response remains denied."
+  ]
+}
