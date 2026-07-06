@@ -203,6 +203,9 @@ type AOMissionFeatureDepthRecommendations struct {
 	Status              string                      `json:"status"`
 	MinimumTasks        int                         `json:"minimum_tasks"`
 	RecommendationCount int                         `json:"recommendation_count"`
+	SourceEvidenceRoot  string                      `json:"source_evidence_root,omitempty"`
+	SourceReadbackPath  string                      `json:"source_readback_path,omitempty"`
+	SourceAssertionPath string                      `json:"source_assertion_path,omitempty"`
 	Tasks               []AOMissionFeatureDepthTask `json:"tasks"`
 	SafeToExecute       bool                        `json:"safe_to_execute"`
 	SchedulesWork       bool                        `json:"schedules_work,omitempty"`
@@ -212,9 +215,32 @@ type AOMissionFeatureDepthRecommendations struct {
 }
 
 type AOMissionFeatureDepthTask struct {
-	ID    string `json:"id"`
-	Owner string `json:"owner"`
-	Task  string `json:"task"`
+	Rank         int      `json:"rank,omitempty"`
+	ID           string   `json:"id"`
+	Owner        string   `json:"owner"`
+	Theme        string   `json:"theme,omitempty"`
+	Task         string   `json:"task"`
+	EvidenceRefs []string `json:"evidence_refs,omitempty"`
+}
+
+type AtlasNextWaveRecommendationExport struct {
+	Schema                 string                               `json:"schema"`
+	NodeID                 string                               `json:"node_id"`
+	Status                 string                               `json:"status"`
+	SourceEvidenceRoot     string                               `json:"source_evidence_root"`
+	SourceReadbackPath     string                               `json:"source_readback_path"`
+	SourceAssertionPath    string                               `json:"source_assertion_path"`
+	CompletedNodesBefore   int                                  `json:"completed_nodes_before_export"`
+	ReadyNodesBefore       int                                  `json:"ready_nodes_before_export"`
+	ExpectedNextNode       string                               `json:"expected_next_node_after_completion"`
+	MinimumRankedTasks     int                                  `json:"minimum_ranked_tasks"`
+	RecommendationCount    int                                  `json:"recommendation_count"`
+	RankedTaskFloorMet     bool                                 `json:"ranked_task_floor_met"`
+	NoPromotionRequested   bool                                 `json:"no_promotion_requested"`
+	PromotionGranted       bool                                 `json:"promotion_granted"`
+	ClaimsAuthorityAdvance bool                                 `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                 `json:"rsi_remains_denied"`
+	FeatureDepthExport     AOMissionFeatureDepthRecommendations `json:"feature_depth_export"`
 }
 
 type AtlasRecommendationWave struct {

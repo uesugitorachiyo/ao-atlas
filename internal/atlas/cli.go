@@ -415,10 +415,13 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, readback, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
+	}
+	if args[0] == "export-next-wave" {
+		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
 	if args[0] == "complete-node" {
 		return runMissionRecommendationsCompleteNode(args[1:], stdout)
@@ -430,7 +433,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, readback, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -527,6 +530,92 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		filepath.ToSlash(filepath.Join(*outDir, "recommendation-readback.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "workgraph-readiness-packet.json")),
 		filepath.ToSlash(filepath.Join(*outDir, "next-recommended-prompt.md")),
+	)
+	return nil
+}
+
+func runMissionRecommendationsExportNextWave(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations export-next-wave", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	missionID := fs.String("mission-id", "ao-atlas-next-feature-depth-wave-v01", "next wave mission id")
+	sourceEvidenceRoot := fs.String("source-evidence-root", "", "source evidence root")
+	sourceReadbackPath := fs.String("source-readback", "", "source recommendation readback path")
+	sourceAssertionPath := fs.String("source-assertion", "", "source no-promotion/no-RSI assertion path")
+	minTasks := fs.Int("min-tasks", 40, "minimum ranked Feature Depth tasks")
+	outPath := fs.String("out", "", "output Feature Depth recommendations path")
+	fixtureOutPath := fs.String("fixture-out", "", "output next-wave exporter fixture path")
+	nodeID := fs.String("node-id", "", "exporting recommendation node id")
+	expectedNextNode := fs.String("expected-next-node", "", "expected next node after exporter completion")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*sourceEvidenceRoot) == "" {
+		return fmt.Errorf("--source-evidence-root is required")
+	}
+	if strings.TrimSpace(*sourceReadbackPath) == "" {
+		return fmt.Errorf("--source-readback is required")
+	}
+	if strings.TrimSpace(*sourceAssertionPath) == "" {
+		return fmt.Errorf("--source-assertion is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	for _, input := range []string{*sourceEvidenceRoot, *sourceReadbackPath, *sourceAssertionPath} {
+		if strings.TrimSpace(*outPath) != "" && samePath(input, *outPath) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+		if strings.TrimSpace(*fixtureOutPath) != "" && samePath(input, *fixtureOutPath) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+	}
+	bundle, err := BuildAtlasNextWaveFeatureDepthRecommendations(AtlasNextWaveFeatureDepthExportOptions{
+		MissionID:           *missionID,
+		SourceEvidenceRoot:  *sourceEvidenceRoot,
+		SourceReadbackPath:  *sourceReadbackPath,
+		SourceAssertionPath: *sourceAssertionPath,
+		MinTasks:            *minTasks,
+	})
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, bundle); err != nil {
+			return err
+		}
+	}
+	if strings.TrimSpace(*fixtureOutPath) != "" {
+		if strings.TrimSpace(*nodeID) == "" {
+			return fmt.Errorf("--node-id is required with --fixture-out")
+		}
+		if strings.TrimSpace(*expectedNextNode) == "" {
+			return fmt.Errorf("--expected-next-node is required with --fixture-out")
+		}
+		sourceReadback, err := LoadJSON[AtlasRecommendationReadback](*sourceReadbackPath)
+		if err != nil {
+			return err
+		}
+		fixture, err := BuildAtlasNextWaveRecommendationExport(bundle, sourceReadback, *nodeID, *expectedNextNode)
+		if err != nil {
+			return err
+		}
+		if err := WriteJSON(*fixtureOutPath, fixture); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, bundle)
+	}
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\nminimum_tasks=%d\nrecommendation_count=%d\nranked_tasks=%d\nsafe_to_execute=%t\nfeature_depth_recommendations=%s\nnext_wave_export_fixture=%s\n",
+		bundle.Status,
+		bundle.MissionID,
+		bundle.MinimumTasks,
+		bundle.RecommendationCount,
+		len(bundle.Tasks),
+		bundle.SafeToExecute,
+		filepath.ToSlash(*outPath),
+		filepath.ToSlash(*fixtureOutPath),
 	)
 	return nil
 }

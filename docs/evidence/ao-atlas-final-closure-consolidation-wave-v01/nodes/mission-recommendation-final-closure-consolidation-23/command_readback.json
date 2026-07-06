@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-23",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 22,
+  "ready_nodes_before": 2,
+  "first_executable_node_before": "mission-recommendation-final-closure-consolidation-23",
+  "final_response_allowed_before": false,
+  "expected_next_node_after_completion": "mission-recommendation-final-closure-consolidation-24",
+  "compact_timeline": [
+    "node22_readback_blocks_final_response",
+    "node23_exports_next_wave_feature_depth_tasks",
+    "node24_remains_ready_after_node23_completion"
+  ]
+}

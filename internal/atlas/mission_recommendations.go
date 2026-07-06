@@ -23,6 +23,14 @@ type AtlasRecommendationWaveOptions struct {
 	FinalReportContract  string
 }
 
+type AtlasNextWaveFeatureDepthExportOptions struct {
+	MissionID           string
+	SourceEvidenceRoot  string
+	SourceReadbackPath  string
+	SourceAssertionPath string
+	MinTasks            int
+}
+
 type AtlasRecommendationWaveResult struct {
 	Wave      AtlasRecommendationWave
 	Workgraph Workgraph
@@ -261,6 +269,204 @@ func ValidateAOMissionFeatureDepthRecommendations(bundle AOMissionFeatureDepthRe
 		errs = append(errs, "mutates_repositories must be false")
 	}
 	return joinErrors(errs)
+}
+
+func BuildAtlasNextWaveFeatureDepthRecommendations(options AtlasNextWaveFeatureDepthExportOptions) (AOMissionFeatureDepthRecommendations, error) {
+	minTasks := options.MinTasks
+	if minTasks <= 0 {
+		minTasks = 40
+	}
+	if minTasks > 40 {
+		return AOMissionFeatureDepthRecommendations{}, fmt.Errorf("next-wave exporter currently supports at most 40 ranked tasks, requested %d", minTasks)
+	}
+	missionID := strings.TrimSpace(options.MissionID)
+	if missionID == "" {
+		missionID = "ao-atlas-next-feature-depth-wave-v01"
+	}
+	sourceEvidenceRoot := filepath.ToSlash(strings.TrimSpace(options.SourceEvidenceRoot))
+	sourceReadbackPath := filepath.ToSlash(strings.TrimSpace(options.SourceReadbackPath))
+	sourceAssertionPath := filepath.ToSlash(strings.TrimSpace(options.SourceAssertionPath))
+	for label, path := range map[string]string{
+		"source_evidence_root":  sourceEvidenceRoot,
+		"source_readback_path":  sourceReadbackPath,
+		"source_assertion_path": sourceAssertionPath,
+	} {
+		if err := validateNextWaveSourcePath(label, path); err != nil {
+			return AOMissionFeatureDepthRecommendations{}, err
+		}
+	}
+
+	tasks := make([]AOMissionFeatureDepthTask, 0, 40)
+	for i, seed := range nextWaveFeatureDepthSeeds() {
+		rank := i + 1
+		tasks = append(tasks, AOMissionFeatureDepthTask{
+			Rank:         rank,
+			ID:           fmt.Sprintf("feature-depth-next-wave-%02d", rank),
+			Owner:        "ao-atlas",
+			Theme:        seed.theme,
+			Task:         seed.task,
+			EvidenceRefs: []string{sourceReadbackPath, sourceAssertionPath},
+		})
+	}
+	bundle := AOMissionFeatureDepthRecommendations{
+		Schema:              "ao.mission.feature-depth-recommendations.v0.3",
+		MissionID:           missionID,
+		Status:              "ready",
+		MinimumTasks:        minTasks,
+		RecommendationCount: len(tasks),
+		SourceEvidenceRoot:  sourceEvidenceRoot,
+		SourceReadbackPath:  sourceReadbackPath,
+		SourceAssertionPath: sourceAssertionPath,
+		Tasks:               tasks,
+		SafeToExecute:       false,
+		SchedulesWork:       false,
+		ExecutesWork:        false,
+		ApprovesWork:        false,
+		MutatesRepositories: false,
+	}
+	if err := ValidateAtlasNextWaveFeatureDepthRecommendations(bundle, minTasks); err != nil {
+		return AOMissionFeatureDepthRecommendations{}, err
+	}
+	return bundle, nil
+}
+
+func BuildAtlasNextWaveRecommendationExport(bundle AOMissionFeatureDepthRecommendations, sourceReadback AtlasRecommendationReadback, nodeID, expectedNextNode string) (AtlasNextWaveRecommendationExport, error) {
+	nodeID = strings.TrimSpace(nodeID)
+	if nodeID == "" {
+		return AtlasNextWaveRecommendationExport{}, fmt.Errorf("node_id is required")
+	}
+	expectedNextNode = strings.TrimSpace(expectedNextNode)
+	if expectedNextNode == "" {
+		return AtlasNextWaveRecommendationExport{}, fmt.Errorf("expected_next_node is required")
+	}
+	if err := ValidateAtlasNextWaveFeatureDepthRecommendations(bundle, 40); err != nil {
+		return AtlasNextWaveRecommendationExport{}, err
+	}
+	fixture := AtlasNextWaveRecommendationExport{
+		Schema:                 "ao.atlas.next-wave-recommendation-export.v0.1",
+		NodeID:                 nodeID,
+		Status:                 "exported",
+		SourceEvidenceRoot:     bundle.SourceEvidenceRoot,
+		SourceReadbackPath:     bundle.SourceReadbackPath,
+		SourceAssertionPath:    bundle.SourceAssertionPath,
+		CompletedNodesBefore:   sourceReadback.CompletedNodes,
+		ReadyNodesBefore:       sourceReadback.ReadyNodes,
+		ExpectedNextNode:       expectedNextNode,
+		MinimumRankedTasks:     40,
+		RecommendationCount:    bundle.RecommendationCount,
+		RankedTaskFloorMet:     len(bundle.Tasks) >= 40,
+		NoPromotionRequested:   true,
+		PromotionGranted:       false,
+		ClaimsAuthorityAdvance: false,
+		RSIRemainsDenied:       true,
+		FeatureDepthExport:     bundle,
+	}
+	if !fixture.RankedTaskFloorMet {
+		return AtlasNextWaveRecommendationExport{}, fmt.Errorf("ranked task floor not met")
+	}
+	return fixture, nil
+}
+
+func ValidateAtlasNextWaveFeatureDepthRecommendations(bundle AOMissionFeatureDepthRecommendations, minTasks int) error {
+	if minTasks <= 0 {
+		minTasks = 40
+	}
+	var errs []string
+	if err := ValidateAOMissionFeatureDepthRecommendations(bundle, minTasks); err != nil {
+		errs = append(errs, err.Error())
+	}
+	requireField(&errs, "source_evidence_root", bundle.SourceEvidenceRoot)
+	requireField(&errs, "source_readback_path", bundle.SourceReadbackPath)
+	requireField(&errs, "source_assertion_path", bundle.SourceAssertionPath)
+	checkPublicPath(&errs, "source_evidence_root", bundle.SourceEvidenceRoot, true)
+	checkPublicPath(&errs, "source_readback_path", bundle.SourceReadbackPath, true)
+	checkPublicPath(&errs, "source_assertion_path", bundle.SourceAssertionPath, true)
+	if len(bundle.Tasks) < minTasks {
+		errs = append(errs, fmt.Sprintf("ranked tasks must include at least %d tasks", minTasks))
+	}
+	themes := map[string]bool{}
+	for i, task := range bundle.Tasks {
+		prefix := fmt.Sprintf("tasks[%d]", i)
+		wantRank := i + 1
+		if task.Rank != wantRank {
+			errs = append(errs, fmt.Sprintf("%s.rank must be %d", prefix, wantRank))
+		}
+		if task.ID != fmt.Sprintf("feature-depth-next-wave-%02d", wantRank) {
+			errs = append(errs, fmt.Sprintf("%s.id must match ranked next-wave id", prefix))
+		}
+		requireField(&errs, prefix+".theme", task.Theme)
+		if len(task.EvidenceRefs) == 0 {
+			errs = append(errs, prefix+".evidence_refs must not be empty")
+		}
+		if !containsValue(task.EvidenceRefs, bundle.SourceReadbackPath) {
+			errs = append(errs, prefix+".evidence_refs must include source_readback_path")
+		}
+		checkPublicStrings(&errs, prefix+".evidence_refs", task.EvidenceRefs, true)
+		checkPublicPath(&errs, prefix+".theme", task.Theme, true)
+		themes[task.Theme] = true
+	}
+	if len(themes) < 10 {
+		errs = append(errs, "tasks must span at least 10 Feature Depth themes")
+	}
+	return joinErrors(errs)
+}
+
+func validateNextWaveSourcePath(label, path string) error {
+	var errs []string
+	requireField(&errs, label, path)
+	checkPublicPath(&errs, label, path, true)
+	return joinErrors(errs)
+}
+
+func nextWaveFeatureDepthSeeds() []struct {
+	theme string
+	task  string
+} {
+	return []struct {
+		theme string
+		task  string
+	}{
+		{"mission-readback-durability", "Bind AO Mission readback deltas to deterministic checkpoint comparison evidence."},
+		{"mission-readback-durability", "Add resumable readback diff fixtures for completed and ready node transitions."},
+		{"mission-readback-durability", "Create stale checkpoint rejection evidence for outdated Mission continuation prompts."},
+		{"mission-readback-durability", "Add operator summary checks that preserve exact next action wording."},
+		{"evidence-schema-coverage", "Extend evidence schema validation to typed node closure rollup artifacts."},
+		{"evidence-schema-coverage", "Add schema coverage summaries for every generated run link artifact."},
+		{"evidence-schema-coverage", "Validate required node evidence fields before recommendation readback advances."},
+		{"evidence-schema-coverage", "Record schema validator drift evidence for regenerated fixture directories."},
+		{"pr-ci-telemetry", "Build aggregate PR and CI timing summaries across consolidation wave nodes."},
+		{"pr-ci-telemetry", "Add long running Windows check threshold evidence to PR ledger rows."},
+		{"pr-ci-telemetry", "Create failed check replay fixtures for retry and no merge decisions."},
+		{"pr-ci-telemetry", "Bind merge commit readbacks to passed required check conclusions."},
+		{"branch-lifecycle-recovery", "Add post merge branch deletion readback to every node closure packet."},
+		{"branch-lifecycle-recovery", "Create stale remote branch repair evidence for interrupted cleanup handoffs."},
+		{"branch-lifecycle-recovery", "Validate local main synchronization before selecting the next executable node."},
+		{"branch-lifecycle-recovery", "Record branch cleanup ledger summaries in final operator handoff evidence."},
+		{"compaction-resume-fidelity", "Generate compaction resume prompts that preserve lease timing and active node state."},
+		{"compaction-resume-fidelity", "Add resume prompt regression fixtures for ready nodes and exact next actions."},
+		{"compaction-resume-fidelity", "Bind checkpoint digests into resume prompts for interruption recovery audits."},
+		{"compaction-resume-fidelity", "Create resume denial evidence when final response remains blocked by ready work."},
+		{"public-safety-scanning", "Bind Sentinel wording scan results into final closure readback status fields."},
+		{"public-safety-scanning", "Add scoped public safety scans for changed evidence and prompt artifacts."},
+		{"public-safety-scanning", "Create negative wording fixtures for unsafe authority promotion statements."},
+		{"public-safety-scanning", "Summarize public safety scan coverage in machine readable closure rollups."},
+		{"promoter-command-rollups", "Aggregate Promoter no promotion verdicts across completed hardening and closure nodes."},
+		{"promoter-command-rollups", "Bind Command compact readback agreement to Promoter no promotion summaries."},
+		{"promoter-command-rollups", "Add regression evidence for no promotion rollup count mismatches."},
+		{"promoter-command-rollups", "Create final response denial evidence when Command and Promoter disagree."},
+		{"foundry-handoff-binding", "Bind Foundry import readiness records to exactly one active mutation node."},
+		{"foundry-handoff-binding", "Add Foundry run link digest checks for completed node evidence packets."},
+		{"foundry-handoff-binding", "Create Foundry handoff replay fixtures for resumed bounded implementation nodes."},
+		{"foundry-handoff-binding", "Validate Foundry terminal status examples against recommendation readback enums."},
+		{"dashboard-provenance", "Bind Atlas final closure evidence into multi repo Mission dashboard rows."},
+		{"dashboard-provenance", "Add dashboard provenance links for Foundry Promoter Command and Sentinel evidence."},
+		{"dashboard-provenance", "Create dashboard freshness checks for merged PR and synced main state."},
+		{"dashboard-provenance", "Summarize blocked versus ready Mission nodes in compact dashboard filters."},
+		{"next-wave-generation", "Export ranked Feature Depth tasks from final closure readback evidence."},
+		{"next-wave-generation", "Add next wave prompt generation with minimum two hour work budget language."},
+		{"next-wave-generation", "Validate next wave recommendations remain planning only until imported."},
+		{"next-wave-generation", "Generate final Feature Depth recommendations for operator handoff review."},
+	}
 }
 
 func ValidateAtlasRecommendationWave(wave AtlasRecommendationWave) error {
