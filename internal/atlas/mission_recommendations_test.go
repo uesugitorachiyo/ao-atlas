@@ -4565,6 +4565,110 @@ func TestLongRunHardeningWaveArtifactAgreementTiesPromptCommandAndWorkgraphStatu
 	}
 }
 
+func TestLongRunHardeningWaveRollbackBoundaryForPromptOnlyNodes(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentyThreeReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-23", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-24")
+	fixture := mustLoadJSON[struct {
+		Schema                     string   `json:"schema"`
+		NodeID                     string   `json:"node_id"`
+		Status                     string   `json:"status"`
+		PromptOnlyNode             bool     `json:"prompt_only_node"`
+		NoDataLossBoundary         bool     `json:"no_data_loss_boundary"`
+		DestructiveRollbackAllowed bool     `json:"destructive_rollback_allowed"`
+		ReleaseActionRequired      bool     `json:"release_action_required"`
+		RollbackCommand            string   `json:"rollback_command"`
+		RollbackScope              []string `json:"rollback_scope"`
+		RestoresPreviousCheckpoint string   `json:"restores_previous_checkpoint"`
+		CompletedNodesBeforeNode   int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode       int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed       bool     `json:"final_response_allowed"`
+		ExactNextAction            string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "rollback-boundary-fixture.json"))
+	rollback := mustLoadJSON[struct {
+		Schema                     string   `json:"schema"`
+		NodeID                     string   `json:"node_id"`
+		Status                     string   `json:"status"`
+		RollbackScope              []string `json:"rollback_scope"`
+		RollbackCommand            string   `json:"rollback_command"`
+		RestoresPreviousCheckpoint string   `json:"restores_previous_checkpoint"`
+		RequiresReleaseAction      bool     `json:"requires_release_action"`
+	}](t, filepath.Join(nodeDir, "rollback_record.json"))
+
+	if fixture.Schema != "ao.atlas.rollback-boundary-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-24" ||
+		fixture.Status != "rollback_boundary_recorded" ||
+		!fixture.PromptOnlyNode ||
+		!fixture.NoDataLossBoundary ||
+		fixture.DestructiveRollbackAllowed ||
+		fixture.ReleaseActionRequired ||
+		fixture.CompletedNodesBeforeNode != nodeTwentyThreeReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeTwentyThreeReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentyThreeReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("rollback boundary fixture must bind prompt-only rollback without authority effects: %#v", fixture)
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeTwentyThreeReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeTwentyThreeReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeTwentyThreeReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeTwentyThreeReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeTwentyThreeReadback.ExactNextAction {
+		t.Fatalf("rollback boundary fixture must bind node 23 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+	if rollback.Schema != "ao.atlas.rollback-record.v0.1" ||
+		rollback.NodeID != fixture.NodeID ||
+		rollback.Status != "available" ||
+		rollback.RollbackCommand != fixture.RollbackCommand ||
+		rollback.RestoresPreviousCheckpoint != fixture.RestoresPreviousCheckpoint ||
+		rollback.RequiresReleaseAction ||
+		len(rollback.RollbackScope) != len(fixture.RollbackScope) {
+		t.Fatalf("rollback record must agree with rollback boundary fixture: rollback=%#v fixture=%#v", rollback, fixture)
+	}
+	for i, scope := range rollback.RollbackScope {
+		if scope != fixture.RollbackScope[i] {
+			t.Fatalf("rollback scope %d disagrees: rollback=%q fixture=%q", i, scope, fixture.RollbackScope[i])
+		}
+	}
+	for _, value := range append([]string{rollback.RollbackCommand}, rollback.RollbackScope...) {
+		lower := strings.ToLower(value)
+		for _, forbidden := range []string{"reset --hard", "rm -rf", "drop database", "delete production data", "release", "deploy", "publish", "upload", "tag"} {
+			if strings.Contains(lower, forbidden) {
+				t.Fatalf("prompt-only rollback must not include destructive or release action %q in %q", forbidden, value)
+			}
+		}
+	}
+
+	nodeTwentyFourReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentyFourReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentyFourReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentyFourReadback.CompletedNodes != 24 ||
+		nodeTwentyFourReadback.ReadyNodes != 16 ||
+		nodeTwentyFourReadback.FirstExecutableNode != "mission-recommendation-hardening-25" ||
+		nodeTwentyFourReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentyFourReadback.ExactNextAction, "mission-recommendation-hardening-25") {
+		t.Fatalf("node 24 readback must carry rollback boundary and continue to node 25: %#v", nodeTwentyFourReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

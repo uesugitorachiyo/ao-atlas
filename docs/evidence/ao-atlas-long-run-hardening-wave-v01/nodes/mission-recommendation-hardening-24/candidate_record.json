@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-24",
+  "candidate": "prompt-only-rollback-boundary",
+  "status": "selected",
+  "objective": "Add rollback record fixture for prompt-only nodes with no data loss boundary.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-24"
+  ],
+  "acceptance_criteria": [
+    "rollback boundary fixture marks the node as prompt-only",
+    "rollback boundary fixture records no data loss and no destructive rollback action",
+    "rollback boundary fixture agrees with rollback_record.json",
+    "rollback boundary fixture restores the prior checkpoint and denies final response while ready nodes remain"
+  ],
+  "selected_at": "2026-07-06T04:02:47Z"
+}
