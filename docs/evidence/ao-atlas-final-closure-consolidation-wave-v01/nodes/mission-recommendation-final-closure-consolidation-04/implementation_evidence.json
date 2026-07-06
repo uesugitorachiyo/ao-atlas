@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-04",
+  "status": "recorded",
+  "cleanup_rollup_artifact": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-04/post-merge-cleanup-rollup.json",
+  "post_merge_lifecycle_artifact": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/post-merge-lifecycle.json",
+  "test_added": "TestFinalClosureConsolidationPostMergeCleanupRollupCoversMergedNodes",
+  "one_active_node_enforced": true,
+  "final_response_allowed_after_rollup": false
+}
