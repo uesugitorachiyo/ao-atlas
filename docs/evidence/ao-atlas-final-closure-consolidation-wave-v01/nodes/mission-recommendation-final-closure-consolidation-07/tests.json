@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-07",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationAggregateRollupRegressionPreservesNoPromotionAgreement -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 6 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationAggregateRollupRegressionPreservesNoPromotionAgreement -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Node 6 merge lifecycle evidence proves PR 309, CI pass, synced main, and branch cleanup.",
+    "Aggregate rollup regression preserves no-promotion status and Command agreement.",
+    "Regression fixture preserves RSI denial and blocks promotion drift."
+  ]
+}

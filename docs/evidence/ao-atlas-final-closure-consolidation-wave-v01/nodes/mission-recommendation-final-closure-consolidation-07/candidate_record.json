@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-07",
+  "status": "implemented",
+  "objective": "Add regression evidence for aggregate no promotion and Command agreement rollups.",
+  "implementation": [
+    "Added node 6 post-merge lifecycle evidence after PR 309 merge, CI pass, sync, and branch cleanup.",
+    "Added an aggregate rollup regression fixture that binds node 6 Promoter, Command, and RSI denial fields to the node 6 readback.",
+    "Added a regression test that fails when aggregate no-promotion or Command agreement evidence drifts."
+  ],
+  "files_changed": [
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-07/aggregate-rollup-regression.json",
+    "internal/atlas/mission_recommendations_test.go"
+  ],
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
