@@ -1,0 +1,115 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-ao-atlas-final-closure-consolidation-wave-v01-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-ao-atlas-final-closure-consolidation-wave-v01",
+  "target_instance": "ao-atlas-final-closure-consolidation-wave-v01",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-01/workgraph-after.json",
+      "digest": "sha256:8c2a737defdf9a54ab638e3688f563e9ce16b67c263ab247b5d57348832a9609"
+    },
+    {
+      "ref": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/stack-instance.json",
+      "digest": "sha256:e621c2ec3804ea28505313e802074e292b5c183f10a3fa28605fa011535d3ca7"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-final-closure-consolidation-02",
+      "task_id": "mission-recommendation-final-closure-consolidation-02-task",
+      "path": "tasks/mission-recommendation-final-closure-consolidation-02-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:f3dc4b705c62ee4e21e55ac6a596bbf1ce1c012fcbdd3121f0e8cf2ee7b32ef0",
+        "source_recommendation:final-closure-consolidation-02",
+        "source_task_digest:sha256:e9ffb1dac36948bbd434ee5cc7fc35f597bde0e343ed5e33b2c08e38c49c4002"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-final-closure-consolidation-02-task",
+        "objective": "Bind final readback public safety scan status to the passed Sentinel production scan result.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/final-closure-consolidation-02",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:f3dc4b705c62ee4e21e55ac6a596bbf1ce1c012fcbdd3121f0e8cf2ee7b32ef0",
+          "source_recommendation:final-closure-consolidation-02",
+          "source_task_digest:sha256:e9ffb1dac36948bbd434ee5cc7fc35f597bde0e343ed5e33b2c08e38c49c4002"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-final-closure-consolidation-01"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:cbbf40f89a741b873ea93a5b8f2d2415caa79d472a32109fcf55502b1f34529c"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

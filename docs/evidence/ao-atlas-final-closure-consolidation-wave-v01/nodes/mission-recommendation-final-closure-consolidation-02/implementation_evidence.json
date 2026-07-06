@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-02",
+  "status": "recorded",
+  "binding_artifact": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-02/public-safety-readback-binding.json",
+  "source_readback_updated": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/recommendation-readback-after.json",
+  "post_merge_lifecycle_artifact": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-01/post-merge-lifecycle.json",
+  "test_added": "TestFinalClosureConsolidationBindsPublicSafetyAndNodeOneLifecycle",
+  "one_active_node_enforced": true,
+  "final_response_allowed_after_binding": false
+}

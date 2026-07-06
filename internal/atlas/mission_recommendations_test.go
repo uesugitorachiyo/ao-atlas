@@ -6182,6 +6182,85 @@ func TestLongRunHardeningWaveFinalClosureArtifactsAllowFinalResponseOnlyAtComple
 	}
 }
 
+func TestFinalClosureConsolidationBindsPublicSafetyAndNodeOneLifecycle(t *testing.T) {
+	longRunRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	finalNodeDir := filepath.Join(longRunRoot, "nodes", "mission-recommendation-hardening-40")
+	finalReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(finalNodeDir, "recommendation-readback-after.json"))
+	sentinel := mustLoadJSON[struct {
+		Status                 string `json:"status"`
+		ForbiddenClaimsPresent bool   `json:"forbidden_claims_present"`
+		RSIClaimPresent        bool   `json:"rsi_claim_present"`
+	}](t, filepath.Join(finalNodeDir, "sentinel_public_safety.json"))
+	verification := mustLoadJSON[struct {
+		Status                 string `json:"status"`
+		PublicSafetyScanPassed bool   `json:"public_safety_scan_passed"`
+		LocalVerificationPassed bool  `json:"local_verification_passed"`
+		RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(finalNodeDir, "final-verification-summary.json"))
+
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeOneLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-01", "post-merge-lifecycle.json"))
+	nodeTwoFixture := mustLoadJSON[struct {
+		Schema                         string `json:"schema"`
+		NodeID                         string `json:"node_id"`
+		Status                         string `json:"status"`
+		SourceReadbackPath             string `json:"source_readback_path"`
+		SentinelEvidencePath           string `json:"sentinel_evidence_path"`
+		VerificationSummaryPath        string `json:"verification_summary_path"`
+		BoundPublicSafetyScanStatus    string `json:"bound_public_safety_scan_status"`
+		PreviousPublicSafetyScanStatus string `json:"previous_public_safety_scan_status"`
+		ReadyNodesAfterBinding         int    `json:"ready_nodes_after_binding"`
+		FinalResponseAllowedAfter      bool   `json:"final_response_allowed_after_binding"`
+		RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-02", "public-safety-readback-binding.json"))
+	nodeOneReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-01", "recommendation-readback-after.json"))
+
+	if finalReadback.PublicSafetyScanStatus != "passed" ||
+		sentinel.Status != "passed" ||
+		sentinel.ForbiddenClaimsPresent ||
+		sentinel.RSIClaimPresent ||
+		verification.Status != "passed" ||
+		!verification.PublicSafetyScanPassed ||
+		!verification.LocalVerificationPassed ||
+		!verification.RSIRemainsDenied {
+		t.Fatalf("final readback must bind to passed Sentinel and production verification: readback=%#v sentinel=%#v verification=%#v", finalReadback.PublicSafetyScanStatus, sentinel, verification)
+	}
+	if nodeOneLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeOneLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-01" ||
+		nodeOneLifecycle.Status != "merged_and_cleaned" ||
+		nodeOneLifecycle.PRNumber != 304 ||
+		nodeOneLifecycle.MergeCommit != "4ae4e22db082e4633d04003be7f0b576e2ccc0c5" ||
+		nodeOneLifecycle.CIStatus != "passed" ||
+		!nodeOneLifecycle.LocalMainSynced ||
+		!nodeOneLifecycle.LocalBranchDeleted ||
+		!nodeOneLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 1 lifecycle evidence must record PR, CI, merge, sync, and cleanup: %#v", nodeOneLifecycle)
+	}
+	if nodeTwoFixture.Schema != "ao.atlas.public-safety-readback-binding.v0.1" ||
+		nodeTwoFixture.NodeID != "mission-recommendation-final-closure-consolidation-02" ||
+		nodeTwoFixture.Status != "bound" ||
+		nodeTwoFixture.SourceReadbackPath != "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/recommendation-readback-after.json" ||
+		nodeTwoFixture.SentinelEvidencePath != "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/sentinel_public_safety.json" ||
+		nodeTwoFixture.VerificationSummaryPath != "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/final-verification-summary.json" ||
+		nodeTwoFixture.BoundPublicSafetyScanStatus != finalReadback.PublicSafetyScanStatus ||
+		nodeTwoFixture.PreviousPublicSafetyScanStatus != "required_pending_verification" ||
+		nodeTwoFixture.ReadyNodesAfterBinding != nodeOneReadback.ReadyNodes ||
+		nodeTwoFixture.FinalResponseAllowedAfter ||
+		!nodeTwoFixture.RSIRemainsDenied {
+		t.Fatalf("node 2 public-safety binding fixture must preserve the final readback and continuation state: %#v", nodeTwoFixture)
+	}
+}
+
 func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))

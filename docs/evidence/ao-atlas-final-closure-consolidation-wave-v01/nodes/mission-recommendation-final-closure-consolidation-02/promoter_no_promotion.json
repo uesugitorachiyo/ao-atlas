@@ -1,0 +1,9 @@
+{
+  "schema": "ao.promoter.no-promotion-readback.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-02",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "reason": "Public-safety readback binding improves audit closure only.",
+  "rsi_remains_denied": true
+}
