@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-24",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T04:02:47Z",
+  "changes": [
+    "added a prompt-only rollback boundary fixture that mirrors rollback_record.json",
+    "added regression coverage that rejects destructive rollback wording for prompt-only nodes",
+    "generated Foundry import, run-link, checkpoint, execution, and readback artifacts for node 24"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-24"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}
