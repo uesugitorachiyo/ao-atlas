@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.post-merge-cleanup-rollup.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-04",
+  "status": "clean",
+  "covered_nodes": 3,
+  "covered_prs": [
+    304,
+    305,
+    306
+  ],
+  "covered_merge_commits": [
+    "4ae4e22db082e4633d04003be7f0b576e2ccc0c5",
+    "b291edcb9089206b77f153a053bf7cc035495cbd",
+    "94a84a836bb39a45de2601c509128cf2f6fa388f"
+  ],
+  "local_codex_branches": 0,
+  "remote_codex_branches": 0,
+  "all_branches_deleted": true,
+  "all_ci_statuses_passed": true,
+  "all_merge_commits_recorded": true,
+  "generated_after_branch_deletion": true,
+  "ready_nodes_after_cleanup_evidence": 21,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-04",
+  "status": "implemented",
+  "objective": "Generate post merge cleanup evidence after remote and local branch deletion completes.",
+  "implementation": [
+    "Added node 3 post-merge lifecycle evidence after PR 306 merge and branch cleanup.",
+    "Added a cleanup rollup fixture summarizing nodes 1 through 3 PR, CI, merge, and branch deletion evidence.",
+    "Added a regression test that requires zero local and remote codex branches after merged nodes."
+  ],
+  "files_changed": [
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-04/post-merge-cleanup-rollup.json",
+    "internal/atlas/mission_recommendations_test.go"
+  ],
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

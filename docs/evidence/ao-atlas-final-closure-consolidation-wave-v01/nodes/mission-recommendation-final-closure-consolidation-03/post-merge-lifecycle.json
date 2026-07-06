@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-03",
+  "status": "merged_and_cleaned",
+  "pr_number": 306,
+  "merge_commit": "94a84a836bb39a45de2601c509128cf2f6fa388f",
+  "ci_status": "passed",
+  "ci_checks": [
+    "Production readiness (ubuntu-latest)",
+    "Production readiness (macos-latest)",
+    "Production readiness (windows-latest)",
+    "production-readiness (ubuntu-latest)",
+    "production-readiness (macos-latest)",
+    "production-readiness (windows-latest)"
+  ],
+  "local_main_synced": true,
+  "local_branch_deleted": true,
+  "remote_branch_deleted": true,
+  "local_codex_branches": 0,
+  "remote_codex_branches": 0,
+  "recorded_after_merge": true
+}

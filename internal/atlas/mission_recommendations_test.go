@@ -6316,6 +6316,73 @@ func TestFinalClosureConsolidationPublicSafetyGuardRejectsPendingClosure(t *test
 	}
 }
 
+func TestFinalClosureConsolidationPostMergeCleanupRollupCoversMergedNodes(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	type lifecycleEvidence struct {
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+		LocalCodexBranches  int    `json:"local_codex_branches"`
+		RemoteCodexBranches int    `json:"remote_codex_branches"`
+	}
+	expected := map[string]struct {
+		pr    int
+		merge string
+	}{
+		"mission-recommendation-final-closure-consolidation-01": {304, "4ae4e22db082e4633d04003be7f0b576e2ccc0c5"},
+		"mission-recommendation-final-closure-consolidation-02": {305, "b291edcb9089206b77f153a053bf7cc035495cbd"},
+		"mission-recommendation-final-closure-consolidation-03": {306, "94a84a836bb39a45de2601c509128cf2f6fa388f"},
+	}
+	for nodeID, want := range expected {
+		lifecycle := mustLoadJSON[lifecycleEvidence](t, filepath.Join(consolidationRoot, "nodes", nodeID, "post-merge-lifecycle.json"))
+		if lifecycle.NodeID != nodeID ||
+			lifecycle.Status != "merged_and_cleaned" ||
+			lifecycle.PRNumber != want.pr ||
+			lifecycle.MergeCommit != want.merge ||
+			lifecycle.CIStatus != "passed" ||
+			!lifecycle.LocalMainSynced ||
+			!lifecycle.LocalBranchDeleted ||
+			!lifecycle.RemoteBranchDeleted ||
+			lifecycle.LocalCodexBranches != 0 ||
+			lifecycle.RemoteCodexBranches != 0 {
+			t.Fatalf("post-merge lifecycle evidence must be clean for %s: %#v", nodeID, lifecycle)
+		}
+	}
+
+	rollup := mustLoadJSON[struct {
+		Schema                         string `json:"schema"`
+		NodeID                         string `json:"node_id"`
+		Status                         string `json:"status"`
+		CoveredNodes                   int    `json:"covered_nodes"`
+		LocalCodexBranches             int    `json:"local_codex_branches"`
+		RemoteCodexBranches            int    `json:"remote_codex_branches"`
+		AllBranchesDeleted             bool   `json:"all_branches_deleted"`
+		AllCIStatusesPassed            bool   `json:"all_ci_statuses_passed"`
+		AllMergeCommitsRecorded        bool   `json:"all_merge_commits_recorded"`
+		GeneratedAfterBranchDeletion   bool   `json:"generated_after_branch_deletion"`
+		ReadyNodesAfterCleanupEvidence int    `json:"ready_nodes_after_cleanup_evidence"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-04", "post-merge-cleanup-rollup.json"))
+	nodeThreeReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-03", "recommendation-readback-after.json"))
+	if rollup.Schema != "ao.atlas.post-merge-cleanup-rollup.v0.1" ||
+		rollup.NodeID != "mission-recommendation-final-closure-consolidation-04" ||
+		rollup.Status != "clean" ||
+		rollup.CoveredNodes != 3 ||
+		rollup.LocalCodexBranches != 0 ||
+		rollup.RemoteCodexBranches != 0 ||
+		!rollup.AllBranchesDeleted ||
+		!rollup.AllCIStatusesPassed ||
+		!rollup.AllMergeCommitsRecorded ||
+		!rollup.GeneratedAfterBranchDeletion ||
+		rollup.ReadyNodesAfterCleanupEvidence != nodeThreeReadback.ReadyNodes {
+		t.Fatalf("cleanup rollup must summarize clean merged node lifecycle evidence: %#v", rollup)
+	}
+}
+
 func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))

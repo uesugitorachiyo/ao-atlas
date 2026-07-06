@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-04",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationPostMergeCleanupRollupCoversMergedNodes -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 3 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationPostMergeCleanupRollupCoversMergedNodes -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Merged nodes have PR numbers, merge commits, passed CI status, and branch deletion evidence.",
+    "Cleanup rollup records zero local and remote codex branches.",
+    "Cleanup rollup is generated after branch deletion evidence exists."
+  ]
+}
