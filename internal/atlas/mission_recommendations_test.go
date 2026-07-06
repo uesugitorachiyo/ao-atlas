@@ -4871,6 +4871,112 @@ func TestLongRunHardeningWaveBranchCleanupEvidenceRequiresLocalAndRemoteCodexRem
 	}
 }
 
+func TestLongRunHardeningWavePRLedgerFixtureBindsMergeCIAndCleanupEvidence(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentySixReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-26", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-27")
+	fixture := mustLoadJSON[struct {
+		Schema                   string `json:"schema"`
+		NodeID                   string `json:"node_id"`
+		Status                   string `json:"status"`
+		LedgerScope              string `json:"ledger_scope"`
+		PreviousNodeID           string `json:"previous_node_id"`
+		PreviousPRNumber         int    `json:"previous_pr_number"`
+		PreviousPRURL            string `json:"previous_pr_url"`
+		PreviousHeadBranch       string `json:"previous_head_branch"`
+		PreviousMergeCommit      string `json:"previous_merge_commit"`
+		PreviousPRState          string `json:"previous_pr_state"`
+		PreviousCIStatus         string `json:"previous_ci_status"`
+		PreviousBranchCleanup    struct {
+			LocalCodexBranchesAfterMerge  []string `json:"local_codex_branches_after_merge"`
+			RemoteCodexBranchesAfterMerge []string `json:"remote_codex_branches_after_merge"`
+			LocalCodexBranchCountAfter    int      `json:"local_codex_branch_count_after_merge"`
+			RemoteCodexBranchCountAfter   int      `json:"remote_codex_branch_count_after_merge"`
+		} `json:"previous_branch_cleanup"`
+		CIChecks []struct {
+			Name       string `json:"name"`
+			Workflow   string `json:"workflow"`
+			Status     string `json:"status"`
+			Conclusion string `json:"conclusion"`
+		} `json:"ci_checks"`
+		DirectMainMutation         bool   `json:"direct_main_mutation"`
+		CompletedNodesBeforeNode   int    `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode       int    `json:"ready_nodes_before_node"`
+		FinalResponseAllowed       bool   `json:"final_response_allowed"`
+		ExactNextAction            string `json:"exact_next_action"`
+		CurrentHardeningCheckpoint struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "github-pr-ledger-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.github-pr-ledger-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-27" ||
+		fixture.Status != "pr_ledger_recorded" ||
+		fixture.LedgerScope != "previous_node_merge_ci_and_cleanup" ||
+		fixture.PreviousNodeID != "mission-recommendation-hardening-26" ||
+		fixture.PreviousPRNumber != 289 ||
+		!strings.Contains(fixture.PreviousPRURL, "/pull/289") ||
+		fixture.PreviousHeadBranch != "codex/hardening-wave-node-26-branch-cleanup" ||
+		fixture.PreviousMergeCommit != "b6f5ee71d716070e24201ff3c7d5e1e1d7b0f905" ||
+		fixture.PreviousPRState != "MERGED" ||
+		fixture.PreviousCIStatus != "pass" ||
+		fixture.DirectMainMutation ||
+		fixture.CompletedNodesBeforeNode != nodeTwentySixReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeTwentySixReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentySixReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("PR ledger fixture must bind previous PR, CI, cleanup, and no-authority state: %#v", fixture)
+	}
+	if len(fixture.PreviousBranchCleanup.LocalCodexBranchesAfterMerge) != 0 ||
+		len(fixture.PreviousBranchCleanup.RemoteCodexBranchesAfterMerge) != 0 ||
+		fixture.PreviousBranchCleanup.LocalCodexBranchCountAfter != 0 ||
+		fixture.PreviousBranchCleanup.RemoteCodexBranchCountAfter != 0 {
+		t.Fatalf("PR ledger fixture must prove local and remote codex branch cleanup: %#v", fixture.PreviousBranchCleanup)
+	}
+	if len(fixture.CIChecks) < 9 {
+		t.Fatalf("PR ledger fixture must include full CI/readiness check rollup, got %d checks", len(fixture.CIChecks))
+	}
+	for _, check := range fixture.CIChecks {
+		if check.Status != "COMPLETED" || check.Conclusion != "SUCCESS" || check.Name == "" || check.Workflow == "" {
+			t.Fatalf("PR ledger fixture check must be completed and successful: %#v", check)
+		}
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeTwentySixReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeTwentySixReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeTwentySixReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeTwentySixReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeTwentySixReadback.ExactNextAction {
+		t.Fatalf("PR ledger fixture must bind node 26 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+
+	nodeTwentySevenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentySevenReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentySevenReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentySevenReadback.CompletedNodes != 27 ||
+		nodeTwentySevenReadback.ReadyNodes != 13 ||
+		nodeTwentySevenReadback.FirstExecutableNode != "mission-recommendation-hardening-28" ||
+		nodeTwentySevenReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentySevenReadback.ExactNextAction, "mission-recommendation-hardening-28") {
+		t.Fatalf("node 27 readback must carry PR ledger evidence and continue to node 28: %#v", nodeTwentySevenReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
