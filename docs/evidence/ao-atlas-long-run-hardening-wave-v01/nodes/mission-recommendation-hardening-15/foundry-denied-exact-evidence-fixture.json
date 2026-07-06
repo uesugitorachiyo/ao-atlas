@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.foundry-denied-exact-evidence-fixture.v0.1",
+  "node_id": "mission-recommendation-hardening-15",
+  "status": "exact_missing_evidence_required",
+  "source_status": "denied",
+  "normalized_status": "denied",
+  "closes_task": true,
+  "closes_mission": false,
+  "exact_missing_evidence_required": true,
+  "generic_denial_allowed": false,
+  "safe_next_action_required": true,
+  "missing_evidence_categories": [
+    "node_evidence",
+    "stop_gate",
+    "ci_pr_merge",
+    "command_readback_agreement"
+  ],
+  "denied_reason_readback": "required_exact_missing_evidence_not_generic",
+  "completed_nodes_before_node": 14,
+  "ready_nodes_before_node": 26,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-15 and execute exactly one active node.",
+  "current_hardening_checkpoint": {
+    "completed_nodes": 14,
+    "ready_nodes": 26,
+    "first_executable_node": "mission-recommendation-hardening-15",
+    "final_response_allowed": false,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-15 and execute exactly one active node."
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

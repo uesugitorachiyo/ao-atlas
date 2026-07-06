@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-15",
+  "status": "no_promotion",
+  "promotion_claimed": false,
+  "completed_nodes_before_node": 14,
+  "ready_nodes_before_node": 26,
+  "final_response_allowed": false,
+  "next_denied_class": "RSI",
+  "rsi_remains_denied": true,
+  "reason": "denied Foundry rollup closure requires exact missing evidence and safe next action",
+  "claims_authority_advance": false
+}

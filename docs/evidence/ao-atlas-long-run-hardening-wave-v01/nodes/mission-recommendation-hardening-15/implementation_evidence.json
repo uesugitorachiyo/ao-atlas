@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-15",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T01:22:18Z",
+  "changes": [
+    "added regression coverage for denied Foundry rollups requiring exact missing evidence readback",
+    "added a node 15 fixture with required missing-evidence categories and safe-next-action gating",
+    "generated Foundry import, run-link, checkpoint, execution, and readback artifacts for node 15"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-15"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}

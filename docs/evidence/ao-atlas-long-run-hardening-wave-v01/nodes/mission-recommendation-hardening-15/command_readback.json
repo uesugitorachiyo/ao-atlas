@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.command-readback-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-15",
+  "status": "denied_rollup_requires_exact_missing_evidence",
+  "completed_nodes_before_node": 14,
+  "ready_nodes_before_node": 26,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-15 and execute exactly one active node."
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-15",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "find docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-15 -name '*.json' -print0 | xargs -0 jq -e . >/dev/null",
+      "status": "passed"
+    },
+    {
+      "command": "category-only negative wording scan over node 15 public evidence",
+      "status": "passed"
+    },
+    {
+      "command": "category-only negative wording scan over added node 15 test lines",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestLongRunHardeningWaveDeniedFoundryRollupReportsExactMissingEvidence -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    }
+  ]
+}
