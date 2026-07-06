@@ -31,6 +31,7 @@ const (
 	AtlasNodeCommandReadbackContract             = "ao.atlas.command-readback.v0.1"
 	AtlasNodePromoterNoPromotionContract         = "ao.atlas.promoter-no-promotion.v0.1"
 	AtlasNodeSentinelPublicSafetyContract        = "ao.atlas.sentinel-public-safety.v0.1"
+	AtlasRunLinkSchemaCoverageContract           = "ao.atlas.run-link-schema-coverage.v0.1"
 	WorkgraphContract                            = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract                  = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                          = "ao.atlas.factory-task.v0.1"

@@ -519,6 +519,32 @@ type AtlasNodeSentinelPublicSafetyEvidence struct {
 	RSIRemainsDenied          bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasRunLinkSchemaCoverage struct {
+	Schema                 string                           `json:"schema"`
+	Status                 string                           `json:"status"`
+	EvidenceRoot           string                           `json:"evidence_root"`
+	RunLinkCount           int                              `json:"run_link_count"`
+	CompletedRunLinks      int                              `json:"completed_run_links"`
+	SchemaCounts           map[string]int                   `json:"schema_counts"`
+	ValidatorCounts        map[string]int                   `json:"validator_counts"`
+	Entries                []AtlasRunLinkSchemaCoverageItem `json:"entries"`
+	SchedulesWork          bool                             `json:"schedules_work"`
+	ExecutesWork           bool                             `json:"executes_work"`
+	ApprovesWork           bool                             `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                             `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                             `json:"rsi_remains_denied"`
+}
+
+type AtlasRunLinkSchemaCoverageItem struct {
+	Path             string `json:"path"`
+	TaskID           string `json:"task_id"`
+	Status           string `json:"status"`
+	Schema           string `json:"schema"`
+	Validator        string `json:"validator"`
+	EvidenceKeyCount int    `json:"evidence_key_count"`
+	Digest           string `json:"digest"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

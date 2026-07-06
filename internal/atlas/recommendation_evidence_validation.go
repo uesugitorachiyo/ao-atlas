@@ -275,6 +275,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:sentinel-public-safety", err
 		}
 		return "typed:sentinel-public-safety", ValidateAtlasNodeSentinelPublicSafetyEvidence(value)
+	case AtlasRunLinkSchemaCoverageContract:
+		value, err := LoadJSON[AtlasRunLinkSchemaCoverage](path)
+		if err != nil {
+			return "typed:run-link-schema-coverage", err
+		}
+		return "typed:run-link-schema-coverage", ValidateAtlasRunLinkSchemaCoverage(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

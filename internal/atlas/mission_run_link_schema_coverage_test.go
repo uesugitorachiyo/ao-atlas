@@ -1,0 +1,79 @@
+package atlas
+
+import (
+	"bytes"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func TestFeatureDepthWaveRunLinkSchemaCoverageSummarizesEveryGeneratedRunLink(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-06")
+	fixturePath := filepath.Join(nodeDir, "run-link-schema-coverage.json")
+
+	coverage, err := BuildAtlasRunLinkSchemaCoverage(waveRoot)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasRunLinkSchemaCoverage(coverage); err != nil {
+		t.Fatal(err)
+	}
+	recorded := mustLoadJSON[AtlasRunLinkSchemaCoverage](t, fixturePath)
+	if err := ValidateAtlasRunLinkSchemaCoverage(recorded); err != nil {
+		t.Fatal(err)
+	}
+	if digestValue(coverage) != digestValue(recorded) {
+		t.Fatalf("run-link schema coverage fixture drifted\nwant %s\ngot  %s", digestValue(coverage), digestValue(recorded))
+	}
+	if coverage.RunLinkCount != 6 ||
+		coverage.CompletedRunLinks != 6 ||
+		coverage.SchemaCounts[RunLinkContract] != 6 ||
+		coverage.ValidatorCounts["typed:run-link"] != 6 ||
+		coverage.SchedulesWork ||
+		coverage.ExecutesWork ||
+		coverage.ApprovesWork ||
+		coverage.ClaimsAuthorityAdvance ||
+		!coverage.RSIRemainsDenied {
+		t.Fatalf("run-link coverage must summarize six completed run links without authority effects: %#v", coverage)
+	}
+	for _, entry := range coverage.Entries {
+		if entry.Schema != RunLinkContract ||
+			entry.Validator != "typed:run-link" ||
+			entry.Status != "completed" ||
+			entry.EvidenceKeyCount == 0 {
+			t.Fatalf("run-link coverage entry must bind typed run-link evidence: %#v", entry)
+		}
+	}
+}
+
+func TestMissionRecommendationsRunLinkSchemaCoverageCLIWritesDeterministicArtifact(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-06")
+	recorded := mustLoadJSON[AtlasRunLinkSchemaCoverage](t, filepath.Join(nodeDir, "run-link-schema-coverage.json"))
+	outPath := filepath.Join(t.TempDir(), "run-link-schema-coverage.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "run-link-schema-coverage",
+		"--evidence-root", waveRoot,
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("run-link-schema-coverage command failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "status=complete") ||
+		!strings.Contains(out.String(), "run_link_count=6") ||
+		!strings.Contains(out.String(), "typed_run_link_validators=6") {
+		t.Fatalf("run-link-schema-coverage output missing coverage summary: %s", out.String())
+	}
+	generated := mustLoadJSON[AtlasRunLinkSchemaCoverage](t, outPath)
+	if err := ValidateAtlasRunLinkSchemaCoverage(generated); err != nil {
+		t.Fatal(err)
+	}
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("CLI run-link coverage output drifted\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+}
