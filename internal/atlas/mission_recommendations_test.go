@@ -6383,6 +6383,68 @@ func TestFinalClosureConsolidationPostMergeCleanupRollupCoversMergedNodes(t *tes
 	}
 }
 
+func TestFinalClosureConsolidationBranchCleanupHandoffRegressionCoversNodeFive(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeFourLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+		LocalCodexBranches  int    `json:"local_codex_branches"`
+		RemoteCodexBranches int    `json:"remote_codex_branches"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-04", "post-merge-lifecycle.json"))
+	nodeFourReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-04", "recommendation-readback-after.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                          string `json:"schema"`
+		NodeID                          string `json:"node_id"`
+		Status                          string `json:"status"`
+		SourceReadbackPath              string `json:"source_readback_path"`
+		CompletedNodesBefore            int    `json:"completed_nodes_before"`
+		ReadyNodesBefore                int    `json:"ready_nodes_before"`
+		FirstExecutableNodeBefore       string `json:"first_executable_node_before"`
+		LocalCodexBranches              int    `json:"local_codex_branches"`
+		RemoteCodexBranches             int    `json:"remote_codex_branches"`
+		AllPriorCleanupRollupsClean     bool   `json:"all_prior_cleanup_rollups_clean"`
+		NextNodeRequiresCleanBranchState bool  `json:"next_node_requires_clean_branch_state"`
+		FinalResponseAllowedBefore      bool   `json:"final_response_allowed_before"`
+		RSIRemainsDenied                bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-05", "branch-cleanup-handoff-regression.json"))
+
+	if nodeFourLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeFourLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-04" ||
+		nodeFourLifecycle.Status != "merged_and_cleaned" ||
+		nodeFourLifecycle.PRNumber != 307 ||
+		nodeFourLifecycle.MergeCommit != "7b21bd14e42714352203eb7790c9372da5eb4e3f" ||
+		nodeFourLifecycle.CIStatus != "passed" ||
+		!nodeFourLifecycle.LocalMainSynced ||
+		!nodeFourLifecycle.LocalBranchDeleted ||
+		!nodeFourLifecycle.RemoteBranchDeleted ||
+		nodeFourLifecycle.LocalCodexBranches != 0 ||
+		nodeFourLifecycle.RemoteCodexBranches != 0 {
+		t.Fatalf("node 4 lifecycle evidence must prove clean branch handoff: %#v", nodeFourLifecycle)
+	}
+	if fixture.Schema != "ao.atlas.branch-cleanup-handoff-regression.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-05" ||
+		fixture.Status != "guarded" ||
+		fixture.SourceReadbackPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-04/recommendation-readback-after.json" ||
+		fixture.CompletedNodesBefore != nodeFourReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeFourReadback.ReadyNodes ||
+		fixture.FirstExecutableNodeBefore != nodeFourReadback.FirstExecutableNode ||
+		fixture.LocalCodexBranches != 0 ||
+		fixture.RemoteCodexBranches != 0 ||
+		!fixture.AllPriorCleanupRollupsClean ||
+		!fixture.NextNodeRequiresCleanBranchState ||
+		fixture.FinalResponseAllowedBefore ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("branch cleanup handoff fixture must bind node 4 readback to clean node 5 start: %#v", fixture)
+	}
+}
+
 func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))
