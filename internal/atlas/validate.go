@@ -24,6 +24,7 @@ const (
 	AOMissionFinalSynthesisReadbackContract = "ao.atlas.ao-mission-final-synthesis-readback.v0.1"
 	AtlasRecommendationWaveContract         = "ao.atlas.recommendation-wave.v0.1"
 	AtlasRecommendationReadbackContract     = "ao.atlas.recommendation-readback.v0.1"
+	AtlasMissionReadbackDeltaContract       = "ao.atlas.mission-readback-delta.v0.1"
 	WorkgraphContract                       = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract             = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                     = "ao.atlas.factory-task.v0.1"
