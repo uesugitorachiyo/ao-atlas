@@ -8298,18 +8298,31 @@ func TestFinalClosureConsolidationNoPromotionNoRSIAssertionCoversCompletedNodes(
 		RSIRemainsDenied              bool     `json:"rsi_remains_denied"`
 	}](t, filepath.Join(nodeTwentyTwoDir, "no-promotion-no-rsi-assertion.json"))
 
-	countNamedFiles := func(rootDir, name string) int {
+	completedNodeIDs := func(workgraph Workgraph) map[string]bool {
+		completed := map[string]bool{}
+		for _, node := range workgraph.Nodes {
+			if node.Status == "completed" {
+				completed[node.ID] = true
+			}
+		}
+		return completed
+	}
+	countNamedFiles := func(rootDir, name string, coveredNodes map[string]bool) int {
 		t.Helper()
 		count := 0
 		if err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				return err
 			}
-			if strings.Contains(filepath.ToSlash(path), "mission-recommendation-final-closure-consolidation-22/") {
-				return nil
-			}
 			if !info.IsDir() && info.Name() == name {
-				count++
+				rel, relErr := filepath.Rel(rootDir, path)
+				if relErr != nil {
+					return relErr
+				}
+				nodeID := strings.Split(filepath.ToSlash(rel), "/")[0]
+				if coveredNodes[nodeID] {
+					count++
+				}
 			}
 			return nil
 		}); err != nil {
@@ -8329,9 +8342,11 @@ func TestFinalClosureConsolidationNoPromotionNoRSIAssertionCoversCompletedNodes(
 
 	completedHardening := countCompleted(hardeningWorkgraph)
 	completedConsolidation := countCompleted(consolidationWorkgraph)
-	promoterFiles := countNamedFiles(filepath.Join(hardeningRoot, "nodes"), "promoter_no_promotion.json") + countNamedFiles(filepath.Join(consolidationRoot, "nodes"), "promoter_no_promotion.json")
-	commandFiles := countNamedFiles(filepath.Join(hardeningRoot, "nodes"), "command_readback.json") + countNamedFiles(filepath.Join(consolidationRoot, "nodes"), "command_readback.json")
-	sentinelFiles := countNamedFiles(filepath.Join(hardeningRoot, "nodes"), "sentinel_public_safety.json") + countNamedFiles(filepath.Join(consolidationRoot, "nodes"), "sentinel_public_safety.json")
+	completedHardeningIDs := completedNodeIDs(hardeningWorkgraph)
+	completedConsolidationIDs := completedNodeIDs(consolidationWorkgraph)
+	promoterFiles := countNamedFiles(filepath.Join(hardeningRoot, "nodes"), "promoter_no_promotion.json", completedHardeningIDs) + countNamedFiles(filepath.Join(consolidationRoot, "nodes"), "promoter_no_promotion.json", completedConsolidationIDs)
+	commandFiles := countNamedFiles(filepath.Join(hardeningRoot, "nodes"), "command_readback.json", completedHardeningIDs) + countNamedFiles(filepath.Join(consolidationRoot, "nodes"), "command_readback.json", completedConsolidationIDs)
+	sentinelFiles := countNamedFiles(filepath.Join(hardeningRoot, "nodes"), "sentinel_public_safety.json", completedHardeningIDs) + countNamedFiles(filepath.Join(consolidationRoot, "nodes"), "sentinel_public_safety.json", completedConsolidationIDs)
 
 	if nodeTwentyOneLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
 		nodeTwentyOneLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-21" ||
@@ -8372,6 +8387,146 @@ func TestFinalClosureConsolidationNoPromotionNoRSIAssertionCoversCompletedNodes(
 		!fixture.RSIRemainsDenied {
 		t.Fatalf("node 22 no-promotion/no-RSI assertion must cover completed node evidence: %#v", fixture)
 	}
+}
+
+func TestFinalClosureConsolidationNextWaveExporterRanksFortyFeatureDepthTasks(t *testing.T) {
+	root := repoRoot(t)
+	consolidationRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeTwentyTwoDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-22")
+	nodeTwentyThreeDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-23")
+	sourceEvidenceRoot := "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01"
+	sourceReadback := filepath.ToSlash(filepath.Join(sourceEvidenceRoot, "nodes", "mission-recommendation-final-closure-consolidation-22", "recommendation-readback-after.json"))
+	sourceAssertion := filepath.ToSlash(filepath.Join(sourceEvidenceRoot, "nodes", "mission-recommendation-final-closure-consolidation-22", "no-promotion-no-rsi-assertion.json"))
+
+	type rankedTask struct {
+		Rank         int      `json:"rank"`
+		ID           string   `json:"id"`
+		Owner        string   `json:"owner"`
+		Theme        string   `json:"theme"`
+		Task         string   `json:"task"`
+		EvidenceRefs []string `json:"evidence_refs"`
+	}
+	type featureDepthExport struct {
+		Schema              string       `json:"schema"`
+		MissionID           string       `json:"mission_id"`
+		Status              string       `json:"status"`
+		MinimumTasks        int          `json:"minimum_tasks"`
+		RecommendationCount int          `json:"recommendation_count"`
+		SourceEvidenceRoot  string       `json:"source_evidence_root"`
+		SourceReadbackPath  string       `json:"source_readback_path"`
+		SourceAssertionPath string       `json:"source_assertion_path"`
+		Tasks               []rankedTask `json:"tasks"`
+		SafeToExecute       bool         `json:"safe_to_execute"`
+		SchedulesWork       bool         `json:"schedules_work"`
+		ExecutesWork        bool         `json:"executes_work"`
+		ApprovesWork        bool         `json:"approves_work"`
+		MutatesRepositories bool         `json:"mutates_repositories"`
+	}
+	type exporterFixture struct {
+		Schema                 string             `json:"schema"`
+		NodeID                 string             `json:"node_id"`
+		Status                 string             `json:"status"`
+		SourceEvidenceRoot     string             `json:"source_evidence_root"`
+		SourceReadbackPath     string             `json:"source_readback_path"`
+		SourceAssertionPath    string             `json:"source_assertion_path"`
+		CompletedNodesBefore   int                `json:"completed_nodes_before_export"`
+		ReadyNodesBefore       int                `json:"ready_nodes_before_export"`
+		ExpectedNextNode       string             `json:"expected_next_node_after_completion"`
+		MinimumRankedTasks     int                `json:"minimum_ranked_tasks"`
+		RecommendationCount    int                `json:"recommendation_count"`
+		RankedTaskFloorMet     bool               `json:"ranked_task_floor_met"`
+		NoPromotionRequested   bool               `json:"no_promotion_requested"`
+		PromotionGranted       bool               `json:"promotion_granted"`
+		ClaimsAuthorityAdvance bool               `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool               `json:"rsi_remains_denied"`
+		FeatureDepthExport     featureDepthExport `json:"feature_depth_export"`
+	}
+	assertExport := func(t *testing.T, export featureDepthExport) {
+		t.Helper()
+		if export.Schema != "ao.mission.feature-depth-recommendations.v0.3" ||
+			export.MissionID != "ao-atlas-next-feature-depth-wave-v01" ||
+			export.Status != "ready" ||
+			export.MinimumTasks != 40 ||
+			export.RecommendationCount != 40 ||
+			len(export.Tasks) != 40 ||
+			export.SourceEvidenceRoot != sourceEvidenceRoot ||
+			export.SourceReadbackPath != sourceReadback ||
+			export.SourceAssertionPath != sourceAssertion ||
+			export.SafeToExecute ||
+			export.SchedulesWork ||
+			export.ExecutesWork ||
+			export.ApprovesWork ||
+			export.MutatesRepositories {
+			t.Fatalf("next-wave export has invalid contract or unsafe authority flags: %#v", export)
+		}
+		seenThemes := map[string]bool{}
+		for i, task := range export.Tasks {
+			wantRank := i + 1
+			if task.Rank != wantRank ||
+				task.ID != "feature-depth-next-wave-"+twoDigit(wantRank) ||
+				task.Owner != "ao-atlas" ||
+				task.Theme == "" ||
+				len(strings.Fields(task.Task)) < 6 ||
+				len(task.EvidenceRefs) == 0 ||
+				!containsString(task.EvidenceRefs, sourceReadback) {
+				t.Fatalf("task %d is not a ranked, evidence-bound AO Atlas Feature Depth task: %#v", wantRank, task)
+			}
+			seenThemes[task.Theme] = true
+		}
+		if len(seenThemes) < 10 {
+			t.Fatalf("next-wave export must span at least 10 themes, got %d: %#v", len(seenThemes), seenThemes)
+		}
+	}
+
+	sourceReadbackValue := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, sourceReadback))
+	sourceAssertionValue := mustLoadJSON[map[string]any](t, filepath.Join(nodeTwentyTwoDir, "no-promotion-no-rsi-assertion.json"))
+	if sourceReadbackValue.CompletedNodes != 22 ||
+		sourceReadbackValue.ReadyNodes != 2 ||
+		sourceReadbackValue.FirstExecutableNode != "mission-recommendation-final-closure-consolidation-23" ||
+		sourceReadbackValue.FinalResponseAllowed {
+		t.Fatalf("node 23 exporter must bind the node 22 continuation checkpoint: %#v", sourceReadbackValue)
+	}
+	if sourceAssertionValue["rsi_remains_denied"] != true || sourceAssertionValue["promotion_granted"] != false {
+		t.Fatalf("node 23 exporter must bind no-promotion/no-RSI assertion: %#v", sourceAssertionValue)
+	}
+
+	tmpExportPath := filepath.Join(t.TempDir(), "next-wave-feature-depth-recommendations.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "export-next-wave",
+		"--mission-id", "ao-atlas-next-feature-depth-wave-v01",
+		"--source-evidence-root", sourceEvidenceRoot,
+		"--source-readback", sourceReadback,
+		"--source-assertion", sourceAssertion,
+		"--min-tasks", "40",
+		"--out", tmpExportPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("export-next-wave failed: %s", out.String())
+	}
+	generatedExport := mustLoadJSON[featureDepthExport](t, tmpExportPath)
+	assertExport(t, generatedExport)
+
+	fixture := mustLoadJSON[exporterFixture](t, filepath.Join(nodeTwentyThreeDir, "next-wave-recommendation-export.json"))
+	if fixture.Schema != "ao.atlas.next-wave-recommendation-export.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-23" ||
+		fixture.Status != "exported" ||
+		fixture.SourceEvidenceRoot != sourceEvidenceRoot ||
+		fixture.SourceReadbackPath != sourceReadback ||
+		fixture.SourceAssertionPath != sourceAssertion ||
+		fixture.CompletedNodesBefore != sourceReadbackValue.CompletedNodes ||
+		fixture.ReadyNodesBefore != sourceReadbackValue.ReadyNodes ||
+		fixture.ExpectedNextNode != "mission-recommendation-final-closure-consolidation-24" ||
+		fixture.MinimumRankedTasks != 40 ||
+		fixture.RecommendationCount != 40 ||
+		!fixture.RankedTaskFloorMet ||
+		!fixture.NoPromotionRequested ||
+		fixture.PromotionGranted ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("node 23 exporter fixture does not prove a safe 40-task next wave: %#v", fixture)
+	}
+	assertExport(t, fixture.FeatureDepthExport)
 }
 
 func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {

@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-23",
+  "status": "implemented",
+  "objective": "Add next wave recommendation exporter with at least forty ranked Feature Depth tasks.",
+  "implementation": "Added Atlas next-wave Feature Depth exporter model, builder, validation, CLI command, regression test, and generated node 23 exporter fixture with forty ranked AO Atlas tasks.",
+  "files_changed": [
+    "internal/atlas/models.go",
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-23/next-wave-feature-depth-recommendations.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-23/next-wave-recommendation-export.json"
+  ],
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

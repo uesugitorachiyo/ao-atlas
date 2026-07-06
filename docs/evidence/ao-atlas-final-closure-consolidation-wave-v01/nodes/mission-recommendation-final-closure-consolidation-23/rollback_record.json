@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-23",
+  "status": "recorded",
+  "rollback_scope": "Revert node 23 Atlas exporter code, regression test, and generated node 23 evidence artifacts.",
+  "rollback_command": "git revert <node-23-merge-commit>",
+  "requires_blueprint": false,
+  "data_loss_risk": "none; generated evidence and low-risk code only"
+}
