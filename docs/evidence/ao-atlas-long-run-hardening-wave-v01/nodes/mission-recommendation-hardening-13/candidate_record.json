@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-13",
+  "candidate": "foundry-terminal-normalization-fixture",
+  "status": "selected",
+  "objective": "Add stale Foundry rollup fixture coverage for promoted denied and blocked terminal normalization.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-13"
+  ],
+  "acceptance_criteria": [
+    "fixture normalizes completed, promoted, denied, and blocked terminal Foundry statuses",
+    "fixture keeps mission closure denied while ready nodes remain",
+    "fixture preserves current continuation state and exact next action"
+  ],
+  "selected_at": "2026-07-06T00:49:58Z"
+}

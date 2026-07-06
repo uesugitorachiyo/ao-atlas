@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-13",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T00:49:58Z",
+  "changes": [
+    "added regression coverage for Foundry terminal rollup normalization in AO Atlas long-run hardening evidence",
+    "added a node 13 fixture binding completed, promoted, denied, and blocked terminal statuses to current checkpoint gates",
+    "generated Foundry import, run-link, checkpoint, execution, and readback artifacts for node 13"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-13"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}
