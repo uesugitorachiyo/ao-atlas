@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-25",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T04:21:28Z",
+  "changes": [
+    "added support evidence authority-boundary fields to the node gate artifact",
+    "added an authority boundary fixture binding node gate and Foundry import task boundaries",
+    "generated Foundry import, run-link, checkpoint, execution, and readback artifacts for node 25"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-25"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}

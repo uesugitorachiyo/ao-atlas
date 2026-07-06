@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-hardening-25",
+  "status": "available",
+  "rollback_scope": [
+    "revert the node 25 authority boundary regression test in internal/atlas/mission_recommendations_test.go",
+    "remove docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-25"
+  ],
+  "rollback_command": "git revert <node-25-merge-commit>",
+  "restores_previous_checkpoint": "../mission-recommendation-hardening-24/recommendation-readback-after.json",
+  "requires_release_action": false
+}
