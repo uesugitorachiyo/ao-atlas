@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-11",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationOperatorSummaryRegressionPreservesCountsNextActionAndNoPromotionWording -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 10 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationOperatorSummaryRegressionPreservesCountsNextActionAndNoPromotionWording -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Operator summary Markdown preserves completed nodes wording.",
+    "Operator summary Markdown preserves next executable node wording.",
+    "Operator summary preserves no-promotion, Command agreement, and RSI denial wording."
+  ]
+}

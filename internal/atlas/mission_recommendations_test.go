@@ -6928,6 +6928,111 @@ func TestFinalClosureConsolidationFinalOperatorSummaryBindsReadbackAndClosureFix
 	}
 }
 
+func TestFinalClosureConsolidationOperatorSummaryRegressionPreservesCountsNextActionAndNoPromotionWording(t *testing.T) {
+	repoRoot := repoRoot(t)
+	consolidationRoot := filepath.Join(repoRoot, "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeTenLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-10", "post-merge-lifecycle.json"))
+	summary := mustLoadJSON[struct {
+		FinalWaveCompletedNodes       int    `json:"final_wave_completed_nodes"`
+		FinalWaveReadyNodes           int    `json:"final_wave_ready_nodes"`
+		FinalWaveFinalResponseAllowed bool   `json:"final_wave_final_response_allowed"`
+		PromoterNoPromotionStatus     string `json:"promoter_no_promotion_status"`
+		CommandReadbackStatus         string `json:"command_readback_status"`
+		NextConsolidationNode         string `json:"next_consolidation_node"`
+		ClaimsAuthorityAdvance        bool   `json:"claims_authority_advance"`
+		RSIRemainsDenied              bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-10", "final-operator-summary.json"))
+	markdownBytes, err := os.ReadFile(filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-10", "final-operator-summary.md"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	markdown := string(markdownBytes)
+	fixture := mustLoadJSON[struct {
+		Schema                          string `json:"schema"`
+		NodeID                          string `json:"node_id"`
+		Status                          string `json:"status"`
+		SourceSummaryPath               string `json:"source_summary_path"`
+		SourceSummaryMarkdownPath       string `json:"source_summary_markdown_path"`
+		CompletedNodesWordingPresent    bool   `json:"completed_nodes_wording_present"`
+		NextActionWordingPresent        bool   `json:"next_action_wording_present"`
+		NoPromotionWordingPresent       bool   `json:"no_promotion_wording_present"`
+		RSIDenialWordingPresent         bool   `json:"rsi_denial_wording_present"`
+		ClaimsAuthorityAdvance          bool   `json:"claims_authority_advance"`
+		ExpectedCompletedNodes          int    `json:"expected_completed_nodes"`
+		ExpectedNextConsolidationNode   string `json:"expected_next_consolidation_node"`
+		ExpectedPromoterStatus          string `json:"expected_promoter_status"`
+		ExpectedCommandStatus           string `json:"expected_command_status"`
+		ConsolidationCompletedBefore    int    `json:"consolidation_completed_before"`
+		ConsolidationReadyBefore        int    `json:"consolidation_ready_before"`
+		ConsolidationFinalAllowedBefore bool   `json:"consolidation_final_response_allowed_before"`
+		RSIRemainsDenied                bool   `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-11", "operator-summary-regression.json"))
+	nodeTenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-10", "recommendation-readback-after.json"))
+
+	if nodeTenLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeTenLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-10" ||
+		nodeTenLifecycle.Status != "merged_and_cleaned" ||
+		nodeTenLifecycle.PRNumber != 313 ||
+		nodeTenLifecycle.MergeCommit != "78f17411cc08214db3d2842f28939036b805a712" ||
+		nodeTenLifecycle.CIStatus != "passed" ||
+		!nodeTenLifecycle.LocalMainSynced ||
+		!nodeTenLifecycle.LocalBranchDeleted ||
+		!nodeTenLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 10 lifecycle evidence must prove clean branch handoff: %#v", nodeTenLifecycle)
+	}
+	if summary.FinalWaveCompletedNodes != 40 ||
+		summary.FinalWaveReadyNodes != 0 ||
+		!summary.FinalWaveFinalResponseAllowed ||
+		summary.PromoterNoPromotionStatus != "no_promotion_requested" ||
+		summary.CommandReadbackStatus != "readback_agrees_no_promotion" ||
+		summary.NextConsolidationNode != "mission-recommendation-final-closure-consolidation-11" ||
+		summary.ClaimsAuthorityAdvance ||
+		!summary.RSIRemainsDenied {
+		t.Fatalf("source operator summary drifted before regression fixture: %#v", summary)
+	}
+	for _, want := range []string{
+		"40 completed nodes",
+		"Promoter status is `no_promotion_requested`",
+		"Command status is `readback_agrees_no_promotion`",
+		"next executable node is `mission-recommendation-final-closure-consolidation-11`",
+		"keeps RSI denied",
+	} {
+		if !strings.Contains(markdown, want) {
+			t.Fatalf("operator summary markdown missing %q:\n%s", want, markdown)
+		}
+	}
+	if fixture.Schema != "ao.atlas.operator-summary-regression.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-11" ||
+		fixture.Status != "guarded" ||
+		fixture.SourceSummaryPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-10/final-operator-summary.json" ||
+		fixture.SourceSummaryMarkdownPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-10/final-operator-summary.md" ||
+		!fixture.CompletedNodesWordingPresent ||
+		!fixture.NextActionWordingPresent ||
+		!fixture.NoPromotionWordingPresent ||
+		!fixture.RSIDenialWordingPresent ||
+		fixture.ClaimsAuthorityAdvance ||
+		fixture.ExpectedCompletedNodes != summary.FinalWaveCompletedNodes ||
+		fixture.ExpectedNextConsolidationNode != summary.NextConsolidationNode ||
+		fixture.ExpectedPromoterStatus != summary.PromoterNoPromotionStatus ||
+		fixture.ExpectedCommandStatus != summary.CommandReadbackStatus ||
+		fixture.ConsolidationCompletedBefore != nodeTenReadback.CompletedNodes ||
+		fixture.ConsolidationReadyBefore != nodeTenReadback.ReadyNodes ||
+		fixture.ConsolidationFinalAllowedBefore != nodeTenReadback.FinalResponseAllowed ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("operator summary regression fixture must preserve wording and readback continuity: %#v", fixture)
+	}
+}
+
 func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))
