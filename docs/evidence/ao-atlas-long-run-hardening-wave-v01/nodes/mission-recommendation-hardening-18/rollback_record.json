@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-hardening-18",
+  "status": "available",
+  "rollback_scope": [
+    "restore the feature-depth recommendation readback limit to the previous 20-task default",
+    "revert the node 18 regression test in internal/atlas/mission_recommendations_test.go",
+    "remove docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-18"
+  ],
+  "rollback_command": "git revert <node-18-merge-commit>",
+  "restores_previous_checkpoint": "../mission-recommendation-hardening-17/recommendation-readback-after.json",
+  "requires_release_action": false
+}

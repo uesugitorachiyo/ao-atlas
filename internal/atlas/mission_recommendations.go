@@ -719,7 +719,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		ContinuationContract:            buildAtlasContinuationContract(ready, exactNextAction, returnGateStatus, finalAllowed),
 		ExactNextActionReadback:         buildExactNextActionReadback(exactNextAction, firstExecutable, returnGateStatus, finalAllowed),
 		NodeEvidence:                    recommendationNodeEvidence(workgraph),
-		FeatureDepthRecommendations:     featureDepthRecommendationReadback(wave.Tasks, 20),
+		FeatureDepthRecommendations:     featureDepthRecommendationReadback(wave.Tasks, wave.TotalTasks),
 		SafetyBoundaries: map[string]bool{
 			"provider_calls":                    false,
 			"credential_inspection":             false,
