@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-32",
+  "status": "implemented",
+  "changed_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-32"
+  ],
+  "implementation_summary": "Added a premature-return guide fixture explaining why 14 to 20 minute loops cannot close a 2 to 3 hour workgraph while continuation gates remain open.",
+  "authority_effect": "none",
+  "implemented_at": "2026-07-06T06:33:04Z"
+}
