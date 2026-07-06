@@ -1,0 +1,52 @@
+{
+  "schema": "ao.atlas.production-readiness-summary-fixture.v0.1",
+  "node_id": "mission-recommendation-hardening-21",
+  "status": "production_readiness_summary_recorded",
+  "local_verification_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "git diff --check"
+  ],
+  "production_readiness_summary": "status=ready; score=100/100",
+  "ci_required_before_merge": true,
+  "merge_required_before_completion": true,
+  "remote_branch_cleanup_required": true,
+  "local_branch_cleanup_required": true,
+  "evidence_roots": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-21",
+    "target/production-readiness/summary.json",
+    "target/atlas-foundry-roundtrip/summary.json"
+  ],
+  "prior_merged_prs": [
+    276,
+    277,
+    278,
+    279,
+    280,
+    281,
+    282,
+    283
+  ],
+  "prior_merged_pr_ci_passed": true,
+  "prior_merged_pr_branch_cleanup": true,
+  "completed_nodes_before_node": 20,
+  "ready_nodes_before_node": 20,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-21 and execute exactly one active node.",
+  "current_hardening_checkpoint": {
+    "completed_nodes": 20,
+    "ready_nodes": 20,
+    "first_executable_node": "mission-recommendation-hardening-21",
+    "final_response_allowed": false,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-hardening-21 and execute exactly one active node."
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

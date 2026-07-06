@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-21",
+  "candidate": "production-readiness-summary-binding",
+  "status": "selected",
+  "objective": "Add production readiness summary tying verification CI merge cleanup and evidence roots together.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-21"
+  ],
+  "acceptance_criteria": [
+    "production readiness summary records local verification commands",
+    "production readiness summary records CI, merge, and branch cleanup requirements",
+    "production readiness summary binds evidence roots",
+    "production readiness summary references prior merged PR evidence from the hardening wave"
+  ],
+  "selected_at": "2026-07-06T03:05:48Z"
+}
