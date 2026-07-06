@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -432,6 +432,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "operator-summary-check" {
 		return runMissionRecommendationsOperatorSummaryCheck(args[1:], stdout)
 	}
+	if args[0] == "run-link-schema-coverage" {
+		return runMissionRecommendationsRunLinkSchemaCoverage(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -445,7 +448,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -830,6 +833,45 @@ func runMissionRecommendationsOperatorSummaryCheck(args []string, stdout io.Writ
 		fixture.ExactNextActionOccurrences,
 		fixture.FirstExecutableNode,
 		filepath.ToSlash(*summaryOutPath),
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsRunLinkSchemaCoverage(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations run-link-schema-coverage", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	evidenceRoot := fs.String("evidence-root", "", "Atlas recommendation evidence root")
+	outPath := fs.String("out", "", "run-link schema coverage output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*evidenceRoot) == "" {
+		return fmt.Errorf("--evidence-root is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*evidenceRoot, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	coverage, err := BuildAtlasRunLinkSchemaCoverage(*evidenceRoot)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, coverage); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, coverage)
+	}
+	fmt.Fprintf(stdout, "status=%s\nrun_link_count=%d\ntyped_run_link_validators=%d\nrun_link_schema_coverage=%s\n",
+		coverage.Status,
+		coverage.RunLinkCount,
+		coverage.ValidatorCounts["typed:run-link"],
 		filepath.ToSlash(*outPath),
 	)
 	return nil

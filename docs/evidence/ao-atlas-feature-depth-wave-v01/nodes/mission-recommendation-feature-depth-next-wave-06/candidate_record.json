@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-06",
+  "task_id": "mission-recommendation-feature-depth-next-wave-06-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-06",
+  "source_task_digest": "sha256:9030e89ae64eb58b9917e540c471c29d5ac7fd57cb33aef38eb2ac74c546670e",
+  "selected_work": [
+    "Add deterministic run-link schema coverage model and validator.",
+    "Add CLI generator for run-link schema coverage artifacts.",
+    "Generate node 06 coverage after node 06 run-link creation so every generated run-link is included."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

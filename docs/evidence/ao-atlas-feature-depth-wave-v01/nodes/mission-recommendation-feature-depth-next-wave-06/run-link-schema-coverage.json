@@ -1,0 +1,74 @@
+{
+  "schema": "ao.atlas.run-link-schema-coverage.v0.1",
+  "status": "complete",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-wave-v01",
+  "run_link_count": 6,
+  "completed_run_links": 6,
+  "schema_counts": {
+    "ao.atlas.run-link.v0.1": 6
+  },
+  "validator_counts": {
+    "typed:run-link": 6
+  },
+  "entries": [
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/run-link.json",
+      "task_id": "mission-recommendation-feature-depth-next-wave-01-task",
+      "status": "completed",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "evidence_key_count": 11,
+      "digest": "sha256:786dd49211ffc52ced0c862b96ee8040c0f1f7e5a67392f866f37be439da2af9"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/run-link.json",
+      "task_id": "mission-recommendation-feature-depth-next-wave-02-task",
+      "status": "completed",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "evidence_key_count": 11,
+      "digest": "sha256:268ec3f9e4c2bcf2b5188e239b6bdf2dfa8f95142b9cbe0bee2dd5b22bfe6a6a"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/run-link.json",
+      "task_id": "mission-recommendation-feature-depth-next-wave-03-task",
+      "status": "completed",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "evidence_key_count": 11,
+      "digest": "sha256:fc04b44f605abf01c633aff0ed8098963b4179f458e01a60bfd4a7de41d503f9"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/run-link.json",
+      "task_id": "mission-recommendation-feature-depth-next-wave-04-task",
+      "status": "completed",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "evidence_key_count": 11,
+      "digest": "sha256:6a023b93be607147c4c73636c1063502e1a7f97fdad4ef6ed931271a3a6ba47b"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/run-link.json",
+      "task_id": "mission-recommendation-feature-depth-next-wave-05-task",
+      "status": "completed",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "evidence_key_count": 11,
+      "digest": "sha256:110951dd59573a60344367a6ba5c8af6ef06897d8070bad9172eb3256d69f617"
+    },
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-06/run-link.json",
+      "task_id": "mission-recommendation-feature-depth-next-wave-06-task",
+      "status": "completed",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "evidence_key_count": 11,
+      "digest": "sha256:5069ddab162f72cd8107f7a9284d062c92d6018055b9547cbb0ced916dc4407d"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.run-link-schema-coverage.v0.1",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "evidence_root",
+    "run_link_count",
+    "completed_run_links",
+    "schema_counts",
+    "validator_counts",
+    "entries",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "ao.atlas.run-link-schema-coverage.v0.1" },
+    "status": { "const": "complete" },
+    "evidence_root": { "type": "string", "minLength": 1 },
+    "run_link_count": { "type": "integer", "minimum": 1 },
+    "completed_run_links": { "type": "integer", "minimum": 1 },
+    "schema_counts": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "integer", "minimum": 1 }
+    },
+    "validator_counts": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "integer", "minimum": 1 }
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/run_link_entry" }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "run_link_entry": {
+      "type": "object",
+      "required": [
+        "path",
+        "task_id",
+        "status",
+        "schema",
+        "validator",
+        "evidence_key_count",
+        "digest"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "task_id": { "type": "string", "minLength": 1 },
+        "status": { "const": "completed" },
+        "schema": { "const": "ao.atlas.run-link.v0.1" },
+        "validator": { "const": "typed:run-link" },
+        "evidence_key_count": { "type": "integer", "minimum": 1 },
+        "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+      }
+    }
+  }
+}
