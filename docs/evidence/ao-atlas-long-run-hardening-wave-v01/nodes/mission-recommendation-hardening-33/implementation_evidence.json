@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-33",
+  "status": "implemented",
+  "changed_paths": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-33"
+  ],
+  "implementation_summary": "Added a doctor readiness fixture covering lease health, checkpoint freshness, stale route decisions, shallow recommendations, and early-return risk.",
+  "authority_effect": "none",
+  "implemented_at": "2026-07-06T06:50:02Z"
+}

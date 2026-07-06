@@ -1,0 +1,43 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-33",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "find docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-33 -name '*.json' -print0 | xargs -0 jq -e . >/dev/null",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestLongRunHardeningWaveDoctorReadinessFixtureCoversContinuationRisks -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --unified=0 -- internal/atlas/mission_recommendations_test.go docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-33 | rg -n '^\\+.*(RSI is proven|RSI proven|broad RSI is proven|fully_unsupervised_complex_mutation is live-proven|highest proven live class: fully_unsupervised_complex_mutation|provider call allowed|credential use allowed|direct main mutation allowed|release allowed|deploy allowed|publish allowed|upload allowed|tag allowed)' returns no matches",
+      "status": "passed"
+    }
+  ]
+}
