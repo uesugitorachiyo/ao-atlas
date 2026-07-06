@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-03",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationPublicSafetyGuardRejectsPendingClosure -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 2 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationPublicSafetyGuardRejectsPendingClosure -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Final response cannot be accepted with pending public-safety readback status.",
+    "The guard fixture records pending public-safety status as a rejected closure state.",
+    "Node 2 PR, CI, merge, sync, and branch cleanup lifecycle evidence is recorded."
+  ]
+}

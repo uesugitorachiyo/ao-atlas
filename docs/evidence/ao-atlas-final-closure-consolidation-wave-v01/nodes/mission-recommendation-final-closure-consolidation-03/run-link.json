@@ -1,0 +1,22 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-final-closure-consolidation-03-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/command_readback.json",
+    "foundry_import": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/foundry-import.json",
+    "generated_continuation_prompt": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/generated-continuation-prompt.md",
+    "implementation_evidence": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/implementation_evidence.json",
+    "node_02_post_merge_lifecycle": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-02/post-merge-lifecycle.json",
+    "node_gate": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/promoter_no_promotion.json",
+    "public_safety_pending_closure_guard": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/public-safety-pending-closure-guard.json",
+    "rollback_record": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/tests.json",
+    "verification": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/verification.json"
+  },
+  "digest": "sha256:a797463630ec010d82870617d3ec4f86db4ad6904ba2636662207779ead94426"
+}

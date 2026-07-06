@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-03",
+  "status": "implemented",
+  "objective": "Add regression evidence that final readback public safety status cannot remain pending after closure.",
+  "implementation": [
+    "Added a pending-status guard fixture for the completed final readback.",
+    "Added a regression test that rejects final closure with a pending public-safety scan status.",
+    "Recorded node 2 post-merge lifecycle evidence after PR 305 merge and branch cleanup."
+  ],
+  "files_changed": [
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-02/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/public-safety-pending-closure-guard.json",
+    "internal/atlas/mission_recommendations_test.go"
+  ],
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

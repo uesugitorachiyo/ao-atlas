@@ -6261,6 +6261,61 @@ func TestFinalClosureConsolidationBindsPublicSafetyAndNodeOneLifecycle(t *testin
 	}
 }
 
+func TestFinalClosureConsolidationPublicSafetyGuardRejectsPendingClosure(t *testing.T) {
+	longRunRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	finalReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(longRunRoot, "nodes", "mission-recommendation-hardening-40", "recommendation-readback-after.json"))
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeTwoLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-02", "post-merge-lifecycle.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                                      string   `json:"schema"`
+		NodeID                                      string   `json:"node_id"`
+		Status                                      string   `json:"status"`
+		SourceReadbackPath                          string   `json:"source_readback_path"`
+		FinalResponseAllowed                        bool     `json:"final_response_allowed"`
+		BoundPublicSafetyScanStatus                 string   `json:"bound_public_safety_scan_status"`
+		RejectedPublicSafetyScanStatuses            []string `json:"rejected_public_safety_scan_statuses"`
+		RequiresNonPendingStatusBeforeFinalResponse bool     `json:"requires_non_pending_status_before_final_response"`
+		RSIRemainsDenied                            bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-03", "public-safety-pending-closure-guard.json"))
+
+	if !finalReadback.FinalResponseAllowed ||
+		finalReadback.PublicSafetyScanStatus == "required_pending_verification" ||
+		finalReadback.PublicSafetyScanStatus != fixture.BoundPublicSafetyScanStatus {
+		t.Fatalf("final readback must not allow closure with pending public-safety status: %#v", finalReadback)
+	}
+	if nodeTwoLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeTwoLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-02" ||
+		nodeTwoLifecycle.Status != "merged_and_cleaned" ||
+		nodeTwoLifecycle.PRNumber != 305 ||
+		nodeTwoLifecycle.MergeCommit != "b291edcb9089206b77f153a053bf7cc035495cbd" ||
+		nodeTwoLifecycle.CIStatus != "passed" ||
+		!nodeTwoLifecycle.LocalMainSynced ||
+		!nodeTwoLifecycle.LocalBranchDeleted ||
+		!nodeTwoLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 2 lifecycle evidence must record PR, CI, merge, sync, and cleanup: %#v", nodeTwoLifecycle)
+	}
+	if fixture.Schema != "ao.atlas.public-safety-pending-closure-guard.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-03" ||
+		fixture.Status != "guarded" ||
+		fixture.SourceReadbackPath != "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/recommendation-readback-after.json" ||
+		!fixture.FinalResponseAllowed ||
+		!containsString(fixture.RejectedPublicSafetyScanStatuses, "required_pending_verification") ||
+		!fixture.RequiresNonPendingStatusBeforeFinalResponse ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("pending closure guard fixture must reject pending public-safety final closure: %#v", fixture)
+	}
+}
+
 func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))
