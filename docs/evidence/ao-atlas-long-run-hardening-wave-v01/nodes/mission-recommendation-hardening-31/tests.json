@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-31",
+  "status": "passed",
+  "red_result": "failed_missing_operator_routing_guide_fixture",
+  "targeted_test": "go test ./internal/atlas -run TestLongRunHardeningWaveOperatorRoutingGuideCoversAORoles -count=1",
+  "green_result": "passed"
+}

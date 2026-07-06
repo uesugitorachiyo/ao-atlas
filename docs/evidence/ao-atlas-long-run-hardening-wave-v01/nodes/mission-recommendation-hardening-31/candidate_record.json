@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-31",
+  "task_id": "mission-recommendation-hardening-31-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-30/recommendation-readback-after.json",
+  "objective": "Document when operators should use Mission Atlas Blueprint Foundry Promoter Command Sentinel and Architecture.",
+  "candidate_reason": "The long-run supervisor needs durable operator routing guidance so Atlas-owned waves do not bounce through Blueprint for ready bounded implementation.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T06:17:04Z"
+}
