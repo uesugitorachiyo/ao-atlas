@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-16",
+  "status": "implemented",
+  "implemented_at": "2026-07-06T01:38:01Z",
+  "changes": [
+    "added regression coverage for blocked Foundry rollups preserving blocker details",
+    "added a node 16 fixture with blocker-detail categories, safe-next-action gating, and resume checkpoint requirements",
+    "generated Foundry import, run-link, checkpoint, execution, and readback artifacts for node 16"
+  ],
+  "evidence_paths": [
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-16"
+  ],
+  "calls_providers": false,
+  "inspects_credentials": false,
+  "claims_authority_advance": false
+}
