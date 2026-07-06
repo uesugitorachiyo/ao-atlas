@@ -1,0 +1,11 @@
+{
+  "schema": "ao.command.readback.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-06",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 5,
+  "ready_nodes_before": 19,
+  "first_executable_node_before": "mission-recommendation-final-closure-consolidation-06",
+  "final_response_allowed_before": false,
+  "expected_next_node_after_completion": "mission-recommendation-final-closure-consolidation-07",
+  "compact_timeline": "5/24 consolidation nodes complete; node 6 binds final Promoter and Command no-promotion rollup evidence."
+}

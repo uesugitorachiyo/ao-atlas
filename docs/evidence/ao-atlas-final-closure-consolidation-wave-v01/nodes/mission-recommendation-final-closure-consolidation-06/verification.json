@@ -1,0 +1,47 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-06",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationAggregatePromoterCommandRollupBindsFinalWave -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "find docs/evidence/ao-atlas-final-closure-consolidation-wave-v01 docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40 -name '*.json' -print0 | xargs -0 jq -e . >/dev/null",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./internal/atlas -run 'TestFinalClosureConsolidationAggregatePromoterCommandRollupBindsFinalWave|TestFinalClosureConsolidationBranchCleanupHandoffRegressionCoversNodeFive' -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    },
+    {
+      "command": "scoped public-safety wording scan over consolidation node 6 changes returns no matches",
+      "status": "passed"
+    }
+  ]
+}
