@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.schema-validation-coverage-regression.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-13",
+  "status": "guarded",
+  "source_report_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12/completed-wave-evidence-validation-report.json",
+  "completed_wave_nodes": 40,
+  "json_file_count": 786,
+  "schema_bound_files": 786,
+  "node_gate_files": 40,
+  "run_link_files": 40,
+  "recommendation_readback_after_files": 40,
+  "checkpoint_readback_after_files": 40,
+  "execution_readback_after_files": 40,
+  "workgraph_after_files": 40,
+  "all_node_gate_run_link_readback_coverage": true,
+  "typed_validator_counts": {
+    "typed:run-link": 40,
+    "typed:recommendation-readback": 44,
+    "typed:recommendation-checkpoint-readback": 40,
+    "typed:recommendation-execution-readback": 44,
+    "typed:workgraph": 40,
+    "typed:foundry-import": 40,
+    "typed:foundry-continuation-handoff": 40,
+    "typed:factory-task": 40
+  },
+  "consolidation_completed_before": 12,
+  "consolidation_ready_before": 12,
+  "consolidation_first_executable_node_before": "mission-recommendation-final-closure-consolidation-13",
+  "consolidation_final_response_allowed_before": false,
+  "rsi_remains_denied": true
+}
