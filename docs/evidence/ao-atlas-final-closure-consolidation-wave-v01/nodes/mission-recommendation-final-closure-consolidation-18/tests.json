@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-18",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationCompactionResumePromptBindsLatestReadback -count=1",
+      "status": "failed_before_implementation",
+      "failure": "missing node 17 post-merge lifecycle and node 18 compaction resume prompt fixture"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationCompactionResumePromptBindsLatestReadback -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Compaction resume prompt binds the latest node 17 readback.",
+    "Prompt preserves completed nodes, ready nodes, exact next action, return gate, and early-return risk.",
+    "Prompt denies final response while ready work remains.",
+    "Prompt preserves no-promotion and RSI-denied boundaries."
+  ]
+}
