@@ -7531,27 +7531,27 @@ func TestFinalClosureConsolidationWindowsCIWaitStateTelemetryRecordsLongRunningC
 	}](t, filepath.Join(nodeFifteenDir, "post-merge-lifecycle.json"))
 	nodeFifteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeFifteenDir, "recommendation-readback-after.json"))
 	telemetry := mustLoadJSON[struct {
-		Schema                         string `json:"schema"`
-		NodeID                         string `json:"node_id"`
-		Status                         string `json:"status"`
-		Source                         string `json:"source"`
-		LongRunningOS                  string `json:"long_running_os"`
-		WaitThresholdSeconds           int    `json:"wait_threshold_seconds"`
-		SourcePRs                      []int  `json:"source_prs"`
-		WindowsCheckSampleCount        int    `json:"windows_check_sample_count"`
-		PendingStateObserved           bool   `json:"pending_state_observed"`
-		CompletedPassStateObserved     bool   `json:"completed_pass_state_observed"`
-		FailedStateObserved            bool   `json:"failed_state_observed"`
-		MaxObservedDurationSeconds     int    `json:"max_observed_duration_seconds"`
-		CompletedNodesBefore           int    `json:"completed_nodes_before"`
-		ReadyNodesBefore               int    `json:"ready_nodes_before"`
-		FirstExecutableNodeBefore      string `json:"first_executable_node_before"`
-		FinalResponseAllowedBefore     bool   `json:"final_response_allowed_before"`
-		ExpectedNextNodeAfterComplete  string `json:"expected_next_node_after_completion"`
-		PromotionRequested             bool   `json:"promotion_requested"`
-		PromotionGranted               bool   `json:"promotion_granted"`
-		RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
-		WindowsCheckDurationSamples    []struct {
+		Schema                        string `json:"schema"`
+		NodeID                        string `json:"node_id"`
+		Status                        string `json:"status"`
+		Source                        string `json:"source"`
+		LongRunningOS                 string `json:"long_running_os"`
+		WaitThresholdSeconds          int    `json:"wait_threshold_seconds"`
+		SourcePRs                     []int  `json:"source_prs"`
+		WindowsCheckSampleCount       int    `json:"windows_check_sample_count"`
+		PendingStateObserved          bool   `json:"pending_state_observed"`
+		CompletedPassStateObserved    bool   `json:"completed_pass_state_observed"`
+		FailedStateObserved           bool   `json:"failed_state_observed"`
+		MaxObservedDurationSeconds    int    `json:"max_observed_duration_seconds"`
+		CompletedNodesBefore          int    `json:"completed_nodes_before"`
+		ReadyNodesBefore              int    `json:"ready_nodes_before"`
+		FirstExecutableNodeBefore     string `json:"first_executable_node_before"`
+		FinalResponseAllowedBefore    bool   `json:"final_response_allowed_before"`
+		ExpectedNextNodeAfterComplete string `json:"expected_next_node_after_completion"`
+		PromotionRequested            bool   `json:"promotion_requested"`
+		PromotionGranted              bool   `json:"promotion_granted"`
+		RSIRemainsDenied              bool   `json:"rsi_remains_denied"`
+		WindowsCheckDurationSamples   []struct {
 			PRNumber        int    `json:"pr_number"`
 			CheckName       string `json:"check_name"`
 			FinalStatus     string `json:"final_status"`
@@ -7606,6 +7606,131 @@ func TestFinalClosureConsolidationWindowsCIWaitStateTelemetryRecordsLongRunningC
 			sample.DurationSeconds < telemetry.WaitThresholdSeconds ||
 			sample.WaitState != "long_running_pending_before_success" {
 			t.Fatalf("Windows telemetry sample must report long-running pending-before-success state: %#v", sample)
+		}
+	}
+}
+
+func TestFinalClosureConsolidationWindowsCIStateRegressionCoversPendingPassingAndFailingStates(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeSixteenDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-16")
+	nodeSeventeenDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-17")
+
+	nodeSixteenLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(nodeSixteenDir, "post-merge-lifecycle.json"))
+	nodeSixteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeSixteenDir, "recommendation-readback-after.json"))
+	telemetry := mustLoadJSON[struct {
+		Schema                     string `json:"schema"`
+		NodeID                     string `json:"node_id"`
+		Status                     string `json:"status"`
+		WindowsCheckSampleCount    int    `json:"windows_check_sample_count"`
+		PendingStateObserved       bool   `json:"pending_state_observed"`
+		CompletedPassStateObserved bool   `json:"completed_pass_state_observed"`
+		FailedStateObserved        bool   `json:"failed_state_observed"`
+	}](t, filepath.Join(nodeSixteenDir, "windows-ci-wait-state-telemetry.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                        string   `json:"schema"`
+		NodeID                        string   `json:"node_id"`
+		Status                        string   `json:"status"`
+		SourceTelemetryPath           string   `json:"source_telemetry_path"`
+		SourceTelemetrySampleCount    int      `json:"source_telemetry_sample_count"`
+		CoveredWindowsStates          []string `json:"covered_windows_states"`
+		PendingStateCovered           bool     `json:"pending_state_covered"`
+		PassingStateCovered           bool     `json:"passing_state_covered"`
+		FailingStateCovered           bool     `json:"failing_state_covered"`
+		SyntheticFailureFixture       bool     `json:"synthetic_failure_fixture"`
+		CompletedNodesBefore          int      `json:"completed_nodes_before"`
+		ReadyNodesBefore              int      `json:"ready_nodes_before"`
+		FirstExecutableNodeBefore     string   `json:"first_executable_node_before"`
+		FinalResponseAllowedBefore    bool     `json:"final_response_allowed_before"`
+		ExpectedNextNodeAfterComplete string   `json:"expected_next_node_after_completion"`
+		PromotionRequested            bool     `json:"promotion_requested"`
+		PromotionGranted              bool     `json:"promotion_granted"`
+		RSIRemainsDenied              bool     `json:"rsi_remains_denied"`
+		StateSamples                  []struct {
+			State                string `json:"state"`
+			GitHubStatus         string `json:"github_status"`
+			GitHubConclusion     string `json:"github_conclusion"`
+			OperatorAction       string `json:"operator_action"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+		} `json:"state_samples"`
+	}](t, filepath.Join(nodeSeventeenDir, "windows-ci-state-regression.json"))
+
+	if nodeSixteenLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeSixteenLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-16" ||
+		nodeSixteenLifecycle.Status != "merged_and_cleaned" ||
+		nodeSixteenLifecycle.PRNumber != 319 ||
+		nodeSixteenLifecycle.MergeCommit != "169baa5990fa9726fe42526968af5c1892a52446" ||
+		nodeSixteenLifecycle.CIStatus != "passed" ||
+		!nodeSixteenLifecycle.LocalMainSynced ||
+		!nodeSixteenLifecycle.LocalBranchDeleted ||
+		!nodeSixteenLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 16 lifecycle evidence must prove clean branch handoff before node 17 state regression: %#v", nodeSixteenLifecycle)
+	}
+	if telemetry.Schema != "ao.atlas.windows-ci-wait-state-telemetry.v0.1" ||
+		telemetry.NodeID != "mission-recommendation-final-closure-consolidation-16" ||
+		telemetry.Status != "recorded" ||
+		telemetry.WindowsCheckSampleCount < 6 ||
+		!telemetry.PendingStateObserved ||
+		!telemetry.CompletedPassStateObserved ||
+		telemetry.FailedStateObserved {
+		t.Fatalf("node 16 telemetry must provide pending and passing source states without real failure: %#v", telemetry)
+	}
+	if fixture.Schema != "ao.atlas.windows-ci-state-regression.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-17" ||
+		fixture.Status != "guarded" ||
+		fixture.SourceTelemetryPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-16/windows-ci-wait-state-telemetry.json" ||
+		fixture.SourceTelemetrySampleCount != telemetry.WindowsCheckSampleCount ||
+		!fixture.PendingStateCovered ||
+		!fixture.PassingStateCovered ||
+		!fixture.FailingStateCovered ||
+		!fixture.SyntheticFailureFixture ||
+		fixture.CompletedNodesBefore != nodeSixteenReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeSixteenReadback.ReadyNodes ||
+		fixture.FirstExecutableNodeBefore != nodeSixteenReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowedBefore != nodeSixteenReadback.FinalResponseAllowed ||
+		fixture.ExpectedNextNodeAfterComplete != "mission-recommendation-final-closure-consolidation-18" ||
+		fixture.PromotionRequested ||
+		fixture.PromotionGranted ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("node 17 Windows CI state regression must cover pending/passing/failing states without promotion: %#v", fixture)
+	}
+	for _, want := range []string{"pending", "passing", "failing"} {
+		if !containsString(fixture.CoveredWindowsStates, want) {
+			t.Fatalf("node 17 fixture missing covered Windows state %q: %#v", want, fixture.CoveredWindowsStates)
+		}
+	}
+	seen := map[string]bool{}
+	for _, sample := range fixture.StateSamples {
+		seen[sample.State] = true
+		switch sample.State {
+		case "pending":
+			if sample.GitHubStatus != "IN_PROGRESS" || sample.GitHubConclusion != "" || sample.OperatorAction != "wait_for_ci" || sample.FinalResponseAllowed {
+				t.Fatalf("pending sample must force CI wait: %#v", sample)
+			}
+		case "passing":
+			if sample.GitHubStatus != "COMPLETED" || sample.GitHubConclusion != "SUCCESS" || sample.OperatorAction != "merge_after_all_required_checks_pass" || sample.FinalResponseAllowed {
+				t.Fatalf("passing sample must allow merge but not final response while ready work remains: %#v", sample)
+			}
+		case "failing":
+			if sample.GitHubStatus != "COMPLETED" || sample.GitHubConclusion != "FAILURE" || sample.OperatorAction != "repair_before_merge" || sample.FinalResponseAllowed {
+				t.Fatalf("failing sample must force repair before merge: %#v", sample)
+			}
+		default:
+			t.Fatalf("unexpected Windows CI state sample: %#v", sample)
+		}
+	}
+	for _, want := range []string{"pending", "passing", "failing"} {
+		if !seen[want] {
+			t.Fatalf("node 17 fixture missing state sample %q: %#v", want, fixture.StateSamples)
 		}
 	}
 }
