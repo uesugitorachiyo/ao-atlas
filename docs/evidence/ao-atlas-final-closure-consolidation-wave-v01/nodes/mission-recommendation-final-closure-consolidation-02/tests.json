@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-02",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationBindsPublicSafetyAndNodeOneLifecycle -count=1",
+      "status": "failed_before_fixture",
+      "failure": "post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationBindsPublicSafetyAndNodeOneLifecycle -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Final readback public_safety_scan_status is passed.",
+    "Final readback is backed by passed Sentinel and production verification evidence.",
+    "Node 1 PR, CI, merge, sync, and branch cleanup lifecycle evidence is recorded."
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-02",
+  "status": "ready",
+  "rollback_scope": [
+    "Restore the final 40-node readback public_safety_scan_status if the binding is rejected.",
+    "Remove node 2 binding evidence and regression test additions.",
+    "Remove node 1 post-merge lifecycle evidence if PR lifecycle data is invalidated."
+  ],
+  "rollback_command": "git revert <merge_commit_for_node_02>",
+  "data_loss_risk": "none; evidence and regression-only change",
+  "requires_blueprint": false
+}
