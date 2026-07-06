@@ -7093,6 +7093,117 @@ func TestFinalClosureConsolidationEvidenceValidationCommandCoversCompletedHarden
 	}
 }
 
+func TestFinalClosureConsolidationSchemaValidationCoverageRegressionBindsGatesRunLinksAndReadbacks(t *testing.T) {
+	consolidationRoot := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	nodeTwelveLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-12", "post-merge-lifecycle.json"))
+	report := mustLoadJSON[struct {
+		Status              string `json:"status"`
+		NodeCount           int    `json:"node_count"`
+		JSONFileCount       int    `json:"json_file_count"`
+		SchemaBoundFiles    int    `json:"schema_bound_files"`
+		TypedValidatorFiles int    `json:"typed_validator_files"`
+		Entries             []struct {
+			Path      string `json:"path"`
+			NodeID    string `json:"node_id"`
+			Filename  string `json:"filename"`
+			Schema    string `json:"schema"`
+			Validator string `json:"validator"`
+			Status    string `json:"status"`
+		} `json:"entries"`
+		Validators map[string]int `json:"validators"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-12", "completed-wave-evidence-validation-report.json"))
+	fixture := mustLoadJSON[struct {
+		Schema                                  string         `json:"schema"`
+		NodeID                                  string         `json:"node_id"`
+		Status                                  string         `json:"status"`
+		SourceReportPath                        string         `json:"source_report_path"`
+		CompletedWaveNodes                      int            `json:"completed_wave_nodes"`
+		JSONFileCount                           int            `json:"json_file_count"`
+		SchemaBoundFiles                        int            `json:"schema_bound_files"`
+		NodeGateFiles                           int            `json:"node_gate_files"`
+		RunLinkFiles                            int            `json:"run_link_files"`
+		RecommendationReadbackAfterFiles        int            `json:"recommendation_readback_after_files"`
+		CheckpointReadbackAfterFiles            int            `json:"checkpoint_readback_after_files"`
+		ExecutionReadbackAfterFiles             int            `json:"execution_readback_after_files"`
+		WorkgraphAfterFiles                     int            `json:"workgraph_after_files"`
+		AllNodeGateRunLinkReadbackCoverage      bool           `json:"all_node_gate_run_link_readback_coverage"`
+		TypedValidatorCounts                    map[string]int `json:"typed_validator_counts"`
+		ConsolidationCompletedBefore            int            `json:"consolidation_completed_before"`
+		ConsolidationReadyBefore                int            `json:"consolidation_ready_before"`
+		ConsolidationFirstExecutableNodeBefore  string         `json:"consolidation_first_executable_node_before"`
+		ConsolidationFinalResponseAllowedBefore bool           `json:"consolidation_final_response_allowed_before"`
+		RSIRemainsDenied                        bool           `json:"rsi_remains_denied"`
+	}](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-13", "schema-validation-coverage-regression.json"))
+	nodeTwelveReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-12", "recommendation-readback-after.json"))
+
+	if nodeTwelveLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeTwelveLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-12" ||
+		nodeTwelveLifecycle.Status != "merged_and_cleaned" ||
+		nodeTwelveLifecycle.PRNumber != 315 ||
+		nodeTwelveLifecycle.MergeCommit != "65d3bd0eb65c4b16d35f1bdb7da44ac22f3313f2" ||
+		nodeTwelveLifecycle.CIStatus != "passed" ||
+		!nodeTwelveLifecycle.LocalMainSynced ||
+		!nodeTwelveLifecycle.LocalBranchDeleted ||
+		!nodeTwelveLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 12 lifecycle evidence must prove clean branch handoff: %#v", nodeTwelveLifecycle)
+	}
+	filenameCounts := map[string]int{}
+	for _, entry := range report.Entries {
+		if entry.Status != "passed" || entry.Schema == "" || entry.Path == "" || entry.NodeID == "" {
+			t.Fatalf("validation report entry must be passed and schema-bound: %#v", entry)
+		}
+		filenameCounts[entry.Filename]++
+	}
+	for _, filename := range []string{
+		"node_gate.json",
+		"run-link.json",
+		"recommendation-readback-after.json",
+		"checkpoint-readback-after.json",
+		"execution-readback-after.json",
+		"workgraph-after.json",
+	} {
+		if filenameCounts[filename] != 40 {
+			t.Fatalf("validation report must cover %s for all 40 nodes, got %d", filename, filenameCounts[filename])
+		}
+	}
+	if fixture.Schema != "ao.atlas.schema-validation-coverage-regression.v0.1" ||
+		fixture.NodeID != "mission-recommendation-final-closure-consolidation-13" ||
+		fixture.Status != "guarded" ||
+		fixture.SourceReportPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12/completed-wave-evidence-validation-report.json" ||
+		fixture.CompletedWaveNodes != report.NodeCount ||
+		fixture.JSONFileCount != report.JSONFileCount ||
+		fixture.SchemaBoundFiles != report.SchemaBoundFiles ||
+		fixture.NodeGateFiles != filenameCounts["node_gate.json"] ||
+		fixture.RunLinkFiles != filenameCounts["run-link.json"] ||
+		fixture.RecommendationReadbackAfterFiles != filenameCounts["recommendation-readback-after.json"] ||
+		fixture.CheckpointReadbackAfterFiles != filenameCounts["checkpoint-readback-after.json"] ||
+		fixture.ExecutionReadbackAfterFiles != filenameCounts["execution-readback-after.json"] ||
+		fixture.WorkgraphAfterFiles != filenameCounts["workgraph-after.json"] ||
+		!fixture.AllNodeGateRunLinkReadbackCoverage ||
+		fixture.TypedValidatorCounts["typed:run-link"] != report.Validators["typed:run-link"] ||
+		fixture.TypedValidatorCounts["typed:recommendation-readback"] != report.Validators["typed:recommendation-readback"] ||
+		fixture.TypedValidatorCounts["typed:recommendation-checkpoint-readback"] != report.Validators["typed:recommendation-checkpoint-readback"] ||
+		fixture.TypedValidatorCounts["typed:recommendation-execution-readback"] != report.Validators["typed:recommendation-execution-readback"] ||
+		fixture.TypedValidatorCounts["typed:workgraph"] != report.Validators["typed:workgraph"] ||
+		fixture.ConsolidationCompletedBefore != nodeTwelveReadback.CompletedNodes ||
+		fixture.ConsolidationReadyBefore != nodeTwelveReadback.ReadyNodes ||
+		fixture.ConsolidationFirstExecutableNodeBefore != nodeTwelveReadback.FirstExecutableNode ||
+		fixture.ConsolidationFinalResponseAllowedBefore != nodeTwelveReadback.FinalResponseAllowed ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("schema validation coverage fixture must bind gates, run-links, readbacks, typed validators, and readback continuity: %#v", fixture)
+	}
+}
+
 func TestFinalClosureConsolidationWaveSeedsTwentyFourSerializedAuditNodes(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
 	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))

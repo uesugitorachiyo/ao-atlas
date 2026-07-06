@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-13",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationSchemaValidationCoverageRegressionBindsGatesRunLinksAndReadbacks -count=1",
+      "status": "failed_before_fixture",
+      "failure": "node 12 post-merge lifecycle fixture missing"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationSchemaValidationCoverageRegressionBindsGatesRunLinksAndReadbacks -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Every completed hardening node has node_gate.json in the validation report.",
+    "Every completed hardening node has run-link.json in the validation report.",
+    "Every completed hardening node has recommendation, checkpoint, execution, and workgraph readback artifacts in the validation report."
+  ]
+}
