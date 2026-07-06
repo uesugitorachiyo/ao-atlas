@@ -3435,6 +3435,97 @@ func TestLongRunHardeningWaveFoundryRollupNormalizesTerminalStatuses(t *testing.
 	}
 }
 
+func TestLongRunHardeningWavePromotedFoundryRollupRequiresCommandAgreement(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-13", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-14")
+	fixture := mustLoadJSON[struct {
+		Schema                         string   `json:"schema"`
+		NodeID                         string   `json:"node_id"`
+		Status                         string   `json:"status"`
+		SourceStatus                   string   `json:"source_status"`
+		NormalizedStatus               string   `json:"normalized_status"`
+		ClosesTask                     bool     `json:"closes_task"`
+		ClosesMission                  bool     `json:"closes_mission"`
+		CommandAgreementRequired       bool     `json:"command_agreement_required"`
+		CommandAgreementStatus         string   `json:"command_agreement_status"`
+		DisagreementBlocksClosure      bool     `json:"disagreement_blocks_closure"`
+		ClosureConditions              []string `json:"closure_conditions"`
+		CompletedNodesBeforeNode       int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode           int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed           bool     `json:"final_response_allowed"`
+		ExactNextAction                string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint     struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "foundry-promoted-command-agreement-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.foundry-promoted-command-agreement-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-14" ||
+		fixture.Status != "command_agreement_required" ||
+		fixture.SourceStatus != "promoted" ||
+		fixture.NormalizedStatus != "completed" ||
+		!fixture.ClosesTask ||
+		fixture.ClosesMission ||
+		!fixture.CommandAgreementRequired ||
+		fixture.CommandAgreementStatus != "required_before_mission_closure" ||
+		!fixture.DisagreementBlocksClosure ||
+		fixture.CompletedNodesBeforeNode != nodeThirteenReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeThirteenReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirteenReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("promoted rollup fixture must require Command agreement before closure: %#v", fixture)
+	}
+	requiredConditions := map[string]bool{}
+	for _, condition := range fixture.ClosureConditions {
+		requiredConditions[condition] = true
+	}
+	for _, condition := range []string{
+		"command_readback_agrees",
+		"zero_ready_nodes",
+		"all_required_closure_evidence_exists",
+		"no_forbidden_surface",
+		"rsi_remains_denied",
+	} {
+		if !requiredConditions[condition] {
+			t.Fatalf("promoted rollup fixture missing closure condition %s: %#v", condition, fixture.ClosureConditions)
+		}
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeThirteenReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeThirteenReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeThirteenReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeThirteenReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeThirteenReadback.ExactNextAction {
+		t.Fatalf("promoted rollup fixture must bind node 13 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+
+	nodeFourteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeFourteenReadback); err != nil {
+		t.Fatal(err)
+	}
+	if nodeFourteenReadback.CompletedNodes != 14 ||
+		nodeFourteenReadback.ReadyNodes != 26 ||
+		nodeFourteenReadback.FirstExecutableNode != "mission-recommendation-hardening-15" ||
+		nodeFourteenReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeFourteenReadback.ExactNextAction, "mission-recommendation-hardening-15") {
+		t.Fatalf("node 14 readback must continue to node 15 without final response: %#v", nodeFourteenReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

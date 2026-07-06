@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-14",
+  "candidate": "foundry-promoted-command-agreement-fixture",
+  "status": "selected",
+  "objective": "Add completed Foundry rollup fixture coverage where promoted closes only with Command agreement.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-14"
+  ],
+  "acceptance_criteria": [
+    "fixture normalizes a promoted Foundry rollup as completed task evidence",
+    "fixture requires Command agreement before mission closure",
+    "fixture denies final response while ready recommendation nodes remain"
+  ],
+  "selected_at": "2026-07-06T01:06:57Z"
+}
