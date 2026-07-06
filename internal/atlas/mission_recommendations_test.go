@@ -3440,22 +3440,22 @@ func TestLongRunHardeningWavePromotedFoundryRollupRequiresCommandAgreement(t *te
 	nodeThirteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-13", "recommendation-readback-after.json"))
 	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-14")
 	fixture := mustLoadJSON[struct {
-		Schema                         string   `json:"schema"`
-		NodeID                         string   `json:"node_id"`
-		Status                         string   `json:"status"`
-		SourceStatus                   string   `json:"source_status"`
-		NormalizedStatus               string   `json:"normalized_status"`
-		ClosesTask                     bool     `json:"closes_task"`
-		ClosesMission                  bool     `json:"closes_mission"`
-		CommandAgreementRequired       bool     `json:"command_agreement_required"`
-		CommandAgreementStatus         string   `json:"command_agreement_status"`
-		DisagreementBlocksClosure      bool     `json:"disagreement_blocks_closure"`
-		ClosureConditions              []string `json:"closure_conditions"`
-		CompletedNodesBeforeNode       int      `json:"completed_nodes_before_node"`
-		ReadyNodesBeforeNode           int      `json:"ready_nodes_before_node"`
-		FinalResponseAllowed           bool     `json:"final_response_allowed"`
-		ExactNextAction                string   `json:"exact_next_action"`
-		CurrentHardeningCheckpoint     struct {
+		Schema                     string   `json:"schema"`
+		NodeID                     string   `json:"node_id"`
+		Status                     string   `json:"status"`
+		SourceStatus               string   `json:"source_status"`
+		NormalizedStatus           string   `json:"normalized_status"`
+		ClosesTask                 bool     `json:"closes_task"`
+		ClosesMission              bool     `json:"closes_mission"`
+		CommandAgreementRequired   bool     `json:"command_agreement_required"`
+		CommandAgreementStatus     string   `json:"command_agreement_status"`
+		DisagreementBlocksClosure  bool     `json:"disagreement_blocks_closure"`
+		ClosureConditions          []string `json:"closure_conditions"`
+		CompletedNodesBeforeNode   int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode       int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed       bool     `json:"final_response_allowed"`
+		ExactNextAction            string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint struct {
 			CompletedNodes       int    `json:"completed_nodes"`
 			ReadyNodes           int    `json:"ready_nodes"`
 			FirstExecutableNode  string `json:"first_executable_node"`
@@ -3531,23 +3531,23 @@ func TestLongRunHardeningWaveDeniedFoundryRollupReportsExactMissingEvidence(t *t
 	nodeFourteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-14", "recommendation-readback-after.json"))
 	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-15")
 	fixture := mustLoadJSON[struct {
-		Schema                         string   `json:"schema"`
-		NodeID                         string   `json:"node_id"`
-		Status                         string   `json:"status"`
-		SourceStatus                   string   `json:"source_status"`
-		NormalizedStatus               string   `json:"normalized_status"`
-		ClosesTask                     bool     `json:"closes_task"`
-		ClosesMission                  bool     `json:"closes_mission"`
-		ExactMissingEvidenceRequired   bool     `json:"exact_missing_evidence_required"`
-		GenericDenialAllowed           bool     `json:"generic_denial_allowed"`
-		SafeNextActionRequired         bool     `json:"safe_next_action_required"`
-		MissingEvidenceCategories      []string `json:"missing_evidence_categories"`
-		DeniedReasonReadback           string   `json:"denied_reason_readback"`
-		CompletedNodesBeforeNode       int      `json:"completed_nodes_before_node"`
-		ReadyNodesBeforeNode           int      `json:"ready_nodes_before_node"`
-		FinalResponseAllowed           bool     `json:"final_response_allowed"`
-		ExactNextAction                string   `json:"exact_next_action"`
-		CurrentHardeningCheckpoint     struct {
+		Schema                       string   `json:"schema"`
+		NodeID                       string   `json:"node_id"`
+		Status                       string   `json:"status"`
+		SourceStatus                 string   `json:"source_status"`
+		NormalizedStatus             string   `json:"normalized_status"`
+		ClosesTask                   bool     `json:"closes_task"`
+		ClosesMission                bool     `json:"closes_mission"`
+		ExactMissingEvidenceRequired bool     `json:"exact_missing_evidence_required"`
+		GenericDenialAllowed         bool     `json:"generic_denial_allowed"`
+		SafeNextActionRequired       bool     `json:"safe_next_action_required"`
+		MissingEvidenceCategories    []string `json:"missing_evidence_categories"`
+		DeniedReasonReadback         string   `json:"denied_reason_readback"`
+		CompletedNodesBeforeNode     int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode         int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed         bool     `json:"final_response_allowed"`
+		ExactNextAction              string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint   struct {
 			CompletedNodes       int    `json:"completed_nodes"`
 			ReadyNodes           int    `json:"ready_nodes"`
 			FirstExecutableNode  string `json:"first_executable_node"`
@@ -3623,24 +3623,24 @@ func TestLongRunHardeningWaveBlockedFoundryRollupPreservesBlockerDetails(t *test
 	nodeFifteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-15", "recommendation-readback-after.json"))
 	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-16")
 	fixture := mustLoadJSON[struct {
-		Schema                         string   `json:"schema"`
-		NodeID                         string   `json:"node_id"`
-		Status                         string   `json:"status"`
-		SourceStatus                   string   `json:"source_status"`
-		NormalizedStatus               string   `json:"normalized_status"`
-		Terminal                       bool     `json:"terminal"`
-		ClosesTask                     bool     `json:"closes_task"`
-		ClosesMission                  bool     `json:"closes_mission"`
-		BlockerDetailsRequired         bool     `json:"blocker_details_required"`
-		GenericBlockerAllowed          bool     `json:"generic_blocker_allowed"`
-		SafeNextActionRequired         bool     `json:"safe_next_action_required"`
-		ResumeCheckpointRequired       bool     `json:"resume_checkpoint_required"`
-		BlockerDetailCategories        []string `json:"blocker_detail_categories"`
-		CompletedNodesBeforeNode       int      `json:"completed_nodes_before_node"`
-		ReadyNodesBeforeNode           int      `json:"ready_nodes_before_node"`
-		FinalResponseAllowed           bool     `json:"final_response_allowed"`
-		ExactNextAction                string   `json:"exact_next_action"`
-		CurrentHardeningCheckpoint     struct {
+		Schema                     string   `json:"schema"`
+		NodeID                     string   `json:"node_id"`
+		Status                     string   `json:"status"`
+		SourceStatus               string   `json:"source_status"`
+		NormalizedStatus           string   `json:"normalized_status"`
+		Terminal                   bool     `json:"terminal"`
+		ClosesTask                 bool     `json:"closes_task"`
+		ClosesMission              bool     `json:"closes_mission"`
+		BlockerDetailsRequired     bool     `json:"blocker_details_required"`
+		GenericBlockerAllowed      bool     `json:"generic_blocker_allowed"`
+		SafeNextActionRequired     bool     `json:"safe_next_action_required"`
+		ResumeCheckpointRequired   bool     `json:"resume_checkpoint_required"`
+		BlockerDetailCategories    []string `json:"blocker_detail_categories"`
+		CompletedNodesBeforeNode   int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode       int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed       bool     `json:"final_response_allowed"`
+		ExactNextAction            string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint struct {
 			CompletedNodes       int    `json:"completed_nodes"`
 			ReadyNodes           int    `json:"ready_nodes"`
 			FirstExecutableNode  string `json:"first_executable_node"`
@@ -3736,17 +3736,17 @@ func TestLongRunHardeningWaveFeatureDepthDefaultsToTwentyTasks(t *testing.T) {
 	nodeSixteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-16", "recommendation-readback-after.json"))
 	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-17")
 	fixture := mustLoadJSON[struct {
-		Schema                         string `json:"schema"`
-		NodeID                         string `json:"node_id"`
-		Status                         string `json:"status"`
-		DefaultRecommendationFloor     int    `json:"default_recommendation_floor"`
-		ObservedRecommendationCount    int    `json:"observed_recommendation_count"`
-		ActionableTaskFloorMet         bool   `json:"actionable_task_floor_met"`
-		CompletedNodesBeforeNode       int    `json:"completed_nodes_before_node"`
-		ReadyNodesBeforeNode           int    `json:"ready_nodes_before_node"`
-		FinalResponseAllowed           bool   `json:"final_response_allowed"`
-		ExactNextAction                string `json:"exact_next_action"`
-		CurrentHardeningCheckpoint     struct {
+		Schema                      string `json:"schema"`
+		NodeID                      string `json:"node_id"`
+		Status                      string `json:"status"`
+		DefaultRecommendationFloor  int    `json:"default_recommendation_floor"`
+		ObservedRecommendationCount int    `json:"observed_recommendation_count"`
+		ActionableTaskFloorMet      bool   `json:"actionable_task_floor_met"`
+		CompletedNodesBeforeNode    int    `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode        int    `json:"ready_nodes_before_node"`
+		FinalResponseAllowed        bool   `json:"final_response_allowed"`
+		ExactNextAction             string `json:"exact_next_action"`
+		CurrentHardeningCheckpoint  struct {
 			CompletedNodes       int    `json:"completed_nodes"`
 			ReadyNodes           int    `json:"ready_nodes"`
 			FirstExecutableNode  string `json:"first_executable_node"`
@@ -3825,17 +3825,17 @@ func TestLongRunHardeningWaveDoubledFeatureDepthReturnsFortyTasks(t *testing.T) 
 	nodeSeventeenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-17", "recommendation-readback-after.json"))
 	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-18")
 	fixture := mustLoadJSON[struct {
-		Schema                         string `json:"schema"`
-		NodeID                         string `json:"node_id"`
-		Status                         string `json:"status"`
-		DoubledRecommendationFloor     int    `json:"doubled_recommendation_floor"`
-		ObservedRecommendationCount    int    `json:"observed_recommendation_count"`
-		IncludesFortiethTask           bool   `json:"includes_fortieth_task"`
-		CompletedNodesBeforeNode       int    `json:"completed_nodes_before_node"`
-		ReadyNodesBeforeNode           int    `json:"ready_nodes_before_node"`
-		FinalResponseAllowed           bool   `json:"final_response_allowed"`
-		ExactNextAction                string `json:"exact_next_action"`
-		CurrentHardeningCheckpoint     struct {
+		Schema                      string `json:"schema"`
+		NodeID                      string `json:"node_id"`
+		Status                      string `json:"status"`
+		DoubledRecommendationFloor  int    `json:"doubled_recommendation_floor"`
+		ObservedRecommendationCount int    `json:"observed_recommendation_count"`
+		IncludesFortiethTask        bool   `json:"includes_fortieth_task"`
+		CompletedNodesBeforeNode    int    `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode        int    `json:"ready_nodes_before_node"`
+		FinalResponseAllowed        bool   `json:"final_response_allowed"`
+		ExactNextAction             string `json:"exact_next_action"`
+		CurrentHardeningCheckpoint  struct {
 			CompletedNodes       int    `json:"completed_nodes"`
 			ReadyNodes           int    `json:"ready_nodes"`
 			FirstExecutableNode  string `json:"first_executable_node"`
@@ -4200,24 +4200,24 @@ func TestLongRunHardeningWaveProductionReadinessSummaryBindsVerificationCIMergeC
 	nodeTwentyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-20", "recommendation-readback-after.json"))
 	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-21")
 	fixture := mustLoadJSON[struct {
-		Schema                         string   `json:"schema"`
-		NodeID                         string   `json:"node_id"`
-		Status                         string   `json:"status"`
-		LocalVerificationCommands       []string `json:"local_verification_commands"`
-		ProductionReadinessSummary      string   `json:"production_readiness_summary"`
-		CIRequiredBeforeMerge           bool     `json:"ci_required_before_merge"`
-		MergeRequiredBeforeCompletion   bool     `json:"merge_required_before_completion"`
-		RemoteBranchCleanupRequired     bool     `json:"remote_branch_cleanup_required"`
-		LocalBranchCleanupRequired      bool     `json:"local_branch_cleanup_required"`
-		EvidenceRoots                   []string `json:"evidence_roots"`
-		PriorMergedPRs                  []int    `json:"prior_merged_prs"`
-		PriorMergedPRCIPassed           bool     `json:"prior_merged_pr_ci_passed"`
-		PriorMergedPRBranchCleanup      bool     `json:"prior_merged_pr_branch_cleanup"`
-		CompletedNodesBeforeNode        int      `json:"completed_nodes_before_node"`
-		ReadyNodesBeforeNode            int      `json:"ready_nodes_before_node"`
-		FinalResponseAllowed            bool     `json:"final_response_allowed"`
-		ExactNextAction                 string   `json:"exact_next_action"`
-		CurrentHardeningCheckpoint      struct {
+		Schema                        string   `json:"schema"`
+		NodeID                        string   `json:"node_id"`
+		Status                        string   `json:"status"`
+		LocalVerificationCommands     []string `json:"local_verification_commands"`
+		ProductionReadinessSummary    string   `json:"production_readiness_summary"`
+		CIRequiredBeforeMerge         bool     `json:"ci_required_before_merge"`
+		MergeRequiredBeforeCompletion bool     `json:"merge_required_before_completion"`
+		RemoteBranchCleanupRequired   bool     `json:"remote_branch_cleanup_required"`
+		LocalBranchCleanupRequired    bool     `json:"local_branch_cleanup_required"`
+		EvidenceRoots                 []string `json:"evidence_roots"`
+		PriorMergedPRs                []int    `json:"prior_merged_prs"`
+		PriorMergedPRCIPassed         bool     `json:"prior_merged_pr_ci_passed"`
+		PriorMergedPRBranchCleanup    bool     `json:"prior_merged_pr_branch_cleanup"`
+		CompletedNodesBeforeNode      int      `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode          int      `json:"ready_nodes_before_node"`
+		FinalResponseAllowed          bool     `json:"final_response_allowed"`
+		ExactNextAction               string   `json:"exact_next_action"`
+		CurrentHardeningCheckpoint    struct {
 			CompletedNodes       int    `json:"completed_nodes"`
 			ReadyNodes           int    `json:"ready_nodes"`
 			FirstExecutableNode  string `json:"first_executable_node"`
@@ -4305,6 +4305,114 @@ func TestLongRunHardeningWaveProductionReadinessSummaryBindsVerificationCIMergeC
 		nodeTwentyOneReadback.FinalResponseAllowed ||
 		!strings.Contains(nodeTwentyOneReadback.ExactNextAction, "mission-recommendation-hardening-22") {
 		t.Fatalf("node 21 readback must carry production readiness summary and continue to node 22: %#v", nodeTwentyOneReadback)
+	}
+}
+
+func TestLongRunHardeningWaveEvidenceDigestSummaryUsesRelativeRouteAndPromptArtifacts(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeTwentyOneReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-21", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-22")
+	fixture := mustLoadJSON[struct {
+		Schema                     string            `json:"schema"`
+		NodeID                     string            `json:"node_id"`
+		Status                     string            `json:"status"`
+		DigestAlgorithm            string            `json:"digest_algorithm"`
+		ArtifactPaths              map[string]string `json:"artifact_paths"`
+		ArtifactDigests            map[string]string `json:"artifact_digests"`
+		NoAbsolutePaths            bool              `json:"no_absolute_paths"`
+		CompletedNodesBeforeNode   int               `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode       int               `json:"ready_nodes_before_node"`
+		FinalResponseAllowed       bool              `json:"final_response_allowed"`
+		ExactNextAction            string            `json:"exact_next_action"`
+		CurrentHardeningCheckpoint struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "evidence-digest-summary-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.evidence-digest-summary-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-22" ||
+		fixture.Status != "digest_summary_recorded" ||
+		fixture.DigestAlgorithm != "sha256_normalized_line_endings" ||
+		!fixture.NoAbsolutePaths ||
+		fixture.CompletedNodesBeforeNode != nodeTwentyOneReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeTwentyOneReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeTwentyOneReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("digest summary fixture must bind relative evidence paths without authority effects: %#v", fixture)
+	}
+	requiredRefs := []string{
+		"route_recommendation_readback",
+		"route_command_readback",
+		"route_reconciliation_packet",
+		"root_next_recommended_prompt",
+		"node_22_foundry_continuation_prompt",
+	}
+	for _, ref := range requiredRefs {
+		artifactPath := fixture.ArtifactPaths[ref]
+		if artifactPath == "" {
+			t.Fatalf("digest summary fixture missing path ref %s: %#v", ref, fixture.ArtifactPaths)
+		}
+		forbiddenPathMarkers := []string{
+			string(filepath.Separator) + "Users" + string(filepath.Separator),
+			string(filepath.Separator) + "home" + string(filepath.Separator),
+			string(filepath.Separator) + "private" + string(filepath.Separator),
+			"file" + "://",
+		}
+		hasForbiddenPathMarker := false
+		for _, marker := range forbiddenPathMarkers {
+			if strings.Contains(artifactPath, marker) {
+				hasForbiddenPathMarker = true
+				break
+			}
+		}
+		if filepath.IsAbs(artifactPath) || hasForbiddenPathMarker {
+			t.Fatalf("digest summary path must be relative and public-safe for %s: %s", ref, artifactPath)
+		}
+		digest := fixture.ArtifactDigests[ref]
+		if !strings.HasPrefix(digest, "sha256:") {
+			t.Fatalf("digest summary missing sha256 digest for %s: %#v", ref, fixture.ArtifactDigests)
+		}
+		actual, err := digestFileWithNormalizedLineEndings(filepath.Join(repoRoot(t), filepath.FromSlash(artifactPath)))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if digest != actual {
+			t.Fatalf("digest summary mismatch for %s: fixture=%s actual=%s", ref, digest, actual)
+		}
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeTwentyOneReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeTwentyOneReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeTwentyOneReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeTwentyOneReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeTwentyOneReadback.ExactNextAction {
+		t.Fatalf("digest summary fixture must bind node 21 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+
+	nodeTwentyTwoReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentyTwoReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentyTwoReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentyTwoReadback.CompletedNodes != 22 ||
+		nodeTwentyTwoReadback.ReadyNodes != 18 ||
+		nodeTwentyTwoReadback.FirstExecutableNode != "mission-recommendation-hardening-23" ||
+		nodeTwentyTwoReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentyTwoReadback.ExactNextAction, "mission-recommendation-hardening-23") {
+		t.Fatalf("node 22 readback must carry evidence digest summary and continue to node 23: %#v", nodeTwentyTwoReadback)
 	}
 }
 

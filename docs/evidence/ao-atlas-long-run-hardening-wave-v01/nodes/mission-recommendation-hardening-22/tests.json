@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-22",
+  "red_command": "go test ./internal/atlas -run TestLongRunHardeningWaveEvidenceDigestSummaryUsesRelativeRouteAndPromptArtifacts -count=1",
+  "red_result": "failed while evidence digest summary fixture was missing",
+  "green_command": "go test ./internal/atlas -run TestLongRunHardeningWaveEvidenceDigestSummaryUsesRelativeRouteAndPromptArtifacts -count=1",
+  "green_result": "passed"
+}

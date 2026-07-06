@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-hardening-22",
+  "status": "completed",
+  "checkpointed_at": "2026-07-06T03:20:43Z",
+  "source_workgraph": "../mission-recommendation-hardening-21/workgraph-after.json",
+  "source_readback": "../mission-recommendation-hardening-21/recommendation-readback-after.json",
+  "resume_action": "Emit Foundry import for mission-recommendation-hardening-23 and execute exactly one active node after node 22 completes.",
+  "completed_nodes_before_node": 21,
+  "ready_nodes_before_node": 19,
+  "final_response_allowed": false
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-22",
+  "candidate": "evidence-digest-summary-relative-paths",
+  "status": "selected",
+  "objective": "Add evidence digest summary for route readback and prompt artifacts without absolute paths.",
+  "implementation_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-22"
+  ],
+  "acceptance_criteria": [
+    "digest summary records route and prompt artifacts by relative path",
+    "digest summary records normalized sha256 digests for each bound artifact",
+    "digest summary records the prior node checkpoint and denies final response while ready nodes remain",
+    "digest summary has no scheduling, execution, approval, or authority-advance effect"
+  ],
+  "selected_at": "2026-07-06T03:20:43Z"
+}
