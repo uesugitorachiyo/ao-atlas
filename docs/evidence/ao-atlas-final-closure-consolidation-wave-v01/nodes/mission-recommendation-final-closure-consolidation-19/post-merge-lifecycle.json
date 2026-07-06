@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-19",
+  "status": "merged_and_cleaned",
+  "pr_number": 322,
+  "merge_commit": "ca45cca5ff434a3b92f39f029b2fcb78b1b543ff",
+  "merged_at": "2026-07-06T18:59:59Z",
+  "ci_status": "passed",
+  "local_main_synced": true,
+  "local_branch_deleted": true,
+  "remote_branch_deleted": true,
+  "local_codex_branch_count": 0,
+  "remote_codex_branch_count": 0
+}

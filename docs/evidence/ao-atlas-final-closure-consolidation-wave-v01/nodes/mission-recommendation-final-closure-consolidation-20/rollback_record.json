@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-20",
+  "status": "ready",
+  "rollback_scope": [
+    "Remove node 20 Mission dashboard JSON and Markdown artifacts.",
+    "Remove node 20 generated evidence and readbacks.",
+    "Remove node 19 post-merge lifecycle evidence if PR lifecycle data is invalidated."
+  ],
+  "rollback_command": "git revert <merge_commit_for_node_20>",
+  "data_loss_risk": "none; dashboard/evidence-only change",
+  "requires_blueprint": false
+}

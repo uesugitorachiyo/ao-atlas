@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-20",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationMissionDashboardBindsMultiRepoEvidence -count=1",
+      "status": "failed_before_implementation",
+      "failure": "missing node 19 post-merge lifecycle and node 20 Mission dashboard binding fixture"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationMissionDashboardBindsMultiRepoEvidence -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Mission dashboard binds Atlas final closure evidence.",
+    "Mission dashboard binds Foundry import/run-link coverage, Promoter no-promotion, Command readback, Sentinel public-safety status, and Mission continuation state.",
+    "Dashboard preserves no-promotion and RSI-denied boundaries."
+  ]
+}

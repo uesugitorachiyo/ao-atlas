@@ -7966,6 +7966,168 @@ func TestFinalClosureConsolidationCompactionResumeRegressionPreservesNextNodeAnd
 	}
 }
 
+func TestFinalClosureConsolidationMissionDashboardBindsMultiRepoEvidence(t *testing.T) {
+	root := repoRoot(t)
+	consolidationRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-final-closure-consolidation-wave-v01")
+	completedWaveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeNineteenDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-19")
+	nodeTwentyDir := filepath.Join(consolidationRoot, "nodes", "mission-recommendation-final-closure-consolidation-20")
+
+	nodeNineteenLifecycle := mustLoadJSON[struct {
+		Schema              string `json:"schema"`
+		NodeID              string `json:"node_id"`
+		Status              string `json:"status"`
+		PRNumber            int    `json:"pr_number"`
+		MergeCommit         string `json:"merge_commit"`
+		CIStatus            string `json:"ci_status"`
+		LocalMainSynced     bool   `json:"local_main_synced"`
+		LocalBranchDeleted  bool   `json:"local_branch_deleted"`
+		RemoteBranchDeleted bool   `json:"remote_branch_deleted"`
+	}](t, filepath.Join(nodeNineteenDir, "post-merge-lifecycle.json"))
+	consolidationReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeNineteenDir, "recommendation-readback-after.json"))
+	finalReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(completedWaveRoot, "nodes", "mission-recommendation-hardening-40", "recommendation-readback-after.json"))
+	closureFixture := mustLoadJSON[struct {
+		Schema                    string   `json:"schema"`
+		NodeID                    string   `json:"node_id"`
+		Status                    string   `json:"status"`
+		ClosureArtifactPaths      []string `json:"closure_artifact_paths"`
+		PromoterNoPromotionStatus string   `json:"promoter_no_promotion_status"`
+		CommandReadbackStatus     string   `json:"command_readback_status"`
+		FinalResponseAllowedAfter bool     `json:"final_response_allowed_after_node"`
+		ReadyNodesAfter           int      `json:"ready_nodes_after_node"`
+		BlockedNodesAfter         int      `json:"blocked_nodes_after_node"`
+		ClaimsAuthorityAdvance    bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied          bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(completedWaveRoot, "nodes", "mission-recommendation-hardening-40", "final-closure-artifacts-fixture.json"))
+	dashboard := mustLoadJSON[struct {
+		Schema                        string `json:"schema"`
+		NodeID                        string `json:"node_id"`
+		Status                        string `json:"status"`
+		DashboardMarkdownPath         string `json:"dashboard_markdown_path"`
+		SourceFinalReadbackPath       string `json:"source_final_readback_path"`
+		SourceClosureFixturePath      string `json:"source_closure_fixture_path"`
+		SourceOperatorSummaryPath     string `json:"source_operator_summary_path"`
+		SourcePromoterCommandRollup   string `json:"source_promoter_command_rollup_path"`
+		SourceSchemaValidationReport  string `json:"source_schema_validation_report_path"`
+		SourcePostMergeCleanupRollup  string `json:"source_post_merge_cleanup_rollup_path"`
+		SourceConsolidationReadback   string `json:"source_consolidation_readback_path"`
+		FinalWaveCompletedNodes       int    `json:"final_wave_completed_nodes"`
+		FinalWaveReadyNodes           int    `json:"final_wave_ready_nodes"`
+		FinalWaveBlockedNodes         int    `json:"final_wave_blocked_nodes"`
+		FinalWaveFailedNodes          int    `json:"final_wave_failed_nodes"`
+		FinalWaveFinalResponseAllowed bool   `json:"final_wave_final_response_allowed"`
+		ConsolidationCompletedBefore  int    `json:"consolidation_completed_before"`
+		ConsolidationReadyBefore      int    `json:"consolidation_ready_before"`
+		ConsolidationFirstExecutable  string `json:"consolidation_first_executable_node_before"`
+		ConsolidationFinalAllowed     bool   `json:"consolidation_final_response_allowed_before"`
+		NextConsolidationNode         string `json:"next_consolidation_node"`
+		ComponentCount                int    `json:"component_count"`
+		AllSourcePathsExist           bool   `json:"all_source_paths_exist"`
+		PublicSafetyScanStatus        string `json:"public_safety_scan_status"`
+		PromoterNoPromotionStatus     string `json:"promoter_no_promotion_status"`
+		CommandReadbackStatus         string `json:"command_readback_status"`
+		PromotionRequested            bool   `json:"promotion_requested"`
+		PromotionGranted              bool   `json:"promotion_granted"`
+		ClaimsAuthorityAdvance        bool   `json:"claims_authority_advance"`
+		RSIRemainsDenied              bool   `json:"rsi_remains_denied"`
+		RepoBindings                  []struct {
+			Repo         string `json:"repo"`
+			Owner        string `json:"owner"`
+			EvidenceRole string `json:"evidence_role"`
+			SourcePath   string `json:"source_path"`
+			Status       string `json:"status"`
+		} `json:"repo_bindings"`
+	}](t, filepath.Join(nodeTwentyDir, "mission-dashboard-binding.json"))
+	markdownBytes, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(dashboard.DashboardMarkdownPath)))
+	if err != nil {
+		t.Fatalf("read mission dashboard markdown: %v", err)
+	}
+	markdown := string(markdownBytes)
+
+	if nodeNineteenLifecycle.Schema != "ao.atlas.post-merge-lifecycle.v0.1" ||
+		nodeNineteenLifecycle.NodeID != "mission-recommendation-final-closure-consolidation-19" ||
+		nodeNineteenLifecycle.Status != "merged_and_cleaned" ||
+		nodeNineteenLifecycle.PRNumber != 322 ||
+		nodeNineteenLifecycle.MergeCommit != "ca45cca5ff434a3b92f39f029b2fcb78b1b543ff" ||
+		nodeNineteenLifecycle.CIStatus != "passed" ||
+		!nodeNineteenLifecycle.LocalMainSynced ||
+		!nodeNineteenLifecycle.LocalBranchDeleted ||
+		!nodeNineteenLifecycle.RemoteBranchDeleted {
+		t.Fatalf("node 19 lifecycle evidence must prove clean branch handoff before node 20 dashboard: %#v", nodeNineteenLifecycle)
+	}
+	if dashboard.Schema != "ao.atlas.mission-dashboard-binding.v0.1" ||
+		dashboard.NodeID != "mission-recommendation-final-closure-consolidation-20" ||
+		dashboard.Status != "bound" ||
+		dashboard.DashboardMarkdownPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-20/mission-dashboard.md" ||
+		dashboard.SourceFinalReadbackPath != "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/recommendation-readback-after.json" ||
+		dashboard.SourceClosureFixturePath != "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-40/final-closure-artifacts-fixture.json" ||
+		dashboard.SourceOperatorSummaryPath != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-10/final-operator-summary.json" ||
+		dashboard.SourcePromoterCommandRollup != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/aggregate-promoter-command-rollup.json" ||
+		dashboard.SourceSchemaValidationReport != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12/completed-wave-evidence-validation-report.json" ||
+		dashboard.SourcePostMergeCleanupRollup != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-04/post-merge-cleanup-rollup.json" ||
+		dashboard.SourceConsolidationReadback != "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-19/recommendation-readback-after.json" ||
+		dashboard.FinalWaveCompletedNodes != finalReadback.CompletedNodes ||
+		dashboard.FinalWaveReadyNodes != finalReadback.ReadyNodes ||
+		dashboard.FinalWaveBlockedNodes != finalReadback.BlockedNodes ||
+		dashboard.FinalWaveFailedNodes != finalReadback.FailedNodes ||
+		dashboard.FinalWaveFinalResponseAllowed != finalReadback.FinalResponseAllowed ||
+		dashboard.ConsolidationCompletedBefore != consolidationReadback.CompletedNodes ||
+		dashboard.ConsolidationReadyBefore != consolidationReadback.ReadyNodes ||
+		dashboard.ConsolidationFirstExecutable != consolidationReadback.FirstExecutableNode ||
+		dashboard.ConsolidationFinalAllowed != consolidationReadback.FinalResponseAllowed ||
+		dashboard.NextConsolidationNode != "mission-recommendation-final-closure-consolidation-21" ||
+		dashboard.ComponentCount != 6 ||
+		len(dashboard.RepoBindings) != dashboard.ComponentCount ||
+		!dashboard.AllSourcePathsExist ||
+		dashboard.PublicSafetyScanStatus != finalReadback.PublicSafetyScanStatus ||
+		dashboard.PromoterNoPromotionStatus != closureFixture.PromoterNoPromotionStatus ||
+		dashboard.CommandReadbackStatus != closureFixture.CommandReadbackStatus ||
+		dashboard.PromotionRequested ||
+		dashboard.PromotionGranted ||
+		dashboard.ClaimsAuthorityAdvance ||
+		!dashboard.RSIRemainsDenied ||
+		!closureFixture.FinalResponseAllowedAfter ||
+		closureFixture.ReadyNodesAfter != 0 ||
+		closureFixture.BlockedNodesAfter != 0 ||
+		closureFixture.ClaimsAuthorityAdvance ||
+		!closureFixture.RSIRemainsDenied {
+		t.Fatalf("node 20 dashboard must bind final closure and current consolidation state without promotion: %#v", dashboard)
+	}
+	wantRepos := map[string]string{
+		"ao-atlas":    "final_readback_and_closure",
+		"ao-foundry":  "bounded_import_run_link_coverage",
+		"ao-promoter": "no_promotion_rollup",
+		"ao-command":  "class_decision_readback",
+		"ao-sentinel": "public_safety_scan",
+		"ao-mission":  "supervised_continuation_state",
+	}
+	for _, binding := range dashboard.RepoBindings {
+		if wantRepos[binding.Repo] != binding.EvidenceRole {
+			t.Fatalf("unexpected dashboard binding for repo %s: %#v", binding.Repo, binding)
+		}
+		if binding.SourcePath == "" || binding.Status == "" || binding.Owner == "" {
+			t.Fatalf("dashboard binding must include owner, source path, and status: %#v", binding)
+		}
+	}
+	for repo := range wantRepos {
+		if !strings.Contains(markdown, repo) {
+			t.Fatalf("mission dashboard markdown missing repo %q:\n%s", repo, markdown)
+		}
+	}
+	for _, want := range []string{
+		"Final wave: 40/40 completed",
+		"Consolidation wave: 19/24 completed",
+		"Next consolidation node: `mission-recommendation-final-closure-consolidation-21`",
+		"Promoter: no_promotion_requested",
+		"Command: readback_agrees_no_promotion",
+		"RSI remains denied.",
+	} {
+		if !strings.Contains(markdown, want) {
+			t.Fatalf("mission dashboard markdown missing %q:\n%s", want, markdown)
+		}
+	}
+}
+
 func TestProductionReadinessRejectsUnsafeRecommendationPromptContinuationReasonFixture(t *testing.T) {
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "examples", "invalid", "recommendation-prompt-unsafe-continuation-reason.md")
