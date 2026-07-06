@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-hardening-19",
+  "status": "available",
+  "rollback_scope": [
+    "remove the explicit prompt stop-gate and safety-boundary lines from internal/atlas/mission_recommendations.go",
+    "revert the node 19 prompt generator regression test in internal/atlas/mission_recommendations_test.go",
+    "remove docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-19"
+  ],
+  "rollback_command": "git revert <node-19-merge-commit>",
+  "restores_previous_checkpoint": "../mission-recommendation-hardening-18/recommendation-readback-after.json",
+  "requires_release_action": false
+}
