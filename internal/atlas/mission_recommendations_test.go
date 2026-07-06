@@ -4012,6 +4012,189 @@ func TestLongRunHardeningWavePromptGeneratorCoversDurationStopGatesAndSafetyBoun
 	}
 }
 
+func TestLongRunHardeningWaveCommandReadbackFinalGateRequiresZeroReadyAndLeaseMinimum(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "command-final-gate-coverage",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	readyWorkgraph := completeRecommendationNodes(result.Workgraph, 30)
+	readyReadback, err := BuildAtlasRecommendationReadback(result.Wave, readyWorkgraph, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:00-07:00",
+		CompletedAt:     "2026-07-04T09:20:00-07:00",
+		ElapsedMinutes:  120,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readyCommand := BuildAtlasRecommendationCommandReadback(readyReadback)
+	if readyCommand.FinalResponseAllowed ||
+		readyCommand.ReadyNodes == 0 ||
+		!readyCommand.MinMinutesMet ||
+		readyCommand.NodeCompletionStatus != "nodes_in_progress" {
+		t.Fatalf("Command must deny final response while ready nodes remain even after min_minutes: %#v", readyCommand)
+	}
+	for _, want := range []string{
+		"ready_nodes=10",
+		"min_minutes=120",
+		"min_minutes_met=true",
+		"node_completion_status=nodes_in_progress",
+		"final_response_allowed=false",
+	} {
+		if !strings.Contains(readyCommand.CompactTimeline, want) {
+			t.Fatalf("ready-node Command timeline missing %q: %s", want, readyCommand.CompactTimeline)
+		}
+	}
+
+	shortCompletedWorkgraph := completeRecommendationNodes(result.Workgraph, 40)
+	shortReadback, err := BuildAtlasRecommendationReadback(result.Wave, shortCompletedWorkgraph, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:20-07:00",
+		CompletedAt:     "2026-07-04T07:42:06-07:00",
+		ElapsedMinutes:  22,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	shortCommand := BuildAtlasRecommendationCommandReadback(shortReadback)
+	if shortCommand.FinalResponseAllowed ||
+		shortCommand.ReadyNodes != 0 ||
+		shortCommand.MinMinutesMet ||
+		shortCommand.NodeCompletionStatus != "all_nodes_complete" {
+		t.Fatalf("Command must deny final response when all nodes complete but min_minutes is unmet: %#v", shortCommand)
+	}
+	for _, want := range []string{
+		"ready_nodes=0",
+		"min_minutes=120",
+		"min_minutes_met=false",
+		"node_completion_status=all_nodes_complete",
+		"final_response_allowed=false",
+	} {
+		if !strings.Contains(shortCommand.CompactTimeline, want) {
+			t.Fatalf("short-lease Command timeline missing %q: %s", want, shortCommand.CompactTimeline)
+		}
+	}
+
+	completeReadback, err := BuildAtlasRecommendationReadback(result.Wave, shortCompletedWorkgraph, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:00-07:00",
+		CompletedAt:     "2026-07-04T09:20:00-07:00",
+		ElapsedMinutes:  120,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	completeCommand := BuildAtlasRecommendationCommandReadback(completeReadback)
+	if !completeCommand.FinalResponseAllowed ||
+		completeCommand.ReadyNodes != 0 ||
+		!completeCommand.MinMinutesMet ||
+		completeCommand.NodeCompletionStatus != "all_nodes_complete" {
+		t.Fatalf("Command must allow final response only with zero ready nodes and min_minutes met: %#v", completeCommand)
+	}
+	for _, want := range []string{
+		"ready_nodes=0",
+		"min_minutes=120",
+		"min_minutes_met=true",
+		"node_completion_status=all_nodes_complete",
+		"final_response_allowed=true",
+	} {
+		if !strings.Contains(completeCommand.CompactTimeline, want) {
+			t.Fatalf("final-allowed Command timeline missing %q: %s", want, completeCommand.CompactTimeline)
+		}
+	}
+	if err := ValidateAtlasRecommendationClosureArtifacts(
+		completeReadback,
+		completeCommand,
+		BuildAtlasRecommendationPromoterReadback(completeReadback),
+		BuildAtlasRecommendationFoundryRollup(completeReadback),
+	); err != nil {
+		t.Fatalf("Command final gate should agree with closure artifacts when zero ready nodes and min_minutes are met: %v", err)
+	}
+
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeNineteenReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-19", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-20")
+	fixture := mustLoadJSON[struct {
+		Schema                     string            `json:"schema"`
+		NodeID                     string            `json:"node_id"`
+		Status                     string            `json:"status"`
+		CommandGateCases           map[string]string `json:"command_gate_cases"`
+		AllowsFinalOnlyWhen        []string          `json:"allows_final_only_when"`
+		CompactTimelineFields      []string          `json:"compact_timeline_fields"`
+		CompletedNodesBeforeNode   int               `json:"completed_nodes_before_node"`
+		ReadyNodesBeforeNode       int               `json:"ready_nodes_before_node"`
+		FinalResponseAllowed       bool              `json:"final_response_allowed"`
+		ExactNextAction            string            `json:"exact_next_action"`
+		CurrentHardeningCheckpoint struct {
+			CompletedNodes       int    `json:"completed_nodes"`
+			ReadyNodes           int    `json:"ready_nodes"`
+			FirstExecutableNode  string `json:"first_executable_node"`
+			FinalResponseAllowed bool   `json:"final_response_allowed"`
+			ExactNextAction      string `json:"exact_next_action"`
+		} `json:"current_hardening_checkpoint"`
+		SchedulesWork          bool `json:"schedules_work"`
+		ExecutesWork           bool `json:"executes_work"`
+		ApprovesWork           bool `json:"approves_work"`
+		ClaimsAuthorityAdvance bool `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "command-final-gate-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.command-final-gate-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-20" ||
+		fixture.Status != "command_final_gate_recorded" ||
+		fixture.CommandGateCases["ready_nodes_remain_min_minutes_met"] != "denied" ||
+		fixture.CommandGateCases["all_nodes_complete_min_minutes_unmet"] != "denied" ||
+		fixture.CommandGateCases["zero_ready_nodes_min_minutes_met"] != "allowed" ||
+		fixture.CompletedNodesBeforeNode != nodeNineteenReadback.CompletedNodes ||
+		fixture.ReadyNodesBeforeNode != nodeNineteenReadback.ReadyNodes ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeNineteenReadback.ExactNextAction ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("Command final gate fixture must bind final response gating without authority effects: %#v", fixture)
+	}
+	for _, want := range []string{"zero_ready_nodes", "min_minutes_met", "all_nodes_complete"} {
+		if !containsString(fixture.AllowsFinalOnlyWhen, want) {
+			t.Fatalf("Command final gate fixture missing allow condition %s: %#v", want, fixture.AllowsFinalOnlyWhen)
+		}
+	}
+	for _, want := range []string{"ready_nodes", "min_minutes", "min_minutes_met", "node_completion_status", "final_response_allowed"} {
+		if !containsString(fixture.CompactTimelineFields, want) {
+			t.Fatalf("Command final gate fixture missing compact timeline field %s: %#v", want, fixture.CompactTimelineFields)
+		}
+	}
+	if fixture.CurrentHardeningCheckpoint.CompletedNodes != nodeNineteenReadback.CompletedNodes ||
+		fixture.CurrentHardeningCheckpoint.ReadyNodes != nodeNineteenReadback.ReadyNodes ||
+		fixture.CurrentHardeningCheckpoint.FirstExecutableNode != nodeNineteenReadback.FirstExecutableNode ||
+		fixture.CurrentHardeningCheckpoint.FinalResponseAllowed != nodeNineteenReadback.FinalResponseAllowed ||
+		fixture.CurrentHardeningCheckpoint.ExactNextAction != nodeNineteenReadback.ExactNextAction {
+		t.Fatalf("Command final gate fixture must bind node 19 checkpoint: %#v", fixture.CurrentHardeningCheckpoint)
+	}
+
+	nodeTwentyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeTwentyReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeTwentyReadback.FeatureDepthRecommendations) < 40 ||
+		nodeTwentyReadback.CompletedNodes != 20 ||
+		nodeTwentyReadback.ReadyNodes != 20 ||
+		nodeTwentyReadback.FirstExecutableNode != "mission-recommendation-hardening-21" ||
+		nodeTwentyReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeTwentyReadback.ExactNextAction, "mission-recommendation-hardening-21") {
+		t.Fatalf("node 20 readback must carry Command final gate coverage and continue to node 21: %#v", nodeTwentyReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {

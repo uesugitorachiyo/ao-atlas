@@ -1,0 +1,22 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-hardening-20-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/checkpoint_bundle.json",
+    "command_final_gate_fixture": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/command-final-gate-fixture.json",
+    "command_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/command_readback.json",
+    "foundry_continuation_handoff": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/foundry-continuation-handoff.json",
+    "foundry_continuation_prompt": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/foundry-continuation-prompt.md",
+    "foundry_import": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/tests.json",
+    "verification": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-20/verification.json"
+  },
+  "digest": "sha256:5b2f8d6d3e2dc2b874c46338913eece2a65cd87d32669a562321e355e3a809ca"
+}
