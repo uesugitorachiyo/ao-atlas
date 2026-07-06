@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.mission-readback-delta.v0.1",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "source_readback_path",
+    "target_readback_path",
+    "source_readback_digest",
+    "target_readback_digest",
+    "deterministic_comparison",
+    "changed_fields",
+    "numeric_deltas",
+    "boolean_transitions",
+    "string_transitions",
+    "safety_boundaries",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "ao.atlas.mission-readback-delta.v0.1" },
+    "status": { "enum": ["changed", "unchanged"] },
+    "source_readback_path": { "type": "string", "minLength": 1 },
+    "target_readback_path": { "type": "string", "minLength": 1 },
+    "source_readback_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "target_readback_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "deterministic_comparison": { "const": true },
+    "changed_fields": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "numeric_deltas": {
+      "type": "object",
+      "additionalProperties": { "type": "integer" }
+    },
+    "boolean_transitions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["before", "after"],
+        "additionalProperties": false,
+        "properties": {
+          "before": { "type": "boolean" },
+          "after": { "type": "boolean" }
+        }
+      }
+    },
+    "string_transitions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["before", "after"],
+        "additionalProperties": false,
+        "properties": {
+          "before": { "type": "string" },
+          "after": { "type": "string" }
+        }
+      }
+    },
+    "safety_boundaries": {
+      "type": "object",
+      "required": [
+        "provider_calls",
+        "credential_inspection",
+        "direct_main_mutation",
+        "release_deploy_publish_upload_tag",
+        "dependency_updates",
+        "auth_policy_config_widening",
+        "hidden_instruction_mutation",
+        "broad_rsi_claim",
+        "rsi_remains_denied"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "provider_calls": { "const": false },
+        "credential_inspection": { "const": false },
+        "direct_main_mutation": { "const": false },
+        "release_deploy_publish_upload_tag": { "const": false },
+        "dependency_updates": { "const": false },
+        "auth_policy_config_widening": { "const": false },
+        "hidden_instruction_mutation": { "const": false },
+        "broad_rsi_claim": { "const": false },
+        "rsi_remains_denied": { "const": true }
+      }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schema": "ao.atlas.mission-readback-delta.v0.1",
+  "status": "changed",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/recommendation-readback.json",
+  "target_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-01/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:8cf92552f2943f68030be5d5c953aae7f54823f51631c50d024ea6a3caea07bf",
+  "target_readback_digest": "sha256:ad71d7cf78592c6baae491d832eecdbb5c448c7290a5637d75275d1c1ac7049d",
+  "deterministic_comparison": true,
+  "changed_fields": [
+    "checkpoint_count",
+    "command_timeline_status",
+    "completed_nodes",
+    "elapsed_minutes",
+    "exact_next_action",
+    "first_executable_node",
+    "foundry_rollup_status",
+    "promoter_no_promotion_status",
+    "ready_nodes",
+    "status"
+  ],
+  "numeric_deltas": {
+    "checkpoint_count": 1,
+    "completed_nodes": 1,
+    "elapsed_minutes": 8,
+    "ready_nodes": -1
+  },
+  "boolean_transitions": {
+    "approves_work": {
+      "before": false,
+      "after": false
+    },
+    "executes_work": {
+      "before": false,
+      "after": false
+    },
+    "final_response_allowed": {
+      "before": false,
+      "after": false
+    },
+    "min_minutes_met": {
+      "before": false,
+      "after": false
+    },
+    "schedules_work": {
+      "before": false,
+      "after": false
+    }
+  },
+  "string_transitions": {
+    "command_timeline_status": {
+      "before": "compact_timeline_required_before_closure",
+      "after": "in_progress_compact_timeline_recorded"
+    },
+    "exact_next_action": {
+      "before": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-01 and execute exactly one active node.",
+      "after": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-02 and execute exactly one active node."
+    },
+    "first_executable_node": {
+      "before": "mission-recommendation-feature-depth-next-wave-01",
+      "after": "mission-recommendation-feature-depth-next-wave-02"
+    },
+    "foundry_rollup_status": {
+      "before": "required_pending_first_node_import",
+      "after": "in_progress_node_run_links_recorded"
+    },
+    "promoter_no_promotion_status": {
+      "before": "required_not_bound_until_promotion_evidence_exists",
+      "after": "in_progress_no_promotion_recorded"
+    },
+    "status": {
+      "before": "ready",
+      "after": "in_progress"
+    }
+  },
+  "safety_boundaries": {
+    "auth_policy_config_widening": false,
+    "broad_rsi_claim": false,
+    "credential_inspection": false,
+    "dependency_updates": false,
+    "direct_main_mutation": false,
+    "hidden_instruction_mutation": false,
+    "provider_calls": false,
+    "release_deploy_publish_upload_tag": false,
+    "rsi_remains_denied": true
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

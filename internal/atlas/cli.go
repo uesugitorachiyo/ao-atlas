@@ -415,10 +415,13 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
+	}
+	if args[0] == "readback-delta" {
+		return runMissionRecommendationsReadbackDelta(args[1:], stdout)
 	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
@@ -433,7 +436,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -616,6 +619,50 @@ func runMissionRecommendationsExportNextWave(args []string, stdout io.Writer) er
 		bundle.SafeToExecute,
 		filepath.ToSlash(*outPath),
 		filepath.ToSlash(*fixtureOutPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsReadbackDelta(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations readback-delta", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	sourceReadbackPath := fs.String("source-readback", "", "source recommendation readback path")
+	targetReadbackPath := fs.String("target-readback", "", "target recommendation readback path")
+	outPath := fs.String("out", "", "mission readback delta output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*sourceReadbackPath) == "" {
+		return fmt.Errorf("--source-readback is required")
+	}
+	if strings.TrimSpace(*targetReadbackPath) == "" {
+		return fmt.Errorf("--target-readback is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && (samePath(*sourceReadbackPath, *outPath) || samePath(*targetReadbackPath, *outPath)) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	delta, err := BuildAtlasMissionReadbackDelta(*sourceReadbackPath, *targetReadbackPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, delta); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, delta)
+	}
+	fmt.Fprintf(stdout, "status=%s\nchanged_fields=%d\nsource_readback=%s\ntarget_readback=%s\nmission_readback_delta=%s\n",
+		delta.Status,
+		len(delta.ChangedFields),
+		delta.SourceReadbackPath,
+		delta.TargetReadbackPath,
+		filepath.ToSlash(*outPath),
 	)
 	return nil
 }

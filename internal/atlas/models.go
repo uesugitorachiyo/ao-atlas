@@ -348,6 +348,36 @@ type AtlasRecommendationReadback struct {
 	ApprovesWork                    bool                                  `json:"approves_work"`
 }
 
+type AtlasMissionReadbackDelta struct {
+	Schema                  string                                           `json:"schema"`
+	Status                  string                                           `json:"status"`
+	SourceReadbackPath      string                                           `json:"source_readback_path"`
+	TargetReadbackPath      string                                           `json:"target_readback_path"`
+	SourceReadbackDigest    string                                           `json:"source_readback_digest"`
+	TargetReadbackDigest    string                                           `json:"target_readback_digest"`
+	DeterministicComparison bool                                             `json:"deterministic_comparison"`
+	ChangedFields           []string                                         `json:"changed_fields"`
+	NumericDeltas           map[string]int                                   `json:"numeric_deltas"`
+	BooleanTransitions      map[string]AtlasMissionReadbackBooleanTransition `json:"boolean_transitions"`
+	StringTransitions       map[string]AtlasMissionReadbackStringTransition  `json:"string_transitions"`
+	SafetyBoundaries        map[string]bool                                  `json:"safety_boundaries"`
+	SchedulesWork           bool                                             `json:"schedules_work"`
+	ExecutesWork            bool                                             `json:"executes_work"`
+	ApprovesWork            bool                                             `json:"approves_work"`
+	ClaimsAuthorityAdvance  bool                                             `json:"claims_authority_advance"`
+	RSIRemainsDenied        bool                                             `json:"rsi_remains_denied"`
+}
+
+type AtlasMissionReadbackBooleanTransition struct {
+	Before bool `json:"before"`
+	After  bool `json:"after"`
+}
+
+type AtlasMissionReadbackStringTransition struct {
+	Before string `json:"before"`
+	After  string `json:"after"`
+}
+
 type AtlasFoundryTerminalStatusExample struct {
 	SourceStatus     string `json:"source_status"`
 	NormalizedStatus string `json:"normalized_status"`
