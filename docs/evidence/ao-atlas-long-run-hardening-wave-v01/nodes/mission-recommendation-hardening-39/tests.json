@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-hardening-39",
+  "status": "passed",
+  "red_result": "failed_missing_verification_public_safety_rollup_fixture",
+  "targeted_test": "go test ./internal/atlas -run TestLongRunHardeningWaveVerificationPublicSafetyRollupBindsChangedReadbacks -count=1",
+  "green_result": "passed"
+}

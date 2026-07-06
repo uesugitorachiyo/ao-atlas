@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-hardening-39",
+  "task_id": "mission-recommendation-hardening-39-task",
+  "status": "selected",
+  "selected_from_readback": "docs/evidence/ao-atlas-long-run-hardening-wave-v01/nodes/mission-recommendation-hardening-38/recommendation-readback-after.json",
+  "objective": "Run full relevant verification and public-safety scans over changed docs and readbacks.",
+  "candidate_reason": "The supervisor needs a durable rollup tying required verification commands and scoped public-safety scans to changed docs and readbacks.",
+  "mutation_class": "low_risk_code",
+  "selected_at": "2026-07-06T08:32:05Z"
+}

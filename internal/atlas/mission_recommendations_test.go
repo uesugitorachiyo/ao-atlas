@@ -6022,6 +6022,91 @@ func TestLongRunHardeningWaveMissionAtlasMultiImportSmokeArtifact(t *testing.T) 
 	}
 }
 
+func TestLongRunHardeningWaveVerificationPublicSafetyRollupBindsChangedReadbacks(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
+	nodeThirtyEightReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-38", "recommendation-readback-after.json"))
+	nodeDir := filepath.Join(root, "nodes", "mission-recommendation-hardening-39")
+	fixture := mustLoadJSON[struct {
+		Schema                      string   `json:"schema"`
+		NodeID                      string   `json:"node_id"`
+		Status                      string   `json:"status"`
+		CompletedNodesBefore        int      `json:"completed_nodes_before_node"`
+		ReadyNodesBefore            int      `json:"ready_nodes_before_node"`
+		FirstExecutableNode         string   `json:"first_executable_node"`
+		FinalResponseAllowed        bool     `json:"final_response_allowed"`
+		ExactNextAction             string   `json:"exact_next_action"`
+		ChangedDocsReadbacksChecked bool     `json:"changed_docs_readbacks_checked"`
+		LocalVerificationPassed     bool     `json:"local_verification_passed"`
+		PublicSafetyScanPassed      bool     `json:"public_safety_scan_passed"`
+		ForbiddenClaimMatches       int      `json:"forbidden_claim_matches"`
+		VerificationCommands        []string `json:"verification_commands"`
+		ChangedDocsAndReadbackPaths []string `json:"changed_docs_and_readback_paths"`
+		ScopedPublicSafetyScan      string   `json:"scoped_public_safety_scan"`
+		SchedulesWork               bool     `json:"schedules_work"`
+		ExecutesWork                bool     `json:"executes_work"`
+		ApprovesWork                bool     `json:"approves_work"`
+		ClaimsAuthorityAdvance      bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied            bool     `json:"rsi_remains_denied"`
+	}](t, filepath.Join(nodeDir, "verification-public-safety-rollup-fixture.json"))
+
+	if fixture.Schema != "ao.atlas.verification-public-safety-rollup-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-hardening-39" ||
+		fixture.Status != "verification_public_safety_rollup_recorded" ||
+		fixture.CompletedNodesBefore != nodeThirtyEightReadback.CompletedNodes ||
+		fixture.ReadyNodesBefore != nodeThirtyEightReadback.ReadyNodes ||
+		fixture.FirstExecutableNode != nodeThirtyEightReadback.FirstExecutableNode ||
+		fixture.FinalResponseAllowed ||
+		fixture.ExactNextAction != nodeThirtyEightReadback.ExactNextAction ||
+		!fixture.ChangedDocsReadbacksChecked ||
+		!fixture.LocalVerificationPassed ||
+		!fixture.PublicSafetyScanPassed ||
+		fixture.ForbiddenClaimMatches != 0 ||
+		fixture.ScopedPublicSafetyScan == "" ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("verification rollup fixture must bind node 38 checkpoint without authority effects: %#v", fixture)
+	}
+	for _, command := range []string{
+		"go test ./... -count=1",
+		"go vet ./...",
+		"go build ./cmd/atlas",
+		"scripts/atlas-foundry-roundtrip-smoke.sh",
+		"scripts/production-readiness.sh",
+		"git diff --check",
+	} {
+		if !containsString(fixture.VerificationCommands, command) {
+			t.Fatalf("verification rollup missing command %q: %#v", command, fixture.VerificationCommands)
+		}
+	}
+	if len(fixture.ChangedDocsAndReadbackPaths) < 4 {
+		t.Fatalf("verification rollup must include changed docs and readbacks: %#v", fixture.ChangedDocsAndReadbackPaths)
+	}
+	for _, path := range fixture.ChangedDocsAndReadbackPaths {
+		if !strings.HasPrefix(path, "docs/") && !strings.HasPrefix(path, "internal/") {
+			t.Fatalf("verification rollup path must stay scoped to docs or tests: %s", path)
+		}
+		if _, err := os.Stat(filepath.Join(repoRoot(t), path)); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	nodeThirtyNineReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(nodeDir, "recommendation-readback-after.json"))
+	if err := ValidateAtlasRecommendationReadback(nodeThirtyNineReadback); err != nil {
+		t.Fatal(err)
+	}
+	if len(nodeThirtyNineReadback.FeatureDepthRecommendations) < 40 ||
+		nodeThirtyNineReadback.CompletedNodes != 39 ||
+		nodeThirtyNineReadback.ReadyNodes != 1 ||
+		nodeThirtyNineReadback.FirstExecutableNode != "mission-recommendation-hardening-40" ||
+		nodeThirtyNineReadback.FinalResponseAllowed ||
+		!strings.Contains(nodeThirtyNineReadback.ExactNextAction, "mission-recommendation-hardening-40") {
+		t.Fatalf("node 39 readback must carry verification rollup evidence and continue to node 40: %#v", nodeThirtyNineReadback)
+	}
+}
+
 func digestFileWithNormalizedLineEndings(path string) (string, error) {
 	data, err := os.ReadFile(path)
 	if err != nil {
