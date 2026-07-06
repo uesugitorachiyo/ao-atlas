@@ -1,0 +1,29 @@
+{
+  "schema": "ao.atlas.build-artifact-promotion-closure-regression.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-15",
+  "status": "guarded",
+  "source_guard_node_id": "mission-recommendation-final-closure-consolidation-14",
+  "source_guard_artifact": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-14/build-artifact-guard.json",
+  "readiness_check_name": "build-artifact-guard",
+  "reported_before_promotion_closure": true,
+  "promotion_closure_depends_on": [
+    "build-artifact-guard",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "guarded_artifacts": [
+    "atlas",
+    "atlas.exe",
+    "cmd/atlas/atlas",
+    "cmd/atlas/atlas.exe"
+  ],
+  "failure_messages": [
+    "tracked build artifact present",
+    "local build artifact present"
+  ],
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "final_response_allowed": false,
+  "expected_next_node_after_completion": "mission-recommendation-final-closure-consolidation-16",
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-15",
+  "status": "passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationBuildArtifactGuardRegressionReportsBeforePromotionClosure -count=1",
+      "status": "failed_before_implementation",
+      "failure": "missing build-artifact-promotion-closure-regression.json fixture"
+    },
+    {
+      "command": "go test ./internal/atlas -run TestFinalClosureConsolidationBuildArtifactGuardRegressionReportsBeforePromotionClosure -count=1",
+      "status": "passed"
+    }
+  ],
+  "regression_assertions": [
+    "Node 15 fixture binds node 14 build-artifact guard evidence.",
+    "Promotion closure depends on build-artifact guard, Promoter no-promotion, and Command readback evidence.",
+    "Guarded artifacts and failure messages are preserved before promotion closure.",
+    "No promotion is requested or granted and RSI remains denied."
+  ]
+}
