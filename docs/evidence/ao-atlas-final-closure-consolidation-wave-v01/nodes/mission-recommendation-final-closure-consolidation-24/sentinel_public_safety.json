@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-24",
+  "status": "passed",
+  "scan_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-24"
+  ],
+  "scan_command_summary": "git diff over changed final closure regression and evidence scanned for unsafe authority, credential, provider, release, deploy, publish, upload, tag, and broad RSI wording; rg returned no matches",
+  "scan_exit_code": 1,
+  "blocked_terms_found": 0,
+  "rsi_remains_denied": true
+}

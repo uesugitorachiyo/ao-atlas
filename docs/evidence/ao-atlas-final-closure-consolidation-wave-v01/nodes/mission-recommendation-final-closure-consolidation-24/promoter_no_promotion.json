@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-final-closure-consolidation-24",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "reason": "Node 24 closes the consolidation wave readback and does not request or grant authority promotion.",
+  "rsi_remains_denied": true
+}
