@@ -23,7 +23,7 @@ func BuildAtlasPublicSafetyCoverageRollup(nodeID, sourceReadbackPath, evidenceRo
 	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
 		return AtlasPublicSafetyCoverageRollup{}, err
 	}
-	readbackDigest, err := digestFile(sourceReadbackPath)
+	readbackDigest, err := digestTextFileWithNormalizedLineEndings(sourceReadbackPath)
 	if err != nil {
 		return AtlasPublicSafetyCoverageRollup{}, err
 	}
@@ -209,4 +209,13 @@ func ValidateAtlasPublicSafetyCoverageRollup(rollup AtlasPublicSafetyCoverageRol
 
 func WriteAtlasPublicSafetyCoverageRollup(path string, rollup AtlasPublicSafetyCoverageRollup) error {
 	return WriteJSON(path, rollup)
+}
+
+func digestTextFileWithNormalizedLineEndings(path string) (string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	data = []byte(strings.ReplaceAll(string(data), "\r\n", "\n"))
+	return DigestBytes(data), nil
 }
