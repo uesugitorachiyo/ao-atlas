@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.pr-ci-windows-threshold-evidence.v0.1",
+  "title": "AO Atlas PR/CI Windows Threshold Evidence",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "source_summary_path",
+    "source_summary_digest",
+    "threshold_seconds",
+    "row_count",
+    "long_running_windows_checks",
+    "max_windows_seconds",
+    "max_over_threshold_seconds",
+    "rows",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.pr-ci-windows-threshold-evidence.v0.1"
+    },
+    "status": {
+      "const": "windows_thresholds_recorded"
+    },
+    "source_summary_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_summary_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "threshold_seconds": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "row_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "long_running_windows_checks": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_windows_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_over_threshold_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "node_id",
+          "pr_number",
+          "ci_status",
+          "merge_commit",
+          "windows_seconds",
+          "threshold_seconds",
+          "exceeds_threshold",
+          "over_threshold_seconds"
+        ],
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pr_number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "ci_status": {
+            "enum": [
+              "passed",
+              "failed",
+              "pending"
+            ]
+          },
+          "merge_commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "windows_seconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "threshold_seconds": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "exceeds_threshold": {
+            "type": "boolean"
+          },
+          "over_threshold_seconds": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

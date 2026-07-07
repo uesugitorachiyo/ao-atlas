@@ -293,6 +293,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:pr-ci-timing-summary", err
 		}
 		return "typed:pr-ci-timing-summary", ValidateAtlasPRCITimingSummary(value)
+	case AtlasPRCIWindowsThresholdEvidenceContract:
+		value, err := LoadJSON[AtlasPRCIWindowsThresholdEvidence](path)
+		if err != nil {
+			return "typed:pr-ci-windows-threshold-evidence", err
+		}
+		return "typed:pr-ci-windows-threshold-evidence", ValidateAtlasPRCIWindowsThresholdEvidence(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

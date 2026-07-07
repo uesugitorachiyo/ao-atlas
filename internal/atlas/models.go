@@ -626,6 +626,35 @@ type AtlasPRCITimingRow struct {
 	SlowestCheck    string `json:"slowest_check"`
 }
 
+type AtlasPRCIWindowsThresholdEvidence struct {
+	Schema                   string                         `json:"schema"`
+	Status                   string                         `json:"status"`
+	SourceSummaryPath        string                         `json:"source_summary_path"`
+	SourceSummaryDigest      string                         `json:"source_summary_digest"`
+	ThresholdSeconds         int                            `json:"threshold_seconds"`
+	RowCount                 int                            `json:"row_count"`
+	LongRunningWindowsChecks int                            `json:"long_running_windows_checks"`
+	MaxWindowsSeconds        int                            `json:"max_windows_seconds"`
+	MaxOverThresholdSeconds  int                            `json:"max_over_threshold_seconds"`
+	Rows                     []AtlasPRCIWindowsThresholdRow `json:"rows"`
+	SchedulesWork            bool                           `json:"schedules_work"`
+	ExecutesWork             bool                           `json:"executes_work"`
+	ApprovesWork             bool                           `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool                           `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool                           `json:"rsi_remains_denied"`
+}
+
+type AtlasPRCIWindowsThresholdRow struct {
+	NodeID               string `json:"node_id"`
+	PRNumber             int    `json:"pr_number"`
+	CIStatus             string `json:"ci_status"`
+	MergeCommit          string `json:"merge_commit"`
+	WindowsSeconds       int    `json:"windows_seconds"`
+	ThresholdSeconds     int    `json:"threshold_seconds"`
+	ExceedsThreshold     bool   `json:"exceeds_threshold"`
+	OverThresholdSeconds int    `json:"over_threshold_seconds"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

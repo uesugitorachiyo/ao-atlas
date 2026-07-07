@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -441,6 +441,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "pr-ci-timing-summary" {
 		return runMissionRecommendationsPRCITimingSummary(args[1:], stdout)
 	}
+	if args[0] == "pr-ci-windows-threshold" {
+		return runMissionRecommendationsPRCIWindowsThreshold(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -454,7 +457,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -966,6 +969,50 @@ func runMissionRecommendationsPRCITimingSummary(args []string, stdout io.Writer)
 		summary.RowCount,
 		summary.MaxWindowsSeconds,
 		summary.MaxCheckSeconds,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsPRCIWindowsThreshold(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations pr-ci-windows-threshold", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	summaryPath := fs.String("summary", "", "PR/CI timing summary path")
+	thresholdSeconds := fs.Int("threshold-seconds", 0, "Windows long-running check threshold in seconds")
+	outPath := fs.String("out", "", "PR/CI Windows threshold evidence output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*summaryPath) == "" {
+		return fmt.Errorf("--summary is required")
+	}
+	if *thresholdSeconds <= 0 {
+		return fmt.Errorf("--threshold-seconds must be greater than zero")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*summaryPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	evidence, err := BuildAtlasPRCIWindowsThresholdEvidence(*summaryPath, *thresholdSeconds)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, evidence); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, evidence)
+	}
+	fmt.Fprintf(stdout, "status=%s\nthreshold_seconds=%d\nrow_count=%d\nlong_running_windows_checks=%d\npr_ci_windows_threshold_evidence=%s\n",
+		evidence.Status,
+		evidence.ThresholdSeconds,
+		evidence.RowCount,
+		evidence.LongRunningWindowsChecks,
 		filepath.ToSlash(*outPath),
 	)
 	return nil

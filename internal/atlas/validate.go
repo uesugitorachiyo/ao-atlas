@@ -35,6 +35,7 @@ const (
 	AtlasSchemaValidatorDriftContract            = "ao.atlas.schema-validator-drift.v0.1"
 	AtlasPRCITimingLedgerContract                = "ao.atlas.pr-ci-timing-ledger.v0.1"
 	AtlasPRCITimingSummaryContract               = "ao.atlas.pr-ci-timing-summary.v0.1"
+	AtlasPRCIWindowsThresholdEvidenceContract    = "ao.atlas.pr-ci-windows-threshold-evidence.v0.1"
 	WorkgraphContract                            = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract                  = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                          = "ao.atlas.factory-task.v0.1"
