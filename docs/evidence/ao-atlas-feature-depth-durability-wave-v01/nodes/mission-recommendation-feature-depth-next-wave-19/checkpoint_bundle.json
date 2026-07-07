@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-19",
+  "task_id": "mission-recommendation-feature-depth-next-wave-19-task",
+  "status": "ready",
+  "source_workgraph": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-18/workgraph-after.json",
+  "checkpoint_digest_resume_prompt": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-19/checkpoint-digest-resume-prompt.json"
+}

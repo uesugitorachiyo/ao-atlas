@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-18",
+  "task_id": "mission-recommendation-feature-depth-next-wave-18-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations compaction-resume-regression --source-prompt-fixture docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-17/compaction-resume-prompt.json --source-prompt-markdown docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-17/compaction-resume-prompt.md --source-readback docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-17/recommendation-readback-after.json --node-id mission-recommendation-feature-depth-next-wave-18 --expected-next-node-after-completion mission-recommendation-feature-depth-next-wave-19 --out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-18/compaction-resume-regression.json",
+    "jq -e . docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-18/compaction-resume-regression.json"
+  ],
+  "assertions": [
+    "source_prompt_active_node_preserved=true",
+    "source_prompt_exact_action_preserved=true",
+    "final_response_allowed_before=false",
+    "rsi_remains_denied=true"
+  ]
+}
