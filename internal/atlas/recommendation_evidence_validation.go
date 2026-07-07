@@ -299,6 +299,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:pr-ci-windows-threshold-evidence", err
 		}
 		return "typed:pr-ci-windows-threshold-evidence", ValidateAtlasPRCIWindowsThresholdEvidence(value)
+	case AtlasFailedCheckReplayFixtureContract:
+		value, err := LoadJSON[AtlasFailedCheckReplayFixture](path)
+		if err != nil {
+			return "typed:failed-check-replay-fixture", err
+		}
+		return "typed:failed-check-replay-fixture", ValidateAtlasFailedCheckReplayFixture(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

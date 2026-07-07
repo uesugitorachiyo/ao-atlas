@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.failed-check-replay-fixture.v0.1",
+  "title": "AO Atlas Failed Check Replay Fixture",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "source_input_path",
+    "source_input_digest",
+    "case_count",
+    "merge_denied_cases",
+    "retry_allowed_cases",
+    "safe_to_merge",
+    "cases",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.failed-check-replay-fixture.v0.1"
+    },
+    "status": {
+      "const": "replay_recorded"
+    },
+    "source_input_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_input_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "case_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "merge_denied_cases": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "retry_allowed_cases": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "safe_to_merge": {
+      "const": false
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "check_name",
+          "platform",
+          "check_status",
+          "failure_kind",
+          "retry_decision",
+          "merge_decision",
+          "reason"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "check_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "platform": {
+            "type": "string",
+            "minLength": 1
+          },
+          "check_status": {
+            "const": "failed"
+          },
+          "failure_kind": {
+            "enum": [
+              "timeout",
+              "public_safety",
+              "schema_validation"
+            ]
+          },
+          "retry_decision": {
+            "enum": [
+              "retry_allowed",
+              "manual_repair_required"
+            ]
+          },
+          "merge_decision": {
+            "const": "merge_denied"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

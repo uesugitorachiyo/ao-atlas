@@ -655,6 +655,54 @@ type AtlasPRCIWindowsThresholdRow struct {
 	OverThresholdSeconds int    `json:"over_threshold_seconds"`
 }
 
+type AtlasFailedCheckReplayInput struct {
+	Schema                 string                       `json:"schema"`
+	Status                 string                       `json:"status"`
+	Cases                  []AtlasFailedCheckReplayCase `json:"cases"`
+	SchedulesWork          bool                         `json:"schedules_work"`
+	ExecutesWork           bool                         `json:"executes_work"`
+	ApprovesWork           bool                         `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                         `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                         `json:"rsi_remains_denied"`
+}
+
+type AtlasFailedCheckReplayFixture struct {
+	Schema                 string                              `json:"schema"`
+	Status                 string                              `json:"status"`
+	SourceInputPath        string                              `json:"source_input_path"`
+	SourceInputDigest      string                              `json:"source_input_digest"`
+	CaseCount              int                                 `json:"case_count"`
+	MergeDeniedCases       int                                 `json:"merge_denied_cases"`
+	RetryAllowedCases      int                                 `json:"retry_allowed_cases"`
+	SafeToMerge            bool                                `json:"safe_to_merge"`
+	Cases                  []AtlasFailedCheckReplayFixtureCase `json:"cases"`
+	SchedulesWork          bool                                `json:"schedules_work"`
+	ExecutesWork           bool                                `json:"executes_work"`
+	ApprovesWork           bool                                `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                `json:"rsi_remains_denied"`
+}
+
+type AtlasFailedCheckReplayCase struct {
+	ID          string `json:"id"`
+	CheckName   string `json:"check_name"`
+	Platform    string `json:"platform"`
+	CheckStatus string `json:"check_status"`
+	FailureKind string `json:"failure_kind"`
+	Retryable   bool   `json:"retryable"`
+}
+
+type AtlasFailedCheckReplayFixtureCase struct {
+	ID            string `json:"id"`
+	CheckName     string `json:"check_name"`
+	Platform      string `json:"platform"`
+	CheckStatus   string `json:"check_status"`
+	FailureKind   string `json:"failure_kind"`
+	RetryDecision string `json:"retry_decision"`
+	MergeDecision string `json:"merge_decision"`
+	Reason        string `json:"reason"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

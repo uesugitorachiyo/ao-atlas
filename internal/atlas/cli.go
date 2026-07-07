@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -444,6 +444,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "pr-ci-windows-threshold" {
 		return runMissionRecommendationsPRCIWindowsThreshold(args[1:], stdout)
 	}
+	if args[0] == "failed-check-replay" {
+		return runMissionRecommendationsFailedCheckReplay(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -457,7 +460,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1013,6 +1016,46 @@ func runMissionRecommendationsPRCIWindowsThreshold(args []string, stdout io.Writ
 		evidence.ThresholdSeconds,
 		evidence.RowCount,
 		evidence.LongRunningWindowsChecks,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsFailedCheckReplay(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations failed-check-replay", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	inputPath := fs.String("input", "", "failed check replay input path")
+	outPath := fs.String("out", "", "failed check replay fixture output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*inputPath) == "" {
+		return fmt.Errorf("--input is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*inputPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	fixture, err := BuildAtlasFailedCheckReplayFixture(*inputPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, fixture); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, fixture)
+	}
+	fmt.Fprintf(stdout, "status=%s\ncase_count=%d\nmerge_denied_cases=%d\nretry_allowed_cases=%d\nfailed_check_replay_fixture=%s\n",
+		fixture.Status,
+		fixture.CaseCount,
+		fixture.MergeDeniedCases,
+		fixture.RetryAllowedCases,
 		filepath.ToSlash(*outPath),
 	)
 	return nil
