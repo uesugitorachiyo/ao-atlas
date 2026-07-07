@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-08",
+  "task_id": "mission-recommendation-feature-depth-next-wave-08-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations schema-validator-drift --source-report docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-05/feature-depth-evidence-validation-report.json --target-report docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-07/required-evidence-validation-report.json --out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-08/schema-validator-drift.json"
+  ],
+  "assertions": [
+    "schema validator drift status is passed",
+    "lost_schemas is empty",
+    "lost_validators is empty"
+  ]
+}

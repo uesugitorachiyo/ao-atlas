@@ -1,0 +1,43 @@
+{
+  "schema": "ao.atlas.failed-check-replay-input.v0.1",
+  "status": "recorded",
+  "cases": [
+    {
+      "id": "windows-timeout-retry",
+      "check_name": "production-readiness (windows-latest)",
+      "platform": "windows-latest",
+      "check_status": "failed",
+      "failure_kind": "timeout",
+      "retryable": true
+    },
+    {
+      "id": "windows-timeout-second-retry",
+      "check_name": "Production readiness (windows-latest)",
+      "platform": "windows-latest",
+      "check_status": "failed",
+      "failure_kind": "timeout",
+      "retryable": true
+    },
+    {
+      "id": "public-safety-failure-no-merge",
+      "check_name": "public-safety-scan",
+      "platform": "ubuntu-latest",
+      "check_status": "failed",
+      "failure_kind": "public_safety",
+      "retryable": false
+    },
+    {
+      "id": "schema-validation-failure-no-merge",
+      "check_name": "recommendation-evidence-validation",
+      "platform": "macos-latest",
+      "check_status": "failed",
+      "failure_kind": "schema_validation",
+      "retryable": false
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

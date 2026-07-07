@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-01",
+  "task_id": "mission-recommendation-feature-depth-next-wave-01-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-01",
+  "source_task_digest": "sha256:6b36ced4fa8684f3270528f4d2a49478b1007207355e5b780056730087c89ec0",
+  "selected_work": [
+    "Generate deterministic AO Mission readback delta evidence from source and target checkpoints.",
+    "Bind the delta artifact into the node run-link and completion readback.",
+    "Preserve no-promotion and RSI-denied boundaries."
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}
