@@ -1,0 +1,72 @@
+{
+  "schema": "ao.atlas.mission-dashboard-freshness-checks.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-35",
+  "status": "dashboard_freshness_verified",
+  "source_provenance_links_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/mission-dashboard-provenance-links.json",
+  "source_provenance_links_digest": "sha256:8b2aafe916753ec9395268729cc90b6aceb67c44f12d19f48d6d5ee7eb969f24",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:cdc0f309b9471de044c491fcc7fc794beac8dad0bb404a628bd9405a45276e47",
+  "post_merge_lifecycle_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/post-merge-lifecycle.json",
+  "post_merge_lifecycle_digest": "sha256:9841c33b4164c0933e24612090afd71708b4e2cb0c3532ce8dd2cce34d8bf24d",
+  "source_completed_nodes": 34,
+  "source_ready_nodes": 6,
+  "source_first_executable_node": "mission-recommendation-feature-depth-next-wave-35",
+  "pr_number": 377,
+  "merge_commit": "f3d6efd937dfea9699c44606ec228bc55b97c7b8",
+  "final_head": "f3d6efd937dfea9699c44606ec228bc55b97c7b8",
+  "local_main_synced": true,
+  "origin_main_synced": true,
+  "local_branch_deleted": true,
+  "remote_branch_deleted": true,
+  "local_codex_branches_remaining": 0,
+  "remote_codex_branches_remaining": 0,
+  "freshness_check_count": 6,
+  "freshness_checks": [
+    {
+      "name": "pr_merged",
+      "status": "passed",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/post-merge-lifecycle.json",
+      "evidence_digest": "sha256:9841c33b4164c0933e24612090afd71708b4e2cb0c3532ce8dd2cce34d8bf24d"
+    },
+    {
+      "name": "ci_passed",
+      "status": "passed",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/post-merge-lifecycle.json",
+      "evidence_digest": "sha256:9841c33b4164c0933e24612090afd71708b4e2cb0c3532ce8dd2cce34d8bf24d"
+    },
+    {
+      "name": "main_synced_to_merge_commit",
+      "status": "passed",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/post-merge-lifecycle.json",
+      "evidence_digest": "sha256:9841c33b4164c0933e24612090afd71708b4e2cb0c3532ce8dd2cce34d8bf24d"
+    },
+    {
+      "name": "branches_deleted",
+      "status": "passed",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/post-merge-lifecycle.json",
+      "evidence_digest": "sha256:9841c33b4164c0933e24612090afd71708b4e2cb0c3532ce8dd2cce34d8bf24d"
+    },
+    {
+      "name": "codex_branches_clean",
+      "status": "passed",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/post-merge-lifecycle.json",
+      "evidence_digest": "sha256:9841c33b4164c0933e24612090afd71708b4e2cb0c3532ce8dd2cce34d8bf24d"
+    },
+    {
+      "name": "dashboard_sources_match_completed_readback",
+      "status": "passed",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/mission-dashboard-provenance-links.json",
+      "evidence_digest": "sha256:8b2aafe916753ec9395268729cc90b6aceb67c44f12d19f48d6d5ee7eb969f24"
+    }
+  ],
+  "pr_merged_and_cleaned": true,
+  "main_synced_to_merge_commit": true,
+  "dashboard_source_still_fresh": true,
+  "all_freshness_checks_passed": true,
+  "final_response_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
