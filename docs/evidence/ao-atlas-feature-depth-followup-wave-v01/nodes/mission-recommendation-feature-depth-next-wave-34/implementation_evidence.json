@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-34",
+  "task_id": "mission-recommendation-feature-depth-next-wave-34-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_dashboard_provenance_links.go",
+    "internal/atlas/mission_dashboard_provenance_links_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "schemas/mission-dashboard-provenance-links.schema.json"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-33/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/mission-dashboard-provenance-links.json"
+  ],
+  "summary": "Node 34 adds a typed dashboard provenance links fixture that binds Foundry, Promoter, Command, and Sentinel evidence links to the node 33 dashboard closure rows.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-21",
+  "task_id": "mission-recommendation-feature-depth-next-wave-21-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWavePublicSafetyReadbackBinding' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "missing mission recommendations public-safety-readback-binding command and typed validator"
+  },
+  "readback_override_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWavePublicSafetyReadbackStatusOverridePreservesContinuation' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "AtlasRecommendationReadbackOptions had no PublicSafetyScanStatus override"
+  },
+  "fixture_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWavePublicSafetyReadbackBinding' -count=1",
+    "status": "failed_before_fixture_generation",
+    "failure": "missing recorded public-safety-readback-binding.json fixture after generator support was added"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWavePublicSafetyReadbackBinding' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}

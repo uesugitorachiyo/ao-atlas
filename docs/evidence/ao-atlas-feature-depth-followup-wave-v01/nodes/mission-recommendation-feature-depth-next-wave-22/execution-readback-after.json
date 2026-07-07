@@ -1,0 +1,117 @@
+{
+  "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+  "status": "in_progress",
+  "mission_id": "ao-atlas-next-feature-depth-wave-v01",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01",
+  "lease_health_status": "minimum_unmet",
+  "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+  "return_gate_status": "blocked_ready_nodes_remain",
+  "continuation_contract_reason": "ready_nodes_or_exact_next_action_remain",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-23 and execute exactly one active node.",
+  "final_response_allowed": false,
+  "refuses_final_response": true,
+  "completed_recommendation_nodes": 22,
+  "total_recommendation_nodes": 40,
+  "generated_workgraph": {
+    "total_nodes": 40,
+    "ready_nodes": 18,
+    "executable_ready_nodes": 1,
+    "first_executable_node": "mission-recommendation-feature-depth-next-wave-23",
+    "lease_health_status": "minimum_unmet",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "checkpoint_count": 22,
+    "final_response_allowed": false,
+    "final_response_reason": "ready nodes or exact next actions remain"
+  },
+  "foundry_run_link_readiness_summary": {
+    "status": "partial_run_links_recorded",
+    "summary": "22/40 Foundry run-links recorded; ready_nodes=18; next_executable_node=mission-recommendation-feature-depth-next-wave-23",
+    "completed_run_links": 22,
+    "required_run_links": 40,
+    "missing_run_links": 18,
+    "ready_nodes": 18,
+    "next_executable_node": "mission-recommendation-feature-depth-next-wave-23",
+    "lease_health_status": "minimum_unmet",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "continuation_contract_reason": "ready_nodes_or_exact_next_action_remain",
+    "exact_next_action": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-23 and execute exactly one active node.",
+    "refuses_final_response": true,
+    "checkpoint_count": 22,
+    "final_response_allowed": false
+  },
+  "continuation_reason_coverage": {
+    "status": "coverage_sources_indexed",
+    "expected_reason": "ready_nodes_or_exact_next_action_remain",
+    "indexed_sources": [
+      "recommendation_readback",
+      "checkpoint_readback",
+      "workgraph_readiness_packet",
+      "command_readback",
+      "command_timeline_binding",
+      "promoter_readback",
+      "foundry_rollup",
+      "reconciliation_packet",
+      "reconciliation_command",
+      "reconciliation_promoter",
+      "reconciliation_foundry",
+      "final_state_reconciliation",
+      "resume_prompt"
+    ],
+    "source_count": 13,
+    "final_response_allowed": false,
+    "refuses_final_response": true,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-23 and execute exactly one active node.",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "lease_health_status": "minimum_unmet",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  },
+  "reason_artifact_agreement_summary": {
+    "status": "agreement",
+    "expected_reason": "ready_nodes_or_exact_next_action_remain",
+    "indexed_sources": [
+      "recommendation_readback",
+      "checkpoint_readback",
+      "workgraph_readiness_packet",
+      "command_readback",
+      "command_timeline_binding",
+      "promoter_readback",
+      "foundry_rollup",
+      "reconciliation_packet",
+      "reconciliation_command",
+      "reconciliation_promoter",
+      "reconciliation_foundry",
+      "final_state_reconciliation",
+      "resume_prompt"
+    ],
+    "source_count": 13,
+    "all_required_sources_indexed": true,
+    "source_artifact_refs": [
+      "foundry_run_link_readiness_summary",
+      "continuation_reason_coverage"
+    ],
+    "source_artifact_count": 2,
+    "source_artifacts_agree": true,
+    "foundry_run_link_readiness_digest": "sha256:37386eef3de8a1b32bbcd0563e2fab74b5c5d076e4bc33c6cf99f8db85a0f3b6",
+    "continuation_reason_coverage_digest": "sha256:108da6494c2f01875c42e245be0848f6835e1a63e5fa5d95b2069b2e99d02e7b",
+    "final_response_allowed": false,
+    "refuses_final_response": true,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-23 and execute exactly one active node.",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  },
+  "source_artifacts": [
+    {
+      "ref": "foundry_run_link_readiness_summary",
+      "digest": "sha256:37386eef3de8a1b32bbcd0563e2fab74b5c5d076e4bc33c6cf99f8db85a0f3b6"
+    },
+    {
+      "ref": "continuation_reason_coverage",
+      "digest": "sha256:108da6494c2f01875c42e245be0848f6835e1a63e5fa5d95b2069b2e99d02e7b"
+    }
+  ]
+}

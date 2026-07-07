@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-16",
+  "task_id": "mission-recommendation-feature-depth-next-wave-16-task",
+  "status": "passed",
+  "scan_scope": [
+    "internal/atlas/mission_branch_cleanup_handoff_summary.go",
+    "internal/atlas/mission_branch_cleanup_handoff_summary_test.go",
+    "schemas/branch-cleanup-handoff-summary.schema.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-16"
+  ],
+  "forbidden_claims_found": false,
+  "public_promotion_claim": false,
+  "rsi_claim": false,
+  "summary": "No forbidden promotion or RSI wording found in node 16 changes.",
+  "rsi_remains_denied": true
+}

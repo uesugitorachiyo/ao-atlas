@@ -1,0 +1,71 @@
+{
+  "schema": "ao.atlas.mission-readback-delta.v0.1",
+  "status": "changed",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-15/recommendation-readback-after.json",
+  "target_readback_path": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-16/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:3a5cd67607ee93d5c0d8eb69d28ea54475191dd65eb23d3d21ffcf866c619b68",
+  "target_readback_digest": "sha256:50a5eeea2a84c3426d990bfac20d77712c82208e8ce3e9ce5b29cbd6c1e2866c",
+  "deterministic_comparison": true,
+  "changed_fields": [
+    "checkpoint_count",
+    "completed_nodes",
+    "elapsed_minutes",
+    "exact_next_action",
+    "first_executable_node",
+    "ready_nodes"
+  ],
+  "numeric_deltas": {
+    "checkpoint_count": 1,
+    "completed_nodes": 1,
+    "elapsed_minutes": 44,
+    "ready_nodes": -1
+  },
+  "boolean_transitions": {
+    "approves_work": {
+      "before": false,
+      "after": false
+    },
+    "executes_work": {
+      "before": false,
+      "after": false
+    },
+    "final_response_allowed": {
+      "before": false,
+      "after": false
+    },
+    "min_minutes_met": {
+      "before": true,
+      "after": true
+    },
+    "schedules_work": {
+      "before": false,
+      "after": false
+    }
+  },
+  "string_transitions": {
+    "exact_next_action": {
+      "before": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-16 and execute exactly one active node.",
+      "after": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-17 and execute exactly one active node."
+    },
+    "first_executable_node": {
+      "before": "mission-recommendation-feature-depth-next-wave-16",
+      "after": "mission-recommendation-feature-depth-next-wave-17"
+    }
+  },
+  "safety_boundaries": {
+    "auth_policy_config_widening": false,
+    "broad_rsi_claim": false,
+    "credential_inspection": false,
+    "dependency_updates": false,
+    "direct_main_mutation": false,
+    "hidden_instruction_mutation": false,
+    "provider_calls": false,
+    "release_deploy_publish_upload_tag": false,
+    "rsi_remains_denied": true
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

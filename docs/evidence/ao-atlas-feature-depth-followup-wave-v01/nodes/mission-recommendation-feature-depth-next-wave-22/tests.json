@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-22",
+  "task_id": "mission-recommendation-feature-depth-next-wave-22-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveScopedPublicSafetyScan' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "missing mission recommendations scoped-public-safety-scan command and typed validator"
+  },
+  "fixture_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveScopedPublicSafetyScan' -count=1",
+    "status": "failed_before_fixture_generation",
+    "failure": "missing recorded scoped-public-safety-scan.json fixture after generator support was added"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveScopedPublicSafetyScan' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}

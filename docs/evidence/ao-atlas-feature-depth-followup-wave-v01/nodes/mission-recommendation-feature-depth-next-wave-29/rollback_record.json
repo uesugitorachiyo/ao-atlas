@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-29",
+  "task_id": "mission-recommendation-feature-depth-next-wave-29-task",
+  "status": "ready",
+  "rollback_scope": [
+    "internal/atlas/mission_foundry_import_readiness_binding.go",
+    "internal/atlas/mission_foundry_import_readiness_binding_test.go",
+    "internal/atlas/cli.go foundry-import-readiness-binding routing",
+    "internal/atlas/models.go AtlasFoundryImportReadinessBinding",
+    "internal/atlas/recommendation_evidence_validation.go typed validator binding",
+    "internal/atlas/validate.go contract constant",
+    "schemas/foundry-import-readiness-binding.schema.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-29"
+  ],
+  "rollback_command": "revert node 29 commit and remove generated node 29 evidence",
+  "data_loss_risk": "none; generated evidence and additive readiness binding support only",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
