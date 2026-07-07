@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-13",
+  "task_id": "mission-recommendation-feature-depth-next-wave-13-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-13",
+  "source_task_digest": "sha256:5f91510913909ce3accdd0415c5a4153084228dae296f04ca14bface6fc697f7",
+  "selected_work": [
+    "Record post-merge lifecycle evidence for the merged nodes 01-12 PR.",
+    "Generate branch deletion readback from lifecycle entries.",
+    "Confirm local and remote codex branch counts are zero."
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

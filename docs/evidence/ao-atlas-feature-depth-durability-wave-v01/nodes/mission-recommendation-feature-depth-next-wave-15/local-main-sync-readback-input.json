@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.local-main-sync-readback-input.v0.1",
+  "status": "recorded",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-14/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:d0c2a66f99d3ff476d9d398841e0ac01b5a9f57ca685e34caf9c9eb328704aff",
+  "current_branch": "main",
+  "local_main_head": "637112fcfaee7557bd5bc3e0d08127d4b69e92d2",
+  "origin_main_head": "637112fcfaee7557bd5bc3e0d08127d4b69e92d2",
+  "working_tree_clean": true,
+  "local_codex_branches": [],
+  "remote_codex_branches": [],
+  "completed_nodes": 14,
+  "ready_nodes": 26,
+  "first_executable_node": "mission-recommendation-feature-depth-next-wave-15",
+  "final_response_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
