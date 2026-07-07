@@ -1351,6 +1351,44 @@ type AtlasRunLinkDigestCheckEntry struct {
 	Status string `json:"status"`
 }
 
+type AtlasFoundryHandoffReplayFixture struct {
+	Schema                         string   `json:"schema"`
+	NodeID                         string   `json:"node_id"`
+	Status                         string   `json:"status"`
+	SourceReadbackPath             string   `json:"source_readback_path"`
+	SourceReadbackDigest           string   `json:"source_readback_digest"`
+	SourceWorkgraphPath            string   `json:"source_workgraph_path"`
+	SourceWorkgraphDigest          string   `json:"source_workgraph_digest"`
+	FoundryImportPath              string   `json:"foundry_import_path"`
+	FoundryImportDigest            string   `json:"foundry_import_digest"`
+	FoundryHandoffPath             string   `json:"foundry_handoff_path"`
+	FoundryHandoffDigest           string   `json:"foundry_handoff_digest"`
+	ResumedFirstExecutableNode     string   `json:"resumed_first_executable_node"`
+	ResumedExactNextAction         string   `json:"resumed_exact_next_action"`
+	CompletedNodesBefore           int      `json:"completed_nodes_before"`
+	ReadyNodesBefore               int      `json:"ready_nodes_before"`
+	FinalResponseAllowed           bool     `json:"final_response_allowed"`
+	ActiveNodeID                   string   `json:"active_node_id"`
+	ActiveTaskID                   string   `json:"active_task_id"`
+	FoundryTaskCount               int      `json:"foundry_task_count"`
+	HandoffFirstSafeNode           string   `json:"handoff_first_safe_node"`
+	WorkgraphNextReadyNode         string   `json:"workgraph_next_ready_node"`
+	MutationClass                  string   `json:"mutation_class"`
+	SingleActiveImportTask         bool     `json:"single_active_import_task"`
+	HandoffMatchesResumedReadback  bool     `json:"handoff_matches_resumed_readback"`
+	ImportMatchesResumedReadback   bool     `json:"import_matches_resumed_readback"`
+	HandoffMatchesWorkgraph        bool     `json:"handoff_matches_workgraph"`
+	BoundedMutationClass           bool     `json:"bounded_mutation_class"`
+	ExactNextActionNamesActiveNode bool     `json:"exact_next_action_names_active_node"`
+	PromptPreservesActiveNode      bool     `json:"prompt_preserves_active_node"`
+	ReplayAssertions               []string `json:"replay_assertions"`
+	SchedulesWork                  bool     `json:"schedules_work"`
+	ExecutesWork                   bool     `json:"executes_work"`
+	ApprovesWork                   bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance         bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied               bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

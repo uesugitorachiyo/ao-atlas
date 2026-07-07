@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-31",
+  "task_id": "mission-recommendation-feature-depth-next-wave-31-task",
+  "status": "passed",
+  "passed_commands": [
+    "go test ./internal/atlas -run TestFeatureDepthWaveFoundryHandoffReplayFixtureBindsResumedNode -count=1",
+    "find docs/evidence/ao-atlas-feature-depth-wave-v01 -name '*.json' -print0 | xargs -0 jq -e .",
+    "go run ./cmd/atlas mission recommendations scoped-public-safety-scan --node-id mission-recommendation-feature-depth-next-wave-31 --scope internal/atlas/mission_foundry_handoff_replay_fixture.go --scope internal/atlas/mission_foundry_handoff_replay_fixture_test.go --scope schemas/foundry-handoff-replay-fixture.schema.json --scope docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-31 --out docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-31/scoped-public-safety-scan.json",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-wave-v01 --out docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-31/feature-depth-evidence-validation-report.json",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas && rm -f atlas && test ! -e atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "required_commands": [
+    "go test ./internal/atlas -run TestFeatureDepthWaveFoundryHandoffReplayFixtureBindsResumedNode -count=1",
+    "find docs/evidence/ao-atlas-feature-depth-wave-v01 -name '*.json' -print0 | xargs -0 jq -e .",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-wave-v01 --out docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-31/feature-depth-evidence-validation-report.json",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "repair_notes": [
+    "Foundry handoff replay fixture validates the resumed readback before comparing it with workgraph, import, and handoff artifacts.",
+    "Removed unnecessary resume execution and closure outputs because they represented the pre-node replay state and conflicted with same-directory post-node execution readback validation.",
+    "Local atlas build artifact was removed after go build ./cmd/atlas before production-readiness checks.",
+    "Production readiness passed with score 100/100."
+  ]
+}
