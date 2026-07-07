@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-14",
+  "task_id": "mission-recommendation-feature-depth-next-wave-14-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-14",
+  "source_task_digest": "sha256:4a503ff89e06d2bf250110b237bfaa8b55bc6dfb77d384f9061082d1fddc90a4",
+  "selected_work": [
+    "Add stale remote branch repair input and evidence models.",
+    "Add a CLI generator for interrupted cleanup handoff repair evidence.",
+    "Generate node 14 stale remote branch repair matrix evidence without executing cleanup."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

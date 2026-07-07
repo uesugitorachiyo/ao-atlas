@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-13",
+  "task_id": "mission-recommendation-feature-depth-next-wave-13-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveBranchDeletionReadback' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "missing post-merge-branch-deletion-readback CLI route and typed post-merge branch deletion readback validator"
+  },
+  "fixture_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveBranchDeletionReadback' -count=1",
+    "status": "failed_before_fixture_regeneration",
+    "failure": "placeholder entries lacked generated post-merge lifecycle fields and digests"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveBranchDeletionReadback' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}
