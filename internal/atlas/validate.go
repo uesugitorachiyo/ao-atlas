@@ -41,6 +41,8 @@ const (
 	AtlasMergeCheckBindingInputContract          = "ao.atlas.merge-check-binding-input.v0.1"
 	AtlasMergeCheckBindingContract               = "ao.atlas.merge-check-binding.v0.1"
 	AtlasPostMergeBranchDeletionReadbackContract = "ao.atlas.post-merge-branch-deletion-readback.v0.1"
+	AtlasStaleRemoteBranchRepairInputContract    = "ao.atlas.stale-remote-branch-repair-input.v0.1"
+	AtlasStaleRemoteBranchRepairContract         = "ao.atlas.stale-remote-branch-repair.v0.1"
 	WorkgraphContract                            = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract                  = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                          = "ao.atlas.factory-task.v0.1"

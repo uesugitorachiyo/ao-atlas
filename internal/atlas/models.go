@@ -770,6 +770,66 @@ type AtlasPostMergeBranchDeletionReadbackEntry struct {
 	Digest                       string `json:"digest"`
 }
 
+type AtlasStaleRemoteBranchRepairInput struct {
+	Schema                             string                             `json:"schema"`
+	Status                             string                             `json:"status"`
+	SourceBranchDeletionReadbackPath   string                             `json:"source_branch_deletion_readback_path"`
+	SourceBranchDeletionReadbackDigest string                             `json:"source_branch_deletion_readback_digest"`
+	Cases                              []AtlasStaleRemoteBranchRepairCase `json:"cases"`
+	SchedulesWork                      bool                               `json:"schedules_work"`
+	ExecutesWork                       bool                               `json:"executes_work"`
+	ApprovesWork                       bool                               `json:"approves_work"`
+	ClaimsAuthorityAdvance             bool                               `json:"claims_authority_advance"`
+	RSIRemainsDenied                   bool                               `json:"rsi_remains_denied"`
+}
+
+type AtlasStaleRemoteBranchRepair struct {
+	Schema                             string                                 `json:"schema"`
+	Status                             string                                 `json:"status"`
+	SourceInputPath                    string                                 `json:"source_input_path"`
+	SourceInputDigest                  string                                 `json:"source_input_digest"`
+	SourceBranchDeletionReadbackPath   string                                 `json:"source_branch_deletion_readback_path"`
+	SourceBranchDeletionReadbackDigest string                                 `json:"source_branch_deletion_readback_digest"`
+	CaseCount                          int                                    `json:"case_count"`
+	RepairRequiredCases                int                                    `json:"repair_required_cases"`
+	CleanupSafeCases                   int                                    `json:"cleanup_safe_cases"`
+	BlockedCases                       int                                    `json:"blocked_cases"`
+	Cases                              []AtlasStaleRemoteBranchRepairDecision `json:"cases"`
+	SchedulesWork                      bool                                   `json:"schedules_work"`
+	ExecutesWork                       bool                                   `json:"executes_work"`
+	ApprovesWork                       bool                                   `json:"approves_work"`
+	ClaimsAuthorityAdvance             bool                                   `json:"claims_authority_advance"`
+	RSIRemainsDenied                   bool                                   `json:"rsi_remains_denied"`
+}
+
+type AtlasStaleRemoteBranchRepairCase struct {
+	ID                           string `json:"id"`
+	NodeID                       string `json:"node_id"`
+	PRNumber                     int    `json:"pr_number"`
+	MergeCommit                  string `json:"merge_commit"`
+	HeadBranch                   string `json:"head_branch"`
+	HandoffStatus                string `json:"handoff_status"`
+	RemoteBranchDeleted          bool   `json:"remote_branch_deleted"`
+	RemoteCodexBranchesRemaining int    `json:"remote_codex_branches_remaining"`
+}
+
+type AtlasStaleRemoteBranchRepairDecision struct {
+	ID                           string `json:"id"`
+	NodeID                       string `json:"node_id"`
+	PRNumber                     int    `json:"pr_number"`
+	MergeCommit                  string `json:"merge_commit"`
+	HeadBranch                   string `json:"head_branch"`
+	HandoffStatus                string `json:"handoff_status"`
+	RemoteBranchDeleted          bool   `json:"remote_branch_deleted"`
+	RemoteCodexBranchesRemaining int    `json:"remote_codex_branches_remaining"`
+	RepairRequired               bool   `json:"repair_required"`
+	SafeToRepair                 bool   `json:"safe_to_repair"`
+	RepairAction                 string `json:"repair_action"`
+	RepairCommand                string `json:"repair_command"`
+	BlocksNextNode               bool   `json:"blocks_next_node"`
+	Reason                       string `json:"reason"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
