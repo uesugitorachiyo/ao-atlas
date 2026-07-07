@@ -1,0 +1,56 @@
+{
+  "schema": "ao.atlas.promoter-rollup-count-mismatch-regression.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-27",
+  "status": "mismatch_regression_recorded",
+  "source_rollup_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-25/promoter-no-promotion-rollup.json",
+  "source_rollup_digest": "sha256:9b8bca0ace31cff4465b44afd7e7ec0c6817ea61c5dc56cafaf72b209d5cfdc5",
+  "case_count": 5,
+  "rejected_cases": 5,
+  "cases": [
+    {
+      "id": "completed_nodes_total_mismatch",
+      "mutation": "increment completed_nodes_total without updating wave summaries",
+      "expected_error_contains": "completed_nodes_total",
+      "rejected": true,
+      "actual_error": "completed_nodes_total must match wave summaries; all_completed_nodes_covered must match counts; no_promotion_invariant_holds must match coverage, promotion, authority, and RSI counts"
+    },
+    {
+      "id": "promoter_files_mismatch",
+      "mutation": "increment promoter_no_promotion_files without adding evidence files",
+      "expected_error_contains": "promoter_no_promotion_files",
+      "rejected": true,
+      "actual_error": "promoter_no_promotion_files must match wave summaries and evidence files; all_completed_nodes_covered must match counts; all_promoter_statuses_no_promotion must match counts; rsi_remains_denied must match rsi denied count; no_promotion_invariant_holds must match coverage, promotion, authority, and RSI counts"
+    },
+    {
+      "id": "missing_nodes_mismatch",
+      "mutation": "increment missing_promoter_nodes_total without adding a missing node",
+      "expected_error_contains": "missing_promoter_nodes_total",
+      "rejected": true,
+      "actual_error": "missing_promoter_nodes_total must match wave summaries and missing node list; all_completed_nodes_covered must match counts; no_promotion_invariant_holds must match coverage, promotion, authority, and RSI counts"
+    },
+    {
+      "id": "no_promotion_status_mismatch",
+      "mutation": "decrement no_promotion_status_count while promoter files stay unchanged",
+      "expected_error_contains": "no_promotion_status_count",
+      "rejected": true,
+      "actual_error": "no_promotion_status_count must match wave summaries; all_promoter_statuses_no_promotion must match counts; no_promotion_invariant_holds must match coverage, promotion, authority, and RSI counts"
+    },
+    {
+      "id": "rsi_denied_mismatch",
+      "mutation": "decrement rsi_denied_count while promoter files stay unchanged",
+      "expected_error_contains": "rsi_denied_count",
+      "rejected": true,
+      "actual_error": "rsi_denied_count must match wave summaries; rsi_remains_denied must match rsi denied count; no_promotion_invariant_holds must match coverage, promotion, authority, and RSI counts"
+    }
+  ],
+  "completed_nodes_mismatch_rejected": true,
+  "promoter_files_mismatch_rejected": true,
+  "missing_nodes_mismatch_rejected": true,
+  "no_promotion_status_mismatch_rejected": true,
+  "rsi_denied_mismatch_rejected": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

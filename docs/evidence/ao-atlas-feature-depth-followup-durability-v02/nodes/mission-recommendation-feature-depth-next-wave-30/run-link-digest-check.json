@@ -1,0 +1,95 @@
+{
+  "schema": "ao.atlas.run-link-digest-check.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-30",
+  "status": "run_link_digest_verified",
+  "source_run_link_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/run-link.json",
+  "source_run_link_file_digest": "sha256:4d41e074ff820c8157147cad6eeb4fee543d73fdacf42f740c57d8498df19d66",
+  "task_id": "mission-recommendation-feature-depth-next-wave-29-task",
+  "run_link_status": "completed",
+  "recorded_digest": "sha256:de785089730e244816d8dbbb088fd603c49f462770d8b18c87ebebb9cecf9561",
+  "recomputed_digest": "sha256:de785089730e244816d8dbbb088fd603c49f462770d8b18c87ebebb9cecf9561",
+  "digest_matches": true,
+  "evidence_root": ".",
+  "evidence_count": 12,
+  "schema_bound_evidence_count": 12,
+  "missing_evidence": [],
+  "evidence_entries": [
+    {
+      "key": "candidate_record",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "checkpoint_bundle",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "command_readback",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "foundry_continuation_handoff",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "foundry_import",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "implementation_evidence",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "node_gate",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "promoter_no_promotion",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "rollback_record",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "sentinel_public_safety",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "tests",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "verification",
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "status": "schema_bound"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
