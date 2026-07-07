@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.command-promoter-disagreement-denial.v0.1",
+  "title": "AO Atlas Command Promoter Disagreement Denial",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_agreement_path",
+    "source_agreement_digest",
+    "source_command_status",
+    "source_aggregate_promotion_status",
+    "source_final_response_allowed",
+    "case_count",
+    "denied_cases",
+    "cases",
+    "command_promoter_disagreement_detected",
+    "final_response_allowed",
+    "final_response_denial_gate",
+    "final_response_reason",
+    "promotion_requested",
+    "promotion_granted",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.command-promoter-disagreement-denial.v0.1"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "final_response_denied_command_promoter_disagreement",
+        "command_promoter_disagreement_denial_failed"
+      ]
+    },
+    "source_agreement_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_agreement_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_command_status": {
+      "const": "readback_agrees_no_promotion"
+    },
+    "source_aggregate_promotion_status": {
+      "const": "no_promotion_requested"
+    },
+    "source_final_response_allowed": {
+      "const": false
+    },
+    "case_count": {
+      "const": 4
+    },
+    "denied_cases": {
+      "const": 4
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "$ref": "#/$defs/case"
+      }
+    },
+    "command_promoter_disagreement_detected": {
+      "const": true
+    },
+    "final_response_allowed": {
+      "const": false
+    },
+    "final_response_denial_gate": {
+      "const": "deny_command_promoter_disagreement"
+    },
+    "final_response_reason": {
+      "const": "command_promoter_disagreement_requires_continued_supervision"
+    },
+    "promotion_requested": {
+      "const": false
+    },
+    "promotion_granted": {
+      "const": false
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "$defs": {
+    "case": {
+      "type": "object",
+      "required": [
+        "id",
+        "mutation",
+        "command_status",
+        "aggregate_promotion_status",
+        "command_agrees_no_promotion",
+        "promoter_no_promotion_invariant_holds",
+        "readback_agrees_with_command",
+        "promotion_requested",
+        "promotion_granted",
+        "claims_authority_advance",
+        "rsi_remains_denied",
+        "disagreement_detected",
+        "final_response_allowed",
+        "final_response_denied",
+        "denial_reason"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "command_no_promotion_disagrees",
+            "promoter_invariant_disagrees",
+            "promoter_request_conflicts",
+            "readback_command_disagrees"
+          ]
+        },
+        "mutation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aggregate_promotion_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "command_agrees_no_promotion": {
+          "type": "boolean"
+        },
+        "promoter_no_promotion_invariant_holds": {
+          "type": "boolean"
+        },
+        "readback_agrees_with_command": {
+          "type": "boolean"
+        },
+        "promotion_requested": {
+          "type": "boolean"
+        },
+        "promotion_granted": {
+          "const": false
+        },
+        "claims_authority_advance": {
+          "const": false
+        },
+        "rsi_remains_denied": {
+          "const": true
+        },
+        "disagreement_detected": {
+          "const": true
+        },
+        "final_response_allowed": {
+          "const": false
+        },
+        "final_response_denied": {
+          "const": true
+        },
+        "denial_reason": {
+          "const": "command_promoter_disagreement_requires_continued_supervision"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

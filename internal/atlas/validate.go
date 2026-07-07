@@ -73,6 +73,7 @@ const AtlasPublicSafetyCoverageRollupContract = "ao.atlas.public-safety-coverage
 const AtlasPromoterNoPromotionRollupContract = "ao.atlas.promoter-no-promotion-rollup.v0.1"
 const AtlasCommandPromoterAgreementRollupContract = "ao.atlas.command-promoter-agreement-rollup.v0.1"
 const AtlasPromoterRollupCountMismatchRegressionContract = "ao.atlas.promoter-rollup-count-mismatch-regression.v0.1"
+const AtlasCommandPromoterDisagreementDenialContract = "ao.atlas.command-promoter-disagreement-denial.v0.1"
 
 var digestPattern = regexp.MustCompile(`^sha256:[0-9a-f]{64}$`)
 var driveAbsPattern = regexp.MustCompile(`^[A-Za-z]:[\\/]`)
