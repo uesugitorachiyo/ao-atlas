@@ -1414,6 +1414,33 @@ type AtlasFoundryDeniedTerminalExample struct {
 	AuthorityAdvanceClaimed      bool   `json:"authority_advance_claimed"`
 }
 
+type AtlasFoundryTerminalStatusExamplesValidation struct {
+	Schema                                   string                              `json:"schema"`
+	NodeID                                   string                              `json:"node_id"`
+	Status                                   string                              `json:"status"`
+	SourceReadbackPath                       string                              `json:"source_readback_path"`
+	SourceReadbackDigest                     string                              `json:"source_readback_digest"`
+	TerminalStatusReadback                   map[string]string                   `json:"terminal_status_readback"`
+	TerminalStatusKeys                       []string                            `json:"terminal_status_keys"`
+	TerminalStatusKeyCount                   int                                 `json:"terminal_status_key_count"`
+	TerminalExamples                         []AtlasFoundryTerminalStatusExample `json:"terminal_examples"`
+	TerminalExampleCount                     int                                 `json:"terminal_example_count"`
+	DeniedExamples                           []AtlasFoundryDeniedTerminalExample `json:"denied_examples"`
+	DeniedExampleCount                       int                                 `json:"denied_example_count"`
+	ExamplesMatchReadbackEnums               bool                                `json:"examples_match_readback_enums"`
+	PromotedRequiresCommandPromoterAgreement bool                                `json:"promoted_requires_command_promoter_agreement"`
+	DeniedRequiresExactEvidence              bool                                `json:"denied_requires_exact_evidence"`
+	BlockedRequiresRepairOrResume            bool                                `json:"blocked_requires_repair_or_resume"`
+	DeniedExamplesSafe                       bool                                `json:"denied_examples_safe"`
+	ReadyNodes                               int                                 `json:"ready_nodes"`
+	FinalResponseAllowed                     bool                                `json:"final_response_allowed"`
+	SchedulesWork                            bool                                `json:"schedules_work"`
+	ExecutesWork                             bool                                `json:"executes_work"`
+	ApprovesWork                             bool                                `json:"approves_work"`
+	ClaimsAuthorityAdvance                   bool                                `json:"claims_authority_advance"`
+	RSIRemainsDenied                         bool                                `json:"rsi_remains_denied"`
+}
+
 type AtlasContinuationContract struct {
 	ContractVersion      string `json:"contract_version"`
 	Status               string `json:"status"`
