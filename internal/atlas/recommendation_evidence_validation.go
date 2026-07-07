@@ -419,6 +419,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:foundry-handoff-replay-fixture", err
 		}
 		return "typed:foundry-handoff-replay-fixture", ValidateAtlasFoundryHandoffReplayFixture(value)
+	case AtlasFoundryTerminalStatusExamplesContract:
+		value, err := LoadJSON[AtlasFoundryTerminalStatusExamplesValidation](path)
+		if err != nil {
+			return "typed:foundry-terminal-status-examples", err
+		}
+		return "typed:foundry-terminal-status-examples", ValidateAtlasFoundryTerminalStatusExamplesValidation(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.foundry-terminal-status-examples.v0.1",
+  "title": "AO Atlas Foundry Terminal Status Examples",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_readback_path",
+    "source_readback_digest",
+    "terminal_status_readback",
+    "terminal_status_keys",
+    "terminal_status_key_count",
+    "terminal_examples",
+    "terminal_example_count",
+    "denied_examples",
+    "denied_example_count",
+    "examples_match_readback_enums",
+    "promoted_requires_command_promoter_agreement",
+    "denied_requires_exact_evidence",
+    "blocked_requires_repair_or_resume",
+    "denied_examples_safe",
+    "ready_nodes",
+    "final_response_allowed",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "ao.atlas.foundry-terminal-status-examples.v0.1" },
+    "node_id": { "type": "string", "minLength": 1 },
+    "status": { "const": "terminal_status_examples_validated" },
+    "source_readback_path": { "type": "string", "minLength": 1 },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "terminal_status_readback": {
+      "type": "object",
+      "required": ["blocked", "completed", "denied", "promoted"],
+      "additionalProperties": false,
+      "properties": {
+        "blocked": { "const": "terminal_blocker_requires_repair_or_checkpoint_resume" },
+        "completed": { "const": "terminal_success_can_close_when_all_nodes_and_readbacks_are_complete" },
+        "denied": { "const": "terminal_denial_requires_exact_missing_evidence_readback" },
+        "promoted": { "const": "terminal_success_can_close_when_promoter_and_command_agree" }
+      }
+    },
+    "terminal_status_keys": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "enum": ["blocked", "completed", "denied", "promoted"] }
+    },
+    "terminal_status_key_count": { "const": 4 },
+    "terminal_examples": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/terminal_example" }
+    },
+    "terminal_example_count": { "const": 4 },
+    "denied_examples": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/denied_example" }
+    },
+    "denied_example_count": { "const": 3 },
+    "examples_match_readback_enums": { "const": true },
+    "promoted_requires_command_promoter_agreement": { "const": true },
+    "denied_requires_exact_evidence": { "const": true },
+    "blocked_requires_repair_or_resume": { "const": true },
+    "denied_examples_safe": { "const": true },
+    "ready_nodes": { "type": "integer", "minimum": 1 },
+    "final_response_allowed": { "const": false },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "terminal_example": {
+      "type": "object",
+      "required": [
+        "source_status",
+        "normalized_status",
+        "terminal",
+        "can_close_mission",
+        "required_readback"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "source_status": { "enum": ["blocked", "completed", "denied", "promoted"] },
+        "normalized_status": { "enum": ["blocked", "completed", "denied"] },
+        "terminal": { "const": true },
+        "can_close_mission": { "type": "boolean" },
+        "required_readback": { "type": "string", "minLength": 1 }
+      }
+    },
+    "denied_example": {
+      "type": "object",
+      "required": [
+        "denial_reason",
+        "normalized_status",
+        "terminal",
+        "can_close_mission",
+        "requires_exact_missing_evidence",
+        "required_readback",
+        "rsi_remains_denied",
+        "authority_advance_claimed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "denial_reason": {
+          "enum": [
+            "missing_node_evidence",
+            "missing_stop_gate_evidence",
+            "forbidden_surface_or_rsi_claim"
+          ]
+        },
+        "normalized_status": { "const": "denied" },
+        "terminal": { "const": true },
+        "can_close_mission": { "const": true },
+        "requires_exact_missing_evidence": { "const": true },
+        "required_readback": { "type": "string", "minLength": 1 },
+        "rsi_remains_denied": { "const": true },
+        "authority_advance_claimed": { "const": false }
+      }
+    }
+  }
+}
