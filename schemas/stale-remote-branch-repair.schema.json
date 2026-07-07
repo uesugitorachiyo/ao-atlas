@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.stale-remote-branch-repair.v0.1",
+  "title": "AO Atlas Stale Remote Branch Repair Evidence",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "source_input_path",
+    "source_input_digest",
+    "source_branch_deletion_readback_path",
+    "source_branch_deletion_readback_digest",
+    "case_count",
+    "repair_required_cases",
+    "cleanup_safe_cases",
+    "blocked_cases",
+    "cases",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.stale-remote-branch-repair.v0.1"
+    },
+    "status": {
+      "const": "remote_branch_repair_matrix_recorded"
+    },
+    "source_input_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_input_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_branch_deletion_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_branch_deletion_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "case_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "repair_required_cases": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "cleanup_safe_cases": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "blocked_cases": {
+      "const": 0
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "node_id",
+          "pr_number",
+          "merge_commit",
+          "head_branch",
+          "handoff_status",
+          "remote_branch_deleted",
+          "remote_codex_branches_remaining",
+          "repair_required",
+          "safe_to_repair",
+          "repair_action",
+          "repair_command",
+          "blocks_next_node",
+          "reason"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pr_number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "merge_commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "head_branch": {
+            "type": "string",
+            "pattern": "^codex/.+"
+          },
+          "handoff_status": {
+            "enum": [
+              "completed_clean",
+              "interrupted_after_merge",
+              "remote_delete_failed"
+            ]
+          },
+          "remote_branch_deleted": {
+            "type": "boolean"
+          },
+          "remote_codex_branches_remaining": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "repair_required": {
+            "type": "boolean"
+          },
+          "safe_to_repair": {
+            "type": "boolean"
+          },
+          "repair_action": {
+            "enum": [
+              "delete_remote_codex_branch",
+              "no_repair_required"
+            ]
+          },
+          "repair_command": {
+            "type": "string"
+          },
+          "blocks_next_node": {
+            "type": "boolean"
+          },
+          "reason": {
+            "enum": [
+              "remote_codex_branch_remains_after_merge_cleanup_handoff",
+              "remote_branch_cleanup_already_bound"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

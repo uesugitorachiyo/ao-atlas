@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-14",
+  "task_id": "mission-recommendation-feature-depth-next-wave-14-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveStaleRemoteBranchRepair' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "missing stale-remote-branch-repair CLI route and typed stale remote branch repair validator"
+  },
+  "fixture_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveStaleRemoteBranchRepair' -count=1",
+    "status": "failed_before_fixture_regeneration",
+    "failure": "placeholder repair fixture lacked generated decisions, commands, and source input digest"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveStaleRemoteBranchRepair' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}
