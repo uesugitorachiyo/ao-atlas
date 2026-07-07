@@ -1247,6 +1247,49 @@ type AtlasPromoterRollupCountMismatchRegressionCase struct {
 	ActualError           string `json:"actual_error"`
 }
 
+type AtlasCommandPromoterDisagreementDenial struct {
+	Schema                              string                                       `json:"schema"`
+	NodeID                              string                                       `json:"node_id"`
+	Status                              string                                       `json:"status"`
+	SourceAgreementPath                 string                                       `json:"source_agreement_path"`
+	SourceAgreementDigest               string                                       `json:"source_agreement_digest"`
+	SourceCommandStatus                 string                                       `json:"source_command_status"`
+	SourceAggregatePromotionStatus      string                                       `json:"source_aggregate_promotion_status"`
+	SourceFinalResponseAllowed          bool                                         `json:"source_final_response_allowed"`
+	CaseCount                           int                                          `json:"case_count"`
+	DeniedCases                         int                                          `json:"denied_cases"`
+	Cases                               []AtlasCommandPromoterDisagreementDenialCase `json:"cases"`
+	CommandPromoterDisagreementDetected bool                                         `json:"command_promoter_disagreement_detected"`
+	FinalResponseAllowed                bool                                         `json:"final_response_allowed"`
+	FinalResponseDenialGate             string                                       `json:"final_response_denial_gate"`
+	FinalResponseReason                 string                                       `json:"final_response_reason"`
+	PromotionRequested                  bool                                         `json:"promotion_requested"`
+	PromotionGranted                    bool                                         `json:"promotion_granted"`
+	SchedulesWork                       bool                                         `json:"schedules_work"`
+	ExecutesWork                        bool                                         `json:"executes_work"`
+	ApprovesWork                        bool                                         `json:"approves_work"`
+	ClaimsAuthorityAdvance              bool                                         `json:"claims_authority_advance"`
+	RSIRemainsDenied                    bool                                         `json:"rsi_remains_denied"`
+}
+
+type AtlasCommandPromoterDisagreementDenialCase struct {
+	ID                                string `json:"id"`
+	Mutation                          string `json:"mutation"`
+	CommandStatus                     string `json:"command_status"`
+	AggregatePromotionStatus          string `json:"aggregate_promotion_status"`
+	CommandAgreesNoPromotion          bool   `json:"command_agrees_no_promotion"`
+	PromoterNoPromotionInvariantHolds bool   `json:"promoter_no_promotion_invariant_holds"`
+	ReadbackAgreesWithCommand         bool   `json:"readback_agrees_with_command"`
+	PromotionRequested                bool   `json:"promotion_requested"`
+	PromotionGranted                  bool   `json:"promotion_granted"`
+	ClaimsAuthorityAdvance            bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied                  bool   `json:"rsi_remains_denied"`
+	DisagreementDetected              bool   `json:"disagreement_detected"`
+	FinalResponseAllowed              bool   `json:"final_response_allowed"`
+	FinalResponseDenied               bool   `json:"final_response_denied"`
+	DenialReason                      string `json:"denial_reason"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
