@@ -1,0 +1,85 @@
+{
+  "schema": "ao.atlas.pr-ci-timing-summary.v0.1",
+  "status": "summarized",
+  "source_ledger_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-09/pr-ci-timing-ledger.json",
+  "source_ledger_digest": "sha256:4c643be9a62998f0408743588bd820df81c23fae214c7c7c69c2f4900d0ca786",
+  "row_count": 4,
+  "merged_prs": 4,
+  "ci_passed_prs": 4,
+  "ci_failed_prs": 0,
+  "ci_pending_prs": 0,
+  "pr_numbers": [
+    368,
+    369,
+    370,
+    371
+  ],
+  "node_ids": [
+    "mission-recommendation-feature-depth-next-wave-01-12",
+    "mission-recommendation-feature-depth-next-wave-13-15",
+    "mission-recommendation-feature-depth-next-wave-16-34",
+    "mission-recommendation-feature-depth-next-wave-35-40"
+  ],
+  "total_ubuntu_seconds": 426,
+  "total_macos_seconds": 971,
+  "total_windows_seconds": 4009,
+  "mean_ubuntu_seconds": 106,
+  "mean_macos_seconds": 242,
+  "mean_windows_seconds": 1002,
+  "max_windows_seconds": 1149,
+  "max_check_seconds": 1149,
+  "slowest_pr_number": 371,
+  "slowest_node_id": "mission-recommendation-feature-depth-next-wave-35-40",
+  "slowest_check": "production-readiness (windows-latest)",
+  "rows": [
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-01-12",
+      "pr_number": 368,
+      "merge_commit": "cd0d7c78510243626d9166e9f0d5d1a401e615bb",
+      "ci_status": "passed",
+      "ubuntu_seconds": 110,
+      "macos_seconds": 230,
+      "windows_seconds": 820,
+      "max_check_seconds": 820,
+      "slowest_check": "production-readiness (windows-latest)"
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-13-15",
+      "pr_number": 369,
+      "merge_commit": "c29dbec7aad85440027a0d1a95abc079be3acb54",
+      "ci_status": "passed",
+      "ubuntu_seconds": 105,
+      "macos_seconds": 245,
+      "windows_seconds": 960,
+      "max_check_seconds": 960,
+      "slowest_check": "production-readiness (windows-latest)"
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-16-34",
+      "pr_number": 370,
+      "merge_commit": "95cfdbb464468f588576fda808faf3c046cdaf79",
+      "ci_status": "passed",
+      "ubuntu_seconds": 102,
+      "macos_seconds": 250,
+      "windows_seconds": 1080,
+      "max_check_seconds": 1080,
+      "slowest_check": "production-readiness (windows-latest)"
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-35-40",
+      "pr_number": 371,
+      "merge_commit": "b26fca846481429f72f4cd8ab63322da377c1bbe",
+      "ci_status": "passed",
+      "ubuntu_seconds": 109,
+      "macos_seconds": 246,
+      "windows_seconds": 1149,
+      "max_check_seconds": 1149,
+      "slowest_check": "production-readiness (windows-latest)"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

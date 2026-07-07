@@ -1,0 +1,21 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-feature-depth-next-wave-13-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/command_readback.json",
+    "foundry_continuation_handoff": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/foundry-continuation-handoff.json",
+    "foundry_continuation_prompt": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/foundry-continuation-prompt.md",
+    "foundry_import": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/tests.json",
+    "verification": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/verification.json"
+  },
+  "digest": "sha256:80c0a70b869228791dd01f120a251c603fb258f465f04e5f16fbf1a1a04ffbd7"
+}
