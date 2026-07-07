@@ -881,13 +881,7 @@ fi
 pass "lease-resume-wave-public-safety-readback"
 
 scan_file="$OUT/public-safety-files.txt"
-find . \
-  -path './.git' -prune -o \
-  -path './target' -prune -o \
-  -path './.atlas-local' -prune -o \
-  -path './.atlas-state' -prune -o \
-  -path './atlas' -prune -o \
-  -type f -print > "$scan_file"
+git ls-files > "$scan_file"
 
 patterns=(
   '/'"Users/"

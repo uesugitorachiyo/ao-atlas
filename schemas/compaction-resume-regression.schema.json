@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.compaction-resume-regression.v0.1",
+  "title": "AO Atlas Compaction Resume Regression",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_prompt_fixture_path",
+    "source_prompt_markdown_path",
+    "source_readback_path",
+    "completed_nodes_before",
+    "total_nodes",
+    "ready_nodes_before",
+    "blocked_nodes_before",
+    "failed_nodes_before",
+    "first_executable_node_before",
+    "exact_next_action_before",
+    "return_gate_status_before",
+    "continuation_contract_reason_before",
+    "early_return_risk_status_before",
+    "final_response_allowed_before",
+    "refuses_final_response_before",
+    "regression_assertions",
+    "expected_next_node_after_completion",
+    "promotion_requested",
+    "promotion_granted",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.compaction-resume-regression.v0.1"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "guarded"
+    },
+    "source_prompt_fixture_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_prompt_fixture_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_prompt_markdown_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_prompt_markdown_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_prompt_first_executable_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_prompt_exact_next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_prompt_active_node_preserved": {
+      "type": "boolean"
+    },
+    "source_prompt_exact_action_preserved": {
+      "type": "boolean"
+    },
+    "completed_nodes_before": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "total_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "ready_nodes_before": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "blocked_nodes_before": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failed_nodes_before": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "first_executable_node_before": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exact_next_action_before": {
+      "type": "string",
+      "minLength": 1
+    },
+    "return_gate_status_before": {
+      "type": "string",
+      "minLength": 1
+    },
+    "continuation_contract_reason_before": {
+      "type": "string",
+      "minLength": 1
+    },
+    "early_return_risk_status_before": {
+      "type": "string",
+      "minLength": 1
+    },
+    "final_response_allowed_before": {
+      "const": false
+    },
+    "refuses_final_response_before": {
+      "const": true
+    },
+    "regression_assertions": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "expected_next_node_after_completion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "promotion_requested": {
+      "const": false
+    },
+    "promotion_granted": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

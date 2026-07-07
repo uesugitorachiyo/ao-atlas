@@ -341,6 +341,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:compaction-resume-prompt", err
 		}
 		return "typed:compaction-resume-prompt", ValidateAtlasCompactionResumePrompt(value)
+	case AtlasCompactionResumeRegressionContract:
+		value, err := LoadJSON[AtlasCompactionResumeRegression](path)
+		if err != nil {
+			return "typed:compaction-resume-regression", err
+		}
+		return "typed:compaction-resume-regression", ValidateAtlasCompactionResumeRegression(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

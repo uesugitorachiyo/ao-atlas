@@ -47,6 +47,7 @@ const (
 	AtlasLocalMainSyncReadbackContract           = "ao.atlas.local-main-sync-readback.v0.1"
 	AtlasBranchCleanupHandoffSummaryContract     = "ao.atlas.branch-cleanup-handoff-summary.v0.1"
 	AtlasCompactionResumePromptContract          = "ao.atlas.compaction-resume-prompt.v0.1"
+	AtlasCompactionResumeRegressionContract      = "ao.atlas.compaction-resume-regression.v0.1"
 	WorkgraphContract                            = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract                  = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                          = "ao.atlas.factory-task.v0.1"

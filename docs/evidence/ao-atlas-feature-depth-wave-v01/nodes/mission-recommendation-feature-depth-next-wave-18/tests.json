@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-18",
+  "task_id": "mission-recommendation-feature-depth-next-wave-18-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveCompactionResumeRegression' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "missing compaction-resume-regression CLI route and typed compaction resume regression validator"
+  },
+  "fixture_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveCompactionResumeRegression' -count=1",
+    "status": "failed_before_fixture_regeneration",
+    "failure": "missing compaction-resume-regression fixture after generator and typed validator were added"
+  },
+  "ci_repair_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveCompactionResumeRegressionDigestNormalizesPromptLineEndings' -count=1",
+    "status": "failed_before_repair",
+    "failure": "prompt markdown digest differed between LF and CRLF checkout line endings"
+  },
+  "ci_wait_state_red_test": {
+    "command": "go test ./internal/atlas -run 'TestProductionReadinessPublicSafetyScanUsesTrackedFiles' -count=1",
+    "status": "failed_before_repair",
+    "failure": "production readiness public-safety scan still used an unbounded working-tree find"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveCompactionResumeRegression' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}
