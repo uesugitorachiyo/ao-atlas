@@ -1441,6 +1441,46 @@ type AtlasFoundryTerminalStatusExamplesValidation struct {
 	RSIRemainsDenied                         bool                                `json:"rsi_remains_denied"`
 }
 
+type AtlasMissionDashboardClosureBinding struct {
+	Schema                     string                                   `json:"schema"`
+	NodeID                     string                                   `json:"node_id"`
+	Status                     string                                   `json:"status"`
+	SourceReadbackPath         string                                   `json:"source_readback_path"`
+	SourceReadbackDigest       string                                   `json:"source_readback_digest"`
+	SourceNodeDir              string                                   `json:"source_node_dir"`
+	CompletedNodesBefore       int                                      `json:"completed_nodes_before"`
+	ReadyNodesBefore           int                                      `json:"ready_nodes_before"`
+	BlockedNodesBefore         int                                      `json:"blocked_nodes_before"`
+	FailedNodesBefore          int                                      `json:"failed_nodes_before"`
+	FirstExecutableNode        string                                   `json:"first_executable_node"`
+	ExactNextAction            string                                   `json:"exact_next_action"`
+	FinalResponseAllowed       bool                                     `json:"final_response_allowed"`
+	RowCount                   int                                      `json:"row_count"`
+	Rows                       []AtlasMissionDashboardClosureBindingRow `json:"rows"`
+	AtlasClosureEvidenceBound  bool                                     `json:"atlas_closure_evidence_bound"`
+	EveryRowHasClosureEvidence bool                                     `json:"every_row_has_closure_evidence"`
+	EveryRowPreservesSafety    bool                                     `json:"every_row_preserves_safety"`
+	DashboardBindingStatus     string                                   `json:"dashboard_binding_status"`
+	SchedulesWork              bool                                     `json:"schedules_work"`
+	ExecutesWork               bool                                     `json:"executes_work"`
+	ApprovesWork               bool                                     `json:"approves_work"`
+	ClaimsAuthorityAdvance     bool                                     `json:"claims_authority_advance"`
+	RSIRemainsDenied           bool                                     `json:"rsi_remains_denied"`
+}
+
+type AtlasMissionDashboardClosureBindingRow struct {
+	Repo                    string `json:"repo"`
+	Role                    string `json:"role"`
+	ClosureEvidencePath     string `json:"closure_evidence_path"`
+	ClosureEvidenceDigest   string `json:"closure_evidence_digest"`
+	ReadinessStatus         string `json:"readiness_status"`
+	EvidenceStatus          string `json:"evidence_status"`
+	ProvenanceRequired      bool   `json:"provenance_required"`
+	FinalResponseAllowed    bool   `json:"final_response_allowed"`
+	RSIRemainsDenied        bool   `json:"rsi_remains_denied"`
+	AuthorityAdvanceClaimed bool   `json:"authority_advance_claimed"`
+}
+
 type AtlasContinuationContract struct {
 	ContractVersion      string `json:"contract_version"`
 	Status               string `json:"status"`

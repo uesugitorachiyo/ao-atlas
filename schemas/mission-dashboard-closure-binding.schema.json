@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.mission-dashboard-closure-binding.v0.1",
+  "title": "AO Atlas Mission Dashboard Closure Binding",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_readback_path",
+    "source_readback_digest",
+    "source_node_dir",
+    "completed_nodes_before",
+    "ready_nodes_before",
+    "blocked_nodes_before",
+    "failed_nodes_before",
+    "first_executable_node",
+    "exact_next_action",
+    "final_response_allowed",
+    "row_count",
+    "rows",
+    "atlas_closure_evidence_bound",
+    "every_row_has_closure_evidence",
+    "every_row_preserves_safety",
+    "dashboard_binding_status",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "ao.atlas.mission-dashboard-closure-binding.v0.1" },
+    "node_id": { "type": "string", "minLength": 1 },
+    "status": { "const": "mission_dashboard_closure_bound" },
+    "source_readback_path": { "type": "string", "minLength": 1 },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_node_dir": { "type": "string", "minLength": 1 },
+    "completed_nodes_before": { "type": "integer", "minimum": 1 },
+    "ready_nodes_before": { "type": "integer", "minimum": 1 },
+    "blocked_nodes_before": { "type": "integer", "minimum": 0 },
+    "failed_nodes_before": { "type": "integer", "minimum": 0 },
+    "first_executable_node": { "type": "string", "minLength": 1 },
+    "exact_next_action": { "type": "string", "minLength": 1 },
+    "final_response_allowed": { "const": false },
+    "row_count": { "const": 6 },
+    "rows": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "$ref": "#/$defs/dashboard_row" }
+    },
+    "atlas_closure_evidence_bound": { "const": true },
+    "every_row_has_closure_evidence": { "const": true },
+    "every_row_preserves_safety": { "const": true },
+    "dashboard_binding_status": { "const": "multi_repo_rows_bound_to_closure_evidence" },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "dashboard_row": {
+      "type": "object",
+      "required": [
+        "repo",
+        "role",
+        "closure_evidence_path",
+        "closure_evidence_digest",
+        "readiness_status",
+        "evidence_status",
+        "provenance_required",
+        "final_response_allowed",
+        "rsi_remains_denied",
+        "authority_advance_claimed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "repo": {
+          "enum": [
+            "ao-atlas",
+            "ao-command",
+            "ao-foundry",
+            "ao-mission",
+            "ao-promoter",
+            "ao-sentinel"
+          ]
+        },
+        "role": {
+          "enum": [
+            "workgraph_state_owner",
+            "compact_readback_owner",
+            "bounded_implementation_handoff",
+            "checkpoint_readback_owner",
+            "no_promotion_rollup_owner",
+            "public_safety_scan_owner"
+          ]
+        },
+        "closure_evidence_path": { "type": "string", "minLength": 1 },
+        "closure_evidence_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "readiness_status": {
+          "enum": [
+            "ready_work_remains",
+            "single_active_import_closed",
+            "readback_agrees",
+            "no_promotion_requested",
+            "public_safety_passed",
+            "checkpoint_readback_bound"
+          ]
+        },
+        "evidence_status": { "const": "bound" },
+        "provenance_required": { "const": true },
+        "final_response_allowed": { "const": false },
+        "rsi_remains_denied": { "const": true },
+        "authority_advance_claimed": { "const": false }
+      }
+    }
+  }
+}
