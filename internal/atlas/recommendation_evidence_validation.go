@@ -281,6 +281,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:run-link-schema-coverage", err
 		}
 		return "typed:run-link-schema-coverage", ValidateAtlasRunLinkSchemaCoverage(value)
+	case AtlasSchemaValidatorDriftContract:
+		value, err := LoadJSON[AtlasSchemaValidatorDriftEvidence](path)
+		if err != nil {
+			return "typed:schema-validator-drift", err
+		}
+		return "typed:schema-validator-drift", ValidateAtlasSchemaValidatorDriftEvidence(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

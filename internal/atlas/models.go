@@ -545,6 +545,32 @@ type AtlasRunLinkSchemaCoverageItem struct {
 	Digest           string `json:"digest"`
 }
 
+type AtlasSchemaValidatorDriftEvidence struct {
+	Schema                 string         `json:"schema"`
+	Status                 string         `json:"status"`
+	SourceReportPath       string         `json:"source_report_path"`
+	TargetReportPath       string         `json:"target_report_path"`
+	SourceReportDigest     string         `json:"source_report_digest"`
+	TargetReportDigest     string         `json:"target_report_digest"`
+	SourceNodeCount        int            `json:"source_node_count"`
+	TargetNodeCount        int            `json:"target_node_count"`
+	JSONFileDelta          int            `json:"json_file_delta"`
+	TypedValidatorDelta    int            `json:"typed_validator_delta"`
+	GenericSchemaDelta     int            `json:"generic_schema_delta"`
+	SchemaCountDeltas      map[string]int `json:"schema_count_deltas"`
+	ValidatorCountDeltas   map[string]int `json:"validator_count_deltas"`
+	AddedSchemas           []string       `json:"added_schemas"`
+	LostSchemas            []string       `json:"lost_schemas"`
+	AddedValidators        []string       `json:"added_validators"`
+	LostValidators         []string       `json:"lost_validators"`
+	UnexpectedLossDetected bool           `json:"unexpected_loss_detected"`
+	SchedulesWork          bool           `json:"schedules_work"`
+	ExecutesWork           bool           `json:"executes_work"`
+	ApprovesWork           bool           `json:"approves_work"`
+	ClaimsAuthorityAdvance bool           `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool           `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

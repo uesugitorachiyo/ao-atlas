@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -435,6 +435,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "run-link-schema-coverage" {
 		return runMissionRecommendationsRunLinkSchemaCoverage(args[1:], stdout)
 	}
+	if args[0] == "schema-validator-drift" {
+		return runMissionRecommendationsSchemaValidatorDrift(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -448,7 +451,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -872,6 +875,54 @@ func runMissionRecommendationsRunLinkSchemaCoverage(args []string, stdout io.Wri
 		coverage.Status,
 		coverage.RunLinkCount,
 		coverage.ValidatorCounts["typed:run-link"],
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsSchemaValidatorDrift(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations schema-validator-drift", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	sourceReportPath := fs.String("source-report", "", "source recommendation evidence validation report path")
+	targetReportPath := fs.String("target-report", "", "target recommendation evidence validation report path")
+	outPath := fs.String("out", "", "schema validator drift output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	for name, value := range map[string]string{
+		"--source-report": *sourceReportPath,
+		"--target-report": *targetReportPath,
+	} {
+		if strings.TrimSpace(value) == "" {
+			return fmt.Errorf("%s is required", name)
+		}
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && (samePath(*sourceReportPath, *outPath) || samePath(*targetReportPath, *outPath)) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	drift, err := BuildAtlasSchemaValidatorDriftEvidence(*sourceReportPath, *targetReportPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, drift); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, drift)
+	}
+	fmt.Fprintf(stdout, "status=%s\njson_file_delta=%d\ntyped_validator_delta=%d\ngeneric_schema_delta=%d\nlost_schemas=%d\nlost_validators=%d\nschema_validator_drift=%s\n",
+		drift.Status,
+		drift.JSONFileDelta,
+		drift.TypedValidatorDelta,
+		drift.GenericSchemaDelta,
+		len(drift.LostSchemas),
+		len(drift.LostValidators),
 		filepath.ToSlash(*outPath),
 	)
 	return nil
