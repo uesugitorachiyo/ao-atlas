@@ -305,6 +305,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:failed-check-replay-fixture", err
 		}
 		return "typed:failed-check-replay-fixture", ValidateAtlasFailedCheckReplayFixture(value)
+	case AtlasMergeCheckBindingContract:
+		value, err := LoadJSON[AtlasMergeCheckBinding](path)
+		if err != nil {
+			return "typed:merge-check-binding", err
+		}
+		return "typed:merge-check-binding", ValidateAtlasMergeCheckBinding(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

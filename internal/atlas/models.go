@@ -703,6 +703,43 @@ type AtlasFailedCheckReplayFixtureCase struct {
 	Reason        string `json:"reason"`
 }
 
+type AtlasMergeCheckBindingInput struct {
+	Schema                 string                      `json:"schema"`
+	Status                 string                      `json:"status"`
+	Rows                   []AtlasMergeCheckBindingRow `json:"rows"`
+	SchedulesWork          bool                        `json:"schedules_work"`
+	ExecutesWork           bool                        `json:"executes_work"`
+	ApprovesWork           bool                        `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                        `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                        `json:"rsi_remains_denied"`
+}
+
+type AtlasMergeCheckBinding struct {
+	Schema                  string                      `json:"schema"`
+	Status                  string                      `json:"status"`
+	SourceInputPath         string                      `json:"source_input_path"`
+	SourceInputDigest       string                      `json:"source_input_digest"`
+	RowCount                int                         `json:"row_count"`
+	PassedRequiredCheckRows int                         `json:"passed_required_check_rows"`
+	UnboundMergeCommits     int                         `json:"unbound_merge_commits"`
+	Rows                    []AtlasMergeCheckBindingRow `json:"rows"`
+	SchedulesWork           bool                        `json:"schedules_work"`
+	ExecutesWork            bool                        `json:"executes_work"`
+	ApprovesWork            bool                        `json:"approves_work"`
+	ClaimsAuthorityAdvance  bool                        `json:"claims_authority_advance"`
+	RSIRemainsDenied        bool                        `json:"rsi_remains_denied"`
+}
+
+type AtlasMergeCheckBindingRow struct {
+	NodeID                   string `json:"node_id"`
+	PRNumber                 int    `json:"pr_number"`
+	MergeCommit              string `json:"merge_commit"`
+	RequiredCheckCount       int    `json:"required_check_count"`
+	PassedRequiredCheckCount int    `json:"passed_required_check_count"`
+	RequiredChecksStatus     string `json:"required_checks_status,omitempty"`
+	MergeCommitBound         bool   `json:"merge_commit_bound,omitempty"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
