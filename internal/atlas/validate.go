@@ -45,6 +45,7 @@ const (
 	AtlasStaleRemoteBranchRepairContract         = "ao.atlas.stale-remote-branch-repair.v0.1"
 	AtlasLocalMainSyncReadbackInputContract      = "ao.atlas.local-main-sync-readback-input.v0.1"
 	AtlasLocalMainSyncReadbackContract           = "ao.atlas.local-main-sync-readback.v0.1"
+	AtlasBranchCleanupHandoffSummaryContract     = "ao.atlas.branch-cleanup-handoff-summary.v0.1"
 	WorkgraphContract                            = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract                  = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                          = "ao.atlas.factory-task.v0.1"

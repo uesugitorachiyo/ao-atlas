@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.branch-cleanup-handoff-summary.v0.1",
+  "title": "AO Atlas Branch Cleanup Handoff Summary",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "evidence_root",
+    "source_readback_path",
+    "source_readback_digest",
+    "completed_nodes",
+    "ready_nodes",
+    "total_nodes",
+    "first_executable_node",
+    "final_response_allowed",
+    "exact_next_action",
+    "post_merge_lifecycle_count",
+    "merged_and_cleaned_count",
+    "passed_ci_count",
+    "local_branch_deleted_count",
+    "remote_branch_deleted_count",
+    "branches_remaining_total",
+    "cleanup_complete",
+    "operator_handoff_status",
+    "entries",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.branch-cleanup-handoff-summary.v0.1"
+    },
+    "status": {
+      "const": "branch_cleanup_handoff_summarized"
+    },
+    "evidence_root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "completed_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "ready_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "total_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "first_executable_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "final_response_allowed": {
+      "const": false
+    },
+    "exact_next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "post_merge_lifecycle_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "merged_and_cleaned_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "passed_ci_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "local_branch_deleted_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "remote_branch_deleted_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "branches_remaining_total": {
+      "const": 0
+    },
+    "cleanup_complete": {
+      "const": true
+    },
+    "operator_handoff_status": {
+      "const": "cleanup_ledger_ready"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "node_id",
+          "status",
+          "pr_number",
+          "merge_commit",
+          "ci_status",
+          "local_branch_deleted",
+          "remote_branch_deleted",
+          "local_codex_branches_remaining",
+          "remote_codex_branches_remaining",
+          "digest"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "const": "merged_and_cleaned"
+          },
+          "pr_number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "merge_commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "ci_status": {
+            "const": "passed"
+          },
+          "local_branch_deleted": {
+            "const": true
+          },
+          "remote_branch_deleted": {
+            "const": true
+          },
+          "local_codex_branches_remaining": {
+            "const": 0
+          },
+          "remote_codex_branches_remaining": {
+            "const": 0
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}
