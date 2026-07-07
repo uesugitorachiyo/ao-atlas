@@ -1001,6 +1001,36 @@ type AtlasCompactionResumeRegression struct {
 	RSIRemainsDenied                 bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasResumeDenialEvidence struct {
+	Schema                     string          `json:"schema"`
+	Status                     string          `json:"status"`
+	SourceReadbackPath         string          `json:"source_readback_path"`
+	SourceReadbackDigest       string          `json:"source_readback_digest"`
+	MissionID                  string          `json:"mission_id"`
+	TargetInstance             string          `json:"target_instance"`
+	CompletedNodes             int             `json:"completed_nodes"`
+	TotalNodes                 int             `json:"total_nodes"`
+	ReadyNodes                 int             `json:"ready_nodes"`
+	BlockedNodes               int             `json:"blocked_nodes"`
+	FailedNodes                int             `json:"failed_nodes"`
+	CheckpointCount            int             `json:"checkpoint_count"`
+	CurrentNextExecutableNode  string          `json:"current_next_executable_node"`
+	ExactNextAction            string          `json:"exact_next_action"`
+	ReturnGateStatus           string          `json:"return_gate_status"`
+	ContinuationContractReason string          `json:"continuation_contract_reason"`
+	FinalResponseAllowed       bool            `json:"final_response_allowed"`
+	FinalResponseDenialGate    string          `json:"final_response_denial_gate"`
+	FinalResponseReason        string          `json:"final_response_reason"`
+	RefusesFinalResponse       bool            `json:"refuses_final_response"`
+	DenialAssertions           []string        `json:"denial_assertions"`
+	SafetyBoundaries           map[string]bool `json:"safety_boundaries"`
+	SchedulesWork              bool            `json:"schedules_work"`
+	ExecutesWork               bool            `json:"executes_work"`
+	ApprovesWork               bool            `json:"approves_work"`
+	ClaimsAuthorityAdvance     bool            `json:"claims_authority_advance"`
+	RSIRemainsDenied           bool            `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

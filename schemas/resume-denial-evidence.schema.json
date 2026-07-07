@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.resume-denial-evidence.v0.1",
+  "title": "AO Atlas Resume Denial Evidence",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "source_readback_path",
+    "source_readback_digest",
+    "mission_id",
+    "target_instance",
+    "completed_nodes",
+    "total_nodes",
+    "ready_nodes",
+    "blocked_nodes",
+    "failed_nodes",
+    "checkpoint_count",
+    "current_next_executable_node",
+    "exact_next_action",
+    "return_gate_status",
+    "continuation_contract_reason",
+    "final_response_allowed",
+    "final_response_denial_gate",
+    "final_response_reason",
+    "refuses_final_response",
+    "denial_assertions",
+    "safety_boundaries",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.resume-denial-evidence.v0.1"
+    },
+    "status": {
+      "const": "denied_ready_work_remains"
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "mission_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_instance": {
+      "type": "string",
+      "minLength": 1
+    },
+    "completed_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "total_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "ready_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "blocked_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failed_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "checkpoint_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "current_next_executable_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exact_next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "return_gate_status": {
+      "const": "blocked_ready_nodes_remain"
+    },
+    "continuation_contract_reason": {
+      "const": "ready_nodes_or_exact_next_action_remain"
+    },
+    "final_response_allowed": {
+      "const": false
+    },
+    "final_response_denial_gate": {
+      "const": "deny_ready_nodes_or_exact_next_action_remain"
+    },
+    "final_response_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "refuses_final_response": {
+      "const": true
+    },
+    "denial_assertions": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "safety_boundaries": {
+      "type": "object",
+      "required": [
+        "provider_calls",
+        "credential_inspection",
+        "direct_main_mutation",
+        "release_deploy_publish_upload_tag",
+        "dependency_updates",
+        "auth_policy_config_widening",
+        "hidden_instruction_mutation",
+        "broad_rsi_claim",
+        "rsi_remains_denied"
+      ],
+      "properties": {
+        "provider_calls": {
+          "const": false
+        },
+        "credential_inspection": {
+          "const": false
+        },
+        "direct_main_mutation": {
+          "const": false
+        },
+        "release_deploy_publish_upload_tag": {
+          "const": false
+        },
+        "dependency_updates": {
+          "const": false
+        },
+        "auth_policy_config_widening": {
+          "const": false
+        },
+        "hidden_instruction_mutation": {
+          "const": false
+        },
+        "broad_rsi_claim": {
+          "const": false
+        },
+        "rsi_remains_denied": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

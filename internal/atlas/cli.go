@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -468,6 +468,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "compaction-resume-regression" {
 		return runMissionRecommendationsCompactionResumeRegression(args[1:], stdout)
 	}
+	if args[0] == "resume-denial-evidence" {
+		return runMissionRecommendationsResumeDenialEvidence(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -481,7 +484,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1411,6 +1414,46 @@ func runMissionRecommendationsCompactionResumeRegression(args []string, stdout i
 		regression.FirstExecutableNodeBefore,
 		regression.SourcePromptExactActionPreserved,
 		regression.FinalResponseAllowedBefore,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsResumeDenialEvidence(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations resume-denial-evidence", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	readbackPath := fs.String("readback", "", "source recommendation readback path")
+	outPath := fs.String("out", "", "resume denial evidence output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*readbackPath) == "" {
+		return fmt.Errorf("--readback is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*readbackPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	evidence, err := BuildAtlasResumeDenialEvidence(*readbackPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteAtlasResumeDenialEvidence(*outPath, evidence); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, evidence)
+	}
+	fmt.Fprintf(stdout, "status=%s\nready_nodes=%d\ncurrent_next_executable_node=%s\nfinal_response_allowed=%t\nresume_denial_evidence=%s\n",
+		evidence.Status,
+		evidence.ReadyNodes,
+		evidence.CurrentNextExecutableNode,
+		evidence.FinalResponseAllowed,
 		filepath.ToSlash(*outPath),
 	)
 	return nil

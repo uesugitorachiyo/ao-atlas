@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-20",
+  "task_id": "mission-recommendation-feature-depth-next-wave-20-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-20",
+  "source_task_digest": "sha256:ef71487fee4768cbb2e316ce2bd41889e2e9a2ca3f72ddc88ef25d7b1d881ddc",
+  "selected_work": [
+    "Add a typed resume denial evidence model and validator for readbacks with ready work remaining.",
+    "Expose mission recommendations resume-denial-evidence as a deterministic CLI generator.",
+    "Record node 20 evidence proving final response remains blocked while node 20 is executable."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
