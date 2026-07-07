@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -459,6 +459,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "local-main-sync-readback" {
 		return runMissionRecommendationsLocalMainSyncReadback(args[1:], stdout)
 	}
+	if args[0] == "branch-cleanup-handoff-summary" {
+		return runMissionRecommendationsBranchCleanupHandoffSummary(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -472,7 +475,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1229,6 +1232,49 @@ func runMissionRecommendationsLocalMainSyncReadback(args []string, stdout io.Wri
 		readback.CodexBranchCleanupConfirmed,
 		readback.SafeToSelectNextNode,
 		readback.DenialCaseCount,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsBranchCleanupHandoffSummary(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations branch-cleanup-handoff-summary", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	evidenceRoot := fs.String("evidence-root", "", "feature depth evidence root")
+	sourceReadback := fs.String("source-readback", "", "source recommendation readback path")
+	outPath := fs.String("out", "", "branch cleanup handoff summary output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*evidenceRoot) == "" {
+		return fmt.Errorf("--evidence-root is required")
+	}
+	if strings.TrimSpace(*sourceReadback) == "" {
+		return fmt.Errorf("--source-readback is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	summary, err := BuildAtlasBranchCleanupHandoffSummary(*evidenceRoot, *sourceReadback)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, summary); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, summary)
+	}
+	fmt.Fprintf(stdout, "status=%s\npost_merge_lifecycle_count=%d\nmerged_and_cleaned_count=%d\npassed_ci_count=%d\ncleanup_complete=%t\noperator_handoff_status=%s\nbranch_cleanup_handoff_summary=%s\n",
+		summary.Status,
+		summary.PostMergeLifecycleCount,
+		summary.MergedAndCleanedCount,
+		summary.PassedCICount,
+		summary.CleanupComplete,
+		summary.OperatorHandoffStatus,
 		filepath.ToSlash(*outPath),
 	)
 	return nil
