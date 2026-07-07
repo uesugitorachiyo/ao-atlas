@@ -413,6 +413,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:run-link-digest-check", err
 		}
 		return "typed:run-link-digest-check", ValidateAtlasRunLinkDigestCheck(value)
+	case AtlasFoundryHandoffReplayFixtureContract:
+		value, err := LoadJSON[AtlasFoundryHandoffReplayFixture](path)
+		if err != nil {
+			return "typed:foundry-handoff-replay-fixture", err
+		}
+		return "typed:foundry-handoff-replay-fixture", ValidateAtlasFoundryHandoffReplayFixture(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

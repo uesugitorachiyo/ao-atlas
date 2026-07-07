@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-31",
+  "task_id": "mission-recommendation-feature-depth-next-wave-31-task",
+  "status": "ready",
+  "rollback_scope": [
+    "internal/atlas/mission_foundry_handoff_replay_fixture.go",
+    "internal/atlas/mission_foundry_handoff_replay_fixture_test.go",
+    "internal/atlas/cli.go foundry-handoff-replay-fixture routing",
+    "internal/atlas/models.go AtlasFoundryHandoffReplayFixture",
+    "internal/atlas/recommendation_evidence_validation.go typed validator binding",
+    "internal/atlas/validate.go contract constant",
+    "schemas/foundry-handoff-replay-fixture.schema.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-31"
+  ],
+  "rollback_command": "revert node 31 commit and remove generated node 31 evidence",
+  "data_loss_risk": "none; generated evidence and additive Foundry handoff replay fixture support only",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
