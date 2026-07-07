@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-37",
+  "task_id": "mission-recommendation-feature-depth-next-wave-37-task",
+  "status": "passed",
+  "passed_commands": [
+    "go test ./internal/atlas -run TestFeatureDepthWaveRankedExportBindsFinalClosureReadbackEvidence -count=1",
+    "find docs/evidence/ao-atlas-feature-depth-wave-v01 -name '*.json' -print0 | xargs -0 jq -e .",
+    "go run ./cmd/atlas mission recommendations scoped-public-safety-scan --node-id mission-recommendation-feature-depth-next-wave-37 --scope internal/atlas/mission_feature_depth_ranked_export_test.go --scope docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-37 --out docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-37/scoped-public-safety-scan.json",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-wave-v01 --out docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-37/feature-depth-evidence-validation-report.json",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas && rm -f atlas && test ! -e atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "required_commands": [
+    "go test ./internal/atlas -run TestFeatureDepthWaveRankedExportBindsFinalClosureReadbackEvidence -count=1",
+    "find docs/evidence/ao-atlas-feature-depth-wave-v01 -name '*.json' -print0 | xargs -0 jq -e .",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-wave-v01 --out docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-37/feature-depth-evidence-validation-report.json",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "repair_notes": [
+    "Ranked Feature Depth export reuses existing export-next-wave implementation and final closure source evidence.",
+    "Replaced testing.Chdir with Go 1.22-compatible os.Chdir restore handling after go vet flagged the version mismatch.",
+    "Local atlas build artifact was removed after go build ./cmd/atlas before production-readiness checks.",
+    "Production readiness passed with score 100/100."
+  ]
+}
