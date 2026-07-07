@@ -1290,6 +1290,37 @@ type AtlasCommandPromoterDisagreementDenialCase struct {
 	DenialReason                      string `json:"denial_reason"`
 }
 
+type AtlasFoundryImportReadinessBinding struct {
+	Schema                      string `json:"schema"`
+	NodeID                      string `json:"node_id"`
+	Status                      string `json:"status"`
+	SourceReadbackPath          string `json:"source_readback_path"`
+	SourceReadbackDigest        string `json:"source_readback_digest"`
+	SourceWorkgraphPath         string `json:"source_workgraph_path"`
+	SourceWorkgraphDigest       string `json:"source_workgraph_digest"`
+	FoundryImportPath           string `json:"foundry_import_path"`
+	FoundryImportDigest         string `json:"foundry_import_digest"`
+	FoundryHandoffPath          string `json:"foundry_handoff_path"`
+	FoundryHandoffDigest        string `json:"foundry_handoff_digest"`
+	FoundryTaskCount            int    `json:"foundry_task_count"`
+	ActiveNodeID                string `json:"active_node_id"`
+	ActiveTaskID                string `json:"active_task_id"`
+	WorkgraphNextReadyNode      string `json:"workgraph_next_ready_node"`
+	ReadbackFirstExecutableNode string `json:"readback_first_executable_node"`
+	HandoffFirstSafeNode        string `json:"handoff_first_safe_node"`
+	DependenciesCompleted       bool   `json:"dependencies_completed"`
+	MatchesWorkgraph            bool   `json:"matches_workgraph"`
+	MatchesReadbackNextNode     bool   `json:"matches_readback_next_node"`
+	HandoffMatchesImport        bool   `json:"handoff_matches_import"`
+	FinalResponseAllowed        bool   `json:"final_response_allowed"`
+	ExactNextAction             string `json:"exact_next_action"`
+	SchedulesWork               bool   `json:"schedules_work"`
+	ExecutesWork                bool   `json:"executes_work"`
+	ApprovesWork                bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance      bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied            bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

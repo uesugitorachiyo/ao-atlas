@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.foundry-import-readiness-binding.v0.1",
+  "title": "AO Atlas Foundry Import Readiness Binding",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_readback_path",
+    "source_readback_digest",
+    "source_workgraph_path",
+    "source_workgraph_digest",
+    "foundry_import_path",
+    "foundry_import_digest",
+    "foundry_handoff_path",
+    "foundry_handoff_digest",
+    "foundry_task_count",
+    "active_node_id",
+    "active_task_id",
+    "workgraph_next_ready_node",
+    "readback_first_executable_node",
+    "handoff_first_safe_node",
+    "dependencies_completed",
+    "matches_workgraph",
+    "matches_readback_next_node",
+    "handoff_matches_import",
+    "final_response_allowed",
+    "exact_next_action",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.foundry-import-readiness-binding.v0.1"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "single_active_foundry_import_ready",
+        "foundry_import_readiness_binding_failed"
+      ]
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_workgraph_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_workgraph_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "foundry_import_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "foundry_import_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "foundry_handoff_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "foundry_handoff_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "foundry_task_count": {
+      "const": 1
+    },
+    "active_node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "active_task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workgraph_next_ready_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "readback_first_executable_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "handoff_first_safe_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dependencies_completed": {
+      "const": true
+    },
+    "matches_workgraph": {
+      "const": true
+    },
+    "matches_readback_next_node": {
+      "const": true
+    },
+    "handoff_matches_import": {
+      "const": true
+    },
+    "final_response_allowed": {
+      "const": false
+    },
+    "exact_next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}
