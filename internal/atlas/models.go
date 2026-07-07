@@ -1481,6 +1481,41 @@ type AtlasMissionDashboardClosureBindingRow struct {
 	AuthorityAdvanceClaimed bool   `json:"authority_advance_claimed"`
 }
 
+type AtlasMissionDashboardProvenanceLinks struct {
+	Schema                            string                                `json:"schema"`
+	NodeID                            string                                `json:"node_id"`
+	Status                            string                                `json:"status"`
+	SourceDashboardBindingPath        string                                `json:"source_dashboard_binding_path"`
+	SourceDashboardBindingDigest      string                                `json:"source_dashboard_binding_digest"`
+	SourceRowCount                    int                                   `json:"source_row_count"`
+	RequiredRepos                     []string                              `json:"required_repos"`
+	ProvenanceLinkCount               int                                   `json:"provenance_link_count"`
+	ProvenanceLinks                   []AtlasMissionDashboardProvenanceLink `json:"provenance_links"`
+	AllRequiredProvenanceLinked       bool                                  `json:"all_required_provenance_linked"`
+	EveryLinkMatchesDashboard         bool                                  `json:"every_link_matches_dashboard"`
+	EveryLinkedArtifactDigestVerified bool                                  `json:"every_linked_artifact_digest_verified"`
+	FinalResponseAllowed              bool                                  `json:"final_response_allowed"`
+	SchedulesWork                     bool                                  `json:"schedules_work"`
+	ExecutesWork                      bool                                  `json:"executes_work"`
+	ApprovesWork                      bool                                  `json:"approves_work"`
+	ClaimsAuthorityAdvance            bool                                  `json:"claims_authority_advance"`
+	RSIRemainsDenied                  bool                                  `json:"rsi_remains_denied"`
+}
+
+type AtlasMissionDashboardProvenanceLink struct {
+	Repo                         string `json:"repo"`
+	Role                         string `json:"role"`
+	EvidencePath                 string `json:"evidence_path"`
+	EvidenceDigest               string `json:"evidence_digest"`
+	ProvenanceLinkStatus         string `json:"provenance_link_status"`
+	DashboardRowMatched          bool   `json:"dashboard_row_matched"`
+	ClosureEvidenceDigestMatches bool   `json:"closure_evidence_digest_matches"`
+	ArtifactDigestVerified       bool   `json:"artifact_digest_verified"`
+	FinalResponseAllowed         bool   `json:"final_response_allowed"`
+	RSIRemainsDenied             bool   `json:"rsi_remains_denied"`
+	AuthorityAdvanceClaimed      bool   `json:"authority_advance_claimed"`
+}
+
 type AtlasContinuationContract struct {
 	ContractVersion      string `json:"contract_version"`
 	Status               string `json:"status"`
