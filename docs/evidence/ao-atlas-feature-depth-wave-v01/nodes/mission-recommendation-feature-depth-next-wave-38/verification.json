@@ -28,6 +28,7 @@
   "repair_notes": [
     "Next-wave prompt generation reuses the existing recommendation import prompt builder and the node 37 ranked Feature Depth export.",
     "The generated prompt preserves the 40-node, 2-3 hour, planning-only continuation contract.",
+    "PR CI repair normalized the test source recommendation fixture and generated prompt comparison across Windows checkout line endings.",
     "Local atlas build artifact was removed after build verification.",
     "Production readiness passed with score 100/100."
   ]

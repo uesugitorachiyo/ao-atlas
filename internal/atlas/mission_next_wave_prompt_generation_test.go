@@ -28,12 +28,23 @@ func TestFeatureDepthWaveNextWavePromptPreservesMinimumTwoHourBudget(t *testing.
 	recordedOutDir := filepath.Join(nodeDir, "generated-next-wave")
 	recordedPromptPath := filepath.Join(recordedOutDir, "next-recommended-prompt.md")
 	recordedWavePath := filepath.Join(recordedOutDir, "recommendation-wave.json")
-	tmpOutDir := filepath.Join(t.TempDir(), "generated-next-wave")
+	tmpDir := t.TempDir()
+	normalizedRecommendationsPath := filepath.Join(tmpDir, "next-wave-feature-depth-recommendations.json")
+	recommendationsData, err := os.ReadFile(recommendationsPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	recommendationsData = bytes.ReplaceAll(recommendationsData, []byte("\r\n"), []byte("\n"))
+	recommendationsData = bytes.ReplaceAll(recommendationsData, []byte("\r"), []byte("\n"))
+	if err := os.WriteFile(normalizedRecommendationsPath, recommendationsData, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	tmpOutDir := filepath.Join(tmpDir, "generated-next-wave")
 
 	var out bytes.Buffer
 	code := Run([]string{
 		"mission", "recommendations", "import",
-		"--recommendations", recommendationsPath,
+		"--recommendations", normalizedRecommendationsPath,
 		"--target-instance", "ao-atlas-feature-depth-followup-wave-v01",
 		"--min-tasks", "40",
 		"--node-budget", "40",
@@ -65,10 +76,12 @@ func TestFeatureDepthWaveNextWavePromptPreservesMinimumTwoHourBudget(t *testing.
 	if err != nil {
 		t.Fatal(err)
 	}
-	if string(generatedPrompt) != string(recordedPrompt) {
-		t.Fatalf("next-wave prompt fixture changed\nwant digest %s\ngot  digest %s", digestValue(string(recordedPrompt)), digestValue(string(generatedPrompt)))
+	generatedPromptText := normalizeRecommendationPromptFixture(string(generatedPrompt))
+	recordedPromptText := normalizeRecommendationPromptFixture(string(recordedPrompt))
+	if generatedPromptText != recordedPromptText {
+		t.Fatalf("next-wave prompt fixture changed\nwant digest %s\ngot  digest %s", digestValue(recordedPromptText), digestValue(generatedPromptText))
 	}
-	prompt := string(recordedPrompt)
+	prompt := recordedPromptText
 	for _, want := range []string{
 		"Target 2-3 hours",
 		"min_minutes: 120",
@@ -105,4 +118,9 @@ func TestFeatureDepthWaveNextWavePromptPreservesMinimumTwoHourBudget(t *testing.
 		recordedWave.ApprovesWork {
 		t.Fatalf("next-wave prompt generation lost 40-node/two-hour planning-only contract: %#v", recordedWave)
 	}
+}
+
+func normalizeRecommendationPromptFixture(value string) string {
+	value = strings.ReplaceAll(value, "\r\n", "\n")
+	return strings.ReplaceAll(value, "\r", "\n")
 }
