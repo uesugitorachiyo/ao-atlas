@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-19",
+  "task_id": "mission-recommendation-feature-depth-next-wave-19-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveCompactionResumePromptBindsCheckpointDigest' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "missing --checkpoint-readback flag on compaction-resume-prompt command"
+  },
+  "fixture_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveCompactionResumePromptBindsCheckpointDigest' -count=1",
+    "status": "failed_before_fixture_generation",
+    "failure": "missing checkpoint-digest resume prompt fixture after generator support was added"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveCompactionResumePrompt' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}

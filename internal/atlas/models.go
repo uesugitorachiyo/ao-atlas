@@ -939,6 +939,8 @@ type AtlasCompactionResumePrompt struct {
 	PromptPath                      string `json:"prompt_path"`
 	LeaseStartPath                  string `json:"lease_start_path,omitempty"`
 	WorkgraphPath                   string `json:"workgraph_path,omitempty"`
+	CheckpointReadbackPath          string `json:"checkpoint_readback_path,omitempty"`
+	CheckpointReadbackDigest        string `json:"checkpoint_readback_digest,omitempty"`
 	StartedAt                       string `json:"started_at,omitempty"`
 	CompletedAt                     string `json:"completed_at,omitempty"`
 	ElapsedMinutes                  int    `json:"elapsed_minutes,omitempty"`
