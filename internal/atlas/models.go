@@ -1559,6 +1559,52 @@ type AtlasMissionDashboardFreshnessCheck struct {
 	EvidenceDigest string `json:"evidence_digest"`
 }
 
+type AtlasMissionDashboardCompactFilters struct {
+	Schema                             string                               `json:"schema"`
+	NodeID                             string                               `json:"node_id"`
+	Status                             string                               `json:"status"`
+	SourceReadbackPath                 string                               `json:"source_readback_path"`
+	SourceReadbackDigest               string                               `json:"source_readback_digest"`
+	SourceWorkgraphPath                string                               `json:"source_workgraph_path"`
+	SourceWorkgraphDigest              string                               `json:"source_workgraph_digest"`
+	TotalNodes                         int                                  `json:"total_nodes"`
+	CompletedNodes                     int                                  `json:"completed_nodes"`
+	ReadyNodes                         int                                  `json:"ready_nodes"`
+	BlockedNodes                       int                                  `json:"blocked_nodes"`
+	FailedNodes                        int                                  `json:"failed_nodes"`
+	ExecutableReadyNodes               int                                  `json:"executable_ready_nodes"`
+	FirstExecutableNode                string                               `json:"first_executable_node"`
+	ExactNextAction                    string                               `json:"exact_next_action"`
+	ReturnGateStatus                   string                               `json:"return_gate_status"`
+	ActiveFilterKey                    string                               `json:"active_filter_key"`
+	FilterCount                        int                                  `json:"filter_count"`
+	Filters                            []AtlasMissionDashboardCompactFilter `json:"filters"`
+	ReadyFilterActionable              bool                                 `json:"ready_filter_actionable"`
+	BlockedFilterEmpty                 bool                                 `json:"blocked_filter_empty"`
+	FailedFilterEmpty                  bool                                 `json:"failed_filter_empty"`
+	CompletedHistoryAvailable          bool                                 `json:"completed_history_available"`
+	ReadbackCountsMatchWorkgraphCounts bool                                 `json:"readback_counts_match_workgraph_counts"`
+	FinalResponseAllowed               bool                                 `json:"final_response_allowed"`
+	SchedulesWork                      bool                                 `json:"schedules_work"`
+	ExecutesWork                       bool                                 `json:"executes_work"`
+	ApprovesWork                       bool                                 `json:"approves_work"`
+	ClaimsAuthorityAdvance             bool                                 `json:"claims_authority_advance"`
+	RSIRemainsDenied                   bool                                 `json:"rsi_remains_denied"`
+}
+
+type AtlasMissionDashboardCompactFilter struct {
+	Key              string   `json:"key"`
+	Label            string   `json:"label"`
+	Count            int      `json:"count"`
+	PreviewNodeIDs   []string `json:"preview_node_ids"`
+	OmittedNodeCount int      `json:"omitted_node_count"`
+	FirstNodeID      string   `json:"first_node_id"`
+	LastNodeID       string   `json:"last_node_id"`
+	Actionable       bool     `json:"actionable"`
+	Empty            bool     `json:"empty"`
+	DashboardStatus  string   `json:"dashboard_status"`
+}
+
 type AtlasContinuationContract struct {
 	ContractVersion      string `json:"contract_version"`
 	Status               string `json:"status"`

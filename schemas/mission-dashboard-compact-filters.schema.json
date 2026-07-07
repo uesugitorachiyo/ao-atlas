@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.mission-dashboard-compact-filters.v0.1",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_readback_path",
+    "source_readback_digest",
+    "source_workgraph_path",
+    "source_workgraph_digest",
+    "total_nodes",
+    "completed_nodes",
+    "ready_nodes",
+    "blocked_nodes",
+    "failed_nodes",
+    "executable_ready_nodes",
+    "first_executable_node",
+    "exact_next_action",
+    "return_gate_status",
+    "active_filter_key",
+    "filter_count",
+    "filters",
+    "ready_filter_actionable",
+    "blocked_filter_empty",
+    "failed_filter_empty",
+    "completed_history_available",
+    "readback_counts_match_workgraph_counts",
+    "final_response_allowed",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.mission-dashboard-compact-filters.v0.1"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "compact_dashboard_filters_bound"
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_workgraph_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_workgraph_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "total_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "completed_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ready_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "blocked_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failed_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "executable_ready_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "first_executable_node": {
+      "type": "string"
+    },
+    "exact_next_action": {
+      "type": "string"
+    },
+    "return_gate_status": {
+      "type": "string"
+    },
+    "active_filter_key": {
+      "type": "string",
+      "enum": ["ready", "blocked", "failed", "completed"]
+    },
+    "filter_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "count",
+          "preview_node_ids",
+          "omitted_node_count",
+          "first_node_id",
+          "last_node_id",
+          "actionable",
+          "empty",
+          "dashboard_status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "preview_node_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "omitted_node_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "first_node_id": {
+            "type": "string"
+          },
+          "last_node_id": {
+            "type": "string"
+          },
+          "actionable": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          },
+          "dashboard_status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ready_filter_actionable": {
+      "type": "boolean"
+    },
+    "blocked_filter_empty": {
+      "type": "boolean"
+    },
+    "failed_filter_empty": {
+      "type": "boolean"
+    },
+    "completed_history_available": {
+      "type": "boolean"
+    },
+    "readback_counts_match_workgraph_counts": {
+      "type": "boolean"
+    },
+    "final_response_allowed": {
+      "type": "boolean"
+    },
+    "schedules_work": {
+      "type": "boolean"
+    },
+    "executes_work": {
+      "type": "boolean"
+    },
+    "approves_work": {
+      "type": "boolean"
+    },
+    "claims_authority_advance": {
+      "type": "boolean"
+    },
+    "rsi_remains_denied": {
+      "type": "boolean"
+    }
+  }
+}

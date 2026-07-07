@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-35",
+  "task_id": "mission-recommendation-feature-depth-next-wave-35-task",
+  "status": "merged_and_cleaned",
+  "repo": "ao-atlas",
+  "branch": "codex/feature-depth-wave-node-35-dashboard-freshness-checks",
+  "pr_number": 362,
+  "merge_commit": "3b7276222a97f406ba09546a53838aebf007a1dd",
+  "ci_status": "passed",
+  "local_main_synced": true,
+  "origin_main_synced": true,
+  "local_branch_deleted": true,
+  "remote_branch_deleted": true,
+  "local_codex_branches_remaining": 0,
+  "remote_codex_branches_remaining": 0,
+  "final_head": "3b7276222a97f406ba09546a53838aebf007a1dd",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

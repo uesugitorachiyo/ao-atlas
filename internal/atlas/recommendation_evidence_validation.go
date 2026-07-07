@@ -443,6 +443,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:mission-dashboard-freshness-checks", err
 		}
 		return "typed:mission-dashboard-freshness-checks", ValidateAtlasMissionDashboardFreshnessChecks(value)
+	case AtlasMissionDashboardCompactFiltersContract:
+		value, err := LoadJSON[AtlasMissionDashboardCompactFilters](path)
+		if err != nil {
+			return "typed:mission-dashboard-compact-filters", err
+		}
+		return "typed:mission-dashboard-compact-filters", ValidateAtlasMissionDashboardCompactFilters(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {
