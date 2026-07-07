@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-13",
+  "task_id": "mission-recommendation-feature-depth-next-wave-13-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-13",
+  "source_task_digest": "sha256:5f91510913909ce3accdd0415c5a4153084228dae296f04ca14bface6fc697f7",
+  "selected_work": [
+    "Add a post-merge branch deletion readback model and validator.",
+    "Add a CLI generator that binds post-merge lifecycle evidence to branch cleanup counts.",
+    "Generate node 13 cleanup readback evidence across the first 12 completed Feature Depth nodes."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

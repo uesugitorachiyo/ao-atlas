@@ -311,6 +311,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:merge-check-binding", err
 		}
 		return "typed:merge-check-binding", ValidateAtlasMergeCheckBinding(value)
+	case AtlasPostMergeBranchDeletionReadbackContract:
+		value, err := LoadJSON[AtlasPostMergeBranchDeletionReadback](path)
+		if err != nil {
+			return "typed:post-merge-branch-deletion-readback", err
+		}
+		return "typed:post-merge-branch-deletion-readback", ValidateAtlasPostMergeBranchDeletionReadback(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

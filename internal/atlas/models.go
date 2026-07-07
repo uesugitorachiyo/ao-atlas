@@ -740,6 +740,36 @@ type AtlasMergeCheckBindingRow struct {
 	MergeCommitBound         bool   `json:"merge_commit_bound,omitempty"`
 }
 
+type AtlasPostMergeBranchDeletionReadback struct {
+	Schema                   string                                      `json:"schema"`
+	Status                   string                                      `json:"status"`
+	EvidenceRoot             string                                      `json:"evidence_root"`
+	PostMergeLifecycleCount  int                                         `json:"post_merge_lifecycle_count"`
+	LocalBranchDeletedCount  int                                         `json:"local_branch_deleted_count"`
+	RemoteBranchDeletedCount int                                         `json:"remote_branch_deleted_count"`
+	BranchesRemainingTotal   int                                         `json:"branches_remaining_total"`
+	Entries                  []AtlasPostMergeBranchDeletionReadbackEntry `json:"entries"`
+	SchedulesWork            bool                                        `json:"schedules_work"`
+	ExecutesWork             bool                                        `json:"executes_work"`
+	ApprovesWork             bool                                        `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool                                        `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool                                        `json:"rsi_remains_denied"`
+}
+
+type AtlasPostMergeBranchDeletionReadbackEntry struct {
+	Path                         string `json:"path"`
+	NodeID                       string `json:"node_id"`
+	Status                       string `json:"status"`
+	PRNumber                     int    `json:"pr_number"`
+	MergeCommit                  string `json:"merge_commit"`
+	CIStatus                     string `json:"ci_status"`
+	LocalBranchDeleted           bool   `json:"local_branch_deleted"`
+	RemoteBranchDeleted          bool   `json:"remote_branch_deleted"`
+	LocalCodexBranchesRemaining  int    `json:"local_codex_branches_remaining"`
+	RemoteCodexBranchesRemaining int    `json:"remote_codex_branches_remaining"`
+	Digest                       string `json:"digest"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
