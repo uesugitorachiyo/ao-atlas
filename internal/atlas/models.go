@@ -1131,6 +1131,60 @@ type AtlasPublicSafetyCoverageRollup struct {
 	RSIRemainsDenied             bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasPromoterNoPromotionRollup struct {
+	Schema                             string                                `json:"schema"`
+	NodeID                             string                                `json:"node_id"`
+	Status                             string                                `json:"status"`
+	SourceReadbackPath                 string                                `json:"source_readback_path"`
+	SourceReadbackDigest               string                                `json:"source_readback_digest"`
+	SourceReadbackCompletedNodes       int                                   `json:"source_readback_completed_nodes"`
+	SourceReadbackReadyNodes           int                                   `json:"source_readback_ready_nodes"`
+	SourceReadbackFirstExecutableNode  string                                `json:"source_readback_first_executable_node"`
+	SourceReadbackFinalResponseAllowed bool                                  `json:"source_readback_final_response_allowed"`
+	EvidenceRoots                      []string                              `json:"evidence_roots"`
+	WaveSummaries                      []AtlasPromoterNoPromotionWaveSummary `json:"wave_summaries"`
+	CompletedNodesTotal                int                                   `json:"completed_nodes_total"`
+	PromoterNoPromotionFiles           int                                   `json:"promoter_no_promotion_files"`
+	MissingPromoterNodesTotal          int                                   `json:"missing_promoter_nodes_total"`
+	NoPromotionStatusCount             int                                   `json:"no_promotion_status_count"`
+	PromotionRequestedCount            int                                   `json:"promotion_requested_count"`
+	PromotionGrantedCount              int                                   `json:"promotion_granted_count"`
+	PromotionClaimedCount              int                                   `json:"promotion_claimed_count"`
+	AuthorityAdvanceClaimCount         int                                   `json:"authority_advance_claim_count"`
+	RSIDeniedCount                     int                                   `json:"rsi_denied_count"`
+	MissingPromoterNodes               []string                              `json:"missing_promoter_nodes"`
+	PromoterEvidenceFiles              []string                              `json:"promoter_evidence_files"`
+	AggregatePromotionStatus           string                                `json:"aggregate_promotion_status"`
+	AllCompletedNodesCovered           bool                                  `json:"all_completed_nodes_covered"`
+	AllPromoterStatusesNoPromotion     bool                                  `json:"all_promoter_statuses_no_promotion"`
+	NoPromotionInvariantHolds          bool                                  `json:"no_promotion_invariant_holds"`
+	PromotionRequested                 bool                                  `json:"promotion_requested"`
+	PromotionGranted                   bool                                  `json:"promotion_granted"`
+	SchedulesWork                      bool                                  `json:"schedules_work"`
+	ExecutesWork                       bool                                  `json:"executes_work"`
+	ApprovesWork                       bool                                  `json:"approves_work"`
+	ClaimsAuthorityAdvance             bool                                  `json:"claims_authority_advance"`
+	RSIRemainsDenied                   bool                                  `json:"rsi_remains_denied"`
+}
+
+type AtlasPromoterNoPromotionWaveSummary struct {
+	EvidenceRoot                   string `json:"evidence_root"`
+	SourceWorkgraphPath            string `json:"source_workgraph_path"`
+	CompletedNodes                 int    `json:"completed_nodes"`
+	PromoterNoPromotionFiles       int    `json:"promoter_no_promotion_files"`
+	MissingPromoterNodes           int    `json:"missing_promoter_nodes"`
+	NoPromotionStatusCount         int    `json:"no_promotion_status_count"`
+	PromotionRequestedCount        int    `json:"promotion_requested_count"`
+	PromotionGrantedCount          int    `json:"promotion_granted_count"`
+	PromotionClaimedCount          int    `json:"promotion_claimed_count"`
+	AuthorityAdvanceClaimCount     int    `json:"authority_advance_claim_count"`
+	RSIDeniedCount                 int    `json:"rsi_denied_count"`
+	AllCompletedNodesCovered       bool   `json:"all_completed_nodes_covered"`
+	AllPromoterStatusesNoPromotion bool   `json:"all_promoter_statuses_no_promotion"`
+	NoPromotionInvariantHolds      bool   `json:"no_promotion_invariant_holds"`
+	RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
