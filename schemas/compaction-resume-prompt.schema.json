@@ -57,6 +57,14 @@
       "type": "string",
       "minLength": 1
     },
+    "checkpoint_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checkpoint_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
     "started_at": {
       "type": "string",
       "minLength": 1

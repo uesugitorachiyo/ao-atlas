@@ -1,6 +1,7 @@
 package atlas
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -13,11 +14,16 @@ type AtlasCompactionResumePromptOptions struct {
 	PromptPath                      string
 	LeaseStartPath                  string
 	WorkgraphPath                   string
+	CheckpointReadbackPath          string
 	EvidenceRoot                    string
 	ExpectedNextNodeAfterCompletion string
 }
 
 func BuildAtlasCompactionResumePromptFixture(readback AtlasRecommendationReadback, options AtlasCompactionResumePromptOptions) (AtlasCompactionResumePrompt, string, error) {
+	checkpointDigest, err := digestJSONArtifact(options.CheckpointReadbackPath)
+	if err != nil {
+		return AtlasCompactionResumePrompt{}, "", err
+	}
 	fixture := AtlasCompactionResumePrompt{
 		Schema:                          AtlasCompactionResumePromptContract,
 		NodeID:                          strings.TrimSpace(options.NodeID),
@@ -27,6 +33,8 @@ func BuildAtlasCompactionResumePromptFixture(readback AtlasRecommendationReadbac
 		PromptPath:                      publicArtifactRef(options.PromptPath),
 		LeaseStartPath:                  publicArtifactRef(options.LeaseStartPath),
 		WorkgraphPath:                   publicArtifactRef(options.WorkgraphPath),
+		CheckpointReadbackPath:          publicArtifactRef(options.CheckpointReadbackPath),
+		CheckpointReadbackDigest:        checkpointDigest,
 		StartedAt:                       readback.StartedAt,
 		CompletedAt:                     readback.CompletedAt,
 		ElapsedMinutes:                  readback.ElapsedMinutes,
@@ -72,7 +80,12 @@ func BuildAtlasCompactionResumePrompt(readback AtlasRecommendationReadback, fixt
 	b.WriteString(fmt.Sprintf("- Evidence root: `%s`\n", filepath.ToSlash(evidenceRoot)))
 	b.WriteString(fmt.Sprintf("- Lease start: `%s`\n", fixture.LeaseStartPath))
 	b.WriteString(fmt.Sprintf("- Current workgraph: `%s`\n", fixture.WorkgraphPath))
-	b.WriteString(fmt.Sprintf("- Current readback: `%s`\n\n", fixture.SourceReadbackPath))
+	b.WriteString(fmt.Sprintf("- Current readback: `%s`\n", fixture.SourceReadbackPath))
+	if fixture.CheckpointReadbackPath != "" {
+		b.WriteString(fmt.Sprintf("- Checkpoint readback: `%s`\n", fixture.CheckpointReadbackPath))
+		b.WriteString(fmt.Sprintf("- Checkpoint readback digest: `%s`\n", fixture.CheckpointReadbackDigest))
+	}
+	b.WriteString("\n")
 	b.WriteString("Current status:\n")
 	b.WriteString(fmt.Sprintf("- Completed nodes: %d / %d\n", fixture.CompletedNodes, fixture.TotalNodes))
 	b.WriteString(fmt.Sprintf("- Ready nodes: %d\n", fixture.ReadyNodes))
@@ -122,6 +135,11 @@ func ValidateAtlasCompactionResumePrompt(fixture AtlasCompactionResumePrompt) er
 	checkPublicPath(&errs, "prompt_path", fixture.PromptPath, true)
 	checkOptionalPublicPath(&errs, "lease_start_path", fixture.LeaseStartPath)
 	checkOptionalPublicPath(&errs, "workgraph_path", fixture.WorkgraphPath)
+	checkOptionalPublicPath(&errs, "checkpoint_readback_path", fixture.CheckpointReadbackPath)
+	checkOptionalDigest(&errs, "checkpoint_readback_digest", fixture.CheckpointReadbackDigest)
+	if fixture.CheckpointReadbackPath != "" && fixture.CheckpointReadbackDigest == "" {
+		errs = append(errs, "checkpoint_readback_digest is required when checkpoint_readback_path is set")
+	}
 	if fixture.CompletedNodes <= 0 || fixture.TotalNodes < fixture.CompletedNodes || fixture.ReadyNodes < 0 || fixture.BlockedNodes < 0 || fixture.FailedNodes < 0 {
 		errs = append(errs, "node counts must be positive and internally consistent")
 	}
@@ -158,6 +176,21 @@ func WriteAtlasCompactionResumePrompt(promptPath, fixturePath string, fixture At
 		return err
 	}
 	return WriteJSON(fixturePath, fixture)
+}
+
+func digestJSONArtifact(path string) (string, error) {
+	if strings.TrimSpace(path) == "" {
+		return "", nil
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	var value any
+	if err := json.Unmarshal(data, &value); err != nil {
+		return "", err
+	}
+	return digestValue(value), nil
 }
 
 func checkOptionalPublicPath(errs *[]string, field, value string) {

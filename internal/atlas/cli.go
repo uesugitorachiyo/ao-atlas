@@ -1292,6 +1292,7 @@ func runMissionRecommendationsCompactionResumePrompt(args []string, stdout io.Wr
 	sourceReadback := fs.String("source-readback", "", "source recommendation readback path")
 	workgraphPath := fs.String("workgraph", "", "current workgraph path")
 	leaseStartPath := fs.String("lease-start", "", "lease start marker path")
+	checkpointReadbackPath := fs.String("checkpoint-readback", "", "checkpoint readback path to bind into the resume prompt")
 	evidenceRoot := fs.String("evidence-root", "", "portable evidence root")
 	nodeID := fs.String("node-id", "", "current resume prompt node id")
 	expectedNextNode := fs.String("expected-next-node-after-completion", "", "expected next node after completing the active node")
@@ -1313,7 +1314,7 @@ func runMissionRecommendationsCompactionResumePrompt(args []string, stdout io.Wr
 			return fmt.Errorf("%s is required", name)
 		}
 	}
-	if samePath(*sourceReadback, *promptOut) || samePath(*sourceReadback, *fixtureOut) || samePath(*workgraphPath, *fixtureOut) || samePath(*leaseStartPath, *fixtureOut) {
+	if samePath(*sourceReadback, *promptOut) || samePath(*sourceReadback, *fixtureOut) || samePath(*workgraphPath, *fixtureOut) || samePath(*leaseStartPath, *fixtureOut) || samePath(*checkpointReadbackPath, *fixtureOut) {
 		return fmt.Errorf("refusing to overwrite input artifact")
 	}
 	readback, err := LoadJSON[AtlasRecommendationReadback](*sourceReadback)
@@ -1326,6 +1327,7 @@ func runMissionRecommendationsCompactionResumePrompt(args []string, stdout io.Wr
 		PromptPath:                      *promptOut,
 		LeaseStartPath:                  *leaseStartPath,
 		WorkgraphPath:                   *workgraphPath,
+		CheckpointReadbackPath:          *checkpointReadbackPath,
 		EvidenceRoot:                    *evidenceRoot,
 		ExpectedNextNodeAfterCompletion: *expectedNextNode,
 	})
