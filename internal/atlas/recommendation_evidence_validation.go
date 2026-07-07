@@ -437,6 +437,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:mission-dashboard-provenance-links", err
 		}
 		return "typed:mission-dashboard-provenance-links", ValidateAtlasMissionDashboardProvenanceLinks(value)
+	case AtlasMissionDashboardFreshnessChecksContract:
+		value, err := LoadJSON[AtlasMissionDashboardFreshnessChecks](path)
+		if err != nil {
+			return "typed:mission-dashboard-freshness-checks", err
+		}
+		return "typed:mission-dashboard-freshness-checks", ValidateAtlasMissionDashboardFreshnessChecks(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

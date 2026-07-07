@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.mission-dashboard-freshness-checks.v0.1",
+  "title": "AO Atlas Mission Dashboard Freshness Checks",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_provenance_links_path",
+    "source_provenance_links_digest",
+    "source_readback_path",
+    "source_readback_digest",
+    "post_merge_lifecycle_path",
+    "post_merge_lifecycle_digest",
+    "source_completed_nodes",
+    "source_ready_nodes",
+    "source_first_executable_node",
+    "pr_number",
+    "merge_commit",
+    "final_head",
+    "local_main_synced",
+    "origin_main_synced",
+    "local_branch_deleted",
+    "remote_branch_deleted",
+    "local_codex_branches_remaining",
+    "remote_codex_branches_remaining",
+    "freshness_check_count",
+    "freshness_checks",
+    "pr_merged_and_cleaned",
+    "main_synced_to_merge_commit",
+    "dashboard_source_still_fresh",
+    "all_freshness_checks_passed",
+    "final_response_allowed",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "ao.atlas.mission-dashboard-freshness-checks.v0.1" },
+    "node_id": { "type": "string", "minLength": 1 },
+    "status": { "const": "dashboard_freshness_verified" },
+    "source_provenance_links_path": { "type": "string", "minLength": 1 },
+    "source_provenance_links_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_readback_path": { "type": "string", "minLength": 1 },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "post_merge_lifecycle_path": { "type": "string", "minLength": 1 },
+    "post_merge_lifecycle_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_completed_nodes": { "const": 34 },
+    "source_ready_nodes": { "const": 6 },
+    "source_first_executable_node": { "const": "mission-recommendation-feature-depth-next-wave-35" },
+    "pr_number": { "type": "integer", "minimum": 1 },
+    "merge_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "final_head": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "local_main_synced": { "const": true },
+    "origin_main_synced": { "const": true },
+    "local_branch_deleted": { "const": true },
+    "remote_branch_deleted": { "const": true },
+    "local_codex_branches_remaining": { "const": 0 },
+    "remote_codex_branches_remaining": { "const": 0 },
+    "freshness_check_count": { "const": 6 },
+    "freshness_checks": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "$ref": "#/$defs/freshness_check" }
+    },
+    "pr_merged_and_cleaned": { "const": true },
+    "main_synced_to_merge_commit": { "const": true },
+    "dashboard_source_still_fresh": { "const": true },
+    "all_freshness_checks_passed": { "const": true },
+    "final_response_allowed": { "const": false },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "freshness_check": {
+      "type": "object",
+      "required": [
+        "name",
+        "status",
+        "evidence_path",
+        "evidence_digest"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "enum": [
+            "pr_merged",
+            "ci_passed",
+            "main_synced_to_merge_commit",
+            "branches_deleted",
+            "codex_branches_clean",
+            "dashboard_sources_match_completed_readback"
+          ]
+        },
+        "status": { "const": "passed" },
+        "evidence_path": { "type": "string", "minLength": 1 },
+        "evidence_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}
