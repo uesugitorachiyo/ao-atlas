@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -474,6 +474,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "public-safety-readback-binding" {
 		return runMissionRecommendationsPublicSafetyReadbackBinding(args[1:], stdout)
 	}
+	if args[0] == "scoped-public-safety-scan" {
+		return runMissionRecommendationsScopedPublicSafetyScan(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -487,7 +490,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1514,6 +1517,59 @@ func runMissionRecommendationsPublicSafetyReadbackBinding(args []string, stdout 
 		filepath.ToSlash(*outPath),
 	)
 	return nil
+}
+
+func runMissionRecommendationsScopedPublicSafetyScan(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations scoped-public-safety-scan", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	nodeID := fs.String("node-id", "", "scan node id")
+	outPath := fs.String("out", "", "scoped public-safety scan output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	scopeFlags := stringListFlag{}
+	fs.Var(&scopeFlags, "scope", "file or directory scope to scan")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*nodeID) == "" {
+		return fmt.Errorf("--node-id is required")
+	}
+	if len(scopeFlags) == 0 {
+		return fmt.Errorf("--scope is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	for _, scope := range scopeFlags {
+		if strings.TrimSpace(*outPath) != "" && samePath(scope, *outPath) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+	}
+	scan, err := BuildAtlasScopedPublicSafetyScan(*nodeID, scopeFlags)
+	if err != nil && strings.TrimSpace(scan.Schema) == "" {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if writeErr := WriteAtlasScopedPublicSafetyScan(*outPath, scan); writeErr != nil {
+			return writeErr
+		}
+	}
+	if *jsonOut {
+		if printErr := printJSON(stdout, scan); printErr != nil {
+			return printErr
+		}
+	} else {
+		fmt.Fprintf(stdout, "status=%s\nnode_id=%s\nscanned_files=%d\nchanged_evidence_files=%d\nchanged_prompt_artifacts=%d\nunsafe_match_count=%d\npublic_safety_scan_passed=%t\nscoped_public_safety_scan=%s\n",
+			scan.Status,
+			scan.NodeID,
+			scan.ScannedFileCount,
+			scan.ChangedEvidenceFiles,
+			scan.ChangedPromptArtifacts,
+			scan.UnsafeMatchCount,
+			scan.PublicSafetyScanPassed,
+			filepath.ToSlash(*outPath),
+		)
+	}
+	return err
 }
 
 func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) error {
