@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-30",
+  "task_id": "mission-recommendation-feature-depth-next-wave-30-task",
+  "status": "ready",
+  "rollback_scope": [
+    "internal/atlas/mission_run_link_digest_check.go",
+    "internal/atlas/mission_run_link_digest_check_test.go",
+    "internal/atlas/cli.go run-link-digest-check routing",
+    "internal/atlas/models.go AtlasRunLinkDigestCheck",
+    "internal/atlas/recommendation_evidence_validation.go typed validator binding",
+    "internal/atlas/validate.go contract constant",
+    "schemas/run-link-digest-check.schema.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-30"
+  ],
+  "rollback_command": "revert node 30 commit and remove generated node 30 evidence",
+  "data_loss_risk": "none; generated evidence and additive run-link digest check support only",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
