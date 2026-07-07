@@ -1,0 +1,29 @@
+{
+  "schema": "ao.atlas.post-merge-branch-deletion-readback.v0.1",
+  "status": "branch_deletion_bound",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01",
+  "post_merge_lifecycle_count": 1,
+  "local_branch_deleted_count": 1,
+  "remote_branch_deleted_count": 1,
+  "branches_remaining_total": 0,
+  "entries": [
+    {
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-12/post-merge-lifecycle.json",
+      "node_id": "mission-recommendation-feature-depth-next-wave-12",
+      "status": "merged_and_cleaned",
+      "pr_number": 372,
+      "merge_commit": "637112fcfaee7557bd5bc3e0d08127d4b69e92d2",
+      "ci_status": "passed",
+      "local_branch_deleted": true,
+      "remote_branch_deleted": true,
+      "local_codex_branches_remaining": 0,
+      "remote_codex_branches_remaining": 0,
+      "digest": "sha256:2d00874a9f65ce8e14339c0678dbbfd45c7c006e793cabc2b13c7b1ac4316df1"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

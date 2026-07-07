@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-14",
+  "task_id": "mission-recommendation-feature-depth-next-wave-14-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations stale-remote-branch-repair --input docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-14/stale-remote-branch-repair-input.json --out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-14/stale-remote-branch-repair.json",
+    "jq -e . docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-14/stale-remote-branch-repair.json"
+  ],
+  "assertions": [
+    "case_count=3",
+    "repair_required_cases=2",
+    "cleanup_safe_cases=2",
+    "blocked_cases=0",
+    "repair commands are evidence only"
+  ]
+}
