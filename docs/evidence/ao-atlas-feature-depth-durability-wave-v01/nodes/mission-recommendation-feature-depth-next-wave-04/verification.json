@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-04",
+  "task_id": "mission-recommendation-feature-depth-next-wave-04-task",
+  "status": "passed",
+  "passed_commands": [
+    "go run ./cmd/atlas mission recommendations operator-summary-check --readback docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-03/recommendation-readback-after.json --summary-out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-04/operator-summary.md --out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-04/operator-summary-check.json"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "repair_notes": [
+    "Node 04 uses existing operator-summary-check implementation and generated evidence only."
+  ]
+}

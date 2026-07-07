@@ -1,0 +1,39 @@
+{
+  "schema": "ao.atlas.merge-check-binding-input.v0.1",
+  "status": "recorded",
+  "rows": [
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-01-12",
+      "pr_number": 368,
+      "merge_commit": "cd0d7c78510243626d9166e9f0d5d1a401e615bb",
+      "required_check_count": 9,
+      "passed_required_check_count": 9
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-13-15",
+      "pr_number": 369,
+      "merge_commit": "c29dbec7aad85440027a0d1a95abc079be3acb54",
+      "required_check_count": 9,
+      "passed_required_check_count": 9
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-16-34",
+      "pr_number": 370,
+      "merge_commit": "95cfdbb464468f588576fda808faf3c046cdaf79",
+      "required_check_count": 9,
+      "passed_required_check_count": 9
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-35-40",
+      "pr_number": 371,
+      "merge_commit": "b26fca846481429f72f4cd8ab63322da377c1bbe",
+      "required_check_count": 9,
+      "passed_required_check_count": 9
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-10",
+  "task_id": "mission-recommendation-feature-depth-next-wave-10-task",
+  "status": "passed",
+  "passed_commands": [
+    "go run ./cmd/atlas mission recommendations pr-ci-windows-threshold --summary docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-09/pr-ci-timing-summary.json --threshold-seconds 900 --out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-10/pr-ci-windows-threshold-evidence.json"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "repair_notes": [
+    "Uses existing Atlas CLI support and generated evidence only."
+  ]
+}

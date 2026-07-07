@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-09",
+  "task_id": "mission-recommendation-feature-depth-next-wave-09-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-09",
+  "source_task_digest": "sha256:837798ab8c52d4091e7212da9457d602df088ed8e60e82c9de020e12863351ad",
+  "selected_work": [
+    "Record machine-readable PR/CI ledger rows for prior Feature Depth PRs.",
+    "Summarize platform timing totals and slowest checks.",
+    "Preserve no-promotion and RSI-denied closure."
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

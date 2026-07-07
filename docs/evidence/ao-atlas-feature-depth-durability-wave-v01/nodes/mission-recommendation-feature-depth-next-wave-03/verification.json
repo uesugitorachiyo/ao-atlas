@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-03",
+  "task_id": "mission-recommendation-feature-depth-next-wave-03-task",
+  "status": "passed",
+  "passed_commands": [
+    "go run ./cmd/atlas mission recommendations stale-checkpoint-rejection --stale-readback docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-01/recommendation-readback-after.json --latest-readback docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-02/recommendation-readback-after.json --prompt-readback docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-01/recommendation-readback-after.json --out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-03/stale-checkpoint-rejection.json"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "repair_notes": [
+    "Initial command attempt failed because prompt-readback did not match stale-readback; rerun used the documented stale prompt contract."
+  ]
+}

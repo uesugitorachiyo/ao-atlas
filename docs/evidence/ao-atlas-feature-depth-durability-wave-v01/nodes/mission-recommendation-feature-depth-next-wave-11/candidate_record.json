@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-11",
+  "task_id": "mission-recommendation-feature-depth-next-wave-11-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-11",
+  "source_task_digest": "sha256:ebaae1ee947b53569628c4c899acbf9f04c38a41fab75eb8cb0af4c251f32042",
+  "selected_work": [
+    "Create failed check replay input cases.",
+    "Generate retry versus no-merge decisions.",
+    "Keep replay evidence intent-only and no-promotion."
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

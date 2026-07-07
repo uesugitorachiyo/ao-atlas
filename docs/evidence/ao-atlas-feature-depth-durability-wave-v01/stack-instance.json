@@ -1,0 +1,13 @@
+{
+  "contract_version": "ao.atlas.stack-instance.v0.1",
+  "id": "ao-atlas-feature-depth-durability-wave-v01",
+  "state_root": ".atlas-local/state/ao-atlas-feature-depth-durability-wave-v01",
+  "toolchain_root": "../shared-ao-toolchain",
+  "roots": {
+    "context": ".atlas-local/state/ao-atlas-feature-depth-durability-wave-v01/ao-atlas-feature-depth-durability-wave-v01/context",
+    "evidence": ".atlas-local/state/ao-atlas-feature-depth-durability-wave-v01/ao-atlas-feature-depth-durability-wave-v01/evidence",
+    "mission": ".atlas-local/state/ao-atlas-feature-depth-durability-wave-v01/ao-atlas-feature-depth-durability-wave-v01/mission",
+    "workgraph": ".atlas-local/state/ao-atlas-feature-depth-durability-wave-v01/ao-atlas-feature-depth-durability-wave-v01/workgraph",
+    "worktree": ".atlas-local/state/ao-atlas-feature-depth-durability-wave-v01/ao-atlas-feature-depth-durability-wave-v01/worktree"
+  }
+}

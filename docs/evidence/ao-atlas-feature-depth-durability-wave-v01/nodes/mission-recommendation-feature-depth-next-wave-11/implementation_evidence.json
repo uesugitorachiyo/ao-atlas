@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-11",
+  "task_id": "mission-recommendation-feature-depth-next-wave-11-task",
+  "status": "completed",
+  "artifact": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-11/failed-check-replay-fixture.json",
+  "summary": "Failed check replay fixture records that failed checks deny merge while retryable timeout cases may be rerun.",
+  "mutates_runtime_code": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

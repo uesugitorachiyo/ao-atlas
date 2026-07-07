@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-09",
+  "task_id": "mission-recommendation-feature-depth-next-wave-09-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations pr-ci-timing-summary --ledger docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-09/pr-ci-timing-ledger.json --out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-09/pr-ci-timing-summary.json"
+  ],
+  "assertions": [
+    "row_count is 4",
+    "max_windows_seconds is 1149",
+    "slowest check is windows production readiness"
+  ]
+}

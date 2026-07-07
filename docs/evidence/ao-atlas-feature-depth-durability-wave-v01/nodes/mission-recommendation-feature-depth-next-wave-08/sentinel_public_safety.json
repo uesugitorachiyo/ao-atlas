@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-08",
+  "task_id": "mission-recommendation-feature-depth-next-wave-08-task",
+  "status": "passed",
+  "scan_scope": [
+    "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-08"
+  ],
+  "unsafe_authority_claims": 0,
+  "rsi_claims": 0,
+  "rsi_remains_denied": true
+}
