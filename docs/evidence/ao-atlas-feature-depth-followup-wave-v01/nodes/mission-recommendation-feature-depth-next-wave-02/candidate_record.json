@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-02",
+  "task_id": "mission-recommendation-feature-depth-next-wave-02-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-02",
+  "source_task_digest": "sha256:b354b64c90f267294f400b65d3e7f29b3d43b9e46f3a2cb4ff3a477cf8788a2a",
+  "selected_work": [
+    "Generate a deterministic mission-readback-delta between node 01 and node 02 checkpoints.",
+    "Generate a resumable readback diff fixture that preserves completed, ready, and checkpoint count transitions.",
+    "Keep final response denied while ready nodes and exact next action remain."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-02"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

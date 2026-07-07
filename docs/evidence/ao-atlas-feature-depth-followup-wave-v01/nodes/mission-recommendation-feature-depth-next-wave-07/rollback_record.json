@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-07",
+  "task_id": "mission-recommendation-feature-depth-next-wave-07-task",
+  "status": "available",
+  "rollback_scope": [
+    "revert node 07 changes in internal/atlas/mission_recommendations.go",
+    "revert node 07 regression coverage in internal/atlas/mission_recommendations_test.go",
+    "remove node 07 generated evidence files"
+  ],
+  "restores_previous_checkpoint": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-06/recommendation-readback-after.json",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

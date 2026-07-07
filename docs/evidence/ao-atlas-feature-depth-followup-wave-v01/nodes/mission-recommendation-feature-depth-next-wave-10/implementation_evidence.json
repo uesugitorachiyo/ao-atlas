@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-10",
+  "task_id": "mission-recommendation-feature-depth-next-wave-10-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_pr_ci_windows_threshold.go",
+    "internal/atlas/mission_pr_ci_windows_threshold_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "schemas/pr-ci-windows-threshold-evidence.schema.json"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-10/pr-ci-windows-threshold-evidence.json"
+  ],
+  "summary": "Node 10 records Windows check duration threshold evidence from the node 09 PR/CI timing summary and preserves no-promotion and no-RSI boundaries.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

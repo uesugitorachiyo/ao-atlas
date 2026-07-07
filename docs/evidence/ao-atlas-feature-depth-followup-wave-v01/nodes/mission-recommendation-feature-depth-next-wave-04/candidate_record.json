@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-04",
+  "task_id": "mission-recommendation-feature-depth-next-wave-04-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-04",
+  "source_task_digest": "sha256:8621cb334655cdb1d05b11d1e42f8ad7f9aa95b132ed41131c7e6cc720d55134",
+  "selected_work": [
+    "Generate operator summary markdown from the current recommendation readback.",
+    "Verify exact next action wording appears exactly once.",
+    "Preserve final-response denial wording while ready work remains."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-04"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

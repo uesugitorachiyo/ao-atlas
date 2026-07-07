@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-11",
+  "task_id": "mission-recommendation-feature-depth-next-wave-11-task",
+  "status": "passed",
+  "scan_scope": [
+    "internal/atlas/mission_failed_check_replay.go",
+    "internal/atlas/mission_failed_check_replay_test.go",
+    "schemas/failed-check-replay-fixture.schema.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-11"
+  ],
+  "forbidden_claims_found": 0,
+  "rsi_remains_denied": true
+}

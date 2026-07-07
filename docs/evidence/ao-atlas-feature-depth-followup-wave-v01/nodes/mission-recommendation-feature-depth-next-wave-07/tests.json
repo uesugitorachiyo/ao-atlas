@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-07",
+  "task_id": "mission-recommendation-feature-depth-next-wave-07-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run TestRecommendationCompleteNodeRejectsEvidenceMissingRequiredFields -count=1",
+    "status": "failed_before_implementation",
+    "failure": "completion accepted a candidate_record evidence JSON file missing required field status"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveRunLinkSchemaCoverage|TestMissionRecommendationsRunLinkSchemaCoverage|TestRecommendationCompleteNode|TestMissionRecommendationsCompleteNodeCLI' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}
