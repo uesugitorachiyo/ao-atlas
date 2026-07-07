@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -465,6 +465,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "compaction-resume-prompt" {
 		return runMissionRecommendationsCompactionResumePrompt(args[1:], stdout)
 	}
+	if args[0] == "compaction-resume-regression" {
+		return runMissionRecommendationsCompactionResumeRegression(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -478,7 +481,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1345,6 +1348,68 @@ func runMissionRecommendationsCompactionResumePrompt(args []string, stdout io.Wr
 		fixture.FinalResponseAllowed,
 		filepath.ToSlash(*promptOut),
 		filepath.ToSlash(*fixtureOut),
+	)
+	return nil
+}
+
+func runMissionRecommendationsCompactionResumeRegression(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations compaction-resume-regression", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	sourcePromptFixture := fs.String("source-prompt-fixture", "", "source compaction resume prompt fixture path")
+	sourcePromptMarkdown := fs.String("source-prompt-markdown", "", "source compaction resume prompt markdown path")
+	sourceReadback := fs.String("source-readback", "", "source recommendation readback path")
+	nodeID := fs.String("node-id", "", "current regression node id")
+	expectedNextNode := fs.String("expected-next-node-after-completion", "", "expected next node after completing the active node")
+	outPath := fs.String("out", "", "compaction resume regression output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	for name, value := range map[string]string{
+		"--source-prompt-fixture":  *sourcePromptFixture,
+		"--source-prompt-markdown": *sourcePromptMarkdown,
+		"--source-readback":        *sourceReadback,
+		"--node-id":                *nodeID,
+	} {
+		if strings.TrimSpace(value) == "" {
+			return fmt.Errorf("%s is required", name)
+		}
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	for _, input := range []string{*sourcePromptFixture, *sourcePromptMarkdown, *sourceReadback} {
+		if strings.TrimSpace(*outPath) != "" && samePath(input, *outPath) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+	}
+	regression, err := BuildAtlasCompactionResumeRegression(AtlasCompactionResumeRegressionOptions{
+		NodeID:                          *nodeID,
+		SourcePromptFixturePath:         *sourcePromptFixture,
+		SourcePromptMarkdownPath:        *sourcePromptMarkdown,
+		SourceReadbackPath:              *sourceReadback,
+		ExpectedNextNodeAfterCompletion: *expectedNextNode,
+	})
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteAtlasCompactionResumeRegression(*outPath, regression); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, regression)
+	}
+	fmt.Fprintf(stdout, "status=%s\nnode_id=%s\ncompleted_nodes_before=%d\nready_nodes_before=%d\nfirst_executable_node_before=%s\nexact_next_action_preserved=%t\nfinal_response_allowed_before=%t\ncompaction_resume_regression=%s\n",
+		regression.Status,
+		regression.NodeID,
+		regression.CompletedNodesBefore,
+		regression.ReadyNodesBefore,
+		regression.FirstExecutableNodeBefore,
+		regression.SourcePromptExactActionPreserved,
+		regression.FinalResponseAllowedBefore,
+		filepath.ToSlash(*outPath),
 	)
 	return nil
 }

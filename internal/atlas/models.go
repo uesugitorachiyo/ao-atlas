@@ -965,6 +965,40 @@ type AtlasCompactionResumePrompt struct {
 	RSIRemainsDenied                bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasCompactionResumeRegression struct {
+	Schema                           string   `json:"schema"`
+	NodeID                           string   `json:"node_id"`
+	Status                           string   `json:"status"`
+	SourcePromptFixturePath          string   `json:"source_prompt_fixture_path"`
+	SourcePromptFixtureDigest        string   `json:"source_prompt_fixture_digest,omitempty"`
+	SourcePromptMarkdownPath         string   `json:"source_prompt_markdown_path"`
+	SourcePromptMarkdownDigest       string   `json:"source_prompt_markdown_digest,omitempty"`
+	SourceReadbackPath               string   `json:"source_readback_path"`
+	SourceReadbackDigest             string   `json:"source_readback_digest,omitempty"`
+	SourcePromptFirstExecutableNode  string   `json:"source_prompt_first_executable_node,omitempty"`
+	SourcePromptExactNextAction      string   `json:"source_prompt_exact_next_action,omitempty"`
+	SourcePromptActiveNodePreserved  bool     `json:"source_prompt_active_node_preserved,omitempty"`
+	SourcePromptExactActionPreserved bool     `json:"source_prompt_exact_action_preserved,omitempty"`
+	CompletedNodesBefore             int      `json:"completed_nodes_before"`
+	TotalNodes                       int      `json:"total_nodes"`
+	ReadyNodesBefore                 int      `json:"ready_nodes_before"`
+	BlockedNodesBefore               int      `json:"blocked_nodes_before"`
+	FailedNodesBefore                int      `json:"failed_nodes_before"`
+	FirstExecutableNodeBefore        string   `json:"first_executable_node_before"`
+	ExactNextActionBefore            string   `json:"exact_next_action_before"`
+	ReturnGateStatusBefore           string   `json:"return_gate_status_before"`
+	ContinuationContractReasonBefore string   `json:"continuation_contract_reason_before"`
+	EarlyReturnRiskStatusBefore      string   `json:"early_return_risk_status_before"`
+	FinalResponseAllowedBefore       bool     `json:"final_response_allowed_before"`
+	RefusesFinalResponseBefore       bool     `json:"refuses_final_response_before"`
+	RegressionAssertions             []string `json:"regression_assertions"`
+	ExpectedNextNodeAfterCompletion  string   `json:"expected_next_node_after_completion"`
+	PromotionRequested               bool     `json:"promotion_requested"`
+	PromotionGranted                 bool     `json:"promotion_granted"`
+	ClaimsAuthorityAdvance           bool     `json:"claims_authority_advance,omitempty"`
+	RSIRemainsDenied                 bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

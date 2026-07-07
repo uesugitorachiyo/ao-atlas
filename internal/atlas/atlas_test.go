@@ -81,6 +81,22 @@ func TestProductionReadinessExercisesAOMissionRecoveryProvenance(t *testing.T) {
 	}
 }
 
+func TestProductionReadinessPublicSafetyScanUsesTrackedFiles(t *testing.T) {
+	root := repoRoot(t)
+	scriptPath := filepath.Join(root, "scripts", "production-readiness.sh")
+	content, err := os.ReadFile(scriptPath)
+	if err != nil {
+		t.Fatalf("read production readiness script: %v", err)
+	}
+	script := string(content)
+	if !strings.Contains(script, "git ls-files > \"$scan_file\"") {
+		t.Fatalf("production readiness public-safety scan must enumerate tracked files through git ls-files")
+	}
+	if strings.Contains(script, "find . \\\n  -path './.git' -prune") {
+		t.Fatalf("production readiness public-safety scan still uses an unbounded working-tree find")
+	}
+}
+
 func repoRoot(t *testing.T) string {
 	t.Helper()
 	_, file, _, ok := runtime.Caller(0)
