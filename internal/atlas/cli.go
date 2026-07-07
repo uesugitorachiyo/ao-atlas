@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -450,6 +450,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "merge-check-binding" {
 		return runMissionRecommendationsMergeCheckBinding(args[1:], stdout)
 	}
+	if args[0] == "post-merge-branch-deletion-readback" {
+		return runMissionRecommendationsPostMergeBranchDeletionReadback(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -463,7 +466,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1099,6 +1102,44 @@ func runMissionRecommendationsMergeCheckBinding(args []string, stdout io.Writer)
 		binding.RowCount,
 		binding.PassedRequiredCheckRows,
 		binding.UnboundMergeCommits,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsPostMergeBranchDeletionReadback(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations post-merge-branch-deletion-readback", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	evidenceRoot := fs.String("evidence-root", "", "Atlas recommendation evidence root")
+	outPath := fs.String("out", "", "post-merge branch deletion readback output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*evidenceRoot) == "" {
+		return fmt.Errorf("--evidence-root is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	readback, err := BuildAtlasPostMergeBranchDeletionReadback(*evidenceRoot)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, readback); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, readback)
+	}
+	fmt.Fprintf(stdout, "status=%s\npost_merge_lifecycle_count=%d\nlocal_branch_deleted_count=%d\nremote_branch_deleted_count=%d\nbranches_remaining_total=%d\npost_merge_branch_deletion_readback=%s\n",
+		readback.Status,
+		readback.PostMergeLifecycleCount,
+		readback.LocalBranchDeletedCount,
+		readback.RemoteBranchDeletedCount,
+		readback.BranchesRemainingTotal,
 		filepath.ToSlash(*outPath),
 	)
 	return nil
