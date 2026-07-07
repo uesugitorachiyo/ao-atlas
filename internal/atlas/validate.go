@@ -49,6 +49,7 @@ const (
 	AtlasCompactionResumePromptContract          = "ao.atlas.compaction-resume-prompt.v0.1"
 	AtlasCompactionResumeRegressionContract      = "ao.atlas.compaction-resume-regression.v0.1"
 	AtlasResumeDenialEvidenceContract            = "ao.atlas.resume-denial-evidence.v0.1"
+	AtlasPublicSafetyReadbackBindingContract     = "ao.atlas.public-safety-readback-binding.v0.1"
 	WorkgraphContract                            = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract                  = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                          = "ao.atlas.factory-task.v0.1"

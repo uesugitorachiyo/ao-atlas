@@ -39,13 +39,14 @@ type AtlasRecommendationWaveResult struct {
 }
 
 type AtlasRecommendationReadbackOptions struct {
-	WavePath        string
-	WorkgraphPath   string
-	EvidenceRoot    string
-	StartedAt       string
-	CompletedAt     string
-	ElapsedMinutes  int
-	LeaseTimingMode string
+	WavePath               string
+	WorkgraphPath          string
+	EvidenceRoot           string
+	StartedAt              string
+	CompletedAt            string
+	ElapsedMinutes         int
+	LeaseTimingMode        string
+	PublicSafetyScanStatus string
 }
 
 type AtlasRecommendationLeaseStartOptions struct {
@@ -874,6 +875,10 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 			return AtlasRecommendationReadback{}, err
 		}
 	}
+	publicSafetyScanStatus := wave.PublicSafetyScanStatus
+	if strings.TrimSpace(options.PublicSafetyScanStatus) != "" {
+		publicSafetyScanStatus = strings.TrimSpace(options.PublicSafetyScanStatus)
+	}
 	readback := AtlasRecommendationReadback{
 		ContractVersion:           AtlasRecommendationReadbackContract,
 		MissionID:                 wave.MissionID,
@@ -916,7 +921,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		CommandReadbackStatus:           commandReadbackStatus,
 		CommandTimelineStatus:           commandTimelineStatus,
 		CommandTimelinePlaceholders:     commandTimelinePlaceholders(),
-		PublicSafetyScanStatus:          wave.PublicSafetyScanStatus,
+		PublicSafetyScanStatus:          publicSafetyScanStatus,
 		ReturnGateStatus:                returnGateStatus,
 		CheckpointCount:                 completed,
 		FinalResponseAllowed:            finalAllowed,

@@ -1,0 +1,58 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-21",
+  "task_id": "mission-recommendation-feature-depth-next-wave-21-task",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "find docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-21 -name '*.json' -print0 | xargs -0 -n1 jq empty",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./internal/atlas -run 'TestFeatureDepthWavePublicSafetyReadbackBinding' -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "scoped public-safety wording scan over node 21 code/schema/evidence",
+      "status": "passed",
+      "summary": "no forbidden affirmative promotion or RSI wording found"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-wave-v01 --out docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-21/feature-depth-evidence-validation-report.json",
+      "status": "passed",
+      "summary": "node_count=21 json_files=463 schema_bound_files=463 typed_validator_files=270 failed_files=0"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas && rm -f atlas && test ! -e atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed",
+      "summary": "status=ready mode=fixture_only_readback"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "summary": "status=ready score=100/100"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    }
+  ],
+  "repair_notes": [],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
