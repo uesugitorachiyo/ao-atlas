@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-25",
+  "task_id": "mission-recommendation-feature-depth-next-wave-25-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations promoter-no-promotion-rollup",
+    "go test ./internal/atlas -run TestFeatureDepthWavePromoterNoPromotionRollup -count=1"
+  ],
+  "assertions": [
+    "missing_promoter_nodes_total=0",
+    "no_promotion_invariant_holds=true",
+    "promotion_granted=false"
+  ]
+}

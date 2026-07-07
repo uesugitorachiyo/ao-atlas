@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-34",
+  "task_id": "mission-recommendation-feature-depth-next-wave-34-task",
+  "status": "completed",
+  "artifact": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/mission-dashboard-provenance-links.json",
+  "summary": "Added dashboard provenance links for Foundry, Promoter, Command, and Sentinel evidence.",
+  "mutates_runtime_code": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

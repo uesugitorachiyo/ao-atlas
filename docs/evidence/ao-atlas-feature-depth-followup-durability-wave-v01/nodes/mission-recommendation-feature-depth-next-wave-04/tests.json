@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-04",
+  "task_id": "mission-recommendation-feature-depth-next-wave-04-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations operator-summary-check",
+    "go test ./internal/atlas -run TestFeatureDepthWaveOperatorSummaryCheckPreservesExactNextActionWording -count=1"
+  ],
+  "assertions": [
+    "exact_next_action retained",
+    "first_executable_node retained",
+    "summary generated"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-11",
+  "task_id": "mission-recommendation-feature-depth-next-wave-11-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations failed-check-replay",
+    "go test ./internal/atlas -run TestFeatureDepthWaveFailedCheckReplay -count=1"
+  ],
+  "assertions": [
+    "merge_denied_cases>=2",
+    "retry_allowed_cases>=1",
+    "approves_work=false"
+  ]
+}

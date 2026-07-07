@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-10",
+  "task_id": "mission-recommendation-feature-depth-next-wave-10-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-10",
+  "source_task_digest": "sha256:32f055c1d1904366f81bde55e71a5aa9b0b0a18a818384dc885fae7929b4cac9",
+  "selected_work": [
+    "Windows threshold summary",
+    "Long-running check evidence",
+    "PR CI timing binding"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

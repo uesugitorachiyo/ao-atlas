@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-14",
+  "task_id": "mission-recommendation-feature-depth-next-wave-14-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations stale-remote-branch-repair",
+    "go test ./internal/atlas -run TestFeatureDepthWaveStaleRemoteBranchRepair -count=1"
+  ],
+  "assertions": [
+    "repair_required_cases>=1",
+    "cleanup_safe_cases>=1",
+    "blocked_cases=0"
+  ]
+}

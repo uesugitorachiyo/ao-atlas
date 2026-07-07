@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-23",
+  "task_id": "mission-recommendation-feature-depth-next-wave-23-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-23",
+  "source_task_digest": "sha256:9a66c22dcab9eca735a2df8085db5f05cd69dd49d14c53aec6081d946960d922",
+  "selected_work": [
+    "Authority promotion negative fixtures",
+    "Encoded unsafe literal cases",
+    "Expected scan rejection binding"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

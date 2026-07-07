@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-28",
+  "task_id": "mission-recommendation-feature-depth-next-wave-28-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations command-promoter-disagreement-denial",
+    "go test ./internal/atlas -run TestFeatureDepthWaveCommandPromoterDisagreementDenial -count=1"
+  ],
+  "assertions": [
+    "denied_cases>0",
+    "final_response_allowed=false",
+    "status=denial_recorded"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-02",
+  "task_id": "mission-recommendation-feature-depth-next-wave-02-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations readback-diff-fixture",
+    "go test ./internal/atlas -run TestFeatureDepthWaveReadbackDiffFixture -count=1"
+  ],
+  "assertions": [
+    "completed_delta=1",
+    "ready_delta=-1",
+    "checkpoint_delta=1"
+  ]
+}

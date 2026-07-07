@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-06",
+  "task_id": "mission-recommendation-feature-depth-next-wave-06-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations run-link-schema-coverage",
+    "go test ./internal/atlas -run TestFeatureDepthWaveRunLinkSchemaCoverage -count=1"
+  ],
+  "assertions": [
+    "run_link_count>=6",
+    "typed_run_link_validators>=6",
+    "completed_run_links>=6"
+  ]
+}

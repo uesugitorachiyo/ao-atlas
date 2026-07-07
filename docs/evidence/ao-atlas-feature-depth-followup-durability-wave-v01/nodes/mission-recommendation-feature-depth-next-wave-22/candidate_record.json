@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-22",
+  "task_id": "mission-recommendation-feature-depth-next-wave-22-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-22",
+  "source_task_digest": "sha256:83c75bd8ff4ce2224311b491c92c10b39552ac86d18685bdb9b719e7a0c36162",
+  "selected_work": [
+    "Scoped public-safety scan",
+    "Prompt artifact scan",
+    "Unsafe wording zero-match evidence"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

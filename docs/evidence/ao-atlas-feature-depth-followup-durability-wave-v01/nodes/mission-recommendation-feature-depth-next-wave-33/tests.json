@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-33",
+  "task_id": "mission-recommendation-feature-depth-next-wave-33-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations mission-dashboard-closure-binding",
+    "go test ./internal/atlas -run TestFeatureDepthWaveMissionDashboardClosureBinding -count=1"
+  ],
+  "assertions": [
+    "atlas_closure_evidence_bound=true",
+    "row_count>0",
+    "final_response_allowed=false"
+  ]
+}

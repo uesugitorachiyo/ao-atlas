@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-12",
+  "task_id": "mission-recommendation-feature-depth-next-wave-12-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations merge-check-binding",
+    "go test ./internal/atlas -run TestFeatureDepthWaveMergeCheckBinding -count=1"
+  ],
+  "assertions": [
+    "unbound_merge_commits=0",
+    "passed_required_check_rows>=1",
+    "status=bound"
+  ]
+}

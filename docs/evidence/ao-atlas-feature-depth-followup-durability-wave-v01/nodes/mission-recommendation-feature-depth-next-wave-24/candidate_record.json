@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-24",
+  "task_id": "mission-recommendation-feature-depth-next-wave-24-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-24",
+  "source_task_digest": "sha256:17b3264a9161f47ca7aa2c88a671568b41c7f2561e05341d5e0e23b2eff5790a",
+  "selected_work": [
+    "Public-safety coverage rollup",
+    "Sentinel evidence count",
+    "Scoped scan count"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

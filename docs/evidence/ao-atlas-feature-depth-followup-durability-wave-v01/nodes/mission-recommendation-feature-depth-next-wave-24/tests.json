@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-24",
+  "task_id": "mission-recommendation-feature-depth-next-wave-24-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations public-safety-coverage-rollup",
+    "go test ./internal/atlas -run TestFeatureDepthWavePublicSafetyCoverageRollup -count=1"
+  ],
+  "assertions": [
+    "public_safety_scan_passed=true",
+    "unsafe_match_count_total=0",
+    "sentinel_evidence_count>0"
+  ]
+}

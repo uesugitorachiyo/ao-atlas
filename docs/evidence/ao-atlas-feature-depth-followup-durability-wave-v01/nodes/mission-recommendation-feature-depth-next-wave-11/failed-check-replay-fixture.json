@@ -1,0 +1,47 @@
+{
+  "schema": "ao.atlas.failed-check-replay-fixture.v0.1",
+  "status": "replay_recorded",
+  "source_input_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-11/failed-check-replay-input.json",
+  "source_input_digest": "sha256:dee7671dac902015b91824cde961c9c64c027393c161df275007afdc5d4ff81e",
+  "case_count": 3,
+  "merge_denied_cases": 3,
+  "retry_allowed_cases": 1,
+  "safe_to_merge": false,
+  "cases": [
+    {
+      "id": "windows-timeout-retry",
+      "check_name": "production-readiness (windows-latest)",
+      "platform": "windows-latest",
+      "check_status": "failed",
+      "failure_kind": "timeout",
+      "retry_decision": "retry_allowed",
+      "merge_decision": "merge_denied",
+      "reason": "failed check blocks merge; retry is allowed for retryable timeout evidence"
+    },
+    {
+      "id": "public-safety-failure-no-merge",
+      "check_name": "public-safety-scan",
+      "platform": "ubuntu-latest",
+      "check_status": "failed",
+      "failure_kind": "public_safety",
+      "retry_decision": "manual_repair_required",
+      "merge_decision": "merge_denied",
+      "reason": "public safety failure blocks merge until repaired and verified"
+    },
+    {
+      "id": "schema-validation-failure-no-merge",
+      "check_name": "recommendation-evidence-validation",
+      "platform": "macos-latest",
+      "check_status": "failed",
+      "failure_kind": "schema_validation",
+      "retry_decision": "manual_repair_required",
+      "merge_decision": "merge_denied",
+      "reason": "schema validation failure blocks merge until evidence is repaired"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

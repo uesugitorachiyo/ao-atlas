@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-03",
+  "task_id": "mission-recommendation-feature-depth-next-wave-03-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations stale-checkpoint-rejection",
+    "go test ./internal/atlas -run TestFeatureDepthWaveStaleCheckpointRejectionRejectsOutdatedContinuationPrompt -count=1"
+  ],
+  "assertions": [
+    "stale prompt denied",
+    "latest checkpoint preserved",
+    "final response remains denied"
+  ]
+}

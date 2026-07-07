@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-32",
+  "task_id": "mission-recommendation-feature-depth-next-wave-32-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations foundry-terminal-status-examples",
+    "go test ./internal/atlas -run TestFeatureDepthWaveFoundryTerminalStatusExamples -count=1"
+  ],
+  "assertions": [
+    "examples_match_readback_enums=true",
+    "terminal_example_count>0",
+    "denied_example_count>0"
+  ]
+}
