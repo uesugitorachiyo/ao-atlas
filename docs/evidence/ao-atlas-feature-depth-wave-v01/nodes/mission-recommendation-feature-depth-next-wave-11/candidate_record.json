@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-11",
+  "task_id": "mission-recommendation-feature-depth-next-wave-11-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-11",
+  "source_task_digest": "sha256:ebaae1ee947b53569628c4c899acbf9f04c38a41fab75eb8cb0af4c251f32042",
+  "selected_work": [
+    "Add failed check replay fixture model and validator.",
+    "Add CLI generator that maps failed checks to retry and no-merge decisions.",
+    "Generate node 11 replay fixture for timeout, public-safety, and schema-validation failures."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
