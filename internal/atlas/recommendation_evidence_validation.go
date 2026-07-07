@@ -389,6 +389,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:command-promoter-agreement-rollup", err
 		}
 		return "typed:command-promoter-agreement-rollup", ValidateAtlasCommandPromoterAgreementRollup(value)
+	case AtlasPromoterRollupCountMismatchRegressionContract:
+		value, err := LoadJSON[AtlasPromoterRollupCountMismatchRegression](path)
+		if err != nil {
+			return "typed:promoter-rollup-count-mismatch-regression", err
+		}
+		return "typed:promoter-rollup-count-mismatch-regression", ValidateAtlasPromoterRollupCountMismatchRegression(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

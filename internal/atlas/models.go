@@ -1218,6 +1218,35 @@ type AtlasCommandPromoterAgreementRollup struct {
 	RSIRemainsDenied                   bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasPromoterRollupCountMismatchRegression struct {
+	Schema                            string                                           `json:"schema"`
+	NodeID                            string                                           `json:"node_id"`
+	Status                            string                                           `json:"status"`
+	SourceRollupPath                  string                                           `json:"source_rollup_path"`
+	SourceRollupDigest                string                                           `json:"source_rollup_digest"`
+	CaseCount                         int                                              `json:"case_count"`
+	RejectedCases                     int                                              `json:"rejected_cases"`
+	Cases                             []AtlasPromoterRollupCountMismatchRegressionCase `json:"cases"`
+	CompletedNodesMismatchRejected    bool                                             `json:"completed_nodes_mismatch_rejected"`
+	PromoterFilesMismatchRejected     bool                                             `json:"promoter_files_mismatch_rejected"`
+	MissingNodesMismatchRejected      bool                                             `json:"missing_nodes_mismatch_rejected"`
+	NoPromotionStatusMismatchRejected bool                                             `json:"no_promotion_status_mismatch_rejected"`
+	RSIDeniedMismatchRejected         bool                                             `json:"rsi_denied_mismatch_rejected"`
+	SchedulesWork                     bool                                             `json:"schedules_work"`
+	ExecutesWork                      bool                                             `json:"executes_work"`
+	ApprovesWork                      bool                                             `json:"approves_work"`
+	ClaimsAuthorityAdvance            bool                                             `json:"claims_authority_advance"`
+	RSIRemainsDenied                  bool                                             `json:"rsi_remains_denied"`
+}
+
+type AtlasPromoterRollupCountMismatchRegressionCase struct {
+	ID                    string `json:"id"`
+	Mutation              string `json:"mutation"`
+	ExpectedErrorContains string `json:"expected_error_contains"`
+	Rejected              bool   `json:"rejected"`
+	ActualError           string `json:"actual_error"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

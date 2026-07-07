@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.promoter-rollup-count-mismatch-regression.v0.1",
+  "title": "AO Atlas Promoter Rollup Count Mismatch Regression",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_rollup_path",
+    "source_rollup_digest",
+    "case_count",
+    "rejected_cases",
+    "cases",
+    "completed_nodes_mismatch_rejected",
+    "promoter_files_mismatch_rejected",
+    "missing_nodes_mismatch_rejected",
+    "no_promotion_status_mismatch_rejected",
+    "rsi_denied_mismatch_rejected",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.promoter-rollup-count-mismatch-regression.v0.1"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "mismatch_regression_recorded",
+        "mismatch_regression_failed"
+      ]
+    },
+    "source_rollup_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_rollup_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "case_count": {
+      "const": 5
+    },
+    "rejected_cases": {
+      "const": 5
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "$ref": "#/$defs/case"
+      }
+    },
+    "completed_nodes_mismatch_rejected": {
+      "const": true
+    },
+    "promoter_files_mismatch_rejected": {
+      "const": true
+    },
+    "missing_nodes_mismatch_rejected": {
+      "const": true
+    },
+    "no_promotion_status_mismatch_rejected": {
+      "const": true
+    },
+    "rsi_denied_mismatch_rejected": {
+      "const": true
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "$defs": {
+    "case": {
+      "type": "object",
+      "required": [
+        "id",
+        "mutation",
+        "expected_error_contains",
+        "rejected",
+        "actual_error"
+      ],
+      "properties": {
+        "id": {
+          "enum": [
+            "completed_nodes_total_mismatch",
+            "promoter_files_mismatch",
+            "missing_nodes_mismatch",
+            "no_promotion_status_mismatch",
+            "rsi_denied_mismatch"
+          ]
+        },
+        "mutation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_error_contains": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rejected": {
+          "const": true
+        },
+        "actual_error": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
