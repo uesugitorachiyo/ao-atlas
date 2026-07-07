@@ -1321,6 +1321,36 @@ type AtlasFoundryImportReadinessBinding struct {
 	RSIRemainsDenied            bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasRunLinkDigestCheck struct {
+	Schema                   string                         `json:"schema"`
+	NodeID                   string                         `json:"node_id"`
+	Status                   string                         `json:"status"`
+	SourceRunLinkPath        string                         `json:"source_run_link_path"`
+	SourceRunLinkFileDigest  string                         `json:"source_run_link_file_digest"`
+	TaskID                   string                         `json:"task_id"`
+	RunLinkStatus            string                         `json:"run_link_status"`
+	RecordedDigest           string                         `json:"recorded_digest"`
+	RecomputedDigest         string                         `json:"recomputed_digest"`
+	DigestMatches            bool                           `json:"digest_matches"`
+	EvidenceRoot             string                         `json:"evidence_root"`
+	EvidenceCount            int                            `json:"evidence_count"`
+	SchemaBoundEvidenceCount int                            `json:"schema_bound_evidence_count"`
+	MissingEvidence          []string                       `json:"missing_evidence"`
+	EvidenceEntries          []AtlasRunLinkDigestCheckEntry `json:"evidence_entries"`
+	SchedulesWork            bool                           `json:"schedules_work"`
+	ExecutesWork             bool                           `json:"executes_work"`
+	ApprovesWork             bool                           `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool                           `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool                           `json:"rsi_remains_denied"`
+}
+
+type AtlasRunLinkDigestCheckEntry struct {
+	Key    string `json:"key"`
+	Path   string `json:"path"`
+	Schema string `json:"schema"`
+	Status string `json:"status"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

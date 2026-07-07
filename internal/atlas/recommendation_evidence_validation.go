@@ -407,6 +407,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:foundry-import-readiness-binding", err
 		}
 		return "typed:foundry-import-readiness-binding", ValidateAtlasFoundryImportReadinessBinding(value)
+	case AtlasRunLinkDigestCheckContract:
+		value, err := LoadJSON[AtlasRunLinkDigestCheck](path)
+		if err != nil {
+			return "typed:run-link-digest-check", err
+		}
+		return "typed:run-link-digest-check", ValidateAtlasRunLinkDigestCheck(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

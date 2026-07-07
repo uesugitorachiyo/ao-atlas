@@ -75,6 +75,7 @@ const AtlasCommandPromoterAgreementRollupContract = "ao.atlas.command-promoter-a
 const AtlasPromoterRollupCountMismatchRegressionContract = "ao.atlas.promoter-rollup-count-mismatch-regression.v0.1"
 const AtlasCommandPromoterDisagreementDenialContract = "ao.atlas.command-promoter-disagreement-denial.v0.1"
 const AtlasFoundryImportReadinessBindingContract = "ao.atlas.foundry-import-readiness-binding.v0.1"
+const AtlasRunLinkDigestCheckContract = "ao.atlas.run-link-digest-check.v0.1"
 
 var digestPattern = regexp.MustCompile(`^sha256:[0-9a-f]{64}$`)
 var driveAbsPattern = regexp.MustCompile(`^[A-Za-z]:[\\/]`)
