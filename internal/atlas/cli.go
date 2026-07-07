@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -486,6 +486,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "promoter-no-promotion-rollup" {
 		return runMissionRecommendationsPromoterNoPromotionRollup(args[1:], stdout)
 	}
+	if args[0] == "command-promoter-agreement-rollup" {
+		return runMissionRecommendationsCommandPromoterAgreementRollup(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -499,7 +502,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1717,6 +1720,62 @@ func runMissionRecommendationsPromoterNoPromotionRollup(args []string, stdout io
 		rollup.PromoterNoPromotionFiles,
 		rollup.MissingPromoterNodesTotal,
 		rollup.NoPromotionInvariantHolds,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsCommandPromoterAgreementRollup(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations command-promoter-agreement-rollup", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	nodeID := fs.String("node-id", "", "rollup node id")
+	promoterRollupPath := fs.String("promoter-rollup", "", "source Promoter no-promotion rollup path")
+	commandReadbackPath := fs.String("command-readback", "", "source Command readback path")
+	sourceReadbackPath := fs.String("source-readback", "", "source recommendation readback path")
+	outPath := fs.String("out", "", "Command/Promoter agreement rollup output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	for name, value := range map[string]string{
+		"--node-id":          *nodeID,
+		"--promoter-rollup":  *promoterRollupPath,
+		"--command-readback": *commandReadbackPath,
+		"--source-readback":  *sourceReadbackPath,
+	} {
+		if strings.TrimSpace(value) == "" {
+			return fmt.Errorf("%s is required", name)
+		}
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	for _, input := range []string{*promoterRollupPath, *commandReadbackPath, *sourceReadbackPath} {
+		if strings.TrimSpace(*outPath) != "" && samePath(input, *outPath) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+	}
+	rollup, err := BuildAtlasCommandPromoterAgreementRollup(*nodeID, *promoterRollupPath, *commandReadbackPath, *sourceReadbackPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteAtlasCommandPromoterAgreementRollup(*outPath, rollup); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, rollup)
+	}
+	fmt.Fprintf(stdout, "status=%s\nnode_id=%s\ncommand_status=%s\npromoter_no_promotion_files=%d\nreadback_completed_nodes=%d\nreadback_ready_nodes=%d\ncommand_agrees_no_promotion=%t\nreadback_agrees_with_command=%t\ncommand_promoter_agreement_rollup=%s\n",
+		rollup.Status,
+		rollup.NodeID,
+		rollup.CommandStatus,
+		rollup.PromoterNoPromotionFiles,
+		rollup.ReadbackCompletedNodes,
+		rollup.ReadbackReadyNodes,
+		rollup.CommandAgreesNoPromotion,
+		rollup.ReadbackAgreesWithCommand,
 		filepath.ToSlash(*outPath),
 	)
 	return nil

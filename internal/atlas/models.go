@@ -1185,6 +1185,39 @@ type AtlasPromoterNoPromotionWaveSummary struct {
 	RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasCommandPromoterAgreementRollup struct {
+	Schema                             string `json:"schema"`
+	NodeID                             string `json:"node_id"`
+	Status                             string `json:"status"`
+	SourcePromoterRollupPath           string `json:"source_promoter_rollup_path"`
+	SourcePromoterRollupDigest         string `json:"source_promoter_rollup_digest"`
+	SourceCommandReadbackPath          string `json:"source_command_readback_path"`
+	SourceCommandReadbackDigest        string `json:"source_command_readback_digest"`
+	SourceReadbackPath                 string `json:"source_readback_path"`
+	SourceReadbackDigest               string `json:"source_readback_digest"`
+	PromoterRollupStatus               string `json:"promoter_rollup_status"`
+	PromoterNoPromotionFiles           int    `json:"promoter_no_promotion_files"`
+	PromoterNoPromotionInvariantHolds  bool   `json:"promoter_no_promotion_invariant_holds"`
+	CommandStatus                      string `json:"command_status"`
+	CommandExpectedCompletedNodesAfter int    `json:"command_expected_completed_nodes_after"`
+	CommandExpectedReadyNodesAfter     int    `json:"command_expected_ready_nodes_after"`
+	CommandExpectedNextExecutableNode  string `json:"command_expected_next_executable_node"`
+	ReadbackCompletedNodes             int    `json:"readback_completed_nodes"`
+	ReadbackReadyNodes                 int    `json:"readback_ready_nodes"`
+	ReadbackFirstExecutableNode        string `json:"readback_first_executable_node"`
+	CommandAgreesNoPromotion           bool   `json:"command_agrees_no_promotion"`
+	ReadbackAgreesWithCommand          bool   `json:"readback_agrees_with_command"`
+	AggregatePromotionStatus           string `json:"aggregate_promotion_status"`
+	PromotionRequested                 bool   `json:"promotion_requested"`
+	PromotionGranted                   bool   `json:"promotion_granted"`
+	FinalResponseAllowed               bool   `json:"final_response_allowed"`
+	SchedulesWork                      bool   `json:"schedules_work"`
+	ExecutesWork                       bool   `json:"executes_work"`
+	ApprovesWork                       bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance             bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied                   bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`

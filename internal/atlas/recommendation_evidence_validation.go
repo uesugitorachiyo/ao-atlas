@@ -383,6 +383,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:promoter-no-promotion-rollup", err
 		}
 		return "typed:promoter-no-promotion-rollup", ValidateAtlasPromoterNoPromotionRollup(value)
+	case AtlasCommandPromoterAgreementRollupContract:
+		value, err := LoadJSON[AtlasCommandPromoterAgreementRollup](path)
+		if err != nil {
+			return "typed:command-promoter-agreement-rollup", err
+		}
+		return "typed:command-promoter-agreement-rollup", ValidateAtlasCommandPromoterAgreementRollup(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {
