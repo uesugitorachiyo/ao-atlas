@@ -431,6 +431,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:mission-dashboard-closure-binding", err
 		}
 		return "typed:mission-dashboard-closure-binding", ValidateAtlasMissionDashboardClosureBinding(value)
+	case AtlasMissionDashboardProvenanceLinksContract:
+		value, err := LoadJSON[AtlasMissionDashboardProvenanceLinks](path)
+		if err != nil {
+			return "typed:mission-dashboard-provenance-links", err
+		}
+		return "typed:mission-dashboard-provenance-links", ValidateAtlasMissionDashboardProvenanceLinks(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

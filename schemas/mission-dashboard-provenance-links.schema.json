@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.mission-dashboard-provenance-links.v0.1",
+  "title": "AO Atlas Mission Dashboard Provenance Links",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_dashboard_binding_path",
+    "source_dashboard_binding_digest",
+    "source_row_count",
+    "required_repos",
+    "provenance_link_count",
+    "provenance_links",
+    "all_required_provenance_linked",
+    "every_link_matches_dashboard",
+    "every_linked_artifact_digest_verified",
+    "final_response_allowed",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "ao.atlas.mission-dashboard-provenance-links.v0.1" },
+    "node_id": { "type": "string", "minLength": 1 },
+    "status": { "const": "dashboard_provenance_links_bound" },
+    "source_dashboard_binding_path": { "type": "string", "minLength": 1 },
+    "source_dashboard_binding_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_row_count": { "const": 6 },
+    "required_repos": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "prefixItems": [
+        { "const": "ao-command" },
+        { "const": "ao-foundry" },
+        { "const": "ao-promoter" },
+        { "const": "ao-sentinel" }
+      ]
+    },
+    "provenance_link_count": { "const": 4 },
+    "provenance_links": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "$ref": "#/$defs/provenance_link" }
+    },
+    "all_required_provenance_linked": { "const": true },
+    "every_link_matches_dashboard": { "const": true },
+    "every_linked_artifact_digest_verified": { "const": true },
+    "final_response_allowed": { "const": false },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "provenance_link": {
+      "type": "object",
+      "required": [
+        "repo",
+        "role",
+        "evidence_path",
+        "evidence_digest",
+        "provenance_link_status",
+        "dashboard_row_matched",
+        "closure_evidence_digest_matches",
+        "artifact_digest_verified",
+        "final_response_allowed",
+        "rsi_remains_denied",
+        "authority_advance_claimed"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "repo": {
+          "enum": [
+            "ao-command",
+            "ao-foundry",
+            "ao-promoter",
+            "ao-sentinel"
+          ]
+        },
+        "role": {
+          "enum": [
+            "compact_readback_owner",
+            "bounded_implementation_handoff",
+            "no_promotion_rollup_owner",
+            "public_safety_scan_owner"
+          ]
+        },
+        "evidence_path": { "type": "string", "minLength": 1 },
+        "evidence_digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "provenance_link_status": { "const": "linked" },
+        "dashboard_row_matched": { "const": true },
+        "closure_evidence_digest_matches": { "const": true },
+        "artifact_digest_verified": { "const": true },
+        "final_response_allowed": { "const": false },
+        "rsi_remains_denied": { "const": true },
+        "authority_advance_claimed": { "const": false }
+      }
+    }
+  }
+}
