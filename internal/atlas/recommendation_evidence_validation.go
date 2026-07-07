@@ -335,6 +335,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:branch-cleanup-handoff-summary", err
 		}
 		return "typed:branch-cleanup-handoff-summary", ValidateAtlasBranchCleanupHandoffSummary(value)
+	case AtlasCompactionResumePromptContract:
+		value, err := LoadJSON[AtlasCompactionResumePrompt](path)
+		if err != nil {
+			return "typed:compaction-resume-prompt", err
+		}
+		return "typed:compaction-resume-prompt", ValidateAtlasCompactionResumePrompt(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

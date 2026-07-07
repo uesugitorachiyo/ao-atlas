@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.compaction-resume-prompt.v0.1",
+  "title": "AO Atlas Compaction Resume Prompt",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_readback_path",
+    "prompt_path",
+    "completed_nodes",
+    "total_nodes",
+    "ready_nodes",
+    "blocked_nodes",
+    "failed_nodes",
+    "first_executable_node",
+    "exact_next_action",
+    "return_gate_status",
+    "continuation_contract_reason",
+    "early_return_risk_status",
+    "final_response_allowed",
+    "refuses_final_response",
+    "expected_next_node_after_completion",
+    "promotion_requested",
+    "promotion_granted",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.compaction-resume-prompt.v0.1"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "generated"
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "prompt_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lease_start_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workgraph_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "started_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "completed_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "elapsed_minutes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "min_minutes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_minutes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "lease_time_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checkpoint_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "completed_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "total_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "ready_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "blocked_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "failed_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "first_executable_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "exact_next_action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "return_gate_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "continuation_contract_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "early_return_risk_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "final_response_allowed": {
+      "const": false
+    },
+    "refuses_final_response": {
+      "const": true
+    },
+    "expected_next_node_after_completion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "promotion_requested": {
+      "const": false
+    },
+    "promotion_granted": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

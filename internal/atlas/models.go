@@ -930,6 +930,41 @@ type AtlasBranchCleanupHandoffEntry struct {
 	Digest                       string `json:"digest"`
 }
 
+type AtlasCompactionResumePrompt struct {
+	Schema                          string `json:"schema"`
+	NodeID                          string `json:"node_id"`
+	Status                          string `json:"status"`
+	SourceReadbackPath              string `json:"source_readback_path"`
+	SourceReadbackDigest            string `json:"source_readback_digest,omitempty"`
+	PromptPath                      string `json:"prompt_path"`
+	LeaseStartPath                  string `json:"lease_start_path,omitempty"`
+	WorkgraphPath                   string `json:"workgraph_path,omitempty"`
+	StartedAt                       string `json:"started_at,omitempty"`
+	CompletedAt                     string `json:"completed_at,omitempty"`
+	ElapsedMinutes                  int    `json:"elapsed_minutes,omitempty"`
+	MinMinutes                      int    `json:"min_minutes,omitempty"`
+	MaxMinutes                      int    `json:"max_minutes,omitempty"`
+	LeaseTimeStatus                 string `json:"lease_time_status,omitempty"`
+	CheckpointCount                 int    `json:"checkpoint_count,omitempty"`
+	CompletedNodes                  int    `json:"completed_nodes"`
+	TotalNodes                      int    `json:"total_nodes"`
+	ReadyNodes                      int    `json:"ready_nodes"`
+	BlockedNodes                    int    `json:"blocked_nodes"`
+	FailedNodes                     int    `json:"failed_nodes"`
+	FirstExecutableNode             string `json:"first_executable_node"`
+	ExactNextAction                 string `json:"exact_next_action"`
+	ReturnGateStatus                string `json:"return_gate_status"`
+	ContinuationContractReason      string `json:"continuation_contract_reason"`
+	EarlyReturnRiskStatus           string `json:"early_return_risk_status"`
+	FinalResponseAllowed            bool   `json:"final_response_allowed"`
+	RefusesFinalResponse            bool   `json:"refuses_final_response"`
+	ExpectedNextNodeAfterCompletion string `json:"expected_next_node_after_completion"`
+	PromotionRequested              bool   `json:"promotion_requested"`
+	PromotionGranted                bool   `json:"promotion_granted"`
+	ClaimsAuthorityAdvance          bool   `json:"claims_authority_advance,omitempty"`
+	RSIRemainsDenied                bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
