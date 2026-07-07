@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-28",
+  "task_id": "mission-recommendation-feature-depth-next-wave-28-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations command-promoter-disagreement-denial",
+    "go test ./internal/atlas -run TestFeatureDepthWaveCommandPromoterDisagreementDenialBlocksFinalResponse -count=1"
+  ],
+  "assertions": [
+    "all disagreement cases deny final response",
+    "promotion remains unrequested and ungranted",
+    "RSI remains denied"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-27",
+  "task_id": "mission-recommendation-feature-depth-next-wave-27-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations promoter-rollup-count-mismatch-regression",
+    "go test ./internal/atlas -run TestFeatureDepthWavePromoterRollupCountMismatchRegressionRejectsDrift -count=1"
+  ],
+  "assertions": [
+    "all mismatch cases are rejected",
+    "regression fixture records expected validator errors",
+    "RSI remains denied"
+  ]
+}
