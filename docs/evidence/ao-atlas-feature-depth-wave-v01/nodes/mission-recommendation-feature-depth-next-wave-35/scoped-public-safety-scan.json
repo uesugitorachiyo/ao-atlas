@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-35",
+  "status": "passed",
+  "scanned_scopes": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35",
+    "internal/atlas/mission_dashboard_freshness.go",
+    "internal/atlas/mission_dashboard_freshness_test.go",
+    "schemas/mission-dashboard-freshness-checks.schema.json"
+  ],
+  "scanned_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35/foundry-continuation-handoff.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35/foundry-continuation-prompt.md",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35/foundry-import.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35/mission-dashboard-freshness-checks.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35/tasks/mission-recommendation-feature-depth-next-wave-35-task.json",
+    "schemas/mission-dashboard-freshness-checks.schema.json"
+  ],
+  "scanned_file_count": 6,
+  "changed_evidence_files": 5,
+  "changed_prompt_artifacts": 1,
+  "forbidden_patterns_redacted": true,
+  "unsafe_match_count": 0,
+  "public_safety_scan_passed": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

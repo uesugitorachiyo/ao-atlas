@@ -80,6 +80,7 @@ const AtlasFoundryHandoffReplayFixtureContract = "ao.atlas.foundry-handoff-repla
 const AtlasFoundryTerminalStatusExamplesContract = "ao.atlas.foundry-terminal-status-examples.v0.1"
 const AtlasMissionDashboardClosureBindingContract = "ao.atlas.mission-dashboard-closure-binding.v0.1"
 const AtlasMissionDashboardProvenanceLinksContract = "ao.atlas.mission-dashboard-provenance-links.v0.1"
+const AtlasMissionDashboardFreshnessChecksContract = "ao.atlas.mission-dashboard-freshness-checks.v0.1"
 
 var digestPattern = regexp.MustCompile(`^sha256:[0-9a-f]{64}$`)
 var driveAbsPattern = regexp.MustCompile(`^[A-Za-z]:[\\/]`)

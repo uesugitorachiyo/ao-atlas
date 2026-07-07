@@ -1516,6 +1516,49 @@ type AtlasMissionDashboardProvenanceLink struct {
 	AuthorityAdvanceClaimed      bool   `json:"authority_advance_claimed"`
 }
 
+type AtlasMissionDashboardFreshnessChecks struct {
+	Schema                       string                                `json:"schema"`
+	NodeID                       string                                `json:"node_id"`
+	Status                       string                                `json:"status"`
+	SourceProvenanceLinksPath    string                                `json:"source_provenance_links_path"`
+	SourceProvenanceLinksDigest  string                                `json:"source_provenance_links_digest"`
+	SourceReadbackPath           string                                `json:"source_readback_path"`
+	SourceReadbackDigest         string                                `json:"source_readback_digest"`
+	PostMergeLifecyclePath       string                                `json:"post_merge_lifecycle_path"`
+	PostMergeLifecycleDigest     string                                `json:"post_merge_lifecycle_digest"`
+	SourceCompletedNodes         int                                   `json:"source_completed_nodes"`
+	SourceReadyNodes             int                                   `json:"source_ready_nodes"`
+	SourceFirstExecutableNode    string                                `json:"source_first_executable_node"`
+	PRNumber                     int                                   `json:"pr_number"`
+	MergeCommit                  string                                `json:"merge_commit"`
+	FinalHead                    string                                `json:"final_head"`
+	LocalMainSynced              bool                                  `json:"local_main_synced"`
+	OriginMainSynced             bool                                  `json:"origin_main_synced"`
+	LocalBranchDeleted           bool                                  `json:"local_branch_deleted"`
+	RemoteBranchDeleted          bool                                  `json:"remote_branch_deleted"`
+	LocalCodexBranchesRemaining  int                                   `json:"local_codex_branches_remaining"`
+	RemoteCodexBranchesRemaining int                                   `json:"remote_codex_branches_remaining"`
+	FreshnessCheckCount          int                                   `json:"freshness_check_count"`
+	FreshnessChecks              []AtlasMissionDashboardFreshnessCheck `json:"freshness_checks"`
+	PRMergedAndCleaned           bool                                  `json:"pr_merged_and_cleaned"`
+	MainSyncedToMergeCommit      bool                                  `json:"main_synced_to_merge_commit"`
+	DashboardSourceStillFresh    bool                                  `json:"dashboard_source_still_fresh"`
+	AllFreshnessChecksPassed     bool                                  `json:"all_freshness_checks_passed"`
+	FinalResponseAllowed         bool                                  `json:"final_response_allowed"`
+	SchedulesWork                bool                                  `json:"schedules_work"`
+	ExecutesWork                 bool                                  `json:"executes_work"`
+	ApprovesWork                 bool                                  `json:"approves_work"`
+	ClaimsAuthorityAdvance       bool                                  `json:"claims_authority_advance"`
+	RSIRemainsDenied             bool                                  `json:"rsi_remains_denied"`
+}
+
+type AtlasMissionDashboardFreshnessCheck struct {
+	Name           string `json:"name"`
+	Status         string `json:"status"`
+	EvidencePath   string `json:"evidence_path"`
+	EvidenceDigest string `json:"evidence_digest"`
+}
+
 type AtlasContinuationContract struct {
 	ContractVersion      string `json:"contract_version"`
 	Status               string `json:"status"`
