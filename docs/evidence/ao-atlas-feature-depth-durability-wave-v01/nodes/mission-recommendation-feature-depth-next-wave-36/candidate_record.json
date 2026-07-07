@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-36",
+  "task_id": "mission-recommendation-feature-depth-next-wave-36-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-36",
+  "source_task_digest": "sha256:81b59764c09ec73a1e06abafd7f064f2057d862fc0c82322c6ce12300f85c0f4",
+  "selected_work": [
+    "ready node filter summary",
+    "blocked and failed empty filters",
+    "completed history filter"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}
