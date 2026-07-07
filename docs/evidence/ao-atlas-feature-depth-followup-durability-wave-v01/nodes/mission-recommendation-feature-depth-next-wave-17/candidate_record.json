@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-17",
+  "task_id": "mission-recommendation-feature-depth-next-wave-17-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-17",
+  "source_task_digest": "sha256:8f1a73bacbdc867e5abbc53fd2c23c433482eed24918a42de869104398cd45ea",
+  "selected_work": [
+    "Compaction resume prompt",
+    "Lease timing preservation",
+    "Active node state binding"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

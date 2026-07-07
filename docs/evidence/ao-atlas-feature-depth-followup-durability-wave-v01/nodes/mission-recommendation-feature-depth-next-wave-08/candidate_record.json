@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-08",
+  "task_id": "mission-recommendation-feature-depth-next-wave-08-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-08",
+  "source_task_digest": "sha256:7dcdbac66226d098f1a8c70c24d18f9a1d457b499edb403616245fca484d6a56",
+  "selected_work": [
+    "Schema validator drift comparison",
+    "Source and target report binding",
+    "Lost schema guard"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

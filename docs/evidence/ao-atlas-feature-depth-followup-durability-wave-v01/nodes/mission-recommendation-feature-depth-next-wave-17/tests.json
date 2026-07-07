@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-17",
+  "task_id": "mission-recommendation-feature-depth-next-wave-17-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations compaction-resume-prompt",
+    "go test ./internal/atlas -run TestFeatureDepthWaveCompactionResumePrompt -count=1"
+  ],
+  "assertions": [
+    "first_executable_node=mission-recommendation-feature-depth-next-wave-17",
+    "final_response_allowed=false",
+    "prompt generated"
+  ]
+}

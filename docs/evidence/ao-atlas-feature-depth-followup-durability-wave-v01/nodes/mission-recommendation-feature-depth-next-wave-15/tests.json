@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-15",
+  "task_id": "mission-recommendation-feature-depth-next-wave-15-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations local-main-sync-readback",
+    "go test ./internal/atlas -run TestFeatureDepthWaveLocalMainSyncReadback -count=1"
+  ],
+  "assertions": [
+    "local_main_synced=true",
+    "working_tree_clean=true",
+    "safe_to_select_next_node=true"
+  ]
+}

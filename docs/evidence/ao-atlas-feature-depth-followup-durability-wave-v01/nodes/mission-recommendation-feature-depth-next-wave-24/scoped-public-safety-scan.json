@@ -1,0 +1,41 @@
+{
+  "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-24",
+  "status": "passed",
+  "scanned_scopes": [
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24"
+  ],
+  "scanned_files": [
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/candidate_record.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/checkpoint-readback-after.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/checkpoint_bundle.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/command_readback.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/execution-readback-after.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/foundry-continuation-handoff.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/foundry-continuation-prompt.md",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/foundry-import.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/implementation_evidence.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/mission-readback-delta.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/node_gate.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/promoter_no_promotion.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/recommendation-readback-after.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/rollback_record.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/run-link.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/sentinel_public_safety.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/tasks/mission-recommendation-feature-depth-next-wave-24-task.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/tests.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/verification.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/workgraph-after.json"
+  ],
+  "scanned_file_count": 20,
+  "changed_evidence_files": 19,
+  "changed_prompt_artifacts": 1,
+  "forbidden_patterns_redacted": true,
+  "unsafe_match_count": 0,
+  "public_safety_scan_passed": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-28",
+  "task_id": "mission-recommendation-feature-depth-next-wave-28-task",
+  "status": "ready",
+  "rollback_scope": [
+    "Remove mission-recommendation-feature-depth-next-wave-28 evidence artifacts and restore mission-recommendation-feature-depth-next-wave-27 workgraph as latest checkpoint."
+  ],
+  "rollback_command": "git restore -- docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-28",
+  "preserves_main": true
+}

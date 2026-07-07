@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-30",
+  "task_id": "mission-recommendation-feature-depth-next-wave-30-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations run-link-digest-check",
+    "go test ./internal/atlas -run TestFeatureDepthWaveRunLinkDigestCheck -count=1"
+  ],
+  "assertions": [
+    "digest_matches=true",
+    "evidence_count>0",
+    "run_link_status=completed"
+  ]
+}

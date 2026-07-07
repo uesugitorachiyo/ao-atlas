@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-21",
+  "task_id": "mission-recommendation-feature-depth-next-wave-21-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-21",
+  "source_task_digest": "sha256:bf03b4c5daebdfd4e6221c287f41c8474e10020e51f1da661550ac78207e90aa",
+  "selected_work": [
+    "Public-safety readback binding",
+    "Sentinel evidence binding",
+    "Verification status binding"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

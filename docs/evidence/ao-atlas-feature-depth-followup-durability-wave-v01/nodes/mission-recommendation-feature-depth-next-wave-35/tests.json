@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-35",
+  "task_id": "mission-recommendation-feature-depth-next-wave-35-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations mission-dashboard-freshness-checks",
+    "go test ./internal/atlas -run TestFeatureDepthWaveMissionDashboardFreshnessChecks -count=1"
+  ],
+  "assertions": [
+    "all_freshness_checks_passed=true",
+    "main_synced_to_merge_commit=true",
+    "freshness_check_count>0"
+  ]
+}

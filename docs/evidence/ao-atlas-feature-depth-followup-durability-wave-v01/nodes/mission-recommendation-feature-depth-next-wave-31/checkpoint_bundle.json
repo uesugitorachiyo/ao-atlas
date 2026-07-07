@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-31",
+  "task_id": "mission-recommendation-feature-depth-next-wave-31-task",
+  "status": "ready",
+  "source_workgraph": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-30/workgraph-after.json",
+  "foundry_handoff_replay_fixture": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-31/foundry-handoff-replay-fixture.json"
+}

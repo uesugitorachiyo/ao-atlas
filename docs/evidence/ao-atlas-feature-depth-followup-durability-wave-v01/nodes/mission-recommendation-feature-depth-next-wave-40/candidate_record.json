@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-40",
+  "task_id": "mission-recommendation-feature-depth-next-wave-40-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-40",
+  "source_task_digest": "sha256:4feb4ec36602ecce073c6a6c1e556ee608b14abf8700c3db8848d06270553333",
+  "selected_work": [
+    "Final recommendation handoff",
+    "Top 10 operator review tasks",
+    "No-promotion RSI-denied assertion"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

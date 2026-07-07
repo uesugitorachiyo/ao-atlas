@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-24",
+  "task_id": "mission-recommendation-feature-depth-next-wave-24-task",
+  "status": "ready",
+  "source_workgraph": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-23/workgraph-after.json",
+  "public_safety_coverage_rollup": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/public-safety-coverage-rollup.json"
+}

@@ -1,0 +1,86 @@
+{
+  "schema": "ao.atlas.final-feature-depth-recommendations.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-40",
+  "status": "ready_for_operator_review",
+  "source_recommendations_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-37/next-wave-feature-depth-recommendations.json",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-39/recommendation-readback-after.json",
+  "completed_nodes_before": 39,
+  "ready_nodes_before": 1,
+  "expected_completed_nodes_after": 40,
+  "expected_ready_nodes_after": 0,
+  "expected_final_response_allowed_after": true,
+  "total_recommendation_count": 40,
+  "operator_review_recommendation_count": 10,
+  "minimum_operator_recommendations": 10,
+  "recommendations": [
+    {
+      "rank": 1,
+      "id": "feature-depth-next-wave-01",
+      "theme": "mission-readback-durability",
+      "task": "Bind AO Mission readback deltas to deterministic checkpoint comparison evidence."
+    },
+    {
+      "rank": 2,
+      "id": "feature-depth-next-wave-02",
+      "theme": "mission-readback-durability",
+      "task": "Add resumable readback diff fixtures for completed and ready node transitions."
+    },
+    {
+      "rank": 3,
+      "id": "feature-depth-next-wave-03",
+      "theme": "mission-readback-durability",
+      "task": "Create stale checkpoint rejection evidence for outdated Mission continuation prompts."
+    },
+    {
+      "rank": 4,
+      "id": "feature-depth-next-wave-04",
+      "theme": "mission-readback-durability",
+      "task": "Add operator summary checks that preserve exact next action wording."
+    },
+    {
+      "rank": 5,
+      "id": "feature-depth-next-wave-05",
+      "theme": "evidence-schema-coverage",
+      "task": "Extend evidence schema validation to typed node closure rollup artifacts."
+    },
+    {
+      "rank": 6,
+      "id": "feature-depth-next-wave-06",
+      "theme": "evidence-schema-coverage",
+      "task": "Add schema coverage summaries for every generated run link artifact."
+    },
+    {
+      "rank": 7,
+      "id": "feature-depth-next-wave-07",
+      "theme": "evidence-schema-coverage",
+      "task": "Validate required node evidence fields before recommendation readback advances."
+    },
+    {
+      "rank": 8,
+      "id": "feature-depth-next-wave-08",
+      "theme": "evidence-schema-coverage",
+      "task": "Record schema validator drift evidence for regenerated fixture directories."
+    },
+    {
+      "rank": 9,
+      "id": "feature-depth-next-wave-09",
+      "theme": "pr-ci-telemetry",
+      "task": "Build aggregate PR and CI timing summaries across consolidation wave nodes."
+    },
+    {
+      "rank": 10,
+      "id": "feature-depth-next-wave-10",
+      "theme": "pr-ci-telemetry",
+      "task": "Add long running Windows check threshold evidence to PR ledger rows."
+    }
+  ],
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

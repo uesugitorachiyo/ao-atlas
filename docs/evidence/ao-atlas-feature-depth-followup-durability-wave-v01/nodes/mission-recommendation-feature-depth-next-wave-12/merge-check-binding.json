@@ -1,0 +1,43 @@
+{
+  "schema": "ao.atlas.merge-check-binding.v0.1",
+  "status": "required_checks_bound",
+  "source_input_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-12/merge-check-binding-input.json",
+  "source_input_digest": "sha256:338d54845ea0d712b58f1f4bd651590abb2865a3b51ff1c9aa07c1ddd1c0a2d7",
+  "row_count": 3,
+  "passed_required_check_rows": 3,
+  "unbound_merge_commits": 0,
+  "rows": [
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-09",
+      "pr_number": 336,
+      "merge_commit": "13b85e08f4069f9416e8e2473c1fcf875e180645",
+      "required_check_count": 9,
+      "passed_required_check_count": 9,
+      "required_checks_status": "passed",
+      "merge_commit_bound": true
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-10",
+      "pr_number": 337,
+      "merge_commit": "1f3e992fc7215f63e4731bad3ee4620b8db15bfe",
+      "required_check_count": 9,
+      "passed_required_check_count": 9,
+      "required_checks_status": "passed",
+      "merge_commit_bound": true
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-11",
+      "pr_number": 338,
+      "merge_commit": "d9540288b3dee7e4894f0db6aead101eb2826526",
+      "required_check_count": 9,
+      "passed_required_check_count": 9,
+      "required_checks_status": "passed",
+      "merge_commit_bound": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

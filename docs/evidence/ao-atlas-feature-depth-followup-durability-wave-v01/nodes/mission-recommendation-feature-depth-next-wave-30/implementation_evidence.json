@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-30",
+  "task_id": "mission-recommendation-feature-depth-next-wave-30-task",
+  "status": "completed",
+  "artifact": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-30/run-link-digest-check.json",
+  "summary": "Added Foundry run-link digest checks for completed node evidence packets.",
+  "mutates_runtime_code": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

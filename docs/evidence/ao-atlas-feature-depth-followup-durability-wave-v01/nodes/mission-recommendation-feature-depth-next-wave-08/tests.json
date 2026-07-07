@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-08",
+  "task_id": "mission-recommendation-feature-depth-next-wave-08-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations schema-validator-drift",
+    "go test ./internal/atlas -run TestFeatureDepthWaveSchemaValidatorDrift -count=1"
+  ],
+  "assertions": [
+    "lost_schemas=0",
+    "lost_validators=0",
+    "typed_validator_delta>=0"
+  ]
+}

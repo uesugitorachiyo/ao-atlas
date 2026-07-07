@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-38",
+  "task_id": "mission-recommendation-feature-depth-next-wave-38-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-38",
+  "source_task_digest": "sha256:2cebfadb9ac9b286b71c8fac46ce8dabba38ff4f0fa938483a84a9660b076cc3",
+  "selected_work": [
+    "Two-hour next-wave prompt",
+    "40-node import bundle",
+    "Planning-only generated wave"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

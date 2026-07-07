@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-15",
+  "task_id": "mission-recommendation-feature-depth-next-wave-15-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-15",
+  "source_task_digest": "sha256:467a860ae10dadab6fff13d0fb3e6788f895e3ed15f52714747841133e97066b",
+  "selected_work": [
+    "Local main sync readback input",
+    "Codex branch cleanup confirmation",
+    "Safe next-node selection fixture"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

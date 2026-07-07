@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-20",
+  "task_id": "mission-recommendation-feature-depth-next-wave-20-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations resume-denial-evidence",
+    "go test ./internal/atlas -run TestFeatureDepthWaveResumeDenialEvidence -count=1"
+  ],
+  "assertions": [
+    "ready_nodes>0",
+    "final_response_allowed=false",
+    "status=denied"
+  ]
+}

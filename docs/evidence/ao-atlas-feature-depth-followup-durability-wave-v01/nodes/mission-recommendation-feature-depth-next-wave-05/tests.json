@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-05",
+  "task_id": "mission-recommendation-feature-depth-next-wave-05-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations validate-evidence",
+    "go test ./internal/atlas -run TestFeatureDepthWaveSchemaValidation -count=1"
+  ],
+  "assertions": [
+    "missing_schema_files=0",
+    "failed_files=0",
+    "node_count>=5"
+  ]
+}

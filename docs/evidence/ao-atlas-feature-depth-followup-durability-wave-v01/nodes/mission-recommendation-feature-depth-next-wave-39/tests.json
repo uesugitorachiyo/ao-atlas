@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-39",
+  "task_id": "mission-recommendation-feature-depth-next-wave-39-task",
+  "status": "passed",
+  "targeted_commands": [
+    "jq -e .next-wave-planning-only-validation.json",
+    "go test ./internal/atlas -run TestFeatureDepthWaveNextWaveRecommendationsRemainPlanningOnlyUntilImported -count=1"
+  ],
+  "assertions": [
+    "generated_ready_nodes=40",
+    "generated_completed_nodes=0",
+    "generated_next_wave_run_link_absent=true"
+  ]
+}

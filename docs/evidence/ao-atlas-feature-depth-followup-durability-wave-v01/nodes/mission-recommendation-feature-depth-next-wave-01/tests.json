@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-01",
+  "task_id": "mission-recommendation-feature-depth-next-wave-01-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations readback-delta --source-readback docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/recommendation-readback.json --target-readback docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-01/recommendation-readback-after.json",
+    "go test ./internal/atlas -run TestFeatureDepthWaveReadbackDeltaFixture -count=1"
+  ],
+  "assertions": [
+    "completed_nodes_delta=1",
+    "ready_nodes_delta=-1",
+    "first_executable_node advances"
+  ]
+}
