@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.test-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-39",
+  "task_id": "mission-recommendation-feature-depth-next-wave-39-task",
+  "status": "passed",
+  "red_command": "go test ./internal/atlas -run TestFeatureDepthWaveNextWaveRecommendationsRemainPlanningOnlyUntilImported -count=1",
+  "red_result": "failed on missing node 39 next-wave-planning-only-validation.json fixture",
+  "green_commands": [
+    "go test ./internal/atlas -run TestFeatureDepthWaveNextWaveRecommendationsRemainPlanningOnlyUntilImported -count=1"
+  ]
+}

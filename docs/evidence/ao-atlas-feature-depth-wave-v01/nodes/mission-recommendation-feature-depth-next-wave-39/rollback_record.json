@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-39",
+  "task_id": "mission-recommendation-feature-depth-next-wave-39-task",
+  "status": "ready",
+  "rollback_scope": [
+    "internal/atlas/mission_next_wave_planning_only_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-39",
+    "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-38/post-merge-lifecycle.json"
+  ],
+  "rollback_method": "Revert the node 39 commit and rerun Atlas verification."
+}
