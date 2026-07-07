@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-37",
+  "task_id": "mission-recommendation-feature-depth-next-wave-37-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations export-next-wave --min-tasks 40",
+    "go test ./internal/atlas -run TestFeatureDepthWaveRankedExportBindsFinalClosureReadbackEvidence -count=1"
+  ],
+  "assertions": [
+    "ranked_tasks=40",
+    "safe_to_execute=false",
+    "planning-only export remains intent-only"
+  ]
+}

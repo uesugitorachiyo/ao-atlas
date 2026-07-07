@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-38",
+  "task_id": "mission-recommendation-feature-depth-next-wave-38-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations import --min-minutes 120 --max-minutes 180",
+    "go test ./internal/atlas -run TestFeatureDepthWaveNextWavePromptPreservesMinimumTwoHourBudget -count=1"
+  ],
+  "assertions": [
+    "min_minutes=120",
+    "max_minutes=180",
+    "continue_if_fast_target=40",
+    "final_response_allowed=false"
+  ]
+}
