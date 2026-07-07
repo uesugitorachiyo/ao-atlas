@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-31",
+  "task_id": "mission-recommendation-feature-depth-next-wave-31-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations foundry-handoff-replay-fixture",
+    "go test ./internal/atlas -run TestFeatureDepthWaveFoundryHandoffReplayFixtureBindsResumedNode -count=1"
+  ],
+  "assertions": [
+    "resumed first executable node matches Foundry import",
+    "handoff preserves active node",
+    "bounded mutation and RSI denial are preserved"
+  ]
+}
