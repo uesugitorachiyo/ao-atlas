@@ -571,6 +571,61 @@ type AtlasSchemaValidatorDriftEvidence struct {
 	RSIRemainsDenied       bool           `json:"rsi_remains_denied"`
 }
 
+type AtlasPRCITimingLedger struct {
+	Schema                 string               `json:"schema"`
+	Status                 string               `json:"status"`
+	EvidenceRoot           string               `json:"evidence_root"`
+	Rows                   []AtlasPRCITimingRow `json:"rows"`
+	SchedulesWork          bool                 `json:"schedules_work"`
+	ExecutesWork           bool                 `json:"executes_work"`
+	ApprovesWork           bool                 `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                 `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                 `json:"rsi_remains_denied"`
+}
+
+type AtlasPRCITimingSummary struct {
+	Schema                 string               `json:"schema"`
+	Status                 string               `json:"status"`
+	SourceLedgerPath       string               `json:"source_ledger_path"`
+	SourceLedgerDigest     string               `json:"source_ledger_digest"`
+	RowCount               int                  `json:"row_count"`
+	MergedPRs              int                  `json:"merged_prs"`
+	CIPassedPRs            int                  `json:"ci_passed_prs"`
+	CIFailedPRs            int                  `json:"ci_failed_prs"`
+	CIPendingPRs           int                  `json:"ci_pending_prs"`
+	PRNumbers              []int                `json:"pr_numbers"`
+	NodeIDs                []string             `json:"node_ids"`
+	TotalUbuntuSeconds     int                  `json:"total_ubuntu_seconds"`
+	TotalMacosSeconds      int                  `json:"total_macos_seconds"`
+	TotalWindowsSeconds    int                  `json:"total_windows_seconds"`
+	MeanUbuntuSeconds      int                  `json:"mean_ubuntu_seconds"`
+	MeanMacosSeconds       int                  `json:"mean_macos_seconds"`
+	MeanWindowsSeconds     int                  `json:"mean_windows_seconds"`
+	MaxWindowsSeconds      int                  `json:"max_windows_seconds"`
+	MaxCheckSeconds        int                  `json:"max_check_seconds"`
+	SlowestPRNumber        int                  `json:"slowest_pr_number"`
+	SlowestNodeID          string               `json:"slowest_node_id"`
+	SlowestCheck           string               `json:"slowest_check"`
+	Rows                   []AtlasPRCITimingRow `json:"rows"`
+	SchedulesWork          bool                 `json:"schedules_work"`
+	ExecutesWork           bool                 `json:"executes_work"`
+	ApprovesWork           bool                 `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                 `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                 `json:"rsi_remains_denied"`
+}
+
+type AtlasPRCITimingRow struct {
+	NodeID          string `json:"node_id"`
+	PRNumber        int    `json:"pr_number"`
+	MergeCommit     string `json:"merge_commit"`
+	CIStatus        string `json:"ci_status"`
+	UbuntuSeconds   int    `json:"ubuntu_seconds"`
+	MacosSeconds    int    `json:"macos_seconds"`
+	WindowsSeconds  int    `json:"windows_seconds"`
+	MaxCheckSeconds int    `json:"max_check_seconds"`
+	SlowestCheck    string `json:"slowest_check"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
