@@ -287,6 +287,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:schema-validator-drift", err
 		}
 		return "typed:schema-validator-drift", ValidateAtlasSchemaValidatorDriftEvidence(value)
+	case AtlasPRCITimingSummaryContract:
+		value, err := LoadJSON[AtlasPRCITimingSummary](path)
+		if err != nil {
+			return "typed:pr-ci-timing-summary", err
+		}
+		return "typed:pr-ci-timing-summary", ValidateAtlasPRCITimingSummary(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

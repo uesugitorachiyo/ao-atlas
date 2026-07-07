@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-09",
+  "task_id": "mission-recommendation-feature-depth-next-wave-09-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWavePRCITimingSummary' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "missing pr-ci-timing-summary CLI route and typed PR/CI timing summary validator"
+  },
+  "fixture_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWavePRCITimingSummary' -count=1",
+    "status": "failed_before_fixture_regeneration",
+    "failure": "placeholder source_ledger_digest rejected by typed validator"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWavePRCITimingSummary' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}

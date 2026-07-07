@@ -1,0 +1,206 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.pr-ci-timing-summary.v0.1",
+  "title": "AO Atlas PR/CI Timing Summary",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "source_ledger_path",
+    "source_ledger_digest",
+    "row_count",
+    "merged_prs",
+    "ci_passed_prs",
+    "ci_failed_prs",
+    "ci_pending_prs",
+    "pr_numbers",
+    "node_ids",
+    "total_ubuntu_seconds",
+    "total_macos_seconds",
+    "total_windows_seconds",
+    "mean_ubuntu_seconds",
+    "mean_macos_seconds",
+    "mean_windows_seconds",
+    "max_windows_seconds",
+    "max_check_seconds",
+    "slowest_pr_number",
+    "slowest_node_id",
+    "slowest_check",
+    "rows",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.pr-ci-timing-summary.v0.1"
+    },
+    "status": {
+      "const": "summarized"
+    },
+    "source_ledger_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_ledger_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "row_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "merged_prs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ci_passed_prs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ci_failed_prs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ci_pending_prs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "pr_numbers": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 1
+      }
+    },
+    "node_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "total_ubuntu_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "total_macos_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "total_windows_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "mean_ubuntu_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "mean_macos_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "mean_windows_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_windows_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_check_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "slowest_pr_number": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "slowest_node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slowest_check": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "node_id",
+          "pr_number",
+          "merge_commit",
+          "ci_status",
+          "ubuntu_seconds",
+          "macos_seconds",
+          "windows_seconds",
+          "max_check_seconds",
+          "slowest_check"
+        ],
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pr_number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "merge_commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "ci_status": {
+            "enum": [
+              "passed",
+              "failed",
+              "pending"
+            ]
+          },
+          "ubuntu_seconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "macos_seconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "windows_seconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "max_check_seconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "slowest_check": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}
