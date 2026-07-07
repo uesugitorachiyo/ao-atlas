@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-15",
+  "task_id": "mission-recommendation-feature-depth-next-wave-15-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveLocalMainSyncReadback' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "missing local-main-sync-readback CLI route and typed local main sync readback validator"
+  },
+  "fixture_red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveLocalMainSyncReadback' -count=1",
+    "status": "failed_before_fixture_regeneration",
+    "failure": "placeholder sync fixture lacked generated denial cases and source input digest"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveLocalMainSyncReadback' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}

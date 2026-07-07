@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -456,6 +456,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "stale-remote-branch-repair" {
 		return runMissionRecommendationsStaleRemoteBranchRepair(args[1:], stdout)
 	}
+	if args[0] == "local-main-sync-readback" {
+		return runMissionRecommendationsLocalMainSyncReadback(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -469,7 +472,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1184,6 +1187,48 @@ func runMissionRecommendationsStaleRemoteBranchRepair(args []string, stdout io.W
 		repair.RepairRequiredCases,
 		repair.CleanupSafeCases,
 		repair.BlockedCases,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsLocalMainSyncReadback(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations local-main-sync-readback", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	inputPath := fs.String("input", "", "local main sync readback input path")
+	outPath := fs.String("out", "", "local main sync readback output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*inputPath) == "" {
+		return fmt.Errorf("--input is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*inputPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	readback, err := BuildAtlasLocalMainSyncReadback(*inputPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, readback); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, readback)
+	}
+	fmt.Fprintf(stdout, "status=%s\nlocal_main_synced=%t\nworking_tree_clean=%t\ncodex_branch_cleanup_confirmed=%t\nsafe_to_select_next_node=%t\ndenial_case_count=%d\nlocal_main_sync_readback=%s\n",
+		readback.Status,
+		readback.LocalMainSynced,
+		readback.WorkingTreeClean,
+		readback.CodexBranchCleanupConfirmed,
+		readback.SafeToSelectNextNode,
+		readback.DenialCaseCount,
 		filepath.ToSlash(*outPath),
 	)
 	return nil

@@ -323,6 +323,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:stale-remote-branch-repair", err
 		}
 		return "typed:stale-remote-branch-repair", ValidateAtlasStaleRemoteBranchRepair(value)
+	case AtlasLocalMainSyncReadbackContract:
+		value, err := LoadJSON[AtlasLocalMainSyncReadback](path)
+		if err != nil {
+			return "typed:local-main-sync-readback", err
+		}
+		return "typed:local-main-sync-readback", ValidateAtlasLocalMainSyncReadback(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

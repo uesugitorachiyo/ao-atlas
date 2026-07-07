@@ -830,6 +830,64 @@ type AtlasStaleRemoteBranchRepairDecision struct {
 	Reason                       string `json:"reason"`
 }
 
+type AtlasLocalMainSyncReadbackInput struct {
+	Schema                 string   `json:"schema"`
+	Status                 string   `json:"status"`
+	SourceReadbackPath     string   `json:"source_readback_path"`
+	SourceReadbackDigest   string   `json:"source_readback_digest"`
+	CurrentBranch          string   `json:"current_branch"`
+	LocalMainHead          string   `json:"local_main_head"`
+	OriginMainHead         string   `json:"origin_main_head"`
+	WorkingTreeClean       bool     `json:"working_tree_clean"`
+	LocalCodexBranches     []string `json:"local_codex_branches"`
+	RemoteCodexBranches    []string `json:"remote_codex_branches"`
+	CompletedNodes         int      `json:"completed_nodes"`
+	ReadyNodes             int      `json:"ready_nodes"`
+	FirstExecutableNode    string   `json:"first_executable_node"`
+	FinalResponseAllowed   bool     `json:"final_response_allowed"`
+	SchedulesWork          bool     `json:"schedules_work"`
+	ExecutesWork           bool     `json:"executes_work"`
+	ApprovesWork           bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+}
+
+type AtlasLocalMainSyncReadback struct {
+	Schema                      string                         `json:"schema"`
+	Status                      string                         `json:"status"`
+	SourceInputPath             string                         `json:"source_input_path"`
+	SourceInputDigest           string                         `json:"source_input_digest"`
+	SourceReadbackPath          string                         `json:"source_readback_path"`
+	SourceReadbackDigest        string                         `json:"source_readback_digest"`
+	CurrentBranch               string                         `json:"current_branch"`
+	LocalMainHead               string                         `json:"local_main_head"`
+	OriginMainHead              string                         `json:"origin_main_head"`
+	LocalMainSynced             bool                           `json:"local_main_synced"`
+	WorkingTreeClean            bool                           `json:"working_tree_clean"`
+	CodexBranchCleanupConfirmed bool                           `json:"codex_branch_cleanup_confirmed"`
+	SafeToSelectNextNode        bool                           `json:"safe_to_select_next_node"`
+	CompletedNodes              int                            `json:"completed_nodes"`
+	ReadyNodes                  int                            `json:"ready_nodes"`
+	FirstExecutableNode         string                         `json:"first_executable_node"`
+	FinalResponseAllowed        bool                           `json:"final_response_allowed"`
+	DenialCaseCount             int                            `json:"denial_case_count"`
+	DenialCases                 []AtlasLocalMainSyncDenialCase `json:"denial_cases"`
+	SchedulesWork               bool                           `json:"schedules_work"`
+	ExecutesWork                bool                           `json:"executes_work"`
+	ApprovesWork                bool                           `json:"approves_work"`
+	ClaimsAuthorityAdvance      bool                           `json:"claims_authority_advance"`
+	RSIRemainsDenied            bool                           `json:"rsi_remains_denied"`
+}
+
+type AtlasLocalMainSyncDenialCase struct {
+	Name                 string `json:"name"`
+	LocalMainStale       bool   `json:"local_main_stale"`
+	WorkingTreeDirty     bool   `json:"working_tree_dirty"`
+	CodexBranchRemaining bool   `json:"codex_branch_remaining"`
+	SafeToSelectNextNode bool   `json:"safe_to_select_next_node"`
+	Reason               string `json:"reason"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
