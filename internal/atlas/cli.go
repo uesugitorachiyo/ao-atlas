@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -471,6 +471,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "resume-denial-evidence" {
 		return runMissionRecommendationsResumeDenialEvidence(args[1:], stdout)
 	}
+	if args[0] == "public-safety-readback-binding" {
+		return runMissionRecommendationsPublicSafetyReadbackBinding(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -484,7 +487,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1459,6 +1462,60 @@ func runMissionRecommendationsResumeDenialEvidence(args []string, stdout io.Writ
 	return nil
 }
 
+func runMissionRecommendationsPublicSafetyReadbackBinding(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations public-safety-readback-binding", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	readbackPath := fs.String("readback", "", "source recommendation readback path")
+	sentinelPath := fs.String("sentinel", "", "Sentinel public-safety evidence path")
+	verificationPath := fs.String("verification", "", "verification summary evidence path")
+	nodeID := fs.String("node-id", "", "binding node id")
+	outPath := fs.String("out", "", "public-safety readback binding output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	for name, value := range map[string]string{
+		"--readback":     *readbackPath,
+		"--sentinel":     *sentinelPath,
+		"--verification": *verificationPath,
+		"--node-id":      *nodeID,
+	} {
+		if strings.TrimSpace(value) == "" {
+			return fmt.Errorf("%s is required", name)
+		}
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	for _, input := range []string{*readbackPath, *sentinelPath, *verificationPath} {
+		if strings.TrimSpace(*outPath) != "" && samePath(input, *outPath) {
+			return fmt.Errorf("refusing to overwrite input artifact")
+		}
+	}
+	binding, err := BuildAtlasPublicSafetyReadbackBinding(*readbackPath, *sentinelPath, *verificationPath, *nodeID)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteAtlasPublicSafetyReadbackBinding(*outPath, binding); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, binding)
+	}
+	fmt.Fprintf(stdout, "status=%s\nnode_id=%s\nbound_public_safety_scan_status=%s\nprevious_public_safety_scan_status=%s\nready_nodes_after_binding=%d\nfinal_response_allowed_after_binding=%t\npublic_safety_readback_binding=%s\n",
+		binding.Status,
+		binding.NodeID,
+		binding.BoundPublicSafetyScanStatus,
+		binding.PreviousPublicSafetyScanStatus,
+		binding.ReadyNodesAfterBinding,
+		binding.FinalResponseAllowedAfter,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
 func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) error {
 	fs := flag.NewFlagSet("mission recommendations validate-evidence", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1565,13 +1622,14 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 		return err
 	}
 	readbackOptions, err := recommendationReadbackOptionsFromLeaseStart(*leaseStartPath, AtlasRecommendationReadbackOptions{
-		WavePath:        *wavePath,
-		WorkgraphPath:   *outWorkgraphPath,
-		EvidenceRoot:    *readbackEvidenceRoot,
-		StartedAt:       *startedAt,
-		CompletedAt:     *completedAt,
-		ElapsedMinutes:  *elapsedMinutes,
-		LeaseTimingMode: *leaseTimingMode,
+		WavePath:               *wavePath,
+		WorkgraphPath:          *outWorkgraphPath,
+		EvidenceRoot:           *readbackEvidenceRoot,
+		StartedAt:              *startedAt,
+		CompletedAt:            *completedAt,
+		ElapsedMinutes:         *elapsedMinutes,
+		LeaseTimingMode:        *leaseTimingMode,
+		PublicSafetyScanStatus: publicSafetyStatusFromRunLink(link),
 	})
 	if err != nil {
 		return err
@@ -1622,6 +1680,13 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 		filepath.ToSlash(*outCheckpointReadbackPath),
 	)
 	return nil
+}
+
+func publicSafetyStatusFromRunLink(link RunLink) string {
+	if strings.TrimSpace(link.Evidence["public_safety_readback_binding"]) == "" {
+		return ""
+	}
+	return "passed"
 }
 
 func recommendationReadbackOptionsFromLeaseStart(leaseStartPath string, options AtlasRecommendationReadbackOptions) (AtlasRecommendationReadbackOptions, error) {

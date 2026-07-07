@@ -353,6 +353,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:resume-denial-evidence", err
 		}
 		return "typed:resume-denial-evidence", ValidateAtlasResumeDenialEvidence(value)
+	case AtlasPublicSafetyReadbackBindingContract:
+		value, err := LoadJSON[AtlasPublicSafetyReadbackBinding](path)
+		if err != nil {
+			return "typed:public-safety-readback-binding", err
+		}
+		return "typed:public-safety-readback-binding", ValidateAtlasPublicSafetyReadbackBinding(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

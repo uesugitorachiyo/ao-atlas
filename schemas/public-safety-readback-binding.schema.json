@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.public-safety-readback-binding.v0.1",
+  "title": "AO Atlas Public Safety Readback Binding",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_readback_path",
+    "sentinel_evidence_path",
+    "verification_summary_path",
+    "bound_public_safety_scan_status",
+    "previous_public_safety_scan_status",
+    "ready_nodes_after_binding",
+    "final_response_allowed_after_binding",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.public-safety-readback-binding.v0.1"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "bound"
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "sentinel_evidence_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sentinel_evidence_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "verification_summary_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verification_summary_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "bound_public_safety_scan_status": {
+      "const": "passed"
+    },
+    "previous_public_safety_scan_status": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "const": "passed"
+      }
+    },
+    "ready_nodes_after_binding": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "final_response_allowed_after_binding": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

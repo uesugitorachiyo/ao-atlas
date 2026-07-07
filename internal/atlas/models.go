@@ -1031,6 +1031,23 @@ type AtlasResumeDenialEvidence struct {
 	RSIRemainsDenied           bool            `json:"rsi_remains_denied"`
 }
 
+type AtlasPublicSafetyReadbackBinding struct {
+	Schema                         string `json:"schema"`
+	NodeID                         string `json:"node_id"`
+	Status                         string `json:"status"`
+	SourceReadbackPath             string `json:"source_readback_path"`
+	SourceReadbackDigest           string `json:"source_readback_digest,omitempty"`
+	SentinelEvidencePath           string `json:"sentinel_evidence_path"`
+	SentinelEvidenceDigest         string `json:"sentinel_evidence_digest,omitempty"`
+	VerificationSummaryPath        string `json:"verification_summary_path"`
+	VerificationSummaryDigest      string `json:"verification_summary_digest,omitempty"`
+	BoundPublicSafetyScanStatus    string `json:"bound_public_safety_scan_status"`
+	PreviousPublicSafetyScanStatus string `json:"previous_public_safety_scan_status"`
+	ReadyNodesAfterBinding         int    `json:"ready_nodes_after_binding"`
+	FinalResponseAllowedAfter      bool   `json:"final_response_allowed_after_binding"`
+	RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
