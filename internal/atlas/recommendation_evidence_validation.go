@@ -371,6 +371,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:authority-promotion-negative-fixtures", err
 		}
 		return "typed:authority-promotion-negative-fixtures", ValidateAtlasAuthorityPromotionNegativeFixtures(value)
+	case AtlasPublicSafetyCoverageRollupContract:
+		value, err := LoadJSON[AtlasPublicSafetyCoverageRollup](path)
+		if err != nil {
+			return "typed:public-safety-coverage-rollup", err
+		}
+		return "typed:public-safety-coverage-rollup", ValidateAtlasPublicSafetyCoverageRollup(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {

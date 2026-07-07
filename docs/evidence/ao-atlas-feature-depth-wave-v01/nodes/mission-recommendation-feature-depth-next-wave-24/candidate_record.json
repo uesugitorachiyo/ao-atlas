@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-24",
+  "task_id": "mission-recommendation-feature-depth-next-wave-24-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-24",
+  "source_task_digest": "sha256:17b3264a9161f47ca7aa2c88a671568b41c7f2561e05341d5e0e23b2eff5790a",
+  "selected_work": [
+    "Add a machine-readable public-safety coverage rollup generator and schema.",
+    "Bind coverage to the node 23 readback so only completed nodes are counted.",
+    "Summarize Sentinel evidence and scoped public-safety scan totals without executing or approving work."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
