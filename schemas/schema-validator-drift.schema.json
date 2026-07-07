@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ao.local/schemas/schema-validator-drift.schema.json",
+  "title": "AO Atlas Schema Validator Drift Evidence",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "source_report_path",
+    "target_report_path",
+    "source_report_digest",
+    "target_report_digest",
+    "source_node_count",
+    "target_node_count",
+    "json_file_delta",
+    "typed_validator_delta",
+    "generic_schema_delta",
+    "schema_count_deltas",
+    "validator_count_deltas",
+    "added_schemas",
+    "lost_schemas",
+    "added_validators",
+    "lost_validators",
+    "unexpected_loss_detected",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.schema-validator-drift.v0.1"
+    },
+    "status": {
+      "enum": [
+        "recorded_no_unexpected_loss",
+        "blocked_unexpected_loss"
+      ]
+    },
+    "source_report_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_report_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_report_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "target_report_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_node_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "target_node_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "json_file_delta": {
+      "type": "integer"
+    },
+    "typed_validator_delta": {
+      "type": "integer"
+    },
+    "generic_schema_delta": {
+      "type": "integer"
+    },
+    "schema_count_deltas": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer"
+      }
+    },
+    "validator_count_deltas": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer"
+      }
+    },
+    "added_schemas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lost_schemas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "added_validators": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lost_validators": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unexpected_loss_detected": {
+      "type": "boolean"
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}
