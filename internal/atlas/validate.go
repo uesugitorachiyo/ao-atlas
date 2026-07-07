@@ -68,6 +68,8 @@ const (
 	LowRiskCodeDenialAuditContract               = "ao.atlas.low-risk-code-denial-audit.v0.1"
 )
 
+const AtlasAuthorityPromotionNegativeFixturesContract = "ao.atlas.authority-promotion-negative-fixtures.v0.1"
+
 var digestPattern = regexp.MustCompile(`^sha256:[0-9a-f]{64}$`)
 var driveAbsPattern = regexp.MustCompile(`^[A-Za-z]:[\\/]`)
 

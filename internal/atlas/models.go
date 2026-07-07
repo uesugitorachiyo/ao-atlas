@@ -1067,6 +1067,35 @@ type AtlasScopedPublicSafetyScan struct {
 	RSIRemainsDenied          bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasAuthorityPromotionNegativeFixtureCase struct {
+	ID                    string   `json:"id"`
+	ScannerPatternID      string   `json:"scanner_pattern_id"`
+	Category              string   `json:"category"`
+	StatementTokens       []string `json:"statement_tokens"`
+	ExpectedScanStatus    string   `json:"expected_scan_status"`
+	ExpectedUnsafeMatches int      `json:"expected_unsafe_matches"`
+	RedactionNote         string   `json:"redaction_note"`
+}
+
+type AtlasAuthorityPromotionNegativeFixtures struct {
+	Schema                         string                                       `json:"schema"`
+	NodeID                         string                                       `json:"node_id"`
+	Status                         string                                       `json:"status"`
+	FixtureEncoding                string                                       `json:"fixture_encoding"`
+	ScannerContract                string                                       `json:"scanner_contract"`
+	CaseCount                      int                                          `json:"case_count"`
+	Cases                          []AtlasAuthorityPromotionNegativeFixtureCase `json:"cases"`
+	ForbiddenPatternsRedacted      bool                                         `json:"forbidden_patterns_redacted"`
+	UnsafeLiteralStored            bool                                         `json:"unsafe_literal_stored"`
+	ExpectedScanStatus             string                                       `json:"expected_scan_status"`
+	ExpectedPublicSafetyScanPassed bool                                         `json:"expected_public_safety_scan_passed"`
+	SchedulesWork                  bool                                         `json:"schedules_work"`
+	ExecutesWork                   bool                                         `json:"executes_work"`
+	ApprovesWork                   bool                                         `json:"approves_work"`
+	ClaimsAuthorityAdvance         bool                                         `json:"claims_authority_advance"`
+	RSIRemainsDenied               bool                                         `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
