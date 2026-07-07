@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-19",
+  "task_id": "mission-recommendation-feature-depth-next-wave-19-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-19",
+  "source_task_digest": "sha256:035807bd4b2ff4df8a5e137135baa2178a061be46d0abf1f25c8f43d5f09743f",
+  "selected_work": [
+    "Bind checkpoint readback path and digest into resume prompt",
+    "Preserve lease timing and active node state",
+    "Keep no-promotion and RSI-denied boundaries"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

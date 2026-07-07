@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-11",
+  "task_id": "mission-recommendation-feature-depth-next-wave-11-task",
+  "status": "merged_and_cleaned",
+  "repo": "ao-atlas",
+  "branch": "codex/feature-depth-next-wave-01-readback-durability",
+  "pr_number": 372,
+  "merge_commit": "637112fcfaee7557bd5bc3e0d08127d4b69e92d2",
+  "ci_status": "passed",
+  "local_main_synced": true,
+  "origin_main_synced": true,
+  "local_branch_deleted": true,
+  "remote_branch_deleted": true,
+  "local_codex_branches_remaining": 0,
+  "remote_codex_branches_remaining": 0,
+  "final_head": "637112fcfaee7557bd5bc3e0d08127d4b69e92d2",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

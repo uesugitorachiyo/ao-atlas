@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-16",
+  "task_id": "mission-recommendation-feature-depth-next-wave-16-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-16",
+  "source_task_digest": "sha256:bb7dd6bce654f352e1c1f25eff0280e36927e89341c093627ba016068dcafe6d",
+  "selected_work": [
+    "Bind post-merge lifecycle entries for nodes 1-15",
+    "Summarize CI pass and local remote branch deletion counts",
+    "Confirm cleanup ledger is ready for operator handoff"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-18",
+  "task_id": "mission-recommendation-feature-depth-next-wave-18-task",
+  "status": "passed",
+  "passed_commands": [
+    "go run ./cmd/atlas mission recommendations compaction-resume-regression --source-prompt-fixture docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-17/compaction-resume-prompt.json --source-prompt-markdown docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-17/compaction-resume-prompt.md --source-readback docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-17/recommendation-readback-after.json --node-id mission-recommendation-feature-depth-next-wave-18 --expected-next-node-after-completion mission-recommendation-feature-depth-next-wave-19 --out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-18/compaction-resume-regression.json",
+    "jq -e . docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-18/compaction-resume-regression.json"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "repair_notes": [
+    "Uses existing Atlas CLI support and generated evidence only."
+  ]
+}

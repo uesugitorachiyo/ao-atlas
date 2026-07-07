@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-18",
+  "task_id": "mission-recommendation-feature-depth-next-wave-18-task",
+  "status": "completed",
+  "artifact": "docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-18/compaction-resume-regression.json",
+  "summary": "Recorded compaction resume regression fixture for ready node and exact next action preservation.",
+  "mutates_runtime_code": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
