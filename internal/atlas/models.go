@@ -1096,6 +1096,41 @@ type AtlasAuthorityPromotionNegativeFixtures struct {
 	RSIRemainsDenied               bool                                         `json:"rsi_remains_denied"`
 }
 
+type AtlasPublicSafetyCoverageRollup struct {
+	Schema                       string   `json:"schema"`
+	NodeID                       string   `json:"node_id"`
+	Status                       string   `json:"status"`
+	SourceReadbackPath           string   `json:"source_readback_path"`
+	SourceReadbackDigest         string   `json:"source_readback_digest"`
+	EvidenceRoot                 string   `json:"evidence_root"`
+	CompletedNodesBefore         int      `json:"completed_nodes_before"`
+	ReadyNodesBefore             int      `json:"ready_nodes_before"`
+	FirstExecutableNodeBefore    string   `json:"first_executable_node_before"`
+	FinalResponseAllowedBefore   bool     `json:"final_response_allowed_before"`
+	ExactNextActionBefore        string   `json:"exact_next_action_before"`
+	PublicSafetyScanStatus       string   `json:"public_safety_scan_status"`
+	SentinelEvidenceCount        int      `json:"sentinel_evidence_count"`
+	CompletedNodesWithSentinel   int      `json:"completed_nodes_with_sentinel"`
+	MissingSentinelNodes         []string `json:"missing_sentinel_nodes"`
+	ScopedScanCount              int      `json:"scoped_scan_count"`
+	SentinelEvidenceFiles        []string `json:"sentinel_evidence_files"`
+	ScopedScanFiles              []string `json:"scoped_scan_files"`
+	ScannedFileCountTotal        int      `json:"scanned_file_count_total"`
+	ChangedEvidenceFilesTotal    int      `json:"changed_evidence_files_total"`
+	ChangedPromptArtifactsTotal  int      `json:"changed_prompt_artifacts_total"`
+	UnsafeMatchCountTotal        int      `json:"unsafe_match_count_total"`
+	AllCompletedNodesCovered     bool     `json:"all_completed_nodes_covered"`
+	AllSentinelStatusesPassed    bool     `json:"all_sentinel_statuses_passed"`
+	AllScopedScansPassed         bool     `json:"all_scoped_scans_passed"`
+	PublicSafetyScanPassed       bool     `json:"public_safety_scan_passed"`
+	MachineReadableClosureRollup bool     `json:"machine_readable_closure_rollup"`
+	SchedulesWork                bool     `json:"schedules_work"`
+	ExecutesWork                 bool     `json:"executes_work"`
+	ApprovesWork                 bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance       bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied             bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasMissionReadbackNumericTransition struct {
 	Before int `json:"before"`
 	After  int `json:"after"`
