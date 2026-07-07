@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.promoter-no-promotion-rollup.v0.1",
+  "title": "AO Atlas Promoter No-Promotion Rollup",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_readback_path",
+    "source_readback_digest",
+    "source_readback_completed_nodes",
+    "source_readback_ready_nodes",
+    "source_readback_first_executable_node",
+    "source_readback_final_response_allowed",
+    "evidence_roots",
+    "wave_summaries",
+    "completed_nodes_total",
+    "promoter_no_promotion_files",
+    "missing_promoter_nodes_total",
+    "no_promotion_status_count",
+    "promotion_requested_count",
+    "promotion_granted_count",
+    "promotion_claimed_count",
+    "authority_advance_claim_count",
+    "rsi_denied_count",
+    "missing_promoter_nodes",
+    "promoter_evidence_files",
+    "aggregate_promotion_status",
+    "all_completed_nodes_covered",
+    "all_promoter_statuses_no_promotion",
+    "no_promotion_invariant_holds",
+    "promotion_requested",
+    "promotion_granted",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.promoter-no-promotion-rollup.v0.1"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "no_promotion_rollup_bound",
+        "no_promotion_rollup_failed"
+      ]
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_readback_completed_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source_readback_ready_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "source_readback_first_executable_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_final_response_allowed": {
+      "const": false
+    },
+    "evidence_roots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "wave_summaries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/wave_summary"
+      }
+    },
+    "completed_nodes_total": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "promoter_no_promotion_files": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "missing_promoter_nodes_total": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "no_promotion_status_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "promotion_requested_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "promotion_granted_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "promotion_claimed_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "authority_advance_claim_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rsi_denied_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "missing_promoter_nodes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "promoter_evidence_files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "aggregate_promotion_status": {
+      "enum": [
+        "no_promotion_requested",
+        "promotion_blocked"
+      ]
+    },
+    "all_completed_nodes_covered": {
+      "type": "boolean"
+    },
+    "all_promoter_statuses_no_promotion": {
+      "type": "boolean"
+    },
+    "no_promotion_invariant_holds": {
+      "type": "boolean"
+    },
+    "promotion_requested": {
+      "const": false
+    },
+    "promotion_granted": {
+      "const": false
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "$defs": {
+    "wave_summary": {
+      "type": "object",
+      "required": [
+        "evidence_root",
+        "source_workgraph_path",
+        "completed_nodes",
+        "promoter_no_promotion_files",
+        "missing_promoter_nodes",
+        "no_promotion_status_count",
+        "promotion_requested_count",
+        "promotion_granted_count",
+        "promotion_claimed_count",
+        "authority_advance_claim_count",
+        "rsi_denied_count",
+        "all_completed_nodes_covered",
+        "all_promoter_statuses_no_promotion",
+        "no_promotion_invariant_holds",
+        "rsi_remains_denied"
+      ],
+      "properties": {
+        "evidence_root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_workgraph_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "completed_nodes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "promoter_no_promotion_files": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missing_promoter_nodes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "no_promotion_status_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "promotion_requested_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "promotion_granted_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "promotion_claimed_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "authority_advance_claim_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rsi_denied_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "all_completed_nodes_covered": {
+          "type": "boolean"
+        },
+        "all_promoter_statuses_no_promotion": {
+          "type": "boolean"
+        },
+        "no_promotion_invariant_holds": {
+          "type": "boolean"
+        },
+        "rsi_remains_denied": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

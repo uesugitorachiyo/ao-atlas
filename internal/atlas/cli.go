@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -483,6 +483,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "public-safety-coverage-rollup" {
 		return runMissionRecommendationsPublicSafetyCoverageRollup(args[1:], stdout)
 	}
+	if args[0] == "promoter-no-promotion-rollup" {
+		return runMissionRecommendationsPromoterNoPromotionRollup(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -496,7 +499,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1663,6 +1666,57 @@ func runMissionRecommendationsPublicSafetyCoverageRollup(args []string, stdout i
 		rollup.ScopedScanCount,
 		rollup.UnsafeMatchCountTotal,
 		rollup.PublicSafetyScanPassed,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsPromoterNoPromotionRollup(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations promoter-no-promotion-rollup", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	nodeID := fs.String("node-id", "", "rollup node id")
+	sourceReadbackPath := fs.String("source-readback", "", "source recommendation readback path")
+	var evidenceRoots stringListFlag
+	fs.Var(&evidenceRoots, "evidence-root", "recommendation evidence root; repeat for multiple roots")
+	outPath := fs.String("out", "", "Promoter no-promotion rollup output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*nodeID) == "" {
+		return fmt.Errorf("--node-id is required")
+	}
+	if strings.TrimSpace(*sourceReadbackPath) == "" {
+		return fmt.Errorf("--source-readback is required")
+	}
+	if len(evidenceRoots) == 0 {
+		return fmt.Errorf("--evidence-root is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*sourceReadbackPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	rollup, err := BuildAtlasPromoterNoPromotionRollup(*nodeID, *sourceReadbackPath, evidenceRoots)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteAtlasPromoterNoPromotionRollup(*outPath, rollup); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, rollup)
+	}
+	fmt.Fprintf(stdout, "status=%s\nnode_id=%s\ncompleted_nodes_total=%d\npromoter_no_promotion_files=%d\nmissing_promoter_nodes_total=%d\nno_promotion_invariant_holds=%t\npromoter_no_promotion_rollup=%s\n",
+		rollup.Status,
+		rollup.NodeID,
+		rollup.CompletedNodesTotal,
+		rollup.PromoterNoPromotionFiles,
+		rollup.MissingPromoterNodesTotal,
+		rollup.NoPromotionInvariantHolds,
 		filepath.ToSlash(*outPath),
 	)
 	return nil
