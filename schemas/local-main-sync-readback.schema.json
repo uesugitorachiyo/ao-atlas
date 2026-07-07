@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.local-main-sync-readback.v0.1",
+  "title": "AO Atlas Local Main Sync Readback",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "source_input_path",
+    "source_input_digest",
+    "source_readback_path",
+    "source_readback_digest",
+    "current_branch",
+    "local_main_head",
+    "origin_main_head",
+    "local_main_synced",
+    "working_tree_clean",
+    "codex_branch_cleanup_confirmed",
+    "safe_to_select_next_node",
+    "completed_nodes",
+    "ready_nodes",
+    "first_executable_node",
+    "final_response_allowed",
+    "denial_case_count",
+    "denial_cases",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.local-main-sync-readback.v0.1"
+    },
+    "status": {
+      "const": "local_main_sync_validated"
+    },
+    "source_input_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_input_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "current_branch": {
+      "const": "main"
+    },
+    "local_main_head": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "origin_main_head": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "local_main_synced": {
+      "const": true
+    },
+    "working_tree_clean": {
+      "const": true
+    },
+    "codex_branch_cleanup_confirmed": {
+      "const": true
+    },
+    "safe_to_select_next_node": {
+      "const": true
+    },
+    "completed_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "ready_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "first_executable_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "final_response_allowed": {
+      "const": false
+    },
+    "denial_case_count": {
+      "const": 3
+    },
+    "denial_cases": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "local_main_stale",
+          "working_tree_dirty",
+          "codex_branch_remaining",
+          "safe_to_select_next_node",
+          "reason"
+        ],
+        "properties": {
+          "name": {
+            "enum": [
+              "stale_main",
+              "dirty_worktree",
+              "codex_branch_remaining"
+            ]
+          },
+          "local_main_stale": {
+            "type": "boolean"
+          },
+          "working_tree_dirty": {
+            "type": "boolean"
+          },
+          "codex_branch_remaining": {
+            "type": "boolean"
+          },
+          "safe_to_select_next_node": {
+            "const": false
+          },
+          "reason": {
+            "enum": [
+              "blocked_local_main_not_synced",
+              "blocked_worktree_not_clean",
+              "blocked_codex_branch_cleanup_incomplete"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

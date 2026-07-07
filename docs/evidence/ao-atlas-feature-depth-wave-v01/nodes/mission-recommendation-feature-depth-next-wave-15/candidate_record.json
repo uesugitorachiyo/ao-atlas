@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-15",
+  "task_id": "mission-recommendation-feature-depth-next-wave-15-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-15",
+  "source_task_digest": "sha256:467a860ae10dadab6fff13d0fb3e6788f895e3ed15f52714747841133e97066b",
+  "selected_work": [
+    "Add a local-main sync readback model and validator.",
+    "Add a CLI generator that validates clean synced main before next-node selection.",
+    "Generate node 15 sync gate evidence with denial cases for stale main, dirty worktree, and remaining codex branches."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

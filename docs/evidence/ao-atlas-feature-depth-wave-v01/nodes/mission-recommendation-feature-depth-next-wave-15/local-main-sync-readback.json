@@ -1,0 +1,51 @@
+{
+  "schema": "ao.atlas.local-main-sync-readback.v0.1",
+  "status": "local_main_sync_validated",
+  "source_input_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-15/local-main-sync-readback-input.json",
+  "source_input_digest": "sha256:8169c9052d08f8435c34295eb278a7c8f34ce378ecb00d648d57246c7525c9ee",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-14/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:be4e8635db04687f13ac485adb51cf64c6dacd18f6a06337322da59e1c7f6c84",
+  "current_branch": "main",
+  "local_main_head": "a8765e35e96e28c124c4b656658a8ce0b05e7834",
+  "origin_main_head": "a8765e35e96e28c124c4b656658a8ce0b05e7834",
+  "local_main_synced": true,
+  "working_tree_clean": true,
+  "codex_branch_cleanup_confirmed": true,
+  "safe_to_select_next_node": true,
+  "completed_nodes": 14,
+  "ready_nodes": 26,
+  "first_executable_node": "mission-recommendation-feature-depth-next-wave-15",
+  "final_response_allowed": false,
+  "denial_case_count": 3,
+  "denial_cases": [
+    {
+      "name": "stale_main",
+      "local_main_stale": true,
+      "working_tree_dirty": false,
+      "codex_branch_remaining": false,
+      "safe_to_select_next_node": false,
+      "reason": "blocked_local_main_not_synced"
+    },
+    {
+      "name": "dirty_worktree",
+      "local_main_stale": false,
+      "working_tree_dirty": true,
+      "codex_branch_remaining": false,
+      "safe_to_select_next_node": false,
+      "reason": "blocked_worktree_not_clean"
+    },
+    {
+      "name": "codex_branch_remaining",
+      "local_main_stale": false,
+      "working_tree_dirty": false,
+      "codex_branch_remaining": true,
+      "safe_to_select_next_node": false,
+      "reason": "blocked_codex_branch_cleanup_incomplete"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
