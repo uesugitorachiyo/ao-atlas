@@ -9,14 +9,20 @@ import (
 	"strings"
 )
 
-var scopedPublicSafetyUnsafePatterns = []*regexp.Regexp{
-	regexp.MustCompile(`"promotion_granted"\s*:\s*true`),
-	regexp.MustCompile(`"promotion_claimed"\s*:\s*true`),
-	regexp.MustCompile(`"claims_authority_advance"\s*:\s*true`),
-	regexp.MustCompile(`"fully_unsupervised_complex_mutation_live_proven"\s*:\s*true`),
-	regexp.MustCompile(`(?i)\brsi\s+is\s+(proven|live|promoted)\b`),
-	regexp.MustCompile(`(?i)\brsi proof granted\b`),
-	regexp.MustCompile(`(?i)\bfully_unsupervised_complex_mutation\s+is\s+(proven|live-proven|live)\b`),
+type scopedPublicSafetyUnsafePatternSpec struct {
+	ID       string
+	Category string
+	Pattern  *regexp.Regexp
+}
+
+var scopedPublicSafetyUnsafePatternSpecs = []scopedPublicSafetyUnsafePatternSpec{
+	{ID: "promotion_granted_true", Category: "json_authority_boolean", Pattern: regexp.MustCompile(`"promotion_granted"\s*:\s*true`)},
+	{ID: "promotion_claimed_true", Category: "json_promotion_boolean", Pattern: regexp.MustCompile(`"promotion_claimed"\s*:\s*true`)},
+	{ID: "claims_authority_advance_true", Category: "json_authority_boolean", Pattern: regexp.MustCompile(`"claims_authority_advance"\s*:\s*true`)},
+	{ID: "fully_unsupervised_complex_mutation_live_proven_true", Category: "json_promotion_boolean", Pattern: regexp.MustCompile(`"fully_unsupervised_complex_mutation_live_proven"\s*:\s*true`)},
+	{ID: "rsi_is_proven_phrase", Category: "text_rsi_claim", Pattern: regexp.MustCompile(`(?i)\brsi\s+is\s+(proven|live|promoted)\b`)},
+	{ID: "rsi_proof_granted_phrase", Category: "text_rsi_claim", Pattern: regexp.MustCompile(`(?i)\brsi proof granted\b`)},
+	{ID: "fully_unsupervised_complex_mutation_is_live_proven_phrase", Category: "text_promotion_claim", Pattern: regexp.MustCompile(`(?i)\bfully_unsupervised_complex_mutation\s+is\s+(proven|live-proven|live)\b`)},
 }
 
 func BuildAtlasScopedPublicSafetyScan(nodeID string, scopes []string) (AtlasScopedPublicSafetyScan, error) {
@@ -56,8 +62,8 @@ func BuildAtlasScopedPublicSafetyScan(nodeID string, scopes []string) (AtlasScop
 			return AtlasScopedPublicSafetyScan{}, err
 		}
 		text := string(data)
-		for _, pattern := range scopedPublicSafetyUnsafePatterns {
-			unsafeMatches += len(pattern.FindAllStringIndex(text, -1))
+		for _, spec := range scopedPublicSafetyUnsafePatternSpecs {
+			unsafeMatches += len(spec.Pattern.FindAllStringIndex(text, -1))
 		}
 	}
 	sort.Strings(scannedScopes)

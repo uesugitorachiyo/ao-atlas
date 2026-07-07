@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -477,6 +477,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "scoped-public-safety-scan" {
 		return runMissionRecommendationsScopedPublicSafetyScan(args[1:], stdout)
 	}
+	if args[0] == "authority-promotion-negative-fixtures" {
+		return runMissionRecommendationsAuthorityPromotionNegativeFixtures(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -490,7 +493,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1570,6 +1573,45 @@ func runMissionRecommendationsScopedPublicSafetyScan(args []string, stdout io.Wr
 		)
 	}
 	return err
+}
+
+func runMissionRecommendationsAuthorityPromotionNegativeFixtures(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations authority-promotion-negative-fixtures", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	nodeID := fs.String("node-id", "", "negative fixture node id")
+	outPath := fs.String("out", "", "authority promotion negative fixture output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*nodeID) == "" {
+		return fmt.Errorf("--node-id is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	fixture, err := BuildAtlasAuthorityPromotionNegativeFixtures(*nodeID)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteAtlasAuthorityPromotionNegativeFixtures(*outPath, fixture); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, fixture)
+	}
+	fmt.Fprintf(stdout, "status=%s\nnode_id=%s\ncase_count=%d\nfixture_encoding=%s\nunsafe_literal_stored=%t\nexpected_scan_status=%s\nauthority_promotion_negative_fixtures=%s\n",
+		fixture.Status,
+		fixture.NodeID,
+		fixture.CaseCount,
+		fixture.FixtureEncoding,
+		fixture.UnsafeLiteralStored,
+		fixture.ExpectedScanStatus,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
 }
 
 func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) error {
