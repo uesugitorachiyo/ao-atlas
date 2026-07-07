@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-30",
+  "task_id": "mission-recommendation-feature-depth-next-wave-30-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-30",
+  "source_task_digest": "sha256:1072007c9e3d99c51fb922650f72d5ad50a89ec3ac7d56e21181cadd127287e2",
+  "selected_work": [
+    "run-link digest recomputation",
+    "schema-bound evidence packet check",
+    "missing evidence rejection guard"
+  ],
+  "write_scope": [
+    "docs/evidence"
+  ]
+}
