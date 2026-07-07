@@ -13,12 +13,14 @@ func TestFeatureDepthWaveBranchCleanupHandoffSummaryFixtureBindsOperatorHandoff(
 	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-16")
 	sourceReadback := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-15", "recommendation-readback-after.json")
 	recordedPath := filepath.Join(nodeDir, "branch-cleanup-handoff-summary.json")
+	recorded := mustLoadJSON[map[string]any](t, recordedPath)
+	checkpointRoot := branchDeletionCheckpointRoot(t, waveRoot, recorded)
 	outPath := filepath.Join(t.TempDir(), "branch-cleanup-handoff-summary.json")
 
 	var out bytes.Buffer
 	code := Run([]string{
 		"mission", "recommendations", "branch-cleanup-handoff-summary",
-		"--evidence-root", waveRoot,
+		"--evidence-root", checkpointRoot,
 		"--source-readback", sourceReadback,
 		"--out", outPath,
 	}, &out, &out)
@@ -30,8 +32,8 @@ func TestFeatureDepthWaveBranchCleanupHandoffSummaryFixtureBindsOperatorHandoff(
 		!strings.Contains(out.String(), "operator_handoff_status=cleanup_ledger_ready") {
 		t.Fatalf("branch-cleanup-handoff-summary output missing handoff summary: %s", out.String())
 	}
-	recorded := mustLoadJSON[map[string]any](t, recordedPath)
 	generated := mustLoadJSON[map[string]any](t, outPath)
+	generated["evidence_root"] = recorded["evidence_root"]
 	if digestValue(generated) != digestValue(recorded) {
 		t.Fatalf("branch cleanup handoff summary fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
 	}

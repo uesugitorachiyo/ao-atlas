@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -462,6 +462,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "branch-cleanup-handoff-summary" {
 		return runMissionRecommendationsBranchCleanupHandoffSummary(args[1:], stdout)
 	}
+	if args[0] == "compaction-resume-prompt" {
+		return runMissionRecommendationsCompactionResumePrompt(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -475,7 +478,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -1276,6 +1279,72 @@ func runMissionRecommendationsBranchCleanupHandoffSummary(args []string, stdout 
 		summary.CleanupComplete,
 		summary.OperatorHandoffStatus,
 		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsCompactionResumePrompt(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations compaction-resume-prompt", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	sourceReadback := fs.String("source-readback", "", "source recommendation readback path")
+	workgraphPath := fs.String("workgraph", "", "current workgraph path")
+	leaseStartPath := fs.String("lease-start", "", "lease start marker path")
+	evidenceRoot := fs.String("evidence-root", "", "portable evidence root")
+	nodeID := fs.String("node-id", "", "current resume prompt node id")
+	expectedNextNode := fs.String("expected-next-node-after-completion", "", "expected next node after completing the active node")
+	promptOut := fs.String("prompt-out", "", "compaction resume prompt markdown output path")
+	fixtureOut := fs.String("fixture-out", "", "compaction resume prompt fixture output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	for name, value := range map[string]string{
+		"--source-readback": *sourceReadback,
+		"--workgraph":       *workgraphPath,
+		"--lease-start":     *leaseStartPath,
+		"--node-id":         *nodeID,
+		"--prompt-out":      *promptOut,
+		"--fixture-out":     *fixtureOut,
+	} {
+		if strings.TrimSpace(value) == "" {
+			return fmt.Errorf("%s is required", name)
+		}
+	}
+	if samePath(*sourceReadback, *promptOut) || samePath(*sourceReadback, *fixtureOut) || samePath(*workgraphPath, *fixtureOut) || samePath(*leaseStartPath, *fixtureOut) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	readback, err := LoadJSON[AtlasRecommendationReadback](*sourceReadback)
+	if err != nil {
+		return err
+	}
+	fixture, prompt, err := BuildAtlasCompactionResumePromptFixture(readback, AtlasCompactionResumePromptOptions{
+		NodeID:                          *nodeID,
+		SourceReadbackPath:              *sourceReadback,
+		PromptPath:                      *promptOut,
+		LeaseStartPath:                  *leaseStartPath,
+		WorkgraphPath:                   *workgraphPath,
+		EvidenceRoot:                    *evidenceRoot,
+		ExpectedNextNodeAfterCompletion: *expectedNextNode,
+	})
+	if err != nil {
+		return err
+	}
+	if err := WriteAtlasCompactionResumePrompt(*promptOut, *fixtureOut, fixture, prompt); err != nil {
+		return err
+	}
+	if *jsonOut {
+		return printJSON(stdout, fixture)
+	}
+	fmt.Fprintf(stdout, "status=%s\nnode_id=%s\ncompleted_nodes=%d\nready_nodes=%d\nfirst_executable_node=%s\nelapsed_minutes=%d\nfinal_response_allowed=%t\ncompaction_resume_prompt=%s\ncompaction_resume_fixture=%s\n",
+		fixture.Status,
+		fixture.NodeID,
+		fixture.CompletedNodes,
+		fixture.ReadyNodes,
+		fixture.FirstExecutableNode,
+		fixture.ElapsedMinutes,
+		fixture.FinalResponseAllowed,
+		filepath.ToSlash(*promptOut),
+		filepath.ToSlash(*fixtureOut),
 	)
 	return nil
 }
