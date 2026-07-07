@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-33",
+  "task_id": "mission-recommendation-feature-depth-next-wave-33-task",
+  "status": "ready",
+  "rollback_scope": [
+    "internal/atlas/mission_dashboard_closure_binding.go",
+    "internal/atlas/mission_dashboard_closure_binding_test.go",
+    "internal/atlas/cli.go mission-dashboard-closure-binding routing",
+    "internal/atlas/models.go AtlasMissionDashboardClosureBinding",
+    "internal/atlas/recommendation_evidence_validation.go typed validator binding",
+    "internal/atlas/validate.go contract constant",
+    "schemas/mission-dashboard-closure-binding.schema.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-33",
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-32/post-merge-lifecycle.json"
+  ],
+  "rollback_command": "revert node 33 commit and remove generated node 33 evidence plus node 32 post-merge lifecycle evidence",
+  "data_loss_risk": "none; generated evidence and additive dashboard closure binding support only",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

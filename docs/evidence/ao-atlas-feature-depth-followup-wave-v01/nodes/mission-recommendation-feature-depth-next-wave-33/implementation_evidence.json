@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-33",
+  "task_id": "mission-recommendation-feature-depth-next-wave-33-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_dashboard_closure_binding.go",
+    "internal/atlas/mission_dashboard_closure_binding_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "schemas/mission-dashboard-closure-binding.schema.json"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-32/post-merge-lifecycle.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-33/mission-dashboard-closure-binding.json"
+  ],
+  "summary": "Node 33 adds a typed multi-repo Mission dashboard closure binding fixture that binds Atlas, Foundry, Command, Promoter, Sentinel, and Mission rows to durable closure evidence while final response remains denied.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

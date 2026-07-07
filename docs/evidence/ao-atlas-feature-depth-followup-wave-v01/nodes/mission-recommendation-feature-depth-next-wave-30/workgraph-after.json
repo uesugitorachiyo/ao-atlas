@@ -1,0 +1,2803 @@
+{
+  "contract_version": "ao.atlas.workgraph.v0.1",
+  "id": "ao-atlas-recommendation-wave-ao-atlas-next-feature-depth-wave-v01",
+  "target_instance": "ao-atlas-feature-depth-followup-wave-v01",
+  "nodes": [
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-01",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-01-task",
+        "objective": "Bind AO Mission readback deltas to deterministic checkpoint comparison evidence.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-01",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-01",
+          "source_task_digest:sha256:6b36ced4fa8684f3270528f4d2a49478b1007207355e5b780056730087c89ec0"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": null,
+        "context_pack_refs": []
+      },
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-02",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-02-task",
+        "objective": "Add resumable readback diff fixtures for completed and ready node transitions.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-02",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-02",
+          "source_task_digest:sha256:f0f8dcda66c0035a091a5e8ec7d3ef5add0f257d663e023f723d6fd0e5e9b237"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-01"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-01"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-03",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-03-task",
+        "objective": "Create stale checkpoint rejection evidence for outdated Mission continuation prompts.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-03",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-03",
+          "source_task_digest:sha256:22e67a8cb379ec6dbfe047ce3fefba3fb6de3a7bcf8c5249a1c35fab92f164c0"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-02"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-02"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-04",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-04-task",
+        "objective": "Add operator summary checks that preserve exact next action wording.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-04",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-04",
+          "source_task_digest:sha256:8621cb334655cdb1d05b11d1e42f8ad7f9aa95b132ed41131c7e6cc720d55134"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-03"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-03"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-05",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-05-task",
+        "objective": "Extend evidence schema validation to typed node closure rollup artifacts.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-05",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-05",
+          "source_task_digest:sha256:f1416b09a8cc76a3738e37e725aec892dc7704af8e10e47aaa6388fd6e6f83d3"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-04"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-04"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-06",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-06-task",
+        "objective": "Add schema coverage summaries for every generated run link artifact.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-06",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-06",
+          "source_task_digest:sha256:9030e89ae64eb58b9917e540c471c29d5ac7fd57cb33aef38eb2ac74c546670e"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-05"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-05"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-07",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-07-task",
+        "objective": "Validate required node evidence fields before recommendation readback advances.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-07",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-07",
+          "source_task_digest:sha256:18098a2c3faf82a95020309833ac989c56c23f9ef901ebe209a44eaa76c91bbd"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-06"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-06"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-08",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-08-task",
+        "objective": "Record schema validator drift evidence for regenerated fixture directories.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-08",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-08",
+          "source_task_digest:sha256:7dcdbac66226d098f1a8c70c24d18f9a1d457b499edb403616245fca484d6a56"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-07"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-07"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-09",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-09-task",
+        "objective": "Build aggregate PR and CI timing summaries across consolidation wave nodes.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-09",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-09",
+          "source_task_digest:sha256:837798ab8c52d4091e7212da9457d602df088ed8e60e82c9de020e12863351ad"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-08"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-08"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-10",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-10-task",
+        "objective": "Add long running Windows check threshold evidence to PR ledger rows.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-10",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-10",
+          "source_task_digest:sha256:32f055c1d1904366f81bde55e71a5aa9b0b0a18a818384dc885fae7929b4cac9"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-09"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-09"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-11",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-11-task",
+        "objective": "Create failed check replay fixtures for retry and no merge decisions.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-11",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-11",
+          "source_task_digest:sha256:ebaae1ee947b53569628c4c899acbf9f04c38a41fab75eb8cb0af4c251f32042"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-10"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-10"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-12",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-12-task",
+        "objective": "Bind merge commit readbacks to passed required check conclusions.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-12",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-12",
+          "source_task_digest:sha256:830b022d4f0a49fd83010da99b80d156fb410e1be03e70f96b00276e8aa14be3"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-11"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-11"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-13",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-13-task",
+        "objective": "Add post merge branch deletion readback to every node closure packet.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-13",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-13",
+          "source_task_digest:sha256:5f91510913909ce3accdd0415c5a4153084228dae296f04ca14bface6fc697f7"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-12"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-12"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-14",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-14-task",
+        "objective": "Create stale remote branch repair evidence for interrupted cleanup handoffs.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-14",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-14",
+          "source_task_digest:sha256:4a503ff89e06d2bf250110b237bfaa8b55bc6dfb77d384f9061082d1fddc90a4"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-13"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-13"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-15",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-15-task",
+        "objective": "Validate local main synchronization before selecting the next executable node.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-15",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-15",
+          "source_task_digest:sha256:467a860ae10dadab6fff13d0fb3e6788f895e3ed15f52714747841133e97066b"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-14"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-14"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-16",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-16-task",
+        "objective": "Record branch cleanup ledger summaries in final operator handoff evidence.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-16",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-16",
+          "source_task_digest:sha256:bb7dd6bce654f352e1c1f25eff0280e36927e89341c093627ba016068dcafe6d"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-15"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-15"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-17",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-17-task",
+        "objective": "Generate compaction resume prompts that preserve lease timing and active node state.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-17",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-17",
+          "source_task_digest:sha256:8f1a73bacbdc867e5abbc53fd2c23c433482eed24918a42de869104398cd45ea"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-16"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-16"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-18",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-18-task",
+        "objective": "Add resume prompt regression fixtures for ready nodes and exact next actions.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-18",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-18",
+          "source_task_digest:sha256:a01325b9bda7bf09f68317cb04555f59baaa11122d23a6bd42177ad63be2fb5f"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-17"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-17"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-19",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-19-task",
+        "objective": "Bind checkpoint digests into resume prompts for interruption recovery audits.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-19",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-19",
+          "source_task_digest:sha256:035807bd4b2ff4df8a5e137135baa2178a061be46d0abf1f25c8f43d5f09743f"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-18"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-18"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-20",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-20-task",
+        "objective": "Create resume denial evidence when final response remains blocked by ready work.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-20",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-20",
+          "source_task_digest:sha256:ef71487fee4768cbb2e316ce2bd41889e2e9a2ca3f72ddc88ef25d7b1d881ddc"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-19"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-19"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-21",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-21-task",
+        "objective": "Bind Sentinel wording scan results into final closure readback status fields.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-21",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-21",
+          "source_task_digest:sha256:bf03b4c5daebdfd4e6221c287f41c8474e10020e51f1da661550ac78207e90aa"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-20"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-20"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-22",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-22-task",
+        "objective": "Add scoped public safety scans for changed evidence and prompt artifacts.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-22",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-22",
+          "source_task_digest:sha256:83c75bd8ff4ce2224311b491c92c10b39552ac86d18685bdb9b719e7a0c36162"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-21"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-21"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-23",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-23-task",
+        "objective": "Create negative wording fixtures for unsafe authority promotion statements.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-23",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-23",
+          "source_task_digest:sha256:9a66c22dcab9eca735a2df8085db5f05cd69dd49d14c53aec6081d946960d922"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-22"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-22"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-24",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-24-task",
+        "objective": "Summarize public safety scan coverage in machine readable closure rollups.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-24",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-24",
+          "source_task_digest:sha256:17b3264a9161f47ca7aa2c88a671568b41c7f2561e05341d5e0e23b2eff5790a"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-23"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-23"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-25",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-25-task",
+        "objective": "Aggregate Promoter no promotion verdicts across completed hardening and closure nodes.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-25",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-25",
+          "source_task_digest:sha256:636671fd31ce0b6160025fa49e2ea56442406390ec64b2dfb21bbc011369424d"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-24"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-24"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-26",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-26-task",
+        "objective": "Bind Command compact readback agreement to Promoter no promotion summaries.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-26",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-26",
+          "source_task_digest:sha256:ac63f651279b281ec561e7693aed5171542b47a9bf7cc0c68bfe5a43234d5ecc"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-25"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-25"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-27",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-27-task",
+        "objective": "Add regression evidence for no promotion rollup count mismatches.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-27",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-27",
+          "source_task_digest:sha256:4448e688eca0de9a433d6fa2a6512427d7c601c6aa160a3dadabbdf0a8b3fb5f"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-26"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-26"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-28",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-28-task",
+        "objective": "Create final response denial evidence when Command and Promoter disagree.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-28",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-28",
+          "source_task_digest:sha256:ca4a303f4a41158db56252f7b8e87dd235445e9e2bc6cb60db0aad0e108d65e6"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-27"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-27"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-29",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-29-task",
+        "objective": "Bind Foundry import readiness records to exactly one active mutation node.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-29",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-29",
+          "source_task_digest:sha256:8ef75c3fabd45c36877ece3f5640ebf3743b8c350ced7c50ba7c51fd8da04fc9"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-28"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-28"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-30",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-30-task",
+        "objective": "Add Foundry run link digest checks for completed node evidence packets.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-30",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-30",
+          "source_task_digest:sha256:1072007c9e3d99c51fb922650f72d5ad50a89ec3ac7d56e21181cadd127287e2"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-29"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-29"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-31",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-31-task",
+        "objective": "Create Foundry handoff replay fixtures for resumed bounded implementation nodes.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-31",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-31",
+          "source_task_digest:sha256:9ae56839d34831b292f8c922fbcf53c6d64e6e2e2d0775cfe761597157712723"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-30"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-30"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-32",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-32-task",
+        "objective": "Validate Foundry terminal status examples against recommendation readback enums.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-32",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-32",
+          "source_task_digest:sha256:82c25325b61edbdac3b13b89041a32b2de6c6f56eca45d8370c5c49251163c46"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-31"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-31"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-33",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-33-task",
+        "objective": "Bind Atlas final closure evidence into multi repo Mission dashboard rows.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-33",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-33",
+          "source_task_digest:sha256:93284c351dd11b51483cd7ac697b50ed18709cacfecdd753a3ad799225b7e5ad"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-32"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-32"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-34",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-34-task",
+        "objective": "Add dashboard provenance links for Foundry Promoter Command and Sentinel evidence.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-34",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-34",
+          "source_task_digest:sha256:174ef80a7528670abcc4bd5c9c87e450a5e675c00d328963ff9765bc21788dae"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-33"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-33"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-35",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-35-task",
+        "objective": "Create dashboard freshness checks for merged PR and synced main state.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-35",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-35",
+          "source_task_digest:sha256:3135c4a6617c2b3e62350b7a6086d1e2db3a398c21336284993d20e96d3ee2e9"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-34"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-34"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-36",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-36-task",
+        "objective": "Summarize blocked versus ready Mission nodes in compact dashboard filters.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-36",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-36",
+          "source_task_digest:sha256:81b59764c09ec73a1e06abafd7f064f2057d862fc0c82322c6ce12300f85c0f4"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-35"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-35"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-37",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-37-task",
+        "objective": "Export ranked Feature Depth tasks from final closure readback evidence.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-37",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-37",
+          "source_task_digest:sha256:e147cb6b51a18bb1672feb35e2d100df39546505212f1b86a2e92478d97b94b6"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-36"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-36"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-38",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-38-task",
+        "objective": "Add next wave prompt generation with minimum two hour work budget language.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-38",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-38",
+          "source_task_digest:sha256:2cebfadb9ac9b286b71c8fac46ce8dabba38ff4f0fa938483a84a9660b076cc3"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-37"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-37"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-39",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-39-task",
+        "objective": "Validate next wave recommendations remain planning only until imported.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-39",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-39",
+          "source_task_digest:sha256:c9990ec28849f5249e620ae1af9c1e967c662421f4f7e38c161e8cab26ae09b4"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-38"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-38"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-feature-depth-next-wave-40",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-40-task",
+        "objective": "Generate final Feature Depth recommendations for operator handoff review.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-40",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:7d515094e12f651d068352854c096213b1f594411a6193d40f945eac0f744f75",
+          "source_recommendation:feature-depth-next-wave-40",
+          "source_task_digest:sha256:4feb4ec36602ecce073c6a6c1e556ee608b14abf8700c3db8848d06270553333"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-39"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-feature-depth-next-wave-39"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    }
+  ]
+}
