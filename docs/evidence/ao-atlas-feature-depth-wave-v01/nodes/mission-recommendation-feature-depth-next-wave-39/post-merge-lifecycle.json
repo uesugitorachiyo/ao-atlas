@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-39",
+  "status": "passed",
+  "pr_number": 366,
+  "branch": "codex/feature-depth-wave-node-39-planning-only-validation",
+  "merge_commit": "1ce85cd8e257fb6150dad7f870867d37df715c73",
+  "ci_status": "passed",
+  "remote_branch_deleted": true,
+  "local_branch_deleted": true,
+  "node_branch_cleanup_complete": true,
+  "current_active_branch": "codex/feature-depth-wave-node-40-final-handoff",
+  "main_synced_after_merge": true
+}
