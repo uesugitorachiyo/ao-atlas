@@ -1,0 +1,21 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-feature-depth-next-wave-40-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+    "final_feature_depth_recommendations": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/final-feature-depth-recommendations.json",
+    "foundry_import": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/rollback_record.json",
+    "scoped_public_safety_scan": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/scoped-public-safety-scan.json",
+    "sentinel_public_safety": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/tests.json",
+    "verification": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/verification.json"
+  },
+  "digest": "sha256:e79e7a86b880ca47cfc3d851e4dc350c541fed5302a6913529bd0a90aeb9ad77"
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-39",
+  "task_id": "mission-recommendation-feature-depth-next-wave-39-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "objective": "Validate next wave recommendations remain planning only until imported.",
+  "previous_node_readback": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-38/recommendation-readback-after.json",
+  "previous_post_merge_lifecycle": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-38/post-merge-lifecycle.json",
+  "active_branch": "codex/feature-depth-wave-node-39-planning-only-validation",
+  "safety_boundaries": {
+    "no_provider_calls": true,
+    "no_credential_inspection": true,
+    "no_direct_main_mutation": true,
+    "no_release_deploy_publish_tag": true,
+    "no_dependency_updates": true,
+    "no_auth_policy_config_widening": true,
+    "rsi_remains_denied": true
+  }
+}

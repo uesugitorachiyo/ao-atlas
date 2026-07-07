@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-39",
+  "task_id": "mission-recommendation-feature-depth-next-wave-39-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-39",
+  "source_task_digest": "sha256:c9990ec28849f5249e620ae1af9c1e967c662421f4f7e38c161e8cab26ae09b4",
+  "selected_work": [
+    "Add regression coverage proving the ranked next-wave recommendations are planning-only.",
+    "Bind node 38 generated recommendation wave and readback artifacts to final-response denial before import.",
+    "Record machine-readable planning-only validation evidence for node 39."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ]
+}
