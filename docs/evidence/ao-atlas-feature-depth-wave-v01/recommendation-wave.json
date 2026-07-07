@@ -1506,7 +1506,7 @@
   "final_response_reason": "ready nodes or exact next actions remain",
   "promoter_readback_status": "required_not_bound",
   "command_readback_status": "required_not_bound",
-  "public_safety_scan_status": "required_pending_verification",
+  "public_safety_scan_status": "passed",
   "safe_to_execute": false,
   "schedules_work": false,
   "executes_work": false,
