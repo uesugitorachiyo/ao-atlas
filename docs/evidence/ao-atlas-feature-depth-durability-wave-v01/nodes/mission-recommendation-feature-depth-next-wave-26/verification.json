@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-26",
+  "task_id": "mission-recommendation-feature-depth-next-wave-26-task",
+  "status": "passed",
+  "passed_commands": [
+    "go run ./cmd/atlas mission recommendations command-promoter-agreement-rollup",
+    "go test ./internal/atlas -run TestFeatureDepthWaveCommandPromoterAgreementRollupBindsNoPromotionReadbacks -count=1"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "repair_notes": [
+    "Uses existing Atlas CLI support and generated evidence only."
+  ]
+}

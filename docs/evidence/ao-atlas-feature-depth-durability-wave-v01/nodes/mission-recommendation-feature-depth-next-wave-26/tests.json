@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-26",
+  "task_id": "mission-recommendation-feature-depth-next-wave-26-task",
+  "status": "passed",
+  "targeted_commands": [
+    "go run ./cmd/atlas mission recommendations command-promoter-agreement-rollup",
+    "go test ./internal/atlas -run TestFeatureDepthWaveCommandPromoterAgreementRollupBindsNoPromotionReadbacks -count=1"
+  ],
+  "assertions": [
+    "Command expected readback state matches Mission readback",
+    "Promoter aggregate remains no_promotion_requested",
+    "RSI remains denied"
+  ]
+}
