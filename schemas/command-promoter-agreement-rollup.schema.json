@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.command-promoter-agreement-rollup.v0.1",
+  "title": "AO Atlas Command Promoter Agreement Rollup",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_promoter_rollup_path",
+    "source_promoter_rollup_digest",
+    "source_command_readback_path",
+    "source_command_readback_digest",
+    "source_readback_path",
+    "source_readback_digest",
+    "promoter_rollup_status",
+    "promoter_no_promotion_files",
+    "promoter_no_promotion_invariant_holds",
+    "command_status",
+    "command_expected_completed_nodes_after",
+    "command_expected_ready_nodes_after",
+    "command_expected_next_executable_node",
+    "readback_completed_nodes",
+    "readback_ready_nodes",
+    "readback_first_executable_node",
+    "command_agrees_no_promotion",
+    "readback_agrees_with_command",
+    "aggregate_promotion_status",
+    "promotion_requested",
+    "promotion_granted",
+    "final_response_allowed",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.command-promoter-agreement-rollup.v0.1"
+    },
+    "node_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "command_agrees_with_promoter_no_promotion",
+        "command_promoter_agreement_failed"
+      ]
+    },
+    "source_promoter_rollup_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_promoter_rollup_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_command_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_command_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_readback_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_readback_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "promoter_rollup_status": {
+      "const": "no_promotion_rollup_bound"
+    },
+    "promoter_no_promotion_files": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "promoter_no_promotion_invariant_holds": {
+      "const": true
+    },
+    "command_status": {
+      "const": "readback_agrees_no_promotion"
+    },
+    "command_expected_completed_nodes_after": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "command_expected_ready_nodes_after": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "command_expected_next_executable_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "readback_completed_nodes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "readback_ready_nodes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "readback_first_executable_node": {
+      "type": "string",
+      "minLength": 1
+    },
+    "command_agrees_no_promotion": {
+      "const": true
+    },
+    "readback_agrees_with_command": {
+      "const": true
+    },
+    "aggregate_promotion_status": {
+      "const": "no_promotion_requested"
+    },
+    "promotion_requested": {
+      "const": false
+    },
+    "promotion_granted": {
+      "const": false
+    },
+    "final_response_allowed": {
+      "const": false
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}
