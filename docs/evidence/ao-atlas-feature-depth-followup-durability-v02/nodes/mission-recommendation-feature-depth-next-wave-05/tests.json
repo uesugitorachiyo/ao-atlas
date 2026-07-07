@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-05",
+  "task_id": "mission-recommendation-feature-depth-next-wave-05-task",
+  "status": "passed",
+  "assertions": [
+    "expected_completed_nodes_after=5",
+    "expected_ready_nodes_after=35",
+    "expected_final_response_allowed_after=false"
+  ]
+}

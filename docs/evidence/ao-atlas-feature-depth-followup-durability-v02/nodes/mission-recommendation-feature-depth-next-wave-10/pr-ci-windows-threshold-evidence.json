@@ -1,0 +1,58 @@
+{
+  "schema": "ao.atlas.pr-ci-windows-threshold-evidence.v0.1",
+  "status": "windows_thresholds_recorded",
+  "source_summary_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-09/pr-ci-timing-summary.json",
+  "source_summary_digest": "sha256:6a178faf16a09448d745ed2cd7054beeec50a05d163f8597b037dc35d5833d79",
+  "threshold_seconds": 720,
+  "row_count": 4,
+  "long_running_windows_checks": 4,
+  "max_windows_seconds": 1149,
+  "max_over_threshold_seconds": 429,
+  "rows": [
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-01-12",
+      "pr_number": 368,
+      "ci_status": "passed",
+      "merge_commit": "cd0d7c78510243626d9166e9f0d5d1a401e615bb",
+      "windows_seconds": 820,
+      "threshold_seconds": 720,
+      "exceeds_threshold": true,
+      "over_threshold_seconds": 100
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-13-15",
+      "pr_number": 369,
+      "ci_status": "passed",
+      "merge_commit": "c29dbec7aad85440027a0d1a95abc079be3acb54",
+      "windows_seconds": 960,
+      "threshold_seconds": 720,
+      "exceeds_threshold": true,
+      "over_threshold_seconds": 240
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-16-34",
+      "pr_number": 370,
+      "ci_status": "passed",
+      "merge_commit": "95cfdbb464468f588576fda808faf3c046cdaf79",
+      "windows_seconds": 1080,
+      "threshold_seconds": 720,
+      "exceeds_threshold": true,
+      "over_threshold_seconds": 360
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-35-40",
+      "pr_number": 371,
+      "ci_status": "passed",
+      "merge_commit": "b26fca846481429f72f4cd8ab63322da377c1bbe",
+      "windows_seconds": 1149,
+      "threshold_seconds": 720,
+      "exceeds_threshold": true,
+      "over_threshold_seconds": 429
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,115 @@
+{
+  "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+  "status": "completed",
+  "mission_id": "ao-atlas-next-feature-depth-followup-durability-v02",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02",
+  "lease_health_status": "all_generated_nodes_complete",
+  "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+  "return_gate_status": "final_response_allowed",
+  "continuation_contract_reason": "final response allowed by recommendation readback",
+  "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
+  "final_response_allowed": true,
+  "refuses_final_response": false,
+  "completed_recommendation_nodes": 40,
+  "total_recommendation_nodes": 40,
+  "generated_workgraph": {
+    "total_nodes": 40,
+    "ready_nodes": 0,
+    "executable_ready_nodes": 0,
+    "lease_health_status": "all_generated_nodes_complete",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "return_gate_status": "final_response_allowed",
+    "checkpoint_count": 40,
+    "final_response_allowed": true,
+    "final_response_reason": "all generated nodes complete and no ready nodes remain"
+  },
+  "foundry_run_link_readiness_summary": {
+    "status": "all_required_run_links_recorded",
+    "summary": "40/40 Foundry run-links recorded; ready_nodes=0; next_executable_node=",
+    "completed_run_links": 40,
+    "required_run_links": 40,
+    "missing_run_links": 0,
+    "ready_nodes": 0,
+    "lease_health_status": "all_generated_nodes_complete",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "return_gate_status": "final_response_allowed",
+    "continuation_contract_reason": "final response allowed by recommendation readback",
+    "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
+    "refuses_final_response": false,
+    "checkpoint_count": 40,
+    "final_response_allowed": true
+  },
+  "continuation_reason_coverage": {
+    "status": "coverage_sources_indexed",
+    "expected_reason": "final response allowed by recommendation readback",
+    "indexed_sources": [
+      "recommendation_readback",
+      "checkpoint_readback",
+      "workgraph_readiness_packet",
+      "command_readback",
+      "command_timeline_binding",
+      "promoter_readback",
+      "foundry_rollup",
+      "reconciliation_packet",
+      "reconciliation_command",
+      "reconciliation_promoter",
+      "reconciliation_foundry",
+      "final_state_reconciliation",
+      "resume_prompt"
+    ],
+    "source_count": 13,
+    "final_response_allowed": true,
+    "refuses_final_response": false,
+    "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
+    "return_gate_status": "final_response_allowed",
+    "lease_health_status": "all_generated_nodes_complete",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  },
+  "reason_artifact_agreement_summary": {
+    "status": "agreement",
+    "expected_reason": "final response allowed by recommendation readback",
+    "indexed_sources": [
+      "recommendation_readback",
+      "checkpoint_readback",
+      "workgraph_readiness_packet",
+      "command_readback",
+      "command_timeline_binding",
+      "promoter_readback",
+      "foundry_rollup",
+      "reconciliation_packet",
+      "reconciliation_command",
+      "reconciliation_promoter",
+      "reconciliation_foundry",
+      "final_state_reconciliation",
+      "resume_prompt"
+    ],
+    "source_count": 13,
+    "all_required_sources_indexed": true,
+    "source_artifact_refs": [
+      "foundry_run_link_readiness_summary",
+      "continuation_reason_coverage"
+    ],
+    "source_artifact_count": 2,
+    "source_artifacts_agree": true,
+    "foundry_run_link_readiness_digest": "sha256:3e81d78f6ac6ee34081cdd673749de14ab5c17dac66408bb9ac4354f78612537",
+    "continuation_reason_coverage_digest": "sha256:a0f4d0436671edd196ac18145513eafd7ca09a0cd22c6bc8896cbaaf65c2a1e3",
+    "final_response_allowed": true,
+    "refuses_final_response": false,
+    "exact_next_action": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
+    "return_gate_status": "final_response_allowed",
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  },
+  "source_artifacts": [
+    {
+      "ref": "foundry_run_link_readiness_summary",
+      "digest": "sha256:3e81d78f6ac6ee34081cdd673749de14ab5c17dac66408bb9ac4354f78612537"
+    },
+    {
+      "ref": "continuation_reason_coverage",
+      "digest": "sha256:a0f4d0436671edd196ac18145513eafd7ca09a0cd22c6bc8896cbaaf65c2a1e3"
+    }
+  ]
+}
