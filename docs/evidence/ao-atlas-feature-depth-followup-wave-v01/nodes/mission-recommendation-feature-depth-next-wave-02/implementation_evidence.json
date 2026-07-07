@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-02",
+  "task_id": "mission-recommendation-feature-depth-next-wave-02-task",
+  "status": "completed",
+  "implemented_artifacts": [
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-02/mission-readback-delta.json",
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-02/resumable-readback-diff-fixture.json"
+  ],
+  "summary": "Prepared node 02 to bind completed-node, ready-node, and checkpoint transitions into a resumable readback diff fixture after the node 02 checkpoint is written.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

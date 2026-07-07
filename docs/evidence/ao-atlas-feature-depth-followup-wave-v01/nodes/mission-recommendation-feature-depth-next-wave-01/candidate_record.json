@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-01",
+  "task_id": "mission-recommendation-feature-depth-next-wave-01-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-01",
+  "source_task_digest": "sha256:6b36ced4fa8684f3270528f4d2a49478b1007207355e5b780056730087c89ec0",
+  "selected_work": [
+    "Import the canonical Feature Depth follow-up recommendation wave.",
+    "Bind the prior completed wave readback to the new follow-up initial readback using deterministic delta evidence.",
+    "Keep the artifact read-only with no scheduling, execution, approval, promotion, or RSI authority."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-atlas-feature-depth-followup-wave-v01"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

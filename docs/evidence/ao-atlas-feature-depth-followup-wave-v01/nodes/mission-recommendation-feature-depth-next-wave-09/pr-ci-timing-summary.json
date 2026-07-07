@@ -1,0 +1,72 @@
+{
+  "schema": "ao.atlas.pr-ci-timing-summary.v0.1",
+  "status": "summarized",
+  "source_ledger_path": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-09/pr-ci-timing-ledger.json",
+  "source_ledger_digest": "sha256:9b9d38b4df269d4eb99f9b22d303f1f0c6ce73381ced7887f2f86d60874fa103",
+  "row_count": 3,
+  "merged_prs": 3,
+  "ci_passed_prs": 3,
+  "ci_failed_prs": 0,
+  "ci_pending_prs": 0,
+  "pr_numbers": [
+    333,
+    334,
+    335
+  ],
+  "node_ids": [
+    "mission-recommendation-feature-depth-next-wave-06",
+    "mission-recommendation-feature-depth-next-wave-07",
+    "mission-recommendation-feature-depth-next-wave-08"
+  ],
+  "total_ubuntu_seconds": 227,
+  "total_macos_seconds": 539,
+  "total_windows_seconds": 2344,
+  "mean_ubuntu_seconds": 75,
+  "mean_macos_seconds": 179,
+  "mean_windows_seconds": 781,
+  "max_windows_seconds": 812,
+  "max_check_seconds": 812,
+  "slowest_pr_number": 334,
+  "slowest_node_id": "mission-recommendation-feature-depth-next-wave-07",
+  "slowest_check": "production-readiness (windows-latest)",
+  "rows": [
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-06",
+      "pr_number": 333,
+      "merge_commit": "0c1a08339c06486cadccfa0cbacb897fe35d58d4",
+      "ci_status": "passed",
+      "ubuntu_seconds": 75,
+      "macos_seconds": 176,
+      "windows_seconds": 758,
+      "max_check_seconds": 758,
+      "slowest_check": "production-readiness (windows-latest)"
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-07",
+      "pr_number": 334,
+      "merge_commit": "1e93a3ff9767f6d24f18af0f5a42837c8a809607",
+      "ci_status": "passed",
+      "ubuntu_seconds": 75,
+      "macos_seconds": 165,
+      "windows_seconds": 812,
+      "max_check_seconds": 812,
+      "slowest_check": "production-readiness (windows-latest)"
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-08",
+      "pr_number": 335,
+      "merge_commit": "3585e9bbd41356aa9cbccc2f3b0964dcc429b0a9",
+      "ci_status": "passed",
+      "ubuntu_seconds": 77,
+      "macos_seconds": 198,
+      "windows_seconds": 774,
+      "max_check_seconds": 774,
+      "slowest_check": "production-readiness (windows-latest)"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
