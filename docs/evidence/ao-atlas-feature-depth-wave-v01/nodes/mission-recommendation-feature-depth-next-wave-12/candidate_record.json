@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-12",
+  "task_id": "mission-recommendation-feature-depth-next-wave-12-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-12",
+  "source_task_digest": "sha256:830b022d4f0a49fd83010da99b80d156fb410e1be03e70f96b00276e8aa14be3",
+  "selected_work": [
+    "Add merge-check binding model and validator.",
+    "Add CLI generator binding merge commits to required check pass counts.",
+    "Generate node 12 binding evidence for recently merged Feature Depth PRs."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

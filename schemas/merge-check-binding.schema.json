@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.merge-check-binding.v0.1",
+  "title": "AO Atlas Merge Check Binding",
+  "type": "object",
+  "required": [
+    "schema",
+    "status",
+    "source_input_path",
+    "source_input_digest",
+    "row_count",
+    "passed_required_check_rows",
+    "unbound_merge_commits",
+    "rows",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ao.atlas.merge-check-binding.v0.1"
+    },
+    "status": {
+      "const": "required_checks_bound"
+    },
+    "source_input_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_input_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "row_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "passed_required_check_rows": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "unbound_merge_commits": {
+      "const": 0
+    },
+    "rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "node_id",
+          "pr_number",
+          "merge_commit",
+          "required_check_count",
+          "passed_required_check_count",
+          "required_checks_status",
+          "merge_commit_bound"
+        ],
+        "properties": {
+          "node_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pr_number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "merge_commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "required_check_count": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "passed_required_check_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "required_checks_status": {
+            "const": "passed"
+          },
+          "merge_commit_bound": {
+            "const": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "schedules_work": {
+      "const": false
+    },
+    "executes_work": {
+      "const": false
+    },
+    "approves_work": {
+      "const": false
+    },
+    "claims_authority_advance": {
+      "const": false
+    },
+    "rsi_remains_denied": {
+      "const": true
+    }
+  },
+  "additionalProperties": false
+}

@@ -38,6 +38,8 @@ const (
 	AtlasPRCIWindowsThresholdEvidenceContract    = "ao.atlas.pr-ci-windows-threshold-evidence.v0.1"
 	AtlasFailedCheckReplayInputContract          = "ao.atlas.failed-check-replay-input.v0.1"
 	AtlasFailedCheckReplayFixtureContract        = "ao.atlas.failed-check-replay-fixture.v0.1"
+	AtlasMergeCheckBindingInputContract          = "ao.atlas.merge-check-binding-input.v0.1"
+	AtlasMergeCheckBindingContract               = "ao.atlas.merge-check-binding.v0.1"
 	WorkgraphContract                            = "ao.atlas.workgraph.v0.1"
 	WorkgraphRepairPlanContract                  = "ao.atlas.workgraph-repair-plan.v0.1"
 	FactoryTaskContract                          = "ao.atlas.factory-task.v0.1"
