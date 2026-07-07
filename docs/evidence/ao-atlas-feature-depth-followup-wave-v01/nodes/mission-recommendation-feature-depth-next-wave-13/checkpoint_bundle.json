@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-13",
+  "task_id": "mission-recommendation-feature-depth-next-wave-13-task",
+  "status": "complete_node_readback_recorded",
+  "workgraph_source": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-12/workgraph-after.json",
+  "workgraph_after": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-13/workgraph-after.json",
+  "recommendation_readback_after": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-13/recommendation-readback-after.json",
+  "checkpoint_readback_after": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-13/checkpoint-readback-after.json",
+  "execution_readback_after": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-13/execution-readback-after.json",
+  "mission_readback_delta": "docs/evidence/ao-atlas-feature-depth-followup-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-13/mission-readback-delta.json",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
