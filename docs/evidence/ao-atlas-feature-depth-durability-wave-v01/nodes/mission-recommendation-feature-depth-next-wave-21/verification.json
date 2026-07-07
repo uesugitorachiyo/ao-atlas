@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-21",
+  "task_id": "mission-recommendation-feature-depth-next-wave-21-task",
+  "status": "passed",
+  "passed_commands": [
+    "go run ./cmd/atlas mission recommendations public-safety-readback-binding --readback docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-20/recommendation-readback-after.json --sentinel docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-21/sentinel_public_safety.json --verification docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-21/verification.json --node-id mission-recommendation-feature-depth-next-wave-21 --out docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-21/public-safety-readback-binding.json",
+    "jq -e . docs/evidence/ao-atlas-feature-depth-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-21/public-safety-readback-binding.json"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "repair_notes": [
+    "Uses existing Atlas CLI support and generated evidence only."
+  ],
+  "public_safety_scan_passed": true,
+  "commands": [
+    {
+      "command": "scoped public-safety wording scan over node 21 readback binding evidence",
+      "status": "passed"
+    }
+  ]
+}
