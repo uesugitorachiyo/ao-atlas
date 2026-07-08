@@ -2,6 +2,7 @@ package atlas
 
 import (
 	"bytes"
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
@@ -41,6 +42,8 @@ func TestMissionRecommendationsSchemaRegistryHealthChainsValidationAndCoverage(t
 		"missing_validators=6",
 		"failure_reasons=missing_registry_schemas,missing_registry_validators",
 		"rsi_remains_denied=true",
+		"run_ledger_count=3",
+		"all_outputs_have_run_ledgers=true",
 		"recommendation_evidence_schema_registry=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-schema-registry.json")),
 		"recommendation_evidence_validation_report=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-validation-report.json")),
 		"recommendation_evidence_schema_registry_coverage=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-schema-registry-coverage.json")),
@@ -113,5 +116,54 @@ func TestMissionRecommendationsSchemaRegistryHealthChainsValidationAndCoverage(t
 			ledger.MutatesRepositories {
 			t.Fatalf("schema registry health ledger %s did not preserve safe command traceability: %#v", path, ledger)
 		}
+	}
+}
+
+func mustDecodeJSON[T any](t *testing.T, data []byte) T {
+	t.Helper()
+	var value T
+	if err := json.Unmarshal(data, &value); err != nil {
+		t.Fatalf("decode JSON: %v\n%s", err, string(data))
+	}
+	return value
+}
+
+func TestMissionRecommendationsSchemaRegistryHealthJSONReportsLedgerCompleteness(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	outDir := t.TempDir()
+	var out bytes.Buffer
+	var stderr bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "schema-registry-health",
+		"--evidence-root", filepath.Join("docs", "evidence", "ao-atlas-feature-depth-followup-durability-v04"),
+		"--out-dir", outDir,
+		"--json",
+	}, &out, &stderr)
+	if code == 0 {
+		t.Fatalf("schema-registry-health JSON should fail when registry artifacts are not covered: %s", out.String())
+	}
+	report := mustDecodeJSON[map[string]any](t, out.Bytes())
+	if report["status"] != "failed" ||
+		report["validation_report_status"] != "passed" ||
+		report["run_ledger_count"] != float64(3) ||
+		report["all_outputs_have_run_ledgers"] != true ||
+		report["rsi_remains_denied"] != true ||
+		report["schema_registry_run_ledger"] != filepath.ToSlash(filepath.Join(outDir, "recommendation-schema-registry-run-ledger.json")) ||
+		report["validation_report_run_ledger"] != filepath.ToSlash(filepath.Join(outDir, "recommendation-validation-report-run-ledger.json")) ||
+		report["schema_registry_coverage_run_ledger"] != filepath.ToSlash(filepath.Join(outDir, "recommendation-schema-registry-coverage-run-ledger.json")) {
+		t.Fatalf("schema registry health JSON did not report ledger completeness: %#v", report)
 	}
 }
