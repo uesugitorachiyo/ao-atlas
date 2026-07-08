@@ -1,0 +1,504 @@
+{
+  "schema": "ao.mission.refactoring-recommendations.v0.1",
+  "mission_id": "ao-atlas-refactoring-wave-v01",
+  "status": "ready",
+  "track": "refactoring",
+  "minimum_tasks": 40,
+  "recommendation_count": 40,
+  "source_evidence_root": "docs/evidence/ao-atlas-feature-depth-wave-v01",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+  "source_assertion_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+  "next_track_decision_path": "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json",
+  "next_track_decision_digest": "sha256:3c5ddc59ab3ffbb36109ba773d10198668d3bbad1751de9a253b3a1aad82a692",
+  "tasks": [
+    {
+      "rank": 1,
+      "id": "refactoring-next-wave-01",
+      "owner": "ao-atlas",
+      "theme": "recommendation-routing",
+      "task": "Extract recommendation routing command dispatch into a typed registry with deterministic help output.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "refactoring-next-wave-02",
+      "owner": "ao-atlas",
+      "theme": "recommendation-routing",
+      "task": "Replace duplicated recommendation command lists with one shared registry-backed command catalog.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "refactoring-next-wave-03",
+      "owner": "ao-atlas",
+      "theme": "recommendation-routing",
+      "task": "Bind completed Feature Depth routing decisions to refactoring wave generation without stale exports.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "refactoring-next-wave-04",
+      "owner": "ao-atlas",
+      "theme": "recommendation-routing",
+      "task": "Add consumed recommendation ledger checks before any next wave exporter can run.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "refactoring-next-wave-05",
+      "owner": "ao-atlas",
+      "theme": "recommendation-routing",
+      "task": "Separate planning-only recommendation export commands from mutation-capable node execution commands.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "refactoring-next-wave-06",
+      "owner": "ao-atlas",
+      "theme": "evidence-schema-registry",
+      "task": "Refactor recommendation evidence schema registry entries into typed constructors with drift tests.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "refactoring-next-wave-07",
+      "owner": "ao-atlas",
+      "theme": "evidence-schema-registry",
+      "task": "Move schema contract constants into grouped recommendation evidence namespaces with coverage tests.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "refactoring-next-wave-08",
+      "owner": "ao-atlas",
+      "theme": "evidence-schema-registry",
+      "task": "Add registry-backed typed validator lookup for recommendation control-plane artifacts.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 9,
+      "id": "refactoring-next-wave-09",
+      "owner": "ao-atlas",
+      "theme": "evidence-schema-registry",
+      "task": "Collapse duplicated schema coverage failure wording into reusable validation helpers.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 10,
+      "id": "refactoring-next-wave-10",
+      "owner": "ao-atlas",
+      "theme": "evidence-schema-registry",
+      "task": "Introduce schema registry golden fixtures for command output and typed validator bindings.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 11,
+      "id": "refactoring-next-wave-11",
+      "owner": "ao-atlas",
+      "theme": "readback-gates",
+      "task": "Centralize final response gate evaluation for readback, execution readback, and closure readbacks.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 12,
+      "id": "refactoring-next-wave-12",
+      "owner": "ao-atlas",
+      "theme": "readback-gates",
+      "task": "Refactor exact next action preservation into a shared readback transition helper.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 13,
+      "id": "refactoring-next-wave-13",
+      "owner": "ao-atlas",
+      "theme": "readback-gates",
+      "task": "Add compact readback status normalization for ready, completed, blocked, and failed node states.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 14,
+      "id": "refactoring-next-wave-14",
+      "owner": "ao-atlas",
+      "theme": "readback-gates",
+      "task": "Bind return gate denial reasons to structured fields instead of repeated text fragments.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 15,
+      "id": "refactoring-next-wave-15",
+      "owner": "ao-atlas",
+      "theme": "readback-gates",
+      "task": "Create regression fixtures for stale readback rejection across all recommendation tracks.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 16,
+      "id": "refactoring-next-wave-16",
+      "owner": "ao-atlas",
+      "theme": "run-ledger",
+      "task": "Unify command run-ledger, rollup, and coverage-check builders behind a common artifact summary type.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 17,
+      "id": "refactoring-next-wave-17",
+      "owner": "ao-atlas",
+      "theme": "run-ledger",
+      "task": "Refactor run-ledger output status classification into reusable pass, ready, failed, and blocked categories.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 18,
+      "id": "refactoring-next-wave-18",
+      "owner": "ao-atlas",
+      "theme": "run-ledger",
+      "task": "Add ledger coverage checks for refactoring exporters and track routing artifacts.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 19,
+      "id": "refactoring-next-wave-19",
+      "owner": "ao-atlas",
+      "theme": "run-ledger",
+      "task": "Bind run-ledger rollups to final operator summaries without self-referential ledger requirements.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 20,
+      "id": "refactoring-next-wave-20",
+      "owner": "ao-atlas",
+      "theme": "run-ledger",
+      "task": "Create long-run ledger fixture packs for repeated command retries and resumed sessions.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 21,
+      "id": "refactoring-next-wave-21",
+      "owner": "ao-atlas",
+      "theme": "pr-ci-lifecycle",
+      "task": "Normalize PR and CI ledger rows across feature depth, closure, and refactoring waves.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 22,
+      "id": "refactoring-next-wave-22",
+      "owner": "ao-atlas",
+      "theme": "pr-ci-lifecycle",
+      "task": "Extract Windows long-running check telemetry into shared threshold and wait-state helpers.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 23,
+      "id": "refactoring-next-wave-23",
+      "owner": "ao-atlas",
+      "theme": "pr-ci-lifecycle",
+      "task": "Add merge readiness guard helpers that require passed checks before branch cleanup evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 24,
+      "id": "refactoring-next-wave-24",
+      "owner": "ao-atlas",
+      "theme": "pr-ci-lifecycle",
+      "task": "Refactor post-merge branch deletion readbacks into reusable local and remote cleanup records.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 25,
+      "id": "refactoring-next-wave-25",
+      "owner": "ao-atlas",
+      "theme": "pr-ci-lifecycle",
+      "task": "Create PR lifecycle replay fixtures for interrupted merge, sync, and cleanup handoffs.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 26,
+      "id": "refactoring-next-wave-26",
+      "owner": "ao-atlas",
+      "theme": "prompt-generation",
+      "task": "Refactor continuation prompt generation to consume structured wave budgets and stop conditions.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 27,
+      "id": "refactoring-next-wave-27",
+      "owner": "ao-atlas",
+      "theme": "prompt-generation",
+      "task": "Add prompt compaction resume fixtures that preserve next node, exact action, and final gate denial.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 28,
+      "id": "refactoring-next-wave-28",
+      "owner": "ao-atlas",
+      "theme": "prompt-generation",
+      "task": "Move prompt safety boundary rendering into one audited template helper.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 29,
+      "id": "refactoring-next-wave-29",
+      "owner": "ao-atlas",
+      "theme": "prompt-generation",
+      "task": "Bind generated prompts to source readback digests and consumed recommendation ledgers.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 30,
+      "id": "refactoring-next-wave-30",
+      "owner": "ao-atlas",
+      "theme": "prompt-generation",
+      "task": "Add long-run prompt regression fixtures for two to three hour refactoring waves.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 31,
+      "id": "refactoring-next-wave-31",
+      "owner": "ao-atlas",
+      "theme": "dashboard-provenance",
+      "task": "Refactor mission dashboard rows to share provenance digest and freshness evaluation helpers.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 32,
+      "id": "refactoring-next-wave-32",
+      "owner": "ao-atlas",
+      "theme": "dashboard-provenance",
+      "task": "Add dashboard filters for recommendation track, schema health, CI state, and cleanup state.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 33,
+      "id": "refactoring-next-wave-33",
+      "owner": "ao-atlas",
+      "theme": "dashboard-provenance",
+      "task": "Bind dashboard closure rows to Promoter, Command, Sentinel, and Foundry rollup evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 34,
+      "id": "refactoring-next-wave-34",
+      "owner": "ao-atlas",
+      "theme": "dashboard-provenance",
+      "task": "Create stale dashboard evidence detection for superseded wave readbacks and old exports.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 35,
+      "id": "refactoring-next-wave-35",
+      "owner": "ao-atlas",
+      "theme": "dashboard-provenance",
+      "task": "Add dashboard compact rendering tests for completed waves with no ready nodes.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 36,
+      "id": "refactoring-next-wave-36",
+      "owner": "ao-atlas",
+      "theme": "test-structure",
+      "task": "Split oversized recommendation tests into focused files by routing, evidence, readback, and lifecycle domain.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 37,
+      "id": "refactoring-next-wave-37",
+      "owner": "ao-atlas",
+      "theme": "test-structure",
+      "task": "Extract shared recommendation test fixture builders for waves, nodes, and readbacks.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 38,
+      "id": "refactoring-next-wave-38",
+      "owner": "ao-atlas",
+      "theme": "test-structure",
+      "task": "Add table-driven validator tests for no-promotion and RSI-denied boundary fields.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 39,
+      "id": "refactoring-next-wave-39",
+      "owner": "ao-atlas",
+      "theme": "architecture-boundaries",
+      "task": "Create targeted regression suites that avoid rerunning unrelated long-wave fixture assertions.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    },
+    {
+      "rank": 40,
+      "id": "refactoring-next-wave-40",
+      "owner": "ao-atlas",
+      "theme": "developer-experience",
+      "task": "Document the refactoring wave handoff with ranked tasks and verification gates.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
+        "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json"
+      ]
+    }
+  ],
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
