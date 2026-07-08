@@ -1074,6 +1074,7 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			"covered_schema_count":                             coverage.CoveredSchemaCount,
 			"missing_schemas":                                  len(coverage.MissingSchemas),
 			"missing_validators":                               len(coverage.MissingValidators),
+			"stale_registry_entries":                           coverage.StaleRegistryEntryCount,
 			"failure_reasons":                                  coverage.FailureReasons,
 			"rsi_remains_denied":                               coverage.RSIRemainsDenied,
 			"run_ledger_count":                                 runLedgerCount,
@@ -1090,13 +1091,14 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			return err
 		}
 	} else {
-		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrun_ledger_count=%d\nall_outputs_have_run_ledgers=%t\noperator_summary=%s\nexact_next_action=%s\nrecommendation_evidence_schema_registry=%s\nrecommendation_evidence_validation_report=%s\nrecommendation_evidence_schema_registry_coverage=%s\nschema_registry_run_ledger=%s\nvalidation_report_run_ledger=%s\nschema_registry_coverage_run_ledger=%s\n",
+		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nstale_registry_entries=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrun_ledger_count=%d\nall_outputs_have_run_ledgers=%t\noperator_summary=%s\nexact_next_action=%s\nrecommendation_evidence_schema_registry=%s\nrecommendation_evidence_validation_report=%s\nrecommendation_evidence_schema_registry_coverage=%s\nschema_registry_run_ledger=%s\nvalidation_report_run_ledger=%s\nschema_registry_coverage_run_ledger=%s\n",
 			coverage.Status,
 			coverage.ValidationReportStatus,
 			coverage.RegistrySchemaCount,
 			coverage.CoveredSchemaCount,
 			len(coverage.MissingSchemas),
 			len(coverage.MissingValidators),
+			coverage.StaleRegistryEntryCount,
 			strings.Join(coverage.FailureReasons, ","),
 			coverage.RSIRemainsDenied,
 			runLedgerCount,
@@ -1152,13 +1154,14 @@ func runMissionRecommendationsSchemaRegistryCoverage(args []string, stdout io.Wr
 			return printErr
 		}
 	} else {
-		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrecommendation_evidence_schema_registry_coverage=%s\n",
+		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nstale_registry_entries=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrecommendation_evidence_schema_registry_coverage=%s\n",
 			coverage.Status,
 			coverage.ValidationReportStatus,
 			coverage.RegistrySchemaCount,
 			coverage.CoveredSchemaCount,
 			len(coverage.MissingSchemas),
 			len(coverage.MissingValidators),
+			coverage.StaleRegistryEntryCount,
 			strings.Join(coverage.FailureReasons, ","),
 			coverage.RSIRemainsDenied,
 			filepath.ToSlash(*outPath),

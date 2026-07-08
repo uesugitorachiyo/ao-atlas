@@ -424,6 +424,9 @@ type AtlasRecommendationEvidenceSchemaRegistryCoverage struct {
 	RegistryValidatorCount       int      `json:"registry_validator_count"`
 	CoveredValidatorCount        int      `json:"covered_validator_count"`
 	MissingValidators            []string `json:"missing_validators"`
+	StaleRegistryEntryCount      int      `json:"stale_registry_entry_count"`
+	StaleRegistryEntries         []string `json:"stale_registry_entries"`
+	AllRegistryEntriesFresh      bool     `json:"all_registry_entries_fresh"`
 	FailureReasons               []string `json:"failure_reasons"`
 	AllRegistrySchemasCovered    bool     `json:"all_registry_schemas_covered"`
 	AllRegistryValidatorsCovered bool     `json:"all_registry_validators_covered"`

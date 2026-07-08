@@ -11,6 +11,7 @@ var allowedRecommendationSchemaRegistryCoverageFailureReasons = []string{
 	"validation_report_failed",
 	"missing_registry_schemas",
 	"missing_registry_validators",
+	"stale_registry_entries",
 }
 
 func BuildAtlasRecommendationEvidenceSchemaRegistryCoverage(registryPath, validationReportPath string) (AtlasRecommendationEvidenceSchemaRegistryCoverage, error) {
@@ -39,22 +40,29 @@ func BuildAtlasRecommendationEvidenceSchemaRegistryCoverage(registryPath, valida
 
 	missingSchemas := []string{}
 	missingValidators := []string{}
+	staleRegistryEntries := []string{}
 	coveredSchemas := 0
 	coveredValidators := 0
 	for _, entry := range registry.Schemas {
-		if report.SchemaCounts[entry.Schema] > 0 {
+		schemaCovered := report.SchemaCounts[entry.Schema] > 0
+		validatorCovered := report.Validators[entry.TypedValidator] > 0
+		if schemaCovered {
 			coveredSchemas++
 		} else {
 			missingSchemas = append(missingSchemas, entry.Schema)
 		}
-		if report.Validators[entry.TypedValidator] > 0 {
+		if validatorCovered {
 			coveredValidators++
 		} else {
 			missingValidators = append(missingValidators, entry.TypedValidator)
 		}
+		if !schemaCovered && !validatorCovered {
+			staleRegistryEntries = append(staleRegistryEntries, entry.Schema)
+		}
 	}
 	sort.Strings(missingSchemas)
 	sort.Strings(missingValidators)
+	sort.Strings(staleRegistryEntries)
 	failureReasons := []string{}
 	if report.Status != "passed" {
 		failureReasons = append(failureReasons, "validation_report_failed")
@@ -64,6 +72,9 @@ func BuildAtlasRecommendationEvidenceSchemaRegistryCoverage(registryPath, valida
 	}
 	if len(missingValidators) != 0 {
 		failureReasons = append(failureReasons, "missing_registry_validators")
+	}
+	if len(staleRegistryEntries) != 0 {
+		failureReasons = append(failureReasons, "stale_registry_entries")
 	}
 
 	coverage := AtlasRecommendationEvidenceSchemaRegistryCoverage{
@@ -78,6 +89,9 @@ func BuildAtlasRecommendationEvidenceSchemaRegistryCoverage(registryPath, valida
 		RegistryValidatorCount:       len(registry.Schemas),
 		CoveredValidatorCount:        coveredValidators,
 		MissingValidators:            missingValidators,
+		StaleRegistryEntryCount:      len(staleRegistryEntries),
+		StaleRegistryEntries:         staleRegistryEntries,
+		AllRegistryEntriesFresh:      len(staleRegistryEntries) == 0,
 		FailureReasons:               failureReasons,
 		AllRegistrySchemasCovered:    len(missingSchemas) == 0,
 		AllRegistryValidatorsCovered: len(missingValidators) == 0,
@@ -91,7 +105,7 @@ func BuildAtlasRecommendationEvidenceSchemaRegistryCoverage(registryPath, valida
 		ApprovesWork:                 false,
 		MutatesRepositories:          false,
 	}
-	if report.Status != "passed" || len(missingSchemas) != 0 || len(missingValidators) != 0 {
+	if report.Status != "passed" || len(missingSchemas) != 0 || len(missingValidators) != 0 || len(staleRegistryEntries) != 0 {
 		coverage.Status = "failed"
 	}
 	if err := ValidateAtlasRecommendationEvidenceSchemaRegistryCoverage(coverage); err != nil {
@@ -132,8 +146,15 @@ func ValidateAtlasRecommendationEvidenceSchemaRegistryCoverage(coverage AtlasRec
 	if coverage.AllRegistryValidatorsCovered != (len(coverage.MissingValidators) == 0) {
 		errs = append(errs, "all_registry_validators_covered must match missing_validators")
 	}
-	if coverage.Status == "passed" && (!coverage.AllRegistrySchemasCovered || !coverage.AllRegistryValidatorsCovered || coverage.ValidationReportStatus != "passed") {
-		errs = append(errs, "passed status requires passed report and full registry coverage")
+	if coverage.StaleRegistryEntryCount != len(coverage.StaleRegistryEntries) {
+		errs = append(errs, "stale_registry_entry_count must match stale_registry_entries")
+	}
+	if coverage.AllRegistryEntriesFresh != (len(coverage.StaleRegistryEntries) == 0) {
+		errs = append(errs, "all_registry_entries_fresh must match stale_registry_entries")
+	}
+	checkPublicStrings(&errs, "stale_registry_entries", coverage.StaleRegistryEntries, true)
+	if coverage.Status == "passed" && (!coverage.AllRegistrySchemasCovered || !coverage.AllRegistryValidatorsCovered || !coverage.AllRegistryEntriesFresh || coverage.ValidationReportStatus != "passed") {
+		errs = append(errs, "passed status requires passed report, full registry coverage, and fresh registry entries")
 	}
 	if coverage.Status == "failed" && len(coverage.FailureReasons) == 0 {
 		errs = append(errs, "failed status requires failure_reasons")

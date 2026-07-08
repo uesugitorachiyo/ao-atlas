@@ -251,6 +251,111 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingSchemaFailure
 	}
 }
 
+func TestMissionRecommendationsSchemaRegistryCoverageDetectsStaleRegistryEntries(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	tempDir := t.TempDir()
+	registryPath := filepath.Join(tempDir, "recommendation-evidence-schema-registry.json")
+	registryOut := bytes.Buffer{}
+	code := Run([]string{
+		"mission", "recommendations", "schema-registry",
+		"--out", registryPath,
+	}, &registryOut, &registryOut)
+	if code != 0 {
+		t.Fatalf("schema-registry failed: %s", registryOut.String())
+	}
+
+	reportPath := filepath.Join(tempDir, "recommendation-evidence-validation-report.json")
+	report := AtlasRecommendationEvidenceValidationReport{
+		Schema:                   AtlasRecommendationEvidenceValidationReportContract,
+		Status:                   "passed",
+		EvidenceRoot:             "docs/evidence/example",
+		NodeRoot:                 "docs/evidence/example/nodes",
+		NodeCount:                1,
+		JSONFileCount:            7,
+		ValidatedJSONFiles:       7,
+		SchemaBoundFiles:         7,
+		TypedValidatorFiles:      7,
+		GenericSchemaFiles:       0,
+		MissingSchemaFiles:       []string{},
+		FailedFiles:              []string{},
+		MissingRequiredFiles:     []string{},
+		RequiredFilenames:        requiredRecommendationEvidenceFilenames(),
+		RequiredFilenamesCovered: true,
+		SchemaCounts: map[string]int{
+			AtlasRecommendationNextTrackDecisionContract:              1,
+			AtlasConsumedRecommendationLedgerContract:                 1,
+			AtlasRecommendationTrackRegistryContract:                  1,
+			AtlasRecommendationCommandRunLedgerContract:               1,
+			AtlasRecommendationEvidenceValidationReportContract:       1,
+			AtlasRecommendationEvidenceSchemaRegistryCoverageContract: 1,
+			AtlasSchemaHealthRepairPromptContract:                     1,
+		},
+		Validators: map[string]int{
+			"typed:recommendation-next-track-decision":               1,
+			"typed:consumed-recommendation-ledger":                   1,
+			"typed:recommendation-track-registry":                    1,
+			"typed:recommendation-command-run-ledger":                1,
+			"typed:recommendation-evidence-validation-report":        1,
+			"typed:recommendation-evidence-schema-registry-coverage": 1,
+			"typed:schema-health-repair-prompt":                      1,
+		},
+		Entries: []AtlasRecommendationEvidenceValidationEntry{},
+	}
+	if err := WriteJSON(reportPath, report); err != nil {
+		t.Fatal(err)
+	}
+
+	coveragePath := filepath.Join(tempDir, "recommendation-schema-registry-coverage.json")
+	var out bytes.Buffer
+	code = Run([]string{
+		"mission", "recommendations", "schema-registry-coverage",
+		"--registry", registryPath,
+		"--validation-report", reportPath,
+		"--out", coveragePath,
+	}, &out, &out)
+	if code == 0 {
+		t.Fatalf("schema-registry-coverage should fail when a registry entry is stale: %s", out.String())
+	}
+	for _, want := range []string{
+		"status=failed",
+		"missing_schemas=1",
+		"missing_validators=1",
+		"stale_registry_entries=1",
+		"failure_reasons=missing_registry_schemas,missing_registry_validators,stale_registry_entries",
+		"rsi_remains_denied=true",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Fatalf("schema-registry-coverage stale-entry output missing %q: %s", want, out.String())
+		}
+	}
+
+	coverage := mustLoadJSON[AtlasRecommendationEvidenceSchemaRegistryCoverage](t, coveragePath)
+	if coverage.StaleRegistryEntryCount != 1 ||
+		len(coverage.StaleRegistryEntries) != 1 ||
+		coverage.StaleRegistryEntries[0] != AtlasRecommendationFinalResponseGatesContract ||
+		coverage.AllRegistryEntriesFresh ||
+		!containsString(coverage.FailureReasons, "stale_registry_entries") ||
+		coverage.NoPromotionRequested != true ||
+		coverage.PromotionGranted ||
+		coverage.ClaimsAuthorityAdvance ||
+		!coverage.RSIRemainsDenied {
+		t.Fatalf("schema registry coverage did not report stale entry safely: %#v", coverage)
+	}
+}
+
 func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingValidatorFailureReason(t *testing.T) {
 	root := repoRoot(t)
 	previousDir, err := os.Getwd()
@@ -454,7 +559,8 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsCombinedMissingSchem
 		"status=failed",
 		"missing_schemas=2",
 		"missing_validators=2",
-		"failure_reasons=missing_registry_schemas,missing_registry_validators",
+		"stale_registry_entries=2",
+		"failure_reasons=missing_registry_schemas,missing_registry_validators,stale_registry_entries",
 		"rsi_remains_denied=true",
 	} {
 		if !strings.Contains(out.String(), want) {
@@ -476,10 +582,19 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsCombinedMissingSchem
 		t.Fatalf("missing validators should identify command ledger and final-response gates: %#v", coverage["missing_validators"])
 	}
 	failureReasons, ok := coverage["failure_reasons"].([]any)
-	if !ok || len(failureReasons) != 2 ||
+	if !ok || len(failureReasons) != 3 ||
 		failureReasons[0] != "missing_registry_schemas" ||
-		failureReasons[1] != "missing_registry_validators" {
+		failureReasons[1] != "missing_registry_validators" ||
+		failureReasons[2] != "stale_registry_entries" {
 		t.Fatalf("failure reasons should preserve combined schema and validator causes: %#v", coverage["failure_reasons"])
+	}
+	staleEntries, ok := coverage["stale_registry_entries"].([]any)
+	if !ok || len(staleEntries) != 2 ||
+		staleEntries[0] != AtlasRecommendationCommandRunLedgerContract ||
+		staleEntries[1] != AtlasRecommendationFinalResponseGatesContract ||
+		coverage["stale_registry_entry_count"] != float64(2) ||
+		coverage["all_registry_entries_fresh"] != false {
+		t.Fatalf("stale registry entries should identify fully missing registry entries: %#v", coverage)
 	}
 	if coverage["status"] != "failed" ||
 		coverage["all_registry_schemas_covered"] != false ||
