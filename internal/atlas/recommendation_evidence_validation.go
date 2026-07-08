@@ -473,6 +473,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:recommendation-command-run-ledger", err
 		}
 		return "typed:recommendation-command-run-ledger", ValidateAtlasRecommendationCommandRunLedger(value)
+	case AtlasRecommendationFinalResponseGatesContract:
+		value, err := LoadJSON[AtlasRecommendationFinalResponseGates](path)
+		if err != nil {
+			return "typed:recommendation-final-response-gates", err
+		}
+		return "typed:recommendation-final-response-gates", ValidateAtlasRecommendationFinalResponseGates(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {
