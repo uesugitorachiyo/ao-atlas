@@ -384,6 +384,34 @@ type AtlasRecommendationFinalResponseGateEntry struct {
 	Expected    string `json:"expected"`
 }
 
+type AtlasRecommendationEvidenceSchemaRegistry struct {
+	Schema                         string                                           `json:"schema"`
+	Status                         string                                           `json:"status"`
+	RegistryPurpose                string                                           `json:"registry_purpose"`
+	Schemas                        []AtlasRecommendationEvidenceSchemaRegistryEntry `json:"schemas"`
+	SchemaCount                    int                                              `json:"schema_count"`
+	TypedValidatorCoverageComplete bool                                             `json:"typed_validator_coverage_complete"`
+	NoPromotionRequested           bool                                             `json:"no_promotion_requested"`
+	PromotionGranted               bool                                             `json:"promotion_granted"`
+	ClaimsAuthorityAdvance         bool                                             `json:"claims_authority_advance"`
+	RSIRemainsDenied               bool                                             `json:"rsi_remains_denied"`
+	SafeToExecute                  bool                                             `json:"safe_to_execute"`
+	SchedulesWork                  bool                                             `json:"schedules_work"`
+	ExecutesWork                   bool                                             `json:"executes_work"`
+	ApprovesWork                   bool                                             `json:"approves_work"`
+	MutatesRepositories            bool                                             `json:"mutates_repositories"`
+}
+
+type AtlasRecommendationEvidenceSchemaRegistryEntry struct {
+	Schema         string `json:"schema"`
+	Artifact       string `json:"artifact"`
+	Command        string `json:"command"`
+	TypedValidator string `json:"typed_validator"`
+	StatusField    string `json:"status_field"`
+	SafetyClass    string `json:"safety_class"`
+	PlanningOnly   bool   `json:"planning_only"`
+}
+
 type AtlasRecommendationWave struct {
 	ContractVersion        string                    `json:"contract_version"`
 	MissionID              string                    `json:"mission_id"`
