@@ -159,6 +159,84 @@ func TestMissionRecommendationsCommandRunLedgerRecordsSchemaRegistryOutput(t *te
 	}
 }
 
+func TestMissionRecommendationsCommandRunLedgerRecordsValidationReportOutput(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	tempDir := t.TempDir()
+	reportPath := filepath.Join(tempDir, "recommendation-evidence-validation-report.json")
+	ledgerPath := filepath.Join(tempDir, "recommendation-validation-report-run-ledger.json")
+	var reportOut bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "validate-evidence",
+		"--evidence-root", filepath.Join("docs", "evidence", "ao-atlas-feature-depth-followup-durability-v04"),
+		"--out", reportPath,
+	}, &reportOut, &reportOut)
+	if code != 0 {
+		t.Fatalf("validate-evidence failed: %s", reportOut.String())
+	}
+
+	var out bytes.Buffer
+	code = Run([]string{
+		"mission", "recommendations", "run-ledger",
+		"--command", "validate-evidence",
+		"--artifact", reportPath,
+		"--out", ledgerPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("run-ledger failed: %s", out.String())
+	}
+	for _, want := range []string{
+		"status=recorded",
+		"command=validate-evidence",
+		"artifact_schema=ao.atlas.recommendation-evidence-validation-report.v0.1",
+		"typed_validator=typed:recommendation-evidence-validation-report",
+		"output_status=passed",
+		"rsi_remains_denied=true",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Fatalf("run-ledger output missing %q: %s", want, out.String())
+		}
+	}
+
+	ledger := mustLoadJSON[map[string]any](t, ledgerPath)
+	if ledger["schema"] != "ao.atlas.recommendation-command-run-ledger.v0.1" ||
+		ledger["status"] != "recorded" ||
+		ledger["command"] != "validate-evidence" ||
+		ledger["artifact_schema"] != "ao.atlas.recommendation-evidence-validation-report.v0.1" ||
+		ledger["typed_validator"] != "typed:recommendation-evidence-validation-report" ||
+		ledger["output_status"] != "passed" ||
+		ledger["no_promotion_requested"] != true ||
+		ledger["promotion_granted"] != false ||
+		ledger["claims_authority_advance"] != false ||
+		ledger["rsi_remains_denied"] != true ||
+		ledger["safe_to_execute"] != false ||
+		ledger["schedules_work"] != false ||
+		ledger["executes_work"] != false ||
+		ledger["approves_work"] != false ||
+		ledger["mutates_repositories"] != false {
+		t.Fatalf("run ledger did not record validation report output safely: %#v", ledger)
+	}
+	validator, err := validateRecommendationEvidenceTypedFile(ledgerPath, "ao.atlas.recommendation-command-run-ledger.v0.1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if validator != "typed:recommendation-command-run-ledger" {
+		t.Fatalf("expected typed recommendation command run ledger validator, got %s", validator)
+	}
+}
+
 func TestMissionRecommendationsCommandRunLedgerRecordsFailedSchemaRegistryCoverageOutput(t *testing.T) {
 	root := repoRoot(t)
 	previousDir, err := os.Getwd()
