@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, next-track, consumed-ledger, track-registry, run-ledger, final-response-gates, schema-registry, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, next-track, consumed-ledger, track-registry, run-ledger, final-response-gates, schema-registry, schema-registry-coverage, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -537,6 +537,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "schema-registry" {
 		return runMissionRecommendationsSchemaRegistry(args[1:], stdout)
 	}
+	if args[0] == "schema-registry-coverage" {
+		return runMissionRecommendationsSchemaRegistryCoverage(args[1:], stdout)
+	}
 	if args[0] == "export-next-wave" {
 		return runMissionRecommendationsExportNextWave(args[1:], stdout)
 	}
@@ -550,7 +553,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, next-track, consumed-ledger, track-registry, run-ledger, final-response-gates, schema-registry, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, next-track, consumed-ledger, track-registry, run-ledger, final-response-gates, schema-registry, schema-registry-coverage, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -972,6 +975,54 @@ func runMissionRecommendationsSchemaRegistry(args []string, stdout io.Writer) er
 		filepath.ToSlash(*outPath),
 	)
 	return nil
+}
+
+func runMissionRecommendationsSchemaRegistryCoverage(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations schema-registry-coverage", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	registryPath := fs.String("registry", "", "recommendation evidence schema registry path")
+	validationReportPath := fs.String("validation-report", "", "recommendation evidence validation report path")
+	outPath := fs.String("out", "", "output recommendation evidence schema registry coverage path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	for name, value := range map[string]string{
+		"--registry":          *registryPath,
+		"--validation-report": *validationReportPath,
+	} {
+		if strings.TrimSpace(value) == "" {
+			return fmt.Errorf("%s is required", name)
+		}
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && (samePath(*registryPath, *outPath) || samePath(*validationReportPath, *outPath)) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	coverage, err := BuildAtlasRecommendationEvidenceSchemaRegistryCoverage(*registryPath, *validationReportPath)
+	if strings.TrimSpace(*outPath) != "" {
+		if writeErr := WriteJSON(*outPath, coverage); writeErr != nil {
+			return writeErr
+		}
+	}
+	if *jsonOut {
+		if printErr := printJSON(stdout, coverage); printErr != nil {
+			return printErr
+		}
+	} else {
+		fmt.Fprintf(stdout, "status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nrsi_remains_denied=%t\nrecommendation_evidence_schema_registry_coverage=%s\n",
+			coverage.Status,
+			coverage.RegistrySchemaCount,
+			coverage.CoveredSchemaCount,
+			len(coverage.MissingSchemas),
+			len(coverage.MissingValidators),
+			coverage.RSIRemainsDenied,
+			filepath.ToSlash(*outPath),
+		)
+	}
+	return err
 }
 
 func runMissionRecommendationsReadbackDelta(args []string, stdout io.Writer) error {
