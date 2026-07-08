@@ -1,0 +1,90 @@
+package atlas
+
+import (
+	"bytes"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func TestMissionRecommendationsCommandRunLedgerRecordsTypedArtifactOutput(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	tempDir := t.TempDir()
+	registryPath := filepath.Join(tempDir, "recommendation-track-registry.json")
+	ledgerPath := filepath.Join(tempDir, "recommendation-command-run-ledger.json")
+
+	var registryOut bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "track-registry",
+		"--out", registryPath,
+	}, &registryOut, &registryOut)
+	if code != 0 {
+		t.Fatalf("track-registry failed: %s", registryOut.String())
+	}
+
+	var out bytes.Buffer
+	code = Run([]string{
+		"mission", "recommendations", "run-ledger",
+		"--command", "track-registry",
+		"--artifact", registryPath,
+		"--out", ledgerPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("run-ledger failed: %s", out.String())
+	}
+	for _, want := range []string{
+		"status=recorded",
+		"command=track-registry",
+		"artifact_schema=ao.atlas.recommendation-track-registry.v0.1",
+		"rsi_remains_denied=true",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Fatalf("run-ledger output missing %q: %s", want, out.String())
+		}
+	}
+
+	ledger := mustLoadJSON[map[string]any](t, ledgerPath)
+	if ledger["schema"] != "ao.atlas.recommendation-command-run-ledger.v0.1" ||
+		ledger["status"] != "recorded" ||
+		ledger["command"] != "track-registry" ||
+		ledger["artifact_path"] != filepath.ToSlash(registryPath) ||
+		ledger["artifact_schema"] != "ao.atlas.recommendation-track-registry.v0.1" ||
+		ledger["typed_validator"] != "typed:recommendation-track-registry" ||
+		ledger["output_status"] != "ready" ||
+		ledger["records_invocation"] != true ||
+		ledger["safe_to_execute"] != false ||
+		ledger["schedules_work"] != false ||
+		ledger["executes_work"] != false ||
+		ledger["approves_work"] != false ||
+		ledger["mutates_repositories"] != false ||
+		ledger["no_promotion_requested"] != true ||
+		ledger["promotion_granted"] != false ||
+		ledger["claims_authority_advance"] != false ||
+		ledger["rsi_remains_denied"] != true {
+		t.Fatalf("run ledger did not record the typed command output safely: %#v", ledger)
+	}
+	if digest, ok := ledger["artifact_digest"].(string); !ok || !digestPattern.MatchString(digest) {
+		t.Fatalf("run ledger missing artifact digest: %#v", ledger["artifact_digest"])
+	}
+	validator, err := validateRecommendationEvidenceTypedFile(ledgerPath, "ao.atlas.recommendation-command-run-ledger.v0.1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if validator != "typed:recommendation-command-run-ledger" {
+		t.Fatalf("expected typed recommendation command run ledger validator, got %s", validator)
+	}
+}

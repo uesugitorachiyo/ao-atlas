@@ -340,6 +340,27 @@ type AtlasRecommendationTrackRegistryEntry struct {
 	MutatesRepositories bool   `json:"mutates_repositories"`
 }
 
+type AtlasRecommendationCommandRunLedger struct {
+	Schema                 string `json:"schema"`
+	Status                 string `json:"status"`
+	Command                string `json:"command"`
+	ArtifactPath           string `json:"artifact_path"`
+	ArtifactDigest         string `json:"artifact_digest"`
+	ArtifactSchema         string `json:"artifact_schema"`
+	TypedValidator         string `json:"typed_validator"`
+	OutputStatus           string `json:"output_status"`
+	RecordsInvocation      bool   `json:"records_invocation"`
+	NoPromotionRequested   bool   `json:"no_promotion_requested"`
+	PromotionGranted       bool   `json:"promotion_granted"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+	SafeToExecute          bool   `json:"safe_to_execute"`
+	SchedulesWork          bool   `json:"schedules_work"`
+	ExecutesWork           bool   `json:"executes_work"`
+	ApprovesWork           bool   `json:"approves_work"`
+	MutatesRepositories    bool   `json:"mutates_repositories"`
+}
+
 type AtlasRecommendationWave struct {
 	ContractVersion        string                    `json:"contract_version"`
 	MissionID              string                    `json:"mission_id"`
