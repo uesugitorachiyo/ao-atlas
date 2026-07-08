@@ -192,6 +192,7 @@
       }
     },
     "public_safety_scan_status": { "type": "string", "minLength": 1 },
+    "schema_health_status": { "type": "string", "minLength": 1 },
     "return_gate_status": {
       "enum": [
         "final_response_allowed",
