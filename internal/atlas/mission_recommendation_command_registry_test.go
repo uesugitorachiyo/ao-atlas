@@ -47,3 +47,58 @@ func TestMissionRecommendationCommandRegistryDrivesDeterministicDispatchHelp(t *
 		t.Fatalf("unknown command did not render registry-backed help: %s", text)
 	}
 }
+
+func TestMissionRecommendationRunLedgerCommandCatalogIsRegistryBacked(t *testing.T) {
+	fullCatalog := map[string]bool{}
+	for _, name := range missionRecommendationCommandNames() {
+		fullCatalog[name] = true
+	}
+
+	ledgerCommands := missionRecommendationRunLedgerCommandNames()
+	want := []string{
+		"next-track",
+		"consumed-ledger",
+		"track-registry",
+		"final-response-gates",
+		"schema-registry",
+		"schema-registry-coverage",
+		"validate-evidence",
+	}
+	if strings.Join(ledgerCommands, ",") != strings.Join(want, ",") {
+		t.Fatalf("run-ledger command catalog drifted: got %#v want %#v", ledgerCommands, want)
+	}
+	for _, command := range ledgerCommands {
+		if !fullCatalog[command] {
+			t.Fatalf("run-ledger command %q is not in the shared recommendation command registry", command)
+		}
+	}
+
+	ledger := AtlasRecommendationCommandRunLedger{
+		Schema:                 AtlasRecommendationCommandRunLedgerContract,
+		Status:                 "recorded",
+		Command:                "not-a-command",
+		ArtifactPath:           "artifact.json",
+		ArtifactDigest:         "sha256:" + strings.Repeat("0", 64),
+		ArtifactSchema:         AtlasRecommendationNextTrackDecisionContract,
+		TypedValidator:         "typed:recommendation-next-track-decision",
+		OutputStatus:           "routed",
+		RecordsInvocation:      true,
+		NoPromotionRequested:   true,
+		PromotionGranted:       false,
+		ClaimsAuthorityAdvance: false,
+		RSIRemainsDenied:       true,
+		SafeToExecute:          false,
+		SchedulesWork:          false,
+		ExecutesWork:           false,
+		ApprovesWork:           false,
+		MutatesRepositories:    false,
+	}
+	err := ValidateAtlasRecommendationCommandRunLedger(ledger)
+	if err == nil {
+		t.Fatal("invalid run-ledger command was accepted")
+	}
+	if !strings.Contains(err.Error(), "command must be next-track, consumed-ledger, track-registry") ||
+		!strings.Contains(err.Error(), "schema-registry-coverage, or validate-evidence") {
+		t.Fatalf("run-ledger command error did not use the registry-backed catalog: %v", err)
+	}
+}
