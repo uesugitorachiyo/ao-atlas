@@ -44,6 +44,7 @@ func TestMissionRecommendationsSchemaRegistryHealthChainsValidationAndCoverage(t
 		"rsi_remains_denied=true",
 		"run_ledger_count=3",
 		"all_outputs_have_run_ledgers=true",
+		"operator_summary=failed: validation report passed; 6 registry schemas missing; 6 registry validators missing; 3 run ledgers written; RSI remains denied",
 		"recommendation_evidence_schema_registry=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-schema-registry.json")),
 		"recommendation_evidence_validation_report=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-validation-report.json")),
 		"recommendation_evidence_schema_registry_coverage=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-schema-registry-coverage.json")),
@@ -160,6 +161,7 @@ func TestMissionRecommendationsSchemaRegistryHealthJSONReportsLedgerCompleteness
 		report["validation_report_status"] != "passed" ||
 		report["run_ledger_count"] != float64(3) ||
 		report["all_outputs_have_run_ledgers"] != true ||
+		report["operator_summary"] != "failed: validation report passed; 6 registry schemas missing; 6 registry validators missing; 3 run ledgers written; RSI remains denied" ||
 		report["rsi_remains_denied"] != true ||
 		report["schema_registry_run_ledger"] != filepath.ToSlash(filepath.Join(outDir, "recommendation-schema-registry-run-ledger.json")) ||
 		report["validation_report_run_ledger"] != filepath.ToSlash(filepath.Join(outDir, "recommendation-validation-report-run-ledger.json")) ||
