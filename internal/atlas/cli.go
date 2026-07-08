@@ -1012,12 +1012,13 @@ func runMissionRecommendationsSchemaRegistryCoverage(args []string, stdout io.Wr
 			return printErr
 		}
 	} else {
-		fmt.Fprintf(stdout, "status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nrsi_remains_denied=%t\nrecommendation_evidence_schema_registry_coverage=%s\n",
+		fmt.Fprintf(stdout, "status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrecommendation_evidence_schema_registry_coverage=%s\n",
 			coverage.Status,
 			coverage.RegistrySchemaCount,
 			coverage.CoveredSchemaCount,
 			len(coverage.MissingSchemas),
 			len(coverage.MissingValidators),
+			strings.Join(coverage.FailureReasons, ","),
 			coverage.RSIRemainsDenied,
 			filepath.ToSlash(*outPath),
 		)
