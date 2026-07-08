@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-35",
+  "task_id": "mission-recommendation-feature-depth-next-wave-35-task",
+  "status": "completed",
+  "summary": "Create dashboard freshness checks for merged PR and synced main state.",
+  "generated_artifacts_root": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-35",
+  "mutation_scope": "docs/evidence only",
+  "provider_calls_used": false,
+  "credential_access_used": false,
+  "rsi_remains_denied": true
+}

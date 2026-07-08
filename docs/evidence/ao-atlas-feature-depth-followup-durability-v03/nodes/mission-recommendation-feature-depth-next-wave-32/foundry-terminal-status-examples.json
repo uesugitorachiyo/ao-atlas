@@ -1,0 +1,96 @@
+{
+  "schema": "ao.atlas.foundry-terminal-status-examples.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-32",
+  "status": "terminal_status_examples_validated",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-31/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:c21ef2d0f27f6e900bcc91eed351857e3144161618e33ec62a8bba528e9a50e0",
+  "terminal_status_readback": {
+    "blocked": "terminal_blocker_requires_repair_or_checkpoint_resume",
+    "completed": "terminal_success_can_close_when_all_nodes_and_readbacks_are_complete",
+    "denied": "terminal_denial_requires_exact_missing_evidence_readback",
+    "promoted": "terminal_success_can_close_when_promoter_and_command_agree"
+  },
+  "terminal_status_keys": [
+    "blocked",
+    "completed",
+    "denied",
+    "promoted"
+  ],
+  "terminal_status_key_count": 4,
+  "terminal_examples": [
+    {
+      "source_status": "completed",
+      "normalized_status": "completed",
+      "terminal": true,
+      "can_close_mission": true,
+      "required_readback": "Foundry rollup reports completed, all node evidence exists, and no ready nodes remain."
+    },
+    {
+      "source_status": "promoted",
+      "normalized_status": "completed",
+      "terminal": true,
+      "can_close_mission": true,
+      "required_readback": "Promoter and Command agree promotion is terminal, RSI remains denied, and no ready nodes remain."
+    },
+    {
+      "source_status": "denied",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "required_readback": "Denial readback includes exact missing evidence, no ready repair node remains, and no authority advance is claimed."
+    },
+    {
+      "source_status": "blocked",
+      "normalized_status": "blocked",
+      "terminal": true,
+      "can_close_mission": false,
+      "required_readback": "Blocker readback names the exact repair or resume action before final response can close."
+    }
+  ],
+  "terminal_example_count": 4,
+  "denied_examples": [
+    {
+      "denial_reason": "missing_node_evidence",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "requires_exact_missing_evidence": true,
+      "required_readback": "Denied rollup names the missing node id, missing evidence key, and expected evidence path.",
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    },
+    {
+      "denial_reason": "missing_stop_gate_evidence",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "requires_exact_missing_evidence": true,
+      "required_readback": "Denied rollup names the uncleared stop gate and the exact artifact needed before promotion can be reconsidered.",
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    },
+    {
+      "denial_reason": "forbidden_surface_or_rsi_claim",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "requires_exact_missing_evidence": true,
+      "required_readback": "Denied rollup records the forbidden surface or RSI claim, refuses promotion, and keeps RSI denied.",
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    }
+  ],
+  "denied_example_count": 3,
+  "examples_match_readback_enums": true,
+  "promoted_requires_command_promoter_agreement": true,
+  "denied_requires_exact_evidence": true,
+  "blocked_requires_repair_or_resume": true,
+  "denied_examples_safe": true,
+  "ready_nodes": 9,
+  "final_response_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

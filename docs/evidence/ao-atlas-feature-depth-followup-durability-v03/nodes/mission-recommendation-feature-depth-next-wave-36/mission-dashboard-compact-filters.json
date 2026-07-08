@@ -1,0 +1,91 @@
+{
+  "schema": "ao.atlas.mission-dashboard-compact-filters.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-36",
+  "status": "compact_dashboard_filters_bound",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-35/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:ec5131a7f63d7443a5dcb398ab870bd05d076d4b9e9d03a36c85c8c5fb32857c",
+  "source_workgraph_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-35/workgraph-after.json",
+  "source_workgraph_digest": "sha256:c8751f23d02c776418f072f3c968d6ac8b2747b1dbe3c73dc3b48bd1ec757995",
+  "total_nodes": 40,
+  "completed_nodes": 35,
+  "ready_nodes": 5,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "executable_ready_nodes": 1,
+  "first_executable_node": "mission-recommendation-feature-depth-next-wave-36",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-36 and execute exactly one active node.",
+  "return_gate_status": "blocked_ready_nodes_remain",
+  "active_filter_key": "ready",
+  "filter_count": 4,
+  "filters": [
+    {
+      "key": "ready",
+      "label": "Ready",
+      "count": 5,
+      "preview_node_ids": [
+        "mission-recommendation-feature-depth-next-wave-36",
+        "mission-recommendation-feature-depth-next-wave-37",
+        "mission-recommendation-feature-depth-next-wave-38",
+        "mission-recommendation-feature-depth-next-wave-39",
+        "mission-recommendation-feature-depth-next-wave-40"
+      ],
+      "omitted_node_count": 0,
+      "first_node_id": "mission-recommendation-feature-depth-next-wave-36",
+      "last_node_id": "mission-recommendation-feature-depth-next-wave-40",
+      "actionable": true,
+      "empty": false,
+      "dashboard_status": "ready_work_remains"
+    },
+    {
+      "key": "blocked",
+      "label": "Blocked",
+      "count": 0,
+      "preview_node_ids": null,
+      "omitted_node_count": 0,
+      "first_node_id": "",
+      "last_node_id": "",
+      "actionable": false,
+      "empty": true,
+      "dashboard_status": "no_blocked_nodes"
+    },
+    {
+      "key": "failed",
+      "label": "Failed",
+      "count": 0,
+      "preview_node_ids": null,
+      "omitted_node_count": 0,
+      "first_node_id": "",
+      "last_node_id": "",
+      "actionable": false,
+      "empty": true,
+      "dashboard_status": "no_failed_nodes"
+    },
+    {
+      "key": "completed",
+      "label": "Completed",
+      "count": 35,
+      "preview_node_ids": [
+        "mission-recommendation-feature-depth-next-wave-33",
+        "mission-recommendation-feature-depth-next-wave-34",
+        "mission-recommendation-feature-depth-next-wave-35"
+      ],
+      "omitted_node_count": 32,
+      "first_node_id": "mission-recommendation-feature-depth-next-wave-01",
+      "last_node_id": "mission-recommendation-feature-depth-next-wave-35",
+      "actionable": false,
+      "empty": false,
+      "dashboard_status": "completed_history"
+    }
+  ],
+  "ready_filter_actionable": true,
+  "blocked_filter_empty": true,
+  "failed_filter_empty": true,
+  "completed_history_available": true,
+  "readback_counts_match_workgraph_counts": true,
+  "final_response_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

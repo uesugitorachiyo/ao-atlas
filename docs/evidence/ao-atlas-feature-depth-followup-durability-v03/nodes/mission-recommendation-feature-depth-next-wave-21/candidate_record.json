@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-21",
+  "task_id": "mission-recommendation-feature-depth-next-wave-21-task",
+  "status": "selected",
+  "candidate": "Atlas-owned bounded evidence node 21",
+  "objective": "Bind Sentinel wording scan results into final closure readback status fields.",
+  "source_recommendation": "feature-depth-next-wave-21",
+  "selection_reason": "Next dependency-ready node in the generated AO Atlas Feature Depth v03 workgraph.",
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}
