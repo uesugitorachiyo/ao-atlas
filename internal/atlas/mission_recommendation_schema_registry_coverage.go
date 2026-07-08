@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+var allowedRecommendationSchemaRegistryCoverageFailureReasons = []string{
+	"validation_report_failed",
+	"missing_registry_schemas",
+	"missing_registry_validators",
+}
+
 func BuildAtlasRecommendationEvidenceSchemaRegistryCoverage(registryPath, validationReportPath string) (AtlasRecommendationEvidenceSchemaRegistryCoverage, error) {
 	registryPath = filepath.ToSlash(strings.TrimSpace(registryPath))
 	validationReportPath = filepath.ToSlash(strings.TrimSpace(validationReportPath))
@@ -133,8 +139,8 @@ func ValidateAtlasRecommendationEvidenceSchemaRegistryCoverage(coverage AtlasRec
 		errs = append(errs, "failed status requires failure_reasons")
 	}
 	for _, reason := range coverage.FailureReasons {
-		if !oneOf(reason, "validation_report_failed", "missing_registry_schemas", "missing_registry_validators") {
-			errs = append(errs, "failure_reasons contains invalid reason "+reason)
+		if !oneOf(reason, allowedRecommendationSchemaRegistryCoverageFailureReasons...) {
+			errs = append(errs, "failure_reasons contains invalid reason "+reason+"; allowed: "+strings.Join(allowedRecommendationSchemaRegistryCoverageFailureReasons, ", "))
 		}
 	}
 	if !coverage.NoPromotionRequested {
