@@ -438,6 +438,34 @@ type AtlasRecommendationEvidenceSchemaRegistryCoverage struct {
 	MutatesRepositories          bool     `json:"mutates_repositories"`
 }
 
+type AtlasSchemaHealthRepairPrompt struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	Status                 string   `json:"status"`
+	SourceCoveragePath     string   `json:"source_coverage_path"`
+	SourceCoverageDigest   string   `json:"source_coverage_digest"`
+	PromptPath             string   `json:"prompt_path"`
+	CoverageStatus         string   `json:"coverage_status"`
+	ValidationReportStatus string   `json:"validation_report_status"`
+	FailureReasons         []string `json:"failure_reasons"`
+	MissingSchemaCount     int      `json:"missing_schema_count"`
+	MissingSchemas         []string `json:"missing_schemas"`
+	MissingValidatorCount  int      `json:"missing_validator_count"`
+	MissingValidators      []string `json:"missing_validators"`
+	RepairActions          []string `json:"repair_actions"`
+	ExactNextAction        string   `json:"exact_next_action"`
+	PlanningOnly           bool     `json:"planning_only"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+	SchedulesWork          bool     `json:"schedules_work"`
+	ExecutesWork           bool     `json:"executes_work"`
+	ApprovesWork           bool     `json:"approves_work"`
+	MutatesRepositories    bool     `json:"mutates_repositories"`
+	PromotionRequested     bool     `json:"promotion_requested"`
+	PromotionGranted       bool     `json:"promotion_granted"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasRecommendationWave struct {
 	ContractVersion        string                    `json:"contract_version"`
 	MissionID              string                    `json:"mission_id"`

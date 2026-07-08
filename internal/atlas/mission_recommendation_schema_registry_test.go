@@ -34,7 +34,7 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 	}
 	for _, want := range []string{
 		"status=ready",
-		"schema_count=7",
+		"schema_count=8",
 		"typed_validator_coverage_complete=true",
 		"rsi_remains_denied=true",
 	} {
@@ -47,7 +47,7 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 	if registry["schema"] != "ao.atlas.recommendation-evidence-schema-registry.v0.1" ||
 		registry["status"] != "ready" ||
 		registry["registry_purpose"] != "recommendation_control_plane_typed_artifact_coverage" ||
-		registry["schema_count"] != float64(7) ||
+		registry["schema_count"] != float64(8) ||
 		registry["typed_validator_coverage_complete"] != true ||
 		registry["no_promotion_requested"] != true ||
 		registry["promotion_granted"] != false ||
@@ -61,8 +61,8 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 		t.Fatalf("schema registry did not emit safe coverage metadata: %#v", registry)
 	}
 	schemas, ok := registry["schemas"].([]any)
-	if !ok || len(schemas) != 7 {
-		t.Fatalf("expected 7 schema registry entries, got %#v", registry["schemas"])
+	if !ok || len(schemas) != 8 {
+		t.Fatalf("expected 8 schema registry entries, got %#v", registry["schemas"])
 	}
 	wantSchemas := []struct {
 		schema         string
@@ -77,6 +77,7 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 		{"ao.atlas.recommendation-evidence-validation-report.v0.1", "recommendation-evidence-validation-report", "validate-evidence", "typed:recommendation-evidence-validation-report"},
 		{"ao.atlas.recommendation-final-response-gates.v0.1", "recommendation-final-response-gates", "final-response-gates", "typed:recommendation-final-response-gates"},
 		{"ao.atlas.recommendation-evidence-schema-registry-coverage.v0.1", "recommendation-evidence-schema-registry-coverage", "schema-registry-coverage", "typed:recommendation-evidence-schema-registry-coverage"},
+		{"ao.atlas.schema-health-repair-prompt.v0.1", "schema-health-repair-prompt", "schema-health-repair-prompt", "typed:schema-health-repair-prompt"},
 	}
 	for i, want := range wantSchemas {
 		entry, ok := schemas[i].(map[string]any)
