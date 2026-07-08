@@ -44,6 +44,9 @@ func TestMissionRecommendationsSchemaRegistryHealthChainsValidationAndCoverage(t
 		"recommendation_evidence_schema_registry=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-schema-registry.json")),
 		"recommendation_evidence_validation_report=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-validation-report.json")),
 		"recommendation_evidence_schema_registry_coverage=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-schema-registry-coverage.json")),
+		"schema_registry_run_ledger=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-schema-registry-run-ledger.json")),
+		"validation_report_run_ledger=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-validation-report-run-ledger.json")),
+		"schema_registry_coverage_run_ledger=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-schema-registry-coverage-run-ledger.json")),
 	} {
 		if !strings.Contains(out.String(), want) {
 			t.Fatalf("schema-registry-health output missing %q: %s", want, out.String())
@@ -53,10 +56,16 @@ func TestMissionRecommendationsSchemaRegistryHealthChainsValidationAndCoverage(t
 	registryPath := filepath.Join(outDir, "recommendation-evidence-schema-registry.json")
 	reportPath := filepath.Join(outDir, "recommendation-evidence-validation-report.json")
 	coveragePath := filepath.Join(outDir, "recommendation-evidence-schema-registry-coverage.json")
+	registryLedgerPath := filepath.Join(outDir, "recommendation-schema-registry-run-ledger.json")
+	reportLedgerPath := filepath.Join(outDir, "recommendation-validation-report-run-ledger.json")
+	coverageLedgerPath := filepath.Join(outDir, "recommendation-schema-registry-coverage-run-ledger.json")
 	for path, schema := range map[string]string{
-		registryPath: AtlasRecommendationEvidenceSchemaRegistryContract,
-		reportPath:   AtlasRecommendationEvidenceValidationReportContract,
-		coveragePath: AtlasRecommendationEvidenceSchemaRegistryCoverageContract,
+		registryPath:       AtlasRecommendationEvidenceSchemaRegistryContract,
+		reportPath:         AtlasRecommendationEvidenceValidationReportContract,
+		coveragePath:       AtlasRecommendationEvidenceSchemaRegistryCoverageContract,
+		registryLedgerPath: AtlasRecommendationCommandRunLedgerContract,
+		reportLedgerPath:   AtlasRecommendationCommandRunLedgerContract,
+		coverageLedgerPath: AtlasRecommendationCommandRunLedgerContract,
 	} {
 		validator, err := validateRecommendationEvidenceTypedFile(path, schema)
 		if err != nil {
@@ -81,5 +90,28 @@ func TestMissionRecommendationsSchemaRegistryHealthChainsValidationAndCoverage(t
 		coverage.ApprovesWork ||
 		coverage.MutatesRepositories {
 		t.Fatalf("schema registry health coverage did not preserve safe failure metadata: %#v", coverage)
+	}
+	for path, want := range map[string]struct {
+		command      string
+		outputStatus string
+	}{
+		registryLedgerPath: {"schema-registry", "ready"},
+		reportLedgerPath:   {"validate-evidence", "passed"},
+		coverageLedgerPath: {"schema-registry-coverage", "failed"},
+	} {
+		ledger := mustLoadJSON[AtlasRecommendationCommandRunLedger](t, path)
+		if ledger.Command != want.command ||
+			ledger.OutputStatus != want.outputStatus ||
+			!ledger.NoPromotionRequested ||
+			ledger.PromotionGranted ||
+			ledger.ClaimsAuthorityAdvance ||
+			!ledger.RSIRemainsDenied ||
+			ledger.SafeToExecute ||
+			ledger.SchedulesWork ||
+			ledger.ExecutesWork ||
+			ledger.ApprovesWork ||
+			ledger.MutatesRepositories {
+			t.Fatalf("schema registry health ledger %s did not preserve safe command traceability: %#v", path, ledger)
+		}
 	}
 }
