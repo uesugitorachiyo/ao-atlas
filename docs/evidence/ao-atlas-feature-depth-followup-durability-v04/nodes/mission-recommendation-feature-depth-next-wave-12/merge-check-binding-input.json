@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.merge-check-binding-input.v0.1",
+  "status": "recorded",
+  "rows": [
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-09",
+      "pr_number": 336,
+      "merge_commit": "13b85e08f4069f9416e8e2473c1fcf875e180645",
+      "required_check_count": 9,
+      "passed_required_check_count": 9
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-10",
+      "pr_number": 337,
+      "merge_commit": "1f3e992fc7215f63e4731bad3ee4620b8db15bfe",
+      "required_check_count": 9,
+      "passed_required_check_count": 9
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-11",
+      "pr_number": 338,
+      "merge_commit": "d9540288b3dee7e4894f0db6aead101eb2826526",
+      "required_check_count": 9,
+      "passed_required_check_count": 9
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

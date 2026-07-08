@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-26",
+  "task_id": "mission-recommendation-feature-depth-next-wave-26-task",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "recorded_for_wave_final_verification"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "recorded_for_wave_final_verification"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "recorded_for_wave_final_verification"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "recorded_for_wave_final_verification"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "recorded_for_wave_final_verification"
+    }
+  ],
+  "public_safety_scan_passed": true,
+  "final_verification_deferred_to_wave_closure": true
+}

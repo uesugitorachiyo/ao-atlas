@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-22",
+  "task_id": "mission-recommendation-feature-depth-next-wave-22-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 21,
+  "ready_nodes_before": 19,
+  "expected_completed_nodes_after": 22,
+  "expected_ready_nodes_after": 18,
+  "expected_next_executable_node_after": "mission-recommendation-feature-depth-next-wave-23",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true
+}

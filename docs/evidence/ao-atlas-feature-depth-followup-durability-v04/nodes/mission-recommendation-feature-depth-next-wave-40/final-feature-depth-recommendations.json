@@ -1,0 +1,506 @@
+{
+  "schema": "ao.atlas.final-feature-depth-recommendations.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-40",
+  "status": "ready_for_operator_handoff",
+  "source_recommendations_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-37/next-wave-feature-depth-recommendations.json",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+  "completed_nodes_before": 39,
+  "ready_nodes_before": 1,
+  "expected_completed_nodes_after": 40,
+  "expected_ready_nodes_after": 0,
+  "expected_final_response_allowed_after": true,
+  "total_recommendation_count": 40,
+  "operator_review_recommendation_count": 40,
+  "minimum_operator_recommendations": 10,
+  "recommendations": [
+    {
+      "rank": 1,
+      "id": "feature-depth-next-wave-01",
+      "theme": "mission-readback-durability",
+      "task": "Bind AO Mission readback deltas to deterministic checkpoint comparison evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "feature-depth-next-wave-02",
+      "theme": "mission-readback-durability",
+      "task": "Add resumable readback diff fixtures for completed and ready node transitions.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "feature-depth-next-wave-03",
+      "theme": "mission-readback-durability",
+      "task": "Create stale checkpoint rejection evidence for outdated Mission continuation prompts.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "feature-depth-next-wave-04",
+      "theme": "mission-readback-durability",
+      "task": "Add operator summary checks that preserve exact next action wording.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "feature-depth-next-wave-05",
+      "theme": "evidence-schema-coverage",
+      "task": "Extend evidence schema validation to typed node closure rollup artifacts.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "feature-depth-next-wave-06",
+      "theme": "evidence-schema-coverage",
+      "task": "Add schema coverage summaries for every generated run link artifact.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "feature-depth-next-wave-07",
+      "theme": "evidence-schema-coverage",
+      "task": "Validate required node evidence fields before recommendation readback advances.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "feature-depth-next-wave-08",
+      "theme": "evidence-schema-coverage",
+      "task": "Record schema validator drift evidence for regenerated fixture directories.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 9,
+      "id": "feature-depth-next-wave-09",
+      "theme": "pr-ci-telemetry",
+      "task": "Build aggregate PR and CI timing summaries across consolidation wave nodes.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 10,
+      "id": "feature-depth-next-wave-10",
+      "theme": "pr-ci-telemetry",
+      "task": "Add long running Windows check threshold evidence to PR ledger rows.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 11,
+      "id": "feature-depth-next-wave-11",
+      "theme": "pr-ci-telemetry",
+      "task": "Create failed check replay fixtures for retry and no merge decisions.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 12,
+      "id": "feature-depth-next-wave-12",
+      "theme": "pr-ci-telemetry",
+      "task": "Bind merge commit readbacks to passed required check conclusions.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 13,
+      "id": "feature-depth-next-wave-13",
+      "theme": "branch-lifecycle-recovery",
+      "task": "Add post merge branch deletion readback to every node closure packet.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 14,
+      "id": "feature-depth-next-wave-14",
+      "theme": "branch-lifecycle-recovery",
+      "task": "Create stale remote branch repair evidence for interrupted cleanup handoffs.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 15,
+      "id": "feature-depth-next-wave-15",
+      "theme": "branch-lifecycle-recovery",
+      "task": "Validate local main synchronization before selecting the next executable node.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 16,
+      "id": "feature-depth-next-wave-16",
+      "theme": "branch-lifecycle-recovery",
+      "task": "Record branch cleanup ledger summaries in final operator handoff evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 17,
+      "id": "feature-depth-next-wave-17",
+      "theme": "compaction-resume-fidelity",
+      "task": "Generate compaction resume prompts that preserve lease timing and active node state.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 18,
+      "id": "feature-depth-next-wave-18",
+      "theme": "compaction-resume-fidelity",
+      "task": "Add resume prompt regression fixtures for ready nodes and exact next actions.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 19,
+      "id": "feature-depth-next-wave-19",
+      "theme": "compaction-resume-fidelity",
+      "task": "Bind checkpoint digests into resume prompts for interruption recovery audits.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 20,
+      "id": "feature-depth-next-wave-20",
+      "theme": "compaction-resume-fidelity",
+      "task": "Create resume denial evidence when final response remains blocked by ready work.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 21,
+      "id": "feature-depth-next-wave-21",
+      "theme": "public-safety-scanning",
+      "task": "Bind Sentinel wording scan results into final closure readback status fields.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 22,
+      "id": "feature-depth-next-wave-22",
+      "theme": "public-safety-scanning",
+      "task": "Add scoped public safety scans for changed evidence and prompt artifacts.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 23,
+      "id": "feature-depth-next-wave-23",
+      "theme": "public-safety-scanning",
+      "task": "Create negative wording fixtures for unsafe authority promotion statements.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 24,
+      "id": "feature-depth-next-wave-24",
+      "theme": "public-safety-scanning",
+      "task": "Summarize public safety scan coverage in machine readable closure rollups.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 25,
+      "id": "feature-depth-next-wave-25",
+      "theme": "promoter-command-rollups",
+      "task": "Aggregate Promoter no promotion verdicts across completed hardening and closure nodes.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 26,
+      "id": "feature-depth-next-wave-26",
+      "theme": "promoter-command-rollups",
+      "task": "Bind Command compact readback agreement to Promoter no promotion summaries.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 27,
+      "id": "feature-depth-next-wave-27",
+      "theme": "promoter-command-rollups",
+      "task": "Add regression evidence for no promotion rollup count mismatches.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 28,
+      "id": "feature-depth-next-wave-28",
+      "theme": "promoter-command-rollups",
+      "task": "Create final response denial evidence when Command and Promoter disagree.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 29,
+      "id": "feature-depth-next-wave-29",
+      "theme": "foundry-handoff-binding",
+      "task": "Bind Foundry import readiness records to exactly one active mutation node.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 30,
+      "id": "feature-depth-next-wave-30",
+      "theme": "foundry-handoff-binding",
+      "task": "Add Foundry run link digest checks for completed node evidence packets.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 31,
+      "id": "feature-depth-next-wave-31",
+      "theme": "foundry-handoff-binding",
+      "task": "Create Foundry handoff replay fixtures for resumed bounded implementation nodes.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 32,
+      "id": "feature-depth-next-wave-32",
+      "theme": "foundry-handoff-binding",
+      "task": "Validate Foundry terminal status examples against recommendation readback enums.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 33,
+      "id": "feature-depth-next-wave-33",
+      "theme": "dashboard-provenance",
+      "task": "Bind Atlas final closure evidence into multi repo Mission dashboard rows.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 34,
+      "id": "feature-depth-next-wave-34",
+      "theme": "dashboard-provenance",
+      "task": "Add dashboard provenance links for Foundry Promoter Command and Sentinel evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 35,
+      "id": "feature-depth-next-wave-35",
+      "theme": "dashboard-provenance",
+      "task": "Create dashboard freshness checks for merged PR and synced main state.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 36,
+      "id": "feature-depth-next-wave-36",
+      "theme": "dashboard-provenance",
+      "task": "Summarize blocked versus ready Mission nodes in compact dashboard filters.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 37,
+      "id": "feature-depth-next-wave-37",
+      "theme": "next-wave-generation",
+      "task": "Export ranked Feature Depth tasks from final closure readback evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 38,
+      "id": "feature-depth-next-wave-38",
+      "theme": "next-wave-generation",
+      "task": "Add next wave prompt generation with minimum two hour work budget language.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 39,
+      "id": "feature-depth-next-wave-39",
+      "theme": "next-wave-generation",
+      "task": "Validate next wave recommendations remain planning only until imported.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    },
+    {
+      "rank": 40,
+      "id": "feature-depth-next-wave-40",
+      "theme": "next-wave-generation",
+      "task": "Generate final Feature Depth recommendations for operator handoff review.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/command_readback.json",
+        "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/sentinel_public_safety.json"
+      ]
+    }
+  ],
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
