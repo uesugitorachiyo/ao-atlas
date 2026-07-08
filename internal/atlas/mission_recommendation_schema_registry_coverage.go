@@ -49,6 +49,16 @@ func BuildAtlasRecommendationEvidenceSchemaRegistryCoverage(registryPath, valida
 	}
 	sort.Strings(missingSchemas)
 	sort.Strings(missingValidators)
+	failureReasons := []string{}
+	if report.Status != "passed" {
+		failureReasons = append(failureReasons, "validation_report_failed")
+	}
+	if len(missingSchemas) != 0 {
+		failureReasons = append(failureReasons, "missing_registry_schemas")
+	}
+	if len(missingValidators) != 0 {
+		failureReasons = append(failureReasons, "missing_registry_validators")
+	}
 
 	coverage := AtlasRecommendationEvidenceSchemaRegistryCoverage{
 		Schema:                       AtlasRecommendationEvidenceSchemaRegistryCoverageContract,
@@ -62,6 +72,7 @@ func BuildAtlasRecommendationEvidenceSchemaRegistryCoverage(registryPath, valida
 		RegistryValidatorCount:       len(registry.Schemas),
 		CoveredValidatorCount:        coveredValidators,
 		MissingValidators:            missingValidators,
+		FailureReasons:               failureReasons,
 		AllRegistrySchemasCovered:    len(missingSchemas) == 0,
 		AllRegistryValidatorsCovered: len(missingValidators) == 0,
 		NoPromotionRequested:         true,
@@ -117,6 +128,14 @@ func ValidateAtlasRecommendationEvidenceSchemaRegistryCoverage(coverage AtlasRec
 	}
 	if coverage.Status == "passed" && (!coverage.AllRegistrySchemasCovered || !coverage.AllRegistryValidatorsCovered || coverage.ValidationReportStatus != "passed") {
 		errs = append(errs, "passed status requires passed report and full registry coverage")
+	}
+	if coverage.Status == "failed" && len(coverage.FailureReasons) == 0 {
+		errs = append(errs, "failed status requires failure_reasons")
+	}
+	for _, reason := range coverage.FailureReasons {
+		if !oneOf(reason, "validation_report_failed", "missing_registry_schemas", "missing_registry_validators") {
+			errs = append(errs, "failure_reasons contains invalid reason "+reason)
+		}
 	}
 	if !coverage.NoPromotionRequested {
 		errs = append(errs, "no_promotion_requested must be true")
