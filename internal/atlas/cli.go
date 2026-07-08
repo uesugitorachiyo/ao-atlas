@@ -415,7 +415,7 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, next-track, consumed-ledger, track-registry, run-ledger, final-response-gates, schema-registry, schema-registry-health, schema-registry-coverage, schema-health-repair-prompt, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, next-track, consumed-ledger, track-registry, run-ledger, run-ledger-rollup, final-response-gates, schema-registry, schema-registry-health, schema-registry-coverage, schema-health-repair-prompt, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
 	}
 	if args[0] == "readback" {
 		return runMissionRecommendationsReadback(args[1:], stdout)
@@ -531,6 +531,9 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if args[0] == "run-ledger" {
 		return runMissionRecommendationsRunLedger(args[1:], stdout)
 	}
+	if args[0] == "run-ledger-rollup" {
+		return runMissionRecommendationsRunLedgerRollup(args[1:], stdout)
+	}
 	if args[0] == "final-response-gates" {
 		return runMissionRecommendationsFinalResponseGates(args[1:], stdout)
 	}
@@ -559,7 +562,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
 	}
 	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, next-track, consumed-ledger, track-registry, run-ledger, final-response-gates, schema-registry, schema-registry-health, schema-registry-coverage, schema-health-repair-prompt, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
+		return fmt.Errorf("mission recommendations requires import, export-next-wave, next-track, consumed-ledger, track-registry, run-ledger, run-ledger-rollup, final-response-gates, schema-registry, schema-registry-health, schema-registry-coverage, schema-health-repair-prompt, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
 	}
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
@@ -913,6 +916,53 @@ func runMissionRecommendationsRunLedger(args []string, stdout io.Writer) error {
 		ledger.TypedValidator,
 		ledger.OutputStatus,
 		ledger.RSIRemainsDenied,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsRunLedgerRollup(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations run-ledger-rollup", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	ledgerPaths := stringListFlag{}
+	fs.Var(&ledgerPaths, "ledger", "recommendation command run ledger path")
+	outPath := fs.String("out", "", "output recommendation command run ledger rollup path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if len(ledgerPaths) == 0 {
+		return fmt.Errorf("--ledger is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		for _, ledgerPath := range ledgerPaths {
+			if samePath(ledgerPath, *outPath) {
+				return fmt.Errorf("refusing to overwrite input artifact")
+			}
+		}
+	}
+	rollup, err := BuildAtlasRecommendationCommandRunLedgerRollup(ledgerPaths)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteAtlasRecommendationCommandRunLedgerRollup(*outPath, rollup); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, rollup)
+	}
+	fmt.Fprintf(stdout, "status=%s\nledger_count=%d\nfailed_output_count=%d\nall_ledgers_record_invocation=%t\nall_outputs_no_promotion=%t\nrsi_remains_denied=%t\nrecommendation_command_run_ledger_rollup=%s\n",
+		rollup.Status,
+		rollup.LedgerCount,
+		rollup.FailedOutputCount,
+		rollup.AllLedgersRecordInvocation,
+		rollup.AllOutputsNoPromotion,
+		rollup.RSIRemainsDenied,
 		filepath.ToSlash(*outPath),
 	)
 	return nil

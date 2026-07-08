@@ -337,3 +337,109 @@ func TestMissionRecommendationsCommandRunLedgerRecordsFailedSchemaRegistryCovera
 		t.Fatalf("expected typed recommendation command run ledger validator, got %s", validator)
 	}
 }
+
+func TestMissionRecommendationsCommandRunLedgerRollupAggregatesControlPlaneLedgers(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	tempDir := t.TempDir()
+	registryPath := filepath.Join(tempDir, "recommendation-evidence-schema-registry.json")
+	reportPath := filepath.Join(tempDir, "recommendation-evidence-validation-report.json")
+	coveragePath := filepath.Join(tempDir, "recommendation-evidence-schema-registry-coverage.json")
+	registryLedgerPath := filepath.Join(tempDir, "recommendation-schema-registry-run-ledger.json")
+	reportLedgerPath := filepath.Join(tempDir, "recommendation-validation-report-run-ledger.json")
+	coverageLedgerPath := filepath.Join(tempDir, "recommendation-schema-registry-coverage-run-ledger.json")
+	rollupPath := filepath.Join(tempDir, "recommendation-command-run-ledger-rollup.json")
+
+	if code := Run([]string{"mission", "recommendations", "schema-registry", "--out", registryPath}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("schema-registry failed")
+	}
+	if code := Run([]string{"mission", "recommendations", "validate-evidence", "--evidence-root", filepath.Join("docs", "evidence", "ao-atlas-feature-depth-followup-durability-v04"), "--out", reportPath}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("validate-evidence failed")
+	}
+	var coverageOut bytes.Buffer
+	if code := Run([]string{"mission", "recommendations", "schema-registry-coverage", "--registry", registryPath, "--validation-report", reportPath, "--out", coveragePath}, &coverageOut, &coverageOut); code == 0 {
+		t.Fatalf("schema-registry-coverage should fail for rollup fixture setup: %s", coverageOut.String())
+	}
+	for _, spec := range []struct {
+		command  string
+		artifact string
+		out      string
+	}{
+		{"schema-registry", registryPath, registryLedgerPath},
+		{"validate-evidence", reportPath, reportLedgerPath},
+		{"schema-registry-coverage", coveragePath, coverageLedgerPath},
+	} {
+		var out bytes.Buffer
+		code := Run([]string{"mission", "recommendations", "run-ledger", "--command", spec.command, "--artifact", spec.artifact, "--out", spec.out}, &out, &out)
+		if code != 0 {
+			t.Fatalf("run-ledger %s failed: %s", spec.command, out.String())
+		}
+	}
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "run-ledger-rollup",
+		"--ledger", registryLedgerPath,
+		"--ledger", reportLedgerPath,
+		"--ledger", coverageLedgerPath,
+		"--out", rollupPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("run-ledger-rollup failed: %s", out.String())
+	}
+	for _, want := range []string{
+		"status=rolled_up",
+		"ledger_count=3",
+		"failed_output_count=1",
+		"all_ledgers_record_invocation=true",
+		"all_outputs_no_promotion=true",
+		"rsi_remains_denied=true",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Fatalf("run-ledger-rollup output missing %q: %s", want, out.String())
+		}
+	}
+
+	rollup := mustLoadJSON[AtlasRecommendationCommandRunLedgerRollup](t, rollupPath)
+	if rollup.Schema != AtlasRecommendationCommandRunLedgerRollupContract ||
+		rollup.Status != "rolled_up" ||
+		rollup.LedgerCount != 3 ||
+		len(rollup.Ledgers) != 3 ||
+		rollup.FailedOutputCount != 1 ||
+		len(rollup.FailedCommands) != 1 ||
+		rollup.FailedCommands[0] != "schema-registry-coverage" ||
+		rollup.OutputStatusCounts["ready"] != 1 ||
+		rollup.OutputStatusCounts["passed"] != 1 ||
+		rollup.OutputStatusCounts["failed"] != 1 ||
+		!rollup.AllLedgersRecordInvocation ||
+		!rollup.AllOutputsNoPromotion ||
+		rollup.PromotionGranted ||
+		rollup.ClaimsAuthorityAdvance ||
+		!rollup.RSIRemainsDenied ||
+		rollup.SafeToExecute ||
+		rollup.SchedulesWork ||
+		rollup.ExecutesWork ||
+		rollup.ApprovesWork ||
+		rollup.MutatesRepositories {
+		t.Fatalf("run-ledger rollup lost aggregate safety state: %#v", rollup)
+	}
+	validator, err := validateRecommendationEvidenceTypedFile(rollupPath, AtlasRecommendationCommandRunLedgerRollupContract)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if validator != "typed:recommendation-command-run-ledger-rollup" {
+		t.Fatalf("expected typed recommendation command run ledger rollup validator, got %s", validator)
+	}
+}

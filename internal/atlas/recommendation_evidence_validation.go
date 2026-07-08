@@ -536,6 +536,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:recommendation-command-run-ledger", err
 		}
 		return "typed:recommendation-command-run-ledger", ValidateAtlasRecommendationCommandRunLedger(value)
+	case AtlasRecommendationCommandRunLedgerRollupContract:
+		value, err := LoadJSON[AtlasRecommendationCommandRunLedgerRollup](path)
+		if err != nil {
+			return "typed:recommendation-command-run-ledger-rollup", err
+		}
+		return "typed:recommendation-command-run-ledger-rollup", ValidateAtlasRecommendationCommandRunLedgerRollup(value)
 	case AtlasRecommendationFinalResponseGatesContract:
 		value, err := LoadJSON[AtlasRecommendationFinalResponseGates](path)
 		if err != nil {

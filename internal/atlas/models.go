@@ -361,6 +361,43 @@ type AtlasRecommendationCommandRunLedger struct {
 	MutatesRepositories    bool   `json:"mutates_repositories"`
 }
 
+type AtlasRecommendationCommandRunLedgerRollup struct {
+	Schema                     string                                           `json:"schema"`
+	Status                     string                                           `json:"status"`
+	LedgerCount                int                                              `json:"ledger_count"`
+	Ledgers                    []AtlasRecommendationCommandRunLedgerRollupEntry `json:"ledgers"`
+	Commands                   []string                                         `json:"commands"`
+	OutputStatusCounts         map[string]int                                   `json:"output_status_counts"`
+	FailedOutputCount          int                                              `json:"failed_output_count"`
+	FailedCommands             []string                                         `json:"failed_commands"`
+	AllLedgersRecordInvocation bool                                             `json:"all_ledgers_record_invocation"`
+	AllOutputsNoPromotion      bool                                             `json:"all_outputs_no_promotion"`
+	PromotionGranted           bool                                             `json:"promotion_granted"`
+	ClaimsAuthorityAdvance     bool                                             `json:"claims_authority_advance"`
+	RSIRemainsDenied           bool                                             `json:"rsi_remains_denied"`
+	SafeToExecute              bool                                             `json:"safe_to_execute"`
+	SchedulesWork              bool                                             `json:"schedules_work"`
+	ExecutesWork               bool                                             `json:"executes_work"`
+	ApprovesWork               bool                                             `json:"approves_work"`
+	MutatesRepositories        bool                                             `json:"mutates_repositories"`
+}
+
+type AtlasRecommendationCommandRunLedgerRollupEntry struct {
+	LedgerPath             string `json:"ledger_path"`
+	LedgerDigest           string `json:"ledger_digest"`
+	Command                string `json:"command"`
+	ArtifactSchema         string `json:"artifact_schema"`
+	TypedValidator         string `json:"typed_validator"`
+	OutputStatus           string `json:"output_status"`
+	ArtifactPath           string `json:"artifact_path"`
+	ArtifactDigest         string `json:"artifact_digest"`
+	RecordsInvocation      bool   `json:"records_invocation"`
+	NoPromotionRequested   bool   `json:"no_promotion_requested"`
+	PromotionGranted       bool   `json:"promotion_granted"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasRecommendationFinalResponseGates struct {
 	Schema                               string                                      `json:"schema"`
 	Status                               string                                      `json:"status"`
