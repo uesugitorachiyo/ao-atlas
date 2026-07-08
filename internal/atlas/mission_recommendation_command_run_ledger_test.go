@@ -443,3 +443,125 @@ func TestMissionRecommendationsCommandRunLedgerRollupAggregatesControlPlaneLedge
 		t.Fatalf("expected typed recommendation command run ledger rollup validator, got %s", validator)
 	}
 }
+
+func TestMissionRecommendationsRunLedgerCoverageCheckRequiresEveryControlPlaneCommand(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	tempDir := t.TempDir()
+	registryPath := filepath.Join(tempDir, "recommendation-evidence-schema-registry.json")
+	rollupPath := filepath.Join(tempDir, "recommendation-command-run-ledger-rollup.json")
+	checkPath := filepath.Join(tempDir, "recommendation-command-run-ledger-coverage-check.json")
+	if code := Run([]string{"mission", "recommendations", "schema-registry", "--out", registryPath}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("schema-registry failed")
+	}
+
+	commands := []string{
+		"next-track",
+		"consumed-ledger",
+		"track-registry",
+		"final-response-gates",
+		"schema-registry",
+		"validate-evidence",
+		"schema-registry-coverage",
+		"schema-health-repair-prompt",
+	}
+	entries := []AtlasRecommendationCommandRunLedgerRollupEntry{}
+	digest := "sha256:" + strings.Repeat("a", 64)
+	for _, command := range commands {
+		entries = append(entries, AtlasRecommendationCommandRunLedgerRollupEntry{
+			LedgerPath:             "docs/evidence/example/" + command + "-run-ledger.json",
+			LedgerDigest:           digest,
+			Command:                command,
+			ArtifactSchema:         "ao.atlas." + command + ".v0.1",
+			TypedValidator:         "typed:" + command,
+			OutputStatus:           "passed",
+			ArtifactPath:           "docs/evidence/example/" + command + ".json",
+			ArtifactDigest:         digest,
+			RecordsInvocation:      true,
+			NoPromotionRequested:   true,
+			PromotionGranted:       false,
+			ClaimsAuthorityAdvance: false,
+			RSIRemainsDenied:       true,
+		})
+	}
+	rollup := AtlasRecommendationCommandRunLedgerRollup{
+		Schema:                     AtlasRecommendationCommandRunLedgerRollupContract,
+		Status:                     "rolled_up",
+		LedgerCount:                len(entries),
+		Ledgers:                    entries,
+		Commands:                   commands,
+		OutputStatusCounts:         map[string]int{"passed": len(commands)},
+		FailedOutputCount:          0,
+		FailedCommands:             []string{},
+		AllLedgersRecordInvocation: true,
+		AllOutputsNoPromotion:      true,
+		PromotionGranted:           false,
+		ClaimsAuthorityAdvance:     false,
+		RSIRemainsDenied:           true,
+		SafeToExecute:              false,
+		SchedulesWork:              false,
+		ExecutesWork:               false,
+		ApprovesWork:               false,
+		MutatesRepositories:        false,
+	}
+	if err := WriteJSON(rollupPath, rollup); err != nil {
+		t.Fatal(err)
+	}
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "run-ledger-coverage-check",
+		"--registry", registryPath,
+		"--rollup", rollupPath,
+		"--out", checkPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("run-ledger-coverage-check failed: %s", out.String())
+	}
+	for _, want := range []string{
+		"status=passed",
+		"required_command_count=8",
+		"covered_command_count=8",
+		"missing_command_count=0",
+		"all_control_plane_commands_covered=true",
+		"rsi_remains_denied=true",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Fatalf("run-ledger-coverage-check output missing %q: %s", want, out.String())
+		}
+	}
+
+	check := mustLoadJSON[AtlasRecommendationRunLedgerCoverageCheck](t, checkPath)
+	if check.Schema != AtlasRecommendationRunLedgerCoverageCheckContract ||
+		check.Status != "passed" ||
+		check.RequiredCommandCount != 8 ||
+		check.CoveredCommandCount != 8 ||
+		check.MissingCommandCount != 0 ||
+		len(check.MissingCommands) != 0 ||
+		!check.AllControlPlaneCommandsCovered ||
+		!check.AllOutputsNoPromotion ||
+		check.PromotionGranted ||
+		check.ClaimsAuthorityAdvance ||
+		!check.RSIRemainsDenied {
+		t.Fatalf("run ledger coverage check lost closure safety state: %#v", check)
+	}
+	validator, err := validateRecommendationEvidenceTypedFile(checkPath, AtlasRecommendationRunLedgerCoverageCheckContract)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if validator != "typed:recommendation-run-ledger-coverage-check" {
+		t.Fatalf("expected typed run ledger coverage check validator, got %s", validator)
+	}
+}

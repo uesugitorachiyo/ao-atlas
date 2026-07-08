@@ -398,6 +398,33 @@ type AtlasRecommendationCommandRunLedgerRollupEntry struct {
 	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasRecommendationRunLedgerCoverageCheck struct {
+	Schema                         string   `json:"schema"`
+	Status                         string   `json:"status"`
+	SourceRegistryPath             string   `json:"source_registry_path"`
+	SourceRegistryDigest           string   `json:"source_registry_digest"`
+	SourceRollupPath               string   `json:"source_rollup_path"`
+	SourceRollupDigest             string   `json:"source_rollup_digest"`
+	RegistryCommandCount           int      `json:"registry_command_count"`
+	RequiredCommandCount           int      `json:"required_command_count"`
+	CoveredCommandCount            int      `json:"covered_command_count"`
+	MissingCommandCount            int      `json:"missing_command_count"`
+	RequiredCommands               []string `json:"required_commands"`
+	CoveredCommands                []string `json:"covered_commands"`
+	MissingCommands                []string `json:"missing_commands"`
+	ExcludedCommands               []string `json:"excluded_commands"`
+	AllControlPlaneCommandsCovered bool     `json:"all_control_plane_commands_covered"`
+	AllOutputsNoPromotion          bool     `json:"all_outputs_no_promotion"`
+	PromotionGranted               bool     `json:"promotion_granted"`
+	ClaimsAuthorityAdvance         bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied               bool     `json:"rsi_remains_denied"`
+	SafeToExecute                  bool     `json:"safe_to_execute"`
+	SchedulesWork                  bool     `json:"schedules_work"`
+	ExecutesWork                   bool     `json:"executes_work"`
+	ApprovesWork                   bool     `json:"approves_work"`
+	MutatesRepositories            bool     `json:"mutates_repositories"`
+}
+
 type AtlasRecommendationFinalResponseGates struct {
 	Schema                               string                                      `json:"schema"`
 	Status                               string                                      `json:"status"`
