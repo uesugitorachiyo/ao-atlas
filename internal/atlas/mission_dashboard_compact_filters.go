@@ -49,6 +49,11 @@ func BuildAtlasMissionDashboardCompactFilters(nodeID, sourceReadbackPath, source
 		buildMissionDashboardCompactFilter("failed", "Failed", statusNodeIDs["failed"], "no_failed_nodes", false),
 		buildMissionDashboardCompactFilter("completed", "Completed", statusNodeIDs["completed"], "completed_history", false),
 	}
+	schemaHealthStatus := strings.TrimSpace(readback.SchemaHealthStatus)
+	schemaHealthFilterActionable := missionDashboardSchemaHealthFilterActionable(schemaHealthStatus)
+	if schemaHealthStatus != "" {
+		filters = append(filters, buildMissionDashboardSchemaHealthFilter(schemaHealthStatus, schemaHealthFilterActionable))
+	}
 
 	fixture := AtlasMissionDashboardCompactFilters{
 		Schema:                             AtlasMissionDashboardCompactFiltersContract,
@@ -67,6 +72,7 @@ func BuildAtlasMissionDashboardCompactFilters(nodeID, sourceReadbackPath, source
 		FirstExecutableNode:                readback.FirstExecutableNode,
 		ExactNextAction:                    readback.ExactNextAction,
 		ReturnGateStatus:                   readback.ReturnGateStatus,
+		SchemaHealthStatus:                 schemaHealthStatus,
 		ActiveFilterKey:                    missionDashboardActiveFilterKey(readback),
 		FilterCount:                        len(filters),
 		Filters:                            filters,
@@ -81,6 +87,11 @@ func BuildAtlasMissionDashboardCompactFilters(nodeID, sourceReadbackPath, source
 		ApprovesWork:                       false,
 		ClaimsAuthorityAdvance:             false,
 		RSIRemainsDenied:                   readback.SafetyBoundaries["rsi_remains_denied"],
+	}
+	if schemaHealthStatus != "" {
+		fixture.SchemaHealthFilterKey = "schema_health"
+		fixture.SchemaHealthFilterStatus = schemaHealthStatus
+		fixture.SchemaHealthFilterActionable = schemaHealthFilterActionable
 	}
 	if err := ValidateAtlasMissionDashboardCompactFilters(fixture); err != nil {
 		return AtlasMissionDashboardCompactFilters{}, err
@@ -102,9 +113,12 @@ func ValidateAtlasMissionDashboardCompactFilters(fixture AtlasMissionDashboardCo
 		"first_executable_node": fixture.FirstExecutableNode,
 		"exact_next_action":     fixture.ExactNextAction,
 		"return_gate_status":    fixture.ReturnGateStatus,
+		"schema_health_status":  fixture.SchemaHealthStatus,
 		"active_filter_key":     fixture.ActiveFilterKey,
 	} {
-		requireField(&errs, field, value)
+		if field != "schema_health_status" {
+			requireField(&errs, field, value)
+		}
 		checkPublicPath(&errs, field, value, true)
 	}
 	for field, value := range map[string]string{
@@ -130,10 +144,16 @@ func ValidateAtlasMissionDashboardCompactFilters(fixture AtlasMissionDashboardCo
 	if fixture.ReturnGateStatus != "blocked_ready_nodes_remain" {
 		errs = append(errs, "return_gate_status must be blocked_ready_nodes_remain")
 	}
-	if fixture.FilterCount != len(fixture.Filters) || fixture.FilterCount != 4 {
-		errs = append(errs, "filter_count must be 4")
+	hasSchemaHealthStatus := strings.TrimSpace(fixture.SchemaHealthStatus) != ""
+	expectedFilterCount := 4
+	if hasSchemaHealthStatus {
+		expectedFilterCount = 5
 	}
-	validateMissionDashboardCompactFilterRows(&errs, fixture.Filters)
+	if fixture.FilterCount != len(fixture.Filters) || fixture.FilterCount != expectedFilterCount {
+		errs = append(errs, fmt.Sprintf("filter_count must be %d", expectedFilterCount))
+	}
+	validateMissionDashboardSchemaHealthFilterBinding(&errs, fixture, hasSchemaHealthStatus)
+	validateMissionDashboardCompactFilterRows(&errs, fixture.Filters, fixture.SchemaHealthStatus)
 	if !fixture.ReadyFilterActionable {
 		errs = append(errs, "ready_filter_actionable must be true")
 	}
@@ -188,7 +208,53 @@ func buildMissionDashboardCompactFilter(key, label string, ids []string, populat
 	}
 }
 
-func validateMissionDashboardCompactFilterRows(errs *[]string, filters []AtlasMissionDashboardCompactFilter) {
+func buildMissionDashboardSchemaHealthFilter(status string, actionable bool) AtlasMissionDashboardCompactFilter {
+	return AtlasMissionDashboardCompactFilter{
+		Key:             "schema_health",
+		Label:           "Schema Health",
+		Count:           1,
+		PreviewNodeIDs:  []string{},
+		Actionable:      actionable,
+		Empty:           false,
+		DashboardStatus: status,
+	}
+}
+
+func missionDashboardSchemaHealthFilterActionable(status string) bool {
+	status = strings.TrimSpace(status)
+	if status == "" {
+		return false
+	}
+	return strings.HasPrefix(status, "failed") ||
+		strings.HasPrefix(status, "pending") ||
+		strings.Contains(status, "missing")
+}
+
+func validateMissionDashboardSchemaHealthFilterBinding(errs *[]string, fixture AtlasMissionDashboardCompactFilters, hasSchemaHealthStatus bool) {
+	for field, value := range map[string]string{
+		"schema_health_filter_key":    fixture.SchemaHealthFilterKey,
+		"schema_health_filter_status": fixture.SchemaHealthFilterStatus,
+	} {
+		checkPublicPath(errs, field, value, true)
+	}
+	if !hasSchemaHealthStatus {
+		if fixture.SchemaHealthFilterKey != "" || fixture.SchemaHealthFilterStatus != "" || fixture.SchemaHealthFilterActionable {
+			*errs = append(*errs, "schema health filter fields require schema_health_status")
+		}
+		return
+	}
+	if fixture.SchemaHealthFilterKey != "schema_health" {
+		*errs = append(*errs, "schema_health_filter_key must be schema_health")
+	}
+	if fixture.SchemaHealthFilterStatus != fixture.SchemaHealthStatus {
+		*errs = append(*errs, "schema_health_filter_status must match schema_health_status")
+	}
+	if fixture.SchemaHealthFilterActionable != missionDashboardSchemaHealthFilterActionable(fixture.SchemaHealthStatus) {
+		*errs = append(*errs, "schema_health_filter_actionable must match schema health status")
+	}
+}
+
+func validateMissionDashboardCompactFilterRows(errs *[]string, filters []AtlasMissionDashboardCompactFilter, schemaHealthStatus string) {
 	expected := []struct {
 		key              string
 		label            string
@@ -206,8 +272,22 @@ func validateMissionDashboardCompactFilterRows(errs *[]string, filters []AtlasMi
 		{"failed", "Failed", 0, false, true, "no_failed_nodes", 5, "", "", 0},
 		{"completed", "Completed", 35, false, false, "completed_history", 3, "mission-recommendation-feature-depth-next-wave-01", "mission-recommendation-feature-depth-next-wave-35", 32},
 	}
+	if schemaHealthStatus != "" {
+		expected = append(expected, struct {
+			key              string
+			label            string
+			count            int
+			actionable       bool
+			empty            bool
+			dashboardStatus  string
+			previewLimit     int
+			firstNodeID      string
+			lastNodeID       string
+			omittedNodeCount int
+		}{"schema_health", "Schema Health", 1, missionDashboardSchemaHealthFilterActionable(schemaHealthStatus), false, schemaHealthStatus, 0, "", "", 0})
+	}
 	if len(filters) != len(expected) {
-		*errs = append(*errs, "filters must contain ready, blocked, failed, and completed rows")
+		*errs = append(*errs, "filters must contain ready, blocked, failed, completed, and optional schema health rows")
 		return
 	}
 	for i, want := range expected {

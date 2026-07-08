@@ -79,3 +79,66 @@ func TestFeatureDepthWaveMissionDashboardCompactFiltersSummarizeReadyBlockedFail
 		t.Fatalf("expected typed Mission dashboard compact filters validator, got %s", validator)
 	}
 }
+
+func TestMissionDashboardCompactFiltersCarrySchemaHealthStatusWhenReadbackHasIt(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
+	sourceNodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-35")
+	sourceReadbackPath := filepath.Join(sourceNodeDir, "recommendation-readback-after.json")
+	workgraphPath := filepath.Join(sourceNodeDir, "workgraph-after.json")
+	tempDir := t.TempDir()
+	syntheticReadbackPath := filepath.Join(tempDir, "recommendation-readback-after.json")
+	outPath := filepath.Join(tempDir, "mission-dashboard-compact-filters.json")
+
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, sourceReadbackPath)
+	readback.SchemaHealthStatus = "failed_missing_registry_artifacts"
+	if err := WriteJSON(syntheticReadbackPath, readback); err != nil {
+		t.Fatal(err)
+	}
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "mission-dashboard-compact-filters",
+		"--node-id", "mission-recommendation-schema-health-compact-filters",
+		"--source-readback", syntheticReadbackPath,
+		"--source-workgraph", workgraphPath,
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("mission-dashboard-compact-filters command failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "schema_health_status=failed_missing_registry_artifacts") {
+		t.Fatalf("dashboard compact filters output missing schema health status: %s", out.String())
+	}
+
+	fixture := mustLoadJSON[AtlasMissionDashboardCompactFilters](t, outPath)
+	if err := ValidateAtlasMissionDashboardCompactFilters(fixture); err != nil {
+		t.Fatal(err)
+	}
+	if fixture.SchemaHealthStatus != "failed_missing_registry_artifacts" ||
+		fixture.SchemaHealthFilterKey != "schema_health" ||
+		fixture.SchemaHealthFilterStatus != "failed_missing_registry_artifacts" ||
+		!fixture.SchemaHealthFilterActionable {
+		t.Fatalf("compact dashboard filters lost schema-health status: %#v", fixture)
+	}
+	if fixture.FilterCount != 5 || len(fixture.Filters) != 5 {
+		t.Fatalf("schema-health status should add a compact filter row: count=%d filters=%#v", fixture.FilterCount, fixture.Filters)
+	}
+	schemaHealthFilter := fixture.Filters[4]
+	if schemaHealthFilter.Key != "schema_health" ||
+		schemaHealthFilter.Label != "Schema Health" ||
+		schemaHealthFilter.Count != 1 ||
+		schemaHealthFilter.DashboardStatus != "failed_missing_registry_artifacts" ||
+		!schemaHealthFilter.Actionable ||
+		schemaHealthFilter.Empty {
+		t.Fatalf("schema-health compact filter row is not actionable: %#v", schemaHealthFilter)
+	}
+
+	validator, err := validateRecommendationEvidenceTypedFile(outPath, "ao.atlas.mission-dashboard-compact-filters.v0.1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if validator != "typed:mission-dashboard-compact-filters" {
+		t.Fatalf("expected typed Mission dashboard compact filters validator, got %s", validator)
+	}
+}
