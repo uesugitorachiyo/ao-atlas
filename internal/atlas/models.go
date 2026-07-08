@@ -277,6 +277,38 @@ type AtlasRecommendationNextTrackDecision struct {
 	MutatesRepositories          bool     `json:"mutates_repositories"`
 }
 
+type AtlasConsumedRecommendationLedger struct {
+	Schema                       string `json:"schema"`
+	Status                       string `json:"status"`
+	SourceEvidenceRoot           string `json:"source_evidence_root"`
+	SourceReadbackPath           string `json:"source_readback_path"`
+	SourceReadbackDigest         string `json:"source_readback_digest"`
+	NextTrackDecisionPath        string `json:"next_track_decision_path"`
+	NextTrackDecisionDigest      string `json:"next_track_decision_digest"`
+	MissionID                    string `json:"mission_id"`
+	TargetInstance               string `json:"target_instance"`
+	CompletedNodes               int    `json:"completed_nodes"`
+	TotalNodes                   int    `json:"total_nodes"`
+	FinalResponseAllowedObserved bool   `json:"final_response_allowed_observed"`
+	CurrentTrack                 string `json:"current_track"`
+	CurrentTrackStatus           string `json:"current_track_status"`
+	ConsumedTrack                string `json:"consumed_track"`
+	ConsumedReason               string `json:"consumed_reason"`
+	RecommendedTrack             string `json:"recommended_track"`
+	ExactNextAction              string `json:"exact_next_action"`
+	DuplicateExportBlocked       bool   `json:"duplicate_export_blocked"`
+	ImportBypassBlocked          bool   `json:"import_bypass_blocked"`
+	NoPromotionRequested         bool   `json:"no_promotion_requested"`
+	PromotionGranted             bool   `json:"promotion_granted"`
+	ClaimsAuthorityAdvance       bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied             bool   `json:"rsi_remains_denied"`
+	SafeToExecute                bool   `json:"safe_to_execute"`
+	SchedulesWork                bool   `json:"schedules_work"`
+	ExecutesWork                 bool   `json:"executes_work"`
+	ApprovesWork                 bool   `json:"approves_work"`
+	MutatesRepositories          bool   `json:"mutates_repositories"`
+}
+
 type AtlasRecommendationWave struct {
 	ContractVersion        string                    `json:"contract_version"`
 	MissionID              string                    `json:"mission_id"`
