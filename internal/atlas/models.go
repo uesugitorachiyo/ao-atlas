@@ -243,6 +243,40 @@ type AtlasNextWaveRecommendationExport struct {
 	FeatureDepthExport     AOMissionFeatureDepthRecommendations `json:"feature_depth_export"`
 }
 
+type AtlasRecommendationNextTrackDecision struct {
+	Schema                       string   `json:"schema"`
+	Status                       string   `json:"status"`
+	SourceEvidenceRoot           string   `json:"source_evidence_root"`
+	SourceReadbackPath           string   `json:"source_readback_path"`
+	SourceReadbackDigest         string   `json:"source_readback_digest"`
+	MissionID                    string   `json:"mission_id"`
+	TargetInstance               string   `json:"target_instance"`
+	CompletedNodes               int      `json:"completed_nodes"`
+	TotalNodes                   int      `json:"total_nodes"`
+	ReadyNodes                   int      `json:"ready_nodes"`
+	BlockedNodes                 int      `json:"blocked_nodes"`
+	FailedNodes                  int      `json:"failed_nodes"`
+	FinalResponseAllowedObserved bool     `json:"final_response_allowed_observed"`
+	ReturnGateStatus             string   `json:"return_gate_status"`
+	CurrentTrack                 string   `json:"current_track"`
+	CurrentTrackStatus           string   `json:"current_track_status"`
+	RecommendedTrack             string   `json:"recommended_track"`
+	PriorityOrder                []string `json:"priority_order"`
+	FeatureDepthStatus           string   `json:"feature_depth_status"`
+	RefactoringStatus            string   `json:"refactoring_status"`
+	RSITrackStatus               string   `json:"rsi_track_status"`
+	ExactNextAction              string   `json:"exact_next_action"`
+	NoPromotionRequested         bool     `json:"no_promotion_requested"`
+	PromotionGranted             bool     `json:"promotion_granted"`
+	ClaimsAuthorityAdvance       bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied             bool     `json:"rsi_remains_denied"`
+	SafeToExecute                bool     `json:"safe_to_execute"`
+	SchedulesWork                bool     `json:"schedules_work"`
+	ExecutesWork                 bool     `json:"executes_work"`
+	ApprovesWork                 bool     `json:"approves_work"`
+	MutatesRepositories          bool     `json:"mutates_repositories"`
+}
+
 type AtlasRecommendationWave struct {
 	ContractVersion        string                    `json:"contract_version"`
 	MissionID              string                    `json:"mission_id"`
