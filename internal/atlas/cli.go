@@ -413,163 +413,106 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 	return nil
 }
 
+type missionRecommendationCommand struct {
+	name string
+	run  func([]string, io.Writer) error
+}
+
+func missionRecommendationCommandRegistry() []missionRecommendationCommand {
+	return []missionRecommendationCommand{
+		{name: "import", run: runMissionRecommendationsImport},
+		{name: "export-next-wave", run: runMissionRecommendationsExportNextWave},
+		{name: "export-refactoring-wave", run: runMissionRecommendationsExportRefactoringWave},
+		{name: "next-track", run: runMissionRecommendationsNextTrack},
+		{name: "consumed-ledger", run: runMissionRecommendationsConsumedLedger},
+		{name: "track-registry", run: runMissionRecommendationsTrackRegistry},
+		{name: "run-ledger", run: runMissionRecommendationsRunLedger},
+		{name: "run-ledger-rollup", run: runMissionRecommendationsRunLedgerRollup},
+		{name: "run-ledger-coverage-check", run: runMissionRecommendationsRunLedgerCoverageCheck},
+		{name: "final-response-gates", run: runMissionRecommendationsFinalResponseGates},
+		{name: "schema-registry", run: runMissionRecommendationsSchemaRegistry},
+		{name: "schema-registry-health", run: runMissionRecommendationsSchemaRegistryHealth},
+		{name: "schema-registry-coverage", run: runMissionRecommendationsSchemaRegistryCoverage},
+		{name: "schema-health-repair-prompt", run: runMissionRecommendationsSchemaHealthRepairPrompt},
+		{name: "readback", run: runMissionRecommendationsReadback},
+		{name: "readback-delta", run: runMissionRecommendationsReadbackDelta},
+		{name: "readback-diff-fixture", run: runMissionRecommendationsReadbackDiffFixture},
+		{name: "stale-checkpoint-rejection", run: runMissionRecommendationsStaleCheckpointRejection},
+		{name: "operator-summary-check", run: runMissionRecommendationsOperatorSummaryCheck},
+		{name: "run-link-schema-coverage", run: runMissionRecommendationsRunLinkSchemaCoverage},
+		{name: "schema-validator-drift", run: runMissionRecommendationsSchemaValidatorDrift},
+		{name: "pr-ci-timing-summary", run: runMissionRecommendationsPRCITimingSummary},
+		{name: "pr-ci-windows-threshold", run: runMissionRecommendationsPRCIWindowsThreshold},
+		{name: "failed-check-replay", run: runMissionRecommendationsFailedCheckReplay},
+		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding},
+		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback},
+		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair},
+		{name: "local-main-sync-readback", run: runMissionRecommendationsLocalMainSyncReadback},
+		{name: "branch-cleanup-handoff-summary", run: runMissionRecommendationsBranchCleanupHandoffSummary},
+		{name: "compaction-resume-prompt", run: runMissionRecommendationsCompactionResumePrompt},
+		{name: "compaction-resume-regression", run: runMissionRecommendationsCompactionResumeRegression},
+		{name: "resume-denial-evidence", run: runMissionRecommendationsResumeDenialEvidence},
+		{name: "public-safety-readback-binding", run: runMissionRecommendationsPublicSafetyReadbackBinding},
+		{name: "scoped-public-safety-scan", run: runMissionRecommendationsScopedPublicSafetyScan},
+		{name: "authority-promotion-negative-fixtures", run: runMissionRecommendationsAuthorityPromotionNegativeFixtures},
+		{name: "public-safety-coverage-rollup", run: runMissionRecommendationsPublicSafetyCoverageRollup},
+		{name: "promoter-no-promotion-rollup", run: runMissionRecommendationsPromoterNoPromotionRollup},
+		{name: "command-promoter-agreement-rollup", run: runMissionRecommendationsCommandPromoterAgreementRollup},
+		{name: "promoter-rollup-count-mismatch-regression", run: runMissionRecommendationsPromoterRollupCountMismatchRegression},
+		{name: "command-promoter-disagreement-denial", run: runMissionRecommendationsCommandPromoterDisagreementDenial},
+		{name: "foundry-import-readiness-binding", run: runMissionRecommendationsFoundryImportReadinessBinding},
+		{name: "run-link-digest-check", run: runMissionRecommendationsRunLinkDigestCheck},
+		{name: "foundry-handoff-replay-fixture", run: runMissionRecommendationsFoundryHandoffReplayFixture},
+		{name: "foundry-terminal-status-examples", run: runMissionRecommendationsFoundryTerminalStatusExamples},
+		{name: "mission-dashboard-closure-binding", run: runMissionRecommendationsMissionDashboardClosureBinding},
+		{name: "mission-dashboard-provenance-links", run: runMissionRecommendationsMissionDashboardProvenanceLinks},
+		{name: "mission-dashboard-freshness-checks", run: runMissionRecommendationsMissionDashboardFreshnessChecks},
+		{name: "mission-dashboard-compact-filters", run: runMissionRecommendationsMissionDashboardCompactFilters},
+		{name: "complete-node", run: runMissionRecommendationsCompleteNode},
+		{name: "resume", run: runMissionRecommendationsResume},
+		{name: "validate-evidence", run: runMissionRecommendationsValidateEvidence},
+	}
+}
+
+func missionRecommendationCommandNames() []string {
+	commands := missionRecommendationCommandRegistry()
+	names := make([]string, 0, len(commands))
+	for _, command := range commands {
+		names = append(names, command.name)
+	}
+	return names
+}
+
+func missionRecommendationsUsageError() error {
+	return fmt.Errorf("mission recommendations requires %s", formatCommandList(missionRecommendationCommandNames()))
+}
+
+func formatCommandList(items []string) string {
+	switch len(items) {
+	case 0:
+		return ""
+	case 1:
+		return items[0]
+	case 2:
+		return items[0] + " or " + items[1]
+	default:
+		return strings.Join(items[:len(items)-1], ", ") + ", or " + items[len(items)-1]
+	}
+}
+
 func runMissionRecommendations(args []string, stdout io.Writer) error {
 	if len(args) == 0 {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, export-refactoring-wave, next-track, consumed-ledger, track-registry, run-ledger, run-ledger-rollup, run-ledger-coverage-check, final-response-gates, schema-registry, schema-registry-health, schema-registry-coverage, schema-health-repair-prompt, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
+		return missionRecommendationsUsageError()
 	}
-	if args[0] == "readback" {
-		return runMissionRecommendationsReadback(args[1:], stdout)
+	for _, command := range missionRecommendationCommandRegistry() {
+		if args[0] == command.name {
+			return command.run(args[1:], stdout)
+		}
 	}
-	if args[0] == "readback-delta" {
-		return runMissionRecommendationsReadbackDelta(args[1:], stdout)
-	}
-	if args[0] == "readback-diff-fixture" {
-		return runMissionRecommendationsReadbackDiffFixture(args[1:], stdout)
-	}
-	if args[0] == "stale-checkpoint-rejection" {
-		return runMissionRecommendationsStaleCheckpointRejection(args[1:], stdout)
-	}
-	if args[0] == "operator-summary-check" {
-		return runMissionRecommendationsOperatorSummaryCheck(args[1:], stdout)
-	}
-	if args[0] == "run-link-schema-coverage" {
-		return runMissionRecommendationsRunLinkSchemaCoverage(args[1:], stdout)
-	}
-	if args[0] == "schema-validator-drift" {
-		return runMissionRecommendationsSchemaValidatorDrift(args[1:], stdout)
-	}
-	if args[0] == "pr-ci-timing-summary" {
-		return runMissionRecommendationsPRCITimingSummary(args[1:], stdout)
-	}
-	if args[0] == "pr-ci-windows-threshold" {
-		return runMissionRecommendationsPRCIWindowsThreshold(args[1:], stdout)
-	}
-	if args[0] == "failed-check-replay" {
-		return runMissionRecommendationsFailedCheckReplay(args[1:], stdout)
-	}
-	if args[0] == "merge-check-binding" {
-		return runMissionRecommendationsMergeCheckBinding(args[1:], stdout)
-	}
-	if args[0] == "post-merge-branch-deletion-readback" {
-		return runMissionRecommendationsPostMergeBranchDeletionReadback(args[1:], stdout)
-	}
-	if args[0] == "stale-remote-branch-repair" {
-		return runMissionRecommendationsStaleRemoteBranchRepair(args[1:], stdout)
-	}
-	if args[0] == "local-main-sync-readback" {
-		return runMissionRecommendationsLocalMainSyncReadback(args[1:], stdout)
-	}
-	if args[0] == "branch-cleanup-handoff-summary" {
-		return runMissionRecommendationsBranchCleanupHandoffSummary(args[1:], stdout)
-	}
-	if args[0] == "compaction-resume-prompt" {
-		return runMissionRecommendationsCompactionResumePrompt(args[1:], stdout)
-	}
-	if args[0] == "compaction-resume-regression" {
-		return runMissionRecommendationsCompactionResumeRegression(args[1:], stdout)
-	}
-	if args[0] == "resume-denial-evidence" {
-		return runMissionRecommendationsResumeDenialEvidence(args[1:], stdout)
-	}
-	if args[0] == "public-safety-readback-binding" {
-		return runMissionRecommendationsPublicSafetyReadbackBinding(args[1:], stdout)
-	}
-	if args[0] == "scoped-public-safety-scan" {
-		return runMissionRecommendationsScopedPublicSafetyScan(args[1:], stdout)
-	}
-	if args[0] == "authority-promotion-negative-fixtures" {
-		return runMissionRecommendationsAuthorityPromotionNegativeFixtures(args[1:], stdout)
-	}
-	if args[0] == "public-safety-coverage-rollup" {
-		return runMissionRecommendationsPublicSafetyCoverageRollup(args[1:], stdout)
-	}
-	if args[0] == "promoter-no-promotion-rollup" {
-		return runMissionRecommendationsPromoterNoPromotionRollup(args[1:], stdout)
-	}
-	if args[0] == "command-promoter-agreement-rollup" {
-		return runMissionRecommendationsCommandPromoterAgreementRollup(args[1:], stdout)
-	}
-	if args[0] == "promoter-rollup-count-mismatch-regression" {
-		return runMissionRecommendationsPromoterRollupCountMismatchRegression(args[1:], stdout)
-	}
-	if args[0] == "command-promoter-disagreement-denial" {
-		return runMissionRecommendationsCommandPromoterDisagreementDenial(args[1:], stdout)
-	}
-	if args[0] == "foundry-import-readiness-binding" {
-		return runMissionRecommendationsFoundryImportReadinessBinding(args[1:], stdout)
-	}
-	if args[0] == "run-link-digest-check" {
-		return runMissionRecommendationsRunLinkDigestCheck(args[1:], stdout)
-	}
-	if args[0] == "foundry-handoff-replay-fixture" {
-		return runMissionRecommendationsFoundryHandoffReplayFixture(args[1:], stdout)
-	}
-	if args[0] == "foundry-terminal-status-examples" {
-		return runMissionRecommendationsFoundryTerminalStatusExamples(args[1:], stdout)
-	}
-	if args[0] == "mission-dashboard-closure-binding" {
-		return runMissionRecommendationsMissionDashboardClosureBinding(args[1:], stdout)
-	}
-	if args[0] == "mission-dashboard-provenance-links" {
-		return runMissionRecommendationsMissionDashboardProvenanceLinks(args[1:], stdout)
-	}
-	if args[0] == "mission-dashboard-freshness-checks" {
-		return runMissionRecommendationsMissionDashboardFreshnessChecks(args[1:], stdout)
-	}
-	if args[0] == "mission-dashboard-compact-filters" {
-		return runMissionRecommendationsMissionDashboardCompactFilters(args[1:], stdout)
-	}
-	if args[0] == "next-track" {
-		return runMissionRecommendationsNextTrack(args[1:], stdout)
-	}
-	if args[0] == "consumed-ledger" {
-		return runMissionRecommendationsConsumedLedger(args[1:], stdout)
-	}
-	if args[0] == "track-registry" {
-		return runMissionRecommendationsTrackRegistry(args[1:], stdout)
-	}
-	if args[0] == "run-ledger" {
-		return runMissionRecommendationsRunLedger(args[1:], stdout)
-	}
-	if args[0] == "run-ledger-rollup" {
-		return runMissionRecommendationsRunLedgerRollup(args[1:], stdout)
-	}
-	if args[0] == "run-ledger-coverage-check" {
-		return runMissionRecommendationsRunLedgerCoverageCheck(args[1:], stdout)
-	}
-	if args[0] == "final-response-gates" {
-		return runMissionRecommendationsFinalResponseGates(args[1:], stdout)
-	}
-	if args[0] == "schema-registry" {
-		return runMissionRecommendationsSchemaRegistry(args[1:], stdout)
-	}
-	if args[0] == "schema-registry-health" {
-		return runMissionRecommendationsSchemaRegistryHealth(args[1:], stdout)
-	}
-	if args[0] == "schema-registry-coverage" {
-		return runMissionRecommendationsSchemaRegistryCoverage(args[1:], stdout)
-	}
-	if args[0] == "schema-health-repair-prompt" {
-		return runMissionRecommendationsSchemaHealthRepairPrompt(args[1:], stdout)
-	}
-	if args[0] == "export-next-wave" {
-		return runMissionRecommendationsExportNextWave(args[1:], stdout)
-	}
-	if args[0] == "export-refactoring-wave" {
-		return runMissionRecommendationsExportRefactoringWave(args[1:], stdout)
-	}
-	if args[0] == "complete-node" {
-		return runMissionRecommendationsCompleteNode(args[1:], stdout)
-	}
-	if args[0] == "resume" {
-		return runMissionRecommendationsResume(args[1:], stdout)
-	}
-	if args[0] == "validate-evidence" {
-		return runMissionRecommendationsValidateEvidence(args[1:], stdout)
-	}
-	if args[0] != "import" {
-		return fmt.Errorf("mission recommendations requires import, export-next-wave, export-refactoring-wave, next-track, consumed-ledger, track-registry, run-ledger, run-ledger-rollup, run-ledger-coverage-check, final-response-gates, schema-registry, schema-registry-health, schema-registry-coverage, schema-health-repair-prompt, readback, readback-delta, readback-diff-fixture, stale-checkpoint-rejection, operator-summary-check, run-link-schema-coverage, schema-validator-drift, pr-ci-timing-summary, pr-ci-windows-threshold, failed-check-replay, merge-check-binding, post-merge-branch-deletion-readback, stale-remote-branch-repair, local-main-sync-readback, branch-cleanup-handoff-summary, compaction-resume-prompt, compaction-resume-regression, resume-denial-evidence, public-safety-readback-binding, scoped-public-safety-scan, authority-promotion-negative-fixtures, public-safety-coverage-rollup, promoter-no-promotion-rollup, command-promoter-agreement-rollup, promoter-rollup-count-mismatch-regression, command-promoter-disagreement-denial, foundry-import-readiness-binding, run-link-digest-check, foundry-handoff-replay-fixture, foundry-terminal-status-examples, mission-dashboard-closure-binding, mission-dashboard-provenance-links, mission-dashboard-freshness-checks, mission-dashboard-compact-filters, complete-node, resume, or validate-evidence")
-	}
+	return missionRecommendationsUsageError()
+}
+
+func runMissionRecommendationsImport(args []string, stdout io.Writer) error {
 	fs := flag.NewFlagSet("mission recommendations import", flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
 	recommendationsPath := fs.String("recommendations", "", "AO Mission Feature Depth Recommendations path")
@@ -587,7 +530,7 @@ func runMissionRecommendations(args []string, stdout io.Writer) error {
 	startedAt := fs.String("started-at", "", "long-run lease start time, RFC3339")
 	outDir := fs.String("out", "", "output directory")
 	jsonOut := fs.Bool("json", false, "json output")
-	if err := fs.Parse(args[1:]); err != nil {
+	if err := fs.Parse(args); err != nil {
 		return err
 	}
 	if strings.TrimSpace(*recommendationsPath) == "" {
