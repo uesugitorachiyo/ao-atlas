@@ -1062,6 +1062,7 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 		len(coverage.MissingValidators),
 		runLedgerCount,
 	)
+	exactNextAction := "Add missing recommendation control-plane evidence artifacts, rerun schema-registry-health, and keep promotion denied."
 	if *jsonOut {
 		if err := printJSON(stdout, map[string]any{
 			"status":                                           coverage.Status,
@@ -1075,6 +1076,7 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			"run_ledger_count":                                 runLedgerCount,
 			"all_outputs_have_run_ledgers":                     allOutputsHaveRunLedgers,
 			"operator_summary":                                 operatorSummary,
+			"exact_next_action":                                exactNextAction,
 			"recommendation_evidence_schema_registry":          filepath.ToSlash(registryPath),
 			"recommendation_evidence_validation_report":        filepath.ToSlash(reportPath),
 			"recommendation_evidence_schema_registry_coverage": filepath.ToSlash(coveragePath),
@@ -1085,7 +1087,7 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			return err
 		}
 	} else {
-		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrun_ledger_count=%d\nall_outputs_have_run_ledgers=%t\noperator_summary=%s\nrecommendation_evidence_schema_registry=%s\nrecommendation_evidence_validation_report=%s\nrecommendation_evidence_schema_registry_coverage=%s\nschema_registry_run_ledger=%s\nvalidation_report_run_ledger=%s\nschema_registry_coverage_run_ledger=%s\n",
+		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrun_ledger_count=%d\nall_outputs_have_run_ledgers=%t\noperator_summary=%s\nexact_next_action=%s\nrecommendation_evidence_schema_registry=%s\nrecommendation_evidence_validation_report=%s\nrecommendation_evidence_schema_registry_coverage=%s\nschema_registry_run_ledger=%s\nvalidation_report_run_ledger=%s\nschema_registry_coverage_run_ledger=%s\n",
 			coverage.Status,
 			coverage.ValidationReportStatus,
 			coverage.RegistrySchemaCount,
@@ -1097,6 +1099,7 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			runLedgerCount,
 			allOutputsHaveRunLedgers,
 			operatorSummary,
+			exactNextAction,
 			filepath.ToSlash(registryPath),
 			filepath.ToSlash(reportPath),
 			filepath.ToSlash(coveragePath),
