@@ -114,6 +114,7 @@ func BuildAtlasMissionDashboardClosureBinding(nodeID, sourceReadbackPath, source
 		FailedNodesBefore:          readback.FailedNodes,
 		FirstExecutableNode:        readback.FirstExecutableNode,
 		ExactNextAction:            readback.ExactNextAction,
+		SchemaHealthStatus:         readback.SchemaHealthStatus,
 		FinalResponseAllowed:       readback.FinalResponseAllowed,
 		RowCount:                   len(rows),
 		Rows:                       rows,
@@ -151,6 +152,7 @@ func ValidateAtlasMissionDashboardClosureBinding(binding AtlasMissionDashboardCl
 		requireField(&errs, field, value)
 		checkPublicPath(&errs, field, value, true)
 	}
+	checkPublicPath(&errs, "schema_health_status", binding.SchemaHealthStatus, true)
 	if !digestPattern.MatchString(binding.SourceReadbackDigest) {
 		errs = append(errs, "source_readback_digest must be sha256 digest")
 	}

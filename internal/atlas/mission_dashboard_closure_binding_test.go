@@ -80,3 +80,30 @@ func TestFeatureDepthWaveMissionDashboardClosureBindingRowsBindAtlasClosureEvide
 		t.Fatalf("expected typed Mission dashboard closure binding validator, got %s", validator)
 	}
 }
+
+func TestMissionDashboardClosureBindingCarriesSchemaHealthStatusWhenReadbackHasIt(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
+	sourceNodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-32")
+	sourceReadbackPath := filepath.Join(sourceNodeDir, "recommendation-readback-after.json")
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, sourceReadbackPath)
+	readback.SchemaHealthStatus = "failed_missing_registry_artifacts"
+
+	dir := t.TempDir()
+	syntheticReadbackPath := filepath.Join(dir, "recommendation-readback-after.json")
+	if err := WriteJSON(syntheticReadbackPath, readback); err != nil {
+		t.Fatal(err)
+	}
+	binding, err := BuildAtlasMissionDashboardClosureBinding(
+		"mission-recommendation-feature-depth-next-wave-33",
+		syntheticReadbackPath,
+		sourceNodeDir,
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if binding.SchemaHealthStatus != "failed_missing_registry_artifacts" {
+		t.Fatalf("dashboard binding lost schema health status: %#v", binding.SchemaHealthStatus)
+	}
+	assertSchemaHasProperty(t, filepath.Join(root, "schemas", "mission-dashboard-closure-binding.schema.json"), "schema_health_status")
+}

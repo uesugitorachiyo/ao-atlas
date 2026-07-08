@@ -1650,6 +1650,7 @@ type AtlasMissionDashboardClosureBinding struct {
 	FailedNodesBefore          int                                      `json:"failed_nodes_before"`
 	FirstExecutableNode        string                                   `json:"first_executable_node"`
 	ExactNextAction            string                                   `json:"exact_next_action"`
+	SchemaHealthStatus         string                                   `json:"schema_health_status,omitempty"`
 	FinalResponseAllowed       bool                                     `json:"final_response_allowed"`
 	RowCount                   int                                      `json:"row_count"`
 	Rows                       []AtlasMissionDashboardClosureBindingRow `json:"rows"`
