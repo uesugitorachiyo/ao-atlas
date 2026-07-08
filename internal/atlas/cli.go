@@ -1009,6 +1009,9 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 	registryPath := filepath.Join(*outDir, "recommendation-evidence-schema-registry.json")
 	reportPath := filepath.Join(*outDir, "recommendation-evidence-validation-report.json")
 	coveragePath := filepath.Join(*outDir, "recommendation-evidence-schema-registry-coverage.json")
+	registryLedgerPath := filepath.Join(*outDir, "recommendation-schema-registry-run-ledger.json")
+	reportLedgerPath := filepath.Join(*outDir, "recommendation-validation-report-run-ledger.json")
+	coverageLedgerPath := filepath.Join(*outDir, "recommendation-schema-registry-coverage-run-ledger.json")
 
 	registry, err := DefaultAtlasRecommendationEvidenceSchemaRegistry()
 	if err != nil {
@@ -1025,6 +1028,27 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 	if err := WriteJSON(coveragePath, coverage); err != nil {
 		return err
 	}
+	registryLedger, err := BuildAtlasRecommendationCommandRunLedger("schema-registry", registryPath)
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(registryLedgerPath, registryLedger); err != nil {
+		return err
+	}
+	reportLedger, err := BuildAtlasRecommendationCommandRunLedger("validate-evidence", reportPath)
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(reportLedgerPath, reportLedger); err != nil {
+		return err
+	}
+	coverageLedger, err := BuildAtlasRecommendationCommandRunLedger("schema-registry-coverage", coveragePath)
+	if err != nil {
+		return err
+	}
+	if err := WriteJSON(coverageLedgerPath, coverageLedger); err != nil {
+		return err
+	}
 	if *jsonOut {
 		if err := printJSON(stdout, map[string]any{
 			"status":                                           coverage.Status,
@@ -1038,11 +1062,14 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			"recommendation_evidence_schema_registry":          filepath.ToSlash(registryPath),
 			"recommendation_evidence_validation_report":        filepath.ToSlash(reportPath),
 			"recommendation_evidence_schema_registry_coverage": filepath.ToSlash(coveragePath),
+			"schema_registry_run_ledger":                       filepath.ToSlash(registryLedgerPath),
+			"validation_report_run_ledger":                     filepath.ToSlash(reportLedgerPath),
+			"schema_registry_coverage_run_ledger":              filepath.ToSlash(coverageLedgerPath),
 		}); err != nil {
 			return err
 		}
 	} else {
-		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrecommendation_evidence_schema_registry=%s\nrecommendation_evidence_validation_report=%s\nrecommendation_evidence_schema_registry_coverage=%s\n",
+		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrecommendation_evidence_schema_registry=%s\nrecommendation_evidence_validation_report=%s\nrecommendation_evidence_schema_registry_coverage=%s\nschema_registry_run_ledger=%s\nvalidation_report_run_ledger=%s\nschema_registry_coverage_run_ledger=%s\n",
 			coverage.Status,
 			coverage.ValidationReportStatus,
 			coverage.RegistrySchemaCount,
@@ -1054,6 +1081,9 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			filepath.ToSlash(registryPath),
 			filepath.ToSlash(reportPath),
 			filepath.ToSlash(coveragePath),
+			filepath.ToSlash(registryLedgerPath),
+			filepath.ToSlash(reportLedgerPath),
+			filepath.ToSlash(coverageLedgerPath),
 		)
 	}
 	if coverageErr != nil {
