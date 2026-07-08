@@ -449,6 +449,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:mission-dashboard-compact-filters", err
 		}
 		return "typed:mission-dashboard-compact-filters", ValidateAtlasMissionDashboardCompactFilters(value)
+	case AtlasRecommendationNextTrackDecisionContract:
+		value, err := LoadJSON[AtlasRecommendationNextTrackDecision](path)
+		if err != nil {
+			return "typed:recommendation-next-track-decision", err
+		}
+		return "typed:recommendation-next-track-decision", ValidateAtlasRecommendationNextTrackDecision(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {
