@@ -900,11 +900,12 @@ func runMissionRecommendationsRunLedger(args []string, stdout io.Writer) error {
 	if *jsonOut {
 		return printJSON(stdout, ledger)
 	}
-	fmt.Fprintf(stdout, "status=%s\ncommand=%s\nartifact_schema=%s\ntyped_validator=%s\nrsi_remains_denied=%t\nrecommendation_command_run_ledger=%s\n",
+	fmt.Fprintf(stdout, "status=%s\ncommand=%s\nartifact_schema=%s\ntyped_validator=%s\noutput_status=%s\nrsi_remains_denied=%t\nrecommendation_command_run_ledger=%s\n",
 		ledger.Status,
 		ledger.Command,
 		ledger.ArtifactSchema,
 		ledger.TypedValidator,
+		ledger.OutputStatus,
 		ledger.RSIRemainsDenied,
 		filepath.ToSlash(*outPath),
 	)
