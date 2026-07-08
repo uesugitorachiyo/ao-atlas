@@ -120,6 +120,44 @@ func TestFeatureDepthWaveNextWavePromptPreservesMinimumTwoHourBudget(t *testing.
 	}
 }
 
+func TestFeatureDepthWaveImportRejectsCompletedFollowupRecommendationSource(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/source-feature-depth-recommendations.json",
+		"--target-instance", "ao-atlas-feature-depth-followup-durability-v05",
+		"--min-tasks", "40",
+		"--node-budget", "40",
+		"--out", filepath.Join(t.TempDir(), "generated-next-wave"),
+	}, &out, &out)
+	if code == 0 {
+		t.Fatalf("stale completed Feature Depth follow-up recommendations were imported again: %s", out.String())
+	}
+	for _, want := range []string{
+		"feature depth recommendations saturated",
+		"completed 40/40",
+		"route to AO Atlas refactoring/strategy review",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Fatalf("saturated import refusal missing %q: %s", want, out.String())
+		}
+	}
+}
+
 func normalizeRecommendationPromptFixture(value string) string {
 	value = strings.ReplaceAll(value, "\r\n", "\n")
 	return strings.ReplaceAll(value, "\r", "\n")

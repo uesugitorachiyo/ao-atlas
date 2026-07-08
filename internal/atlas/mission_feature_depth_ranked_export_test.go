@@ -97,3 +97,50 @@ func TestFeatureDepthWaveRankedExportBindsFinalClosureReadbackEvidence(t *testin
 		t.Fatalf("ranked Feature Depth export must remain a 40-task intent-only planning artifact: %#v", recordedExport)
 	}
 }
+
+func TestFeatureDepthWaveRankedExportRejectsCompletedFollowupSource(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	sourceRoot := "docs/evidence/ao-atlas-feature-depth-followup-durability-v04"
+	sourceReadback := sourceRoot + "/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json"
+	sourceAssertion := sourceRoot + "/nodes/mission-recommendation-feature-depth-next-wave-40/promoter_no_promotion.json"
+	tmpExportPath := filepath.Join(t.TempDir(), "next-wave-feature-depth-recommendations.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "export-next-wave",
+		"--mission-id", "ao-atlas-next-feature-depth-followup-durability-v05",
+		"--source-evidence-root", sourceRoot,
+		"--source-readback", sourceReadback,
+		"--source-assertion", sourceAssertion,
+		"--min-tasks", "40",
+		"--out", tmpExportPath,
+	}, &out, &out)
+	if code == 0 {
+		t.Fatalf("completed Feature Depth follow-up source was exported again: %s", out.String())
+	}
+	for _, want := range []string{
+		"feature depth recommendations saturated",
+		"completed 40/40",
+		"route to AO Atlas refactoring/strategy review",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Fatalf("saturation refusal missing %q: %s", want, out.String())
+		}
+	}
+	if _, err := os.Stat(tmpExportPath); !os.IsNotExist(err) {
+		t.Fatalf("saturated export should not write a next-wave artifact, stat err=%v", err)
+	}
+}
