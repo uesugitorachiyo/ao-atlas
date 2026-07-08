@@ -15,8 +15,8 @@ func BuildAtlasRecommendationCommandRunLedger(command, artifactPath string) (Atl
 	if artifactPath == "" {
 		return AtlasRecommendationCommandRunLedger{}, fmt.Errorf("artifact path is required")
 	}
-	if !oneOf(command, "next-track", "consumed-ledger", "track-registry") {
-		return AtlasRecommendationCommandRunLedger{}, fmt.Errorf("command must be next-track, consumed-ledger, or track-registry")
+	if !oneOf(command, "next-track", "consumed-ledger", "track-registry", "final-response-gates", "schema-registry") {
+		return AtlasRecommendationCommandRunLedger{}, fmt.Errorf("command must be next-track, consumed-ledger, track-registry, final-response-gates, or schema-registry")
 	}
 
 	header, err := LoadJSON[struct {
@@ -70,8 +70,8 @@ func ValidateAtlasRecommendationCommandRunLedger(ledger AtlasRecommendationComma
 	if ledger.Status != "recorded" {
 		errs = append(errs, "status must be recorded")
 	}
-	if !oneOf(ledger.Command, "next-track", "consumed-ledger", "track-registry") {
-		errs = append(errs, "command must be next-track, consumed-ledger, or track-registry")
+	if !oneOf(ledger.Command, "next-track", "consumed-ledger", "track-registry", "final-response-gates", "schema-registry") {
+		errs = append(errs, "command must be next-track, consumed-ledger, track-registry, final-response-gates, or schema-registry")
 	}
 	requireField(&errs, "artifact_path", ledger.ArtifactPath)
 	if !digestPattern.MatchString(ledger.ArtifactDigest) {
@@ -81,6 +81,8 @@ func ValidateAtlasRecommendationCommandRunLedger(ledger AtlasRecommendationComma
 		AtlasRecommendationNextTrackDecisionContract,
 		AtlasConsumedRecommendationLedgerContract,
 		AtlasRecommendationTrackRegistryContract,
+		AtlasRecommendationFinalResponseGatesContract,
+		AtlasRecommendationEvidenceSchemaRegistryContract,
 	) {
 		errs = append(errs, "artifact_schema is not an allowed recommendation command output")
 	}
