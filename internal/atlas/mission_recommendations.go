@@ -47,6 +47,7 @@ type AtlasRecommendationReadbackOptions struct {
 	ElapsedMinutes         int
 	LeaseTimingMode        string
 	PublicSafetyScanStatus string
+	SchemaHealthStatus     string
 }
 
 type AtlasRecommendationLeaseStartOptions struct {
@@ -928,6 +929,10 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 	if strings.TrimSpace(options.PublicSafetyScanStatus) != "" {
 		publicSafetyScanStatus = strings.TrimSpace(options.PublicSafetyScanStatus)
 	}
+	schemaHealthStatus := "required_pending_schema_registry_health"
+	if strings.TrimSpace(options.SchemaHealthStatus) != "" {
+		schemaHealthStatus = strings.TrimSpace(options.SchemaHealthStatus)
+	}
 	readback := AtlasRecommendationReadback{
 		ContractVersion:           AtlasRecommendationReadbackContract,
 		MissionID:                 wave.MissionID,
@@ -971,6 +976,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		CommandTimelineStatus:           commandTimelineStatus,
 		CommandTimelinePlaceholders:     commandTimelinePlaceholders(),
 		PublicSafetyScanStatus:          publicSafetyScanStatus,
+		SchemaHealthStatus:              schemaHealthStatus,
 		ReturnGateStatus:                returnGateStatus,
 		CheckpointCount:                 completed,
 		FinalResponseAllowed:            finalAllowed,

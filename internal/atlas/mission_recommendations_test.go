@@ -58,6 +58,14 @@ func assertSchemaRequiresField(t *testing.T, schemaPath, field string) {
 	t.Fatalf("schema %s does not require %q", schemaPath, field)
 }
 
+func assertSchemaHasProperty(t *testing.T, schemaPath, field string) {
+	t.Helper()
+	schema := mustLoadJSON[requiredFieldSchema](t, schemaPath)
+	if _, ok := schema.Properties[field]; !ok {
+		t.Fatalf("schema %s does not define property %q", schemaPath, field)
+	}
+}
+
 func assertNestedSchemaRequiresField(t *testing.T, schemaPath, property, field string) {
 	t.Helper()
 	schema := mustLoadJSON[requiredFieldSchema](t, schemaPath)
@@ -1122,6 +1130,44 @@ func TestMissionRecommendationsReadbackCLIMatchesGeneratedArtifacts(t *testing.T
 	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 0 {
 		t.Fatalf("readback must expose return gate status and checkpoint count: %#v", readback)
 	}
+}
+
+func TestMissionRecommendationsReadbackCLIBindsSchemaHealthStatus(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	readbackPath := filepath.Join(dir, "readback.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "readback",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--schema-health-status", "failed_missing_registry_artifacts",
+		"--out", readbackPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation readback failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "schema_health_status=failed_missing_registry_artifacts") {
+		t.Fatalf("readback output missing schema health status: %s", out.String())
+	}
+	rawReadback := mustLoadJSON[map[string]any](t, readbackPath)
+	if rawReadback["schema_health_status"] != "failed_missing_registry_artifacts" {
+		t.Fatalf("readback JSON missing schema health status: %#v", rawReadback["schema_health_status"])
+	}
+	assertSchemaHasProperty(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "schema_health_status")
 }
 
 func TestMissionRecommendationsReadbackCLIWritesWorkgraphReadinessPacket(t *testing.T) {

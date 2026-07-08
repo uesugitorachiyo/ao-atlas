@@ -3108,6 +3108,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	completedAt := fs.String("completed-at", "", "long-run lease completion time, RFC3339")
 	elapsedMinutes := fs.Int("elapsed-minutes", 0, "long-run lease elapsed minutes")
 	leaseTimingMode := fs.String("lease-timing-mode", "", "lease timing evidence mode")
+	schemaHealthStatus := fs.String("schema-health-status", "", "schema registry health readback status")
 	outPath := fs.String("out", "", "output path")
 	outExecutionReadbackPath := fs.String("out-execution-readback", "", "execution readback output path")
 	outWorkgraphReadinessPacketPath := fs.String("out-workgraph-readiness-packet", "", "generated workgraph readiness packet output path")
@@ -3141,13 +3142,14 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 		return err
 	}
 	readback, err := BuildAtlasRecommendationReadback(wave, workgraph, AtlasRecommendationReadbackOptions{
-		WavePath:        *wavePath,
-		WorkgraphPath:   *workgraphPath,
-		EvidenceRoot:    *evidenceRoot,
-		StartedAt:       *startedAt,
-		CompletedAt:     *completedAt,
-		ElapsedMinutes:  *elapsedMinutes,
-		LeaseTimingMode: *leaseTimingMode,
+		WavePath:           *wavePath,
+		WorkgraphPath:      *workgraphPath,
+		EvidenceRoot:       *evidenceRoot,
+		StartedAt:          *startedAt,
+		CompletedAt:        *completedAt,
+		ElapsedMinutes:     *elapsedMinutes,
+		LeaseTimingMode:    *leaseTimingMode,
+		SchemaHealthStatus: *schemaHealthStatus,
 	})
 	if err != nil {
 		return err
@@ -3179,7 +3181,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	if *jsonOut {
 		return printJSON(stdout, readback)
 	}
-	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\nworkgraph_readiness_packet=%s\n",
+	fmt.Fprintf(stdout, "status=%s\nmission_id=%s\ntotal_nodes=%d\ncompleted_nodes=%d\nready_nodes=%d\nexecutable_ready_nodes=%d\nlease_health=%s\ncheckpoint_count=%d\nreturn_gate_status=%s\nschema_health_status=%s\nelapsed_minutes=%d\nmin_minutes_met=%t\nlease_time_status=%s\nfinal_response_allowed=%t\nexact_next_action=%s\nrecommendation_readback=%s\nexecution_readback=%s\nworkgraph_readiness_packet=%s\n",
 		readback.Status,
 		readback.MissionID,
 		readback.TotalNodes,
@@ -3189,6 +3191,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 		readback.LeaseHealthStatus,
 		readback.CheckpointCount,
 		readback.ReturnGateStatus,
+		readback.SchemaHealthStatus,
 		readback.ElapsedMinutes,
 		readback.MinMinutesMet,
 		readback.LeaseTimeStatus,

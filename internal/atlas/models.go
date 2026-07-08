@@ -527,6 +527,7 @@ type AtlasRecommendationReadback struct {
 	CommandTimelineStatus           string                                `json:"command_timeline_status"`
 	CommandTimelinePlaceholders     []AtlasCommandTimelinePlaceholder     `json:"command_timeline_placeholders"`
 	PublicSafetyScanStatus          string                                `json:"public_safety_scan_status"`
+	SchemaHealthStatus              string                                `json:"schema_health_status,omitempty"`
 	ReturnGateStatus                string                                `json:"return_gate_status,omitempty"`
 	CheckpointCount                 int                                   `json:"checkpoint_count"`
 	FinalResponseAllowed            bool                                  `json:"final_response_allowed"`
