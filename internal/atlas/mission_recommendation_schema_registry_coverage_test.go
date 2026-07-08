@@ -605,3 +605,44 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsFailedValidationRepo
 		t.Fatalf("expected typed recommendation schema registry coverage validator, got %s", validator)
 	}
 }
+
+func TestValidateAtlasRecommendationEvidenceSchemaRegistryCoverageRejectsInvalidFailureReasonWithAllowedValues(t *testing.T) {
+	coverage := AtlasRecommendationEvidenceSchemaRegistryCoverage{
+		Schema:                       AtlasRecommendationEvidenceSchemaRegistryCoverageContract,
+		Status:                       "failed",
+		RegistryPath:                 "docs/evidence/example/recommendation-evidence-schema-registry.json",
+		ValidationReportPath:         "docs/evidence/example/recommendation-evidence-validation-report.json",
+		ValidationReportStatus:       "failed",
+		RegistrySchemaCount:          6,
+		CoveredSchemaCount:           6,
+		MissingSchemas:               []string{},
+		RegistryValidatorCount:       6,
+		CoveredValidatorCount:        6,
+		MissingValidators:            []string{},
+		FailureReasons:               []string{"unexpected_failure_reason"},
+		AllRegistrySchemasCovered:    true,
+		AllRegistryValidatorsCovered: true,
+		NoPromotionRequested:         true,
+		PromotionGranted:             false,
+		ClaimsAuthorityAdvance:       false,
+		RSIRemainsDenied:             true,
+		SafeToExecute:                false,
+		SchedulesWork:                false,
+		ExecutesWork:                 false,
+		ApprovesWork:                 false,
+		MutatesRepositories:          false,
+	}
+
+	err := ValidateAtlasRecommendationEvidenceSchemaRegistryCoverage(coverage)
+	if err == nil {
+		t.Fatal("expected invalid failure reason to be rejected")
+	}
+	for _, want := range []string{
+		"failure_reasons contains invalid reason unexpected_failure_reason",
+		"allowed: validation_report_failed, missing_registry_schemas, missing_registry_validators",
+	} {
+		if !strings.Contains(err.Error(), want) {
+			t.Fatalf("invalid failure reason error missing %q: %v", want, err)
+		}
+	}
+}
