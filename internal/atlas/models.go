@@ -223,6 +223,39 @@ type AOMissionFeatureDepthTask struct {
 	EvidenceRefs []string `json:"evidence_refs,omitempty"`
 }
 
+type AOMissionRefactoringRecommendations struct {
+	Schema                  string                     `json:"schema"`
+	MissionID               string                     `json:"mission_id"`
+	Status                  string                     `json:"status"`
+	Track                   string                     `json:"track"`
+	MinimumTasks            int                        `json:"minimum_tasks"`
+	RecommendationCount     int                        `json:"recommendation_count"`
+	SourceEvidenceRoot      string                     `json:"source_evidence_root"`
+	SourceReadbackPath      string                     `json:"source_readback_path"`
+	SourceAssertionPath     string                     `json:"source_assertion_path"`
+	NextTrackDecisionPath   string                     `json:"next_track_decision_path"`
+	NextTrackDecisionDigest string                     `json:"next_track_decision_digest"`
+	Tasks                   []AOMissionRefactoringTask `json:"tasks"`
+	NoPromotionRequested    bool                       `json:"no_promotion_requested"`
+	PromotionGranted        bool                       `json:"promotion_granted"`
+	ClaimsAuthorityAdvance  bool                       `json:"claims_authority_advance"`
+	RSIRemainsDenied        bool                       `json:"rsi_remains_denied"`
+	SafeToExecute           bool                       `json:"safe_to_execute"`
+	SchedulesWork           bool                       `json:"schedules_work"`
+	ExecutesWork            bool                       `json:"executes_work"`
+	ApprovesWork            bool                       `json:"approves_work"`
+	MutatesRepositories     bool                       `json:"mutates_repositories"`
+}
+
+type AOMissionRefactoringTask struct {
+	Rank         int      `json:"rank"`
+	ID           string   `json:"id"`
+	Owner        string   `json:"owner"`
+	Theme        string   `json:"theme"`
+	Task         string   `json:"task"`
+	EvidenceRefs []string `json:"evidence_refs"`
+}
+
 type AtlasNextWaveRecommendationExport struct {
 	Schema                 string                               `json:"schema"`
 	NodeID                 string                               `json:"node_id"`

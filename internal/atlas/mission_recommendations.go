@@ -32,6 +32,15 @@ type AtlasNextWaveFeatureDepthExportOptions struct {
 	MinTasks            int
 }
 
+type AtlasNextWaveRefactoringExportOptions struct {
+	MissionID             string
+	SourceEvidenceRoot    string
+	SourceReadbackPath    string
+	SourceAssertionPath   string
+	NextTrackDecisionPath string
+	MinTasks              int
+}
+
 type AtlasRecommendationWaveResult struct {
 	Wave      AtlasRecommendationWave
 	Workgraph Workgraph
@@ -339,6 +348,94 @@ func BuildAtlasNextWaveFeatureDepthRecommendations(options AtlasNextWaveFeatureD
 	return bundle, nil
 }
 
+func BuildAtlasNextWaveRefactoringRecommendations(options AtlasNextWaveRefactoringExportOptions) (AOMissionRefactoringRecommendations, error) {
+	minTasks := options.MinTasks
+	if minTasks <= 0 {
+		minTasks = 40
+	}
+	if minTasks > 40 {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("refactoring exporter currently supports at most 40 ranked tasks, requested %d", minTasks)
+	}
+	missionID := strings.TrimSpace(options.MissionID)
+	if missionID == "" {
+		missionID = "ao-atlas-refactoring-wave-v01"
+	}
+	sourceEvidenceRoot := filepath.ToSlash(strings.TrimSpace(options.SourceEvidenceRoot))
+	sourceReadbackPath := filepath.ToSlash(strings.TrimSpace(options.SourceReadbackPath))
+	sourceAssertionPath := filepath.ToSlash(strings.TrimSpace(options.SourceAssertionPath))
+	nextTrackDecisionPath := filepath.ToSlash(strings.TrimSpace(options.NextTrackDecisionPath))
+	for label, path := range map[string]string{
+		"source_evidence_root":  sourceEvidenceRoot,
+		"source_readback_path":  sourceReadbackPath,
+		"source_assertion_path": sourceAssertionPath,
+	} {
+		if err := validateNextWaveSourcePath(label, path); err != nil {
+			return AOMissionRefactoringRecommendations{}, err
+		}
+	}
+	if nextTrackDecisionPath == "" {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("next_track_decision_path is required")
+	}
+	decision, err := LoadJSON[AtlasRecommendationNextTrackDecision](nextTrackDecisionPath)
+	if err != nil {
+		return AOMissionRefactoringRecommendations{}, err
+	}
+	if err := ValidateAtlasRecommendationNextTrackDecision(decision); err != nil {
+		return AOMissionRefactoringRecommendations{}, err
+	}
+	if decision.SourceEvidenceRoot != sourceEvidenceRoot || filepath.ToSlash(decision.SourceReadbackPath) != sourceReadbackPath {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("next-track decision must match refactoring export source")
+	}
+	if decision.RecommendedTrack != "refactoring" || decision.RefactoringStatus != "recommended_next" || decision.RSITrackStatus != "boundary_hardening_only_denied" {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("next-track decision must recommend refactoring with RSI boundary denied")
+	}
+	decisionDigest, err := digestFile(nextTrackDecisionPath)
+	if err != nil {
+		return AOMissionRefactoringRecommendations{}, err
+	}
+	nextTrackDecisionRef := publicArtifactRef(nextTrackDecisionPath)
+
+	tasks := make([]AOMissionRefactoringTask, 0, 40)
+	for i, seed := range nextWaveRefactoringSeeds() {
+		rank := i + 1
+		tasks = append(tasks, AOMissionRefactoringTask{
+			Rank:         rank,
+			ID:           fmt.Sprintf("refactoring-next-wave-%02d", rank),
+			Owner:        "ao-atlas",
+			Theme:        seed.theme,
+			Task:         seed.task,
+			EvidenceRefs: []string{sourceReadbackPath, sourceAssertionPath, nextTrackDecisionRef},
+		})
+	}
+	bundle := AOMissionRefactoringRecommendations{
+		Schema:                  "ao.mission.refactoring-recommendations.v0.1",
+		MissionID:               missionID,
+		Status:                  "ready",
+		Track:                   "refactoring",
+		MinimumTasks:            minTasks,
+		RecommendationCount:     len(tasks),
+		SourceEvidenceRoot:      sourceEvidenceRoot,
+		SourceReadbackPath:      sourceReadbackPath,
+		SourceAssertionPath:     sourceAssertionPath,
+		NextTrackDecisionPath:   nextTrackDecisionRef,
+		NextTrackDecisionDigest: decisionDigest,
+		Tasks:                   tasks,
+		NoPromotionRequested:    true,
+		PromotionGranted:        false,
+		ClaimsAuthorityAdvance:  false,
+		RSIRemainsDenied:        true,
+		SafeToExecute:           false,
+		SchedulesWork:           false,
+		ExecutesWork:            false,
+		ApprovesWork:            false,
+		MutatesRepositories:     false,
+	}
+	if err := ValidateAtlasNextWaveRefactoringRecommendations(bundle, minTasks); err != nil {
+		return AOMissionRefactoringRecommendations{}, err
+	}
+	return bundle, nil
+}
+
 func BuildAtlasNextWaveRecommendationExport(bundle AOMissionFeatureDepthRecommendations, sourceReadback AtlasRecommendationReadback, nodeID, expectedNextNode string) (AtlasNextWaveRecommendationExport, error) {
 	nodeID = strings.TrimSpace(nodeID)
 	if nodeID == "" {
@@ -416,6 +513,118 @@ func ValidateAtlasNextWaveFeatureDepthRecommendations(bundle AOMissionFeatureDep
 	}
 	if len(themes) < 10 {
 		errs = append(errs, "tasks must span at least 10 Feature Depth themes")
+	}
+	return joinErrors(errs)
+}
+
+func ValidateAtlasNextWaveRefactoringRecommendations(bundle AOMissionRefactoringRecommendations, minTasks int) error {
+	var errs []string
+	if minTasks <= 0 {
+		minTasks = 40
+	}
+	if bundle.Schema != "ao.mission.refactoring-recommendations.v0.1" {
+		errs = append(errs, "schema must be ao.mission.refactoring-recommendations.v0.1")
+	}
+	requireField(&errs, "mission_id", bundle.MissionID)
+	if bundle.Status != "ready" {
+		errs = append(errs, "status must be ready")
+	}
+	if bundle.Track != "refactoring" {
+		errs = append(errs, "track must be refactoring")
+	}
+	if bundle.MinimumTasks < minTasks {
+		errs = append(errs, fmt.Sprintf("minimum_tasks must be at least %d", minTasks))
+	}
+	if len(bundle.Tasks) < minTasks {
+		errs = append(errs, fmt.Sprintf("tasks must include at least %d tasks", minTasks))
+	}
+	if bundle.RecommendationCount != len(bundle.Tasks) {
+		errs = append(errs, "recommendation_count must match tasks length")
+	}
+	for field, path := range map[string]string{
+		"source_evidence_root":     bundle.SourceEvidenceRoot,
+		"source_readback_path":     bundle.SourceReadbackPath,
+		"source_assertion_path":    bundle.SourceAssertionPath,
+		"next_track_decision_path": bundle.NextTrackDecisionPath,
+	} {
+		requireField(&errs, field, path)
+		checkPublicPath(&errs, field, path, true)
+	}
+	if !digestPattern.MatchString(bundle.NextTrackDecisionDigest) {
+		errs = append(errs, "next_track_decision_digest must be sha256 digest")
+	}
+	seen := map[string]bool{}
+	themes := map[string]bool{}
+	for i, task := range bundle.Tasks {
+		prefix := fmt.Sprintf("tasks[%d]", i)
+		wantRank := i + 1
+		if task.Rank != wantRank {
+			errs = append(errs, fmt.Sprintf("%s.rank must be %d", prefix, wantRank))
+		}
+		if task.ID != fmt.Sprintf("refactoring-next-wave-%02d", wantRank) {
+			errs = append(errs, prefix+".id must match ranked refactoring id")
+		}
+		if seen[task.ID] {
+			errs = append(errs, prefix+".id must be unique")
+		}
+		seen[task.ID] = true
+		requireField(&errs, prefix+".owner", task.Owner)
+		if task.Owner != "ao-atlas" {
+			errs = append(errs, prefix+".owner must be ao-atlas")
+		}
+		requireField(&errs, prefix+".theme", task.Theme)
+		requireField(&errs, prefix+".task", task.Task)
+		if len(strings.Fields(task.Task)) < 6 {
+			errs = append(errs, prefix+".task must be a concrete actionable task")
+		}
+		if len(task.EvidenceRefs) < 3 {
+			errs = append(errs, prefix+".evidence_refs must include readback, assertion, and next-track decision")
+		}
+		if !containsValue(task.EvidenceRefs, bundle.SourceReadbackPath) {
+			errs = append(errs, prefix+".evidence_refs must include source_readback_path")
+		}
+		if !containsValue(task.EvidenceRefs, bundle.SourceAssertionPath) {
+			errs = append(errs, prefix+".evidence_refs must include source_assertion_path")
+		}
+		if !containsValue(task.EvidenceRefs, bundle.NextTrackDecisionPath) {
+			errs = append(errs, prefix+".evidence_refs must include next_track_decision_path")
+		}
+		checkPublicPath(&errs, prefix+".id", task.ID, true)
+		checkPublicPath(&errs, prefix+".owner", task.Owner, true)
+		checkPublicPath(&errs, prefix+".theme", task.Theme, true)
+		checkPublicPath(&errs, prefix+".task", task.Task, true)
+		checkPublicStrings(&errs, prefix+".evidence_refs", task.EvidenceRefs, true)
+		themes[task.Theme] = true
+	}
+	if len(themes) < 10 {
+		errs = append(errs, "tasks must span at least 10 refactoring themes")
+	}
+	if !bundle.NoPromotionRequested {
+		errs = append(errs, "no_promotion_requested must be true")
+	}
+	if bundle.PromotionGranted {
+		errs = append(errs, "promotion_granted must be false")
+	}
+	if bundle.ClaimsAuthorityAdvance {
+		errs = append(errs, "claims_authority_advance must be false")
+	}
+	if !bundle.RSIRemainsDenied {
+		errs = append(errs, "rsi_remains_denied must be true")
+	}
+	if bundle.SafeToExecute {
+		errs = append(errs, "safe_to_execute must be false")
+	}
+	if bundle.SchedulesWork {
+		errs = append(errs, "schedules_work must be false")
+	}
+	if bundle.ExecutesWork {
+		errs = append(errs, "executes_work must be false")
+	}
+	if bundle.ApprovesWork {
+		errs = append(errs, "approves_work must be false")
+	}
+	if bundle.MutatesRepositories {
+		errs = append(errs, "mutates_repositories must be false")
 	}
 	return joinErrors(errs)
 }
@@ -518,6 +727,57 @@ func nextWaveFeatureDepthSeeds() []struct {
 		{"next-wave-generation", "Add next wave prompt generation with minimum two hour work budget language."},
 		{"next-wave-generation", "Validate next wave recommendations remain planning only until imported."},
 		{"next-wave-generation", "Generate final Feature Depth recommendations for operator handoff review."},
+	}
+}
+
+func nextWaveRefactoringSeeds() []struct {
+	theme string
+	task  string
+} {
+	return []struct {
+		theme string
+		task  string
+	}{
+		{"recommendation-routing", "Extract recommendation routing command dispatch into a typed registry with deterministic help output."},
+		{"recommendation-routing", "Replace duplicated recommendation command lists with one shared registry-backed command catalog."},
+		{"recommendation-routing", "Bind completed Feature Depth routing decisions to refactoring wave generation without stale exports."},
+		{"recommendation-routing", "Add consumed recommendation ledger checks before any next wave exporter can run."},
+		{"recommendation-routing", "Separate planning-only recommendation export commands from mutation-capable node execution commands."},
+		{"evidence-schema-registry", "Refactor recommendation evidence schema registry entries into typed constructors with drift tests."},
+		{"evidence-schema-registry", "Move schema contract constants into grouped recommendation evidence namespaces with coverage tests."},
+		{"evidence-schema-registry", "Add registry-backed typed validator lookup for recommendation control-plane artifacts."},
+		{"evidence-schema-registry", "Collapse duplicated schema coverage failure wording into reusable validation helpers."},
+		{"evidence-schema-registry", "Introduce schema registry golden fixtures for command output and typed validator bindings."},
+		{"readback-gates", "Centralize final response gate evaluation for readback, execution readback, and closure readbacks."},
+		{"readback-gates", "Refactor exact next action preservation into a shared readback transition helper."},
+		{"readback-gates", "Add compact readback status normalization for ready, completed, blocked, and failed node states."},
+		{"readback-gates", "Bind return gate denial reasons to structured fields instead of repeated text fragments."},
+		{"readback-gates", "Create regression fixtures for stale readback rejection across all recommendation tracks."},
+		{"run-ledger", "Unify command run-ledger, rollup, and coverage-check builders behind a common artifact summary type."},
+		{"run-ledger", "Refactor run-ledger output status classification into reusable pass, ready, failed, and blocked categories."},
+		{"run-ledger", "Add ledger coverage checks for refactoring exporters and track routing artifacts."},
+		{"run-ledger", "Bind run-ledger rollups to final operator summaries without self-referential ledger requirements."},
+		{"run-ledger", "Create long-run ledger fixture packs for repeated command retries and resumed sessions."},
+		{"pr-ci-lifecycle", "Normalize PR and CI ledger rows across feature depth, closure, and refactoring waves."},
+		{"pr-ci-lifecycle", "Extract Windows long-running check telemetry into shared threshold and wait-state helpers."},
+		{"pr-ci-lifecycle", "Add merge readiness guard helpers that require passed checks before branch cleanup evidence."},
+		{"pr-ci-lifecycle", "Refactor post-merge branch deletion readbacks into reusable local and remote cleanup records."},
+		{"pr-ci-lifecycle", "Create PR lifecycle replay fixtures for interrupted merge, sync, and cleanup handoffs."},
+		{"prompt-generation", "Refactor continuation prompt generation to consume structured wave budgets and stop conditions."},
+		{"prompt-generation", "Add prompt compaction resume fixtures that preserve next node, exact action, and final gate denial."},
+		{"prompt-generation", "Move prompt safety boundary rendering into one audited template helper."},
+		{"prompt-generation", "Bind generated prompts to source readback digests and consumed recommendation ledgers."},
+		{"prompt-generation", "Add long-run prompt regression fixtures for two to three hour refactoring waves."},
+		{"dashboard-provenance", "Refactor mission dashboard rows to share provenance digest and freshness evaluation helpers."},
+		{"dashboard-provenance", "Add dashboard filters for recommendation track, schema health, CI state, and cleanup state."},
+		{"dashboard-provenance", "Bind dashboard closure rows to Promoter, Command, Sentinel, and Foundry rollup evidence."},
+		{"dashboard-provenance", "Create stale dashboard evidence detection for superseded wave readbacks and old exports."},
+		{"dashboard-provenance", "Add dashboard compact rendering tests for completed waves with no ready nodes."},
+		{"test-structure", "Split oversized recommendation tests into focused files by routing, evidence, readback, and lifecycle domain."},
+		{"test-structure", "Extract shared recommendation test fixture builders for waves, nodes, and readbacks."},
+		{"test-structure", "Add table-driven validator tests for no-promotion and RSI-denied boundary fields."},
+		{"architecture-boundaries", "Create targeted regression suites that avoid rerunning unrelated long-wave fixture assertions."},
+		{"developer-experience", "Document the refactoring wave handoff with ranked tasks and verification gates."},
 	}
 }
 
