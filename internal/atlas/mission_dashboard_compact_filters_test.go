@@ -142,3 +142,63 @@ func TestMissionDashboardCompactFiltersCarrySchemaHealthStatusWhenReadbackHasIt(
 		t.Fatalf("expected typed Mission dashboard compact filters validator, got %s", validator)
 	}
 }
+
+func TestMissionDashboardCompactFiltersClassifySchemaHealthFilterStates(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
+	sourceNodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-35")
+	sourceReadbackPath := filepath.Join(sourceNodeDir, "recommendation-readback-after.json")
+	workgraphPath := filepath.Join(sourceNodeDir, "workgraph-after.json")
+
+	cases := []struct {
+		name       string
+		status     string
+		wantState  string
+		actionable bool
+	}{
+		{
+			name:       "failed",
+			status:     "failed_missing_registry_artifacts",
+			wantState:  "failed",
+			actionable: true,
+		},
+		{
+			name:       "pending",
+			status:     "pending_schema_health_repair",
+			wantState:  "pending",
+			actionable: true,
+		},
+		{
+			name:       "ready",
+			status:     "ready_schema_registry_health",
+			wantState:  "ready",
+			actionable: false,
+		},
+	}
+
+	for _, tt := range cases {
+		t.Run(tt.name, func(t *testing.T) {
+			tempDir := t.TempDir()
+			syntheticReadbackPath := filepath.Join(tempDir, "recommendation-readback-after.json")
+			readback := mustLoadJSON[AtlasRecommendationReadback](t, sourceReadbackPath)
+			readback.SchemaHealthStatus = tt.status
+			if err := WriteJSON(syntheticReadbackPath, readback); err != nil {
+				t.Fatal(err)
+			}
+
+			fixture, err := BuildAtlasMissionDashboardCompactFilters("mission-recommendation-schema-health-filter-states", syntheticReadbackPath, workgraphPath)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if fixture.SchemaHealthFilterState != tt.wantState {
+				t.Fatalf("schema health status %q classified as %q, want %q", tt.status, fixture.SchemaHealthFilterState, tt.wantState)
+			}
+			if fixture.SchemaHealthFilterActionable != tt.actionable {
+				t.Fatalf("schema health status %q actionable=%t, want %t", tt.status, fixture.SchemaHealthFilterActionable, tt.actionable)
+			}
+			if err := ValidateAtlasMissionDashboardCompactFilters(fixture); err != nil {
+				t.Fatal(err)
+			}
+		})
+	}
+}

@@ -50,6 +50,7 @@ func BuildAtlasMissionDashboardCompactFilters(nodeID, sourceReadbackPath, source
 		buildMissionDashboardCompactFilter("completed", "Completed", statusNodeIDs["completed"], "completed_history", false),
 	}
 	schemaHealthStatus := strings.TrimSpace(readback.SchemaHealthStatus)
+	schemaHealthFilterState := missionDashboardSchemaHealthFilterState(schemaHealthStatus)
 	schemaHealthFilterActionable := missionDashboardSchemaHealthFilterActionable(schemaHealthStatus)
 	if schemaHealthStatus != "" {
 		filters = append(filters, buildMissionDashboardSchemaHealthFilter(schemaHealthStatus, schemaHealthFilterActionable))
@@ -91,6 +92,7 @@ func BuildAtlasMissionDashboardCompactFilters(nodeID, sourceReadbackPath, source
 	if schemaHealthStatus != "" {
 		fixture.SchemaHealthFilterKey = "schema_health"
 		fixture.SchemaHealthFilterStatus = schemaHealthStatus
+		fixture.SchemaHealthFilterState = schemaHealthFilterState
 		fixture.SchemaHealthFilterActionable = schemaHealthFilterActionable
 	}
 	if err := ValidateAtlasMissionDashboardCompactFilters(fixture); err != nil {
@@ -221,24 +223,36 @@ func buildMissionDashboardSchemaHealthFilter(status string, actionable bool) Atl
 }
 
 func missionDashboardSchemaHealthFilterActionable(status string) bool {
+	state := missionDashboardSchemaHealthFilterState(status)
+	return state == "failed" || state == "pending"
+}
+
+func missionDashboardSchemaHealthFilterState(status string) string {
 	status = strings.TrimSpace(status)
 	if status == "" {
-		return false
+		return ""
 	}
-	return strings.HasPrefix(status, "failed") ||
-		strings.HasPrefix(status, "pending") ||
-		strings.Contains(status, "missing")
+	if strings.HasPrefix(status, "failed") || strings.Contains(status, "missing") {
+		return "failed"
+	}
+	if strings.HasPrefix(status, "ready") ||
+		strings.HasPrefix(status, "passed") ||
+		strings.Contains(status, "complete") {
+		return "ready"
+	}
+	return "pending"
 }
 
 func validateMissionDashboardSchemaHealthFilterBinding(errs *[]string, fixture AtlasMissionDashboardCompactFilters, hasSchemaHealthStatus bool) {
 	for field, value := range map[string]string{
 		"schema_health_filter_key":    fixture.SchemaHealthFilterKey,
 		"schema_health_filter_status": fixture.SchemaHealthFilterStatus,
+		"schema_health_filter_state":  fixture.SchemaHealthFilterState,
 	} {
 		checkPublicPath(errs, field, value, true)
 	}
 	if !hasSchemaHealthStatus {
-		if fixture.SchemaHealthFilterKey != "" || fixture.SchemaHealthFilterStatus != "" || fixture.SchemaHealthFilterActionable {
+		if fixture.SchemaHealthFilterKey != "" || fixture.SchemaHealthFilterStatus != "" || fixture.SchemaHealthFilterState != "" || fixture.SchemaHealthFilterActionable {
 			*errs = append(*errs, "schema health filter fields require schema_health_status")
 		}
 		return
@@ -248,6 +262,9 @@ func validateMissionDashboardSchemaHealthFilterBinding(errs *[]string, fixture A
 	}
 	if fixture.SchemaHealthFilterStatus != fixture.SchemaHealthStatus {
 		*errs = append(*errs, "schema_health_filter_status must match schema_health_status")
+	}
+	if fixture.SchemaHealthFilterState != missionDashboardSchemaHealthFilterState(fixture.SchemaHealthStatus) {
+		*errs = append(*errs, "schema_health_filter_state must classify schema_health_status")
 	}
 	if fixture.SchemaHealthFilterActionable != missionDashboardSchemaHealthFilterActionable(fixture.SchemaHealthStatus) {
 		*errs = append(*errs, "schema_health_filter_actionable must match schema health status")

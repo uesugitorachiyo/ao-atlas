@@ -1805,6 +1805,7 @@ type AtlasMissionDashboardCompactFilters struct {
 	SchemaHealthStatus                 string                               `json:"schema_health_status,omitempty"`
 	SchemaHealthFilterKey              string                               `json:"schema_health_filter_key,omitempty"`
 	SchemaHealthFilterStatus           string                               `json:"schema_health_filter_status,omitempty"`
+	SchemaHealthFilterState            string                               `json:"schema_health_filter_state,omitempty"`
 	SchemaHealthFilterActionable       bool                                 `json:"schema_health_filter_actionable,omitempty"`
 	ActiveFilterKey                    string                               `json:"active_filter_key"`
 	FilterCount                        int                                  `json:"filter_count"`
