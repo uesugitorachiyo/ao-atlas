@@ -53,8 +53,17 @@ func DefaultAtlasRecommendationEvidenceSchemaRegistry() (AtlasRecommendationEvid
 				SafetyClass:    "planning_readback_no_execution",
 				PlanningOnly:   true,
 			},
+			{
+				Schema:         AtlasRecommendationEvidenceSchemaRegistryCoverageContract,
+				Artifact:       "recommendation-evidence-schema-registry-coverage",
+				Command:        "schema-registry-coverage",
+				TypedValidator: "typed:recommendation-evidence-schema-registry-coverage",
+				StatusField:    "status",
+				SafetyClass:    "planning_readback_no_execution",
+				PlanningOnly:   true,
+			},
 		},
-		SchemaCount:                    5,
+		SchemaCount:                    6,
 		TypedValidatorCoverageComplete: true,
 		NoPromotionRequested:           true,
 		PromotionGranted:               false,
@@ -87,6 +96,7 @@ func ValidateAtlasRecommendationEvidenceSchemaRegistry(registry AtlasRecommendat
 		{Schema: AtlasRecommendationTrackRegistryContract, Artifact: "recommendation-track-registry", Command: "track-registry", TypedValidator: "typed:recommendation-track-registry", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
 		{Schema: AtlasRecommendationCommandRunLedgerContract, Artifact: "recommendation-command-run-ledger", Command: "run-ledger", TypedValidator: "typed:recommendation-command-run-ledger", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
 		{Schema: AtlasRecommendationFinalResponseGatesContract, Artifact: "recommendation-final-response-gates", Command: "final-response-gates", TypedValidator: "typed:recommendation-final-response-gates", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
+		{Schema: AtlasRecommendationEvidenceSchemaRegistryCoverageContract, Artifact: "recommendation-evidence-schema-registry-coverage", Command: "schema-registry-coverage", TypedValidator: "typed:recommendation-evidence-schema-registry-coverage", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
 	}
 	if registry.SchemaCount != len(registry.Schemas) {
 		errs = append(errs, "schema_count must equal schemas length")

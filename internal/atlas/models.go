@@ -412,6 +412,31 @@ type AtlasRecommendationEvidenceSchemaRegistryEntry struct {
 	PlanningOnly   bool   `json:"planning_only"`
 }
 
+type AtlasRecommendationEvidenceSchemaRegistryCoverage struct {
+	Schema                       string   `json:"schema"`
+	Status                       string   `json:"status"`
+	RegistryPath                 string   `json:"registry_path"`
+	ValidationReportPath         string   `json:"validation_report_path"`
+	ValidationReportStatus       string   `json:"validation_report_status"`
+	RegistrySchemaCount          int      `json:"registry_schema_count"`
+	CoveredSchemaCount           int      `json:"covered_schema_count"`
+	MissingSchemas               []string `json:"missing_schemas"`
+	RegistryValidatorCount       int      `json:"registry_validator_count"`
+	CoveredValidatorCount        int      `json:"covered_validator_count"`
+	MissingValidators            []string `json:"missing_validators"`
+	AllRegistrySchemasCovered    bool     `json:"all_registry_schemas_covered"`
+	AllRegistryValidatorsCovered bool     `json:"all_registry_validators_covered"`
+	NoPromotionRequested         bool     `json:"no_promotion_requested"`
+	PromotionGranted             bool     `json:"promotion_granted"`
+	ClaimsAuthorityAdvance       bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied             bool     `json:"rsi_remains_denied"`
+	SafeToExecute                bool     `json:"safe_to_execute"`
+	SchedulesWork                bool     `json:"schedules_work"`
+	ExecutesWork                 bool     `json:"executes_work"`
+	ApprovesWork                 bool     `json:"approves_work"`
+	MutatesRepositories          bool     `json:"mutates_repositories"`
+}
+
 type AtlasRecommendationWave struct {
 	ContractVersion        string                    `json:"contract_version"`
 	MissionID              string                    `json:"mission_id"`
