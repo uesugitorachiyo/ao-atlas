@@ -34,7 +34,7 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 	}
 	for _, want := range []string{
 		"status=ready",
-		"schema_count=6",
+		"schema_count=7",
 		"typed_validator_coverage_complete=true",
 		"rsi_remains_denied=true",
 	} {
@@ -47,7 +47,7 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 	if registry["schema"] != "ao.atlas.recommendation-evidence-schema-registry.v0.1" ||
 		registry["status"] != "ready" ||
 		registry["registry_purpose"] != "recommendation_control_plane_typed_artifact_coverage" ||
-		registry["schema_count"] != float64(6) ||
+		registry["schema_count"] != float64(7) ||
 		registry["typed_validator_coverage_complete"] != true ||
 		registry["no_promotion_requested"] != true ||
 		registry["promotion_granted"] != false ||
@@ -58,11 +58,11 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 		registry["executes_work"] != false ||
 		registry["approves_work"] != false ||
 		registry["mutates_repositories"] != false {
-		t.Fatalf("schema registry did not publish safe coverage metadata: %#v", registry)
+		t.Fatalf("schema registry did not emit safe coverage metadata: %#v", registry)
 	}
 	schemas, ok := registry["schemas"].([]any)
-	if !ok || len(schemas) != 6 {
-		t.Fatalf("expected 6 schema registry entries, got %#v", registry["schemas"])
+	if !ok || len(schemas) != 7 {
+		t.Fatalf("expected 7 schema registry entries, got %#v", registry["schemas"])
 	}
 	wantSchemas := []struct {
 		schema         string
@@ -74,6 +74,7 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 		{"ao.atlas.consumed-recommendation-ledger.v0.1", "consumed-recommendation-ledger", "consumed-ledger", "typed:consumed-recommendation-ledger"},
 		{"ao.atlas.recommendation-track-registry.v0.1", "recommendation-track-registry", "track-registry", "typed:recommendation-track-registry"},
 		{"ao.atlas.recommendation-command-run-ledger.v0.1", "recommendation-command-run-ledger", "run-ledger", "typed:recommendation-command-run-ledger"},
+		{"ao.atlas.recommendation-evidence-validation-report.v0.1", "recommendation-evidence-validation-report", "validate-evidence", "typed:recommendation-evidence-validation-report"},
 		{"ao.atlas.recommendation-final-response-gates.v0.1", "recommendation-final-response-gates", "final-response-gates", "typed:recommendation-final-response-gates"},
 		{"ao.atlas.recommendation-evidence-schema-registry-coverage.v0.1", "recommendation-evidence-schema-registry-coverage", "schema-registry-coverage", "typed:recommendation-evidence-schema-registry-coverage"},
 	}

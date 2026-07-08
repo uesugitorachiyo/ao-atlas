@@ -15,8 +15,8 @@ func BuildAtlasRecommendationCommandRunLedger(command, artifactPath string) (Atl
 	if artifactPath == "" {
 		return AtlasRecommendationCommandRunLedger{}, fmt.Errorf("artifact path is required")
 	}
-	if !oneOf(command, "next-track", "consumed-ledger", "track-registry", "final-response-gates", "schema-registry", "schema-registry-coverage") {
-		return AtlasRecommendationCommandRunLedger{}, fmt.Errorf("command must be next-track, consumed-ledger, track-registry, final-response-gates, schema-registry, or schema-registry-coverage")
+	if !oneOf(command, "next-track", "consumed-ledger", "track-registry", "final-response-gates", "schema-registry", "validate-evidence", "schema-registry-coverage") {
+		return AtlasRecommendationCommandRunLedger{}, fmt.Errorf("command must be next-track, consumed-ledger, track-registry, final-response-gates, schema-registry, validate-evidence, or schema-registry-coverage")
 	}
 
 	header, err := LoadJSON[struct {
@@ -70,8 +70,8 @@ func ValidateAtlasRecommendationCommandRunLedger(ledger AtlasRecommendationComma
 	if ledger.Status != "recorded" {
 		errs = append(errs, "status must be recorded")
 	}
-	if !oneOf(ledger.Command, "next-track", "consumed-ledger", "track-registry", "final-response-gates", "schema-registry", "schema-registry-coverage") {
-		errs = append(errs, "command must be next-track, consumed-ledger, track-registry, final-response-gates, schema-registry, or schema-registry-coverage")
+	if !oneOf(ledger.Command, "next-track", "consumed-ledger", "track-registry", "final-response-gates", "schema-registry", "validate-evidence", "schema-registry-coverage") {
+		errs = append(errs, "command must be next-track, consumed-ledger, track-registry, final-response-gates, schema-registry, validate-evidence, or schema-registry-coverage")
 	}
 	requireField(&errs, "artifact_path", ledger.ArtifactPath)
 	if !digestPattern.MatchString(ledger.ArtifactDigest) {
@@ -82,6 +82,7 @@ func ValidateAtlasRecommendationCommandRunLedger(ledger AtlasRecommendationComma
 		AtlasConsumedRecommendationLedgerContract,
 		AtlasRecommendationTrackRegistryContract,
 		AtlasRecommendationFinalResponseGatesContract,
+		AtlasRecommendationEvidenceValidationReportContract,
 		AtlasRecommendationEvidenceSchemaRegistryContract,
 		AtlasRecommendationEvidenceSchemaRegistryCoverageContract,
 	) {

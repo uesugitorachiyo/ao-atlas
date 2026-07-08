@@ -137,6 +137,69 @@ func BuildAtlasRecommendationEvidenceValidationReport(evidenceRoot string) (Atla
 	return report, nil
 }
 
+func ValidateAtlasRecommendationEvidenceValidationReport(report AtlasRecommendationEvidenceValidationReport) error {
+	var errs []string
+	requireContract(&errs, "recommendation_evidence_validation_report", report.Schema, AtlasRecommendationEvidenceValidationReportContract)
+	if !oneOf(report.Status, "passed", "failed") {
+		errs = append(errs, "status must be passed or failed")
+	}
+	requireField(&errs, "evidence_root", report.EvidenceRoot)
+	requireField(&errs, "node_root", report.NodeRoot)
+	if report.NodeCount < 0 {
+		errs = append(errs, "node_count must be non-negative")
+	}
+	if report.JSONFileCount < 0 || report.ValidatedJSONFiles < 0 || report.SchemaBoundFiles < 0 || report.TypedValidatorFiles < 0 || report.GenericSchemaFiles < 0 {
+		errs = append(errs, "file counts must be non-negative")
+	}
+	if report.ValidatedJSONFiles > report.JSONFileCount {
+		errs = append(errs, "validated_json_files must not exceed json_file_count")
+	}
+	if report.SchemaBoundFiles > report.JSONFileCount {
+		errs = append(errs, "schema_bound_files must not exceed json_file_count")
+	}
+	if report.TypedValidatorFiles+report.GenericSchemaFiles > report.JSONFileCount {
+		errs = append(errs, "validator file counts must not exceed json_file_count")
+	}
+	if len(report.RequiredFilenames) == 0 {
+		errs = append(errs, "required_filenames must not be empty")
+	}
+	if report.RequiredFilenamesCovered != (len(report.MissingRequiredFiles) == 0) {
+		errs = append(errs, "required_filenames_covered must match missing_required_files")
+	}
+	if report.Status == "passed" {
+		if report.JSONFileCount == 0 {
+			errs = append(errs, "passed status requires json files")
+		}
+		if report.ValidatedJSONFiles != report.JSONFileCount {
+			errs = append(errs, "passed status requires every json file to validate")
+		}
+		if len(report.MissingSchemaFiles) != 0 {
+			errs = append(errs, "passed status requires no missing schema files")
+		}
+		if len(report.FailedFiles) != 0 {
+			errs = append(errs, "passed status requires no failed files")
+		}
+		if !report.RequiredFilenamesCovered {
+			errs = append(errs, "passed status requires required filenames to be covered")
+		}
+	}
+	for _, entry := range report.Entries {
+		requireField(&errs, "validation_entry.path", entry.Path)
+		requireField(&errs, "validation_entry.filename", entry.Filename)
+		if !oneOf(entry.Status, "passed", "failed") {
+			errs = append(errs, "validation entry status must be passed or failed")
+		}
+		if entry.Status == "passed" {
+			requireField(&errs, "validation_entry.schema", entry.Schema)
+			requireField(&errs, "validation_entry.validator", entry.Validator)
+		}
+		if entry.Status == "failed" && strings.TrimSpace(entry.Error) == "" {
+			errs = append(errs, "failed validation entry requires error")
+		}
+	}
+	return joinErrors(errs)
+}
+
 func validateRecommendationEvidenceJSONFile(evidenceRoot, nodeRoot, path string) AtlasRecommendationEvidenceValidationEntry {
 	rel, err := filepath.Rel(evidenceRoot, path)
 	if err != nil {
@@ -479,6 +542,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:recommendation-final-response-gates", err
 		}
 		return "typed:recommendation-final-response-gates", ValidateAtlasRecommendationFinalResponseGates(value)
+	case AtlasRecommendationEvidenceValidationReportContract:
+		value, err := LoadJSON[AtlasRecommendationEvidenceValidationReport](path)
+		if err != nil {
+			return "typed:recommendation-evidence-validation-report", err
+		}
+		return "typed:recommendation-evidence-validation-report", ValidateAtlasRecommendationEvidenceValidationReport(value)
 	case AtlasRecommendationEvidenceSchemaRegistryContract:
 		value, err := LoadJSON[AtlasRecommendationEvidenceSchemaRegistry](path)
 		if err != nil {
