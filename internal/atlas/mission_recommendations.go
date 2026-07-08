@@ -126,6 +126,9 @@ func BuildAtlasRecommendationWave(options AtlasRecommendationWaveOptions) (Atlas
 	if err := ValidateAOMissionFeatureDepthRecommendations(bundle, minTasks); err != nil {
 		return AtlasRecommendationWaveResult{}, err
 	}
+	if err := rejectSaturatedFeatureDepthContinuation(bundle.SourceEvidenceRoot, bundle.SourceReadbackPath); err != nil {
+		return AtlasRecommendationWaveResult{}, err
+	}
 	sourceDigest, err := digestFile(options.RecommendationsPath)
 	if err != nil {
 		return AtlasRecommendationWaveResult{}, err
@@ -297,6 +300,9 @@ func BuildAtlasNextWaveFeatureDepthRecommendations(options AtlasNextWaveFeatureD
 			return AOMissionFeatureDepthRecommendations{}, err
 		}
 	}
+	if err := rejectSaturatedFeatureDepthContinuation(sourceEvidenceRoot, sourceReadbackPath); err != nil {
+		return AOMissionFeatureDepthRecommendations{}, err
+	}
 
 	tasks := make([]AOMissionFeatureDepthTask, 0, 40)
 	for i, seed := range nextWaveFeatureDepthSeeds() {
@@ -418,6 +424,49 @@ func validateNextWaveSourcePath(label, path string) error {
 	requireField(&errs, label, path)
 	checkPublicPath(&errs, label, path, true)
 	return joinErrors(errs)
+}
+
+func rejectSaturatedFeatureDepthContinuation(sourceEvidenceRoot, sourceReadbackPath string) error {
+	sourceEvidenceRoot = filepath.ToSlash(strings.TrimSpace(sourceEvidenceRoot))
+	sourceReadbackPath = strings.TrimSpace(sourceReadbackPath)
+	if sourceEvidenceRoot == "" || sourceReadbackPath == "" || !isAtlasFeatureDepthEvidenceRoot(sourceEvidenceRoot) {
+		return nil
+	}
+
+	var readback AtlasRecommendationReadback
+	if err := readJSONIfPossible(sourceReadbackPath, &readback); err != nil {
+		return fmt.Errorf("read source_readback_path for Feature Depth saturation check: %w", err)
+	}
+	if !isSaturatedFeatureDepthReadback(readback) {
+		return nil
+	}
+	return fmt.Errorf(
+		"feature depth recommendations saturated: source readback %s completed %d/%d Feature Depth nodes with final_response_allowed=true; route to AO Atlas refactoring/strategy review instead of exporting another Feature Depth wave",
+		filepath.ToSlash(sourceReadbackPath),
+		readback.CompletedNodes,
+		readback.TotalNodes,
+	)
+}
+
+func isAtlasFeatureDepthEvidenceRoot(sourceEvidenceRoot string) bool {
+	base := filepath.Base(filepath.ToSlash(strings.TrimSpace(sourceEvidenceRoot)))
+	return strings.HasPrefix(base, "ao-atlas-feature-depth-wave-") ||
+		strings.HasPrefix(base, "ao-atlas-feature-depth-followup-")
+}
+
+func isSaturatedFeatureDepthReadback(readback AtlasRecommendationReadback) bool {
+	if !strings.Contains(readback.MissionID, "feature-depth") &&
+		!strings.Contains(readback.TargetInstance, "feature-depth") {
+		return false
+	}
+	return readback.Status == "completed" &&
+		readback.TotalNodes > 0 &&
+		readback.CompletedNodes == readback.TotalNodes &&
+		readback.ReadyNodes == 0 &&
+		readback.BlockedNodes == 0 &&
+		readback.FailedNodes == 0 &&
+		readback.FinalResponseAllowed &&
+		readback.ReturnGateStatus == "final_response_allowed"
 }
 
 func nextWaveFeatureDepthSeeds() []struct {
