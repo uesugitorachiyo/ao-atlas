@@ -1,0 +1,29 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-22",
+  "task_id": "mission-recommendation-feature-depth-next-wave-22-task",
+  "status": "ready",
+  "exactly_one_active_node": true,
+  "active_node_id": "mission-recommendation-feature-depth-next-wave-22",
+  "objective": "Add scoped public safety scans for changed evidence and prompt artifacts.",
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "safety_limits": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates without separate authorization",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-lease-start.v0.1",
+  "status": "started",
+  "mission_id": "ao-atlas-next-feature-depth-followup-durability-v04",
+  "target_instance": "ao-atlas-feature-depth-followup-durability-v04",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04",
+  "started_at": "2026-07-07T17:00:00-07:00",
+  "min_minutes": 120,
+  "max_minutes": 180,
+  "continue_if_fast_target": 40,
+  "checkpoint_policy": "after_each_node_with_pr_ci_merge_cleanup",
+  "wave_digest": "sha256:b6cf04995738cefbc6654412d674b5fe49754a38a78b586a36999fa6a81b99aa",
+  "workgraph_digest": "sha256:97af084e6f7cb1fde0017dc6ccf7fe031c706a72a12ef63f112f4d9bcb0db2ca",
+  "final_response_allowed": false,
+  "final_response_reason": "lease start marker does not allow final response",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "claims_authority_advance": false
+}

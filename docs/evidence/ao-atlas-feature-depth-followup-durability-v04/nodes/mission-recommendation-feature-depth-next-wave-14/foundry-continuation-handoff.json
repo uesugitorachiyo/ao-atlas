@@ -1,0 +1,10 @@
+{
+  "schema": "ao.foundry.continuation-handoff.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-14",
+  "task_id": "mission-recommendation-feature-depth-next-wave-14-task",
+  "status": "ready",
+  "active_node_id": "mission-recommendation-feature-depth-next-wave-14",
+  "next_action": "Execute mission-recommendation-feature-depth-next-wave-14 and return completed run-link evidence.",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true
+}

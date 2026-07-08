@@ -1,0 +1,110 @@
+{
+  "schema": "ao.atlas.authority-promotion-negative-fixtures.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-23",
+  "status": "passed",
+  "fixture_encoding": "redacted_token_sequences",
+  "scanner_contract": "ao.atlas.scoped-public-safety-scan.v0.1",
+  "case_count": 7,
+  "cases": [
+    {
+      "id": "promotion_granted_true",
+      "scanner_pattern_id": "promotion_granted_true",
+      "category": "json_authority_boolean",
+      "statement_tokens": [
+        "json_field",
+        "promotion_granted",
+        "boolean_true"
+      ],
+      "expected_scan_status": "failed",
+      "expected_unsafe_matches": 1,
+      "redaction_note": "unsafe wording is represented as separated tokens; no raw unsafe literal is stored in this fixture"
+    },
+    {
+      "id": "promotion_claimed_true",
+      "scanner_pattern_id": "promotion_claimed_true",
+      "category": "json_promotion_boolean",
+      "statement_tokens": [
+        "json_field",
+        "promotion_claimed",
+        "boolean_true"
+      ],
+      "expected_scan_status": "failed",
+      "expected_unsafe_matches": 1,
+      "redaction_note": "unsafe wording is represented as separated tokens; no raw unsafe literal is stored in this fixture"
+    },
+    {
+      "id": "claims_authority_advance_true",
+      "scanner_pattern_id": "claims_authority_advance_true",
+      "category": "json_authority_boolean",
+      "statement_tokens": [
+        "json_field",
+        "claims_authority_advance",
+        "boolean_true"
+      ],
+      "expected_scan_status": "failed",
+      "expected_unsafe_matches": 1,
+      "redaction_note": "unsafe wording is represented as separated tokens; no raw unsafe literal is stored in this fixture"
+    },
+    {
+      "id": "fully_unsupervised_complex_mutation_live_proven_true",
+      "scanner_pattern_id": "fully_unsupervised_complex_mutation_live_proven_true",
+      "category": "json_promotion_boolean",
+      "statement_tokens": [
+        "json_field",
+        "fully_unsupervised_complex_mutation_live_proven",
+        "boolean_true"
+      ],
+      "expected_scan_status": "failed",
+      "expected_unsafe_matches": 1,
+      "redaction_note": "unsafe wording is represented as separated tokens; no raw unsafe literal is stored in this fixture"
+    },
+    {
+      "id": "rsi_is_proven_phrase",
+      "scanner_pattern_id": "rsi_is_proven_phrase",
+      "category": "text_rsi_claim",
+      "statement_tokens": [
+        "RSI",
+        "is",
+        "proven"
+      ],
+      "expected_scan_status": "failed",
+      "expected_unsafe_matches": 1,
+      "redaction_note": "unsafe wording is represented as separated tokens; no raw unsafe literal is stored in this fixture"
+    },
+    {
+      "id": "rsi_proof_granted_phrase",
+      "scanner_pattern_id": "rsi_proof_granted_phrase",
+      "category": "text_rsi_claim",
+      "statement_tokens": [
+        "RSI",
+        "proof",
+        "granted"
+      ],
+      "expected_scan_status": "failed",
+      "expected_unsafe_matches": 1,
+      "redaction_note": "unsafe wording is represented as separated tokens; no raw unsafe literal is stored in this fixture"
+    },
+    {
+      "id": "fully_unsupervised_complex_mutation_is_live_proven_phrase",
+      "scanner_pattern_id": "fully_unsupervised_complex_mutation_is_live_proven_phrase",
+      "category": "text_promotion_claim",
+      "statement_tokens": [
+        "fully_unsupervised_complex_mutation",
+        "is",
+        "live-proven"
+      ],
+      "expected_scan_status": "failed",
+      "expected_unsafe_matches": 1,
+      "redaction_note": "unsafe wording is represented as separated tokens; no raw unsafe literal is stored in this fixture"
+    }
+  ],
+  "forbidden_patterns_redacted": true,
+  "unsafe_literal_stored": false,
+  "expected_scan_status": "failed",
+  "expected_public_safety_scan_passed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

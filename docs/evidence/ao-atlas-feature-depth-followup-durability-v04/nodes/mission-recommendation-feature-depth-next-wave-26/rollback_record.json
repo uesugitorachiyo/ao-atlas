@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-26",
+  "task_id": "mission-recommendation-feature-depth-next-wave-26-task",
+  "status": "recorded",
+  "rollback_scope": [
+    "revert node-specific Atlas changes and generated evidence"
+  ],
+  "rollback_steps": [
+    "Remove docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-26",
+    "Restore previous workgraph/readback checkpoint from docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-25/recommendation-readback-after.json"
+  ],
+  "no_release_or_deploy_required": true,
+  "rsi_remains_denied": true
+}

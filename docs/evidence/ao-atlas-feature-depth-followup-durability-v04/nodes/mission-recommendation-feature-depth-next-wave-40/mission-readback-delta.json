@@ -1,0 +1,125 @@
+{
+  "schema": "ao.atlas.mission-readback-delta.v0.1",
+  "status": "changed",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-39/recommendation-readback-after.json",
+  "target_readback_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:d3cb265981f8c1008223007c6c9b8e03d636fff61e4df832f3ffb5d6566d7fc4",
+  "target_readback_digest": "sha256:bc7b02c29f42e19d2eab7fc087e72f0a568c4c0b448bbc9b796c6d408a5ebdf0",
+  "deterministic_comparison": true,
+  "changed_fields": [
+    "checkpoint_count",
+    "command_readback_status",
+    "command_timeline_status",
+    "completed_nodes",
+    "early_return_risk_status",
+    "elapsed_minutes",
+    "exact_next_action",
+    "executable_ready_nodes",
+    "final_response_allowed",
+    "final_response_denial_gate",
+    "first_executable_node",
+    "foundry_rollup_status",
+    "lease_health_status",
+    "min_minutes_met",
+    "promoter_no_promotion_status",
+    "promoter_readback_status",
+    "ready_nodes",
+    "return_gate_status",
+    "status"
+  ],
+  "numeric_deltas": {
+    "checkpoint_count": 1,
+    "completed_nodes": 1,
+    "elapsed_minutes": 3,
+    "executable_ready_nodes": -1,
+    "ready_nodes": -1
+  },
+  "boolean_transitions": {
+    "approves_work": {
+      "before": false,
+      "after": false
+    },
+    "executes_work": {
+      "before": false,
+      "after": false
+    },
+    "final_response_allowed": {
+      "before": false,
+      "after": true
+    },
+    "min_minutes_met": {
+      "before": false,
+      "after": true
+    },
+    "schedules_work": {
+      "before": false,
+      "after": false
+    }
+  },
+  "string_transitions": {
+    "command_readback_status": {
+      "before": "required_not_bound",
+      "after": "compact_timeline_recorded"
+    },
+    "command_timeline_status": {
+      "before": "in_progress_compact_timeline_recorded",
+      "after": "recorded_compact_timeline_for_completed_wave"
+    },
+    "early_return_risk_status": {
+      "before": "blocked_final_response_ready_nodes_remain",
+      "after": "cleared_no_ready_nodes_remain"
+    },
+    "exact_next_action": {
+      "before": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-40 and execute exactly one active node.",
+      "after": "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
+    },
+    "final_response_denial_gate": {
+      "before": "deny_ready_nodes_or_exact_next_action_remain",
+      "after": "allow_final_response"
+    },
+    "first_executable_node": {
+      "before": "mission-recommendation-feature-depth-next-wave-40",
+      "after": ""
+    },
+    "foundry_rollup_status": {
+      "before": "in_progress_node_run_links_recorded",
+      "after": "completed_all_node_run_links_recorded"
+    },
+    "lease_health_status": {
+      "before": "minimum_unmet",
+      "after": "all_generated_nodes_complete"
+    },
+    "promoter_no_promotion_status": {
+      "before": "in_progress_no_promotion_recorded",
+      "after": "recorded_no_promotion_for_recommendation_wave"
+    },
+    "promoter_readback_status": {
+      "before": "required_not_bound",
+      "after": "no_promotion_recorded"
+    },
+    "return_gate_status": {
+      "before": "blocked_ready_nodes_remain",
+      "after": "final_response_allowed"
+    },
+    "status": {
+      "before": "in_progress",
+      "after": "completed"
+    }
+  },
+  "safety_boundaries": {
+    "auth_policy_config_widening": false,
+    "broad_rsi_claim": false,
+    "credential_inspection": false,
+    "dependency_updates": false,
+    "direct_main_mutation": false,
+    "hidden_instruction_mutation": false,
+    "provider_calls": false,
+    "release_deploy_publish_upload_tag": false,
+    "rsi_remains_denied": true
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
