@@ -89,6 +89,7 @@ const AtlasRecommendationCommandRunLedgerContract = "ao.atlas.recommendation-com
 const AtlasRecommendationFinalResponseGatesContract = "ao.atlas.recommendation-final-response-gates.v0.1"
 const AtlasRecommendationEvidenceSchemaRegistryContract = "ao.atlas.recommendation-evidence-schema-registry.v0.1"
 const AtlasRecommendationEvidenceSchemaRegistryCoverageContract = "ao.atlas.recommendation-evidence-schema-registry-coverage.v0.1"
+const AtlasSchemaHealthRepairPromptContract = "ao.atlas.schema-health-repair-prompt.v0.1"
 
 var digestPattern = regexp.MustCompile(`^sha256:[0-9a-f]{64}$`)
 var driveAbsPattern = regexp.MustCompile(`^[A-Za-z]:[\\/]`)

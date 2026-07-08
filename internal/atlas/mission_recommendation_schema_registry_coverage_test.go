@@ -41,10 +41,10 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 		EvidenceRoot:             "docs/evidence/example",
 		NodeRoot:                 "docs/evidence/example/nodes",
 		NodeCount:                1,
-		JSONFileCount:            7,
-		ValidatedJSONFiles:       7,
-		SchemaBoundFiles:         7,
-		TypedValidatorFiles:      7,
+		JSONFileCount:            8,
+		ValidatedJSONFiles:       8,
+		SchemaBoundFiles:         8,
+		TypedValidatorFiles:      8,
 		GenericSchemaFiles:       0,
 		MissingSchemaFiles:       []string{},
 		FailedFiles:              []string{},
@@ -59,6 +59,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 			AtlasRecommendationEvidenceValidationReportContract:       1,
 			AtlasRecommendationFinalResponseGatesContract:             1,
 			AtlasRecommendationEvidenceSchemaRegistryCoverageContract: 1,
+			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
 			"typed:recommendation-next-track-decision":               1,
@@ -68,6 +69,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 			"typed:recommendation-evidence-validation-report":        1,
 			"typed:recommendation-final-response-gates":              1,
 			"typed:recommendation-evidence-schema-registry-coverage": 1,
+			"typed:schema-health-repair-prompt":                      1,
 		},
 		Entries: []AtlasRecommendationEvidenceValidationEntry{},
 	}
@@ -88,7 +90,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 	}
 	for _, want := range []string{
 		"status=passed",
-		"registry_schema_count=7",
+		"registry_schema_count=8",
 		"missing_schemas=0",
 		"missing_validators=0",
 		"rsi_remains_denied=true",
@@ -101,10 +103,10 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 	coverage := mustLoadJSON[map[string]any](t, coveragePath)
 	if coverage["schema"] != "ao.atlas.recommendation-evidence-schema-registry-coverage.v0.1" ||
 		coverage["status"] != "passed" ||
-		coverage["registry_schema_count"] != float64(7) ||
-		coverage["covered_schema_count"] != float64(7) ||
-		coverage["registry_validator_count"] != float64(7) ||
-		coverage["covered_validator_count"] != float64(7) ||
+		coverage["registry_schema_count"] != float64(8) ||
+		coverage["covered_schema_count"] != float64(8) ||
+		coverage["registry_validator_count"] != float64(8) ||
+		coverage["covered_validator_count"] != float64(8) ||
 		coverage["all_registry_schemas_covered"] != true ||
 		coverage["all_registry_validators_covered"] != true ||
 		coverage["no_promotion_requested"] != true ||
@@ -160,10 +162,10 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingSchemaFailure
 		EvidenceRoot:             "docs/evidence/example",
 		NodeRoot:                 "docs/evidence/example/nodes",
 		NodeCount:                1,
-		JSONFileCount:            6,
-		ValidatedJSONFiles:       6,
-		SchemaBoundFiles:         6,
-		TypedValidatorFiles:      7,
+		JSONFileCount:            7,
+		ValidatedJSONFiles:       7,
+		SchemaBoundFiles:         7,
+		TypedValidatorFiles:      8,
 		GenericSchemaFiles:       0,
 		MissingSchemaFiles:       []string{},
 		FailedFiles:              []string{},
@@ -177,6 +179,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingSchemaFailure
 			AtlasRecommendationCommandRunLedgerContract:               1,
 			AtlasRecommendationEvidenceValidationReportContract:       1,
 			AtlasRecommendationEvidenceSchemaRegistryCoverageContract: 1,
+			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
 			"typed:recommendation-next-track-decision":               1,
@@ -186,6 +189,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingSchemaFailure
 			"typed:recommendation-evidence-validation-report":        1,
 			"typed:recommendation-final-response-gates":              1,
 			"typed:recommendation-evidence-schema-registry-coverage": 1,
+			"typed:schema-health-repair-prompt":                      1,
 		},
 		Entries: []AtlasRecommendationEvidenceValidationEntry{},
 	}
@@ -280,10 +284,10 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingValidatorFail
 		EvidenceRoot:             "docs/evidence/example",
 		NodeRoot:                 "docs/evidence/example/nodes",
 		NodeCount:                1,
-		JSONFileCount:            7,
-		ValidatedJSONFiles:       7,
-		SchemaBoundFiles:         7,
-		TypedValidatorFiles:      6,
+		JSONFileCount:            8,
+		ValidatedJSONFiles:       8,
+		SchemaBoundFiles:         8,
+		TypedValidatorFiles:      7,
 		GenericSchemaFiles:       0,
 		MissingSchemaFiles:       []string{},
 		FailedFiles:              []string{},
@@ -298,6 +302,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingValidatorFail
 			AtlasRecommendationEvidenceValidationReportContract:       1,
 			AtlasRecommendationFinalResponseGatesContract:             1,
 			AtlasRecommendationEvidenceSchemaRegistryCoverageContract: 1,
+			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
 			"typed:recommendation-next-track-decision":               1,
@@ -306,6 +311,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingValidatorFail
 			"typed:recommendation-command-run-ledger":                1,
 			"typed:recommendation-evidence-validation-report":        1,
 			"typed:recommendation-evidence-schema-registry-coverage": 1,
+			"typed:schema-health-repair-prompt":                      1,
 		},
 		Entries: []AtlasRecommendationEvidenceValidationEntry{},
 	}
@@ -401,10 +407,10 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsCombinedMissingSchem
 		EvidenceRoot:             "docs/evidence/example",
 		NodeRoot:                 "docs/evidence/example/nodes",
 		NodeCount:                1,
-		JSONFileCount:            5,
-		ValidatedJSONFiles:       5,
-		SchemaBoundFiles:         5,
-		TypedValidatorFiles:      5,
+		JSONFileCount:            6,
+		ValidatedJSONFiles:       6,
+		SchemaBoundFiles:         6,
+		TypedValidatorFiles:      6,
 		GenericSchemaFiles:       0,
 		MissingSchemaFiles:       []string{},
 		FailedFiles:              []string{},
@@ -417,6 +423,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsCombinedMissingSchem
 			AtlasRecommendationTrackRegistryContract:                  1,
 			AtlasRecommendationEvidenceValidationReportContract:       1,
 			AtlasRecommendationEvidenceSchemaRegistryCoverageContract: 1,
+			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
 			"typed:recommendation-next-track-decision":               1,
@@ -424,6 +431,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsCombinedMissingSchem
 			"typed:recommendation-track-registry":                    1,
 			"typed:recommendation-evidence-validation-report":        1,
 			"typed:recommendation-evidence-schema-registry-coverage": 1,
+			"typed:schema-health-repair-prompt":                      1,
 		},
 		Entries: []AtlasRecommendationEvidenceValidationEntry{},
 	}
@@ -529,10 +537,10 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsFailedValidationRepo
 		EvidenceRoot:             "docs/evidence/example",
 		NodeRoot:                 "docs/evidence/example/nodes",
 		NodeCount:                1,
-		JSONFileCount:            7,
+		JSONFileCount:            8,
 		ValidatedJSONFiles:       6,
-		SchemaBoundFiles:         7,
-		TypedValidatorFiles:      7,
+		SchemaBoundFiles:         8,
+		TypedValidatorFiles:      8,
 		GenericSchemaFiles:       0,
 		MissingSchemaFiles:       []string{},
 		FailedFiles:              []string{"docs/evidence/example/nodes/node-01/command_readback.json"},
@@ -547,6 +555,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsFailedValidationRepo
 			AtlasRecommendationEvidenceValidationReportContract:       1,
 			AtlasRecommendationFinalResponseGatesContract:             1,
 			AtlasRecommendationEvidenceSchemaRegistryCoverageContract: 1,
+			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
 			"typed:recommendation-next-track-decision":               1,
@@ -556,6 +565,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsFailedValidationRepo
 			"typed:recommendation-evidence-validation-report":        1,
 			"typed:recommendation-final-response-gates":              1,
 			"typed:recommendation-evidence-schema-registry-coverage": 1,
+			"typed:schema-health-repair-prompt":                      1,
 		},
 		Entries: []AtlasRecommendationEvidenceValidationEntry{},
 	}

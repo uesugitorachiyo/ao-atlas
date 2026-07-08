@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.schema-health-repair-prompt.v0.1",
+  "title": "AO Atlas Schema Health Repair Prompt",
+  "type": "object",
+  "required": [
+    "schema",
+    "node_id",
+    "status",
+    "source_coverage_path",
+    "source_coverage_digest",
+    "prompt_path",
+    "coverage_status",
+    "validation_report_status",
+    "failure_reasons",
+    "missing_schema_count",
+    "missing_schemas",
+    "missing_validator_count",
+    "missing_validators",
+    "repair_actions",
+    "exact_next_action",
+    "planning_only",
+    "safe_to_execute",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "mutates_repositories",
+    "promotion_requested",
+    "promotion_granted",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "ao.atlas.schema-health-repair-prompt.v0.1" },
+    "node_id": { "type": "string", "minLength": 1 },
+    "status": { "const": "repair_prompt_generated" },
+    "source_coverage_path": { "type": "string", "minLength": 1 },
+    "source_coverage_digest": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "prompt_path": { "type": "string", "minLength": 1 },
+    "coverage_status": { "const": "failed" },
+    "validation_report_status": { "enum": ["passed", "failed"] },
+    "failure_reasons": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "missing_schema_count": { "type": "integer", "minimum": 0 },
+    "missing_schemas": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "missing_validator_count": { "type": "integer", "minimum": 0 },
+    "missing_validators": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "repair_actions": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "exact_next_action": { "type": "string", "minLength": 1 },
+    "planning_only": { "const": true },
+    "safe_to_execute": { "const": false },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "mutates_repositories": { "const": false },
+    "promotion_requested": { "const": false },
+    "promotion_granted": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  }
+}
