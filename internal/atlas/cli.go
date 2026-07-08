@@ -2822,6 +2822,12 @@ func runMissionRecommendationsMissionDashboardCompactFilters(args []string, stdo
 		fixture.ActiveFilterKey,
 		filepath.ToSlash(*outPath),
 	)
+	if fixture.SchemaHealthStatus != "" {
+		fmt.Fprintf(stdout, "schema_health_status=%s\nschema_health_filter=%s\n",
+			fixture.SchemaHealthStatus,
+			fixture.SchemaHealthFilterKey,
+		)
+	}
 	return nil
 }
 

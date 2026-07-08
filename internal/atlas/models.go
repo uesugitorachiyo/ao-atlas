@@ -1802,6 +1802,10 @@ type AtlasMissionDashboardCompactFilters struct {
 	FirstExecutableNode                string                               `json:"first_executable_node"`
 	ExactNextAction                    string                               `json:"exact_next_action"`
 	ReturnGateStatus                   string                               `json:"return_gate_status"`
+	SchemaHealthStatus                 string                               `json:"schema_health_status,omitempty"`
+	SchemaHealthFilterKey              string                               `json:"schema_health_filter_key,omitempty"`
+	SchemaHealthFilterStatus           string                               `json:"schema_health_filter_status,omitempty"`
+	SchemaHealthFilterActionable       bool                                 `json:"schema_health_filter_actionable,omitempty"`
 	ActiveFilterKey                    string                               `json:"active_filter_key"`
 	FilterCount                        int                                  `json:"filter_count"`
 	Filters                            []AtlasMissionDashboardCompactFilter `json:"filters"`

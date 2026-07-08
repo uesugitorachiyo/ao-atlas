@@ -95,6 +95,20 @@
     "return_gate_status": {
       "type": "string"
     },
+    "schema_health_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_health_filter_key": {
+      "const": "schema_health"
+    },
+    "schema_health_filter_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_health_filter_actionable": {
+      "type": "boolean"
+    },
     "active_filter_key": {
       "type": "string",
       "enum": ["ready", "blocked", "failed", "completed"]
