@@ -46,6 +46,7 @@
     "failed_nodes_before": { "type": "integer", "minimum": 0 },
     "first_executable_node": { "type": "string", "minLength": 1 },
     "exact_next_action": { "type": "string", "minLength": 1 },
+    "schema_health_status": { "type": "string", "minLength": 1 },
     "final_response_allowed": { "const": false },
     "row_count": { "const": 6 },
     "rows": {
