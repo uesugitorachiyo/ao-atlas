@@ -143,3 +143,48 @@ func TestFeatureDepthWaveCompactionResumePromptBindsCheckpointDigest(t *testing.
 		}
 	}
 }
+
+func TestCompactionResumePromptCarriesSchemaHealthStatusWhenReadbackHasIt(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
+	sourceReadback := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-16", "recommendation-readback-after.json")
+	sourceWorkgraph := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-16", "workgraph-after.json")
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, sourceReadback)
+	readback.SchemaHealthStatus = "failed_missing_registry_artifacts"
+
+	outDir := t.TempDir()
+	syntheticReadback := filepath.Join(outDir, "recommendation-readback-after.json")
+	outFixture := filepath.Join(outDir, "compaction-resume-prompt.json")
+	outPrompt := filepath.Join(outDir, "compaction-resume-prompt.md")
+	if err := WriteJSON(syntheticReadback, readback); err != nil {
+		t.Fatal(err)
+	}
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "compaction-resume-prompt",
+		"--source-readback", syntheticReadback,
+		"--workgraph", sourceWorkgraph,
+		"--lease-start", filepath.Join(waveRoot, "lease-start.json"),
+		"--evidence-root", filepath.ToSlash(filepath.Join("docs", "evidence", "ao-atlas-feature-depth-wave-v01")),
+		"--node-id", "mission-recommendation-feature-depth-next-wave-17",
+		"--expected-next-node-after-completion", "mission-recommendation-feature-depth-next-wave-18",
+		"--prompt-out", outPrompt,
+		"--fixture-out", outFixture,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("compaction-resume-prompt command failed: %s", out.String())
+	}
+	fixture := mustLoadJSON[AtlasCompactionResumePrompt](t, outFixture)
+	if fixture.SchemaHealthStatus != "failed_missing_registry_artifacts" {
+		t.Fatalf("compaction resume prompt lost schema health status: %#v", fixture.SchemaHealthStatus)
+	}
+	promptBytes, err := os.ReadFile(outPrompt)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(promptBytes), "Schema health status: `failed_missing_registry_artifacts`") {
+		t.Fatalf("compaction resume prompt markdown missing schema health status:\n%s", string(promptBytes))
+	}
+	assertSchemaHasProperty(t, filepath.Join(root, "schemas", "compaction-resume-prompt.schema.json"), "schema_health_status")
+}

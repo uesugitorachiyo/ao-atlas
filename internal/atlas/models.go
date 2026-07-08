@@ -1182,6 +1182,7 @@ type AtlasCompactionResumePrompt struct {
 	ReturnGateStatus                string `json:"return_gate_status"`
 	ContinuationContractReason      string `json:"continuation_contract_reason"`
 	EarlyReturnRiskStatus           string `json:"early_return_risk_status"`
+	SchemaHealthStatus              string `json:"schema_health_status,omitempty"`
 	FinalResponseAllowed            bool   `json:"final_response_allowed"`
 	RefusesFinalResponse            bool   `json:"refuses_final_response"`
 	ExpectedNextNodeAfterCompletion string `json:"expected_next_node_after_completion"`

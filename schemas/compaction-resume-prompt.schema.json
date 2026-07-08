@@ -133,6 +133,10 @@
       "type": "string",
       "minLength": 1
     },
+    "schema_health_status": {
+      "type": "string",
+      "minLength": 1
+    },
     "final_response_allowed": {
       "const": false
     },

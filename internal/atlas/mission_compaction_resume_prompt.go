@@ -50,6 +50,7 @@ func BuildAtlasCompactionResumePromptFixture(readback AtlasRecommendationReadbac
 		ReturnGateStatus:                readback.ReturnGateStatus,
 		ContinuationContractReason:      readback.ContinuationContract.Reason,
 		EarlyReturnRiskStatus:           readback.EarlyReturnRiskStatus,
+		SchemaHealthStatus:              readback.SchemaHealthStatus,
 		FinalResponseAllowed:            readback.FinalResponseAllowed,
 		RefusesFinalResponse:            readback.ContinuationContract.RefusesFinalResponse,
 		ExpectedNextNodeAfterCompletion: strings.TrimSpace(options.ExpectedNextNodeAfterCompletion),
@@ -99,6 +100,9 @@ func BuildAtlasCompactionResumePrompt(readback AtlasRecommendationReadback, fixt
 	b.WriteString(fmt.Sprintf("- Return gate: `%s`\n", fixture.ReturnGateStatus))
 	b.WriteString(fmt.Sprintf("- Continuation contract reason: `%s`\n", fixture.ContinuationContractReason))
 	b.WriteString(fmt.Sprintf("- Early-return risk: `%s`\n", fixture.EarlyReturnRiskStatus))
+	if fixture.SchemaHealthStatus != "" {
+		b.WriteString(fmt.Sprintf("- Schema health status: `%s`\n", fixture.SchemaHealthStatus))
+	}
 	b.WriteString(fmt.Sprintf("- Final response allowed: `%t`\n\n", fixture.FinalResponseAllowed))
 	b.WriteString("Execution rules:\n")
 	b.WriteString("- Emit Foundry import for exactly one active node at a time.\n")
@@ -150,6 +154,7 @@ func ValidateAtlasCompactionResumePrompt(fixture AtlasCompactionResumePrompt) er
 	requireField(&errs, "return_gate_status", fixture.ReturnGateStatus)
 	requireField(&errs, "continuation_contract_reason", fixture.ContinuationContractReason)
 	requireField(&errs, "early_return_risk_status", fixture.EarlyReturnRiskStatus)
+	checkPublicPath(&errs, "schema_health_status", fixture.SchemaHealthStatus, true)
 	if fixture.ReadyNodes > 0 && fixture.FinalResponseAllowed {
 		errs = append(errs, "final_response_allowed must be false while ready nodes remain")
 	}
