@@ -1055,6 +1055,13 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 		registryLedger.ArtifactPath == filepath.ToSlash(registryPath) &&
 		reportLedger.ArtifactPath == filepath.ToSlash(reportPath) &&
 		coverageLedger.ArtifactPath == filepath.ToSlash(coveragePath)
+	operatorSummary := fmt.Sprintf("%s: validation report %s; %d registry schemas missing; %d registry validators missing; %d run ledgers written; RSI remains denied",
+		coverage.Status,
+		coverage.ValidationReportStatus,
+		len(coverage.MissingSchemas),
+		len(coverage.MissingValidators),
+		runLedgerCount,
+	)
 	if *jsonOut {
 		if err := printJSON(stdout, map[string]any{
 			"status":                                           coverage.Status,
@@ -1067,6 +1074,7 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			"rsi_remains_denied":                               coverage.RSIRemainsDenied,
 			"run_ledger_count":                                 runLedgerCount,
 			"all_outputs_have_run_ledgers":                     allOutputsHaveRunLedgers,
+			"operator_summary":                                 operatorSummary,
 			"recommendation_evidence_schema_registry":          filepath.ToSlash(registryPath),
 			"recommendation_evidence_validation_report":        filepath.ToSlash(reportPath),
 			"recommendation_evidence_schema_registry_coverage": filepath.ToSlash(coveragePath),
@@ -1077,7 +1085,7 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			return err
 		}
 	} else {
-		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrun_ledger_count=%d\nall_outputs_have_run_ledgers=%t\nrecommendation_evidence_schema_registry=%s\nrecommendation_evidence_validation_report=%s\nrecommendation_evidence_schema_registry_coverage=%s\nschema_registry_run_ledger=%s\nvalidation_report_run_ledger=%s\nschema_registry_coverage_run_ledger=%s\n",
+		fmt.Fprintf(stdout, "status=%s\nvalidation_report_status=%s\nregistry_schema_count=%d\ncovered_schema_count=%d\nmissing_schemas=%d\nmissing_validators=%d\nfailure_reasons=%s\nrsi_remains_denied=%t\nrun_ledger_count=%d\nall_outputs_have_run_ledgers=%t\noperator_summary=%s\nrecommendation_evidence_schema_registry=%s\nrecommendation_evidence_validation_report=%s\nrecommendation_evidence_schema_registry_coverage=%s\nschema_registry_run_ledger=%s\nvalidation_report_run_ledger=%s\nschema_registry_coverage_run_ledger=%s\n",
 			coverage.Status,
 			coverage.ValidationReportStatus,
 			coverage.RegistrySchemaCount,
@@ -1088,6 +1096,7 @@ func runMissionRecommendationsSchemaRegistryHealth(args []string, stdout io.Writ
 			coverage.RSIRemainsDenied,
 			runLedgerCount,
 			allOutputsHaveRunLedgers,
+			operatorSummary,
 			filepath.ToSlash(registryPath),
 			filepath.ToSlash(reportPath),
 			filepath.ToSlash(coveragePath),
