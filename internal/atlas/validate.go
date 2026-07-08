@@ -84,6 +84,7 @@ const AtlasMissionDashboardFreshnessChecksContract = "ao.atlas.mission-dashboard
 const AtlasMissionDashboardCompactFiltersContract = "ao.atlas.mission-dashboard-compact-filters.v0.1"
 const AtlasRecommendationNextTrackDecisionContract = "ao.atlas.recommendation-next-track-decision.v0.1"
 const AtlasConsumedRecommendationLedgerContract = "ao.atlas.consumed-recommendation-ledger.v0.1"
+const AtlasRecommendationTrackRegistryContract = "ao.atlas.recommendation-track-registry.v0.1"
 
 var digestPattern = regexp.MustCompile(`^sha256:[0-9a-f]{64}$`)
 var driveAbsPattern = regexp.MustCompile(`^[A-Za-z]:[\\/]`)

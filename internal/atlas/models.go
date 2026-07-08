@@ -309,6 +309,37 @@ type AtlasConsumedRecommendationLedger struct {
 	MutatesRepositories          bool   `json:"mutates_repositories"`
 }
 
+type AtlasRecommendationTrackRegistry struct {
+	Schema                         string                                  `json:"schema"`
+	Status                         string                                  `json:"status"`
+	DefaultTrack                   string                                  `json:"default_track"`
+	SaturatedFeatureDepthNextTrack string                                  `json:"saturated_feature_depth_next_track"`
+	PriorityOrder                  []string                                `json:"priority_order"`
+	Tracks                         []AtlasRecommendationTrackRegistryEntry `json:"tracks"`
+	FeatureDepthStatus             string                                  `json:"feature_depth_status"`
+	RefactoringStatus              string                                  `json:"refactoring_status"`
+	RSITrackStatus                 string                                  `json:"rsi_track_status"`
+	NoPromotionRequested           bool                                    `json:"no_promotion_requested"`
+	PromotionGranted               bool                                    `json:"promotion_granted"`
+	ClaimsAuthorityAdvance         bool                                    `json:"claims_authority_advance"`
+	RSIRemainsDenied               bool                                    `json:"rsi_remains_denied"`
+	SafeToExecute                  bool                                    `json:"safe_to_execute"`
+	SchedulesWork                  bool                                    `json:"schedules_work"`
+	ExecutesWork                   bool                                    `json:"executes_work"`
+	ApprovesWork                   bool                                    `json:"approves_work"`
+	MutatesRepositories            bool                                    `json:"mutates_repositories"`
+}
+
+type AtlasRecommendationTrackRegistryEntry struct {
+	Track               string `json:"track"`
+	Rank                int    `json:"rank"`
+	Status              string `json:"status"`
+	NextWhenCompleted   string `json:"next_when_completed"`
+	AuthorityEffect     string `json:"authority_effect"`
+	SchedulesWork       bool   `json:"schedules_work"`
+	MutatesRepositories bool   `json:"mutates_repositories"`
+}
+
 type AtlasRecommendationWave struct {
 	ContractVersion        string                    `json:"contract_version"`
 	MissionID              string                    `json:"mission_id"`

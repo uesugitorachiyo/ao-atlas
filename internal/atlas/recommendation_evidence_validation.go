@@ -461,6 +461,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:consumed-recommendation-ledger", err
 		}
 		return "typed:consumed-recommendation-ledger", ValidateAtlasConsumedRecommendationLedger(value)
+	case AtlasRecommendationTrackRegistryContract:
+		value, err := LoadJSON[AtlasRecommendationTrackRegistry](path)
+		if err != nil {
+			return "typed:recommendation-track-registry", err
+		}
+		return "typed:recommendation-track-registry", ValidateAtlasRecommendationTrackRegistry(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {
