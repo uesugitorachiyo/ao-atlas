@@ -414,8 +414,9 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 }
 
 type missionRecommendationCommand struct {
-	name string
-	run  func([]string, io.Writer) error
+	name             string
+	run              func([]string, io.Writer) error
+	recordsRunLedger bool
 }
 
 func missionRecommendationCommandRegistry() []missionRecommendationCommand {
@@ -423,16 +424,16 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "import", run: runMissionRecommendationsImport},
 		{name: "export-next-wave", run: runMissionRecommendationsExportNextWave},
 		{name: "export-refactoring-wave", run: runMissionRecommendationsExportRefactoringWave},
-		{name: "next-track", run: runMissionRecommendationsNextTrack},
-		{name: "consumed-ledger", run: runMissionRecommendationsConsumedLedger},
-		{name: "track-registry", run: runMissionRecommendationsTrackRegistry},
+		{name: "next-track", run: runMissionRecommendationsNextTrack, recordsRunLedger: true},
+		{name: "consumed-ledger", run: runMissionRecommendationsConsumedLedger, recordsRunLedger: true},
+		{name: "track-registry", run: runMissionRecommendationsTrackRegistry, recordsRunLedger: true},
 		{name: "run-ledger", run: runMissionRecommendationsRunLedger},
 		{name: "run-ledger-rollup", run: runMissionRecommendationsRunLedgerRollup},
 		{name: "run-ledger-coverage-check", run: runMissionRecommendationsRunLedgerCoverageCheck},
-		{name: "final-response-gates", run: runMissionRecommendationsFinalResponseGates},
-		{name: "schema-registry", run: runMissionRecommendationsSchemaRegistry},
+		{name: "final-response-gates", run: runMissionRecommendationsFinalResponseGates, recordsRunLedger: true},
+		{name: "schema-registry", run: runMissionRecommendationsSchemaRegistry, recordsRunLedger: true},
 		{name: "schema-registry-health", run: runMissionRecommendationsSchemaRegistryHealth},
-		{name: "schema-registry-coverage", run: runMissionRecommendationsSchemaRegistryCoverage},
+		{name: "schema-registry-coverage", run: runMissionRecommendationsSchemaRegistryCoverage, recordsRunLedger: true},
 		{name: "schema-health-repair-prompt", run: runMissionRecommendationsSchemaHealthRepairPrompt},
 		{name: "readback", run: runMissionRecommendationsReadback},
 		{name: "readback-delta", run: runMissionRecommendationsReadbackDelta},
@@ -470,7 +471,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "mission-dashboard-compact-filters", run: runMissionRecommendationsMissionDashboardCompactFilters},
 		{name: "complete-node", run: runMissionRecommendationsCompleteNode},
 		{name: "resume", run: runMissionRecommendationsResume},
-		{name: "validate-evidence", run: runMissionRecommendationsValidateEvidence},
+		{name: "validate-evidence", run: runMissionRecommendationsValidateEvidence, recordsRunLedger: true},
 	}
 }
 
@@ -479,6 +480,17 @@ func missionRecommendationCommandNames() []string {
 	names := make([]string, 0, len(commands))
 	for _, command := range commands {
 		names = append(names, command.name)
+	}
+	return names
+}
+
+func missionRecommendationRunLedgerCommandNames() []string {
+	commands := missionRecommendationCommandRegistry()
+	names := make([]string, 0, len(commands))
+	for _, command := range commands {
+		if command.recordsRunLedger {
+			names = append(names, command.name)
+		}
 	}
 	return names
 }
