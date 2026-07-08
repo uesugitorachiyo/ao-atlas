@@ -361,6 +361,29 @@ type AtlasRecommendationCommandRunLedger struct {
 	MutatesRepositories    bool   `json:"mutates_repositories"`
 }
 
+type AtlasRecommendationFinalResponseGates struct {
+	Schema                               string                                      `json:"schema"`
+	Status                               string                                      `json:"status"`
+	FinalResponseAllowedRequiresAllGates bool                                        `json:"final_response_allowed_requires_all_gates"`
+	Gates                                []AtlasRecommendationFinalResponseGateEntry `json:"gates"`
+	NoPromotionRequested                 bool                                        `json:"no_promotion_requested"`
+	PromotionGranted                     bool                                        `json:"promotion_granted"`
+	ClaimsAuthorityAdvance               bool                                        `json:"claims_authority_advance"`
+	RSIRemainsDenied                     bool                                        `json:"rsi_remains_denied"`
+	SafeToExecute                        bool                                        `json:"safe_to_execute"`
+	SchedulesWork                        bool                                        `json:"schedules_work"`
+	ExecutesWork                         bool                                        `json:"executes_work"`
+	ApprovesWork                         bool                                        `json:"approves_work"`
+	MutatesRepositories                  bool                                        `json:"mutates_repositories"`
+}
+
+type AtlasRecommendationFinalResponseGateEntry struct {
+	Gate        string `json:"gate"`
+	Required    bool   `json:"required"`
+	SourceField string `json:"source_field"`
+	Expected    string `json:"expected"`
+}
+
 type AtlasRecommendationWave struct {
 	ContractVersion        string                    `json:"contract_version"`
 	MissionID              string                    `json:"mission_id"`
