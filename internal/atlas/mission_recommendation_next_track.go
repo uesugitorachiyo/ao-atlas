@@ -32,10 +32,14 @@ func BuildAtlasRecommendationNextTrackDecision(sourceEvidenceRoot, sourceReadbac
 	if err != nil {
 		return AtlasRecommendationNextTrackDecision{}, err
 	}
+	registry, err := DefaultAtlasRecommendationTrackRegistry()
+	if err != nil {
+		return AtlasRecommendationNextTrackDecision{}, err
+	}
 
 	currentTrack := recommendationCurrentTrack(sourceEvidenceRoot, readback)
 	currentTrackStatus := "in_progress"
-	recommendedTrack := "feature_depth"
+	recommendedTrack := registry.DefaultTrack
 	featureDepthStatus := "available"
 	refactoringStatus := "pending_after_feature_depth"
 	exactNextAction := readback.ExactNextAction
@@ -44,11 +48,12 @@ func BuildAtlasRecommendationNextTrackDecision(sourceEvidenceRoot, sourceReadbac
 	}
 	if currentTrack == "feature_depth" && isSaturatedFeatureDepthReadback(readback) {
 		currentTrackStatus = "completed_saturated"
-		recommendedTrack = "refactoring"
+		recommendedTrack = registry.SaturatedFeatureDepthNextTrack
 		featureDepthStatus = "saturated_completed"
 		refactoringStatus = "recommended_next"
 		exactNextAction = "Start AO Atlas refactoring wave for recommendation routing, consumed-task ledger, final-response gates, and non-self-referential handoffs."
 	}
+	priorityOrder := priorityOrderForRecommendedTrack(registry, recommendedTrack)
 
 	decision := AtlasRecommendationNextTrackDecision{
 		Schema:                       AtlasRecommendationNextTrackDecisionContract,
@@ -68,7 +73,7 @@ func BuildAtlasRecommendationNextTrackDecision(sourceEvidenceRoot, sourceReadbac
 		CurrentTrack:                 currentTrack,
 		CurrentTrackStatus:           currentTrackStatus,
 		RecommendedTrack:             recommendedTrack,
-		PriorityOrder:                []string{recommendedTrack, "feature_depth", "rsi_boundary_hardening"},
+		PriorityOrder:                priorityOrder,
 		FeatureDepthStatus:           featureDepthStatus,
 		RefactoringStatus:            refactoringStatus,
 		RSITrackStatus:               "boundary_hardening_only_denied",
@@ -82,9 +87,6 @@ func BuildAtlasRecommendationNextTrackDecision(sourceEvidenceRoot, sourceReadbac
 		ExecutesWork:                 false,
 		ApprovesWork:                 false,
 		MutatesRepositories:          false,
-	}
-	if decision.PriorityOrder[1] == decision.PriorityOrder[0] {
-		decision.PriorityOrder[1] = "refactoring"
 	}
 	if err := ValidateAtlasRecommendationNextTrackDecision(decision); err != nil {
 		return AtlasRecommendationNextTrackDecision{}, err
