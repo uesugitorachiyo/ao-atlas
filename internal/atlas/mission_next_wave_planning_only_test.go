@@ -10,9 +10,20 @@ func TestFeatureDepthWaveNextWaveRecommendationsRemainPlanningOnlyUntilImported(
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-39", "next-wave-planning-only-validation.json")
 	recorded := mustLoadJSON[nextWavePlanningOnlyValidationFixture](t, fixturePath)
-	generated := buildNextWavePlanningOnlyValidationFixture(t, root)
+	generated := buildNextWavePlanningOnlyValidationFixture(t, root, "ao-atlas-feature-depth-wave-v01")
 	if digestValue(generated) != digestValue(recorded) {
 		t.Fatalf("next-wave planning-only validation fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	validateNextWavePlanningOnlyValidationFixture(t, recorded)
+}
+
+func TestFeatureDepthWaveV02NextWaveRecommendationsRemainPlanningOnlyUntilImported(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v02", "nodes", "mission-recommendation-feature-depth-next-wave-39", "next-wave-planning-only-validation.json")
+	recorded := mustLoadJSON[nextWavePlanningOnlyValidationFixture](t, fixturePath)
+	generated := buildNextWavePlanningOnlyValidationFixture(t, root, "ao-atlas-feature-depth-wave-v02")
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("v02 next-wave planning-only validation fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
 	}
 	validateNextWavePlanningOnlyValidationFixture(t, recorded)
 }
@@ -50,12 +61,12 @@ type nextWavePlanningOnlyValidationFixture struct {
 	SafetyBoundaries                     map[string]bool `json:"safety_boundaries"`
 }
 
-func buildNextWavePlanningOnlyValidationFixture(t *testing.T, root string) nextWavePlanningOnlyValidationFixture {
+func buildNextWavePlanningOnlyValidationFixture(t *testing.T, root string, waveName string) nextWavePlanningOnlyValidationFixture {
 	t.Helper()
-	sourcePath := "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-37/next-wave-feature-depth-recommendations.json"
-	generatedWavePath := "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave/recommendation-wave.json"
-	generatedReadbackPath := "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave/recommendation-readback.json"
-	generatedWorkgraphPath := "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave/recommendation-workgraph.json"
+	sourcePath := filepath.ToSlash(filepath.Join("docs", "evidence", waveName, "nodes", "mission-recommendation-feature-depth-next-wave-37", "next-wave-feature-depth-recommendations.json"))
+	generatedWavePath := filepath.ToSlash(filepath.Join("docs", "evidence", waveName, "nodes", "mission-recommendation-feature-depth-next-wave-38", "generated-next-wave", "recommendation-wave.json"))
+	generatedReadbackPath := filepath.ToSlash(filepath.Join("docs", "evidence", waveName, "nodes", "mission-recommendation-feature-depth-next-wave-38", "generated-next-wave", "recommendation-readback.json"))
+	generatedWorkgraphPath := filepath.ToSlash(filepath.Join("docs", "evidence", waveName, "nodes", "mission-recommendation-feature-depth-next-wave-38", "generated-next-wave", "recommendation-workgraph.json"))
 
 	source := mustLoadJSON[AOMissionFeatureDepthRecommendations](t, filepath.Join(root, sourcePath))
 	if err := ValidateAtlasNextWaveFeatureDepthRecommendations(source, 40); err != nil {
