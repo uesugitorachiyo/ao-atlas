@@ -1,0 +1,41 @@
+{
+  "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-38",
+  "status": "passed",
+  "scanned_scopes": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38",
+    "internal/atlas/mission_next_wave_prompt_generation_test.go"
+  ],
+  "scanned_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/candidate_record.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/checkpoint_bundle.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/command_readback.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/foundry-continuation-prompt.md",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/foundry-import.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave/lease-start.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave/next-recommended-prompt.md",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave/recommendation-readback.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave/recommendation-wave.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave/recommendation-workgraph.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave/workgraph-readiness-packet.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/implementation_evidence.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/node_gate.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/promoter_no_promotion.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/rollback_record.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/run-link.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/sentinel_public_safety.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/tests.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/verification.json"
+  ],
+  "scanned_file_count": 19,
+  "changed_evidence_files": 17,
+  "changed_prompt_artifacts": 2,
+  "forbidden_patterns_redacted": true,
+  "unsafe_match_count": 0,
+  "public_safety_scan_passed": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

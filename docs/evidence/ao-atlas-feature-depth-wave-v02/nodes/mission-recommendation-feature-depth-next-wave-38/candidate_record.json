@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-38",
+  "task_id": "mission-recommendation-feature-depth-next-wave-38-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-38",
+  "source_task_digest": "sha256:2cebfadb9ac9b286b71c8fac46ce8dabba38ff4f0fa938483a84a9660b076cc3",
+  "selected_work": [
+    "Generate v02 next-wave prompt and recommendation wave from node 37 recommendations.",
+    "Validate min_minutes=120, max_minutes=180, continue-if-fast target 40, and ready-work final-response denial.",
+    "Preserve planning-only, no-promotion, and RSI-denied invariants."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
