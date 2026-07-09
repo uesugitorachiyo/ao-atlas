@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-03",
+  "task_id": "mission-recommendation-feature-depth-next-wave-03-task",
+  "status": "recorded",
+  "implemented": [
+    "Added v02-specific regression coverage for stale checkpoint rejection.",
+    "Generated stale-checkpoint-rejection evidence comparing node 01 stale readback to node 02 latest checkpoint."
+  ],
+  "mutation_class": "low_risk_code",
+  "safe_to_execute": true
+}
