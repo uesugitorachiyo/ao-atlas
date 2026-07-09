@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-23",
+  "task_id": "mission-recommendation-feature-depth-next-wave-23-task",
+  "status": "selected",
+  "candidate": "feature-depth-next-wave-23",
+  "reason": "The node records typed redacted negative fixtures that exercise unsafe authority-promotion wording without storing raw unsafe public claims.",
+  "selected_from": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-22/recommendation-readback-after.json",
+  "rsi_remains_denied": true
+}
