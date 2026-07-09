@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.refactoring.tests.v0.1",
+  "node_id": "refactoring-next-wave-32",
+  "red_test": {
+    "command": "go test ./internal/atlas -run TestMissionDashboardCompactFiltersIncludeTrackCIAndCleanupStateRows -count=1",
+    "observed_status": "failed_before_implementation",
+    "failure_reason": "compact dashboard filters missing recommendation_track, schema_health, ci_state, and cleanup_state rows"
+  },
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run 'TestMissionDashboardCompactFiltersIncludeTrackCIAndCleanupStateRows|TestFeatureDepthWaveMissionDashboardCompactFiltersSummarizeReadyBlockedFailedStates|TestMissionDashboardCompactFiltersCarrySchemaHealthStatusWhenReadbackHasIt|TestMissionDashboardCompactFiltersClassifySchemaHealthFilterStates' -count=1",
+      "status": "passed"
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    }
+  ]
+}

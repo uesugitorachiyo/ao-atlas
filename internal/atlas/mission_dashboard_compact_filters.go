@@ -52,9 +52,12 @@ func BuildAtlasMissionDashboardCompactFilters(nodeID, sourceReadbackPath, source
 	schemaHealthStatus := strings.TrimSpace(readback.SchemaHealthStatus)
 	schemaHealthFilterState := missionDashboardSchemaHealthFilterState(schemaHealthStatus)
 	schemaHealthFilterActionable := missionDashboardSchemaHealthFilterActionable(schemaHealthStatus)
-	if schemaHealthStatus != "" {
-		filters = append(filters, buildMissionDashboardSchemaHealthFilter(schemaHealthStatus, schemaHealthFilterActionable))
-	}
+	filters = append(filters,
+		buildMissionDashboardStateFilter("recommendation_track", "Track", missionDashboardRecommendationTrackStatus(readback), false),
+		buildMissionDashboardSchemaHealthFilter(schemaHealthStatus, schemaHealthFilterActionable),
+		buildMissionDashboardStateFilter("ci_state", "CI State", missionDashboardCIStateStatus(readback), missionDashboardCIStateActionable(readback)),
+		buildMissionDashboardStateFilter("cleanup_state", "Cleanup State", missionDashboardCleanupStateStatus(readback), missionDashboardCleanupStateActionable(readback)),
+	)
 
 	fixture := AtlasMissionDashboardCompactFilters{
 		Schema:                             AtlasMissionDashboardCompactFiltersContract,
@@ -147,10 +150,7 @@ func ValidateAtlasMissionDashboardCompactFilters(fixture AtlasMissionDashboardCo
 		errs = append(errs, "return_gate_status must be blocked_ready_nodes_remain")
 	}
 	hasSchemaHealthStatus := strings.TrimSpace(fixture.SchemaHealthStatus) != ""
-	expectedFilterCount := 4
-	if hasSchemaHealthStatus {
-		expectedFilterCount = 5
-	}
+	expectedFilterCount := 8
 	if fixture.FilterCount != len(fixture.Filters) || fixture.FilterCount != expectedFilterCount {
 		errs = append(errs, fmt.Sprintf("filter_count must be %d", expectedFilterCount))
 	}
@@ -211,6 +211,18 @@ func buildMissionDashboardCompactFilter(key, label string, ids []string, populat
 }
 
 func buildMissionDashboardSchemaHealthFilter(status string, actionable bool) AtlasMissionDashboardCompactFilter {
+	status = strings.TrimSpace(status)
+	if status == "" {
+		return AtlasMissionDashboardCompactFilter{
+			Key:             "schema_health",
+			Label:           "Schema Health",
+			Count:           0,
+			PreviewNodeIDs:  []string{},
+			Actionable:      false,
+			Empty:           true,
+			DashboardStatus: "schema_health_not_reported",
+		}
+	}
 	return AtlasMissionDashboardCompactFilter{
 		Key:             "schema_health",
 		Label:           "Schema Health",
@@ -220,6 +232,64 @@ func buildMissionDashboardSchemaHealthFilter(status string, actionable bool) Atl
 		Empty:           false,
 		DashboardStatus: status,
 	}
+}
+
+func buildMissionDashboardStateFilter(key, label, status string, actionable bool) AtlasMissionDashboardCompactFilter {
+	return AtlasMissionDashboardCompactFilter{
+		Key:             key,
+		Label:           label,
+		Count:           1,
+		PreviewNodeIDs:  []string{},
+		Actionable:      actionable,
+		Empty:           false,
+		DashboardStatus: status,
+	}
+}
+
+func missionDashboardRecommendationTrackStatus(readback AtlasRecommendationReadback) string {
+	source := strings.ToLower(readback.TargetInstance + " " + readback.MissionID)
+	switch {
+	case strings.Contains(source, "feature-depth"):
+		return "track_feature_depth"
+	case strings.Contains(source, "refactoring"):
+		return "track_refactoring"
+	case strings.Contains(source, "hardening"):
+		return "track_hardening"
+	case strings.Contains(source, "final-closure") || strings.Contains(source, "final_closure"):
+		return "track_final_closure"
+	default:
+		return "track_unknown"
+	}
+}
+
+func missionDashboardCIStateStatus(readback AtlasRecommendationReadback) string {
+	if readback.FailedNodes > 0 || strings.Contains(readback.PublicSafetyScanStatus, "failed") {
+		return "ci_state_failed"
+	}
+	if strings.Contains(readback.FoundryRollupStatus, "completed") &&
+		strings.Contains(readback.CommandReadbackStatus, "compact") &&
+		readback.PublicSafetyScanStatus == "passed" {
+		return "ci_state_passed"
+	}
+	return "ci_state_pending_remote_lifecycle"
+}
+
+func missionDashboardCIStateActionable(readback AtlasRecommendationReadback) bool {
+	return missionDashboardCIStateStatus(readback) != "ci_state_passed"
+}
+
+func missionDashboardCleanupStateStatus(readback AtlasRecommendationReadback) string {
+	if readback.FinalResponseAllowed && readback.ReadyNodes == 0 && readback.BlockedNodes == 0 && readback.FailedNodes == 0 {
+		return "cleanup_state_complete"
+	}
+	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
+		return "cleanup_state_blocked"
+	}
+	return "cleanup_state_pending_ready_work"
+}
+
+func missionDashboardCleanupStateActionable(readback AtlasRecommendationReadback) bool {
+	return missionDashboardCleanupStateStatus(readback) != "cleanup_state_complete"
 }
 
 func missionDashboardSchemaHealthFilterActionable(status string) bool {
@@ -288,9 +358,18 @@ func validateMissionDashboardCompactFilterRows(errs *[]string, filters []AtlasMi
 		{"blocked", "Blocked", 0, false, true, "no_blocked_nodes", 5, "", "", 0},
 		{"failed", "Failed", 0, false, true, "no_failed_nodes", 5, "", "", 0},
 		{"completed", "Completed", 35, false, false, "completed_history", 3, "mission-recommendation-feature-depth-next-wave-01", "mission-recommendation-feature-depth-next-wave-35", 32},
+		{"recommendation_track", "Track", 1, false, false, "track_feature_depth", 0, "", "", 0},
 	}
+	schemaHealthExpectedStatus := "schema_health_not_reported"
+	schemaHealthExpectedCount := 0
+	schemaHealthExpectedEmpty := true
 	if schemaHealthStatus != "" {
-		expected = append(expected, struct {
+		schemaHealthExpectedStatus = schemaHealthStatus
+		schemaHealthExpectedCount = 1
+		schemaHealthExpectedEmpty = false
+	}
+	expected = append(expected,
+		struct {
 			key              string
 			label            string
 			count            int
@@ -301,10 +380,34 @@ func validateMissionDashboardCompactFilterRows(errs *[]string, filters []AtlasMi
 			firstNodeID      string
 			lastNodeID       string
 			omittedNodeCount int
-		}{"schema_health", "Schema Health", 1, missionDashboardSchemaHealthFilterActionable(schemaHealthStatus), false, schemaHealthStatus, 0, "", "", 0})
-	}
+		}{"schema_health", "Schema Health", schemaHealthExpectedCount, missionDashboardSchemaHealthFilterActionable(schemaHealthStatus), schemaHealthExpectedEmpty, schemaHealthExpectedStatus, 0, "", "", 0},
+		struct {
+			key              string
+			label            string
+			count            int
+			actionable       bool
+			empty            bool
+			dashboardStatus  string
+			previewLimit     int
+			firstNodeID      string
+			lastNodeID       string
+			omittedNodeCount int
+		}{"ci_state", "CI State", 1, true, false, "ci_state_pending_remote_lifecycle", 0, "", "", 0},
+		struct {
+			key              string
+			label            string
+			count            int
+			actionable       bool
+			empty            bool
+			dashboardStatus  string
+			previewLimit     int
+			firstNodeID      string
+			lastNodeID       string
+			omittedNodeCount int
+		}{"cleanup_state", "Cleanup State", 1, true, false, "cleanup_state_pending_ready_work", 0, "", "", 0},
+	)
 	if len(filters) != len(expected) {
-		*errs = append(*errs, "filters must contain ready, blocked, failed, completed, and optional schema health rows")
+		*errs = append(*errs, "filters must contain ready, blocked, failed, completed, recommendation track, schema health, ci state, and cleanup state rows")
 		return
 	}
 	for i, want := range expected {

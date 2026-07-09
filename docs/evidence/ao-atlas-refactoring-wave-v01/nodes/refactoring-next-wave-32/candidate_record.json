@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.refactoring.candidate-record.v0.1",
+  "node_id": "refactoring-next-wave-32",
+  "rank": 32,
+  "task": "Add dashboard filters for recommendation track, schema health, CI state, and cleanup state.",
+  "candidate_status": "implemented_locally",
+  "files_changed": [
+    "internal/atlas/mission_dashboard_compact_filters.go",
+    "internal/atlas/mission_dashboard_compact_filters_test.go",
+    "docs/evidence/*/nodes/mission-recommendation-feature-depth-next-wave-36/mission-dashboard-compact-filters.json"
+  ],
+  "filters_added": [
+    "recommendation_track",
+    "schema_health",
+    "ci_state",
+    "cleanup_state"
+  ],
+  "generated_fixture_copies_refreshed": 7,
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}
