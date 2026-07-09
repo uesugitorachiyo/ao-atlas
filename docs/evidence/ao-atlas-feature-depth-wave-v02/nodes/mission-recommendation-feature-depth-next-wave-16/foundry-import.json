@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-16",
+  "task_id": "mission-recommendation-feature-depth-next-wave-16-task",
+  "status": "ready",
+  "target_repo": "ao-atlas",
+  "objective": "Record branch cleanup ledger summaries in final operator handoff evidence.",
+  "active_node_count": 1,
+  "safe_to_execute": true,
+  "authority_boundary": "atlas_recommendation_planning_only"
+}

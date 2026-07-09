@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-16",
+  "task_id": "mission-recommendation-feature-depth-next-wave-16-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveBranchCleanupHandoffSummary' -count=1",
+    "status": "failed_before_implementation",
+    "failure": "missing v02 branch-cleanup-handoff-summary fixture rejected by regression coverage"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveBranchCleanupHandoffSummary' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}
