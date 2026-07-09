@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.refactoring.node-gate.v0.1",
+  "node_id": "refactoring-next-wave-37",
+  "status": "cleared",
+  "theme": "test-structure",
+  "task": "Extract shared recommendation test fixture builders for waves, nodes, and readbacks.",
+  "bounded_scope": [
+    "internal/atlas/mission_recommendations_fixture_builders_test.go",
+    "internal/atlas/mission_recommendations_final_closure_lifecycle_test.go",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-37"
+  ],
+  "execution_clearance": "mechanical_test_helper_extraction",
+  "requires_new_authorization": false,
+  "requires_policy_change": false,
+  "requires_provider_call": false,
+  "requires_dependency_update": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.refactoring.rollback-record.v0.1",
+  "node_id": "refactoring-next-wave-37",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "Move shared fixture builders back into final-closure lifecycle tests.",
+    "Remove internal/atlas/mission_recommendations_fixture_builders_test.go.",
+    "Remove node 37 evidence artifacts."
+  ],
+  "rollback_risk": "low",
+  "data_migration_required": false,
+  "release_or_deploy_required": false,
+  "rsi_remains_denied": true
+}
