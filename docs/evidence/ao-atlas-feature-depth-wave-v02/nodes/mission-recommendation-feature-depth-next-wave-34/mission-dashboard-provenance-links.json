@@ -1,0 +1,78 @@
+{
+  "schema": "ao.atlas.mission-dashboard-provenance-links.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-34",
+  "status": "dashboard_provenance_links_bound",
+  "source_dashboard_binding_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-33/mission-dashboard-closure-binding.json",
+  "source_dashboard_binding_digest": "sha256:da0358e7a753a723a47a4ea96454028bb9087370f86b4560782d9c045d003610",
+  "source_row_count": 6,
+  "required_repos": [
+    "ao-command",
+    "ao-foundry",
+    "ao-promoter",
+    "ao-sentinel"
+  ],
+  "provenance_link_count": 4,
+  "provenance_links": [
+    {
+      "repo": "ao-command",
+      "role": "compact_readback_owner",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-32/command_readback.json",
+      "evidence_digest": "sha256:6b6d8fbc26552253706d2e0a56cb643f6da1b763bcf24412c241cd1e57b77551",
+      "provenance_link_status": "linked",
+      "dashboard_row_matched": true,
+      "closure_evidence_digest_matches": true,
+      "artifact_digest_verified": true,
+      "final_response_allowed": false,
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    },
+    {
+      "repo": "ao-foundry",
+      "role": "bounded_implementation_handoff",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-32/foundry-rollup.json",
+      "evidence_digest": "sha256:1fa5527b74b3275e68949c3faa2d9fc168576cedbf440d9b891aaf8c6743b2f3",
+      "provenance_link_status": "linked",
+      "dashboard_row_matched": true,
+      "closure_evidence_digest_matches": true,
+      "artifact_digest_verified": true,
+      "final_response_allowed": false,
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    },
+    {
+      "repo": "ao-promoter",
+      "role": "no_promotion_rollup_owner",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-32/promoter_no_promotion.json",
+      "evidence_digest": "sha256:f3a892fc88640a5831dd9ba625689a3b2f43667955b70d8a0ef064787d1bd328",
+      "provenance_link_status": "linked",
+      "dashboard_row_matched": true,
+      "closure_evidence_digest_matches": true,
+      "artifact_digest_verified": true,
+      "final_response_allowed": false,
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    },
+    {
+      "repo": "ao-sentinel",
+      "role": "public_safety_scan_owner",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-32/sentinel_public_safety.json",
+      "evidence_digest": "sha256:207d7f53933ed9775c3d8cad615b1a8e33c38b311887ab53420a8e83bb5ec0df",
+      "provenance_link_status": "linked",
+      "dashboard_row_matched": true,
+      "closure_evidence_digest_matches": true,
+      "artifact_digest_verified": true,
+      "final_response_allowed": false,
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    }
+  ],
+  "all_required_provenance_linked": true,
+  "every_link_matches_dashboard": true,
+  "every_linked_artifact_digest_verified": true,
+  "final_response_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

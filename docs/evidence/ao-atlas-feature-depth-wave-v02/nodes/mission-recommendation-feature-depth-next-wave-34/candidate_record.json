@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-34",
+  "task_id": "mission-recommendation-feature-depth-next-wave-34-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-34",
+  "source_task_digest": "sha256:174ef80a7528670abcc4bd5c9c87e450a5e675c00d328963ff9765bc21788dae",
+  "selected_work": [
+    "Generate v02 Mission dashboard provenance links from node 33 dashboard closure binding.",
+    "Validate Foundry, Promoter, Command, and Sentinel provenance links against dashboard rows.",
+    "Preserve final-response denial, no-promotion, and RSI-denied invariants."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

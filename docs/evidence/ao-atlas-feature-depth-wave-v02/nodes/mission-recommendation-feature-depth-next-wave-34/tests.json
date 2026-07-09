@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-34",
+  "task_id": "mission-recommendation-feature-depth-next-wave-34-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveMissionDashboardProvenanceLinksBindSubsystemEvidence|TestFeatureDepthWaveV02MissionDashboardProvenanceLinksBindSubsystemEvidence' -count=1",
+    "status": "failed_before_fixture_generation",
+    "failure": "missing v02 mission-dashboard-provenance-links.json fixture"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveMissionDashboardProvenanceLinksBindSubsystemEvidence|TestFeatureDepthWaveV02MissionDashboardProvenanceLinksBindSubsystemEvidence' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}

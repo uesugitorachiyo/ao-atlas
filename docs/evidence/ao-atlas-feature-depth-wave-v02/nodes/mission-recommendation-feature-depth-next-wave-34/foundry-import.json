@@ -1,0 +1,9 @@
+{
+  "contract_version": "ao.foundry.import.v0.1",
+  "task_id": "mission-recommendation-feature-depth-next-wave-34-task",
+  "node_id": "mission-recommendation-feature-depth-next-wave-34",
+  "status": "ready_for_bounded_implementation",
+  "objective": "Add dashboard provenance links for Foundry Promoter Command and Sentinel evidence.",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-34",
+  "safe_to_execute": true
+}
