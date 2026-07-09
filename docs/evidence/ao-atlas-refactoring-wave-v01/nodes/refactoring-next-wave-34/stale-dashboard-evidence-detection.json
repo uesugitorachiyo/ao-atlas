@@ -1,0 +1,61 @@
+{
+  "schema": "ao.atlas.mission-dashboard-stale-evidence-detection.v0.1",
+  "node_id": "refactoring-next-wave-34",
+  "status": "stale_dashboard_evidence_detected",
+  "latest_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+  "latest_readback_digest": "sha256:2f8db366915afd3efdb6c7d15b6c8eafe71dadd14fb4100df2159ff319367e0e",
+  "latest_completed_nodes": 40,
+  "dashboard_evidence_count": 3,
+  "stale_dashboard_evidence_count": 3,
+  "fresh_dashboard_evidence_count": 0,
+  "stale_dashboard_evidence": [
+    {
+      "path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-33/mission-dashboard-closure-binding.json",
+      "schema": "ao.atlas.mission-dashboard-closure-binding.v0.1",
+      "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-32/recommendation-readback-after.json",
+      "source_readback_digest": "sha256:9cef8278d748e83416124a0a187bcc04d8692bfdddf53c00e8fc4e7976b2c1bd",
+      "latest_readback_digest": "sha256:2f8db366915afd3efdb6c7d15b6c8eafe71dadd14fb4100df2159ff319367e0e",
+      "stale": true,
+      "stale_reason": "source_readback_digest_superseded_by_latest_readback"
+    },
+    {
+      "path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35/mission-dashboard-freshness-checks.json",
+      "schema": "ao.atlas.mission-dashboard-freshness-checks.v0.1",
+      "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/recommendation-readback-after.json",
+      "source_readback_digest": "sha256:45b464734e11d9cf5a1658473ac182a0f5e0676df8f1eb42d5373983c765c182",
+      "latest_readback_digest": "sha256:2f8db366915afd3efdb6c7d15b6c8eafe71dadd14fb4100df2159ff319367e0e",
+      "stale": true,
+      "stale_reason": "source_readback_digest_superseded_by_latest_readback"
+    },
+    {
+      "path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-36/mission-dashboard-compact-filters.json",
+      "schema": "ao.atlas.mission-dashboard-compact-filters.v0.1",
+      "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35/recommendation-readback-after.json",
+      "source_readback_digest": "sha256:df083126c771d3f944dcc14a7ee1365d5e665cc43075db7994a6bbde8d455ea9",
+      "latest_readback_digest": "sha256:2f8db366915afd3efdb6c7d15b6c8eafe71dadd14fb4100df2159ff319367e0e",
+      "stale": true,
+      "stale_reason": "source_readback_digest_superseded_by_latest_readback"
+    }
+  ],
+  "old_export_root_count": 2,
+  "old_export_roots": [
+    {
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02",
+      "stale": true,
+      "stale_reason": "old_export_root_superseded_by_latest_readback"
+    },
+    {
+      "path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04",
+      "stale": true,
+      "stale_reason": "old_export_root_superseded_by_latest_readback"
+    }
+  ],
+  "recommended_action": "regenerate_dashboard_evidence_from_latest_readback_before_operator_handoff",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.refactoring.candidate-record.v0.1",
+  "node_id": "refactoring-next-wave-34",
+  "rank": 34,
+  "task": "Create stale dashboard evidence detection for superseded wave readbacks and old exports.",
+  "candidate_status": "implemented_locally",
+  "files_changed": [
+    "internal/atlas/mission_dashboard_stale_evidence.go",
+    "internal/atlas/mission_dashboard_stale_evidence_test.go",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/stale-dashboard-evidence-detection.json"
+  ],
+  "detected_stale_dashboard_evidence": 3,
+  "detected_old_export_roots": 2,
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}
