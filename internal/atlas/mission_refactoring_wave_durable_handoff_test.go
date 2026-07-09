@@ -123,10 +123,8 @@ func TestRefactoringWaveLongRunPromptRegressionFixturePreservesTwoToThreeHourBud
 		t.Fatal(err)
 	}
 	recommendationsPath := filepath.Join(root, filepath.FromSlash(fixture.RecommendationsPath))
-	recommendationsDigest, err := digestFile(recommendationsPath)
-	if err != nil {
-		t.Fatal(err)
-	}
+	recommendations := mustLoadJSON[AOMissionRefactoringRecommendations](t, recommendationsPath)
+	recommendationsDigest := digestValue(recommendations)
 
 	if fixture.Schema != "ao.atlas.refactoring-long-run-prompt-regression.v0.1" ||
 		fixture.Status != "guarded" ||
@@ -148,7 +146,7 @@ func TestRefactoringWaveLongRunPromptRegressionFixturePreservesTwoToThreeHourBud
 		fixture.ExecutesWork ||
 		fixture.ApprovesWork ||
 		fixture.MutatesRepositories {
-		t.Fatalf("long-run prompt regression fixture lost budget or safety state: %#v", fixture)
+		t.Fatalf("long-run prompt regression fixture lost budget or safety state: fixture=%#v recommendations_digest=%s", fixture, recommendationsDigest)
 	}
 	promptText := string(promptBytes)
 	for _, want := range []string{

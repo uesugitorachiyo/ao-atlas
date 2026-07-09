@@ -4,7 +4,7 @@
   "prompt_path": "docs/evidence/ao-atlas-refactoring-wave-v01/next-recommended-prompt.md",
   "prompt_digest": "sha256:bfce5f01c61b1cad5a220ffc6b48a64506f275caf0de024e0fc751d08912a334",
   "recommendations_path": "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-recommendations.json",
-  "recommendations_digest": "sha256:a18a77319e620bc932782576ea537a512853879def60f2539b96901d879f7287",
+  "recommendations_digest": "sha256:c1976306b9b871c16eff065314c606261af49185c0756290809f34ad7f00e4d7",
   "minimum_nodes": 12,
   "total_nodes": 40,
   "min_minutes": 120,
