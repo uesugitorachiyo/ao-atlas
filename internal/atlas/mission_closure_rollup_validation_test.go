@@ -1,6 +1,7 @@
 package atlas
 
 import (
+	"os"
 	"path/filepath"
 	"testing"
 )
@@ -31,12 +32,13 @@ func TestFeatureDepthWaveV02ClosureRollupArtifactsUseTypedEvidenceValidation(t *
 	root := repoRoot(t)
 	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v02")
 	reportPath := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-05", "feature-depth-evidence-validation-report.json")
+	recorded := mustLoadJSON[AtlasRecommendationEvidenceValidationReport](t, reportPath)
+	checkpointRoot := evidenceValidationReportCheckpointRoot(t, waveRoot, recorded)
 
-	report, err := BuildAtlasRecommendationEvidenceValidationReport(waveRoot)
+	report, err := BuildAtlasRecommendationEvidenceValidationReport(checkpointRoot)
 	if err != nil {
 		t.Fatal(err)
 	}
-	recorded := mustLoadJSON[AtlasRecommendationEvidenceValidationReport](t, reportPath)
 	if err := ValidateAtlasRecommendationEvidenceValidationReport(recorded); err != nil {
 		t.Fatal(err)
 	}
@@ -66,4 +68,24 @@ func TestFeatureDepthWaveV02ClosureRollupArtifactsUseTypedEvidenceValidation(t *
 			t.Fatalf("%s should validate every %s file, got validator count %d schema count %d", validator, schema, recorded.Validators[validator], schemaCount)
 		}
 	}
+}
+
+func evidenceValidationReportCheckpointRoot(t *testing.T, waveRoot string, recorded AtlasRecommendationEvidenceValidationReport) string {
+	t.Helper()
+	checkpointRoot := filepath.Join(t.TempDir(), "evidence")
+	for _, entry := range recorded.Entries {
+		src := filepath.Join(waveRoot, filepath.FromSlash(entry.Path))
+		dst := filepath.Join(checkpointRoot, filepath.FromSlash(entry.Path))
+		data, err := os.ReadFile(src)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := os.MkdirAll(filepath.Dir(dst), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(dst, data, 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return checkpointRoot
 }

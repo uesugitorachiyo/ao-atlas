@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-06",
+  "task_id": "mission-recommendation-feature-depth-next-wave-06-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestFeatureDepthWaveV02RunLinkSchemaCoverageSummarizesEveryGeneratedRunLink -count=1 failed before run-link-schema-coverage.json existed",
+  "targeted_regression": "go test ./internal/atlas -run TestFeatureDepthWaveV02RunLinkSchemaCoverageSummarizesEveryGeneratedRunLink -count=1",
+  "assertions": [
+    "run_link_count=6",
+    "completed_run_links=6",
+    "typed:run-link validator count matches run-link schema count",
+    "RSI remains denied"
+  ]
+}
