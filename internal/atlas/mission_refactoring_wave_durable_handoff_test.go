@@ -89,3 +89,78 @@ func TestRefactoringWaveDurableHandoffFixtureRoutesPastCompletedFeatureDepth(t *
 		}
 	}
 }
+
+func TestRefactoringWaveLongRunPromptRegressionFixturePreservesTwoToThreeHourBudget(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-refactoring-wave-v01")
+	fixture := mustLoadJSON[struct {
+		Schema                 string   `json:"schema"`
+		Status                 string   `json:"status"`
+		PromptPath             string   `json:"prompt_path"`
+		PromptDigest           string   `json:"prompt_digest"`
+		RecommendationsPath    string   `json:"recommendations_path"`
+		RecommendationsDigest  string   `json:"recommendations_digest"`
+		MinimumNodes           int      `json:"minimum_nodes"`
+		TotalNodes             int      `json:"total_nodes"`
+		MinMinutes             int      `json:"min_minutes"`
+		MaxMinutes             int      `json:"max_minutes"`
+		FinalResponseAllowed   bool     `json:"final_response_allowed"`
+		RegressionAssertions   []string `json:"regression_assertions"`
+		NoPromotionRequested   bool     `json:"no_promotion_requested"`
+		PromotionGranted       bool     `json:"promotion_granted"`
+		ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+		RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+		SafeToExecute          bool     `json:"safe_to_execute"`
+		SchedulesWork          bool     `json:"schedules_work"`
+		ExecutesWork           bool     `json:"executes_work"`
+		ApprovesWork           bool     `json:"approves_work"`
+		MutatesRepositories    bool     `json:"mutates_repositories"`
+	}](t, filepath.Join(waveRoot, "long-run-prompt-regression.json"))
+
+	promptPath := filepath.Join(root, filepath.FromSlash(fixture.PromptPath))
+	promptBytes, err := os.ReadFile(promptPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	recommendationsPath := filepath.Join(root, filepath.FromSlash(fixture.RecommendationsPath))
+	recommendationsDigest, err := digestFile(recommendationsPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if fixture.Schema != "ao.atlas.refactoring-long-run-prompt-regression.v0.1" ||
+		fixture.Status != "guarded" ||
+		fixture.PromptPath != "docs/evidence/ao-atlas-refactoring-wave-v01/next-recommended-prompt.md" ||
+		fixture.PromptDigest != digestBytes(promptBytes) ||
+		fixture.RecommendationsPath != "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-recommendations.json" ||
+		fixture.RecommendationsDigest != recommendationsDigest ||
+		fixture.MinimumNodes != 12 ||
+		fixture.TotalNodes != 40 ||
+		fixture.MinMinutes != 120 ||
+		fixture.MaxMinutes != 180 ||
+		fixture.FinalResponseAllowed ||
+		!fixture.NoPromotionRequested ||
+		fixture.PromotionGranted ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.MutatesRepositories {
+		t.Fatalf("long-run prompt regression fixture lost budget or safety state: %#v", fixture)
+	}
+	promptText := string(promptBytes)
+	for _, want := range []string{
+		"Target 2-3 hours",
+		"Complete at least 12 bounded refactoring nodes",
+		"continue toward all 40 recommendations",
+		"Do not stop after one node",
+		"refactoring-next-wave-40",
+		"RSI remains denied",
+	} {
+		if !strings.Contains(promptText, want) || !containsStringValue(fixture.RegressionAssertions, want) {
+			t.Fatalf("long-run prompt regression fixture missing %q", want)
+		}
+	}
+}

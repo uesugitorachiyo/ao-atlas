@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.refactoring-long-run-prompt-regression.v0.1",
+  "status": "guarded",
+  "prompt_path": "docs/evidence/ao-atlas-refactoring-wave-v01/next-recommended-prompt.md",
+  "prompt_digest": "sha256:bfce5f01c61b1cad5a220ffc6b48a64506f275caf0de024e0fc751d08912a334",
+  "recommendations_path": "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-recommendations.json",
+  "recommendations_digest": "sha256:a18a77319e620bc932782576ea537a512853879def60f2539b96901d879f7287",
+  "minimum_nodes": 12,
+  "total_nodes": 40,
+  "min_minutes": 120,
+  "max_minutes": 180,
+  "final_response_allowed": false,
+  "regression_assertions": [
+    "Target 2-3 hours",
+    "Complete at least 12 bounded refactoring nodes",
+    "continue toward all 40 recommendations",
+    "Do not stop after one node",
+    "refactoring-next-wave-40",
+    "RSI remains denied"
+  ],
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
