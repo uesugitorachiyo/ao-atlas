@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-11",
+  "task_id": "mission-recommendation-feature-depth-next-wave-11-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_failed_check_replay.go",
+    "internal/atlas/mission_failed_check_replay_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "schemas/failed-check-replay-fixture.schema.json"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-11/failed-check-replay-input.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-11/failed-check-replay-fixture.json"
+  ],
+  "summary": "Node 11 records v02 failed check replay decisions that deny merge on failed checks and allow retry only for retryable timeout evidence, without promotion or RSI authority.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
