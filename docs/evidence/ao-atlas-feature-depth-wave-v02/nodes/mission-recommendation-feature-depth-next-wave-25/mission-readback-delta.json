@@ -1,0 +1,76 @@
+{
+  "schema": "ao.atlas.mission-readback-delta.v0.1",
+  "status": "changed",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-24/recommendation-readback-after.json",
+  "target_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-25/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:5512015d36f963854057215e7160f9620b21b2e1406991ea99291dc0cfb5f52f",
+  "target_readback_digest": "sha256:6ce9ab6eaba6892336bd32957211f023385ebb589dcd2d6614bad2ef99e47847",
+  "deterministic_comparison": true,
+  "changed_fields": [
+    "checkpoint_count",
+    "completed_nodes",
+    "elapsed_minutes",
+    "exact_next_action",
+    "first_executable_node",
+    "public_safety_scan_status",
+    "ready_nodes"
+  ],
+  "numeric_deltas": {
+    "checkpoint_count": 1,
+    "completed_nodes": 1,
+    "elapsed_minutes": 8,
+    "ready_nodes": -1
+  },
+  "boolean_transitions": {
+    "approves_work": {
+      "before": false,
+      "after": false
+    },
+    "executes_work": {
+      "before": false,
+      "after": false
+    },
+    "final_response_allowed": {
+      "before": false,
+      "after": false
+    },
+    "min_minutes_met": {
+      "before": true,
+      "after": true
+    },
+    "schedules_work": {
+      "before": false,
+      "after": false
+    }
+  },
+  "string_transitions": {
+    "exact_next_action": {
+      "before": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-25 and execute exactly one active node.",
+      "after": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-26 and execute exactly one active node."
+    },
+    "first_executable_node": {
+      "before": "mission-recommendation-feature-depth-next-wave-25",
+      "after": "mission-recommendation-feature-depth-next-wave-26"
+    },
+    "public_safety_scan_status": {
+      "before": "passed",
+      "after": "required_pending_verification"
+    }
+  },
+  "safety_boundaries": {
+    "auth_policy_config_widening": false,
+    "broad_rsi_claim": false,
+    "credential_inspection": false,
+    "dependency_updates": false,
+    "direct_main_mutation": false,
+    "hidden_instruction_mutation": false,
+    "provider_calls": false,
+    "release_deploy_publish_upload_tag": false,
+    "rsi_remains_denied": true
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
