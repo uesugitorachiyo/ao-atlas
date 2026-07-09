@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-05",
+  "task_id": "mission-recommendation-feature-depth-next-wave-05-task",
+  "status": "selected",
+  "candidate": "typed-evidence-validation-report",
+  "objective": "Generate a typed evidence validation report covering node closure rollup artifacts across the first five v02 nodes.",
+  "write_scope": [
+    "internal/atlas/mission_closure_rollup_validation_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-05"
+  ],
+  "expected_completed_nodes_after": 5,
+  "expected_ready_nodes_after": 35,
+  "expected_final_response_allowed_after": false,
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}
