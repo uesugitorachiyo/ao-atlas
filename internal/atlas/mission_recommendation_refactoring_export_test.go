@@ -90,3 +90,59 @@ func TestMissionRecommendationsExportRefactoringWaveUsesNextTrackDecision(t *tes
 		t.Fatal(err)
 	}
 }
+
+func TestMissionRecommendationsExportRefactoringWaveRejectsStaleNextTrackReadbackDigest(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	sourceRoot := "docs/evidence/ao-atlas-feature-depth-wave-v01"
+	sourceReadback := sourceRoot + "/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json"
+	sourceAssertion := "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json"
+	tempDir := t.TempDir()
+	decisionPath := filepath.Join(tempDir, "next-track-decision.json")
+	refactoringPath := filepath.Join(tempDir, "next-wave-refactoring-recommendations.json")
+
+	if code := Run([]string{
+		"mission", "recommendations", "next-track",
+		"--source-evidence-root", sourceRoot,
+		"--readback", sourceReadback,
+		"--out", decisionPath,
+	}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("next-track failed")
+	}
+	decision := mustLoadJSON[AtlasRecommendationNextTrackDecision](t, decisionPath)
+	decision.SourceReadbackDigest = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+	if err := WriteJSON(decisionPath, decision); err != nil {
+		t.Fatal(err)
+	}
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "export-refactoring-wave",
+		"--mission-id", "ao-atlas-refactoring-wave-v01",
+		"--source-evidence-root", sourceRoot,
+		"--source-readback", sourceReadback,
+		"--source-assertion", sourceAssertion,
+		"--next-track-decision", decisionPath,
+		"--min-tasks", "40",
+		"--out", refactoringPath,
+	}, &out, &out)
+	if code == 0 {
+		t.Fatalf("export-refactoring-wave accepted stale next-track readback digest: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "next-track decision source_readback_digest") ||
+		!strings.Contains(out.String(), "does not match current source readback digest") {
+		t.Fatalf("stale digest error missing actionable message: %s", out.String())
+	}
+}

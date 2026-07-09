@@ -386,6 +386,13 @@ func BuildAtlasNextWaveRefactoringRecommendations(options AtlasNextWaveRefactori
 	if decision.SourceEvidenceRoot != sourceEvidenceRoot || filepath.ToSlash(decision.SourceReadbackPath) != sourceReadbackPath {
 		return AOMissionRefactoringRecommendations{}, fmt.Errorf("next-track decision must match refactoring export source")
 	}
+	sourceReadbackDigest, err := digestFile(sourceReadbackPath)
+	if err != nil {
+		return AOMissionRefactoringRecommendations{}, err
+	}
+	if decision.SourceReadbackDigest != sourceReadbackDigest {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("next-track decision source_readback_digest %s does not match current source readback digest %s", decision.SourceReadbackDigest, sourceReadbackDigest)
+	}
 	if decision.RecommendedTrack != "refactoring" || decision.RefactoringStatus != "recommended_next" || decision.RSITrackStatus != "boundary_hardening_only_denied" {
 		return AOMissionRefactoringRecommendations{}, fmt.Errorf("next-track decision must recommend refactoring with RSI boundary denied")
 	}
