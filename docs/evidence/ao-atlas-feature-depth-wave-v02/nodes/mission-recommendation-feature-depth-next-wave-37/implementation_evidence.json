@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-37",
+  "task_id": "mission-recommendation-feature-depth-next-wave-37-task",
+  "status": "implemented",
+  "implementation_summary": [
+    "Added v02 regression coverage for ranked Feature Depth export.",
+    "Generated next-wave-feature-depth-recommendations.json with 40 planning-only tasks.",
+    "Generated next-wave-recommendation-export.json bound to final closure readback and no-promotion/no-RSI assertion."
+  ],
+  "changed_paths": [
+    "internal/atlas/mission_feature_depth_ranked_export_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-37"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
