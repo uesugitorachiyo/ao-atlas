@@ -164,6 +164,86 @@ func TestMissionRecommendationsSchemaRegistryBacksTypedValidatorLookup(t *testin
 	}
 }
 
+func TestMissionRecommendationsSchemaRegistryGoldenFixtures(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	registryPath := filepath.Join(t.TempDir(), "recommendation-evidence-schema-registry.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "schema-registry",
+		"--out", registryPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("schema-registry failed: %s", out.String())
+	}
+
+	commandOutputGolden := filepath.Join("internal", "atlas", "testdata", "recommendation_schema_registry_command_output.golden")
+	wantOutput, err := os.ReadFile(commandOutputGolden)
+	if err != nil {
+		t.Fatalf("read command output golden fixture: %v", err)
+	}
+	gotOutput := normalizeSchemaRegistryCommandOutput(out.String(), registryPath)
+	expectedOutput := normalizeSchemaRegistryCommandOutput(string(wantOutput), registryPath)
+	if gotOutput != expectedOutput {
+		t.Fatalf("schema registry command output golden drifted\ngot:\n%s\nwant:\n%s", gotOutput, expectedOutput)
+	}
+
+	registry := mustLoadJSON[AtlasRecommendationEvidenceSchemaRegistry](t, registryPath)
+	gotBindings := make([]schemaRegistryTypedValidatorBindingGolden, 0, len(registry.Schemas))
+	for _, entry := range registry.Schemas {
+		gotBindings = append(gotBindings, schemaRegistryTypedValidatorBindingGolden{
+			Schema:         entry.Schema,
+			TypedValidator: entry.TypedValidator,
+		})
+	}
+	bindingGolden := filepath.Join("internal", "atlas", "testdata", "recommendation_schema_registry_typed_validator_bindings.json")
+	wantBindings := mustLoadJSON[[]schemaRegistryTypedValidatorBindingGolden](t, bindingGolden)
+	assertSchemaRegistryTypedValidatorBindings(t, gotBindings, wantBindings)
+}
+
+type schemaRegistryTypedValidatorBindingGolden struct {
+	Schema         string `json:"schema"`
+	TypedValidator string `json:"typed_validator"`
+}
+
+func normalizeSchemaRegistryCommandOutput(output, registryPath string) string {
+	output = strings.ReplaceAll(output, "\r\n", "\n")
+	output = strings.ReplaceAll(output, registryPath, "<out>")
+	return strings.ReplaceAll(output, filepath.ToSlash(registryPath), "<out>")
+}
+
+func TestNormalizeSchemaRegistryCommandOutputNormalizesWindowsLineEndings(t *testing.T) {
+	got := normalizeSchemaRegistryCommandOutput("recommendation_evidence_schema_registry=C:\\tmp\\registry.json\r\n", "C:\\tmp\\registry.json")
+	want := "recommendation_evidence_schema_registry=<out>\n"
+	if got != want {
+		t.Fatalf("normalized schema registry command output drifted: got %q want %q", got, want)
+	}
+}
+
+func assertSchemaRegistryTypedValidatorBindings(t *testing.T, got, want []schemaRegistryTypedValidatorBindingGolden) {
+	t.Helper()
+	if len(got) != len(want) {
+		t.Fatalf("typed validator binding count drifted: got %d want %d", len(got), len(want))
+	}
+	for i := range got {
+		if got[i] != want[i] {
+			t.Fatalf("typed validator binding %d drifted: got %#v want %#v", i, got[i], want[i])
+		}
+	}
+}
+
 func schemaRegistryEntryKeys(entries []AtlasRecommendationEvidenceSchemaRegistryEntry) []string {
 	keys := make([]string, 0, len(entries))
 	for _, entry := range entries {

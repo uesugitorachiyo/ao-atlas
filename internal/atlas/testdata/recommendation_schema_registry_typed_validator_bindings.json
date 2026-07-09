@@ -1,0 +1,34 @@
+[
+  {
+    "schema": "ao.atlas.recommendation-next-track-decision.v0.1",
+    "typed_validator": "typed:recommendation-next-track-decision"
+  },
+  {
+    "schema": "ao.atlas.consumed-recommendation-ledger.v0.1",
+    "typed_validator": "typed:consumed-recommendation-ledger"
+  },
+  {
+    "schema": "ao.atlas.recommendation-track-registry.v0.1",
+    "typed_validator": "typed:recommendation-track-registry"
+  },
+  {
+    "schema": "ao.atlas.recommendation-command-run-ledger.v0.1",
+    "typed_validator": "typed:recommendation-command-run-ledger"
+  },
+  {
+    "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+    "typed_validator": "typed:recommendation-evidence-validation-report"
+  },
+  {
+    "schema": "ao.atlas.recommendation-final-response-gates.v0.1",
+    "typed_validator": "typed:recommendation-final-response-gates"
+  },
+  {
+    "schema": "ao.atlas.recommendation-evidence-schema-registry-coverage.v0.1",
+    "typed_validator": "typed:recommendation-evidence-schema-registry-coverage"
+  },
+  {
+    "schema": "ao.atlas.schema-health-repair-prompt.v0.1",
+    "typed_validator": "typed:schema-health-repair-prompt"
+  }
+]
