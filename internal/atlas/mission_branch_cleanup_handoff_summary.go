@@ -173,13 +173,15 @@ func summarizeBranchCleanupEntriesOnly(entries []AtlasBranchCleanupHandoffEntry)
 		if entry.CIStatus == "passed" {
 			summary.PassedCICount++
 		}
-		if entry.LocalBranchDeleted {
-			summary.LocalBranchDeletedCount++
-		}
-		if entry.RemoteBranchDeleted {
-			summary.RemoteBranchDeletedCount++
-		}
-		summary.BranchesRemainingTotal += entry.LocalCodexBranchesRemaining + entry.RemoteCodexBranchesRemaining
+		recordSummary := SummarizeAtlasBranchCleanupRecords(BuildAtlasBranchCleanupRecords(AtlasBranchCleanupRecordInput{
+			LocalBranchDeleted:           entry.LocalBranchDeleted,
+			RemoteBranchDeleted:          entry.RemoteBranchDeleted,
+			LocalCodexBranchesRemaining:  entry.LocalCodexBranchesRemaining,
+			RemoteCodexBranchesRemaining: entry.RemoteCodexBranchesRemaining,
+		}))
+		summary.LocalBranchDeletedCount += recordSummary.LocalBranchDeletedCount
+		summary.RemoteBranchDeletedCount += recordSummary.RemoteBranchDeletedCount
+		summary.BranchesRemainingTotal += recordSummary.BranchesRemainingTotal
 	}
 	return summary
 }
@@ -235,6 +237,12 @@ func validateBranchCleanupHandoffEntries(errs *[]string, entries []AtlasBranchCl
 		if entry.LocalCodexBranchesRemaining != 0 || entry.RemoteCodexBranchesRemaining != 0 {
 			*errs = append(*errs, prefix+".remaining branch counts must be zero")
 		}
+		validateAtlasBranchCleanupRecords(errs, prefix, BuildAtlasBranchCleanupRecords(AtlasBranchCleanupRecordInput{
+			LocalBranchDeleted:           entry.LocalBranchDeleted,
+			RemoteBranchDeleted:          entry.RemoteBranchDeleted,
+			LocalCodexBranchesRemaining:  entry.LocalCodexBranchesRemaining,
+			RemoteCodexBranchesRemaining: entry.RemoteCodexBranchesRemaining,
+		}))
 		if !digestPattern.MatchString(entry.Digest) {
 			*errs = append(*errs, prefix+".digest must be sha256 digest")
 		}
