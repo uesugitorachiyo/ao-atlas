@@ -145,6 +145,25 @@ func TestMissionRecommendationsSchemaRegistryContractsUseRecommendationEvidenceG
 	}
 }
 
+func TestMissionRecommendationsSchemaRegistryBacksTypedValidatorLookup(t *testing.T) {
+	registry, err := DefaultAtlasRecommendationEvidenceSchemaRegistry()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, entry := range registry.Schemas {
+		validator, ok := recommendationControlPlaneTypedValidator(entry.Schema)
+		if !ok {
+			t.Fatalf("schema %s missing registry-backed typed validator lookup", entry.Schema)
+		}
+		if validator != entry.TypedValidator {
+			t.Fatalf("schema %s typed validator drifted: got %s want %s", entry.Schema, validator, entry.TypedValidator)
+		}
+	}
+	if validator, ok := recommendationControlPlaneTypedValidator("ao.atlas.not-recommendation-control-plane.v0.1"); ok || validator != "" {
+		t.Fatalf("unknown schema should not resolve through recommendation control-plane lookup: %q %t", validator, ok)
+	}
+}
+
 func schemaRegistryEntryKeys(entries []AtlasRecommendationEvidenceSchemaRegistryEntry) []string {
 	keys := make([]string, 0, len(entries))
 	for _, entry := range entries {

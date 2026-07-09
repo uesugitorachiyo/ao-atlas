@@ -53,6 +53,15 @@ func newAtlasRecommendationEvidenceSchemaRegistryEntry(schema, artifact, command
 	}
 }
 
+func recommendationControlPlaneTypedValidator(schema string) (string, bool) {
+	for _, entry := range defaultAtlasRecommendationEvidenceSchemaRegistryEntries() {
+		if entry.Schema == schema {
+			return entry.TypedValidator, true
+		}
+	}
+	return "", false
+}
+
 func ValidateAtlasRecommendationEvidenceSchemaRegistry(registry AtlasRecommendationEvidenceSchemaRegistry) error {
 	var errs []string
 	requireContract(&errs, "recommendation_evidence_schema_registry", registry.Schema, AtlasRecommendationEvidenceSchemaRegistryContract)
