@@ -7,9 +7,12 @@
   "recommendation_count": 40,
   "source_evidence_root": "docs/evidence/ao-atlas-feature-depth-wave-v01",
   "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:2f8db366915afd3efdb6c7d15b6c8eafe71dadd14fb4100df2159ff319367e0e",
   "source_assertion_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json",
   "next_track_decision_path": "docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json",
   "next_track_decision_digest": "sha256:3c5ddc59ab3ffbb36109ba773d10198668d3bbad1751de9a253b3a1aad82a692",
+  "consumed_recommendation_ledger_path": "docs/evidence/ao-atlas-refactoring-wave-v01/consumed-recommendation-ledger.json",
+  "consumed_recommendation_ledger_digest": "sha256:7fe7731e1a9f9b37219d4492de27ae71b1edc9ca11a093114f60fad466b690b6",
   "tasks": [
     {
       "rank": 1,

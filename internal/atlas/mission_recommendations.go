@@ -452,6 +452,7 @@ func BuildAtlasNextWaveRefactoringRecommendations(options AtlasNextWaveRefactori
 		RecommendationCount:     len(tasks),
 		SourceEvidenceRoot:      sourceEvidenceRoot,
 		SourceReadbackPath:      sourceReadbackPath,
+		SourceReadbackDigest:    sourceReadbackDigest,
 		SourceAssertionPath:     sourceAssertionPath,
 		NextTrackDecisionPath:   nextTrackDecisionRef,
 		NextTrackDecisionDigest: decisionDigest,
@@ -590,6 +591,9 @@ func ValidateAtlasNextWaveRefactoringRecommendations(bundle AOMissionRefactoring
 	}
 	if !digestPattern.MatchString(bundle.NextTrackDecisionDigest) {
 		errs = append(errs, "next_track_decision_digest must be sha256 digest")
+	}
+	if !digestPattern.MatchString(bundle.SourceReadbackDigest) {
+		errs = append(errs, "source_readback_digest must be sha256 digest")
 	}
 	if bundle.ConsumedLedgerPath != "" || bundle.ConsumedLedgerDigest != "" {
 		requireField(&errs, "consumed_recommendation_ledger_path", bundle.ConsumedLedgerPath)
