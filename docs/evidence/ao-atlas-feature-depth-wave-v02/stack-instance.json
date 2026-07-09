@@ -1,0 +1,13 @@
+{
+  "contract_version": "ao.atlas.stack-instance.v0.1",
+  "id": "ao-atlas-feature-depth-wave-v02",
+  "state_root": ".atlas-local/state/ao-atlas-feature-depth-wave-v02",
+  "toolchain_root": "../shared-ao-toolchain",
+  "roots": {
+    "context": ".atlas-local/state/ao-atlas-feature-depth-wave-v02/ao-atlas-feature-depth-wave-v02/context",
+    "evidence": ".atlas-local/state/ao-atlas-feature-depth-wave-v02/ao-atlas-feature-depth-wave-v02/evidence",
+    "mission": ".atlas-local/state/ao-atlas-feature-depth-wave-v02/ao-atlas-feature-depth-wave-v02/mission",
+    "workgraph": ".atlas-local/state/ao-atlas-feature-depth-wave-v02/ao-atlas-feature-depth-wave-v02/workgraph",
+    "worktree": ".atlas-local/state/ao-atlas-feature-depth-wave-v02/ao-atlas-feature-depth-wave-v02/worktree"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-29",
+  "task_id": "mission-recommendation-feature-depth-next-wave-29-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-29",
+  "source_task_digest": "sha256:8ef75c3fabd45c36877ece3f5640ebf3743b8c350ced7c50ba7c51fd8da04fc9",
+  "selected_work": [
+    "Generate v02 Foundry import, continuation handoff, and readiness binding with exactly one active mutation node.",
+    "Bind Foundry import readiness to the current Atlas readback/workgraph first executable node.",
+    "Preserve Atlas planning-only boundaries without executing or approving work."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
