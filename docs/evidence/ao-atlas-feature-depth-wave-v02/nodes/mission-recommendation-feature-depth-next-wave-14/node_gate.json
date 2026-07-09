@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-14",
+  "task_id": "mission-recommendation-feature-depth-next-wave-14-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "objective": "Create stale remote branch repair evidence for interrupted cleanup handoffs.",
+  "mutation_class": "low_risk_code",
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "previous_node_cleanup_evidence": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-13/recommendation-readback-after.json",
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}
