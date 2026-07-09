@@ -124,6 +124,27 @@ func TestMissionRecommendationsSchemaRegistryUsesTypedEntryConstructors(t *testi
 	}
 }
 
+func TestMissionRecommendationsSchemaRegistryContractsUseRecommendationEvidenceGroup(t *testing.T) {
+	contracts := defaultAtlasRecommendationEvidenceSchemaContracts()
+	contractSet := map[string]bool{}
+	for _, contract := range contracts.ControlPlane {
+		contractSet[contract] = true
+	}
+	registry, err := DefaultAtlasRecommendationEvidenceSchemaRegistry()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, entry := range registry.Schemas {
+		if !contractSet[entry.Schema] {
+			t.Fatalf("schema registry entry %s is not covered by grouped recommendation evidence contracts: %#v", entry.Schema, contracts)
+		}
+	}
+	if !contractSet[AtlasRecommendationEvidenceSchemaRegistryContract] ||
+		!contractSet[AtlasRecommendationEvidenceSchemaRegistryCoverageContract] {
+		t.Fatalf("grouped recommendation evidence contracts must include registry and coverage contracts: %#v", contracts)
+	}
+}
+
 func schemaRegistryEntryKeys(entries []AtlasRecommendationEvidenceSchemaRegistryEntry) []string {
 	keys := make([]string, 0, len(entries))
 	for _, entry := range entries {
