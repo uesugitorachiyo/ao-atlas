@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.post-merge-lifecycle.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-09",
+  "status": "merged_and_cleaned",
+  "pr_number": 464,
+  "merge_commit": "5246e8cab4c45354bdb3458106d7ec334c417ecc",
+  "ci_status": "passed",
+  "local_main_synced": true,
+  "local_branch_deleted": true,
+  "remote_branch_deleted": true,
+  "local_codex_branches_remaining": 0,
+  "remote_codex_branches_remaining": 0
+}
