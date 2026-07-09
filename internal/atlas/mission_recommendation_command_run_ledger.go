@@ -97,6 +97,7 @@ func ValidateAtlasRecommendationCommandRunLedger(ledger AtlasRecommendationComma
 		errs = append(errs, "artifact_digest must be sha256 digest")
 	}
 	if !oneOf(ledger.ArtifactSchema,
+		AOMissionRefactoringRecommendationsContract,
 		AtlasRecommendationNextTrackDecisionContract,
 		AtlasConsumedRecommendationLedgerContract,
 		AtlasRecommendationTrackRegistryContract,

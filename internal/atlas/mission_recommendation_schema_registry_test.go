@@ -34,7 +34,7 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 	}
 	for _, want := range []string{
 		"status=ready",
-		"schema_count=8",
+		"schema_count=9",
 		"typed_validator_coverage_complete=true",
 		"rsi_remains_denied=true",
 	} {
@@ -47,7 +47,7 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 	if registry["schema"] != "ao.atlas.recommendation-evidence-schema-registry.v0.1" ||
 		registry["status"] != "ready" ||
 		registry["registry_purpose"] != "recommendation_control_plane_typed_artifact_coverage" ||
-		registry["schema_count"] != float64(8) ||
+		registry["schema_count"] != float64(9) ||
 		registry["typed_validator_coverage_complete"] != true ||
 		registry["no_promotion_requested"] != true ||
 		registry["promotion_granted"] != false ||
@@ -61,8 +61,8 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 		t.Fatalf("schema registry did not emit safe coverage metadata: %#v", registry)
 	}
 	schemas, ok := registry["schemas"].([]any)
-	if !ok || len(schemas) != 8 {
-		t.Fatalf("expected 8 schema registry entries, got %#v", registry["schemas"])
+	if !ok || len(schemas) != 9 {
+		t.Fatalf("expected 9 schema registry entries, got %#v", registry["schemas"])
 	}
 	wantSchemas := []struct {
 		schema         string
@@ -70,6 +70,7 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 		command        string
 		typedValidator string
 	}{
+		{"ao.mission.refactoring-recommendations.v0.1", "recommendation-refactoring-recommendations", "export-refactoring-wave", "typed:recommendation-refactoring-recommendations"},
 		{"ao.atlas.recommendation-next-track-decision.v0.1", "recommendation-next-track-decision", "next-track", "typed:recommendation-next-track-decision"},
 		{"ao.atlas.consumed-recommendation-ledger.v0.1", "consumed-recommendation-ledger", "consumed-ledger", "typed:consumed-recommendation-ledger"},
 		{"ao.atlas.recommendation-track-registry.v0.1", "recommendation-track-registry", "track-registry", "typed:recommendation-track-registry"},
@@ -109,7 +110,7 @@ func TestMissionRecommendationsSchemaRegistryUsesTypedEntryConstructors(t *testi
 		t.Fatal(err)
 	}
 	entries := defaultAtlasRecommendationEvidenceSchemaRegistryEntries()
-	if len(entries) != 8 {
+	if len(entries) != 9 {
 		t.Fatalf("typed registry constructors drifted: got %d entries", len(entries))
 	}
 	if strings.Join(schemaRegistryEntryKeys(registry.Schemas), ",") != strings.Join(schemaRegistryEntryKeys(entries), ",") {

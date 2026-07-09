@@ -1,5 +1,9 @@
 [
   {
+    "schema": "ao.mission.refactoring-recommendations.v0.1",
+    "typed_validator": "typed:recommendation-refactoring-recommendations"
+  },
+  {
     "schema": "ao.atlas.recommendation-next-track-decision.v0.1",
     "typed_validator": "typed:recommendation-next-track-decision"
   },

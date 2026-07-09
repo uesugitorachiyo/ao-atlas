@@ -52,6 +52,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 		RequiredFilenames:        requiredRecommendationEvidenceFilenames(),
 		RequiredFilenamesCovered: true,
 		SchemaCounts: map[string]int{
+			AOMissionRefactoringRecommendationsContract:               1,
 			AtlasRecommendationNextTrackDecisionContract:              1,
 			AtlasConsumedRecommendationLedgerContract:                 1,
 			AtlasRecommendationTrackRegistryContract:                  1,
@@ -62,6 +63,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
+			"typed:recommendation-refactoring-recommendations":       1,
 			"typed:recommendation-next-track-decision":               1,
 			"typed:consumed-recommendation-ledger":                   1,
 			"typed:recommendation-track-registry":                    1,
@@ -90,7 +92,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 	}
 	for _, want := range []string{
 		"status=passed",
-		"registry_schema_count=8",
+		"registry_schema_count=9",
 		"missing_schemas=0",
 		"missing_validators=0",
 		"rsi_remains_denied=true",
@@ -103,10 +105,10 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 	coverage := mustLoadJSON[map[string]any](t, coveragePath)
 	if coverage["schema"] != "ao.atlas.recommendation-evidence-schema-registry-coverage.v0.1" ||
 		coverage["status"] != "passed" ||
-		coverage["registry_schema_count"] != float64(8) ||
-		coverage["covered_schema_count"] != float64(8) ||
-		coverage["registry_validator_count"] != float64(8) ||
-		coverage["covered_validator_count"] != float64(8) ||
+		coverage["registry_schema_count"] != float64(9) ||
+		coverage["covered_schema_count"] != float64(9) ||
+		coverage["registry_validator_count"] != float64(9) ||
+		coverage["covered_validator_count"] != float64(9) ||
 		coverage["all_registry_schemas_covered"] != true ||
 		coverage["all_registry_validators_covered"] != true ||
 		coverage["no_promotion_requested"] != true ||
@@ -182,6 +184,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingSchemaFailure
 		RequiredFilenames:        requiredRecommendationEvidenceFilenames(),
 		RequiredFilenamesCovered: true,
 		SchemaCounts: map[string]int{
+			AOMissionRefactoringRecommendationsContract:               1,
 			AtlasRecommendationNextTrackDecisionContract:              1,
 			AtlasConsumedRecommendationLedgerContract:                 1,
 			AtlasRecommendationTrackRegistryContract:                  1,
@@ -191,6 +194,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingSchemaFailure
 			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
+			"typed:recommendation-refactoring-recommendations":       1,
 			"typed:recommendation-next-track-decision":               1,
 			"typed:consumed-recommendation-ledger":                   1,
 			"typed:recommendation-track-registry":                    1,
@@ -300,6 +304,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageDetectsStaleRegistryEntries
 		RequiredFilenames:        requiredRecommendationEvidenceFilenames(),
 		RequiredFilenamesCovered: true,
 		SchemaCounts: map[string]int{
+			AOMissionRefactoringRecommendationsContract:               1,
 			AtlasRecommendationNextTrackDecisionContract:              1,
 			AtlasConsumedRecommendationLedgerContract:                 1,
 			AtlasRecommendationTrackRegistryContract:                  1,
@@ -309,6 +314,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageDetectsStaleRegistryEntries
 			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
+			"typed:recommendation-refactoring-recommendations":       1,
 			"typed:recommendation-next-track-decision":               1,
 			"typed:consumed-recommendation-ledger":                   1,
 			"typed:recommendation-track-registry":                    1,
@@ -401,6 +407,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingValidatorFail
 		RequiredFilenames:        requiredRecommendationEvidenceFilenames(),
 		RequiredFilenamesCovered: true,
 		SchemaCounts: map[string]int{
+			AOMissionRefactoringRecommendationsContract:               1,
 			AtlasRecommendationNextTrackDecisionContract:              1,
 			AtlasConsumedRecommendationLedgerContract:                 1,
 			AtlasRecommendationTrackRegistryContract:                  1,
@@ -411,6 +418,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingValidatorFail
 			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
+			"typed:recommendation-refactoring-recommendations":       1,
 			"typed:recommendation-next-track-decision":               1,
 			"typed:consumed-recommendation-ledger":                   1,
 			"typed:recommendation-track-registry":                    1,
@@ -520,6 +528,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsCombinedMissingSchem
 		RequiredFilenames:        requiredRecommendationEvidenceFilenames(),
 		RequiredFilenamesCovered: true,
 		SchemaCounts: map[string]int{
+			AOMissionRefactoringRecommendationsContract:               1,
 			AtlasRecommendationNextTrackDecisionContract:              1,
 			AtlasConsumedRecommendationLedgerContract:                 1,
 			AtlasRecommendationTrackRegistryContract:                  1,
@@ -528,6 +537,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsCombinedMissingSchem
 			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
+			"typed:recommendation-refactoring-recommendations":       1,
 			"typed:recommendation-next-track-decision":               1,
 			"typed:consumed-recommendation-ledger":                   1,
 			"typed:recommendation-track-registry":                    1,
@@ -656,6 +666,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsFailedValidationRepo
 		RequiredFilenames:        requiredRecommendationEvidenceFilenames(),
 		RequiredFilenamesCovered: true,
 		SchemaCounts: map[string]int{
+			AOMissionRefactoringRecommendationsContract:               1,
 			AtlasRecommendationNextTrackDecisionContract:              1,
 			AtlasConsumedRecommendationLedgerContract:                 1,
 			AtlasRecommendationTrackRegistryContract:                  1,
@@ -666,6 +677,7 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsFailedValidationRepo
 			AtlasSchemaHealthRepairPromptContract:                     1,
 		},
 		Validators: map[string]int{
+			"typed:recommendation-refactoring-recommendations":       1,
 			"typed:recommendation-next-track-decision":               1,
 			"typed:consumed-recommendation-ledger":                   1,
 			"typed:recommendation-track-registry":                    1,

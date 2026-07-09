@@ -37,14 +37,14 @@ func TestMissionRecommendationsSchemaRegistryHealthChainsValidationAndCoverage(t
 	for _, want := range []string{
 		"status=failed",
 		"validation_report_status=passed",
-		"registry_schema_count=8",
-		"missing_schemas=7",
-		"missing_validators=7",
+		"registry_schema_count=9",
+		"missing_schemas=8",
+		"missing_validators=8",
 		"failure_reasons=missing_registry_schemas,missing_registry_validators",
 		"rsi_remains_denied=true",
 		"run_ledger_count=3",
 		"all_outputs_have_run_ledgers=true",
-		"operator_summary=failed: validation report passed; 7 registry schemas missing; 7 registry validators missing; 3 run ledgers written; RSI remains denied",
+		"operator_summary=failed: validation report passed; 8 registry schemas missing; 8 registry validators missing; 3 run ledgers written; RSI remains denied",
 		"exact_next_action=Add missing recommendation control-plane evidence artifacts, rerun schema-registry-health, and keep promotion denied.",
 		"recommendation_evidence_schema_registry=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-schema-registry.json")),
 		"recommendation_evidence_validation_report=" + filepath.ToSlash(filepath.Join(outDir, "recommendation-evidence-validation-report.json")),
@@ -83,8 +83,8 @@ func TestMissionRecommendationsSchemaRegistryHealthChainsValidationAndCoverage(t
 	coverage := mustLoadJSON[AtlasRecommendationEvidenceSchemaRegistryCoverage](t, coveragePath)
 	if coverage.Status != "failed" ||
 		coverage.ValidationReportStatus != "passed" ||
-		len(coverage.MissingSchemas) != 7 ||
-		len(coverage.MissingValidators) != 7 ||
+		len(coverage.MissingSchemas) != 8 ||
+		len(coverage.MissingValidators) != 8 ||
 		!coverage.NoPromotionRequested ||
 		coverage.PromotionGranted ||
 		coverage.ClaimsAuthorityAdvance ||
@@ -162,7 +162,7 @@ func TestMissionRecommendationsSchemaRegistryHealthJSONReportsLedgerCompleteness
 		report["validation_report_status"] != "passed" ||
 		report["run_ledger_count"] != float64(3) ||
 		report["all_outputs_have_run_ledgers"] != true ||
-		report["operator_summary"] != "failed: validation report passed; 7 registry schemas missing; 7 registry validators missing; 3 run ledgers written; RSI remains denied" ||
+		report["operator_summary"] != "failed: validation report passed; 8 registry schemas missing; 8 registry validators missing; 3 run ledgers written; RSI remains denied" ||
 		report["exact_next_action"] != "Add missing recommendation control-plane evidence artifacts, rerun schema-registry-health, and keep promotion denied." ||
 		report["rsi_remains_denied"] != true ||
 		report["schema_registry_run_ledger"] != filepath.ToSlash(filepath.Join(outDir, "recommendation-schema-registry-run-ledger.json")) ||
@@ -214,8 +214,8 @@ func TestMissionRecommendationsSchemaHealthRepairPromptGeneratesPlanningOnlyRepa
 	}
 	for _, want := range []string{
 		"status=repair_prompt_generated",
-		"missing_schemas=7",
-		"missing_validators=7",
+		"missing_schemas=8",
+		"missing_validators=8",
 		"safe_to_execute=false",
 		"rsi_remains_denied=true",
 	} {
@@ -227,8 +227,8 @@ func TestMissionRecommendationsSchemaHealthRepairPromptGeneratesPlanningOnlyRepa
 	fixture := mustLoadJSON[AtlasSchemaHealthRepairPrompt](t, fixturePath)
 	if fixture.Schema != "ao.atlas.schema-health-repair-prompt.v0.1" ||
 		fixture.Status != "repair_prompt_generated" ||
-		fixture.MissingSchemaCount != 7 ||
-		fixture.MissingValidatorCount != 7 ||
+		fixture.MissingSchemaCount != 8 ||
+		fixture.MissingValidatorCount != 8 ||
 		!fixture.PlanningOnly ||
 		fixture.SafeToExecute ||
 		fixture.SchedulesWork ||
@@ -252,8 +252,8 @@ func TestMissionRecommendationsSchemaHealthRepairPromptGeneratesPlanningOnlyRepa
 	prompt := string(promptBytes)
 	for _, want := range []string{
 		"You are AO Atlas, repairing recommendation schema-health coverage.",
-		"Missing schemas: `7`",
-		"Missing validators: `7`",
+		"Missing schemas: `8`",
+		"Missing validators: `8`",
 		"Rerun `mission recommendations schema-registry-health` after repair.",
 		"No promotion is requested.",
 		"RSI remains denied.",

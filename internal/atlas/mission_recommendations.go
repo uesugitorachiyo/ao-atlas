@@ -444,7 +444,7 @@ func BuildAtlasNextWaveRefactoringRecommendations(options AtlasNextWaveRefactori
 		})
 	}
 	bundle := AOMissionRefactoringRecommendations{
-		Schema:                  "ao.mission.refactoring-recommendations.v0.1",
+		Schema:                  AOMissionRefactoringRecommendationsContract,
 		MissionID:               missionID,
 		Status:                  "ready",
 		Track:                   "refactoring",
@@ -560,8 +560,8 @@ func ValidateAtlasNextWaveRefactoringRecommendations(bundle AOMissionRefactoring
 	if minTasks <= 0 {
 		minTasks = 40
 	}
-	if bundle.Schema != "ao.mission.refactoring-recommendations.v0.1" {
-		errs = append(errs, "schema must be ao.mission.refactoring-recommendations.v0.1")
+	if bundle.Schema != AOMissionRefactoringRecommendationsContract {
+		errs = append(errs, "schema must be "+AOMissionRefactoringRecommendationsContract)
 	}
 	requireField(&errs, "mission_id", bundle.MissionID)
 	if bundle.Status != "ready" {

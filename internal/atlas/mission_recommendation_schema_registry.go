@@ -30,6 +30,7 @@ func DefaultAtlasRecommendationEvidenceSchemaRegistry() (AtlasRecommendationEvid
 func defaultAtlasRecommendationEvidenceSchemaRegistryEntries() []AtlasRecommendationEvidenceSchemaRegistryEntry {
 	contracts := defaultAtlasRecommendationEvidenceSchemaContracts()
 	return []AtlasRecommendationEvidenceSchemaRegistryEntry{
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.RefactoringRecommendations, "recommendation-refactoring-recommendations", "export-refactoring-wave", "typed:recommendation-refactoring-recommendations"),
 		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.NextTrackDecision, "recommendation-next-track-decision", "next-track", "typed:recommendation-next-track-decision"),
 		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.ConsumedRecommendationLedger, "consumed-recommendation-ledger", "consumed-ledger", "typed:consumed-recommendation-ledger"),
 		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.TrackRegistry, "recommendation-track-registry", "track-registry", "typed:recommendation-track-registry"),

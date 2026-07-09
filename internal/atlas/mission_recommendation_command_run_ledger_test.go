@@ -468,6 +468,7 @@ func TestMissionRecommendationsRunLedgerCoverageCheckRequiresEveryControlPlaneCo
 	}
 
 	commands := []string{
+		"export-refactoring-wave",
 		"next-track",
 		"consumed-ledger",
 		"track-registry",
@@ -532,8 +533,8 @@ func TestMissionRecommendationsRunLedgerCoverageCheckRequiresEveryControlPlaneCo
 	}
 	for _, want := range []string{
 		"status=passed",
-		"required_command_count=8",
-		"covered_command_count=8",
+		"required_command_count=9",
+		"covered_command_count=9",
 		"missing_command_count=0",
 		"all_control_plane_commands_covered=true",
 		"rsi_remains_denied=true",
@@ -546,8 +547,8 @@ func TestMissionRecommendationsRunLedgerCoverageCheckRequiresEveryControlPlaneCo
 	check := mustLoadJSON[AtlasRecommendationRunLedgerCoverageCheck](t, checkPath)
 	if check.Schema != AtlasRecommendationRunLedgerCoverageCheckContract ||
 		check.Status != "passed" ||
-		check.RequiredCommandCount != 8 ||
-		check.CoveredCommandCount != 8 ||
+		check.RequiredCommandCount != 9 ||
+		check.CoveredCommandCount != 9 ||
 		check.MissingCommandCount != 0 ||
 		len(check.MissingCommands) != 0 ||
 		!check.AllControlPlaneCommandsCovered ||
@@ -678,5 +679,93 @@ func TestRecommendationRunLedgerOutputStatusClassificationCoversPassReadyFailedB
 				t.Fatalf("unexpected classification for %s: %#v", tc.status, classification)
 			}
 		})
+	}
+}
+
+func TestMissionRecommendationsRunLedgerRecordsRefactoringExporterAndRoutingArtifacts(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	sourceRoot := "docs/evidence/ao-atlas-feature-depth-wave-v01"
+	sourceReadback := sourceRoot + "/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json"
+	sourceAssertion := "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json"
+	tempDir := t.TempDir()
+	decisionPath := filepath.Join(tempDir, "next-track-decision.json")
+	consumedLedgerPath := filepath.Join(tempDir, "consumed-recommendation-ledger.json")
+	refactoringPath := filepath.Join(tempDir, "next-wave-refactoring-recommendations.json")
+	refactoringLedgerPath := filepath.Join(tempDir, "refactoring-export-run-ledger.json")
+
+	if code := Run([]string{
+		"mission", "recommendations", "next-track",
+		"--source-evidence-root", sourceRoot,
+		"--readback", sourceReadback,
+		"--out", decisionPath,
+	}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("next-track failed")
+	}
+	if code := Run([]string{
+		"mission", "recommendations", "consumed-ledger",
+		"--source-evidence-root", sourceRoot,
+		"--readback", sourceReadback,
+		"--next-track-decision", decisionPath,
+		"--out", consumedLedgerPath,
+	}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("consumed-ledger failed")
+	}
+	if code := Run([]string{
+		"mission", "recommendations", "export-refactoring-wave",
+		"--mission-id", "ao-atlas-refactoring-wave-v01",
+		"--source-evidence-root", sourceRoot,
+		"--source-readback", sourceReadback,
+		"--source-assertion", sourceAssertion,
+		"--next-track-decision", decisionPath,
+		"--consumed-ledger", consumedLedgerPath,
+		"--min-tasks", "40",
+		"--out", refactoringPath,
+	}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("export-refactoring-wave failed")
+	}
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "run-ledger",
+		"--command", "export-refactoring-wave",
+		"--artifact", refactoringPath,
+		"--out", refactoringLedgerPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("run-ledger export-refactoring-wave failed: %s", out.String())
+	}
+	for _, want := range []string{
+		"command=export-refactoring-wave",
+		"artifact_schema=ao.mission.refactoring-recommendations.v0.1",
+		"typed_validator=typed:recommendation-refactoring-recommendations",
+		"output_status=ready",
+		"rsi_remains_denied=true",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Fatalf("run-ledger export-refactoring-wave output missing %q: %s", want, out.String())
+		}
+	}
+	ledger := mustLoadJSON[AtlasRecommendationCommandRunLedger](t, refactoringLedgerPath)
+	if ledger.Command != "export-refactoring-wave" ||
+		ledger.ArtifactSchema != "ao.mission.refactoring-recommendations.v0.1" ||
+		ledger.TypedValidator != "typed:recommendation-refactoring-recommendations" ||
+		ledger.OutputStatus != "ready" ||
+		ledger.PromotionGranted ||
+		ledger.ClaimsAuthorityAdvance ||
+		!ledger.RSIRemainsDenied {
+		t.Fatalf("refactoring exporter ledger lost safe routing coverage: %#v", ledger)
 	}
 }
