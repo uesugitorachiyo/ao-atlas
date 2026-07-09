@@ -809,6 +809,45 @@ func TestBlueprintCompilerReadyArtifactsRemainNoExecution(t *testing.T) {
 	}
 }
 
+func TestBlueprintPersistedFoundryArtifactsMatchRecordedDigests(t *testing.T) {
+	paths := blueprintCompilerValidPaths(t.TempDir())
+	artifacts, err := BlueprintCompiler{Inputs: BlueprintCompileInputs{Paths: paths}}.Compile()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := persistBlueprintImportArtifacts(paths, artifacts, nil); err != nil {
+		t.Fatal(err)
+	}
+	recorded, err := LoadJSON[BlueprintImport](filepath.Join(paths.OutDir, "blueprint-import.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, artifact := range []struct {
+		name   string
+		path   string
+		digest string
+	}{
+		{
+			name:   "foundry import",
+			path:   filepath.Join(paths.OutDir, "foundry-import", "foundry-import.json"),
+			digest: recorded.DownstreamFoundryImport.Digest,
+		},
+		{
+			name:   "Foundry continuation handoff",
+			path:   filepath.Join(paths.OutDir, "foundry-import", "foundry-continuation-handoff.json"),
+			digest: recorded.DownstreamFoundryContinuationHandoff.Digest,
+		},
+	} {
+		actual, err := digestFile(artifact.path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if actual != artifact.digest {
+			t.Fatalf("%s digest=%s, want persisted file digest %s", artifact.name, artifact.digest, actual)
+		}
+	}
+}
+
 func TestBlueprintCompilerPreservesExternalCandidateRulesRef(t *testing.T) {
 	dir := t.TempDir()
 	sourcePack := filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "blueprint-pack")
