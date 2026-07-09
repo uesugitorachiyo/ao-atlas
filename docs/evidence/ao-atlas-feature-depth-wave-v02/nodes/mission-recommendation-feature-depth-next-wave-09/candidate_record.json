@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-09",
+  "task_id": "mission-recommendation-feature-depth-next-wave-09-task",
+  "status": "selected",
+  "candidate": "feature-depth-next-wave-09",
+  "reason": "The node records aggregate PR and CI timing evidence across recent Feature Depth v02 PRs.",
+  "selected_from": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-08/recommendation-readback-after.json",
+  "rsi_remains_denied": true
+}
