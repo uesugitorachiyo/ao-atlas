@@ -56,6 +56,7 @@ func TestMissionRecommendationRunLedgerCommandCatalogIsRegistryBacked(t *testing
 
 	ledgerCommands := missionRecommendationRunLedgerCommandNames()
 	want := []string{
+		"export-refactoring-wave",
 		"next-track",
 		"consumed-ledger",
 		"track-registry",
@@ -97,7 +98,7 @@ func TestMissionRecommendationRunLedgerCommandCatalogIsRegistryBacked(t *testing
 	if err == nil {
 		t.Fatal("invalid run-ledger command was accepted")
 	}
-	if !strings.Contains(err.Error(), "command must be next-track, consumed-ledger, track-registry") ||
+	if !strings.Contains(err.Error(), "command must be export-refactoring-wave, next-track, consumed-ledger, track-registry") ||
 		!strings.Contains(err.Error(), "schema-registry-coverage, or validate-evidence") {
 		t.Fatalf("run-ledger command error did not use the registry-backed catalog: %v", err)
 	}

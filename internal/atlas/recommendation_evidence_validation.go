@@ -512,6 +512,13 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:mission-dashboard-compact-filters", err
 		}
 		return "typed:mission-dashboard-compact-filters", ValidateAtlasMissionDashboardCompactFilters(value)
+	case AOMissionRefactoringRecommendationsContract:
+		validator, _ := recommendationControlPlaneTypedValidator(AOMissionRefactoringRecommendationsContract)
+		value, err := LoadJSON[AOMissionRefactoringRecommendations](path)
+		if err != nil {
+			return validator, err
+		}
+		return validator, ValidateAtlasNextWaveRefactoringRecommendations(value, value.MinimumTasks)
 	case AtlasRecommendationNextTrackDecisionContract:
 		validator, _ := recommendationControlPlaneTypedValidator(AtlasRecommendationNextTrackDecisionContract)
 		value, err := LoadJSON[AtlasRecommendationNextTrackDecision](path)

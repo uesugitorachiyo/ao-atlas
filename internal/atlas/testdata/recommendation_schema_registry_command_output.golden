@@ -1,5 +1,5 @@
 status=ready
-schema_count=8
+schema_count=9
 typed_validator_coverage_complete=true
 rsi_remains_denied=true
 recommendation_evidence_schema_registry=<out>

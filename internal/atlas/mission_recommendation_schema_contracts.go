@@ -1,6 +1,7 @@
 package atlas
 
 type atlasRecommendationEvidenceSchemaContracts struct {
+	RefactoringRecommendations     string
 	NextTrackDecision              string
 	ConsumedRecommendationLedger   string
 	TrackRegistry                  string
@@ -17,6 +18,7 @@ type atlasRecommendationEvidenceSchemaContracts struct {
 
 func defaultAtlasRecommendationEvidenceSchemaContracts() atlasRecommendationEvidenceSchemaContracts {
 	contracts := atlasRecommendationEvidenceSchemaContracts{
+		RefactoringRecommendations:     AOMissionRefactoringRecommendationsContract,
 		NextTrackDecision:              AtlasRecommendationNextTrackDecisionContract,
 		ConsumedRecommendationLedger:   AtlasConsumedRecommendationLedgerContract,
 		TrackRegistry:                  AtlasRecommendationTrackRegistryContract,
@@ -30,6 +32,7 @@ func defaultAtlasRecommendationEvidenceSchemaContracts() atlasRecommendationEvid
 		SchemaHealthRepairPrompt:       AtlasSchemaHealthRepairPromptContract,
 	}
 	contracts.ControlPlane = []string{
+		contracts.RefactoringRecommendations,
 		contracts.NextTrackDecision,
 		contracts.ConsumedRecommendationLedger,
 		contracts.TrackRegistry,

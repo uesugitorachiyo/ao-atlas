@@ -429,7 +429,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 	return []missionRecommendationCommand{
 		{name: "import", run: runMissionRecommendationsImport, commandClass: missionRecommendationCommandClassMutationCapable},
 		{name: "export-next-wave", run: runMissionRecommendationsExportNextWave, commandClass: missionRecommendationCommandClassPlanningOnly},
-		{name: "export-refactoring-wave", run: runMissionRecommendationsExportRefactoringWave, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "export-refactoring-wave", run: runMissionRecommendationsExportRefactoringWave, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
 		{name: "next-track", run: runMissionRecommendationsNextTrack, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
 		{name: "consumed-ledger", run: runMissionRecommendationsConsumedLedger, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
 		{name: "track-registry", run: runMissionRecommendationsTrackRegistry, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
