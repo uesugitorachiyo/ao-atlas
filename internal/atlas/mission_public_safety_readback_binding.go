@@ -92,7 +92,7 @@ func ValidateAtlasPublicSafetyReadbackBinding(binding AtlasPublicSafetyReadbackB
 	if binding.ReadyNodesAfterBinding < 0 {
 		errs = append(errs, "ready_nodes_after_binding must be non-negative")
 	}
-	if binding.FinalResponseAllowedAfter {
+	if binding.FinalResponseAllowedAfter && binding.ReadyNodesAfterBinding != 0 {
 		errs = append(errs, "final_response_allowed_after_binding must remain false while feature-depth ready work remains")
 	}
 	if !binding.RSIRemainsDenied {

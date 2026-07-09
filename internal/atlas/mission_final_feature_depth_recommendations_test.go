@@ -9,9 +9,20 @@ func TestFeatureDepthWaveFinalOperatorHandoffRecommendations(t *testing.T) {
 	root := repoRoot(t)
 	fixturePath := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-40", "final-feature-depth-recommendations.json")
 	recorded := mustLoadJSON[finalFeatureDepthRecommendationHandoff](t, fixturePath)
-	generated := buildFinalFeatureDepthRecommendationHandoff(t, root)
+	generated := buildFinalFeatureDepthRecommendationHandoff(t, root, "ao-atlas-feature-depth-wave-v01")
 	if digestValue(generated) != digestValue(recorded) {
 		t.Fatalf("final Feature Depth recommendation handoff fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	validateFinalFeatureDepthRecommendationHandoff(t, recorded)
+}
+
+func TestFeatureDepthWaveV02FinalOperatorHandoffRecommendations(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v02", "nodes", "mission-recommendation-feature-depth-next-wave-40", "final-feature-depth-recommendations.json")
+	recorded := mustLoadJSON[finalFeatureDepthRecommendationHandoff](t, fixturePath)
+	generated := buildFinalFeatureDepthRecommendationHandoff(t, root, "ao-atlas-feature-depth-wave-v02")
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("v02 final Feature Depth recommendation handoff fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
 	}
 	validateFinalFeatureDepthRecommendationHandoff(t, recorded)
 }
@@ -49,10 +60,10 @@ type finalFeatureDepthRecommendation struct {
 	Task  string `json:"task"`
 }
 
-func buildFinalFeatureDepthRecommendationHandoff(t *testing.T, root string) finalFeatureDepthRecommendationHandoff {
+func buildFinalFeatureDepthRecommendationHandoff(t *testing.T, root string, wave string) finalFeatureDepthRecommendationHandoff {
 	t.Helper()
-	sourceRecommendationsPath := "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-37/next-wave-feature-depth-recommendations.json"
-	sourceReadbackPath := "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-39/recommendation-readback-after.json"
+	sourceRecommendationsPath := filepath.ToSlash(filepath.Join("docs", "evidence", wave, "nodes", "mission-recommendation-feature-depth-next-wave-37", "next-wave-feature-depth-recommendations.json"))
+	sourceReadbackPath := filepath.ToSlash(filepath.Join("docs", "evidence", wave, "nodes", "mission-recommendation-feature-depth-next-wave-39", "recommendation-readback-after.json"))
 	source := mustLoadJSON[AOMissionFeatureDepthRecommendations](t, filepath.Join(root, sourceRecommendationsPath))
 	if err := ValidateAtlasNextWaveFeatureDepthRecommendations(source, 40); err != nil {
 		t.Fatal(err)

@@ -87,6 +87,48 @@ func TestFeatureDepthWaveV02PublicSafetyReadbackBindingPreservesAlreadyBoundStat
 	}
 }
 
+func TestFeatureDepthWaveV02PublicSafetyReadbackBindingAllowsTerminalClosedWave(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v02")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-40")
+	readbackPath := filepath.Join(nodeDir, "recommendation-readback-before-public-safety-binding.json")
+	sentinelPath := filepath.Join(nodeDir, "sentinel_public_safety.json")
+	verificationPath := filepath.Join(nodeDir, "verification.json")
+	recordedPath := filepath.Join(nodeDir, "public-safety-readback-binding.json")
+	outPath := filepath.Join(t.TempDir(), "public-safety-readback-binding.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "public-safety-readback-binding",
+		"--readback", readbackPath,
+		"--sentinel", sentinelPath,
+		"--verification", verificationPath,
+		"--node-id", "mission-recommendation-feature-depth-next-wave-40",
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("terminal public-safety-readback-binding command failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "status=bound") ||
+		!strings.Contains(out.String(), "ready_nodes_after_binding=0") ||
+		!strings.Contains(out.String(), "final_response_allowed_after_binding=true") {
+		t.Fatalf("terminal public safety binding output missing closed-wave state: %s", out.String())
+	}
+	recorded := mustLoadJSON[map[string]any](t, recordedPath)
+	generated := mustLoadJSON[map[string]any](t, outPath)
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("terminal public safety readback binding fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	if recorded["status"] != "bound" ||
+		recorded["bound_public_safety_scan_status"] != "passed" ||
+		recorded["previous_public_safety_scan_status"] != "required_pending_verification" ||
+		recorded["ready_nodes_after_binding"].(float64) != 0 ||
+		recorded["final_response_allowed_after_binding"] != true ||
+		recorded["rsi_remains_denied"] != true {
+		t.Fatalf("terminal public safety binding fixture lost closed-wave state: %#v", recorded)
+	}
+}
+
 func TestFeatureDepthWavePublicSafetyReadbackBindingUsesTypedValidator(t *testing.T) {
 	root := repoRoot(t)
 	path := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-21", "public-safety-readback-binding.json")
