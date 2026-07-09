@@ -416,62 +416,68 @@ func runMissionFinalSynthesis(args []string, stdout io.Writer) error {
 type missionRecommendationCommand struct {
 	name             string
 	run              func([]string, io.Writer) error
+	commandClass     string
 	recordsRunLedger bool
 }
 
+const (
+	missionRecommendationCommandClassPlanningOnly    = "planning_only"
+	missionRecommendationCommandClassMutationCapable = "mutation_capable"
+)
+
 func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 	return []missionRecommendationCommand{
-		{name: "import", run: runMissionRecommendationsImport},
-		{name: "export-next-wave", run: runMissionRecommendationsExportNextWave},
-		{name: "export-refactoring-wave", run: runMissionRecommendationsExportRefactoringWave},
-		{name: "next-track", run: runMissionRecommendationsNextTrack, recordsRunLedger: true},
-		{name: "consumed-ledger", run: runMissionRecommendationsConsumedLedger, recordsRunLedger: true},
-		{name: "track-registry", run: runMissionRecommendationsTrackRegistry, recordsRunLedger: true},
-		{name: "run-ledger", run: runMissionRecommendationsRunLedger},
-		{name: "run-ledger-rollup", run: runMissionRecommendationsRunLedgerRollup},
-		{name: "run-ledger-coverage-check", run: runMissionRecommendationsRunLedgerCoverageCheck},
-		{name: "final-response-gates", run: runMissionRecommendationsFinalResponseGates, recordsRunLedger: true},
-		{name: "schema-registry", run: runMissionRecommendationsSchemaRegistry, recordsRunLedger: true},
-		{name: "schema-registry-health", run: runMissionRecommendationsSchemaRegistryHealth},
-		{name: "schema-registry-coverage", run: runMissionRecommendationsSchemaRegistryCoverage, recordsRunLedger: true},
-		{name: "schema-health-repair-prompt", run: runMissionRecommendationsSchemaHealthRepairPrompt},
-		{name: "readback", run: runMissionRecommendationsReadback},
-		{name: "readback-delta", run: runMissionRecommendationsReadbackDelta},
-		{name: "readback-diff-fixture", run: runMissionRecommendationsReadbackDiffFixture},
-		{name: "stale-checkpoint-rejection", run: runMissionRecommendationsStaleCheckpointRejection},
-		{name: "operator-summary-check", run: runMissionRecommendationsOperatorSummaryCheck},
-		{name: "run-link-schema-coverage", run: runMissionRecommendationsRunLinkSchemaCoverage},
-		{name: "schema-validator-drift", run: runMissionRecommendationsSchemaValidatorDrift},
-		{name: "pr-ci-timing-summary", run: runMissionRecommendationsPRCITimingSummary},
-		{name: "pr-ci-windows-threshold", run: runMissionRecommendationsPRCIWindowsThreshold},
-		{name: "failed-check-replay", run: runMissionRecommendationsFailedCheckReplay},
-		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding},
-		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback},
-		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair},
-		{name: "local-main-sync-readback", run: runMissionRecommendationsLocalMainSyncReadback},
-		{name: "branch-cleanup-handoff-summary", run: runMissionRecommendationsBranchCleanupHandoffSummary},
-		{name: "compaction-resume-prompt", run: runMissionRecommendationsCompactionResumePrompt},
-		{name: "compaction-resume-regression", run: runMissionRecommendationsCompactionResumeRegression},
-		{name: "resume-denial-evidence", run: runMissionRecommendationsResumeDenialEvidence},
-		{name: "public-safety-readback-binding", run: runMissionRecommendationsPublicSafetyReadbackBinding},
-		{name: "scoped-public-safety-scan", run: runMissionRecommendationsScopedPublicSafetyScan},
-		{name: "authority-promotion-negative-fixtures", run: runMissionRecommendationsAuthorityPromotionNegativeFixtures},
-		{name: "public-safety-coverage-rollup", run: runMissionRecommendationsPublicSafetyCoverageRollup},
-		{name: "promoter-no-promotion-rollup", run: runMissionRecommendationsPromoterNoPromotionRollup},
-		{name: "command-promoter-agreement-rollup", run: runMissionRecommendationsCommandPromoterAgreementRollup},
-		{name: "promoter-rollup-count-mismatch-regression", run: runMissionRecommendationsPromoterRollupCountMismatchRegression},
-		{name: "command-promoter-disagreement-denial", run: runMissionRecommendationsCommandPromoterDisagreementDenial},
-		{name: "foundry-import-readiness-binding", run: runMissionRecommendationsFoundryImportReadinessBinding},
-		{name: "run-link-digest-check", run: runMissionRecommendationsRunLinkDigestCheck},
-		{name: "foundry-handoff-replay-fixture", run: runMissionRecommendationsFoundryHandoffReplayFixture},
-		{name: "foundry-terminal-status-examples", run: runMissionRecommendationsFoundryTerminalStatusExamples},
-		{name: "mission-dashboard-closure-binding", run: runMissionRecommendationsMissionDashboardClosureBinding},
-		{name: "mission-dashboard-provenance-links", run: runMissionRecommendationsMissionDashboardProvenanceLinks},
-		{name: "mission-dashboard-freshness-checks", run: runMissionRecommendationsMissionDashboardFreshnessChecks},
-		{name: "mission-dashboard-compact-filters", run: runMissionRecommendationsMissionDashboardCompactFilters},
-		{name: "complete-node", run: runMissionRecommendationsCompleteNode},
-		{name: "resume", run: runMissionRecommendationsResume},
-		{name: "validate-evidence", run: runMissionRecommendationsValidateEvidence, recordsRunLedger: true},
+		{name: "import", run: runMissionRecommendationsImport, commandClass: missionRecommendationCommandClassMutationCapable},
+		{name: "export-next-wave", run: runMissionRecommendationsExportNextWave, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "export-refactoring-wave", run: runMissionRecommendationsExportRefactoringWave, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "next-track", run: runMissionRecommendationsNextTrack, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
+		{name: "consumed-ledger", run: runMissionRecommendationsConsumedLedger, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
+		{name: "track-registry", run: runMissionRecommendationsTrackRegistry, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
+		{name: "run-ledger", run: runMissionRecommendationsRunLedger, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "run-ledger-rollup", run: runMissionRecommendationsRunLedgerRollup, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "run-ledger-coverage-check", run: runMissionRecommendationsRunLedgerCoverageCheck, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "final-response-gates", run: runMissionRecommendationsFinalResponseGates, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
+		{name: "schema-registry", run: runMissionRecommendationsSchemaRegistry, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
+		{name: "schema-registry-health", run: runMissionRecommendationsSchemaRegistryHealth, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "schema-registry-coverage", run: runMissionRecommendationsSchemaRegistryCoverage, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
+		{name: "schema-health-repair-prompt", run: runMissionRecommendationsSchemaHealthRepairPrompt, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "readback", run: runMissionRecommendationsReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "readback-delta", run: runMissionRecommendationsReadbackDelta, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "readback-diff-fixture", run: runMissionRecommendationsReadbackDiffFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "stale-checkpoint-rejection", run: runMissionRecommendationsStaleCheckpointRejection, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "operator-summary-check", run: runMissionRecommendationsOperatorSummaryCheck, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "run-link-schema-coverage", run: runMissionRecommendationsRunLinkSchemaCoverage, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "schema-validator-drift", run: runMissionRecommendationsSchemaValidatorDrift, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "pr-ci-timing-summary", run: runMissionRecommendationsPRCITimingSummary, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "pr-ci-windows-threshold", run: runMissionRecommendationsPRCIWindowsThreshold, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "failed-check-replay", run: runMissionRecommendationsFailedCheckReplay, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "local-main-sync-readback", run: runMissionRecommendationsLocalMainSyncReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "branch-cleanup-handoff-summary", run: runMissionRecommendationsBranchCleanupHandoffSummary, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "compaction-resume-prompt", run: runMissionRecommendationsCompactionResumePrompt, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "compaction-resume-regression", run: runMissionRecommendationsCompactionResumeRegression, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "resume-denial-evidence", run: runMissionRecommendationsResumeDenialEvidence, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "public-safety-readback-binding", run: runMissionRecommendationsPublicSafetyReadbackBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "scoped-public-safety-scan", run: runMissionRecommendationsScopedPublicSafetyScan, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "authority-promotion-negative-fixtures", run: runMissionRecommendationsAuthorityPromotionNegativeFixtures, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "public-safety-coverage-rollup", run: runMissionRecommendationsPublicSafetyCoverageRollup, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "promoter-no-promotion-rollup", run: runMissionRecommendationsPromoterNoPromotionRollup, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "command-promoter-agreement-rollup", run: runMissionRecommendationsCommandPromoterAgreementRollup, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "promoter-rollup-count-mismatch-regression", run: runMissionRecommendationsPromoterRollupCountMismatchRegression, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "command-promoter-disagreement-denial", run: runMissionRecommendationsCommandPromoterDisagreementDenial, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "foundry-import-readiness-binding", run: runMissionRecommendationsFoundryImportReadinessBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "run-link-digest-check", run: runMissionRecommendationsRunLinkDigestCheck, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "foundry-handoff-replay-fixture", run: runMissionRecommendationsFoundryHandoffReplayFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "foundry-terminal-status-examples", run: runMissionRecommendationsFoundryTerminalStatusExamples, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "mission-dashboard-closure-binding", run: runMissionRecommendationsMissionDashboardClosureBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "mission-dashboard-provenance-links", run: runMissionRecommendationsMissionDashboardProvenanceLinks, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "mission-dashboard-freshness-checks", run: runMissionRecommendationsMissionDashboardFreshnessChecks, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "mission-dashboard-compact-filters", run: runMissionRecommendationsMissionDashboardCompactFilters, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "complete-node", run: runMissionRecommendationsCompleteNode, commandClass: missionRecommendationCommandClassMutationCapable},
+		{name: "resume", run: runMissionRecommendationsResume, commandClass: missionRecommendationCommandClassMutationCapable},
+		{name: "validate-evidence", run: runMissionRecommendationsValidateEvidence, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
 	}
 }
 
@@ -489,6 +495,25 @@ func missionRecommendationRunLedgerCommandNames() []string {
 	names := make([]string, 0, len(commands))
 	for _, command := range commands {
 		if command.recordsRunLedger {
+			names = append(names, command.name)
+		}
+	}
+	return names
+}
+
+func missionRecommendationPlanningOnlyCommandNames() []string {
+	return missionRecommendationCommandNamesByClass(missionRecommendationCommandClassPlanningOnly)
+}
+
+func missionRecommendationMutationCapableCommandNames() []string {
+	return missionRecommendationCommandNamesByClass(missionRecommendationCommandClassMutationCapable)
+}
+
+func missionRecommendationCommandNamesByClass(commandClass string) []string {
+	commands := missionRecommendationCommandRegistry()
+	names := make([]string, 0, len(commands))
+	for _, command := range commands {
+		if command.commandClass == commandClass {
 			names = append(names, command.name)
 		}
 	}
