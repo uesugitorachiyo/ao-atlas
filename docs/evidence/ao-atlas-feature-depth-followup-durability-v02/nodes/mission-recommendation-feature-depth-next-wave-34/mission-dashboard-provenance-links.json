@@ -3,7 +3,7 @@
   "node_id": "mission-recommendation-feature-depth-next-wave-34",
   "status": "dashboard_provenance_links_bound",
   "source_dashboard_binding_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-33/mission-dashboard-closure-binding.json",
-  "source_dashboard_binding_digest": "sha256:f2ed9b48b424f6f55572e298be5e7adf5f2782f93ef20cf8737e322ee553c527",
+  "source_dashboard_binding_digest": "sha256:3c88afd28bcb093e0b50768130efcbc902dcd51203cdc6a01d9d785bdc1380bc",
   "source_row_count": 6,
   "required_repos": [
     "ao-command",
@@ -29,8 +29,8 @@
     {
       "repo": "ao-foundry",
       "role": "bounded_implementation_handoff",
-      "evidence_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-32/foundry-import.json",
-      "evidence_digest": "sha256:d72dac0a0e96c0d68520f5c1793acea247f6d88c3aa96ba1811babfe74f87393",
+      "evidence_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-32/foundry-rollup.json",
+      "evidence_digest": "sha256:a87d86e619a0f0d98b9202a6fb92b93f16182f95fb7d001bdbc9fb182ca96535",
       "provenance_link_status": "linked",
       "dashboard_row_matched": true,
       "closure_evidence_digest_matches": true,
@@ -56,7 +56,7 @@
       "repo": "ao-sentinel",
       "role": "public_safety_scan_owner",
       "evidence_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-32/sentinel_public_safety.json",
-      "evidence_digest": "sha256:453695d770ace440d482c7d237cc3f78a1b29292170465391ca6f047972319f4",
+      "evidence_digest": "sha256:30c8edef2dee92e22d0c02dc9a58ed63a26495e3198c3640da8d402bd5c7d4a2",
       "provenance_link_status": "linked",
       "dashboard_row_matched": true,
       "closure_evidence_digest_matches": true,

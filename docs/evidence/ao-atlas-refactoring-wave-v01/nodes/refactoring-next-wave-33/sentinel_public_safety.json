@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.refactoring.sentinel-public-safety.v0.1",
+  "node_id": "refactoring-next-wave-33",
+  "status": "public_safety_scan_passed",
+  "scan_scope": [
+    "internal/atlas/mission_dashboard_closure_binding.go",
+    "internal/atlas/mission_dashboard_closure_binding_test.go",
+    "docs/evidence/*/nodes/mission-recommendation-feature-depth-next-wave-32/foundry-rollup.json",
+    "docs/evidence/*/nodes/mission-recommendation-feature-depth-next-wave-33/mission-dashboard-closure-binding.json",
+    "docs/evidence/*/nodes/mission-recommendation-feature-depth-next-wave-34/mission-dashboard-provenance-links.json",
+    "docs/evidence/*/nodes/mission-recommendation-feature-depth-next-wave-35/mission-dashboard-freshness-checks.json"
+  ],
+  "unsafe_match_count": 0,
+  "promotion_claim_detected": false,
+  "rsi_claim_detected": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.refactoring.rollback-record.v0.1",
+  "node_id": "refactoring-next-wave-33",
+  "rollback_status": "bounded_revert_available",
+  "rollback_scope": [
+    "restore ao-foundry dashboard closure row to foundry-import.json",
+    "remove generated foundry-rollup.json fixtures",
+    "restore regenerated closure/provenance/freshness fixtures",
+    "remove node 33 evidence artifacts"
+  ],
+  "data_migration_required": false,
+  "external_state_changed": false,
+  "release_or_deploy_performed": false,
+  "rsi_remains_denied": true
+}

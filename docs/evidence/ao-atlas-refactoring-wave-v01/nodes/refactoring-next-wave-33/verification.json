@@ -1,0 +1,47 @@
+{
+  "schema": "ao.atlas.refactoring.verification.v0.1",
+  "node_id": "refactoring-next-wave-33",
+  "status": "local_verification_passed",
+  "verified_at": "2026-07-09T14:37:47Z",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveMissionDashboardClosureBindingRowsBindAtlasClosureEvidence|TestFeatureDepthWaveMissionDashboardProvenanceLinksBindSubsystemEvidence|TestFeatureDepthWaveMissionDashboardFreshnessChecksMergedPRAndSyncedMain|TestMissionDashboardClosureBindingSubsystemRowsUseRollupEvidence' -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "summary": "status=ready score=100/100"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-wave-v01",
+      "status": "passed"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-followup-durability-v04",
+      "status": "passed"
+    }
+  ],
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

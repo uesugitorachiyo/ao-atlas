@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.refactoring.node-gate.v0.1",
+  "node_id": "refactoring-next-wave-33",
+  "rank": 33,
+  "theme": "dashboard-provenance",
+  "status": "bounded_refactor_gate_cleared",
+  "execution_scope": "AO Atlas dashboard closure rows and generated rollup fixtures",
+  "mutation_boundary": "mission dashboard closure binding, tests, Foundry rollup fixtures, dependent dashboard provenance/freshness fixtures, and node evidence",
+  "requires_new_authorization": false,
+  "requires_blueprint": false,
+  "policy_widening_requested": false,
+  "provider_call_requested": false,
+  "release_or_deploy_requested": false,
+  "dependency_update_requested": false,
+  "direct_main_mutation_allowed": false,
+  "rsi_remains_denied": true
+}
