@@ -769,3 +769,75 @@ func TestMissionRecommendationsRunLedgerRecordsRefactoringExporterAndRoutingArti
 		t.Fatalf("refactoring exporter ledger lost safe routing coverage: %#v", ledger)
 	}
 }
+
+func TestRecommendationRunLedgerRollupBindsOperatorSummaryWithoutSelfReference(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	tempDir := t.TempDir()
+	registryPath := filepath.Join(tempDir, "recommendation-evidence-schema-registry.json")
+	ledgerPath := filepath.Join(tempDir, "recommendation-schema-registry-run-ledger.json")
+	rollupPath := filepath.Join(tempDir, "recommendation-command-run-ledger-rollup.json")
+	summaryPath := filepath.Join(tempDir, "operator-summary.md")
+	summaryCheckPath := filepath.Join(tempDir, "operator-summary-check.json")
+	readbackPath := filepath.Join("docs", "evidence", "ao-atlas-feature-depth-followup-durability-v04", "nodes", "mission-recommendation-feature-depth-next-wave-39", "recommendation-readback-after.json")
+
+	if code := Run([]string{"mission", "recommendations", "schema-registry", "--out", registryPath}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("schema-registry failed")
+	}
+	if code := Run([]string{"mission", "recommendations", "run-ledger", "--command", "schema-registry", "--artifact", registryPath, "--out", ledgerPath}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("run-ledger failed")
+	}
+	if code := Run([]string{"mission", "recommendations", "run-ledger-rollup", "--ledger", ledgerPath, "--out", rollupPath}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("run-ledger-rollup failed")
+	}
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, readbackPath)
+	if err := WriteAtlasMissionOperatorSummary(summaryPath, readback); err != nil {
+		t.Fatal(err)
+	}
+	summaryCheck, err := BuildAtlasMissionOperatorSummaryCheck(readbackPath, summaryPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(summaryCheckPath, summaryCheck); err != nil {
+		t.Fatal(err)
+	}
+
+	binding, err := BuildAtlasRecommendationRunLedgerOperatorSummaryBinding(rollupPath, summaryCheckPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasRecommendationRunLedgerOperatorSummaryBinding(binding); err != nil {
+		t.Fatal(err)
+	}
+	if binding.Schema != AtlasRecommendationRunLedgerOperatorSummaryBindingContract ||
+		binding.Status != "bound" ||
+		binding.SourceRollupPath != publicArtifactRef(rollupPath) ||
+		binding.SourceOperatorSummaryCheckPath != publicArtifactRef(summaryCheckPath) ||
+		binding.RollupLedgerCount != 1 ||
+		binding.SummaryRequiresOwnRunLedger ||
+		binding.RollupRequiresSummaryRunLedger ||
+		binding.SelfReferentialLedgerRequirement ||
+		!binding.AllOutputsNoPromotion ||
+		binding.PromotionGranted ||
+		binding.ClaimsAuthorityAdvance ||
+		!binding.RSIRemainsDenied ||
+		binding.SafeToExecute ||
+		binding.SchedulesWork ||
+		binding.ExecutesWork ||
+		binding.ApprovesWork ||
+		binding.MutatesRepositories {
+		t.Fatalf("rollup operator summary binding lost no-self-reference safety: %#v", binding)
+	}
+}
