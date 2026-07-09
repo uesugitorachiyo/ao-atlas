@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-30",
+  "task_id": "mission-recommendation-feature-depth-next-wave-30-task",
+  "status": "ready",
+  "target_repo": "ao-atlas",
+  "objective": "Add Foundry run link digest checks for completed node evidence packets.",
+  "active_node_count": 1,
+  "safe_to_execute": true,
+  "authority_boundary": "atlas_recommendation_planning_only"
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-30",
+  "task_id": "mission-recommendation-feature-depth-next-wave-30-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveRunLinkDigestCheckVerifiesCompletedEvidencePacket|TestFeatureDepthWaveV02RunLinkDigestCheckVerifiesCompletedEvidencePacket' -count=1",
+    "status": "failed_before_digest_repair",
+    "failure": "node 29 run-link digest used non-canonical evidence key ordering"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveRunLinkDigestCheckVerifiesCompletedEvidencePacket|TestFeatureDepthWaveV02RunLinkDigestCheckVerifiesCompletedEvidencePacket' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}
