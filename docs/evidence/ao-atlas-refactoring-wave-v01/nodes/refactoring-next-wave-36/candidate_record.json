@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.refactoring.candidate-record.v0.1",
+  "node_id": "refactoring-next-wave-36",
+  "status": "implemented_locally",
+  "candidate_summary": "Split the oversized mission recommendation test file into schema helper, routing/evidence, readback/lifecycle, hardening lifecycle, and final-closure lifecycle test files.",
+  "implementation_refs": [
+    "internal/atlas/mission_recommendations_test.go",
+    "internal/atlas/mission_recommendations_routing_evidence_test.go",
+    "internal/atlas/mission_recommendations_readback_lifecycle_test.go",
+    "internal/atlas/mission_recommendations_hardening_lifecycle_test.go",
+    "internal/atlas/mission_recommendations_final_closure_lifecycle_test.go"
+  ],
+  "line_count_after_split": {
+    "mission_recommendations_test.go": 393,
+    "mission_recommendations_routing_evidence_test.go": 703,
+    "mission_recommendations_readback_lifecycle_test.go": 1591,
+    "mission_recommendations_hardening_lifecycle_test.go": 3917,
+    "mission_recommendations_final_closure_lifecycle_test.go": 2626
+  },
+  "promotion_requested": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
