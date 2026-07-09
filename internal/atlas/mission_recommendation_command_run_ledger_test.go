@@ -565,3 +565,93 @@ func TestMissionRecommendationsRunLedgerCoverageCheckRequiresEveryControlPlaneCo
 		t.Fatalf("expected typed run ledger coverage check validator, got %s", validator)
 	}
 }
+
+func TestMissionRecommendationsArtifactSummaryBindsRunLedgerRollupAndCoverageCheck(t *testing.T) {
+	root := repoRoot(t)
+	previousDir, err := os.Getwd()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Chdir(root); err != nil {
+		t.Fatal(err)
+	}
+	defer func() {
+		if err := os.Chdir(previousDir); err != nil {
+			t.Fatal(err)
+		}
+	}()
+
+	tempDir := t.TempDir()
+	registryPath := filepath.Join(tempDir, "recommendation-evidence-schema-registry.json")
+	ledgerPath := filepath.Join(tempDir, "recommendation-schema-registry-run-ledger.json")
+	rollupPath := filepath.Join(tempDir, "recommendation-command-run-ledger-rollup.json")
+	checkPath := filepath.Join(tempDir, "recommendation-command-run-ledger-coverage-check.json")
+	if code := Run([]string{"mission", "recommendations", "schema-registry", "--out", registryPath}, &bytes.Buffer{}, &bytes.Buffer{}); code != 0 {
+		t.Fatal("schema-registry failed")
+	}
+
+	registrySummary, err := BuildAtlasRecommendationArtifactSummary(registryPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ledger, err := BuildAtlasRecommendationCommandRunLedger("schema-registry", registryPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if ledger.ArtifactPath != registrySummary.Path ||
+		ledger.ArtifactDigest != registrySummary.Digest ||
+		ledger.ArtifactSchema != registrySummary.Schema ||
+		ledger.TypedValidator != registrySummary.TypedValidator ||
+		ledger.OutputStatus != registrySummary.OutputStatus {
+		t.Fatalf("run-ledger did not bind artifact summary: ledger=%#v summary=%#v", ledger, registrySummary)
+	}
+	if err := WriteAtlasRecommendationCommandRunLedger(ledgerPath, ledger); err != nil {
+		t.Fatal(err)
+	}
+
+	ledgerSummary, err := BuildAtlasRecommendationArtifactSummary(ledgerPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	rollup, err := BuildAtlasRecommendationCommandRunLedgerRollup([]string{ledgerPath})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(rollup.Ledgers) != 1 {
+		t.Fatalf("expected one rollup ledger entry: %#v", rollup)
+	}
+	entry := rollup.Ledgers[0]
+	if entry.LedgerPath != ledgerSummary.PublicPath ||
+		entry.LedgerDigest != ledgerSummary.Digest ||
+		entry.ArtifactPath != registrySummary.PublicPath ||
+		entry.ArtifactDigest != registrySummary.Digest ||
+		entry.ArtifactSchema != registrySummary.Schema ||
+		entry.TypedValidator != registrySummary.TypedValidator ||
+		entry.OutputStatus != registrySummary.OutputStatus {
+		t.Fatalf("rollup entry did not bind ledger and artifact summaries: entry=%#v ledger_summary=%#v artifact_summary=%#v", entry, ledgerSummary, registrySummary)
+	}
+	if err := WriteAtlasRecommendationCommandRunLedgerRollup(rollupPath, rollup); err != nil {
+		t.Fatal(err)
+	}
+
+	rollupSummary, err := BuildAtlasRecommendationArtifactSummary(rollupPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	check, err := BuildAtlasRecommendationRunLedgerCoverageCheck(registryPath, rollupPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if check.SourceRegistryPath != registrySummary.PublicPath ||
+		check.SourceRegistryDigest != registrySummary.Digest ||
+		check.SourceRollupPath != rollupSummary.PublicPath ||
+		check.SourceRollupDigest != rollupSummary.Digest ||
+		check.PromotionGranted ||
+		check.ClaimsAuthorityAdvance ||
+		!check.RSIRemainsDenied {
+		t.Fatalf("coverage check did not bind source artifact summaries safely: check=%#v registry_summary=%#v rollup_summary=%#v", check, registrySummary, rollupSummary)
+	}
+	if err := WriteJSON(checkPath, check); err != nil {
+		t.Fatal(err)
+	}
+}

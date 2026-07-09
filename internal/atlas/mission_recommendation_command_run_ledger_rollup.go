@@ -30,19 +30,20 @@ func BuildAtlasRecommendationCommandRunLedgerRollup(ledgerPaths []string) (Atlas
 		if err := ValidateAtlasRecommendationCommandRunLedger(ledger); err != nil {
 			return AtlasRecommendationCommandRunLedgerRollup{}, err
 		}
-		digest, err := digestFile(ledgerPath)
+		ledgerSummary, err := BuildAtlasRecommendationArtifactSummary(ledgerPath)
 		if err != nil {
 			return AtlasRecommendationCommandRunLedgerRollup{}, err
 		}
+		artifactSummary := recommendationArtifactSummaryFromCommandRunLedger(ledger)
 		entries = append(entries, AtlasRecommendationCommandRunLedgerRollupEntry{
-			LedgerPath:             publicArtifactRef(ledgerPath),
-			LedgerDigest:           digest,
+			LedgerPath:             ledgerSummary.PublicPath,
+			LedgerDigest:           ledgerSummary.Digest,
 			Command:                ledger.Command,
-			ArtifactSchema:         ledger.ArtifactSchema,
-			TypedValidator:         ledger.TypedValidator,
-			OutputStatus:           ledger.OutputStatus,
-			ArtifactPath:           publicArtifactRef(ledger.ArtifactPath),
-			ArtifactDigest:         ledger.ArtifactDigest,
+			ArtifactSchema:         artifactSummary.Schema,
+			TypedValidator:         artifactSummary.TypedValidator,
+			OutputStatus:           artifactSummary.OutputStatus,
+			ArtifactPath:           artifactSummary.PublicPath,
+			ArtifactDigest:         artifactSummary.Digest,
 			RecordsInvocation:      ledger.RecordsInvocation,
 			NoPromotionRequested:   ledger.NoPromotionRequested,
 			PromotionGranted:       ledger.PromotionGranted,
@@ -83,6 +84,17 @@ func BuildAtlasRecommendationCommandRunLedgerRollup(ledgerPaths []string) (Atlas
 		return AtlasRecommendationCommandRunLedgerRollup{}, err
 	}
 	return rollup, nil
+}
+
+func recommendationArtifactSummaryFromCommandRunLedger(ledger AtlasRecommendationCommandRunLedger) AtlasRecommendationArtifactSummary {
+	return AtlasRecommendationArtifactSummary{
+		Path:           ledger.ArtifactPath,
+		PublicPath:     publicArtifactRef(ledger.ArtifactPath),
+		Digest:         ledger.ArtifactDigest,
+		Schema:         ledger.ArtifactSchema,
+		TypedValidator: ledger.TypedValidator,
+		OutputStatus:   ledger.OutputStatus,
+	}
 }
 
 func ValidateAtlasRecommendationCommandRunLedgerRollup(rollup AtlasRecommendationCommandRunLedgerRollup) error {

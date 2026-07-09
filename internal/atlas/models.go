@@ -410,6 +410,15 @@ type AtlasRecommendationTrackRegistryEntry struct {
 	MutatesRepositories bool   `json:"mutates_repositories"`
 }
 
+type AtlasRecommendationArtifactSummary struct {
+	Path           string `json:"path"`
+	PublicPath     string `json:"public_path"`
+	Digest         string `json:"digest"`
+	Schema         string `json:"schema"`
+	TypedValidator string `json:"typed_validator"`
+	OutputStatus   string `json:"output_status"`
+}
+
 type AtlasRecommendationCommandRunLedger struct {
 	Schema                 string `json:"schema"`
 	Status                 string `json:"status"`
