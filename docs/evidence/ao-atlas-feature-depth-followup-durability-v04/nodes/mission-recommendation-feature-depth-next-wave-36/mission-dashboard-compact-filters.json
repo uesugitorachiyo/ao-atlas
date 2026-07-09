@@ -3,9 +3,9 @@
   "node_id": "mission-recommendation-feature-depth-next-wave-36",
   "status": "compact_dashboard_filters_bound",
   "source_readback_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-35/recommendation-readback-after.json",
-  "source_readback_digest": "sha256:ec5131a7f63d7443a5dcb398ab870bd05d076d4b9e9d03a36c85c8c5fb32857c",
+  "source_readback_digest": "sha256:c1272cdf994d92f0f3b9fdbd6a049522b60a7868c819cf1379e7ca35b488fced",
   "source_workgraph_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-35/workgraph-after.json",
-  "source_workgraph_digest": "sha256:c8751f23d02c776418f072f3c968d6ac8b2747b1dbe3c73dc3b48bd1ec757995",
+  "source_workgraph_digest": "sha256:783933cb9293f0779ee200711402b1140d2fe3285cd1f4609d10e01337cd83c1",
   "total_nodes": 40,
   "completed_nodes": 35,
   "ready_nodes": 5,
@@ -16,7 +16,7 @@
   "exact_next_action": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-36 and execute exactly one active node.",
   "return_gate_status": "blocked_ready_nodes_remain",
   "active_filter_key": "ready",
-  "filter_count": 4,
+  "filter_count": 8,
   "filters": [
     {
       "key": "ready",
@@ -75,6 +75,54 @@
       "actionable": false,
       "empty": false,
       "dashboard_status": "completed_history"
+    },
+    {
+      "key": "recommendation_track",
+      "label": "Track",
+      "count": 1,
+      "preview_node_ids": [],
+      "omitted_node_count": 0,
+      "first_node_id": "",
+      "last_node_id": "",
+      "actionable": false,
+      "empty": false,
+      "dashboard_status": "track_feature_depth"
+    },
+    {
+      "key": "schema_health",
+      "label": "Schema Health",
+      "count": 0,
+      "preview_node_ids": [],
+      "omitted_node_count": 0,
+      "first_node_id": "",
+      "last_node_id": "",
+      "actionable": false,
+      "empty": true,
+      "dashboard_status": "schema_health_not_reported"
+    },
+    {
+      "key": "ci_state",
+      "label": "CI State",
+      "count": 1,
+      "preview_node_ids": [],
+      "omitted_node_count": 0,
+      "first_node_id": "",
+      "last_node_id": "",
+      "actionable": true,
+      "empty": false,
+      "dashboard_status": "ci_state_pending_remote_lifecycle"
+    },
+    {
+      "key": "cleanup_state",
+      "label": "Cleanup State",
+      "count": 1,
+      "preview_node_ids": [],
+      "omitted_node_count": 0,
+      "first_node_id": "",
+      "last_node_id": "",
+      "actionable": true,
+      "empty": false,
+      "dashboard_status": "cleanup_state_pending_ready_work"
     }
   ],
   "ready_filter_actionable": true,

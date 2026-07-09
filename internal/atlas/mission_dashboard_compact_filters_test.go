@@ -60,14 +60,18 @@ func TestFeatureDepthWaveMissionDashboardCompactFiltersSummarizeReadyBlockedFail
 		!recorded.RSIRemainsDenied {
 		t.Fatalf("compact dashboard filters lost ready/blocked status: %#v", recorded)
 	}
-	if len(recorded.Filters) != 4 ||
+	if len(recorded.Filters) != 8 ||
 		recorded.Filters[0].Key != "ready" ||
 		recorded.Filters[0].Count != 5 ||
 		recorded.Filters[0].PreviewNodeIDs[0] != "mission-recommendation-feature-depth-next-wave-36" ||
 		!recorded.Filters[0].Actionable ||
 		recorded.Filters[1].Key != "blocked" ||
 		recorded.Filters[1].Count != 0 ||
-		!recorded.Filters[1].Empty {
+		!recorded.Filters[1].Empty ||
+		recorded.Filters[4].Key != "recommendation_track" ||
+		recorded.Filters[5].Key != "schema_health" ||
+		recorded.Filters[6].Key != "ci_state" ||
+		recorded.Filters[7].Key != "cleanup_state" {
 		t.Fatalf("compact dashboard filters did not preserve ready versus blocked rows: %#v", recorded.Filters)
 	}
 
@@ -121,10 +125,10 @@ func TestMissionDashboardCompactFiltersCarrySchemaHealthStatusWhenReadbackHasIt(
 		!fixture.SchemaHealthFilterActionable {
 		t.Fatalf("compact dashboard filters lost schema-health status: %#v", fixture)
 	}
-	if fixture.FilterCount != 5 || len(fixture.Filters) != 5 {
+	if fixture.FilterCount != 8 || len(fixture.Filters) != 8 {
 		t.Fatalf("schema-health status should add a compact filter row: count=%d filters=%#v", fixture.FilterCount, fixture.Filters)
 	}
-	schemaHealthFilter := fixture.Filters[4]
+	schemaHealthFilter := fixture.Filters[5]
 	if schemaHealthFilter.Key != "schema_health" ||
 		schemaHealthFilter.Label != "Schema Health" ||
 		schemaHealthFilter.Count != 1 ||
@@ -200,5 +204,46 @@ func TestMissionDashboardCompactFiltersClassifySchemaHealthFilterStates(t *testi
 				t.Fatal(err)
 			}
 		})
+	}
+}
+
+func TestMissionDashboardCompactFiltersIncludeTrackCIAndCleanupStateRows(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
+	sourceNodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-35")
+	sourceReadbackPath := filepath.Join(sourceNodeDir, "recommendation-readback-after.json")
+	workgraphPath := filepath.Join(sourceNodeDir, "workgraph-after.json")
+
+	fixture, err := BuildAtlasMissionDashboardCompactFilters("mission-recommendation-dashboard-state-filters", sourceReadbackPath, workgraphPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	filters := map[string]AtlasMissionDashboardCompactFilter{}
+	for _, filter := range fixture.Filters {
+		filters[filter.Key] = filter
+	}
+	for _, key := range []string{"recommendation_track", "schema_health", "ci_state", "cleanup_state"} {
+		if _, ok := filters[key]; !ok {
+			t.Fatalf("compact dashboard filters missing %s row: %#v", key, fixture.Filters)
+		}
+	}
+	if filters["recommendation_track"].DashboardStatus != "track_feature_depth" ||
+		filters["recommendation_track"].Count != 1 ||
+		filters["recommendation_track"].Actionable {
+		t.Fatalf("recommendation track filter did not bind source track state: %#v", filters["recommendation_track"])
+	}
+	if filters["schema_health"].DashboardStatus != "schema_health_not_reported" ||
+		!filters["schema_health"].Empty ||
+		filters["schema_health"].Actionable {
+		t.Fatalf("schema health filter did not expose not-reported state: %#v", filters["schema_health"])
+	}
+	if filters["ci_state"].DashboardStatus != "ci_state_pending_remote_lifecycle" ||
+		!filters["ci_state"].Actionable {
+		t.Fatalf("CI state filter did not expose pending remote lifecycle state: %#v", filters["ci_state"])
+	}
+	if filters["cleanup_state"].DashboardStatus != "cleanup_state_pending_ready_work" ||
+		!filters["cleanup_state"].Actionable {
+		t.Fatalf("cleanup state filter did not expose ready-work cleanup state: %#v", filters["cleanup_state"])
 	}
 }

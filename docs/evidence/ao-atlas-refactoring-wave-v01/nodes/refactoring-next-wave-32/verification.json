@@ -1,0 +1,47 @@
+{
+  "schema": "ao.atlas.refactoring.verification.v0.1",
+  "node_id": "refactoring-next-wave-32",
+  "status": "local_verification_passed",
+  "verified_at": "2026-07-09T14:29:27Z",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run 'TestMissionDashboardCompactFiltersIncludeTrackCIAndCleanupStateRows|TestFeatureDepthWaveMissionDashboardCompactFiltersSummarizeReadyBlockedFailedStates|TestMissionDashboardCompactFiltersCarrySchemaHealthStatusWhenReadbackHasIt|TestMissionDashboardCompactFiltersClassifySchemaHealthFilterStates' -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "summary": "status=ready score=100/100"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    },
+    {
+      "command": "find docs/evidence -path '*mission-recommendation-feature-depth-next-wave-36/mission-dashboard-compact-filters.json' -print0 | xargs -0 -n1 jq empty",
+      "status": "passed"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-followup-durability-v04",
+      "status": "passed"
+    }
+  ],
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

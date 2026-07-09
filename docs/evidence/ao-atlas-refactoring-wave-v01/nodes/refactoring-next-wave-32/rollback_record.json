@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.refactoring.rollback-record.v0.1",
+  "node_id": "refactoring-next-wave-32",
+  "rollback_status": "bounded_revert_available",
+  "rollback_scope": [
+    "restore four-row compact dashboard filter behavior",
+    "restore regenerated mission-dashboard-compact-filters.json fixtures",
+    "remove node 32 evidence artifacts"
+  ],
+  "data_migration_required": false,
+  "external_state_changed": false,
+  "release_or_deploy_performed": false,
+  "rsi_remains_denied": true
+}
