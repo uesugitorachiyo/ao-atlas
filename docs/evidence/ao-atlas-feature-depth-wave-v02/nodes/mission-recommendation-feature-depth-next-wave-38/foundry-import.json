@@ -1,0 +1,9 @@
+{
+  "contract_version": "ao.foundry.import.v0.1",
+  "task_id": "mission-recommendation-feature-depth-next-wave-38-task",
+  "node_id": "mission-recommendation-feature-depth-next-wave-38",
+  "status": "ready_for_bounded_implementation",
+  "objective": "Add next wave prompt generation with minimum two hour work budget language.",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38",
+  "safe_to_execute": true
+}

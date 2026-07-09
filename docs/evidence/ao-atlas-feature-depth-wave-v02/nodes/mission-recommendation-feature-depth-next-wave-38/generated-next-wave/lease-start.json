@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-lease-start.v0.1",
+  "status": "started",
+  "mission_id": "ao-atlas-next-feature-depth-wave-v02",
+  "target_instance": "ao-atlas-feature-depth-followup-wave-v02",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-38/generated-next-wave",
+  "started_at": "2026-07-09T00:00:00Z",
+  "min_minutes": 120,
+  "max_minutes": 180,
+  "continue_if_fast_target": 40,
+  "checkpoint_policy": "after_each_node_with_pr_ci_merge_cleanup",
+  "wave_digest": "sha256:b2e3e506da588cc8dced613f44befa9e82c123572566ce6e544215ead73cc5b4",
+  "workgraph_digest": "sha256:e0c84fa3cfdf361f80e7297f4ab68b0f3338a1606d1d75238dacdbd56555e63e",
+  "final_response_allowed": false,
+  "final_response_reason": "lease start marker does not allow final response",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "claims_authority_advance": false
+}
