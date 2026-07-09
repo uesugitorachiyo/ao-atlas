@@ -61,3 +61,50 @@ func TestFeatureDepthWaveBranchCleanupHandoffSummaryUsesTypedValidator(t *testin
 		t.Fatalf("expected typed branch cleanup handoff summary validator, got %s", validator)
 	}
 }
+
+func TestMergeReadinessGuardRequiresPassedChecksBeforeBranchCleanupEvidence(t *testing.T) {
+	root := repoRoot(t)
+	summary := mustLoadJSON[AtlasBranchCleanupHandoffSummary](t, filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-16", "branch-cleanup-handoff-summary.json"))
+	if len(summary.Entries) == 0 {
+		t.Fatal("branch cleanup handoff fixture has no entries")
+	}
+	entry := summary.Entries[0]
+	ready := EvaluateAtlasMergeReadinessGuard(AtlasMergeReadinessGuardInput{
+		NodeID:      entry.NodeID,
+		PRNumber:    entry.PRNumber,
+		MergeCommit: entry.MergeCommit,
+		CIStatus:    entry.CIStatus,
+	})
+	if ready.Status != "ready_for_branch_cleanup_evidence" ||
+		ready.Reason != "passed_checks_bound_to_merge_commit" ||
+		!ready.PassedChecksRequiredBeforeCleanup ||
+		!ready.BranchCleanupEvidenceAllowed ||
+		ready.ClaimsAuthorityAdvance ||
+		!ready.RSIRemainsDenied {
+		t.Fatalf("merge readiness guard should allow clean passed entry without authority effects: %#v", ready)
+	}
+
+	blocked := EvaluateAtlasMergeReadinessGuard(AtlasMergeReadinessGuardInput{
+		NodeID:      entry.NodeID,
+		PRNumber:    entry.PRNumber,
+		MergeCommit: entry.MergeCommit,
+		CIStatus:    "pending",
+	})
+	if blocked.Status != "blocked" ||
+		blocked.Reason != "blocked_ci_not_passed" ||
+		blocked.BranchCleanupEvidenceAllowed ||
+		!blocked.PassedChecksRequiredBeforeCleanup ||
+		blocked.ClaimsAuthorityAdvance ||
+		!blocked.RSIRemainsDenied {
+		t.Fatalf("merge readiness guard should block cleanup evidence before passed checks: %#v", blocked)
+	}
+
+	summary.Entries[0].CIStatus = "pending"
+	summary.PassedCICount--
+	summary.CleanupComplete = false
+	summary.OperatorHandoffStatus = "cleanup_ledger_blocked"
+	err := ValidateAtlasBranchCleanupHandoffSummary(summary)
+	if err == nil || !strings.Contains(err.Error(), "merge readiness guard blocks branch cleanup evidence: blocked_ci_not_passed") {
+		t.Fatalf("branch cleanup handoff validation must use merge readiness guard, got %v", err)
+	}
+}

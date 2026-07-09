@@ -127,6 +127,15 @@ func ValidateAtlasPostMergeBranchDeletionReadback(readback AtlasPostMergeBranchD
 		if entry.CIStatus != "passed" {
 			errs = append(errs, prefix+".ci_status must be passed")
 		}
+		guard := EvaluateAtlasMergeReadinessGuard(AtlasMergeReadinessGuardInput{
+			NodeID:      entry.NodeID,
+			PRNumber:    entry.PRNumber,
+			MergeCommit: entry.MergeCommit,
+			CIStatus:    entry.CIStatus,
+		})
+		if !guard.BranchCleanupEvidenceAllowed {
+			errs = append(errs, prefix+".merge readiness guard blocks branch cleanup evidence: "+guard.Reason)
+		}
 		if !entry.LocalBranchDeleted {
 			errs = append(errs, prefix+".local_branch_deleted must be true")
 		}
