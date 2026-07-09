@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-10",
+  "task_id": "mission-recommendation-feature-depth-next-wave-10-task",
+  "status": "selected",
+  "candidate": "feature-depth-next-wave-10",
+  "reason": "The node records Windows threshold evidence against the v02 PR/CI timing summary.",
+  "selected_from": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-09/recommendation-readback-after.json",
+  "rsi_remains_denied": true
+}
