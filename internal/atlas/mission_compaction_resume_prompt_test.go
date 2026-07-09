@@ -266,6 +266,65 @@ func TestFeatureDepthWaveCompactionResumePromptBindsCheckpointDigest(t *testing.
 	}
 }
 
+func TestFeatureDepthWaveV02CompactionResumePromptBindsCheckpointDigest(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v02")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-19")
+	sourceReadback := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-18", "recommendation-readback-after.json")
+	sourceWorkgraph := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-18", "workgraph-after.json")
+	sourceCheckpoint := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-18", "checkpoint-readback-after.json")
+	recordedPath := filepath.Join(nodeDir, "checkpoint-digest-resume-prompt.json")
+	recordedPromptPath := filepath.Join(nodeDir, "checkpoint-digest-resume-prompt.md")
+	outDir := t.TempDir()
+	outFixture := filepath.Join(outDir, "checkpoint-digest-resume-prompt.json")
+	outPrompt := filepath.Join(outDir, "checkpoint-digest-resume-prompt.md")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "compaction-resume-prompt",
+		"--source-readback", sourceReadback,
+		"--workgraph", sourceWorkgraph,
+		"--lease-start", filepath.Join(waveRoot, "lease-start.json"),
+		"--checkpoint-readback", sourceCheckpoint,
+		"--evidence-root", filepath.ToSlash(filepath.Join("docs", "evidence", "ao-atlas-feature-depth-wave-v02")),
+		"--node-id", "mission-recommendation-feature-depth-next-wave-19",
+		"--expected-next-node-after-completion", "mission-recommendation-feature-depth-next-wave-20",
+		"--prompt-out", outPrompt,
+		"--fixture-out", outFixture,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("compaction-resume-prompt command failed: %s", out.String())
+	}
+	recorded := mustLoadJSON[map[string]any](t, recordedPath)
+	generated := mustLoadJSON[map[string]any](t, outFixture)
+	generated["prompt_path"] = recorded["prompt_path"]
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("v02 checkpoint digest resume prompt fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	if recorded["checkpoint_readback_path"] != "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-18/checkpoint-readback-after.json" {
+		t.Fatalf("v02 checkpoint readback path not bound: %#v", recorded["checkpoint_readback_path"])
+	}
+	checkpointDigest, ok := recorded["checkpoint_readback_digest"].(string)
+	if !ok || !digestPattern.MatchString(checkpointDigest) {
+		t.Fatalf("v02 checkpoint digest missing or invalid: %#v", recorded["checkpoint_readback_digest"])
+	}
+	promptBytes, err := os.ReadFile(recordedPromptPath)
+	if err != nil {
+		t.Fatalf("read recorded prompt: %v", err)
+	}
+	prompt := string(promptBytes)
+	for _, want := range []string{
+		"Checkpoint readback: `docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-18/checkpoint-readback-after.json`",
+		"Checkpoint readback digest: `" + checkpointDigest + "`",
+		"Next executable node: `mission-recommendation-feature-depth-next-wave-19`",
+		"Do not produce a final response while ready nodes or exact next action remain.",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("v02 checkpoint digest resume prompt missing %q:\n%s", want, prompt)
+		}
+	}
+}
+
 func TestCompactionResumePromptCarriesSchemaHealthStatusWhenReadbackHasIt(t *testing.T) {
 	root := repoRoot(t)
 	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
