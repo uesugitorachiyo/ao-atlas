@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.refactoring.checkpoint-readback.v0.1",
+  "node_id": "refactoring-next-wave-31",
+  "status": "node_complete_pending_remote_lifecycle",
+  "completed_nodes": 31,
+  "total_nodes": 40,
+  "ready_nodes": 9,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "first_executable_node": "refactoring-next-wave-32",
+  "exact_next_action": "complete PR, CI, merge, branch cleanup for refactoring-next-wave-31, then continue to refactoring-next-wave-32",
+  "final_response_allowed": false,
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

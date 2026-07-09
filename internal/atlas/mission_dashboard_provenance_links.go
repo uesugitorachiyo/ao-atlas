@@ -2,7 +2,6 @@ package atlas
 
 import (
 	"fmt"
-	"path/filepath"
 	"strings"
 )
 
@@ -38,27 +37,14 @@ func BuildAtlasMissionDashboardProvenanceLinks(nodeID, dashboardBindingPath stri
 	links := make([]AtlasMissionDashboardProvenanceLink, 0, len(missionDashboardRequiredProvenanceRepos))
 	for _, repo := range missionDashboardRequiredProvenanceRepos {
 		row := rowsByRepo[repo]
-		resolvedEvidencePath, err := resolveMissionDashboardEvidencePath(row.ClosureEvidencePath)
+		artifact, err := buildMissionDashboardEvidenceArtifact(row.ClosureEvidencePath)
 		if err != nil {
 			return AtlasMissionDashboardProvenanceLinks{}, err
 		}
-		artifactDigest, err := digestTextFileWithNormalizedLineEndings(resolvedEvidencePath)
-		if err != nil {
-			return AtlasMissionDashboardProvenanceLinks{}, err
-		}
-		links = append(links, AtlasMissionDashboardProvenanceLink{
-			Repo:                         repo,
-			Role:                         row.Role,
-			EvidencePath:                 row.ClosureEvidencePath,
-			EvidenceDigest:               artifactDigest,
-			ProvenanceLinkStatus:         "linked",
-			DashboardRowMatched:          strings.TrimSpace(row.Repo) == repo,
-			ClosureEvidenceDigestMatches: row.ClosureEvidenceDigest == artifactDigest,
-			ArtifactDigestVerified:       row.ClosureEvidenceDigest == artifactDigest && digestPattern.MatchString(artifactDigest),
-			FinalResponseAllowed:         row.FinalResponseAllowed,
-			RSIRemainsDenied:             row.RSIRemainsDenied,
-			AuthorityAdvanceClaimed:      row.AuthorityAdvanceClaimed,
-		})
+		link := buildMissionDashboardProvenanceLinkFromArtifact(repo, row.Role, artifact, row.ClosureEvidenceDigest, row.FinalResponseAllowed, row.RSIRemainsDenied)
+		link.DashboardRowMatched = strings.TrimSpace(row.Repo) == repo
+		link.AuthorityAdvanceClaimed = row.AuthorityAdvanceClaimed
+		links = append(links, link)
 	}
 
 	linksFixture := AtlasMissionDashboardProvenanceLinks{
@@ -215,18 +201,6 @@ func missionDashboardEveryLinkedArtifactDigestVerified(links []AtlasMissionDashb
 		}
 	}
 	return len(links) > 0
-}
-
-func resolveMissionDashboardEvidencePath(path string) (string, error) {
-	path = strings.TrimSpace(path)
-	if filepath.IsAbs(path) || driveAbsPattern.MatchString(path) {
-		return filepath.Clean(path), nil
-	}
-	root, err := findRepoRoot()
-	if err != nil {
-		return "", err
-	}
-	return filepath.Join(root, path), nil
 }
 
 func WriteAtlasMissionDashboardProvenanceLinks(path string, links AtlasMissionDashboardProvenanceLinks) error {

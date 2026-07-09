@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.refactoring.tests.v0.1",
+  "node_id": "refactoring-next-wave-31",
+  "red_test": {
+    "command": "go test ./internal/atlas -run TestMissionDashboardEvidenceArtifactFeedsProvenanceAndFreshnessRows -count=1",
+    "observed_status": "failed_before_implementation",
+    "failure_reason": "missing shared dashboard artifact and row helper functions"
+  },
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run 'TestMissionDashboardEvidenceArtifactFeedsProvenanceAndFreshnessRows|TestFeatureDepthWaveMissionDashboardProvenanceLinksBindSubsystemEvidence|TestFeatureDepthWaveMissionDashboardFreshnessChecksMergedPRAndSyncedMain' -count=1",
+      "status": "passed"
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    }
+  ]
+}
