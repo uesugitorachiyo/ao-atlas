@@ -201,6 +201,143 @@ func recommendationCurrentTrack(sourceEvidenceRoot string, readback AtlasRecomme
 	}
 }
 
+func BuildAtlasRecommendationStaleReadbackTrackFixture(readback AtlasRecommendationReadback, sourceEvidenceRoots []string) (AtlasRecommendationStaleReadbackTrackFixture, error) {
+	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
+		return AtlasRecommendationStaleReadbackTrackFixture{}, err
+	}
+	if len(sourceEvidenceRoots) == 0 {
+		return AtlasRecommendationStaleReadbackTrackFixture{}, fmt.Errorf("source evidence roots are required")
+	}
+
+	cases := make([]AtlasRecommendationStaleReadbackTrackCase, 0, len(sourceEvidenceRoots))
+	seenTracks := map[string]bool{}
+	for _, root := range sourceEvidenceRoots {
+		root = filepath.ToSlash(strings.TrimSpace(root))
+		if err := validateNextWaveSourcePath("source_evidence_root", root); err != nil {
+			return AtlasRecommendationStaleReadbackTrackFixture{}, err
+		}
+		track := recommendationCurrentTrack(root, readback)
+		if !oneOf(track, "feature_depth", "refactoring", "rsi_boundary_hardening") {
+			return AtlasRecommendationStaleReadbackTrackFixture{}, fmt.Errorf("source_evidence_root %s does not map to a recommendation track", root)
+		}
+
+		stale := readback
+		stale.ReturnGateStatus = "final_response_allowed"
+		stale.ExactNextActionReadback.ReturnGateStatus = stale.ReturnGateStatus
+		err := ValidateAtlasRecommendationReadback(stale)
+		if err == nil {
+			return AtlasRecommendationStaleReadbackTrackFixture{}, fmt.Errorf("stale readback drift was not rejected for track %s", track)
+		}
+
+		cases = append(cases, AtlasRecommendationStaleReadbackTrackCase{
+			Track:                    track,
+			SourceEvidenceRoot:       root,
+			Status:                   "stale_rejected",
+			StaleMutation:            "return_gate_final_response_drift",
+			Validator:                "typed:recommendation-readback",
+			RejectionMessage:         err.Error(),
+			SourceDigest:             readback.SourceDigest,
+			OriginalReturnGateStatus: readback.ReturnGateStatus,
+			TamperedReturnGateStatus: stale.ReturnGateStatus,
+		})
+		seenTracks[track] = true
+	}
+
+	fixture := AtlasRecommendationStaleReadbackTrackFixture{
+		Schema:                 AtlasRecommendationStaleReadbackTrackFixtureContract,
+		Status:                 "passed",
+		SourceDigest:           readback.SourceDigest,
+		CoveredTrackCount:      len(seenTracks),
+		StaleRejectionCount:    len(cases),
+		Cases:                  cases,
+		NoPromotionRequested:   true,
+		PromotionGranted:       false,
+		ClaimsAuthorityAdvance: false,
+		RSIRemainsDenied:       true,
+		SafeToExecute:          false,
+		SchedulesWork:          false,
+		ExecutesWork:           false,
+		ApprovesWork:           false,
+		MutatesRepositories:    false,
+	}
+	if err := ValidateAtlasRecommendationStaleReadbackTrackFixture(fixture); err != nil {
+		return AtlasRecommendationStaleReadbackTrackFixture{}, err
+	}
+	return fixture, nil
+}
+
+func ValidateAtlasRecommendationStaleReadbackTrackFixture(fixture AtlasRecommendationStaleReadbackTrackFixture) error {
+	var errs []string
+	requireContract(&errs, "recommendation_stale_readback_track_fixture", fixture.Schema, AtlasRecommendationStaleReadbackTrackFixtureContract)
+	if fixture.Status != "passed" {
+		errs = append(errs, "status must be passed")
+	}
+	if !digestPattern.MatchString(fixture.SourceDigest) {
+		errs = append(errs, "source_digest must be sha256 digest")
+	}
+	if len(fixture.Cases) < 3 {
+		errs = append(errs, "cases must cover all recommendation tracks")
+	}
+	if fixture.StaleRejectionCount != len(fixture.Cases) {
+		errs = append(errs, "stale_rejection_count must match cases length")
+	}
+	if !fixture.NoPromotionRequested {
+		errs = append(errs, "no_promotion_requested must be true")
+	}
+	if fixture.PromotionGranted {
+		errs = append(errs, "promotion_granted must be false")
+	}
+	if fixture.ClaimsAuthorityAdvance {
+		errs = append(errs, "claims_authority_advance must be false")
+	}
+	if !fixture.RSIRemainsDenied {
+		errs = append(errs, "rsi_remains_denied must be true")
+	}
+	if fixture.SafeToExecute || fixture.SchedulesWork || fixture.ExecutesWork || fixture.ApprovesWork || fixture.MutatesRepositories {
+		errs = append(errs, "fixture must not execute, schedule, approve, mutate repositories, or mark safe_to_execute")
+	}
+
+	seenTracks := map[string]bool{}
+	for i, fixtureCase := range fixture.Cases {
+		prefix := fmt.Sprintf("cases[%d]", i)
+		if !oneOf(fixtureCase.Track, "feature_depth", "refactoring", "rsi_boundary_hardening") {
+			errs = append(errs, prefix+".track is invalid")
+		}
+		seenTracks[fixtureCase.Track] = true
+		checkPublicPath(&errs, prefix+".source_evidence_root", fixtureCase.SourceEvidenceRoot, true)
+		if fixtureCase.Status != "stale_rejected" {
+			errs = append(errs, prefix+".status must be stale_rejected")
+		}
+		if fixtureCase.StaleMutation != "return_gate_final_response_drift" {
+			errs = append(errs, prefix+".stale_mutation must be return_gate_final_response_drift")
+		}
+		if fixtureCase.Validator != "typed:recommendation-readback" {
+			errs = append(errs, prefix+".validator must be typed:recommendation-readback")
+		}
+		if !strings.Contains(fixtureCase.RejectionMessage, "ready nodes require return_gate_status=blocked_ready_nodes_remain") {
+			errs = append(errs, prefix+".rejection_message must record stale return gate rejection")
+		}
+		if !digestPattern.MatchString(fixtureCase.SourceDigest) {
+			errs = append(errs, prefix+".source_digest must be sha256 digest")
+		}
+		if fixtureCase.TamperedReturnGateStatus != "final_response_allowed" {
+			errs = append(errs, prefix+".tampered_return_gate_status must be final_response_allowed")
+		}
+		if fixtureCase.SafeToExecute || fixtureCase.SchedulesWork || fixtureCase.ExecutesWork || fixtureCase.ApprovesWork || fixtureCase.MutatesRepositories {
+			errs = append(errs, prefix+" must not execute, schedule, approve, mutate repositories, or mark safe_to_execute")
+		}
+	}
+	for _, required := range []string{"feature_depth", "refactoring", "rsi_boundary_hardening"} {
+		if !seenTracks[required] {
+			errs = append(errs, "cases missing "+required)
+		}
+	}
+	if fixture.CoveredTrackCount != len(seenTracks) {
+		errs = append(errs, "covered_track_count must match unique case tracks")
+	}
+	return joinErrors(errs)
+}
+
 func ValidateAtlasConsumedRecommendationLedger(ledger AtlasConsumedRecommendationLedger) error {
 	var errs []string
 	requireContract(&errs, "consumed_recommendation_ledger", ledger.Schema, AtlasConsumedRecommendationLedgerContract)

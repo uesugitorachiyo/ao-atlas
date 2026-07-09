@@ -312,6 +312,41 @@ type AtlasRecommendationNextTrackDecision struct {
 	MutatesRepositories          bool     `json:"mutates_repositories"`
 }
 
+type AtlasRecommendationStaleReadbackTrackFixture struct {
+	Schema                 string                                      `json:"schema"`
+	Status                 string                                      `json:"status"`
+	SourceDigest           string                                      `json:"source_digest"`
+	CoveredTrackCount      int                                         `json:"covered_track_count"`
+	StaleRejectionCount    int                                         `json:"stale_rejection_count"`
+	Cases                  []AtlasRecommendationStaleReadbackTrackCase `json:"cases"`
+	NoPromotionRequested   bool                                        `json:"no_promotion_requested"`
+	PromotionGranted       bool                                        `json:"promotion_granted"`
+	ClaimsAuthorityAdvance bool                                        `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                        `json:"rsi_remains_denied"`
+	SafeToExecute          bool                                        `json:"safe_to_execute"`
+	SchedulesWork          bool                                        `json:"schedules_work"`
+	ExecutesWork           bool                                        `json:"executes_work"`
+	ApprovesWork           bool                                        `json:"approves_work"`
+	MutatesRepositories    bool                                        `json:"mutates_repositories"`
+}
+
+type AtlasRecommendationStaleReadbackTrackCase struct {
+	Track                    string `json:"track"`
+	SourceEvidenceRoot       string `json:"source_evidence_root"`
+	Status                   string `json:"status"`
+	StaleMutation            string `json:"stale_mutation"`
+	Validator                string `json:"validator"`
+	RejectionMessage         string `json:"rejection_message"`
+	SourceDigest             string `json:"source_digest"`
+	OriginalReturnGateStatus string `json:"original_return_gate_status"`
+	TamperedReturnGateStatus string `json:"tampered_return_gate_status"`
+	SafeToExecute            bool   `json:"safe_to_execute"`
+	SchedulesWork            bool   `json:"schedules_work"`
+	ExecutesWork             bool   `json:"executes_work"`
+	ApprovesWork             bool   `json:"approves_work"`
+	MutatesRepositories      bool   `json:"mutates_repositories"`
+}
+
 type AtlasConsumedRecommendationLedger struct {
 	Schema                       string `json:"schema"`
 	Status                       string `json:"status"`
