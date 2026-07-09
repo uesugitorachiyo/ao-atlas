@@ -59,6 +59,42 @@ func TestFeatureDepthWaveBranchDeletionReadbackFixtureUsesTypedValidator(t *test
 	}
 }
 
+func TestPostMergeBranchDeletionUsesReusableLocalAndRemoteCleanupRecords(t *testing.T) {
+	root := repoRoot(t)
+	readback := mustLoadJSON[AtlasPostMergeBranchDeletionReadback](t, filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-13", "post-merge-branch-deletion-readback.json"))
+	if len(readback.Entries) == 0 {
+		t.Fatal("branch deletion readback fixture has no entries")
+	}
+	entry := readback.Entries[0]
+	records := BuildAtlasBranchCleanupRecords(AtlasBranchCleanupRecordInput{
+		LocalBranchDeleted:           entry.LocalBranchDeleted,
+		RemoteBranchDeleted:          entry.RemoteBranchDeleted,
+		LocalCodexBranchesRemaining:  entry.LocalCodexBranchesRemaining,
+		RemoteCodexBranchesRemaining: entry.RemoteCodexBranchesRemaining,
+	})
+	summary := SummarizeAtlasBranchCleanupRecords(records)
+	if len(records) != 2 ||
+		records[0].Scope != "local" ||
+		records[1].Scope != "remote" ||
+		!records[0].CleanupComplete ||
+		!records[1].CleanupComplete ||
+		summary.LocalBranchDeletedCount != 1 ||
+		summary.RemoteBranchDeletedCount != 1 ||
+		summary.BranchesRemainingTotal != 0 ||
+		!summary.CleanupComplete {
+		t.Fatalf("cleanup records must split local and remote branch deletion facts: records=%#v summary=%#v", records, summary)
+	}
+
+	readback.Entries[0].RemoteBranchDeleted = false
+	readback.Entries[0].RemoteCodexBranchesRemaining = 1
+	readback.RemoteBranchDeletedCount--
+	readback.BranchesRemainingTotal = 1
+	err := ValidateAtlasPostMergeBranchDeletionReadback(readback)
+	if err == nil || !strings.Contains(err.Error(), "remote cleanup record incomplete") {
+		t.Fatalf("branch deletion validation must use reusable remote cleanup record, got %v", err)
+	}
+}
+
 func branchDeletionCheckpointRoot(t *testing.T, waveRoot string, recorded map[string]any) string {
 	t.Helper()
 	checkpointRoot := filepath.Join(t.TempDir(), "evidence")

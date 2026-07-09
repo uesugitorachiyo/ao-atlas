@@ -145,6 +145,12 @@ func ValidateAtlasPostMergeBranchDeletionReadback(readback AtlasPostMergeBranchD
 		if entry.LocalCodexBranchesRemaining < 0 || entry.RemoteCodexBranchesRemaining < 0 {
 			errs = append(errs, prefix+".remaining branch counts must be non-negative")
 		}
+		validateAtlasBranchCleanupRecords(&errs, prefix, BuildAtlasBranchCleanupRecords(AtlasBranchCleanupRecordInput{
+			LocalBranchDeleted:           entry.LocalBranchDeleted,
+			RemoteBranchDeleted:          entry.RemoteBranchDeleted,
+			LocalCodexBranchesRemaining:  entry.LocalCodexBranchesRemaining,
+			RemoteCodexBranchesRemaining: entry.RemoteCodexBranchesRemaining,
+		}))
 		if !digestPattern.MatchString(entry.Digest) {
 			errs = append(errs, prefix+".digest must be sha256 digest")
 		}
@@ -159,13 +165,15 @@ func summarizePostMergeBranchDeletionEntries(entries []AtlasPostMergeBranchDelet
 		Entries:                 append([]AtlasPostMergeBranchDeletionReadbackEntry(nil), entries...),
 	}
 	for _, entry := range entries {
-		if entry.LocalBranchDeleted {
-			readback.LocalBranchDeletedCount++
-		}
-		if entry.RemoteBranchDeleted {
-			readback.RemoteBranchDeletedCount++
-		}
-		readback.BranchesRemainingTotal += entry.LocalCodexBranchesRemaining + entry.RemoteCodexBranchesRemaining
+		recordSummary := SummarizeAtlasBranchCleanupRecords(BuildAtlasBranchCleanupRecords(AtlasBranchCleanupRecordInput{
+			LocalBranchDeleted:           entry.LocalBranchDeleted,
+			RemoteBranchDeleted:          entry.RemoteBranchDeleted,
+			LocalCodexBranchesRemaining:  entry.LocalCodexBranchesRemaining,
+			RemoteCodexBranchesRemaining: entry.RemoteCodexBranchesRemaining,
+		}))
+		readback.LocalBranchDeletedCount += recordSummary.LocalBranchDeletedCount
+		readback.RemoteBranchDeletedCount += recordSummary.RemoteBranchDeletedCount
+		readback.BranchesRemainingTotal += recordSummary.BranchesRemainingTotal
 	}
 	return readback
 }
