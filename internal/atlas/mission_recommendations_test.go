@@ -4279,6 +4279,103 @@ func TestLongRunHardeningWaveCommandReadbackFinalGateRequiresZeroReadyAndLeaseMi
 	}
 }
 
+func TestRecommendationFinalResponseGateEvaluationCentralizesReadbackClosureFields(t *testing.T) {
+	cases := []struct {
+		name                 string
+		finalAllowed         bool
+		nodesComplete        bool
+		leaseTiming          atlasRecommendationLeaseTiming
+		ready                int
+		blocked              int
+		failed               int
+		exactNextAction      string
+		firstExecutableNode  string
+		wantReturnGate       string
+		wantDenialGate       string
+		wantContractStatus   string
+		wantRefusesFinal     bool
+		wantExactActionState string
+	}{
+		{
+			name:                 "ready nodes deny final response",
+			ready:                1,
+			exactNextAction:      "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.",
+			firstExecutableNode:  "mission-recommendation-next-01",
+			wantReturnGate:       "blocked_ready_nodes_remain",
+			wantDenialGate:       "deny_ready_nodes_or_exact_next_action_remain",
+			wantContractStatus:   "continuation_required",
+			wantRefusesFinal:     true,
+			wantExactActionState: "continuation_required",
+		},
+		{
+			name:                 "hard blocker preserves blocker gate",
+			blocked:              1,
+			exactNextAction:      "Resolve blocked or failed recommendation node with exact repair evidence.",
+			wantReturnGate:       "blocked_hard_blocker",
+			wantDenialGate:       "blocked_hard_blocker",
+			wantContractStatus:   "continuation_required",
+			wantRefusesFinal:     true,
+			wantExactActionState: "continuation_required",
+		},
+		{
+			name:          "lease timing missing denies final response",
+			nodesComplete: true,
+			leaseTiming: atlasRecommendationLeaseTiming{
+				LeaseTimeStatus: "lease_timing_missing",
+			},
+			exactNextAction:      "Record started_at, completed_at, and elapsed_minutes before evaluating final response for the long-run lease.",
+			wantReturnGate:       "blocked_lease_timing_missing",
+			wantDenialGate:       "deny_ready_nodes_or_exact_next_action_remain",
+			wantContractStatus:   "continuation_required",
+			wantRefusesFinal:     true,
+			wantExactActionState: "continuation_required",
+		},
+		{
+			name:          "minimum minutes unmet denies final response",
+			nodesComplete: true,
+			leaseTiming: atlasRecommendationLeaseTiming{
+				LeaseTimeStatus: "elapsed_recorded",
+				MinMinutesMet:   false,
+			},
+			exactNextAction:      "Generate and execute the next useful Atlas recommendation wave until elapsed_minutes meets supervisor.min_minutes, or record a true hard blocker.",
+			wantReturnGate:       "blocked_minimum_minutes_unmet",
+			wantDenialGate:       "deny_ready_nodes_or_exact_next_action_remain",
+			wantContractStatus:   "continuation_required",
+			wantRefusesFinal:     true,
+			wantExactActionState: "continuation_required",
+		},
+		{
+			name:          "completed lease allows final response",
+			finalAllowed:  true,
+			nodesComplete: true,
+			leaseTiming: atlasRecommendationLeaseTiming{
+				LeaseTimeStatus: "elapsed_recorded",
+				MinMinutesMet:   true,
+			},
+			exactNextAction:      "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks.",
+			wantReturnGate:       "final_response_allowed",
+			wantDenialGate:       "allow_final_response",
+			wantContractStatus:   "ready_for_final_response",
+			wantRefusesFinal:     false,
+			wantExactActionState: "ready_for_final_response",
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			gate := recommendationFinalResponseGateEvaluation(tc.finalAllowed, tc.nodesComplete, tc.leaseTiming, tc.ready, tc.blocked, tc.failed, tc.exactNextAction, tc.firstExecutableNode)
+			if gate.ReturnGateStatus != tc.wantReturnGate ||
+				gate.FinalResponseDenialGate != tc.wantDenialGate ||
+				gate.ContinuationContract.Status != tc.wantContractStatus ||
+				gate.ContinuationContract.RefusesFinalResponse != tc.wantRefusesFinal ||
+				gate.ExactNextActionReadback.Status != tc.wantExactActionState ||
+				gate.ExactNextActionReadback.ReturnGateStatus != tc.wantReturnGate ||
+				gate.ExactNextActionReadback.FinalResponseAllowed != tc.finalAllowed {
+				t.Fatalf("final response gate evaluation drifted: %#v", gate)
+			}
+		})
+	}
+}
+
 func TestLongRunHardeningWaveProductionReadinessSummaryBindsVerificationCIMergeCleanupAndEvidenceRoots(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
 	nodeTwentyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-20", "recommendation-readback-after.json"))

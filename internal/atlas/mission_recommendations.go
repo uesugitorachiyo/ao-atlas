@@ -1188,7 +1188,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 			exactNextAction = fmt.Sprintf("Emit Foundry import for %s and execute exactly one active node.", firstExecutable)
 		}
 	}
-	returnGateStatus := recommendationReturnGateStatus(finalAllowed, nodesComplete, leaseTiming, ready, blocked, failed)
+	finalGate := recommendationFinalResponseGateEvaluation(finalAllowed, nodesComplete, leaseTiming, ready, blocked, failed, exactNextAction, firstExecutable)
 	status := "ready"
 	if finalAllowed {
 		status = "completed"
@@ -1282,14 +1282,14 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		CommandTimelinePlaceholders:     commandTimelinePlaceholders(),
 		PublicSafetyScanStatus:          publicSafetyScanStatus,
 		SchemaHealthStatus:              schemaHealthStatus,
-		ReturnGateStatus:                returnGateStatus,
+		ReturnGateStatus:                finalGate.ReturnGateStatus,
 		CheckpointCount:                 completed,
 		FinalResponseAllowed:            finalAllowed,
-		FinalResponseDenialGate:         recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
+		FinalResponseDenialGate:         finalGate.FinalResponseDenialGate,
 		FinalResponseReason:             finalReason,
 		ExactNextAction:                 exactNextAction,
-		ContinuationContract:            buildAtlasContinuationContract(ready, exactNextAction, returnGateStatus, finalAllowed),
-		ExactNextActionReadback:         buildExactNextActionReadback(exactNextAction, firstExecutable, returnGateStatus, finalAllowed),
+		ContinuationContract:            finalGate.ContinuationContract,
+		ExactNextActionReadback:         finalGate.ExactNextActionReadback,
 		NodeEvidence:                    recommendationNodeEvidence(workgraph),
 		FeatureDepthRecommendations:     featureDepthRecommendationReadback(wave.Tasks, wave.TotalTasks),
 		SafetyBoundaries: map[string]bool{
@@ -1465,6 +1465,23 @@ func recommendationReturnGateStatus(finalAllowed bool, nodesComplete bool, lease
 		return "blocked_ready_nodes_remain"
 	}
 	return "blocked_no_executable_ready_node"
+}
+
+type atlasRecommendationFinalResponseGateEvaluation struct {
+	ReturnGateStatus        string
+	FinalResponseDenialGate string
+	ContinuationContract    AtlasContinuationContract
+	ExactNextActionReadback AtlasExactNextActionReadback
+}
+
+func recommendationFinalResponseGateEvaluation(finalAllowed bool, nodesComplete bool, leaseTiming atlasRecommendationLeaseTiming, ready, blocked, failed int, exactNextAction, firstExecutable string) atlasRecommendationFinalResponseGateEvaluation {
+	returnGateStatus := recommendationReturnGateStatus(finalAllowed, nodesComplete, leaseTiming, ready, blocked, failed)
+	return atlasRecommendationFinalResponseGateEvaluation{
+		ReturnGateStatus:        returnGateStatus,
+		FinalResponseDenialGate: recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
+		ContinuationContract:    buildAtlasContinuationContract(ready, exactNextAction, returnGateStatus, finalAllowed),
+		ExactNextActionReadback: buildExactNextActionReadback(exactNextAction, firstExecutable, returnGateStatus, finalAllowed),
+	}
 }
 
 func recommendationFinalResponseDenialGate(finalAllowed bool, returnGateStatus string) string {
