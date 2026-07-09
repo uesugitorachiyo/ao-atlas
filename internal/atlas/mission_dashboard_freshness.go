@@ -54,15 +54,15 @@ func BuildAtlasMissionDashboardFreshnessChecks(nodeID, provenanceLinksPath, sour
 	if err != nil {
 		return AtlasMissionDashboardFreshnessChecks{}, err
 	}
-	provenanceDigest, err := digestTextFileWithNormalizedLineEndings(provenanceLinksPath)
+	provenanceArtifact, err := buildMissionDashboardEvidenceArtifact(provenanceLinksPath)
 	if err != nil {
 		return AtlasMissionDashboardFreshnessChecks{}, err
 	}
-	readbackDigest, err := digestTextFileWithNormalizedLineEndings(sourceReadbackPath)
+	readbackArtifact, err := buildMissionDashboardEvidenceArtifact(sourceReadbackPath)
 	if err != nil {
 		return AtlasMissionDashboardFreshnessChecks{}, err
 	}
-	lifecycleDigest, err := digestTextFileWithNormalizedLineEndings(postMergeLifecyclePath)
+	lifecycleArtifact, err := buildMissionDashboardEvidenceArtifact(postMergeLifecyclePath)
 	if err != nil {
 		return AtlasMissionDashboardFreshnessChecks{}, err
 	}
@@ -73,24 +73,24 @@ func BuildAtlasMissionDashboardFreshnessChecks(nodeID, provenanceLinksPath, sour
 	dashboardFresh := provenance.NodeID == lifecycle.NodeID && readback.CompletedNodes == 34 && readback.FirstExecutableNode == "mission-recommendation-feature-depth-next-wave-35" && !readback.FinalResponseAllowed
 
 	checks := []AtlasMissionDashboardFreshnessCheck{
-		buildMissionDashboardFreshnessCheck("pr_merged", prMergedAndCleaned, postMergeLifecyclePath, lifecycleDigest),
-		buildMissionDashboardFreshnessCheck("ci_passed", lifecycle.CIStatus == "passed", postMergeLifecyclePath, lifecycleDigest),
-		buildMissionDashboardFreshnessCheck("main_synced_to_merge_commit", mainSynced, postMergeLifecyclePath, lifecycleDigest),
-		buildMissionDashboardFreshnessCheck("branches_deleted", lifecycle.LocalBranchDeleted && lifecycle.RemoteBranchDeleted, postMergeLifecyclePath, lifecycleDigest),
-		buildMissionDashboardFreshnessCheck("codex_branches_clean", branchesClean, postMergeLifecyclePath, lifecycleDigest),
-		buildMissionDashboardFreshnessCheck("dashboard_sources_match_completed_readback", dashboardFresh, provenanceLinksPath, provenanceDigest),
+		buildMissionDashboardFreshnessCheckFromArtifact("pr_merged", prMergedAndCleaned, lifecycleArtifact),
+		buildMissionDashboardFreshnessCheckFromArtifact("ci_passed", lifecycle.CIStatus == "passed", lifecycleArtifact),
+		buildMissionDashboardFreshnessCheckFromArtifact("main_synced_to_merge_commit", mainSynced, lifecycleArtifact),
+		buildMissionDashboardFreshnessCheckFromArtifact("branches_deleted", lifecycle.LocalBranchDeleted && lifecycle.RemoteBranchDeleted, lifecycleArtifact),
+		buildMissionDashboardFreshnessCheckFromArtifact("codex_branches_clean", branchesClean, lifecycleArtifact),
+		buildMissionDashboardFreshnessCheckFromArtifact("dashboard_sources_match_completed_readback", dashboardFresh, provenanceArtifact),
 	}
 
 	fixture := AtlasMissionDashboardFreshnessChecks{
 		Schema:                       AtlasMissionDashboardFreshnessChecksContract,
 		NodeID:                       nodeID,
 		Status:                       "dashboard_freshness_verified",
-		SourceProvenanceLinksPath:    publicArtifactRef(provenanceLinksPath),
-		SourceProvenanceLinksDigest:  provenanceDigest,
-		SourceReadbackPath:           publicArtifactRef(sourceReadbackPath),
-		SourceReadbackDigest:         readbackDigest,
-		PostMergeLifecyclePath:       publicArtifactRef(postMergeLifecyclePath),
-		PostMergeLifecycleDigest:     lifecycleDigest,
+		SourceProvenanceLinksPath:    provenanceArtifact.PublicPath,
+		SourceProvenanceLinksDigest:  provenanceArtifact.Digest,
+		SourceReadbackPath:           readbackArtifact.PublicPath,
+		SourceReadbackDigest:         readbackArtifact.Digest,
+		PostMergeLifecyclePath:       lifecycleArtifact.PublicPath,
+		PostMergeLifecycleDigest:     lifecycleArtifact.Digest,
 		SourceCompletedNodes:         readback.CompletedNodes,
 		SourceReadyNodes:             readback.ReadyNodes,
 		SourceFirstExecutableNode:    readback.FirstExecutableNode,
@@ -192,19 +192,6 @@ func ValidateAtlasMissionDashboardFreshnessChecks(fixture AtlasMissionDashboardF
 	}
 	validateNoAuthorityEffects(&errs, fixture.SchedulesWork, fixture.ExecutesWork, fixture.ApprovesWork, fixture.ClaimsAuthorityAdvance, fixture.RSIRemainsDenied)
 	return joinErrors(errs)
-}
-
-func buildMissionDashboardFreshnessCheck(name string, passed bool, evidencePath, evidenceDigest string) AtlasMissionDashboardFreshnessCheck {
-	status := "failed"
-	if passed {
-		status = "passed"
-	}
-	return AtlasMissionDashboardFreshnessCheck{
-		Name:           name,
-		Status:         status,
-		EvidencePath:   publicArtifactRef(evidencePath),
-		EvidenceDigest: evidenceDigest,
-	}
 }
 
 func validateMissionDashboardFreshnessCheckRows(errs *[]string, checks []AtlasMissionDashboardFreshnessCheck) {

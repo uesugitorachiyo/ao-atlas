@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.refactoring.candidate-record.v0.1",
+  "node_id": "refactoring-next-wave-31",
+  "rank": 31,
+  "task": "Refactor mission dashboard rows to share provenance digest and freshness evaluation helpers.",
+  "candidate_status": "implemented_locally",
+  "files_changed": [
+    "internal/atlas/mission_dashboard_shared.go",
+    "internal/atlas/mission_dashboard_shared_test.go",
+    "internal/atlas/mission_dashboard_provenance_links.go",
+    "internal/atlas/mission_dashboard_freshness.go"
+  ],
+  "shared_helpers_added": [
+    "buildMissionDashboardEvidenceArtifact",
+    "buildMissionDashboardFreshnessCheckFromArtifact",
+    "buildMissionDashboardProvenanceLinkFromArtifact",
+    "missionDashboardEvidencePublicPath"
+  ],
+  "behavior_preserved": [
+    "mission dashboard provenance fixture digest remains stable",
+    "mission dashboard freshness fixture digest remains stable",
+    "relative public evidence paths remain repo-relative under go test"
+  ],
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

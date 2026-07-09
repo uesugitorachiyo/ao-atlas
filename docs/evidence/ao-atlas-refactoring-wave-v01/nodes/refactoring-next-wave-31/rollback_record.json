@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.refactoring.rollback-record.v0.1",
+  "node_id": "refactoring-next-wave-31",
+  "rollback_status": "bounded_revert_available",
+  "rollback_scope": [
+    "remove internal/atlas/mission_dashboard_shared.go",
+    "remove internal/atlas/mission_dashboard_shared_test.go",
+    "restore local digest and freshness helper code in mission_dashboard_provenance_links.go and mission_dashboard_freshness.go"
+  ],
+  "data_migration_required": false,
+  "external_state_changed": false,
+  "release_or_deploy_performed": false,
+  "rsi_remains_denied": true
+}
