@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-31",
+  "task_id": "mission-recommendation-feature-depth-next-wave-31-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-31",
+  "source_task_digest": "sha256:9ae56839d34831b292f8c922fbcf53c6d64e6e2e2d0775cfe761597157712723",
+  "selected_work": [
+    "Create v02 resume readback from node 30 closure state.",
+    "Generate Foundry import/handoff replay fixture for resumed bounded implementation node 31.",
+    "Preserve one-active-node and no-execution boundaries."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

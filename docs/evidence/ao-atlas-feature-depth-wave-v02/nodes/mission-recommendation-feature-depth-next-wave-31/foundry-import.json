@@ -1,0 +1,115 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-ao-atlas-next-feature-depth-wave-v02-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-ao-atlas-next-feature-depth-wave-v02",
+  "target_instance": "ao-atlas-feature-depth-wave-v02",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-30/workgraph-after.json",
+      "digest": "sha256:6e2add772d0543ba8216796d84ccdcdc188cf41a66500d4931a0a785fe379ad8"
+    },
+    {
+      "ref": "docs/evidence/ao-atlas-feature-depth-wave-v02/stack-instance.json",
+      "digest": "sha256:62fc44bcc46cf5f4e530db8f0e468a5a22ce3ccae9a44f570dea63b094db2a9d"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-31",
+      "task_id": "mission-recommendation-feature-depth-next-wave-31-task",
+      "path": "tasks/mission-recommendation-feature-depth-next-wave-31-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:af81312296998aec2991d859fbecaa7806b4ee4045914ad85e284cf5591a3d7f",
+        "source_recommendation:feature-depth-next-wave-31",
+        "source_task_digest:sha256:9ae56839d34831b292f8c922fbcf53c6d64e6e2e2d0775cfe761597157712723"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-feature-depth-next-wave-31-task",
+        "objective": "Create Foundry handoff replay fixtures for resumed bounded implementation nodes.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/feature-depth-next-wave-31",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:af81312296998aec2991d859fbecaa7806b4ee4045914ad85e284cf5591a3d7f",
+          "source_recommendation:feature-depth-next-wave-31",
+          "source_task_digest:sha256:9ae56839d34831b292f8c922fbcf53c6d64e6e2e2d0775cfe761597157712723"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-feature-depth-next-wave-30"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:0d367f52a127d16304e9541720a14a9c5357875ee41e9ae13f8baa4bb92b98cb"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
