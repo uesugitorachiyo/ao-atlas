@@ -1,0 +1,43 @@
+{
+  "schema": "ao.atlas.stale-remote-branch-repair-input.v0.1",
+  "status": "recorded",
+  "source_branch_deletion_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-13/post-merge-branch-deletion-readback.json",
+  "source_branch_deletion_readback_digest": "sha256:96b218bc7cd2aaa9f19c23ea10bd345787af62d15121f6d1d822f2fe054a4ff0",
+  "cases": [
+    {
+      "id": "clean-node-13",
+      "node_id": "mission-recommendation-feature-depth-next-wave-13",
+      "pr_number": 468,
+      "merge_commit": "f83b17e9c1a5fac40eefb8e2eeefb9dc0c4f6be2",
+      "head_branch": "codex/feature-depth-v02-node-13-branch-deletion-readback",
+      "handoff_status": "completed_clean",
+      "remote_branch_deleted": true,
+      "remote_codex_branches_remaining": 0
+    },
+    {
+      "id": "interrupted-node-12",
+      "node_id": "mission-recommendation-feature-depth-next-wave-12",
+      "pr_number": 467,
+      "merge_commit": "8deba402a73767cf47a4fcf17219b79480a5f9f4",
+      "head_branch": "codex/feature-depth-v02-node-12-merge-check-binding",
+      "handoff_status": "interrupted_after_merge",
+      "remote_branch_deleted": false,
+      "remote_codex_branches_remaining": 1
+    },
+    {
+      "id": "remote-delete-failed-node-11",
+      "node_id": "mission-recommendation-feature-depth-next-wave-11",
+      "pr_number": 466,
+      "merge_commit": "03ed92ce1a7e3d634c3d445c1cea20c1e9a61da7",
+      "head_branch": "codex/feature-depth-v02-node-11-failed-check-replay",
+      "handoff_status": "remote_delete_failed",
+      "remote_branch_deleted": false,
+      "remote_codex_branches_remaining": 1
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

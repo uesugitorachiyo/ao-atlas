@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-14",
+  "task_id": "mission-recommendation-feature-depth-next-wave-14-task",
+  "status": "selected",
+  "candidate": "feature-depth-next-wave-14",
+  "reason": "The node records an intent-only stale remote branch repair matrix for interrupted cleanup handoffs.",
+  "selected_from": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-13/recommendation-readback-after.json",
+  "rsi_remains_denied": true
+}
