@@ -25,6 +25,7 @@ func TestRefactoringWaveHandoffDocumentsRankedTasksAndVerificationGates(t *testi
 		"## Next Recommendations",
 		"scripts/recommendation-targeted-regressions.sh validator-boundaries",
 		"scripts/production-readiness.sh",
+		"| 40 | #453 | `a2dfb28e6ea98a275bbc0e573876a51c8c1270bb` |",
 		"RSI remains denied",
 	} {
 		if !strings.Contains(handoff, required) {
@@ -40,6 +41,10 @@ func TestRefactoringWaveHandoffDocumentsRankedTasksAndVerificationGates(t *testi
 	if summary["total_nodes"].(float64) != 40 ||
 		summary["completed_nodes_before_node_40_pr"].(float64) != 39 ||
 		summary["ready_nodes_before_node_40_pr"].(float64) != 1 ||
+		summary["completed_nodes_after_node_40_merge"].(float64) != 40 ||
+		summary["ready_nodes_after_node_40_merge"].(float64) != 0 ||
+		summary["node_40_pr"].(float64) != 453 ||
+		summary["node_40_merge_head"].(string) != "a2dfb28e6ea98a275bbc0e573876a51c8c1270bb" ||
 		summary["promoter_status"].(string) != "no_promotion_requested" ||
 		summary["command_readback_status"].(string) != "readback_agrees_no_promotion" ||
 		summary["promotion_requested"].(bool) ||

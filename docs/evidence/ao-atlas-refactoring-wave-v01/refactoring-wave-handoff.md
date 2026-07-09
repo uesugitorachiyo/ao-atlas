@@ -1,6 +1,6 @@
 # AO Atlas Refactoring Wave v01 Handoff
 
-Status: node 40 documentation in progress.
+Status: completed.
 
 This wave refactors AO Atlas recommendation control-plane code and tests without requesting promotion, widening policy, or changing RSI status. RSI remains denied.
 
@@ -32,7 +32,7 @@ This wave refactors AO Atlas recommendation control-plane code and tests without
 | 37 | #450 | `4a9692a70523ddd402a83d2ce8f985983f263f11` |
 | 38 | #451 | `293eee3684c6a48ccef34afde3b72ff61b079291` |
 | 39 | #452 | `9bca7fb5550ab87508f37a78f830a21bbff4bd01` |
-| 40 | pending | pending PR/CI/merge |
+| 40 | #453 | `a2dfb28e6ea98a275bbc0e573876a51c8c1270bb` |
 
 ## Ranked Tasks
 
@@ -91,4 +91,3 @@ This wave refactors AO Atlas recommendation control-plane code and tests without
 10. Add a next-wave exporter for architecture-boundary cleanup tasks.
 11. Add a no-promotion/no-RSI assertion rollup covering all refactoring nodes.
 12. Add a final Command readback binding for refactoring wave closure.
-

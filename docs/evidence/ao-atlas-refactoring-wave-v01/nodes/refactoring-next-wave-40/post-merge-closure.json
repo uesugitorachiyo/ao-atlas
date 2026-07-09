@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.refactoring.post-merge-closure.v0.1",
+  "node_id": "refactoring-next-wave-40",
+  "status": "post_merge_closure_recorded",
+  "completed_nodes": 40,
+  "ready_nodes": 0,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "pr": 453,
+  "merge_head": "a2dfb28e6ea98a275bbc0e573876a51c8c1270bb",
+  "handoff_summary": "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-wave-handoff-summary.json",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
