@@ -513,29 +513,33 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 		}
 		return "typed:mission-dashboard-compact-filters", ValidateAtlasMissionDashboardCompactFilters(value)
 	case AtlasRecommendationNextTrackDecisionContract:
+		validator, _ := recommendationControlPlaneTypedValidator(AtlasRecommendationNextTrackDecisionContract)
 		value, err := LoadJSON[AtlasRecommendationNextTrackDecision](path)
 		if err != nil {
-			return "typed:recommendation-next-track-decision", err
+			return validator, err
 		}
-		return "typed:recommendation-next-track-decision", ValidateAtlasRecommendationNextTrackDecision(value)
+		return validator, ValidateAtlasRecommendationNextTrackDecision(value)
 	case AtlasConsumedRecommendationLedgerContract:
+		validator, _ := recommendationControlPlaneTypedValidator(AtlasConsumedRecommendationLedgerContract)
 		value, err := LoadJSON[AtlasConsumedRecommendationLedger](path)
 		if err != nil {
-			return "typed:consumed-recommendation-ledger", err
+			return validator, err
 		}
-		return "typed:consumed-recommendation-ledger", ValidateAtlasConsumedRecommendationLedger(value)
+		return validator, ValidateAtlasConsumedRecommendationLedger(value)
 	case AtlasRecommendationTrackRegistryContract:
+		validator, _ := recommendationControlPlaneTypedValidator(AtlasRecommendationTrackRegistryContract)
 		value, err := LoadJSON[AtlasRecommendationTrackRegistry](path)
 		if err != nil {
-			return "typed:recommendation-track-registry", err
+			return validator, err
 		}
-		return "typed:recommendation-track-registry", ValidateAtlasRecommendationTrackRegistry(value)
+		return validator, ValidateAtlasRecommendationTrackRegistry(value)
 	case AtlasRecommendationCommandRunLedgerContract:
+		validator, _ := recommendationControlPlaneTypedValidator(AtlasRecommendationCommandRunLedgerContract)
 		value, err := LoadJSON[AtlasRecommendationCommandRunLedger](path)
 		if err != nil {
-			return "typed:recommendation-command-run-ledger", err
+			return validator, err
 		}
-		return "typed:recommendation-command-run-ledger", ValidateAtlasRecommendationCommandRunLedger(value)
+		return validator, ValidateAtlasRecommendationCommandRunLedger(value)
 	case AtlasRecommendationCommandRunLedgerRollupContract:
 		value, err := LoadJSON[AtlasRecommendationCommandRunLedgerRollup](path)
 		if err != nil {
@@ -549,17 +553,19 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 		}
 		return "typed:recommendation-run-ledger-coverage-check", ValidateAtlasRecommendationRunLedgerCoverageCheck(value)
 	case AtlasRecommendationFinalResponseGatesContract:
+		validator, _ := recommendationControlPlaneTypedValidator(AtlasRecommendationFinalResponseGatesContract)
 		value, err := LoadJSON[AtlasRecommendationFinalResponseGates](path)
 		if err != nil {
-			return "typed:recommendation-final-response-gates", err
+			return validator, err
 		}
-		return "typed:recommendation-final-response-gates", ValidateAtlasRecommendationFinalResponseGates(value)
+		return validator, ValidateAtlasRecommendationFinalResponseGates(value)
 	case AtlasRecommendationEvidenceValidationReportContract:
+		validator, _ := recommendationControlPlaneTypedValidator(AtlasRecommendationEvidenceValidationReportContract)
 		value, err := LoadJSON[AtlasRecommendationEvidenceValidationReport](path)
 		if err != nil {
-			return "typed:recommendation-evidence-validation-report", err
+			return validator, err
 		}
-		return "typed:recommendation-evidence-validation-report", ValidateAtlasRecommendationEvidenceValidationReport(value)
+		return validator, ValidateAtlasRecommendationEvidenceValidationReport(value)
 	case AtlasRecommendationEvidenceSchemaRegistryContract:
 		value, err := LoadJSON[AtlasRecommendationEvidenceSchemaRegistry](path)
 		if err != nil {
@@ -567,17 +573,19 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 		}
 		return "typed:recommendation-evidence-schema-registry", ValidateAtlasRecommendationEvidenceSchemaRegistry(value)
 	case AtlasRecommendationEvidenceSchemaRegistryCoverageContract:
+		validator, _ := recommendationControlPlaneTypedValidator(AtlasRecommendationEvidenceSchemaRegistryCoverageContract)
 		value, err := LoadJSON[AtlasRecommendationEvidenceSchemaRegistryCoverage](path)
 		if err != nil {
-			return "typed:recommendation-evidence-schema-registry-coverage", err
+			return validator, err
 		}
-		return "typed:recommendation-evidence-schema-registry-coverage", ValidateAtlasRecommendationEvidenceSchemaRegistryCoverage(value)
+		return validator, ValidateAtlasRecommendationEvidenceSchemaRegistryCoverage(value)
 	case AtlasSchemaHealthRepairPromptContract:
+		validator, _ := recommendationControlPlaneTypedValidator(AtlasSchemaHealthRepairPromptContract)
 		value, err := LoadJSON[AtlasSchemaHealthRepairPrompt](path)
 		if err != nil {
-			return "typed:schema-health-repair-prompt", err
+			return validator, err
 		}
-		return "typed:schema-health-repair-prompt", ValidateAtlasSchemaHealthRepairPrompt(value)
+		return validator, ValidateAtlasSchemaHealthRepairPrompt(value)
 	case "ao.atlas.recommendation-checkpoint-readback.v0.1":
 		value, err := LoadJSON[AtlasRecommendationCheckpointReadback](path)
 		if err != nil {
