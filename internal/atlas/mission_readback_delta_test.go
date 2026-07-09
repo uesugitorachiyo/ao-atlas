@@ -98,3 +98,44 @@ func TestMissionRecommendationsReadbackDeltaCLIWritesDeterministicArtifact(t *te
 		t.Fatalf("CLI delta output drifted from fixture\nwant %s\ngot  %s", digestValue(fixture), digestValue(generated))
 	}
 }
+
+func TestFeatureDepthWaveV02MissionReadbackDeltaEvidenceBindsCheckpointComparison(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v02")
+	nodeID := "mission-recommendation-feature-depth-next-wave-01"
+	nodeDir := filepath.Join(waveRoot, "nodes", nodeID)
+	beforePath := filepath.Join(waveRoot, "recommendation-readback.json")
+	afterPath := filepath.Join(nodeDir, "recommendation-readback-after.json")
+	fixturePath := filepath.Join(nodeDir, "mission-readback-delta.json")
+
+	delta, err := BuildAtlasMissionReadbackDelta(beforePath, afterPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasMissionReadbackDelta(delta); err != nil {
+		t.Fatal(err)
+	}
+	fixture := mustLoadJSON[AtlasMissionReadbackDelta](t, fixturePath)
+	if err := ValidateAtlasMissionReadbackDelta(fixture); err != nil {
+		t.Fatal(err)
+	}
+	if digestValue(delta) != digestValue(fixture) {
+		t.Fatalf("v02 mission readback delta fixture drifted\nwant %s\ngot  %s", digestValue(delta), digestValue(fixture))
+	}
+	if delta.SourceReadbackPath != "docs/evidence/ao-atlas-feature-depth-wave-v02/recommendation-readback.json" ||
+		delta.TargetReadbackPath != "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-01/recommendation-readback-after.json" ||
+		delta.NumericDeltas["completed_nodes"] != 1 ||
+		delta.NumericDeltas["ready_nodes"] != -1 ||
+		delta.NumericDeltas["checkpoint_count"] != 1 ||
+		delta.StringTransitions["first_executable_node"].Before != nodeID ||
+		delta.StringTransitions["first_executable_node"].After != "mission-recommendation-feature-depth-next-wave-02" ||
+		delta.BooleanTransitions["final_response_allowed"].Before ||
+		delta.BooleanTransitions["final_response_allowed"].After ||
+		delta.SchedulesWork ||
+		delta.ExecutesWork ||
+		delta.ApprovesWork ||
+		delta.ClaimsAuthorityAdvance ||
+		!delta.RSIRemainsDenied {
+		t.Fatalf("v02 mission readback delta must preserve checkpoint and safety transitions: %#v", delta)
+	}
+}
