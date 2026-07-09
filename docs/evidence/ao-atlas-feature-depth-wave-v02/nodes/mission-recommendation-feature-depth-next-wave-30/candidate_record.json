@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-30",
+  "task_id": "mission-recommendation-feature-depth-next-wave-30-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-30",
+  "source_task_digest": "sha256:1072007c9e3d99c51fb922650f72d5ad50a89ec3ac7d56e21181cadd127287e2",
+  "selected_work": [
+    "Repair node 29 run-link digest to canonical sorted-map encoding.",
+    "Generate v02 run-link digest check evidence for the completed node 29 packet.",
+    "Preserve no-promotion and RSI-denied invariants without executing or approving work."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
