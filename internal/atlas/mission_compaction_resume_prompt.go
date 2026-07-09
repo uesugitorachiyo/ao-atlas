@@ -76,7 +76,7 @@ func BuildAtlasCompactionResumePrompt(readback AtlasRecommendationReadback, fixt
 		evidenceRoot = readback.EvidenceRoot
 	}
 	var b strings.Builder
-	b.WriteString("You are AO Atlas, resuming the AO Atlas feature-depth wave after context compaction.\n\n")
+	b.WriteString(fmt.Sprintf("You are AO Atlas, resuming the AO Atlas %s after context compaction.\n\n", atlasCompactionResumeWaveLabel(readback.TargetInstance)))
 	b.WriteString("Load and preserve this state exactly:\n")
 	b.WriteString(fmt.Sprintf("- Evidence root: `%s`\n", filepath.ToSlash(evidenceRoot)))
 	b.WriteString(fmt.Sprintf("- Lease start: `%s`\n", fixture.LeaseStartPath))
@@ -120,6 +120,20 @@ func BuildAtlasCompactionResumePrompt(readback AtlasRecommendationReadback, fixt
 	b.WriteString("- No broad RSI claim.\n")
 	b.WriteString("- RSI remains denied.\n")
 	return b.String()
+}
+
+func atlasCompactionResumeWaveLabel(targetInstance string) string {
+	target := strings.ToLower(strings.TrimSpace(targetInstance))
+	switch {
+	case strings.Contains(target, "refactoring"):
+		return "refactoring wave"
+	case strings.Contains(target, "feature-depth"):
+		return "feature-depth wave"
+	case strings.Contains(target, "final-closure"):
+		return "final-closure consolidation wave"
+	default:
+		return "recommendation wave"
+	}
 }
 
 func ValidateAtlasCompactionResumePrompt(fixture AtlasCompactionResumePrompt) error {

@@ -71,6 +71,48 @@ func TestFeatureDepthWaveCompactionResumeRegressionUsesTypedValidator(t *testing
 	}
 }
 
+func TestRefactoringWaveCompactionResumeRegressionPreservesNextActionAndFinalGateDenial(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-refactoring-wave-v01")
+	nodeDir := filepath.Join(waveRoot, "nodes", "refactoring-next-wave-27")
+	sourcePromptFixture := filepath.Join(nodeDir, "compaction-resume-prompt.json")
+	sourcePromptMarkdown := filepath.Join(nodeDir, "compaction-resume-prompt.md")
+	sourceReadback := filepath.Join(waveRoot, "nodes", "refactoring-next-wave-26", "recommendation-readback-after.json")
+	recordedPath := filepath.Join(nodeDir, "compaction-resume-regression.json")
+	outPath := filepath.Join(t.TempDir(), "compaction-resume-regression.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "compaction-resume-regression",
+		"--source-prompt-fixture", sourcePromptFixture,
+		"--source-prompt-markdown", sourcePromptMarkdown,
+		"--source-readback", sourceReadback,
+		"--node-id", "refactoring-next-wave-27",
+		"--expected-next-node-after-completion", "refactoring-next-wave-28",
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("compaction-resume-regression command failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "status=guarded") ||
+		!strings.Contains(out.String(), "first_executable_node_before=refactoring-next-wave-27") ||
+		!strings.Contains(out.String(), "exact_next_action_preserved=true") {
+		t.Fatalf("compaction-resume-regression output missing refactoring regression state: %s", out.String())
+	}
+	recorded := mustLoadJSON[map[string]any](t, recordedPath)
+	generated := mustLoadJSON[map[string]any](t, outPath)
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("refactoring compaction resume regression fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	fixture := mustLoadJSON[AtlasCompactionResumePrompt](t, sourcePromptFixture)
+	if fixture.FirstExecutableNode != "refactoring-next-wave-27" ||
+		fixture.ExactNextAction != "Add prompt compaction resume fixtures that preserve next node, exact action, and final gate denial." ||
+		fixture.ReturnGateStatus != "final_response_denied_ready_work_remains" ||
+		fixture.FinalResponseAllowed {
+		t.Fatalf("source compaction resume prompt lost continuation denial state: %#v", fixture)
+	}
+}
+
 func TestFeatureDepthWaveCompactionResumeRegressionDigestNormalizesPromptLineEndings(t *testing.T) {
 	lf := []byte("Next executable node: `mission-recommendation-feature-depth-next-wave-18`\nRSI remains denied.\n")
 	crlf := []byte("Next executable node: `mission-recommendation-feature-depth-next-wave-18`\r\nRSI remains denied.\r\n")

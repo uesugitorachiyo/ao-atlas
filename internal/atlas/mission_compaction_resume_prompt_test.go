@@ -85,6 +85,65 @@ func TestFeatureDepthWaveCompactionResumePromptUsesTypedValidator(t *testing.T) 
 	}
 }
 
+func TestRefactoringWaveCompactionResumePromptPreservesNextActionAndFinalGateDenial(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-refactoring-wave-v01")
+	nodeDir := filepath.Join(waveRoot, "nodes", "refactoring-next-wave-27")
+	sourceReadback := filepath.Join(waveRoot, "nodes", "refactoring-next-wave-26", "recommendation-readback-after.json")
+	sourceWorkgraph := filepath.Join(waveRoot, "nodes", "refactoring-next-wave-26", "workgraph-after.json")
+	recordedPath := filepath.Join(nodeDir, "compaction-resume-prompt.json")
+	recordedPromptPath := filepath.Join(nodeDir, "compaction-resume-prompt.md")
+	outDir := t.TempDir()
+	outFixture := filepath.Join(outDir, "compaction-resume-prompt.json")
+	outPrompt := filepath.Join(outDir, "compaction-resume-prompt.md")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "compaction-resume-prompt",
+		"--source-readback", sourceReadback,
+		"--workgraph", sourceWorkgraph,
+		"--lease-start", filepath.Join(waveRoot, "lease-start.json"),
+		"--evidence-root", filepath.ToSlash(filepath.Join("docs", "evidence", "ao-atlas-refactoring-wave-v01")),
+		"--node-id", "refactoring-next-wave-27",
+		"--expected-next-node-after-completion", "refactoring-next-wave-28",
+		"--prompt-out", outPrompt,
+		"--fixture-out", outFixture,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("compaction-resume-prompt command failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "status=generated") ||
+		!strings.Contains(out.String(), "first_executable_node=refactoring-next-wave-27") {
+		t.Fatalf("compaction-resume-prompt output missing refactoring resume state: %s", out.String())
+	}
+	recorded := mustLoadJSON[map[string]any](t, recordedPath)
+	generated := mustLoadJSON[map[string]any](t, outFixture)
+	generated["prompt_path"] = recorded["prompt_path"]
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("refactoring compaction resume prompt fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	promptBytes, err := os.ReadFile(recordedPromptPath)
+	if err != nil {
+		t.Fatalf("read recorded prompt: %v", err)
+	}
+	prompt := string(promptBytes)
+	for _, want := range []string{
+		"You are AO Atlas, resuming the AO Atlas refactoring wave after context compaction.",
+		"Completed nodes: 26 / 40",
+		"Ready nodes: 14",
+		"Next executable node: `refactoring-next-wave-27`",
+		"Exact next action: Add prompt compaction resume fixtures that preserve next node, exact action, and final gate denial.",
+		"Return gate: `final_response_denied_ready_work_remains`",
+		"Final response allowed: `false`",
+		"Do not produce a final response while ready nodes or exact next action remain.",
+		"RSI remains denied.",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("refactoring compaction resume prompt missing %q:\n%s", want, prompt)
+		}
+	}
+}
+
 func TestFeatureDepthWaveCompactionResumePromptBindsCheckpointDigest(t *testing.T) {
 	root := repoRoot(t)
 	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
