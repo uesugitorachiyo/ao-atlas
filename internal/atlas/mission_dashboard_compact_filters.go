@@ -115,7 +115,6 @@ func ValidateAtlasMissionDashboardCompactFilters(fixture AtlasMissionDashboardCo
 	for field, value := range map[string]string{
 		"source_readback_path":  fixture.SourceReadbackPath,
 		"source_workgraph_path": fixture.SourceWorkgraphPath,
-		"first_executable_node": fixture.FirstExecutableNode,
 		"exact_next_action":     fixture.ExactNextAction,
 		"return_gate_status":    fixture.ReturnGateStatus,
 		"schema_health_status":  fixture.SchemaHealthStatus,
@@ -134,20 +133,25 @@ func ValidateAtlasMissionDashboardCompactFilters(fixture AtlasMissionDashboardCo
 			errs = append(errs, field+" must be sha256 digest")
 		}
 	}
-	if fixture.TotalNodes != 40 || fixture.CompletedNodes != 35 || fixture.ReadyNodes != 5 || fixture.BlockedNodes != 0 || fixture.FailedNodes != 0 {
-		errs = append(errs, "source node counts must be total_nodes=40 completed_nodes=35 ready_nodes=5 blocked_nodes=0 failed_nodes=0")
+	if fixture.TotalNodes <= 0 {
+		errs = append(errs, "total_nodes must be greater than zero")
 	}
-	if fixture.ExecutableReadyNodes != 1 {
-		errs = append(errs, "executable_ready_nodes must be 1")
+	if fixture.CompletedNodes < 0 || fixture.ReadyNodes < 0 || fixture.BlockedNodes < 0 || fixture.FailedNodes < 0 || fixture.ExecutableReadyNodes < 0 {
+		errs = append(errs, "source node counts must not be negative")
 	}
-	if fixture.FirstExecutableNode != "mission-recommendation-feature-depth-next-wave-36" {
-		errs = append(errs, "first_executable_node must be mission-recommendation-feature-depth-next-wave-36")
+	if fixture.TotalNodes != fixture.CompletedNodes+fixture.ReadyNodes+fixture.BlockedNodes+fixture.FailedNodes {
+		errs = append(errs, "total_nodes must equal completed, ready, blocked, and failed node counts")
 	}
-	if fixture.ActiveFilterKey != "ready" {
-		errs = append(errs, "active_filter_key must be ready while ready work remains")
+	if fixture.ExecutableReadyNodes > fixture.ReadyNodes {
+		errs = append(errs, "executable_ready_nodes must not exceed ready_nodes")
 	}
-	if fixture.ReturnGateStatus != "blocked_ready_nodes_remain" {
-		errs = append(errs, "return_gate_status must be blocked_ready_nodes_remain")
+	if fixture.ExecutableReadyNodes > 0 {
+		requireField(&errs, "first_executable_node", fixture.FirstExecutableNode)
+	}
+	checkPublicPath(&errs, "first_executable_node", fixture.FirstExecutableNode, true)
+	expectedActiveFilter := missionDashboardActiveFilterKeyFromCounts(fixture.ReadyNodes, fixture.BlockedNodes, fixture.FailedNodes)
+	if fixture.ActiveFilterKey != expectedActiveFilter {
+		errs = append(errs, "active_filter_key must match source node counts")
 	}
 	hasSchemaHealthStatus := strings.TrimSpace(fixture.SchemaHealthStatus) != ""
 	expectedFilterCount := 8
@@ -155,9 +159,10 @@ func ValidateAtlasMissionDashboardCompactFilters(fixture AtlasMissionDashboardCo
 		errs = append(errs, fmt.Sprintf("filter_count must be %d", expectedFilterCount))
 	}
 	validateMissionDashboardSchemaHealthFilterBinding(&errs, fixture, hasSchemaHealthStatus)
-	validateMissionDashboardCompactFilterRows(&errs, fixture.Filters, fixture.SchemaHealthStatus)
-	if !fixture.ReadyFilterActionable {
-		errs = append(errs, "ready_filter_actionable must be true")
+	validateMissionDashboardCompactFilterRows(&errs, fixture)
+	readyFilter := missionDashboardCompactFilterByKey(fixture.Filters, "ready")
+	if fixture.ReadyFilterActionable != (readyFilter.Actionable && readyFilter.Count == fixture.ReadyNodes) {
+		errs = append(errs, "ready_filter_actionable must match ready filter row")
 	}
 	if !fixture.BlockedFilterEmpty {
 		errs = append(errs, "blocked_filter_empty must be true")
@@ -171,8 +176,8 @@ func ValidateAtlasMissionDashboardCompactFilters(fixture AtlasMissionDashboardCo
 	if !fixture.ReadbackCountsMatchWorkgraphCounts {
 		errs = append(errs, "readback_counts_match_workgraph_counts must be true")
 	}
-	if fixture.FinalResponseAllowed {
-		errs = append(errs, "final_response_allowed must be false while ready work remains")
+	if fixture.FinalResponseAllowed && (fixture.ReadyNodes > 0 || fixture.BlockedNodes > 0 || fixture.FailedNodes > 0) {
+		errs = append(errs, "final_response_allowed requires no ready, blocked, or failed nodes")
 	}
 	validateNoAuthorityEffects(&errs, fixture.SchedulesWork, fixture.ExecutesWork, fixture.ApprovesWork, fixture.ClaimsAuthorityAdvance, fixture.RSIRemainsDenied)
 	return joinErrors(errs)
@@ -341,77 +346,65 @@ func validateMissionDashboardSchemaHealthFilterBinding(errs *[]string, fixture A
 	}
 }
 
-func validateMissionDashboardCompactFilterRows(errs *[]string, filters []AtlasMissionDashboardCompactFilter, schemaHealthStatus string) {
+func validateMissionDashboardCompactFilterRows(errs *[]string, fixture AtlasMissionDashboardCompactFilters) {
 	expected := []struct {
-		key              string
-		label            string
-		count            int
-		actionable       bool
-		empty            bool
-		dashboardStatus  string
-		previewLimit     int
-		firstNodeID      string
-		lastNodeID       string
-		omittedNodeCount int
+		key             string
+		label           string
+		count           int
+		actionable      bool
+		empty           bool
+		dashboardStatus string
+		previewLimit    int
 	}{
-		{"ready", "Ready", 5, true, false, "ready_work_remains", 5, "mission-recommendation-feature-depth-next-wave-36", "mission-recommendation-feature-depth-next-wave-40", 0},
-		{"blocked", "Blocked", 0, false, true, "no_blocked_nodes", 5, "", "", 0},
-		{"failed", "Failed", 0, false, true, "no_failed_nodes", 5, "", "", 0},
-		{"completed", "Completed", 35, false, false, "completed_history", 3, "mission-recommendation-feature-depth-next-wave-01", "mission-recommendation-feature-depth-next-wave-35", 32},
-		{"recommendation_track", "Track", 1, false, false, "track_feature_depth", 0, "", "", 0},
+		{"ready", "Ready", fixture.ReadyNodes, fixture.ReadyNodes > 0, fixture.ReadyNodes == 0, missionDashboardStatusFilterStatus("ready", fixture.ReadyNodes), 5},
+		{"blocked", "Blocked", fixture.BlockedNodes, false, fixture.BlockedNodes == 0, missionDashboardStatusFilterStatus("blocked", fixture.BlockedNodes), 5},
+		{"failed", "Failed", fixture.FailedNodes, false, fixture.FailedNodes == 0, missionDashboardStatusFilterStatus("failed", fixture.FailedNodes), 5},
+		{"completed", "Completed", fixture.CompletedNodes, false, fixture.CompletedNodes == 0, "completed_history", 3},
+		{"recommendation_track", "Track", 1, false, false, "", 0},
 	}
 	schemaHealthExpectedStatus := "schema_health_not_reported"
 	schemaHealthExpectedCount := 0
 	schemaHealthExpectedEmpty := true
-	if schemaHealthStatus != "" {
-		schemaHealthExpectedStatus = schemaHealthStatus
+	if fixture.SchemaHealthStatus != "" {
+		schemaHealthExpectedStatus = fixture.SchemaHealthStatus
 		schemaHealthExpectedCount = 1
 		schemaHealthExpectedEmpty = false
 	}
 	expected = append(expected,
 		struct {
-			key              string
-			label            string
-			count            int
-			actionable       bool
-			empty            bool
-			dashboardStatus  string
-			previewLimit     int
-			firstNodeID      string
-			lastNodeID       string
-			omittedNodeCount int
-		}{"schema_health", "Schema Health", schemaHealthExpectedCount, missionDashboardSchemaHealthFilterActionable(schemaHealthStatus), schemaHealthExpectedEmpty, schemaHealthExpectedStatus, 0, "", "", 0},
+			key             string
+			label           string
+			count           int
+			actionable      bool
+			empty           bool
+			dashboardStatus string
+			previewLimit    int
+		}{"schema_health", "Schema Health", schemaHealthExpectedCount, missionDashboardSchemaHealthFilterActionable(fixture.SchemaHealthStatus), schemaHealthExpectedEmpty, schemaHealthExpectedStatus, 0},
 		struct {
-			key              string
-			label            string
-			count            int
-			actionable       bool
-			empty            bool
-			dashboardStatus  string
-			previewLimit     int
-			firstNodeID      string
-			lastNodeID       string
-			omittedNodeCount int
-		}{"ci_state", "CI State", 1, true, false, "ci_state_pending_remote_lifecycle", 0, "", "", 0},
+			key             string
+			label           string
+			count           int
+			actionable      bool
+			empty           bool
+			dashboardStatus string
+			previewLimit    int
+		}{"ci_state", "CI State", 1, false, false, "", 0},
 		struct {
-			key              string
-			label            string
-			count            int
-			actionable       bool
-			empty            bool
-			dashboardStatus  string
-			previewLimit     int
-			firstNodeID      string
-			lastNodeID       string
-			omittedNodeCount int
-		}{"cleanup_state", "Cleanup State", 1, true, false, "cleanup_state_pending_ready_work", 0, "", "", 0},
+			key             string
+			label           string
+			count           int
+			actionable      bool
+			empty           bool
+			dashboardStatus string
+			previewLimit    int
+		}{"cleanup_state", "Cleanup State", 1, false, false, missionDashboardCleanupStateStatusFromCounts(fixture), 0},
 	)
-	if len(filters) != len(expected) {
+	if len(fixture.Filters) != len(expected) {
 		*errs = append(*errs, "filters must contain ready, blocked, failed, completed, recommendation track, schema health, ci state, and cleanup state rows")
 		return
 	}
 	for i, want := range expected {
-		filter := filters[i]
+		filter := fixture.Filters[i]
 		prefix := fmt.Sprintf("filters[%d]", i)
 		requireField(errs, prefix+".key", filter.Key)
 		requireField(errs, prefix+".label", filter.Label)
@@ -426,12 +419,30 @@ func validateMissionDashboardCompactFilterRows(errs *[]string, filters []AtlasMi
 			*errs = append(*errs, prefix+".count must match source workgraph status count")
 		}
 		if filter.Actionable != want.actionable {
-			*errs = append(*errs, prefix+".actionable must match expected compact filter behavior")
+			if want.key == "ci_state" {
+				if filter.Actionable != (filter.DashboardStatus != "ci_state_passed") {
+					*errs = append(*errs, prefix+".actionable must match CI state")
+				}
+			} else if want.key == "cleanup_state" {
+				if filter.Actionable != (filter.DashboardStatus != "cleanup_state_complete") {
+					*errs = append(*errs, prefix+".actionable must match cleanup state")
+				}
+			} else {
+				*errs = append(*errs, prefix+".actionable must match expected compact filter behavior")
+			}
 		}
 		if filter.Empty != want.empty {
 			*errs = append(*errs, prefix+".empty must match count")
 		}
-		if filter.DashboardStatus != want.dashboardStatus {
+		if want.key == "recommendation_track" {
+			if !strings.HasPrefix(filter.DashboardStatus, "track_") {
+				*errs = append(*errs, prefix+".dashboard_status must describe recommendation track")
+			}
+		} else if want.key == "ci_state" {
+			if !oneOf(filter.DashboardStatus, "ci_state_failed", "ci_state_pending_remote_lifecycle", "ci_state_passed") {
+				*errs = append(*errs, prefix+".dashboard_status must describe CI state")
+			}
+		} else if filter.DashboardStatus != want.dashboardStatus {
 			*errs = append(*errs, prefix+".dashboard_status must be "+want.dashboardStatus)
 		}
 		if len(filter.PreviewNodeIDs) > want.previewLimit {
@@ -443,16 +454,64 @@ func validateMissionDashboardCompactFilterRows(errs *[]string, filters []AtlasMi
 			}
 			checkPublicPath(errs, fmt.Sprintf("%s.preview_node_ids[%d]", prefix, j), id, true)
 		}
-		if filter.OmittedNodeCount != want.omittedNodeCount {
-			*errs = append(*errs, prefix+".omitted_node_count must match compact preview")
+		expectedOmittedNodeCount := 0
+		if want.previewLimit > 0 {
+			expectedOmittedNodeCount = filter.Count - len(filter.PreviewNodeIDs)
+			if expectedOmittedNodeCount < 0 {
+				expectedOmittedNodeCount = 0
+			}
 		}
-		if filter.FirstNodeID != want.firstNodeID || filter.LastNodeID != want.lastNodeID {
-			*errs = append(*errs, prefix+" first and last node ids must match source workgraph order")
+		if filter.OmittedNodeCount != expectedOmittedNodeCount {
+			*errs = append(*errs, prefix+".omitted_node_count must match compact preview")
 		}
 		if filter.Count == 0 && (len(filter.PreviewNodeIDs) != 0 || filter.OmittedNodeCount != 0 || filter.FirstNodeID != "" || filter.LastNodeID != "") {
 			*errs = append(*errs, prefix+" empty filters must not carry node ids")
 		}
+		if filter.Count > 0 && want.previewLimit > 0 && (filter.FirstNodeID == "" || filter.LastNodeID == "") {
+			*errs = append(*errs, prefix+" populated status filters must carry first and last node ids")
+		}
 	}
+}
+
+func missionDashboardCompactFilterByKey(filters []AtlasMissionDashboardCompactFilter, key string) AtlasMissionDashboardCompactFilter {
+	for _, filter := range filters {
+		if filter.Key == key {
+			return filter
+		}
+	}
+	return AtlasMissionDashboardCompactFilter{}
+}
+
+func missionDashboardStatusFilterStatus(key string, count int) string {
+	switch key {
+	case "ready":
+		if count == 0 {
+			return "no_ready_nodes"
+		}
+		return "ready_work_remains"
+	case "blocked":
+		if count == 0 {
+			return "no_blocked_nodes"
+		}
+		return "blocked_nodes_present"
+	case "failed":
+		if count == 0 {
+			return "no_failed_nodes"
+		}
+		return "failed_nodes_present"
+	default:
+		return ""
+	}
+}
+
+func missionDashboardCleanupStateStatusFromCounts(fixture AtlasMissionDashboardCompactFilters) string {
+	if fixture.FinalResponseAllowed && fixture.ReadyNodes == 0 && fixture.BlockedNodes == 0 && fixture.FailedNodes == 0 {
+		return "cleanup_state_complete"
+	}
+	if fixture.BlockedNodes > 0 || fixture.FailedNodes > 0 {
+		return "cleanup_state_blocked"
+	}
+	return "cleanup_state_pending_ready_work"
 }
 
 func missionDashboardNodeIDsByStatus(workgraph Workgraph) map[string][]string {
@@ -492,13 +551,17 @@ func missionDashboardFirstLastNodeIDs(ids []string) (string, string) {
 }
 
 func missionDashboardActiveFilterKey(readback AtlasRecommendationReadback) string {
-	if readback.ReadyNodes > 0 {
+	return missionDashboardActiveFilterKeyFromCounts(readback.ReadyNodes, readback.BlockedNodes, readback.FailedNodes)
+}
+
+func missionDashboardActiveFilterKeyFromCounts(readyNodes, blockedNodes, failedNodes int) string {
+	if readyNodes > 0 {
 		return "ready"
 	}
-	if readback.BlockedNodes > 0 {
+	if blockedNodes > 0 {
 		return "blocked"
 	}
-	if readback.FailedNodes > 0 {
+	if failedNodes > 0 {
 		return "failed"
 	}
 	return "completed"

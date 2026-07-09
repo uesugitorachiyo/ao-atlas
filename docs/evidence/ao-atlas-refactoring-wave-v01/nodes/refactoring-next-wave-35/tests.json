@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.refactoring.tests.v0.1",
+  "node_id": "refactoring-next-wave-35",
+  "status": "targeted_regression_passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestMissionDashboardCompactFiltersRenderCompletedWaveWithNoReadyNodes -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./internal/atlas -run 'TestMissionDashboardCompactFilters(RenderCompletedWaveWithNoReadyNodes|SummarizeReadyBlockedFailedStates|IncludeTrackCIAndCleanupStateRows|CarrySchemaHealthStatusWhenReadbackHasIt|ClassifySchemaHealthFilterStates)' -count=1",
+      "status": "passed"
+    }
+  ],
+  "rsi_remains_denied": true
+}
