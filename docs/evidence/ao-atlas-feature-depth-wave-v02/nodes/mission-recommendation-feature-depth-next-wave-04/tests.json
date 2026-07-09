@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-04",
+  "task_id": "mission-recommendation-feature-depth-next-wave-04-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestFeatureDepthWaveV02OperatorSummaryCheckPreservesExactNextActionWording -count=1 failed before operator summary evidence existed",
+  "targeted_regression": "go test ./internal/atlas -run TestFeatureDepthWaveV02OperatorSummaryCheckPreservesExactNextActionWording -count=1",
+  "assertions": [
+    "operator summary preserves exact_next_action exactly once",
+    "summary names mission-recommendation-feature-depth-next-wave-04 as next executable",
+    "summary denies final response while ready work remains",
+    "RSI remains denied"
+  ]
+}
