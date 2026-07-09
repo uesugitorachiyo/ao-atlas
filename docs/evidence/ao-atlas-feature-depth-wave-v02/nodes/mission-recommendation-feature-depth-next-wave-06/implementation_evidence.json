@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-06",
+  "task_id": "mission-recommendation-feature-depth-next-wave-06-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_run_link_schema_coverage_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-06/run-link-schema-coverage.json"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-06/run-link-schema-coverage.json"
+  ],
+  "summary": "Node 06 binds the existing run-link schema coverage command to the v02 wave and records coverage for the first six completed run-link artifacts.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

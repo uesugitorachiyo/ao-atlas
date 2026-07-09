@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-06",
+  "task_id": "mission-recommendation-feature-depth-next-wave-06-task",
+  "status": "available",
+  "rollback_scope": "Remove the v02 run-link schema coverage fixture, node 06 evidence files, and the v02 regression test.",
+  "rollback_command": "git revert <node-06-merge-commit>",
+  "rsi_remains_denied": true
+}

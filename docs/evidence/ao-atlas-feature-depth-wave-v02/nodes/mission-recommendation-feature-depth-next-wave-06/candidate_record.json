@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-06",
+  "task_id": "mission-recommendation-feature-depth-next-wave-06-task",
+  "status": "selected",
+  "candidate": "feature-depth-next-wave-06",
+  "reason": "The node adds machine-readable schema coverage for every generated run-link artifact in the v02 recommendation wave.",
+  "selected_from": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-05/recommendation-readback-after.json",
+  "rsi_remains_denied": true
+}
