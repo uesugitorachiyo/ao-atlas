@@ -102,3 +102,49 @@ func TestMissionRecommendationRunLedgerCommandCatalogIsRegistryBacked(t *testing
 		t.Fatalf("run-ledger command error did not use the registry-backed catalog: %v", err)
 	}
 }
+
+func TestMissionRecommendationCommandRegistrySeparatesPlanningOnlyAndMutationCapableCommands(t *testing.T) {
+	planningOnly := map[string]bool{}
+	for _, name := range missionRecommendationPlanningOnlyCommandNames() {
+		planningOnly[name] = true
+	}
+	mutationCapable := map[string]bool{}
+	for _, name := range missionRecommendationMutationCapableCommandNames() {
+		mutationCapable[name] = true
+	}
+
+	for _, name := range []string{
+		"export-next-wave",
+		"export-refactoring-wave",
+		"next-track",
+		"consumed-ledger",
+		"track-registry",
+		"final-response-gates",
+		"schema-registry",
+		"schema-registry-coverage",
+		"validate-evidence",
+	} {
+		if !planningOnly[name] {
+			t.Fatalf("recommendation command %q must be classified as planning-only", name)
+		}
+		if mutationCapable[name] {
+			t.Fatalf("planning-only recommendation command %q was also classified mutation-capable", name)
+		}
+	}
+	for _, name := range []string{"import", "complete-node", "resume"} {
+		if !mutationCapable[name] {
+			t.Fatalf("recommendation lifecycle command %q must be classified mutation-capable", name)
+		}
+		if planningOnly[name] {
+			t.Fatalf("mutation-capable recommendation command %q was also classified planning-only", name)
+		}
+	}
+	for _, command := range missionRecommendationCommandRegistry() {
+		if command.commandClass == "" {
+			t.Fatalf("recommendation command %q has no command class", command.name)
+		}
+		if planningOnly[command.name] == mutationCapable[command.name] {
+			t.Fatalf("recommendation command %q must be in exactly one class", command.name)
+		}
+	}
+}
