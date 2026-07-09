@@ -4462,6 +4462,68 @@ func TestRecommendationReadbackTransitionPreservesExactNextActionDecisions(t *te
 	}
 }
 
+func TestRecommendationCompactReadbackStatusNormalizesNodeStates(t *testing.T) {
+	cases := []struct {
+		name                     string
+		completed                int
+		total                    int
+		ready                    int
+		blocked                  int
+		failed                   int
+		finalAllowed             bool
+		wantReadbackStatus       string
+		wantNodeCompletionStatus string
+	}{
+		{
+			name:                     "ready wave",
+			total:                    4,
+			ready:                    4,
+			wantReadbackStatus:       "ready",
+			wantNodeCompletionStatus: "nodes_in_progress",
+		},
+		{
+			name:                     "in progress wave",
+			completed:                2,
+			total:                    4,
+			ready:                    2,
+			wantReadbackStatus:       "in_progress",
+			wantNodeCompletionStatus: "nodes_in_progress",
+		},
+		{
+			name:                     "completed final allowed wave",
+			completed:                4,
+			total:                    4,
+			finalAllowed:             true,
+			wantReadbackStatus:       "completed",
+			wantNodeCompletionStatus: "all_nodes_complete",
+		},
+		{
+			name:                     "blocked wave",
+			completed:                2,
+			total:                    4,
+			blocked:                  1,
+			wantReadbackStatus:       "blocked",
+			wantNodeCompletionStatus: "blocked_or_failed_nodes_present",
+		},
+		{
+			name:                     "failed wave",
+			completed:                2,
+			total:                    4,
+			failed:                   1,
+			wantReadbackStatus:       "blocked",
+			wantNodeCompletionStatus: "blocked_or_failed_nodes_present",
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			status := recommendationCompactReadbackStatus(tc.completed, tc.total, tc.ready, tc.blocked, tc.failed, tc.finalAllowed)
+			if status.ReadbackStatus != tc.wantReadbackStatus || status.NodeCompletionStatus != tc.wantNodeCompletionStatus {
+				t.Fatalf("compact readback status drifted: %#v", status)
+			}
+		})
+	}
+}
+
 func TestLongRunHardeningWaveProductionReadinessSummaryBindsVerificationCIMergeCleanupAndEvidenceRoots(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
 	nodeTwentyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-20", "recommendation-readback-after.json"))
