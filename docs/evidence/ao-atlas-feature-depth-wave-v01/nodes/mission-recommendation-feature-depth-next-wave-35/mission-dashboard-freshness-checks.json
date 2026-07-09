@@ -3,7 +3,7 @@
   "node_id": "mission-recommendation-feature-depth-next-wave-35",
   "status": "dashboard_freshness_verified",
   "source_provenance_links_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/mission-dashboard-provenance-links.json",
-  "source_provenance_links_digest": "sha256:a5cab235ea3a0b781243e9812bf50a21f8db0cee7012b276a0fb7701d23617a9",
+  "source_provenance_links_digest": "sha256:16e825c55f47c54654a9fe8c31993002ef9bd9c30f9fe27d6b103c5e0a02533f",
   "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/recommendation-readback-after.json",
   "source_readback_digest": "sha256:45b464734e11d9cf5a1658473ac182a0f5e0676df8f1eb42d5373983c765c182",
   "post_merge_lifecycle_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/post-merge-lifecycle.json",
@@ -56,7 +56,7 @@
       "name": "dashboard_sources_match_completed_readback",
       "status": "passed",
       "evidence_path": "docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/mission-dashboard-provenance-links.json",
-      "evidence_digest": "sha256:a5cab235ea3a0b781243e9812bf50a21f8db0cee7012b276a0fb7701d23617a9"
+      "evidence_digest": "sha256:16e825c55f47c54654a9fe8c31993002ef9bd9c30f9fe27d6b103c5e0a02533f"
     }
   ],
   "pr_merged_and_cleaned": true,

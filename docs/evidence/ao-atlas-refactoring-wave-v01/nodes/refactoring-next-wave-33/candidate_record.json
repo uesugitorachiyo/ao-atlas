@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.refactoring.candidate-record.v0.1",
+  "node_id": "refactoring-next-wave-33",
+  "rank": 33,
+  "task": "Bind dashboard closure rows to Promoter, Command, Sentinel, and Foundry rollup evidence.",
+  "candidate_status": "implemented_locally",
+  "files_changed": [
+    "internal/atlas/mission_dashboard_closure_binding.go",
+    "internal/atlas/mission_dashboard_closure_binding_test.go",
+    "docs/evidence/*/nodes/mission-recommendation-feature-depth-next-wave-32/foundry-rollup.json",
+    "docs/evidence/*/nodes/mission-recommendation-feature-depth-next-wave-33/mission-dashboard-closure-binding.json",
+    "docs/evidence/*/nodes/mission-recommendation-feature-depth-next-wave-34/mission-dashboard-provenance-links.json",
+    "docs/evidence/*/nodes/mission-recommendation-feature-depth-next-wave-35/mission-dashboard-freshness-checks.json"
+  ],
+  "binding_changes": [
+    "ao-foundry closure row now binds foundry-rollup.json",
+    "ao-command closure row remains bound to command_readback.json",
+    "ao-promoter closure row remains bound to promoter_no_promotion.json",
+    "ao-sentinel closure row remains bound to sentinel_public_safety.json"
+  ],
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.refactoring.tests.v0.1",
+  "node_id": "refactoring-next-wave-33",
+  "red_test": {
+    "command": "go test ./internal/atlas -run TestMissionDashboardClosureBindingSubsystemRowsUseRollupEvidence -count=1",
+    "observed_status": "failed_before_implementation",
+    "failure_reason": "ao-foundry dashboard closure row still referenced foundry-import.json"
+  },
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveMissionDashboardClosureBindingRowsBindAtlasClosureEvidence|TestFeatureDepthWaveMissionDashboardProvenanceLinksBindSubsystemEvidence|TestFeatureDepthWaveMissionDashboardFreshnessChecksMergedPRAndSyncedMain|TestMissionDashboardClosureBindingSubsystemRowsUseRollupEvidence' -count=1",
+      "status": "passed"
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    }
+  ]
+}

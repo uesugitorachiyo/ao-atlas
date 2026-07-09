@@ -107,3 +107,45 @@ func TestMissionDashboardClosureBindingCarriesSchemaHealthStatusWhenReadbackHasI
 	}
 	assertSchemaHasProperty(t, filepath.Join(root, "schemas", "mission-dashboard-closure-binding.schema.json"), "schema_health_status")
 }
+
+func TestMissionDashboardClosureBindingSubsystemRowsUseRollupEvidence(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")
+	sourceNodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-32")
+	sourceReadbackPath := filepath.Join(sourceNodeDir, "recommendation-readback-after.json")
+
+	binding, err := BuildAtlasMissionDashboardClosureBinding(
+		"mission-recommendation-feature-depth-next-wave-33",
+		sourceReadbackPath,
+		sourceNodeDir,
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rows := map[string]AtlasMissionDashboardClosureBindingRow{}
+	for _, row := range binding.Rows {
+		rows[row.Repo] = row
+	}
+	expected := map[string]struct {
+		pathSuffix      string
+		readinessStatus string
+	}{
+		"ao-command":  {"command_readback.json", "readback_agrees"},
+		"ao-foundry":  {"foundry-rollup.json", "foundry_rollup_bound"},
+		"ao-promoter": {"promoter_no_promotion.json", "no_promotion_requested"},
+		"ao-sentinel": {"sentinel_public_safety.json", "public_safety_passed"},
+	}
+	for repo, want := range expected {
+		row, ok := rows[repo]
+		if !ok {
+			t.Fatalf("dashboard closure binding missing %s row", repo)
+		}
+		if !strings.HasSuffix(row.ClosureEvidencePath, want.pathSuffix) || row.ReadinessStatus != want.readinessStatus {
+			t.Fatalf("%s row did not bind expected evidence: %#v", repo, row)
+		}
+		if row.ClosureEvidenceDigest == "" || row.AuthorityAdvanceClaimed || !row.RSIRemainsDenied {
+			t.Fatalf("%s row lost digest or safety state: %#v", repo, row)
+		}
+	}
+}

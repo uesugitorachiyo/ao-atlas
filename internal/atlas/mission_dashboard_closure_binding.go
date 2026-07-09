@@ -49,8 +49,8 @@ func BuildAtlasMissionDashboardClosureBinding(nodeID, sourceReadbackPath, source
 		{
 			repo:            "ao-foundry",
 			role:            "bounded_implementation_handoff",
-			path:            filepath.Join(sourceNodeDir, "foundry-import.json"),
-			readinessStatus: "single_active_import_closed",
+			path:            filepath.Join(sourceNodeDir, "foundry-rollup.json"),
+			readinessStatus: "foundry_rollup_bound",
 		},
 		{
 			repo:            "ao-command",
