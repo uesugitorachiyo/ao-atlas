@@ -3619,17 +3619,10 @@ func BuildAtlasRecommendationResumePrompt(readback AtlasRecommendationReadback, 
 	b.WriteString(fmt.Sprintf("- %s\n\n", readback.ExactNextAction))
 	b.WriteString("Blocked-node continuation:\n")
 	b.WriteString("- If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.\n\n")
-	b.WriteString("Safety boundaries:\n")
-	b.WriteString("- No provider calls.\n")
-	b.WriteString("- No credential or token inspection.\n")
-	b.WriteString("- No direct main mutation.\n")
-	b.WriteString("- No release, deploy, publish, upload, or tag.\n")
-	b.WriteString("- No dependency updates unless separately authorized.\n")
-	b.WriteString("- No auth, policy, or config widening.\n")
-	b.WriteString("- No hidden instruction mutation.\n")
-	b.WriteString("- No broad RSI claim.\n")
-	b.WriteString("- RSI remains denied.\n")
-	b.WriteString("- Keep exactly one executable mutation node active at a time.\n\n")
+	writeAtlasPromptSafetyBoundaries(&b, AtlasPromptSafetyBoundaryOptions{
+		SuffixLines: []string{"Keep exactly one executable mutation node active at a time."},
+	})
+	b.WriteString("\n")
 	b.WriteString("Verification:\n")
 	b.WriteString("- `go test ./... -count=1`\n")
 	b.WriteString("- `go vet ./...`\n")
@@ -3717,18 +3710,11 @@ func buildAtlasRecommendationPrompt(wave AtlasRecommendationWave) string {
 		b.WriteString(fmt.Sprintf("- %s\n", condition))
 	}
 	b.WriteString("- Checkpoint stop gate: record a checkpoint after each node or timed interval before evaluating final response.\n\n")
-	b.WriteString("Safety boundaries:\n")
-	b.WriteString("- Keep exactly one executable mutation node active at a time.\n")
-	b.WriteString("- No provider calls.\n")
-	b.WriteString("- No credential or token inspection.\n")
-	b.WriteString("- No direct main mutation.\n")
-	b.WriteString("- No release, deploy, publish, upload, or tag.\n")
-	b.WriteString("- No dependency updates unless separately authorized.\n")
-	b.WriteString("- No auth, policy, or config widening.\n")
-	b.WriteString("- No hidden instruction mutation.\n")
-	b.WriteString("- No broad RSI claim.\n")
-	b.WriteString("- RSI remains denied.\n")
-	b.WriteString("- Use existing repo auth only for normal PR, CI, and merge if available without exposing credentials.\n\n")
+	writeAtlasPromptSafetyBoundaries(&b, AtlasPromptSafetyBoundaryOptions{
+		PrefixLines: []string{"Keep exactly one executable mutation node active at a time."},
+		SuffixLines: []string{"Use existing repo auth only for normal PR, CI, and merge if available without exposing credentials."},
+	})
+	b.WriteString("\n")
 	b.WriteString("Required work:\n")
 	for _, task := range wave.Tasks {
 		b.WriteString(fmt.Sprintf("%s. %s\n", strings.TrimPrefix(task.ID, "next-"), task.Task))
