@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-08",
+  "task_id": "mission-recommendation-feature-depth-next-wave-08-task",
+  "status": "selected",
+  "candidate": "feature-depth-next-wave-08",
+  "reason": "The node records schema and validator-count drift after regenerated v02 fixture directories while preserving no-loss evidence.",
+  "selected_from": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-07/recommendation-readback-after.json",
+  "rsi_remains_denied": true
+}
