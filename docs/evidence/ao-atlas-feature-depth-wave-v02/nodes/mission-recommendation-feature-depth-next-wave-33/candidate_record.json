@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-33",
+  "task_id": "mission-recommendation-feature-depth-next-wave-33-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-33",
+  "source_task_digest": "sha256:93284c351dd11b51483cd7ac697b50ed18709cacfecdd753a3ad799225b7e5ad",
+  "selected_work": [
+    "Generate v02 Mission dashboard closure-binding rows from node 32 final closure evidence.",
+    "Bind Atlas, Foundry, Command, Promoter, Sentinel, and Mission rows to concrete evidence artifacts.",
+    "Repair missing node 32 Foundry rollup evidence required by dashboard row binding.",
+    "Preserve no-promotion and RSI-denied invariants."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

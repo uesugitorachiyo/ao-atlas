@@ -1,0 +1,9 @@
+{
+  "contract_version": "ao.foundry.import.v0.1",
+  "task_id": "mission-recommendation-feature-depth-next-wave-33-task",
+  "node_id": "mission-recommendation-feature-depth-next-wave-33",
+  "status": "ready_for_bounded_implementation",
+  "objective": "Bind Atlas final closure evidence into multi repo Mission dashboard rows.",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-33",
+  "safe_to_execute": true
+}
