@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-32",
+  "task_id": "mission-recommendation-feature-depth-next-wave-32-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_foundry_terminal_status_examples_test.go"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-32/foundry-terminal-status-examples.json"
+  ],
+  "summary": "Node 32 adds v02 Foundry terminal status examples validation bound to recommendation readback enums.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
