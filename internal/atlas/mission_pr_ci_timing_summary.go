@@ -209,6 +209,182 @@ func validatePRCITimingRows(errs *[]string, rows []AtlasPRCITimingRow) {
 	}
 }
 
+func FeatureDepthPRCITimingRowsToNormalizedInputs(rows []AtlasPRCITimingRow) []AtlasPRCINormalizedRow {
+	normalized := make([]AtlasPRCINormalizedRow, 0, len(rows))
+	for _, row := range rows {
+		ciPassed := row.CIStatus == "passed"
+		normalized = append(normalized, AtlasPRCINormalizedRow{
+			NodeID:          row.NodeID,
+			PRNumber:        row.PRNumber,
+			MergeCommit:     row.MergeCommit,
+			CIStatus:        row.CIStatus,
+			CheckCount:      3,
+			SuccessCount:    boolToInt(ciPassed) * 3,
+			UbuntuPassed:    ciPassed,
+			MacosPassed:     ciPassed,
+			WindowsPassed:   ciPassed,
+			UbuntuSeconds:   row.UbuntuSeconds,
+			MacosSeconds:    row.MacosSeconds,
+			WindowsSeconds:  row.WindowsSeconds,
+			MaxCheckSeconds: row.MaxCheckSeconds,
+			SlowestCheck:    row.SlowestCheck,
+		})
+	}
+	return normalized
+}
+
+func ClosurePRCILedgerEntriesToNormalizedInputs(entries []AtlasPRCILedgerEntry) []AtlasPRCINormalizedRow {
+	normalized := make([]AtlasPRCINormalizedRow, 0, len(entries))
+	for _, entry := range entries {
+		normalized = append(normalized, AtlasPRCINormalizedRow{
+			NodeID:        entry.NodeID,
+			PRNumber:      entry.PRNumber,
+			MergeCommit:   entry.MergeCommit,
+			CIStatus:      entry.CIStatus,
+			CheckCount:    entry.CheckCount,
+			SuccessCount:  entry.SuccessCount,
+			UbuntuPassed:  entry.UbuntuSuccessCount > 0,
+			MacosPassed:   entry.MacOSSuccessCount > 0,
+			WindowsPassed: entry.WindowsSuccessCount > 0,
+		})
+	}
+	return normalized
+}
+
+func NormalizeAtlasPRCILedgerRows(inputs []AtlasPRCINormalizationInput) ([]AtlasPRCINormalizedRow, error) {
+	if len(inputs) == 0 {
+		return nil, fmt.Errorf("at least one PR/CI normalization input is required")
+	}
+	rows := []AtlasPRCINormalizedRow{}
+	for inputIndex, input := range inputs {
+		sourceWave := strings.TrimSpace(input.SourceWave)
+		if sourceWave == "" {
+			return nil, fmt.Errorf("inputs[%d].source_wave is required", inputIndex)
+		}
+		if len(input.Rows) == 0 {
+			return nil, fmt.Errorf("inputs[%d].rows must not be empty", inputIndex)
+		}
+		for _, rawRow := range input.Rows {
+			row := normalizePRCIRow(sourceWave, rawRow)
+			rows = append(rows, row)
+		}
+	}
+	sort.Slice(rows, func(i, j int) bool {
+		if rows[i].PRNumber == rows[j].PRNumber {
+			return rows[i].SourceWave < rows[j].SourceWave
+		}
+		return rows[i].PRNumber < rows[j].PRNumber
+	})
+	if err := ValidateAtlasPRCINormalizedRows(rows); err != nil {
+		return nil, err
+	}
+	return rows, nil
+}
+
+func normalizePRCIRow(sourceWave string, row AtlasPRCINormalizedRow) AtlasPRCINormalizedRow {
+	row.NormalizedSchema = AtlasPRCINormalizedRowContract
+	row.SourceWave = sourceWave
+	row.NodeID = strings.TrimSpace(row.NodeID)
+	row.MergeCommit = strings.TrimSpace(row.MergeCommit)
+	row.CIStatus = strings.TrimSpace(row.CIStatus)
+	row.SlowestCheck = strings.TrimSpace(row.SlowestCheck)
+	row.Merged = len(row.MergeCommit) == 40
+	row.AllRequiredChecksPassed = row.CIStatus == "passed" &&
+		row.CheckCount > 0 &&
+		row.SuccessCount == row.CheckCount &&
+		row.UbuntuPassed &&
+		row.MacosPassed &&
+		row.WindowsPassed
+	row.PromotionGranted = false
+	row.ClaimsAuthorityAdvance = false
+	row.RSIRemainsDenied = true
+	row.SafeToExecute = false
+	row.SchedulesWork = false
+	row.ExecutesWork = false
+	row.ApprovesWork = false
+	row.MutatesRepositories = false
+	return row
+}
+
+func ValidateAtlasPRCINormalizedRows(rows []AtlasPRCINormalizedRow) error {
+	var errs []string
+	if len(rows) == 0 {
+		errs = append(errs, "rows must not be empty")
+	}
+	seenPRs := map[int]bool{}
+	previousPR := 0
+	for index, row := range rows {
+		prefix := fmt.Sprintf("rows[%d]", index)
+		requireContract(&errs, prefix+".normalized_schema", row.NormalizedSchema, AtlasPRCINormalizedRowContract)
+		requireField(&errs, prefix+".source_wave", row.SourceWave)
+		checkPublicPath(&errs, prefix+".source_wave", row.SourceWave, true)
+		requireField(&errs, prefix+".node_id", row.NodeID)
+		checkPublicPath(&errs, prefix+".node_id", row.NodeID, true)
+		if row.PRNumber <= 0 {
+			errs = append(errs, prefix+".pr_number must be greater than zero")
+		}
+		if seenPRs[row.PRNumber] {
+			errs = append(errs, "rows pr_number values must be unique")
+		}
+		seenPRs[row.PRNumber] = true
+		if previousPR != 0 && row.PRNumber < previousPR {
+			errs = append(errs, "rows must be sorted by pr_number")
+		}
+		previousPR = row.PRNumber
+		requireField(&errs, prefix+".merge_commit", row.MergeCommit)
+		if len(row.MergeCommit) != 40 {
+			errs = append(errs, prefix+".merge_commit must be a 40 character commit hash")
+		}
+		if !oneOf(row.CIStatus, "passed", "failed", "pending") {
+			errs = append(errs, prefix+".ci_status must be passed, failed, or pending")
+		}
+		if row.Merged != (len(row.MergeCommit) == 40) {
+			errs = append(errs, prefix+".merged must match merge_commit")
+		}
+		if row.CheckCount <= 0 {
+			errs = append(errs, prefix+".check_count must be positive")
+		}
+		if row.SuccessCount < 0 || row.SuccessCount > row.CheckCount {
+			errs = append(errs, prefix+".success_count must be between zero and check_count")
+		}
+		expectedPassed := row.CIStatus == "passed" &&
+			row.CheckCount > 0 &&
+			row.SuccessCount == row.CheckCount &&
+			row.UbuntuPassed &&
+			row.MacosPassed &&
+			row.WindowsPassed
+		if row.AllRequiredChecksPassed != expectedPassed {
+			errs = append(errs, prefix+".all_required_checks_passed must match CI status and platform checks")
+		}
+		if row.UbuntuSeconds < 0 || row.MacosSeconds < 0 || row.WindowsSeconds < 0 || row.MaxCheckSeconds < 0 {
+			errs = append(errs, prefix+".seconds fields must be non-negative")
+		}
+		if row.MaxCheckSeconds > 0 && row.MaxCheckSeconds != maxInt(row.UbuntuSeconds, row.MacosSeconds, row.WindowsSeconds) {
+			errs = append(errs, prefix+".max_check_seconds must equal the row platform maximum")
+		}
+		if row.PromotionGranted {
+			errs = append(errs, prefix+".promotion_granted must be false")
+		}
+		if row.ClaimsAuthorityAdvance {
+			errs = append(errs, prefix+".claims_authority_advance must be false")
+		}
+		if !row.RSIRemainsDenied {
+			errs = append(errs, prefix+".rsi_remains_denied must be true")
+		}
+		if row.SafeToExecute || row.SchedulesWork || row.ExecutesWork || row.ApprovesWork || row.MutatesRepositories {
+			errs = append(errs, prefix+" must not execute, schedule, approve, mutate repositories, or mark safe_to_execute")
+		}
+	}
+	return joinErrors(errs)
+}
+
+func boolToInt(value bool) int {
+	if value {
+		return 1
+	}
+	return 0
+}
+
 func maxInt(values ...int) int {
 	max := 0
 	for _, value := range values {

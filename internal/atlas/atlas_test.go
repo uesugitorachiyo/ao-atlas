@@ -92,6 +92,12 @@ func TestProductionReadinessPublicSafetyScanUsesTrackedFiles(t *testing.T) {
 	if !strings.Contains(script, "git ls-files > \"$scan_file\"") {
 		t.Fatalf("production readiness public-safety scan must enumerate tracked files through git ls-files")
 	}
+	if !strings.Contains(script, "git grep -nF -- \"$pattern\" -- .") {
+		t.Fatalf("production readiness public-safety scan must use git grep over tracked files")
+	}
+	if strings.Contains(script, "while IFS= read -r file") {
+		t.Fatalf("production readiness public-safety scan still uses a slow per-file grep loop")
+	}
 	if strings.Contains(script, "find . \\\n  -path './.git' -prune") {
 		t.Fatalf("production readiness public-safety scan still uses an unbounded working-tree find")
 	}

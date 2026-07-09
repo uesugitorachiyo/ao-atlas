@@ -896,14 +896,12 @@ patterns=(
   "aws_""secret_access_key"
 )
 
-while IFS= read -r file; do
-  for pattern in "${patterns[@]}"; do
-    if grep -nF "$pattern" "$file" >/dev/null; then
-      echo "public safety marker '$pattern' found in $file" >&2
-      exit 1
-    fi
-  done
-done < "$scan_file"
+for pattern in "${patterns[@]}"; do
+  if git grep -nF -- "$pattern" -- . >/dev/null; then
+    echo "public safety marker '$pattern' found in tracked files" >&2
+    exit 1
+  fi
+done
 pass "public-safety-scan"
 
 git diff --check
