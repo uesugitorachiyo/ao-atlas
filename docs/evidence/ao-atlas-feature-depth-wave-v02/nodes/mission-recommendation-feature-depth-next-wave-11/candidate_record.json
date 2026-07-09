@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-11",
+  "task_id": "mission-recommendation-feature-depth-next-wave-11-task",
+  "status": "selected",
+  "candidate": "feature-depth-next-wave-11",
+  "reason": "The node records failed check replay fixtures that allow retry for timeout evidence while denying merge on all failed checks.",
+  "selected_from": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-10/recommendation-readback-after.json",
+  "rsi_remains_denied": true
+}
