@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.refactoring.candidate-record.v0.1",
+  "node_id": "refactoring-next-wave-39",
+  "status": "implemented_locally",
+  "candidate_summary": "Add named recommendation targeted regression suites with narrow go test selectors and regression coverage for the validator-boundaries suite.",
+  "implementation_refs": [
+    "scripts/recommendation-targeted-regressions.sh",
+    "internal/atlas/mission_recommendation_targeted_regression_suites_test.go"
+  ],
+  "targeted_suites": [
+    "validator-boundaries",
+    "fixture-builders",
+    "compact-dashboard",
+    "command-ledger",
+    "all"
+  ],
+  "promotion_requested": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
