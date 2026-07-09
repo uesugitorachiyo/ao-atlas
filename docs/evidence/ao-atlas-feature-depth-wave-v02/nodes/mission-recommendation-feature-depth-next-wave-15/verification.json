@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-15",
+  "task_id": "mission-recommendation-feature-depth-next-wave-15-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "go test ./internal/atlas -run 'TestFeatureDepthWaveLocalMainSyncReadback' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/ao-atlas-node15-build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "jq empty over node JSON evidence",
+    "scoped public-safety wording scan over changed docs/tests"
+  ]
+}
