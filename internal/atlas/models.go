@@ -1067,6 +1067,58 @@ type AtlasPRCITimingRow struct {
 	SlowestCheck    string `json:"slowest_check"`
 }
 
+type AtlasPRCILedgerEntry struct {
+	HardeningNode       int    `json:"hardening_node,omitempty"`
+	NodeID              string `json:"node_id"`
+	PRNumber            int    `json:"pr_number"`
+	PRURL               string `json:"pr_url,omitempty"`
+	Title               string `json:"title,omitempty"`
+	HeadRef             string `json:"head_ref,omitempty"`
+	State               string `json:"state,omitempty"`
+	MergedAt            string `json:"merged_at,omitempty"`
+	MergeCommit         string `json:"merge_commit"`
+	CheckCount          int    `json:"check_count"`
+	SuccessCount        int    `json:"success_count"`
+	UbuntuSuccessCount  int    `json:"ubuntu_success_count,omitempty"`
+	MacOSSuccessCount   int    `json:"macos_success_count,omitempty"`
+	WindowsSuccessCount int    `json:"windows_success_count,omitempty"`
+	CIStatus            string `json:"ci_status"`
+}
+
+type AtlasPRCINormalizationInput struct {
+	SourceWave string                   `json:"source_wave"`
+	Rows       []AtlasPRCINormalizedRow `json:"rows"`
+}
+
+type AtlasPRCINormalizedRow struct {
+	NormalizedSchema        string `json:"normalized_schema"`
+	SourceWave              string `json:"source_wave"`
+	NodeID                  string `json:"node_id"`
+	PRNumber                int    `json:"pr_number"`
+	MergeCommit             string `json:"merge_commit"`
+	CIStatus                string `json:"ci_status"`
+	Merged                  bool   `json:"merged"`
+	CheckCount              int    `json:"check_count"`
+	SuccessCount            int    `json:"success_count"`
+	AllRequiredChecksPassed bool   `json:"all_required_checks_passed"`
+	UbuntuPassed            bool   `json:"ubuntu_passed"`
+	MacosPassed             bool   `json:"macos_passed"`
+	WindowsPassed           bool   `json:"windows_passed"`
+	UbuntuSeconds           int    `json:"ubuntu_seconds,omitempty"`
+	MacosSeconds            int    `json:"macos_seconds,omitempty"`
+	WindowsSeconds          int    `json:"windows_seconds,omitempty"`
+	MaxCheckSeconds         int    `json:"max_check_seconds,omitempty"`
+	SlowestCheck            string `json:"slowest_check,omitempty"`
+	PromotionGranted        bool   `json:"promotion_granted"`
+	ClaimsAuthorityAdvance  bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied        bool   `json:"rsi_remains_denied"`
+	SafeToExecute           bool   `json:"safe_to_execute"`
+	SchedulesWork           bool   `json:"schedules_work"`
+	ExecutesWork            bool   `json:"executes_work"`
+	ApprovesWork            bool   `json:"approves_work"`
+	MutatesRepositories     bool   `json:"mutates_repositories"`
+}
+
 type AtlasPRCIWindowsThresholdEvidence struct {
 	Schema                   string                         `json:"schema"`
 	Status                   string                         `json:"status"`

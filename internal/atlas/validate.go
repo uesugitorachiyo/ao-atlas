@@ -35,6 +35,7 @@ const (
 	AtlasSchemaValidatorDriftContract            = "ao.atlas.schema-validator-drift.v0.1"
 	AtlasPRCITimingLedgerContract                = "ao.atlas.pr-ci-timing-ledger.v0.1"
 	AtlasPRCITimingSummaryContract               = "ao.atlas.pr-ci-timing-summary.v0.1"
+	AtlasPRCINormalizedRowContract               = "ao.atlas.pr-ci-normalized-row.v0.1"
 	AtlasPRCIWindowsThresholdEvidenceContract    = "ao.atlas.pr-ci-windows-threshold-evidence.v0.1"
 	AtlasFailedCheckReplayInputContract          = "ao.atlas.failed-check-replay-input.v0.1"
 	AtlasFailedCheckReplayFixtureContract        = "ao.atlas.failed-check-replay-fixture.v0.1"
