@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-05",
+  "task_id": "mission-recommendation-feature-depth-next-wave-05-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestFeatureDepthWaveV02ClosureRollupArtifactsUseTypedEvidenceValidation -count=1 failed before node evidence report existed",
+  "targeted_regression": "go test ./internal/atlas -run TestFeatureDepthWaveV02ClosureRollupArtifactsUseTypedEvidenceValidation -count=1",
+  "assertions": [
+    "evidence validation report status=passed",
+    "node_count=5",
+    "required filenames covered",
+    "command/promoter/sentinel closure rollup artifacts use typed validators"
+  ]
+}

@@ -26,3 +26,44 @@ func TestFeatureDepthWaveClosureRollupArtifactsUseTypedEvidenceValidation(t *tes
 		}
 	}
 }
+
+func TestFeatureDepthWaveV02ClosureRollupArtifactsUseTypedEvidenceValidation(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v02")
+	reportPath := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-05", "feature-depth-evidence-validation-report.json")
+
+	report, err := BuildAtlasRecommendationEvidenceValidationReport(waveRoot)
+	if err != nil {
+		t.Fatal(err)
+	}
+	recorded := mustLoadJSON[AtlasRecommendationEvidenceValidationReport](t, reportPath)
+	if err := ValidateAtlasRecommendationEvidenceValidationReport(recorded); err != nil {
+		t.Fatal(err)
+	}
+	report.EvidenceRoot = recorded.EvidenceRoot
+	report.NodeRoot = recorded.NodeRoot
+	if digestValue(report) != digestValue(recorded) {
+		t.Fatalf("v02 evidence validation report drifted\nwant %s\ngot  %s", digestValue(recorded), digestValue(report))
+	}
+	if recorded.Status != "passed" ||
+		recorded.NodeCount != 5 ||
+		!recorded.RequiredFilenamesCovered ||
+		len(recorded.MissingRequiredFiles) != 0 ||
+		len(recorded.MissingSchemaFiles) != 0 ||
+		len(recorded.FailedFiles) != 0 {
+		t.Fatalf("v02 evidence validation report must pass across the first five completed nodes: %#v", recorded)
+	}
+	for schema, validator := range map[string]string{
+		"ao.atlas.command-readback.v0.1":       "typed:command-readback",
+		"ao.atlas.promoter-no-promotion.v0.1":  "typed:promoter-no-promotion",
+		"ao.atlas.sentinel-public-safety.v0.1": "typed:sentinel-public-safety",
+	} {
+		schemaCount := recorded.SchemaCounts[schema]
+		if schemaCount == 0 {
+			t.Fatalf("expected schema count for %s in v02 evidence report", schema)
+		}
+		if recorded.Validators[validator] != schemaCount {
+			t.Fatalf("%s should validate every %s file, got validator count %d schema count %d", validator, schema, recorded.Validators[validator], schemaCount)
+		}
+	}
+}
