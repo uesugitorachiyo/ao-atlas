@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-07",
+  "task_id": "mission-recommendation-feature-depth-next-wave-07-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_recommendations.go",
+    "internal/atlas/mission_recommendations_readback_lifecycle_test.go"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-07/tests.json"
+  ],
+  "summary": "Node 07 records the existing required-evidence field gate for v02: completion rejects malformed run-link evidence before advancing recommendation readback.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

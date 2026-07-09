@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-07",
+  "status": "bound",
+  "source_readback_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-07/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:f51f8f38f378caf789f622d2eef3c5806ccc96dfde7ff87fdda1c7ae685ba0db",
+  "sentinel_evidence_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-07/sentinel_public_safety.json",
+  "sentinel_evidence_digest": "sha256:30614a21e64ec6876ff211c6d69943b6de80c30eb1164d61e9ec1af2691fcb8f",
+  "verification_summary_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-07/verification.json",
+  "verification_summary_digest": "sha256:f680d9b070bc8254bc881678455467d4d658efa571d1e8cc602c88f6cc685df6",
+  "bound_public_safety_scan_status": "passed",
+  "previous_public_safety_scan_status": "required_pending_verification",
+  "ready_nodes_after_binding": 33,
+  "final_response_allowed_after_binding": false,
+  "rsi_remains_denied": true
+}
