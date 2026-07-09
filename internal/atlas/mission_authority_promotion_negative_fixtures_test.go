@@ -76,6 +76,42 @@ func TestFeatureDepthWaveAuthorityPromotionNegativeFixtures(t *testing.T) {
 	}
 }
 
+func TestFeatureDepthWaveV02AuthorityPromotionNegativeFixtures(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v02", "nodes", "mission-recommendation-feature-depth-next-wave-23")
+	recordedPath := filepath.Join(nodeDir, "authority-promotion-negative-fixtures.json")
+	outPath := filepath.Join(t.TempDir(), "authority-promotion-negative-fixtures.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "authority-promotion-negative-fixtures",
+		"--node-id", "mission-recommendation-feature-depth-next-wave-23",
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("authority-promotion-negative-fixtures command failed: %s", out.String())
+	}
+	recorded := mustLoadJSON[AtlasAuthorityPromotionNegativeFixtures](t, recordedPath)
+	generated := mustLoadJSON[AtlasAuthorityPromotionNegativeFixtures](t, outPath)
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("v02 authority promotion negative fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	if err := ValidateAtlasAuthorityPromotionNegativeFixtures(recorded); err != nil {
+		t.Fatal(err)
+	}
+	if recorded.Status != "passed" ||
+		recorded.FixtureEncoding != "redacted_token_sequences" ||
+		recorded.CaseCount < 7 ||
+		!recorded.ForbiddenPatternsRedacted ||
+		recorded.UnsafeLiteralStored ||
+		recorded.ExpectedScanStatus != "failed" ||
+		recorded.ExpectedPublicSafetyScanPassed ||
+		recorded.ClaimsAuthorityAdvance ||
+		!recorded.RSIRemainsDenied {
+		t.Fatalf("v02 negative authority wording fixture lost safety state: %#v", recorded)
+	}
+}
+
 func TestFeatureDepthWaveScopedPublicSafetyScanRejectsNegativeAuthorityPromotionSamples(t *testing.T) {
 	dir := t.TempDir()
 	jsonPath := filepath.Join(dir, "unsafe-authority.json")
