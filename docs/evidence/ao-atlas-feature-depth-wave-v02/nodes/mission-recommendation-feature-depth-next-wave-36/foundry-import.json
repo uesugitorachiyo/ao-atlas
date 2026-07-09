@@ -1,0 +1,9 @@
+{
+  "contract_version": "ao.foundry.import.v0.1",
+  "task_id": "mission-recommendation-feature-depth-next-wave-36-task",
+  "node_id": "mission-recommendation-feature-depth-next-wave-36",
+  "status": "ready_for_bounded_implementation",
+  "objective": "Summarize blocked versus ready Mission nodes in compact dashboard filters.",
+  "evidence_root": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-36",
+  "safe_to_execute": true
+}
