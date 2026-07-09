@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-17",
+  "task_id": "mission-recommendation-feature-depth-next-wave-17-task",
+  "status": "selected",
+  "candidate": "feature-depth-next-wave-17",
+  "reason": "The node binds the v02 latest readback into a compaction resume prompt so continuation preserves active node, exact action, lease timing, and final-response denial.",
+  "selected_from": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-16/recommendation-readback-after.json",
+  "rsi_remains_denied": true
+}

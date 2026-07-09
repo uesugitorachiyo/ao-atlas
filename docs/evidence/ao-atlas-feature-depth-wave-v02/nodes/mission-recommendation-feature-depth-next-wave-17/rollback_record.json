@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-17",
+  "task_id": "mission-recommendation-feature-depth-next-wave-17-task",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "internal/atlas/mission_compaction_resume_prompt_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-17"
+  ],
+  "rollback_command": "git revert the node 17 commit or remove the node 17 v02 compaction resume prompt evidence before merge",
+  "rsi_remains_denied": true
+}
