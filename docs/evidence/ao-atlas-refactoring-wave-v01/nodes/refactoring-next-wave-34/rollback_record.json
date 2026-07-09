@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.refactoring.rollback-record.v0.1",
+  "node_id": "refactoring-next-wave-34",
+  "rollback_status": "bounded_revert_available",
+  "rollback_scope": [
+    "remove stale dashboard evidence detector implementation",
+    "remove stale dashboard detector regression test",
+    "remove node 34 detector fixture and evidence artifacts"
+  ],
+  "data_migration_required": false,
+  "external_state_changed": false,
+  "release_or_deploy_performed": false,
+  "rsi_remains_denied": true
+}

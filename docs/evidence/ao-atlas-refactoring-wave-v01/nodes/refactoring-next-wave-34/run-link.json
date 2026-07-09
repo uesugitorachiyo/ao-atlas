@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.refactoring.run-link.v0.1",
+  "node_id": "refactoring-next-wave-34",
+  "status": "local_run_link_bound",
+  "branch": "codex/refactoring-stale-dashboard-evidence",
+  "evidence": {
+    "node_gate": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/node_gate.json",
+    "candidate_record": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/candidate_record.json",
+    "rollback_record": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/rollback_record.json",
+    "tests": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/tests.json",
+    "verification": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/verification.json",
+    "sentinel_public_safety": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/sentinel_public_safety.json",
+    "promoter_no_promotion": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/promoter_no_promotion.json",
+    "command_readback": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/command_readback.json",
+    "stale_dashboard_evidence_detection": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-34/stale-dashboard-evidence-detection.json"
+  },
+  "remote_lifecycle_status": "pending_pr",
+  "rsi_remains_denied": true
+}

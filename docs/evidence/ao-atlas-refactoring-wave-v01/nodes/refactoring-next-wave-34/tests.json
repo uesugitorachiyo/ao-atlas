@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.refactoring.tests.v0.1",
+  "node_id": "refactoring-next-wave-34",
+  "red_test": {
+    "command": "go test ./internal/atlas -run TestMissionDashboardStaleEvidenceDetectionFlagsSupersededReadbacksAndOldExports -count=1",
+    "observed_status": "failed_before_implementation",
+    "failure_reason": "missing BuildAtlasMissionDashboardStaleEvidenceDetection"
+  },
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run TestMissionDashboardStaleEvidenceDetectionFlagsSupersededReadbacksAndOldExports -count=1",
+      "status": "passed"
+    }
+  ],
+  "full_tests": [
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    }
+  ]
+}
