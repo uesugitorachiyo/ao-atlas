@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-40",
+  "task_id": "mission-recommendation-feature-depth-next-wave-40-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-40",
+  "source_task_digest": "sha256:4feb4ec36602ecce073c6a6c1e556ee608b14abf8700c3db8848d06270553333",
+  "selected_work": [
+    "Generate final v02 Feature Depth recommendations handoff for operator review.",
+    "Bind top 10 review recommendations to node 37 ranked export and node 39 readback.",
+    "Complete the 40-node v02 wave with no promotion and RSI denied."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
