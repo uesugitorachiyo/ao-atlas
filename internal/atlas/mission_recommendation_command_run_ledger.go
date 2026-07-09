@@ -6,6 +6,39 @@ import (
 	"strings"
 )
 
+func BuildAtlasRecommendationArtifactSummary(artifactPath string) (AtlasRecommendationArtifactSummary, error) {
+	artifactPath = filepath.ToSlash(strings.TrimSpace(artifactPath))
+	if artifactPath == "" {
+		return AtlasRecommendationArtifactSummary{}, fmt.Errorf("artifact path is required")
+	}
+	header, err := LoadJSON[struct {
+		Schema string `json:"schema"`
+		Status string `json:"status"`
+	}](artifactPath)
+	if err != nil {
+		return AtlasRecommendationArtifactSummary{}, err
+	}
+	if strings.TrimSpace(header.Schema) == "" {
+		return AtlasRecommendationArtifactSummary{}, fmt.Errorf("artifact schema is required")
+	}
+	validator, err := validateRecommendationEvidenceTypedFile(artifactPath, header.Schema)
+	if err != nil {
+		return AtlasRecommendationArtifactSummary{}, err
+	}
+	digest, err := digestFile(artifactPath)
+	if err != nil {
+		return AtlasRecommendationArtifactSummary{}, err
+	}
+	return AtlasRecommendationArtifactSummary{
+		Path:           artifactPath,
+		PublicPath:     publicArtifactRef(artifactPath),
+		Digest:         digest,
+		Schema:         header.Schema,
+		TypedValidator: validator,
+		OutputStatus:   header.Status,
+	}, nil
+}
+
 func BuildAtlasRecommendationCommandRunLedger(command, artifactPath string) (AtlasRecommendationCommandRunLedger, error) {
 	command = strings.TrimSpace(command)
 	artifactPath = filepath.ToSlash(strings.TrimSpace(artifactPath))
@@ -19,21 +52,7 @@ func BuildAtlasRecommendationCommandRunLedger(command, artifactPath string) (Atl
 		return AtlasRecommendationCommandRunLedger{}, fmt.Errorf("command must be %s", formatCommandList(missionRecommendationRunLedgerCommandNames()))
 	}
 
-	header, err := LoadJSON[struct {
-		Schema string `json:"schema"`
-		Status string `json:"status"`
-	}](artifactPath)
-	if err != nil {
-		return AtlasRecommendationCommandRunLedger{}, err
-	}
-	if strings.TrimSpace(header.Schema) == "" {
-		return AtlasRecommendationCommandRunLedger{}, fmt.Errorf("artifact schema is required")
-	}
-	validator, err := validateRecommendationEvidenceTypedFile(artifactPath, header.Schema)
-	if err != nil {
-		return AtlasRecommendationCommandRunLedger{}, err
-	}
-	digest, err := digestFile(artifactPath)
+	summary, err := BuildAtlasRecommendationArtifactSummary(artifactPath)
 	if err != nil {
 		return AtlasRecommendationCommandRunLedger{}, err
 	}
@@ -42,11 +61,11 @@ func BuildAtlasRecommendationCommandRunLedger(command, artifactPath string) (Atl
 		Schema:                 AtlasRecommendationCommandRunLedgerContract,
 		Status:                 "recorded",
 		Command:                command,
-		ArtifactPath:           artifactPath,
-		ArtifactDigest:         digest,
-		ArtifactSchema:         header.Schema,
-		TypedValidator:         validator,
-		OutputStatus:           header.Status,
+		ArtifactPath:           summary.Path,
+		ArtifactDigest:         summary.Digest,
+		ArtifactSchema:         summary.Schema,
+		TypedValidator:         summary.TypedValidator,
+		OutputStatus:           summary.OutputStatus,
 		RecordsInvocation:      true,
 		NoPromotionRequested:   true,
 		PromotionGranted:       false,
@@ -124,4 +143,8 @@ func ValidateAtlasRecommendationCommandRunLedger(ledger AtlasRecommendationComma
 		errs = append(errs, "mutates_repositories must be false")
 	}
 	return joinErrors(errs)
+}
+
+func WriteAtlasRecommendationCommandRunLedger(path string, ledger AtlasRecommendationCommandRunLedger) error {
+	return WriteJSON(path, ledger)
 }

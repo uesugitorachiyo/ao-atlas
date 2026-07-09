@@ -23,11 +23,11 @@ func BuildAtlasRecommendationRunLedgerCoverageCheck(registryPath, rollupPath str
 	if err := ValidateAtlasRecommendationCommandRunLedgerRollup(rollup); err != nil {
 		return AtlasRecommendationRunLedgerCoverageCheck{}, err
 	}
-	registryDigest, err := digestFile(registryPath)
+	registrySummary, err := BuildAtlasRecommendationArtifactSummary(registryPath)
 	if err != nil {
 		return AtlasRecommendationRunLedgerCoverageCheck{}, err
 	}
-	rollupDigest, err := digestFile(rollupPath)
+	rollupSummary, err := BuildAtlasRecommendationArtifactSummary(rollupPath)
 	if err != nil {
 		return AtlasRecommendationRunLedgerCoverageCheck{}, err
 	}
@@ -65,10 +65,10 @@ func BuildAtlasRecommendationRunLedgerCoverageCheck(registryPath, rollupPath str
 	check := AtlasRecommendationRunLedgerCoverageCheck{
 		Schema:                         AtlasRecommendationRunLedgerCoverageCheckContract,
 		Status:                         status,
-		SourceRegistryPath:             publicArtifactRef(registryPath),
-		SourceRegistryDigest:           registryDigest,
-		SourceRollupPath:               publicArtifactRef(rollupPath),
-		SourceRollupDigest:             rollupDigest,
+		SourceRegistryPath:             registrySummary.PublicPath,
+		SourceRegistryDigest:           registrySummary.Digest,
+		SourceRollupPath:               rollupSummary.PublicPath,
+		SourceRollupDigest:             rollupSummary.Digest,
 		RegistryCommandCount:           registry.SchemaCount,
 		RequiredCommandCount:           len(requiredCommands),
 		CoveredCommandCount:            len(coveredCommands),
