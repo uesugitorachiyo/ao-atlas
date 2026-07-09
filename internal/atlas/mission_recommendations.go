@@ -1155,14 +1155,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 	finalAllowed := nodesComplete && leaseTiming.MinMinutesMet
 	transition := recommendationReadbackTransition(finalAllowed, nodesComplete, leaseTiming, completed, wave.MinimumTasks, ready, blocked, failed, firstExecutable)
 	finalGate := recommendationFinalResponseGateEvaluation(finalAllowed, nodesComplete, leaseTiming, ready, blocked, failed, transition.ExactNextAction, firstExecutable)
-	status := "ready"
-	if finalAllowed {
-		status = "completed"
-	} else if blocked > 0 || failed > 0 {
-		status = "blocked"
-	} else if completed > 0 {
-		status = "in_progress"
-	}
+	compactStatus := recommendationCompactReadbackStatus(completed, wave.TotalTasks, ready, blocked, failed, finalAllowed)
 	foundryRollupStatus := "required_pending_first_node_import"
 	promoterReadbackStatus := wave.PromoterReadbackStatus
 	promoterNoPromotionStatus := "required_not_bound_until_promotion_evidence_exists"
@@ -1208,7 +1201,7 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		ContractVersion:           AtlasRecommendationReadbackContract,
 		MissionID:                 wave.MissionID,
 		TargetInstance:            wave.TargetInstance,
-		Status:                    status,
+		Status:                    compactStatus.ReadbackStatus,
 		SourceDigest:              wave.SourceDigest,
 		WaveDigest:                waveDigest,
 		WorkgraphDigest:           workgraphDigest,
@@ -1346,6 +1339,32 @@ func recommendationReadbackTransition(finalAllowed bool, nodesComplete bool, lea
 		transition.ExactNextAction = fmt.Sprintf("Emit Foundry import for %s and execute exactly one active node.", firstExecutable)
 	}
 	return transition
+}
+
+type atlasRecommendationCompactReadbackStatus struct {
+	ReadbackStatus       string
+	NodeCompletionStatus string
+}
+
+func recommendationCompactReadbackStatus(completed, total, ready, blocked, failed int, finalAllowed bool) atlasRecommendationCompactReadbackStatus {
+	status := atlasRecommendationCompactReadbackStatus{
+		ReadbackStatus:       "ready",
+		NodeCompletionStatus: "nodes_in_progress",
+	}
+	if finalAllowed {
+		status.ReadbackStatus = "completed"
+	} else if blocked > 0 || failed > 0 {
+		status.ReadbackStatus = "blocked"
+	} else if completed > 0 {
+		status.ReadbackStatus = "in_progress"
+	}
+	if completed == total && ready == 0 && blocked == 0 && failed == 0 {
+		status.NodeCompletionStatus = "all_nodes_complete"
+	}
+	if blocked > 0 || failed > 0 {
+		status.NodeCompletionStatus = "blocked_or_failed_nodes_present"
+	}
+	return status
 }
 
 func commandTimelinePlaceholders() []AtlasCommandTimelinePlaceholder {
@@ -2220,13 +2239,8 @@ func BuildAtlasRecommendationCommandReadback(readback AtlasRecommendationReadbac
 	if readback.Supervisor != nil {
 		minMinutes = readback.Supervisor.MinMinutes
 	}
-	nodeStatus := "nodes_in_progress"
-	if readback.CompletedNodes == readback.TotalNodes && readback.ReadyNodes == 0 && readback.BlockedNodes == 0 && readback.FailedNodes == 0 {
-		nodeStatus = "all_nodes_complete"
-	}
-	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
-		nodeStatus = "blocked_or_failed_nodes_present"
-	}
+	compactStatus := recommendationCompactReadbackStatus(readback.CompletedNodes, readback.TotalNodes, readback.ReadyNodes, readback.BlockedNodes, readback.FailedNodes, readback.FinalResponseAllowed)
+	nodeStatus := compactStatus.NodeCompletionStatus
 	compactTimeline := fmt.Sprintf("%d/%d recommendation nodes complete; ready_nodes=%d; blocked_nodes=%d; failed_nodes=%d; elapsed_minutes=%d; min_minutes=%d; min_minutes_met=%t; node_completion_status=%s; lease_time_status=%s; final_response_allowed=%t; continuation_contract_reason=%s; exact_next_action=%s", readback.CompletedNodes, readback.TotalNodes, readback.ReadyNodes, readback.BlockedNodes, readback.FailedNodes, readback.ElapsedMinutes, minMinutes, readback.MinMinutesMet, nodeStatus, readback.LeaseTimeStatus, readback.FinalResponseAllowed, readback.ContinuationContract.Reason, readback.ExactNextAction)
 	return AtlasRecommendationCommandReadback{
 		Schema:                     "ao.atlas.recommendation-command-readback.v0.1",
@@ -2310,17 +2324,16 @@ func BuildAtlasRecommendationPromoterReadback(readback AtlasRecommendationReadba
 }
 
 func BuildAtlasRecommendationFoundryRollup(readback AtlasRecommendationReadback) AtlasRecommendationFoundryRollup {
-	nodeStatus := "nodes_in_progress"
+	compactStatus := recommendationCompactReadbackStatus(readback.CompletedNodes, readback.TotalNodes, readback.ReadyNodes, readback.BlockedNodes, readback.FailedNodes, readback.FinalResponseAllowed)
+	nodeStatus := compactStatus.NodeCompletionStatus
 	status := "in_progress"
-	if readback.CompletedNodes == readback.TotalNodes && readback.ReadyNodes == 0 && readback.BlockedNodes == 0 && readback.FailedNodes == 0 {
-		nodeStatus = "all_nodes_complete"
+	if nodeStatus == "all_nodes_complete" {
 		status = "nodes_complete_lease_pending"
 	}
 	if readback.FinalResponseAllowed {
 		status = "completed"
 	}
 	if readback.BlockedNodes > 0 || readback.FailedNodes > 0 {
-		nodeStatus = "blocked_or_failed_nodes_present"
 		status = "blocked"
 	}
 	return AtlasRecommendationFoundryRollup{
