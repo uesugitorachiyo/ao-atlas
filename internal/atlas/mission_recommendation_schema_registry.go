@@ -3,85 +3,13 @@ package atlas
 import "fmt"
 
 func DefaultAtlasRecommendationEvidenceSchemaRegistry() (AtlasRecommendationEvidenceSchemaRegistry, error) {
+	entries := defaultAtlasRecommendationEvidenceSchemaRegistryEntries()
 	registry := AtlasRecommendationEvidenceSchemaRegistry{
-		Schema:          AtlasRecommendationEvidenceSchemaRegistryContract,
-		Status:          "ready",
-		RegistryPurpose: "recommendation_control_plane_typed_artifact_coverage",
-		Schemas: []AtlasRecommendationEvidenceSchemaRegistryEntry{
-			{
-				Schema:         AtlasRecommendationNextTrackDecisionContract,
-				Artifact:       "recommendation-next-track-decision",
-				Command:        "next-track",
-				TypedValidator: "typed:recommendation-next-track-decision",
-				StatusField:    "status",
-				SafetyClass:    "planning_readback_no_execution",
-				PlanningOnly:   true,
-			},
-			{
-				Schema:         AtlasConsumedRecommendationLedgerContract,
-				Artifact:       "consumed-recommendation-ledger",
-				Command:        "consumed-ledger",
-				TypedValidator: "typed:consumed-recommendation-ledger",
-				StatusField:    "status",
-				SafetyClass:    "planning_readback_no_execution",
-				PlanningOnly:   true,
-			},
-			{
-				Schema:         AtlasRecommendationTrackRegistryContract,
-				Artifact:       "recommendation-track-registry",
-				Command:        "track-registry",
-				TypedValidator: "typed:recommendation-track-registry",
-				StatusField:    "status",
-				SafetyClass:    "planning_readback_no_execution",
-				PlanningOnly:   true,
-			},
-			{
-				Schema:         AtlasRecommendationCommandRunLedgerContract,
-				Artifact:       "recommendation-command-run-ledger",
-				Command:        "run-ledger",
-				TypedValidator: "typed:recommendation-command-run-ledger",
-				StatusField:    "status",
-				SafetyClass:    "planning_readback_no_execution",
-				PlanningOnly:   true,
-			},
-			{
-				Schema:         AtlasRecommendationEvidenceValidationReportContract,
-				Artifact:       "recommendation-evidence-validation-report",
-				Command:        "validate-evidence",
-				TypedValidator: "typed:recommendation-evidence-validation-report",
-				StatusField:    "status",
-				SafetyClass:    "planning_readback_no_execution",
-				PlanningOnly:   true,
-			},
-			{
-				Schema:         AtlasRecommendationFinalResponseGatesContract,
-				Artifact:       "recommendation-final-response-gates",
-				Command:        "final-response-gates",
-				TypedValidator: "typed:recommendation-final-response-gates",
-				StatusField:    "status",
-				SafetyClass:    "planning_readback_no_execution",
-				PlanningOnly:   true,
-			},
-			{
-				Schema:         AtlasRecommendationEvidenceSchemaRegistryCoverageContract,
-				Artifact:       "recommendation-evidence-schema-registry-coverage",
-				Command:        "schema-registry-coverage",
-				TypedValidator: "typed:recommendation-evidence-schema-registry-coverage",
-				StatusField:    "status",
-				SafetyClass:    "planning_readback_no_execution",
-				PlanningOnly:   true,
-			},
-			{
-				Schema:         AtlasSchemaHealthRepairPromptContract,
-				Artifact:       "schema-health-repair-prompt",
-				Command:        "schema-health-repair-prompt",
-				TypedValidator: "typed:schema-health-repair-prompt",
-				StatusField:    "status",
-				SafetyClass:    "planning_readback_no_execution",
-				PlanningOnly:   true,
-			},
-		},
-		SchemaCount:                    8,
+		Schema:                         AtlasRecommendationEvidenceSchemaRegistryContract,
+		Status:                         "ready",
+		RegistryPurpose:                "recommendation_control_plane_typed_artifact_coverage",
+		Schemas:                        entries,
+		SchemaCount:                    len(entries),
 		TypedValidatorCoverageComplete: true,
 		NoPromotionRequested:           true,
 		PromotionGranted:               false,
@@ -99,6 +27,31 @@ func DefaultAtlasRecommendationEvidenceSchemaRegistry() (AtlasRecommendationEvid
 	return registry, nil
 }
 
+func defaultAtlasRecommendationEvidenceSchemaRegistryEntries() []AtlasRecommendationEvidenceSchemaRegistryEntry {
+	return []AtlasRecommendationEvidenceSchemaRegistryEntry{
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationNextTrackDecisionContract, "recommendation-next-track-decision", "next-track", "typed:recommendation-next-track-decision"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasConsumedRecommendationLedgerContract, "consumed-recommendation-ledger", "consumed-ledger", "typed:consumed-recommendation-ledger"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationTrackRegistryContract, "recommendation-track-registry", "track-registry", "typed:recommendation-track-registry"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationCommandRunLedgerContract, "recommendation-command-run-ledger", "run-ledger", "typed:recommendation-command-run-ledger"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationEvidenceValidationReportContract, "recommendation-evidence-validation-report", "validate-evidence", "typed:recommendation-evidence-validation-report"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationFinalResponseGatesContract, "recommendation-final-response-gates", "final-response-gates", "typed:recommendation-final-response-gates"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationEvidenceSchemaRegistryCoverageContract, "recommendation-evidence-schema-registry-coverage", "schema-registry-coverage", "typed:recommendation-evidence-schema-registry-coverage"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasSchemaHealthRepairPromptContract, "schema-health-repair-prompt", "schema-health-repair-prompt", "typed:schema-health-repair-prompt"),
+	}
+}
+
+func newAtlasRecommendationEvidenceSchemaRegistryEntry(schema, artifact, command, typedValidator string) AtlasRecommendationEvidenceSchemaRegistryEntry {
+	return AtlasRecommendationEvidenceSchemaRegistryEntry{
+		Schema:         schema,
+		Artifact:       artifact,
+		Command:        command,
+		TypedValidator: typedValidator,
+		StatusField:    "status",
+		SafetyClass:    "planning_readback_no_execution",
+		PlanningOnly:   true,
+	}
+}
+
 func ValidateAtlasRecommendationEvidenceSchemaRegistry(registry AtlasRecommendationEvidenceSchemaRegistry) error {
 	var errs []string
 	requireContract(&errs, "recommendation_evidence_schema_registry", registry.Schema, AtlasRecommendationEvidenceSchemaRegistryContract)
@@ -108,16 +61,7 @@ func ValidateAtlasRecommendationEvidenceSchemaRegistry(registry AtlasRecommendat
 	if registry.RegistryPurpose != "recommendation_control_plane_typed_artifact_coverage" {
 		errs = append(errs, "registry_purpose must be recommendation_control_plane_typed_artifact_coverage")
 	}
-	expected := []AtlasRecommendationEvidenceSchemaRegistryEntry{
-		{Schema: AtlasRecommendationNextTrackDecisionContract, Artifact: "recommendation-next-track-decision", Command: "next-track", TypedValidator: "typed:recommendation-next-track-decision", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
-		{Schema: AtlasConsumedRecommendationLedgerContract, Artifact: "consumed-recommendation-ledger", Command: "consumed-ledger", TypedValidator: "typed:consumed-recommendation-ledger", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
-		{Schema: AtlasRecommendationTrackRegistryContract, Artifact: "recommendation-track-registry", Command: "track-registry", TypedValidator: "typed:recommendation-track-registry", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
-		{Schema: AtlasRecommendationCommandRunLedgerContract, Artifact: "recommendation-command-run-ledger", Command: "run-ledger", TypedValidator: "typed:recommendation-command-run-ledger", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
-		{Schema: AtlasRecommendationEvidenceValidationReportContract, Artifact: "recommendation-evidence-validation-report", Command: "validate-evidence", TypedValidator: "typed:recommendation-evidence-validation-report", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
-		{Schema: AtlasRecommendationFinalResponseGatesContract, Artifact: "recommendation-final-response-gates", Command: "final-response-gates", TypedValidator: "typed:recommendation-final-response-gates", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
-		{Schema: AtlasRecommendationEvidenceSchemaRegistryCoverageContract, Artifact: "recommendation-evidence-schema-registry-coverage", Command: "schema-registry-coverage", TypedValidator: "typed:recommendation-evidence-schema-registry-coverage", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
-		{Schema: AtlasSchemaHealthRepairPromptContract, Artifact: "schema-health-repair-prompt", Command: "schema-health-repair-prompt", TypedValidator: "typed:schema-health-repair-prompt", StatusField: "status", SafetyClass: "planning_readback_no_execution", PlanningOnly: true},
-	}
+	expected := defaultAtlasRecommendationEvidenceSchemaRegistryEntries()
 	if registry.SchemaCount != len(registry.Schemas) {
 		errs = append(errs, "schema_count must equal schemas length")
 	}

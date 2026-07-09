@@ -102,3 +102,32 @@ func TestMissionRecommendationsSchemaRegistryPublishesTypedArtifactCoverage(t *t
 		t.Fatalf("expected typed recommendation schema registry validator, got %s", validator)
 	}
 }
+
+func TestMissionRecommendationsSchemaRegistryUsesTypedEntryConstructors(t *testing.T) {
+	registry, err := DefaultAtlasRecommendationEvidenceSchemaRegistry()
+	if err != nil {
+		t.Fatal(err)
+	}
+	entries := defaultAtlasRecommendationEvidenceSchemaRegistryEntries()
+	if len(entries) != 8 {
+		t.Fatalf("typed registry constructors drifted: got %d entries", len(entries))
+	}
+	if strings.Join(schemaRegistryEntryKeys(registry.Schemas), ",") != strings.Join(schemaRegistryEntryKeys(entries), ",") {
+		t.Fatalf("default registry entries are not constructor-backed\ngot  %#v\nwant %#v", registry.Schemas, entries)
+	}
+	for _, entry := range entries {
+		if entry.StatusField != "status" ||
+			entry.SafetyClass != "planning_readback_no_execution" ||
+			!entry.PlanningOnly {
+			t.Fatalf("typed registry constructor lost planning-only defaults: %#v", entry)
+		}
+	}
+}
+
+func schemaRegistryEntryKeys(entries []AtlasRecommendationEvidenceSchemaRegistryEntry) []string {
+	keys := make([]string, 0, len(entries))
+	for _, entry := range entries {
+		keys = append(keys, entry.Schema+"|"+entry.Artifact+"|"+entry.Command+"|"+entry.TypedValidator)
+	}
+	return keys
+}
