@@ -33,12 +33,13 @@ type AtlasNextWaveFeatureDepthExportOptions struct {
 }
 
 type AtlasNextWaveRefactoringExportOptions struct {
-	MissionID             string
-	SourceEvidenceRoot    string
-	SourceReadbackPath    string
-	SourceAssertionPath   string
-	NextTrackDecisionPath string
-	MinTasks              int
+	MissionID                  string
+	SourceEvidenceRoot         string
+	SourceReadbackPath         string
+	SourceAssertionPath        string
+	NextTrackDecisionPath      string
+	ConsumedRecommendationPath string
+	MinTasks                   int
 }
 
 type AtlasRecommendationWaveResult struct {
@@ -364,6 +365,7 @@ func BuildAtlasNextWaveRefactoringRecommendations(options AtlasNextWaveRefactori
 	sourceReadbackPath := filepath.ToSlash(strings.TrimSpace(options.SourceReadbackPath))
 	sourceAssertionPath := filepath.ToSlash(strings.TrimSpace(options.SourceAssertionPath))
 	nextTrackDecisionPath := filepath.ToSlash(strings.TrimSpace(options.NextTrackDecisionPath))
+	consumedRecommendationPath := filepath.ToSlash(strings.TrimSpace(options.ConsumedRecommendationPath))
 	for label, path := range map[string]string{
 		"source_evidence_root":  sourceEvidenceRoot,
 		"source_readback_path":  sourceReadbackPath,
@@ -375,6 +377,9 @@ func BuildAtlasNextWaveRefactoringRecommendations(options AtlasNextWaveRefactori
 	}
 	if nextTrackDecisionPath == "" {
 		return AOMissionRefactoringRecommendations{}, fmt.Errorf("next_track_decision_path is required")
+	}
+	if consumedRecommendationPath == "" {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("consumed_recommendation_ledger_path is required")
 	}
 	decision, err := LoadJSON[AtlasRecommendationNextTrackDecision](nextTrackDecisionPath)
 	if err != nil {
@@ -400,7 +405,31 @@ func BuildAtlasNextWaveRefactoringRecommendations(options AtlasNextWaveRefactori
 	if err != nil {
 		return AOMissionRefactoringRecommendations{}, err
 	}
+	ledger, err := LoadJSON[AtlasConsumedRecommendationLedger](consumedRecommendationPath)
+	if err != nil {
+		return AOMissionRefactoringRecommendations{}, err
+	}
+	if err := ValidateAtlasConsumedRecommendationLedger(ledger); err != nil {
+		return AOMissionRefactoringRecommendations{}, err
+	}
+	if ledger.SourceEvidenceRoot != sourceEvidenceRoot || filepath.ToSlash(ledger.SourceReadbackPath) != sourceReadbackPath {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("consumed recommendation ledger must match refactoring export source")
+	}
+	if filepath.ToSlash(ledger.NextTrackDecisionPath) != nextTrackDecisionPath {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("consumed recommendation ledger next_track_decision_path must match refactoring export decision")
+	}
+	if ledger.SourceReadbackDigest != sourceReadbackDigest {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("consumed recommendation ledger source_readback_digest %s does not match current source readback digest %s", ledger.SourceReadbackDigest, sourceReadbackDigest)
+	}
+	if ledger.NextTrackDecisionDigest != decisionDigest {
+		return AOMissionRefactoringRecommendations{}, fmt.Errorf("consumed recommendation ledger next_track_decision_digest %s does not match current next-track decision digest %s", ledger.NextTrackDecisionDigest, decisionDigest)
+	}
+	ledgerDigest, err := digestFile(consumedRecommendationPath)
+	if err != nil {
+		return AOMissionRefactoringRecommendations{}, err
+	}
 	nextTrackDecisionRef := publicArtifactRef(nextTrackDecisionPath)
+	consumedRecommendationRef := publicArtifactRef(consumedRecommendationPath)
 
 	tasks := make([]AOMissionRefactoringTask, 0, 40)
 	for i, seed := range nextWaveRefactoringSeeds() {
@@ -426,6 +455,8 @@ func BuildAtlasNextWaveRefactoringRecommendations(options AtlasNextWaveRefactori
 		SourceAssertionPath:     sourceAssertionPath,
 		NextTrackDecisionPath:   nextTrackDecisionRef,
 		NextTrackDecisionDigest: decisionDigest,
+		ConsumedLedgerPath:      consumedRecommendationRef,
+		ConsumedLedgerDigest:    ledgerDigest,
 		Tasks:                   tasks,
 		NoPromotionRequested:    true,
 		PromotionGranted:        false,
@@ -559,6 +590,13 @@ func ValidateAtlasNextWaveRefactoringRecommendations(bundle AOMissionRefactoring
 	}
 	if !digestPattern.MatchString(bundle.NextTrackDecisionDigest) {
 		errs = append(errs, "next_track_decision_digest must be sha256 digest")
+	}
+	if bundle.ConsumedLedgerPath != "" || bundle.ConsumedLedgerDigest != "" {
+		requireField(&errs, "consumed_recommendation_ledger_path", bundle.ConsumedLedgerPath)
+		checkPublicPath(&errs, "consumed_recommendation_ledger_path", bundle.ConsumedLedgerPath, true)
+		if !digestPattern.MatchString(bundle.ConsumedLedgerDigest) {
+			errs = append(errs, "consumed_recommendation_ledger_digest must be sha256 digest")
+		}
 	}
 	seen := map[string]bool{}
 	themes := map[string]bool{}
