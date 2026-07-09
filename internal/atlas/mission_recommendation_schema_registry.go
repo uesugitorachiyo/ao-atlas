@@ -28,15 +28,16 @@ func DefaultAtlasRecommendationEvidenceSchemaRegistry() (AtlasRecommendationEvid
 }
 
 func defaultAtlasRecommendationEvidenceSchemaRegistryEntries() []AtlasRecommendationEvidenceSchemaRegistryEntry {
+	contracts := defaultAtlasRecommendationEvidenceSchemaContracts()
 	return []AtlasRecommendationEvidenceSchemaRegistryEntry{
-		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationNextTrackDecisionContract, "recommendation-next-track-decision", "next-track", "typed:recommendation-next-track-decision"),
-		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasConsumedRecommendationLedgerContract, "consumed-recommendation-ledger", "consumed-ledger", "typed:consumed-recommendation-ledger"),
-		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationTrackRegistryContract, "recommendation-track-registry", "track-registry", "typed:recommendation-track-registry"),
-		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationCommandRunLedgerContract, "recommendation-command-run-ledger", "run-ledger", "typed:recommendation-command-run-ledger"),
-		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationEvidenceValidationReportContract, "recommendation-evidence-validation-report", "validate-evidence", "typed:recommendation-evidence-validation-report"),
-		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationFinalResponseGatesContract, "recommendation-final-response-gates", "final-response-gates", "typed:recommendation-final-response-gates"),
-		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasRecommendationEvidenceSchemaRegistryCoverageContract, "recommendation-evidence-schema-registry-coverage", "schema-registry-coverage", "typed:recommendation-evidence-schema-registry-coverage"),
-		newAtlasRecommendationEvidenceSchemaRegistryEntry(AtlasSchemaHealthRepairPromptContract, "schema-health-repair-prompt", "schema-health-repair-prompt", "typed:schema-health-repair-prompt"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.NextTrackDecision, "recommendation-next-track-decision", "next-track", "typed:recommendation-next-track-decision"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.ConsumedRecommendationLedger, "consumed-recommendation-ledger", "consumed-ledger", "typed:consumed-recommendation-ledger"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.TrackRegistry, "recommendation-track-registry", "track-registry", "typed:recommendation-track-registry"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.CommandRunLedger, "recommendation-command-run-ledger", "run-ledger", "typed:recommendation-command-run-ledger"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.EvidenceValidationReport, "recommendation-evidence-validation-report", "validate-evidence", "typed:recommendation-evidence-validation-report"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.FinalResponseGates, "recommendation-final-response-gates", "final-response-gates", "typed:recommendation-final-response-gates"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.EvidenceSchemaRegistryCoverage, "recommendation-evidence-schema-registry-coverage", "schema-registry-coverage", "typed:recommendation-evidence-schema-registry-coverage"),
+		newAtlasRecommendationEvidenceSchemaRegistryEntry(contracts.SchemaHealthRepairPrompt, "schema-health-repair-prompt", "schema-health-repair-prompt", "typed:schema-health-repair-prompt"),
 	}
 }
 
