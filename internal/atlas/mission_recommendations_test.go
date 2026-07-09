@@ -4524,6 +4524,74 @@ func TestRecommendationCompactReadbackStatusNormalizesNodeStates(t *testing.T) {
 	}
 }
 
+func TestRecommendationReturnGateDenialReasonsAreStructured(t *testing.T) {
+	cases := []struct {
+		name                    string
+		returnGateStatus        string
+		finalAllowed            bool
+		wantCode                string
+		wantFinalResponseGate   string
+		wantSummaryContains     string
+		wantAllowsFinalResponse bool
+	}{
+		{
+			name:                    "final response allowed",
+			returnGateStatus:        "final_response_allowed",
+			finalAllowed:            true,
+			wantCode:                "allow_final_response",
+			wantFinalResponseGate:   "allow_final_response",
+			wantSummaryContains:     "final response allowed",
+			wantAllowsFinalResponse: true,
+		},
+		{
+			name:                  "hard blocker",
+			returnGateStatus:      "blocked_hard_blocker",
+			wantCode:              "hard_blocker",
+			wantFinalResponseGate: "blocked_hard_blocker",
+			wantSummaryContains:   "hard blocker",
+		},
+		{
+			name:                  "lease timing missing",
+			returnGateStatus:      "blocked_lease_timing_missing",
+			wantCode:              "lease_timing_missing",
+			wantFinalResponseGate: "deny_ready_nodes_or_exact_next_action_remain",
+			wantSummaryContains:   "lease timing",
+		},
+		{
+			name:                  "minimum minutes unmet",
+			returnGateStatus:      "blocked_minimum_minutes_unmet",
+			wantCode:              "minimum_minutes_unmet",
+			wantFinalResponseGate: "deny_ready_nodes_or_exact_next_action_remain",
+			wantSummaryContains:   "minimum minutes",
+		},
+		{
+			name:                  "ready nodes remain",
+			returnGateStatus:      "blocked_ready_nodes_remain",
+			wantCode:              "ready_nodes_remain",
+			wantFinalResponseGate: "deny_ready_nodes_or_exact_next_action_remain",
+			wantSummaryContains:   "ready nodes",
+		},
+		{
+			name:                  "no executable ready node",
+			returnGateStatus:      "blocked_no_executable_ready_node",
+			wantCode:              "no_executable_ready_node",
+			wantFinalResponseGate: "deny_ready_nodes_or_exact_next_action_remain",
+			wantSummaryContains:   "executable",
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			reason := recommendationReturnGateDenialReason(tc.finalAllowed, tc.returnGateStatus)
+			if reason.Code != tc.wantCode ||
+				reason.FinalResponseDenialGate != tc.wantFinalResponseGate ||
+				reason.AllowsFinalResponse != tc.wantAllowsFinalResponse ||
+				!strings.Contains(reason.Summary, tc.wantSummaryContains) {
+				t.Fatalf("structured return gate denial reason drifted: %#v", reason)
+			}
+		})
+	}
+}
+
 func TestLongRunHardeningWaveProductionReadinessSummaryBindsVerificationCIMergeCleanupAndEvidenceRoots(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
 	nodeTwentyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-20", "recommendation-readback-after.json"))

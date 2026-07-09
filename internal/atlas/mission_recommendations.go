@@ -1515,22 +1515,74 @@ type atlasRecommendationFinalResponseGateEvaluation struct {
 
 func recommendationFinalResponseGateEvaluation(finalAllowed bool, nodesComplete bool, leaseTiming atlasRecommendationLeaseTiming, ready, blocked, failed int, exactNextAction, firstExecutable string) atlasRecommendationFinalResponseGateEvaluation {
 	returnGateStatus := recommendationReturnGateStatus(finalAllowed, nodesComplete, leaseTiming, ready, blocked, failed)
+	denialReason := recommendationReturnGateDenialReason(finalAllowed, returnGateStatus)
 	return atlasRecommendationFinalResponseGateEvaluation{
 		ReturnGateStatus:        returnGateStatus,
-		FinalResponseDenialGate: recommendationFinalResponseDenialGate(finalAllowed, returnGateStatus),
+		FinalResponseDenialGate: denialReason.FinalResponseDenialGate,
 		ContinuationContract:    buildAtlasContinuationContract(ready, exactNextAction, returnGateStatus, finalAllowed),
 		ExactNextActionReadback: buildExactNextActionReadback(exactNextAction, firstExecutable, returnGateStatus, finalAllowed),
 	}
 }
 
 func recommendationFinalResponseDenialGate(finalAllowed bool, returnGateStatus string) string {
+	return recommendationReturnGateDenialReason(finalAllowed, returnGateStatus).FinalResponseDenialGate
+}
+
+type atlasRecommendationReturnGateDenialReason struct {
+	Code                    string
+	Summary                 string
+	FinalResponseDenialGate string
+	AllowsFinalResponse     bool
+}
+
+func recommendationReturnGateDenialReason(finalAllowed bool, returnGateStatus string) atlasRecommendationReturnGateDenialReason {
 	if finalAllowed {
-		return "allow_final_response"
+		return atlasRecommendationReturnGateDenialReason{
+			Code:                    "allow_final_response",
+			Summary:                 "final response allowed by return gate",
+			FinalResponseDenialGate: "allow_final_response",
+			AllowsFinalResponse:     true,
+		}
 	}
 	if returnGateStatus == "blocked_hard_blocker" {
-		return "blocked_hard_blocker"
+		return atlasRecommendationReturnGateDenialReason{
+			Code:                    "hard_blocker",
+			Summary:                 "hard blocker prevents final response",
+			FinalResponseDenialGate: "blocked_hard_blocker",
+		}
 	}
-	return "deny_ready_nodes_or_exact_next_action_remain"
+	switch returnGateStatus {
+	case "blocked_lease_timing_missing":
+		return atlasRecommendationReturnGateDenialReason{
+			Code:                    "lease_timing_missing",
+			Summary:                 "lease timing evidence missing prevents final response",
+			FinalResponseDenialGate: "deny_ready_nodes_or_exact_next_action_remain",
+		}
+	case "blocked_minimum_minutes_unmet":
+		return atlasRecommendationReturnGateDenialReason{
+			Code:                    "minimum_minutes_unmet",
+			Summary:                 "minimum minutes unmet prevents final response",
+			FinalResponseDenialGate: "deny_ready_nodes_or_exact_next_action_remain",
+		}
+	case "blocked_ready_nodes_remain":
+		return atlasRecommendationReturnGateDenialReason{
+			Code:                    "ready_nodes_remain",
+			Summary:                 "ready nodes remain before final response",
+			FinalResponseDenialGate: "deny_ready_nodes_or_exact_next_action_remain",
+		}
+	case "blocked_no_executable_ready_node":
+		return atlasRecommendationReturnGateDenialReason{
+			Code:                    "no_executable_ready_node",
+			Summary:                 "no executable ready node is available before final response",
+			FinalResponseDenialGate: "deny_ready_nodes_or_exact_next_action_remain",
+		}
+	default:
+		return atlasRecommendationReturnGateDenialReason{
+			Code:                    "return_gate_denied",
+			Summary:                 "return gate denies final response",
+			FinalResponseDenialGate: "deny_ready_nodes_or_exact_next_action_remain",
+		}
+	}
 }
 
 func buildAtlasContinuationContract(readyNodes int, exactNextAction, returnGateStatus string, finalResponseAllowed bool) AtlasContinuationContract {
