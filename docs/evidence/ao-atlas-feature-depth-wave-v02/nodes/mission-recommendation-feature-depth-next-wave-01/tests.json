@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-01",
+  "task_id": "mission-recommendation-feature-depth-next-wave-01-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestFeatureDepthWaveV02MissionReadbackDeltaEvidenceBindsCheckpointComparison -count=1 failed before node evidence existed",
+  "targeted_regression": "go test ./internal/atlas -run TestFeatureDepthWaveV02MissionReadbackDeltaEvidenceBindsCheckpointComparison -count=1",
+  "assertions": [
+    "expected_completed_nodes_after=1",
+    "expected_ready_nodes_after=39",
+    "expected_final_response_allowed_after=false",
+    "mission-readback-delta changed_fields are deterministic",
+    "first_executable_node advances to mission-recommendation-feature-depth-next-wave-02"
+  ]
+}

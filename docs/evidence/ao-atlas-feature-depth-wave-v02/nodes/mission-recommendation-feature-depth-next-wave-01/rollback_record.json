@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-01",
+  "task_id": "mission-recommendation-feature-depth-next-wave-01-task",
+  "status": "recorded",
+  "rollback_scope": [
+    "revert internal/atlas/mission_readback_delta_test.go v02 regression additions",
+    "remove docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-01"
+  ],
+  "rollback_command": "git revert <node-01-merge-commit>",
+  "safety_boundaries_preserved": true
+}

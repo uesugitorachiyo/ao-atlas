@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-01",
+  "task_id": "mission-recommendation-feature-depth-next-wave-01-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_after": 1,
+  "ready_nodes_after": 39,
+  "final_response_allowed_after": false,
+  "exact_next_action_after": "Emit Foundry import for mission-recommendation-feature-depth-next-wave-02 and execute exactly one active node.",
+  "rsi_remains_denied": true
+}
