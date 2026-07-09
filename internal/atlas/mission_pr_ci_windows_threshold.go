@@ -1,6 +1,105 @@
 package atlas
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
+
+type AtlasWindowsCIWaitStateInput struct {
+	CheckName        string `json:"check_name"`
+	GitHubStatus     string `json:"github_status"`
+	GitHubConclusion string `json:"github_conclusion"`
+	DurationSeconds  int    `json:"duration_seconds"`
+	ThresholdSeconds int    `json:"threshold_seconds"`
+}
+
+type AtlasWindowsCIWaitState struct {
+	CheckName              string `json:"check_name"`
+	State                  string `json:"state"`
+	WaitState              string `json:"wait_state"`
+	GitHubStatus           string `json:"github_status"`
+	GitHubConclusion       string `json:"github_conclusion"`
+	DurationSeconds        int    `json:"duration_seconds"`
+	ThresholdSeconds       int    `json:"threshold_seconds"`
+	ExceedsThreshold       bool   `json:"exceeds_threshold"`
+	OverThresholdSeconds   int    `json:"over_threshold_seconds"`
+	RequiresCIWait         bool   `json:"requires_ci_wait"`
+	CIFailure              bool   `json:"ci_failure"`
+	OperatorAction         string `json:"operator_action"`
+	FinalResponseAllowed   bool   `json:"final_response_allowed"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+}
+
+func EvaluateAtlasWindowsCIThreshold(durationSeconds, thresholdSeconds int) (bool, int, error) {
+	if durationSeconds < 0 {
+		return false, 0, fmt.Errorf("duration_seconds must be non-negative")
+	}
+	if thresholdSeconds <= 0 {
+		return false, 0, fmt.Errorf("threshold_seconds must be greater than zero")
+	}
+	return windowsCIThresholdDelta(durationSeconds, thresholdSeconds), maxInt(durationSeconds-thresholdSeconds, 0), nil
+}
+
+func ClassifyAtlasWindowsCIWaitState(input AtlasWindowsCIWaitStateInput) (AtlasWindowsCIWaitState, error) {
+	if strings.TrimSpace(input.CheckName) == "" {
+		return AtlasWindowsCIWaitState{}, fmt.Errorf("check_name is required")
+	}
+	if !strings.Contains(strings.ToLower(input.CheckName), "windows-latest") {
+		return AtlasWindowsCIWaitState{}, fmt.Errorf("check_name must reference windows-latest")
+	}
+	exceeds, over, err := EvaluateAtlasWindowsCIThreshold(input.DurationSeconds, input.ThresholdSeconds)
+	if err != nil {
+		return AtlasWindowsCIWaitState{}, err
+	}
+
+	status := strings.ToUpper(strings.TrimSpace(input.GitHubStatus))
+	conclusion := strings.ToUpper(strings.TrimSpace(input.GitHubConclusion))
+	state := AtlasWindowsCIWaitState{
+		CheckName:              input.CheckName,
+		GitHubStatus:           status,
+		GitHubConclusion:       conclusion,
+		DurationSeconds:        input.DurationSeconds,
+		ThresholdSeconds:       input.ThresholdSeconds,
+		ExceedsThreshold:       exceeds,
+		OverThresholdSeconds:   over,
+		FinalResponseAllowed:   false,
+		ClaimsAuthorityAdvance: false,
+		RSIRemainsDenied:       true,
+	}
+
+	switch {
+	case oneOf(status, "QUEUED", "PENDING", "IN_PROGRESS"):
+		state.State = "pending"
+		state.RequiresCIWait = true
+		state.OperatorAction = "wait_for_ci"
+		if exceeds {
+			state.WaitState = "long_running_pending"
+		} else {
+			state.WaitState = "pending"
+		}
+	case status == "COMPLETED" && conclusion == "SUCCESS":
+		state.State = "passing"
+		state.OperatorAction = "merge_after_all_required_checks_pass"
+		if exceeds {
+			state.WaitState = "long_running_pending_before_success"
+		} else {
+			state.WaitState = "completed_success_under_threshold"
+		}
+	case status == "COMPLETED" && oneOf(conclusion, "FAILURE", "CANCELLED", "TIMED_OUT", "ACTION_REQUIRED", "STARTUP_FAILURE"):
+		state.State = "failing"
+		state.CIFailure = true
+		state.OperatorAction = "repair_before_merge"
+		if exceeds {
+			state.WaitState = "long_running_before_failure"
+		} else {
+			state.WaitState = "failed_under_threshold"
+		}
+	default:
+		return AtlasWindowsCIWaitState{}, fmt.Errorf("unsupported github status/conclusion: %s/%s", status, conclusion)
+	}
+	return state, nil
+}
 
 func BuildAtlasPRCIWindowsThresholdEvidence(summaryPath string, thresholdSeconds int) (AtlasPRCIWindowsThresholdEvidence, error) {
 	summary, err := LoadJSON[AtlasPRCITimingSummary](summaryPath)
@@ -78,10 +177,7 @@ func ValidateAtlasPRCIWindowsThresholdEvidence(evidence AtlasPRCIWindowsThreshol
 func summarizeWindowsThresholdRows(rows []AtlasPRCITimingRow, thresholdSeconds int) AtlasPRCIWindowsThresholdEvidence {
 	thresholdRows := make([]AtlasPRCIWindowsThresholdRow, 0, len(rows))
 	for _, row := range rows {
-		over := row.WindowsSeconds - thresholdSeconds
-		if over < 0 {
-			over = 0
-		}
+		exceeds, over, _ := EvaluateAtlasWindowsCIThreshold(row.WindowsSeconds, thresholdSeconds)
 		thresholdRows = append(thresholdRows, AtlasPRCIWindowsThresholdRow{
 			NodeID:               row.NodeID,
 			PRNumber:             row.PRNumber,
@@ -89,7 +185,7 @@ func summarizeWindowsThresholdRows(rows []AtlasPRCITimingRow, thresholdSeconds i
 			MergeCommit:          row.MergeCommit,
 			WindowsSeconds:       row.WindowsSeconds,
 			ThresholdSeconds:     thresholdSeconds,
-			ExceedsThreshold:     row.WindowsSeconds > thresholdSeconds,
+			ExceedsThreshold:     exceeds,
 			OverThresholdSeconds: over,
 		})
 	}
@@ -147,15 +243,16 @@ func validateWindowsThresholdRows(errs *[]string, rows []AtlasPRCIWindowsThresho
 		if row.ThresholdSeconds != thresholdSeconds {
 			*errs = append(*errs, prefix+".threshold_seconds must match evidence threshold")
 		}
-		expectedOver := row.WindowsSeconds - thresholdSeconds
-		if expectedOver < 0 {
-			expectedOver = 0
-		}
+		expectedExceeds, expectedOver, _ := EvaluateAtlasWindowsCIThreshold(row.WindowsSeconds, thresholdSeconds)
 		if row.OverThresholdSeconds != expectedOver {
 			*errs = append(*errs, prefix+".over_threshold_seconds must match windows seconds over threshold")
 		}
-		if row.ExceedsThreshold != (row.WindowsSeconds > thresholdSeconds) {
+		if row.ExceedsThreshold != expectedExceeds {
 			*errs = append(*errs, prefix+".exceeds_threshold must match windows seconds over threshold")
 		}
 	}
+}
+
+func windowsCIThresholdDelta(durationSeconds, thresholdSeconds int) bool {
+	return durationSeconds > thresholdSeconds
 }
