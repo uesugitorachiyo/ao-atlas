@@ -90,6 +90,7 @@ const AtlasRecommendationCommandRunLedgerContract = "ao.atlas.recommendation-com
 const AtlasRecommendationCommandRunLedgerRollupContract = "ao.atlas.recommendation-command-run-ledger-rollup.v0.1"
 const AtlasRecommendationRunLedgerCoverageCheckContract = "ao.atlas.recommendation-run-ledger-coverage-check.v0.1"
 const AtlasRecommendationRunLedgerOperatorSummaryBindingContract = "ao.atlas.recommendation-run-ledger-operator-summary-binding.v0.1"
+const AtlasRecommendationRunLedgerRetryFixturePackContract = "ao.atlas.recommendation-run-ledger-retry-fixture-pack.v0.1"
 const AtlasRecommendationFinalResponseGatesContract = "ao.atlas.recommendation-final-response-gates.v0.1"
 const AtlasRecommendationStaleReadbackTrackFixtureContract = "ao.atlas.recommendation-stale-readback-track-fixture.v0.1"
 const AtlasRecommendationEvidenceSchemaRegistryContract = "ao.atlas.recommendation-evidence-schema-registry.v0.1"
