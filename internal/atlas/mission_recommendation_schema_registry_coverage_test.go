@@ -129,6 +129,15 @@ func TestMissionRecommendationsSchemaRegistryCoverageAuditsValidationReport(t *t
 	}
 }
 
+func assertSchemaRegistryCoverageFailureOutput(t *testing.T, output string, expected []string) {
+	t.Helper()
+	for _, want := range expected {
+		if !strings.Contains(output, want) {
+			t.Fatalf("schema-registry-coverage failure output missing %q: %s", want, output)
+		}
+	}
+}
+
 func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingSchemaFailureReason(t *testing.T) {
 	root := repoRoot(t)
 	previousDir, err := os.Getwd()
@@ -208,16 +217,12 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingSchemaFailure
 	if code == 0 {
 		t.Fatalf("schema-registry-coverage should fail when a registry schema is missing: %s", out.String())
 	}
-	for _, want := range []string{
+	assertSchemaRegistryCoverageFailureOutput(t, out.String(), []string{
 		"status=failed",
 		"missing_schemas=1",
 		"missing_validators=0",
 		"rsi_remains_denied=true",
-	} {
-		if !strings.Contains(out.String(), want) {
-			t.Fatalf("schema-registry-coverage failure output missing %q: %s", want, out.String())
-		}
-	}
+	})
 
 	coverage := mustLoadJSON[map[string]any](t, coveragePath)
 	missingSchemas, ok := coverage["missing_schemas"].([]any)
@@ -329,18 +334,14 @@ func TestMissionRecommendationsSchemaRegistryCoverageDetectsStaleRegistryEntries
 	if code == 0 {
 		t.Fatalf("schema-registry-coverage should fail when a registry entry is stale: %s", out.String())
 	}
-	for _, want := range []string{
+	assertSchemaRegistryCoverageFailureOutput(t, out.String(), []string{
 		"status=failed",
 		"missing_schemas=1",
 		"missing_validators=1",
 		"stale_registry_entries=1",
 		"failure_reasons=missing_registry_schemas,missing_registry_validators,stale_registry_entries",
 		"rsi_remains_denied=true",
-	} {
-		if !strings.Contains(out.String(), want) {
-			t.Fatalf("schema-registry-coverage stale-entry output missing %q: %s", want, out.String())
-		}
-	}
+	})
 
 	coverage := mustLoadJSON[AtlasRecommendationEvidenceSchemaRegistryCoverage](t, coveragePath)
 	if coverage.StaleRegistryEntryCount != 1 ||
@@ -435,17 +436,13 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsMissingValidatorFail
 	if code == 0 {
 		t.Fatalf("schema-registry-coverage should fail when a registry validator is missing: %s", out.String())
 	}
-	for _, want := range []string{
+	assertSchemaRegistryCoverageFailureOutput(t, out.String(), []string{
 		"status=failed",
 		"missing_schemas=0",
 		"missing_validators=1",
 		"failure_reasons=missing_registry_validators",
 		"rsi_remains_denied=true",
-	} {
-		if !strings.Contains(out.String(), want) {
-			t.Fatalf("schema-registry-coverage failure output missing %q: %s", want, out.String())
-		}
-	}
+	})
 
 	coverage := mustLoadJSON[map[string]any](t, coveragePath)
 	missingValidators, ok := coverage["missing_validators"].([]any)
@@ -555,18 +552,14 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsCombinedMissingSchem
 	if code == 0 {
 		t.Fatalf("schema-registry-coverage should fail when registry schemas and validators are missing: %s", out.String())
 	}
-	for _, want := range []string{
+	assertSchemaRegistryCoverageFailureOutput(t, out.String(), []string{
 		"status=failed",
 		"missing_schemas=2",
 		"missing_validators=2",
 		"stale_registry_entries=2",
 		"failure_reasons=missing_registry_schemas,missing_registry_validators,stale_registry_entries",
 		"rsi_remains_denied=true",
-	} {
-		if !strings.Contains(out.String(), want) {
-			t.Fatalf("schema-registry-coverage combined failure output missing %q: %s", want, out.String())
-		}
-	}
+	})
 
 	coverage := mustLoadJSON[map[string]any](t, coveragePath)
 	missingSchemas, ok := coverage["missing_schemas"].([]any)
@@ -699,18 +692,14 @@ func TestMissionRecommendationsSchemaRegistryCoverageRecordsFailedValidationRepo
 	if code == 0 {
 		t.Fatalf("schema-registry-coverage should fail when validation report failed: %s", out.String())
 	}
-	for _, want := range []string{
+	assertSchemaRegistryCoverageFailureOutput(t, out.String(), []string{
 		"status=failed",
 		"validation_report_status=failed",
 		"missing_schemas=0",
 		"missing_validators=0",
 		"failure_reasons=validation_report_failed",
 		"rsi_remains_denied=true",
-	} {
-		if !strings.Contains(out.String(), want) {
-			t.Fatalf("schema-registry-coverage failed-report output missing %q: %s", want, out.String())
-		}
-	}
+	})
 
 	coverage := mustLoadJSON[map[string]any](t, coveragePath)
 	failureReasons, ok := coverage["failure_reasons"].([]any)
