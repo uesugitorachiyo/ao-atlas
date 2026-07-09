@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-02",
+  "task_id": "mission-recommendation-feature-depth-next-wave-02-task",
+  "status": "ready",
+  "target_repo": "ao-atlas",
+  "objective": "Add resumable readback diff fixtures for completed and ready node transitions.",
+  "active_node_count": 1,
+  "safe_to_execute": true,
+  "authority_boundary": "atlas_recommendation_planning_only"
+}
