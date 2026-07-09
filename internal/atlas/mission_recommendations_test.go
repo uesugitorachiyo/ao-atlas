@@ -4376,6 +4376,92 @@ func TestRecommendationFinalResponseGateEvaluationCentralizesReadbackClosureFiel
 	}
 }
 
+func TestRecommendationReadbackTransitionPreservesExactNextActionDecisions(t *testing.T) {
+	cases := []struct {
+		name                string
+		finalAllowed        bool
+		nodesComplete       bool
+		leaseTiming         atlasRecommendationLeaseTiming
+		completed           int
+		minimum             int
+		ready               int
+		blocked             int
+		failed              int
+		firstExecutableNode string
+		wantReason          string
+		wantActionContains  string
+		wantLeaseHealth     string
+		wantEarlyReturnRisk string
+	}{
+		{
+			name:                "ready node preserves first executable exact action",
+			completed:           20,
+			minimum:             15,
+			ready:               1,
+			firstExecutableNode: "mission-recommendation-hardening-21",
+			wantReason:          "ready nodes or exact next actions remain",
+			wantActionContains:  "mission-recommendation-hardening-21",
+			wantLeaseHealth:     "minimum_met_continue_if_fast",
+			wantEarlyReturnRisk: "blocked_final_response_ready_nodes_remain",
+		},
+		{
+			name:                "blocked node preserves repair action",
+			blocked:             1,
+			wantReason:          "true hard blocker requires exact repair evidence",
+			wantActionContains:  "Resolve blocked or failed recommendation node",
+			wantLeaseHealth:     "hard_blocker_requires_repair",
+			wantEarlyReturnRisk: "hard_blocker_requires_exact_missing_evidence",
+		},
+		{
+			name:          "lease timing missing preserves timing action",
+			nodesComplete: true,
+			leaseTiming: atlasRecommendationLeaseTiming{
+				LeaseTimeStatus: "lease_timing_missing",
+			},
+			wantReason:          "minimum lease timing evidence missing",
+			wantActionContains:  "Record started_at, completed_at, and elapsed_minutes",
+			wantLeaseHealth:     "minimum_minutes_timing_missing",
+			wantEarlyReturnRisk: "blocked_final_response_minimum_timing_missing",
+		},
+		{
+			name:          "minimum minutes unmet preserves next wave action",
+			nodesComplete: true,
+			leaseTiming: atlasRecommendationLeaseTiming{
+				LeaseTimeStatus: "elapsed_recorded",
+				MinMinutesMet:   false,
+			},
+			wantReason:          "minimum lease minutes unmet",
+			wantActionContains:  "Generate and execute the next useful Atlas recommendation wave",
+			wantLeaseHealth:     "minimum_minutes_unmet_continue_next_wave",
+			wantEarlyReturnRisk: "blocked_final_response_minimum_minutes_unmet",
+		},
+		{
+			name:         "final allowed preserves closure action",
+			finalAllowed: true,
+			nodesComplete: true,
+			leaseTiming: atlasRecommendationLeaseTiming{
+				LeaseTimeStatus: "elapsed_recorded",
+				MinMinutesMet:   true,
+			},
+			wantReason:          "all generated nodes complete and no ready nodes remain",
+			wantActionContains:  "Finalize AO Atlas long-run wave",
+			wantLeaseHealth:     "all_generated_nodes_complete",
+			wantEarlyReturnRisk: "cleared_no_ready_nodes_remain",
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			transition := recommendationReadbackTransition(tc.finalAllowed, tc.nodesComplete, tc.leaseTiming, tc.completed, tc.minimum, tc.ready, tc.blocked, tc.failed, tc.firstExecutableNode)
+			if transition.FinalResponseReason != tc.wantReason ||
+				!strings.Contains(transition.ExactNextAction, tc.wantActionContains) ||
+				transition.LeaseHealthStatus != tc.wantLeaseHealth ||
+				transition.EarlyReturnRiskStatus != tc.wantEarlyReturnRisk {
+				t.Fatalf("recommendation transition drifted: %#v", transition)
+			}
+		})
+	}
+}
+
 func TestLongRunHardeningWaveProductionReadinessSummaryBindsVerificationCIMergeCleanupAndEvidenceRoots(t *testing.T) {
 	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-long-run-hardening-wave-v01")
 	nodeTwentyReadback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "nodes", "mission-recommendation-hardening-20", "recommendation-readback-after.json"))
