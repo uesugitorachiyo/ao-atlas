@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-29",
+  "task_id": "mission-recommendation-feature-depth-next-wave-29-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_foundry_import_readiness_binding_test.go"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/stack-instance.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-29/foundry-import.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-29/foundry-continuation-handoff.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-29/foundry-import-readiness-binding.json"
+  ],
+  "summary": "Node 29 adds v02 Foundry import readiness binding evidence proving exactly one active node is imported and aligned with readback/workgraph state.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
