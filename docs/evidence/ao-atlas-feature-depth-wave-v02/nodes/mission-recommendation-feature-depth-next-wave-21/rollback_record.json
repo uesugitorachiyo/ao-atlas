@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-21",
+  "task_id": "mission-recommendation-feature-depth-next-wave-21-task",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "internal/atlas/mission_public_safety_readback_binding_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-21"
+  ],
+  "rollback_command": "git revert the node 21 commit or remove the node 21 v02 public-safety preservation evidence before merge",
+  "rsi_remains_denied": true
+}
