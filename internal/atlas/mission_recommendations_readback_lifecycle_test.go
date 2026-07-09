@@ -1,0 +1,1591 @@
+package atlas
+
+import (
+	"bytes"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"testing"
+)
+
+func TestMissionRecommendationsReadbackCLIMatchesGeneratedArtifacts(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	readbackPath := filepath.Join(dir, "readback.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "readback",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--out", readbackPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation readback failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "final_response_allowed=false") ||
+		!strings.Contains(out.String(), "return_gate_status=blocked_ready_nodes_remain") ||
+		!strings.Contains(out.String(), "checkpoint_count=0") ||
+		!strings.Contains(out.String(), "exact_next_action=Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.") {
+		t.Fatalf("readback output missing final gate and exact action: %s", out.String())
+	}
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, readbackPath)
+	if readback.WaveDigest == "" || readback.WorkgraphDigest == "" {
+		t.Fatalf("readback must carry artifact digests: %#v", readback)
+	}
+	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 0 {
+		t.Fatalf("readback must expose return gate status and checkpoint count: %#v", readback)
+	}
+}
+
+func TestMissionRecommendationsReadbackCLIBindsSchemaHealthStatus(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	readbackPath := filepath.Join(dir, "readback.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "readback",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--schema-health-status", "failed_missing_registry_artifacts",
+		"--out", readbackPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation readback failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "schema_health_status=failed_missing_registry_artifacts") {
+		t.Fatalf("readback output missing schema health status: %s", out.String())
+	}
+	rawReadback := mustLoadJSON[map[string]any](t, readbackPath)
+	if rawReadback["schema_health_status"] != "failed_missing_registry_artifacts" {
+		t.Fatalf("readback JSON missing schema health status: %#v", rawReadback["schema_health_status"])
+	}
+	assertSchemaHasProperty(t, filepath.Join(repoRoot(t), "schemas", "recommendation-readback.schema.json"), "schema_health_status")
+}
+
+func TestMissionRecommendationsReadbackCLIWritesWorkgraphReadinessPacket(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	readbackPath := filepath.Join(dir, "readback.json")
+	packetPath := filepath.Join(dir, "workgraph-readiness-packet.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "readback",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--out", readbackPath,
+		"--out-workgraph-readiness-packet", packetPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation readback failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "workgraph_readiness_packet=") {
+		t.Fatalf("readback output missing workgraph readiness packet path: %s", out.String())
+	}
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, readbackPath)
+	packet := mustLoadJSON[AtlasRecommendationWorkgraphReadinessPacket](t, packetPath)
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(packet, readback); err != nil {
+		t.Fatalf("bad workgraph readiness packet: %v", err)
+	}
+	if packet.NodeBudget != 40 ||
+		packet.ContinueIfFastTarget != 40 ||
+		packet.ReadyNodes != 40 ||
+		packet.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		packet.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		packet.FinalResponseAllowed {
+		t.Fatalf("packet lost 40-node ready workgraph denial: %#v", packet)
+	}
+}
+
+func TestMissionRecommendationsImportPersistsLeaseStartAndResumeUsesIt(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--started-at", "2026-07-04T08:00:00-07:00",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "lease_start=") {
+		t.Fatalf("import output missing lease start artifact: %s", out.String())
+	}
+	leaseStartPath := filepath.Join(importDir, "lease-start.json")
+	leaseStart := mustLoadJSON[AtlasRecommendationLeaseStart](t, leaseStartPath)
+	if err := ValidateAtlasRecommendationLeaseStart(leaseStart); err != nil {
+		t.Fatal(err)
+	}
+	if leaseStart.StartedAt != "2026-07-04T08:00:00-07:00" ||
+		leaseStart.MinMinutes != 120 ||
+		leaseStart.MaxMinutes != 180 ||
+		leaseStart.FinalResponseAllowed {
+		t.Fatalf("bad lease start marker: %#v", leaseStart)
+	}
+
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join(importDir, "recommendation-workgraph.json"))
+	firstNode := workgraph.Nodes[0]
+	linkPath := filepath.Join(dir, "run-link.json")
+	if err := WriteJSON(linkPath, recommendationRunLink(t, firstNode.FactoryTask.ID, recommendationEvidenceFiles(t, "lease-start", firstNode.ID))); err != nil {
+		t.Fatal(err)
+	}
+	updatedWorkgraphPath := filepath.Join(dir, "updated-workgraph.json")
+	readbackPath := filepath.Join(dir, "updated-readback.json")
+	executionPath := filepath.Join(dir, "updated-execution-readback.json")
+	checkpointPath := filepath.Join(dir, "checkpoint-readback.json")
+
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "complete-node",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--run-link", linkPath,
+		"--expected-node", firstNode.ID,
+		"--evidence-root", repoRoot(t),
+		"--readback-evidence-root", "docs/evidence/test-wave",
+		"--lease-start", leaseStartPath,
+		"--completed-at", "2026-07-04T08:17:00-07:00",
+		"--out-workgraph", updatedWorkgraphPath,
+		"--out-readback", readbackPath,
+		"--out-execution-readback", executionPath,
+		"--out-checkpoint-readback", checkpointPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("complete-node failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "checkpoint_readback=") ||
+		!strings.Contains(out.String(), "elapsed_minutes=17") {
+		t.Fatalf("complete-node output missing checkpoint timing: %s", out.String())
+	}
+	checkpoint := mustLoadJSON[AtlasRecommendationCheckpointReadback](t, checkpointPath)
+	if err := ValidateAtlasRecommendationCheckpointReadback(checkpoint); err != nil {
+		t.Fatal(err)
+	}
+	if checkpoint.StartedAt != leaseStart.StartedAt ||
+		checkpoint.ElapsedMinutes != 17 ||
+		checkpoint.LeaseHealthStatus != "minimum_unmet" ||
+		checkpoint.ContinuationContractReason != "ready_nodes_or_exact_next_action_remain" ||
+		checkpoint.CompletedNodes != 1 ||
+		checkpoint.ReadyNodes != 39 ||
+		checkpoint.FinalResponseAllowed {
+		t.Fatalf("bad checkpoint readback: %#v", checkpoint)
+	}
+
+	resumeReadbackPath := filepath.Join(dir, "resume-readback.json")
+	resumeExecutionPath := filepath.Join(dir, "resume-execution-readback.json")
+	commandPath := filepath.Join(dir, "command-readback.json")
+	promoterPath := filepath.Join(dir, "promoter-readback.json")
+	foundryPath := filepath.Join(dir, "foundry-rollup.json")
+	reconciliationPath := filepath.Join(dir, "reconciliation-packet.json")
+	nextPromptPath := filepath.Join(dir, "next-recommended-prompt.md")
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "resume",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", updatedWorkgraphPath,
+		"--lease-start", leaseStartPath,
+		"--completed-at", "2026-07-04T08:25:00-07:00",
+		"--evidence-root", "docs/evidence/test-wave",
+		"--out-readback", resumeReadbackPath,
+		"--out-execution-readback", resumeExecutionPath,
+		"--out-command-readback", commandPath,
+		"--out-promoter-readback", promoterPath,
+		"--out-foundry-rollup", foundryPath,
+		"--out-reconciliation-packet", reconciliationPath,
+		"--out-next-prompt", nextPromptPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("resume failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "started_at=2026-07-04T08:00:00-07:00") ||
+		!strings.Contains(out.String(), "elapsed_minutes=25") ||
+		!strings.Contains(out.String(), "next_recommended_prompt=") {
+		t.Fatalf("resume output did not preserve lease timing: %s", out.String())
+	}
+	readbackExecutionPath := filepath.Join(dir, "readback-execution-readback.json")
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "readback",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", updatedWorkgraphPath,
+		"--evidence-root", "docs/evidence/test-wave",
+		"--started-at", "2026-07-04T08:00:00-07:00",
+		"--completed-at", "2026-07-04T08:25:00-07:00",
+		"--elapsed-minutes", "25",
+		"--lease-timing-mode", "actual",
+		"--out-execution-readback", readbackExecutionPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("readback execution output failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "execution_readback="+filepath.ToSlash(readbackExecutionPath)) {
+		t.Fatalf("readback output missing execution readback path: %s", out.String())
+	}
+	readbackExecution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, readbackExecutionPath)
+	if readbackExecution.ReasonArtifactAgreementSummary.Status != "agreement" ||
+		readbackExecution.ReasonArtifactAgreementSummary.SourceArtifactCount != len(readbackExecution.SourceArtifacts) ||
+		!readbackExecution.ReasonArtifactAgreementSummary.SourceArtifactsAgree {
+		t.Fatalf("readback command execution output missing agreement summary: %#v", readbackExecution)
+	}
+	resumeReadback := mustLoadJSON[AtlasRecommendationReadback](t, resumeReadbackPath)
+	if resumeReadback.StartedAt != leaseStart.StartedAt || resumeReadback.ElapsedMinutes != 25 {
+		t.Fatalf("resume readback lost lease start: %#v", resumeReadback)
+	}
+	resumeExecution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, resumeExecutionPath)
+	if resumeExecution.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		resumeExecution.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		resumeExecution.ReturnGateStatus != resumeReadback.ReturnGateStatus ||
+		resumeExecution.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		resumeExecution.ExactNextAction != resumeReadback.ExactNextAction ||
+		resumeExecution.FinalResponseAllowed != resumeReadback.FinalResponseAllowed ||
+		resumeExecution.RefusesFinalResponse != resumeReadback.ContinuationContract.RefusesFinalResponse ||
+		resumeExecution.GeneratedWorkgraph.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		resumeExecution.GeneratedWorkgraph.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		resumeExecution.FoundryRunLinkReadinessSummary.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		resumeExecution.FoundryRunLinkReadinessSummary.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		resumeExecution.FoundryRunLinkReadinessSummary.CompletedRunLinks != resumeReadback.CompletedNodes ||
+		resumeExecution.FoundryRunLinkReadinessSummary.RequiredRunLinks != resumeReadback.TotalNodes ||
+		resumeExecution.FoundryRunLinkReadinessSummary.NextExecutableNode != resumeReadback.FirstExecutableNode ||
+		resumeExecution.FoundryRunLinkReadinessSummary.ReturnGateStatus != resumeReadback.ReturnGateStatus ||
+		resumeExecution.FoundryRunLinkReadinessSummary.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		resumeExecution.FoundryRunLinkReadinessSummary.ExactNextAction != resumeReadback.ExactNextAction ||
+		resumeExecution.FoundryRunLinkReadinessSummary.RefusesFinalResponse != resumeReadback.ContinuationContract.RefusesFinalResponse ||
+		resumeExecution.ContinuationReasonCoverage.ExpectedReason != resumeReadback.ContinuationContract.Reason ||
+		resumeExecution.ContinuationReasonCoverage.SourceCount != 13 ||
+		!containsString(resumeExecution.ContinuationReasonCoverage.IndexedSources, "checkpoint_readback") ||
+		!containsString(resumeExecution.ContinuationReasonCoverage.IndexedSources, "resume_prompt") ||
+		resumeExecution.ReasonArtifactAgreementSummary.Status != "agreement" ||
+		resumeExecution.ReasonArtifactAgreementSummary.ExpectedReason != resumeReadback.ContinuationContract.Reason ||
+		resumeExecution.ReasonArtifactAgreementSummary.SourceCount != resumeExecution.ContinuationReasonCoverage.SourceCount ||
+		!resumeExecution.ReasonArtifactAgreementSummary.AllRequiredSourcesIndexed ||
+		!resumeExecution.ReasonArtifactAgreementSummary.SourceArtifactsAgree ||
+		resumeExecution.ReasonArtifactAgreementSummary.SourceArtifactCount != len(resumeExecution.SourceArtifacts) ||
+		!containsString(resumeExecution.ReasonArtifactAgreementSummary.SourceArtifactRefs, "continuation_reason_coverage") ||
+		!containsString(resumeExecution.ReasonArtifactAgreementSummary.SourceArtifactRefs, "foundry_run_link_readiness_summary") ||
+		!hasSourceArtifact(resumeExecution.SourceArtifacts, "continuation_reason_coverage") ||
+		!hasSourceArtifact(resumeExecution.SourceArtifacts, "foundry_run_link_readiness_summary") {
+		t.Fatalf("execution readback missing source artifact coverage: %#v", resumeExecution)
+	}
+	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, commandPath)
+	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, promoterPath)
+	foundry := mustLoadJSON[AtlasRecommendationFoundryRollup](t, foundryPath)
+	reconciliation := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, reconciliationPath)
+	if err := ValidateAtlasRecommendationClosureArtifacts(resumeReadback, command, promoter, foundry); err != nil {
+		t.Fatalf("closure artifacts should agree with resumed readback: %v", err)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(resumeReadback, command, promoter, foundry, reconciliation); err != nil {
+		t.Fatalf("reconciliation packet should agree with resumed closure artifacts: %v", err)
+	}
+	rawPromoter := mustLoadJSON[map[string]any](t, promoterPath)
+	if rawPromoter["no_promotion_summary"] != "No mutation authority promotion claimed; RSI remains denied." ||
+		!strings.Contains(rawPromoter["no_promotion_reason_summary"].(string), "continuation_contract_reason="+resumeReadback.ContinuationContract.Reason) ||
+		rawPromoter["next_denied_class"] != "RSI" {
+		t.Fatalf("promoter readback missing no-promotion summary fields: %#v", rawPromoter)
+	}
+	rawCommand := mustLoadJSON[map[string]any](t, commandPath)
+	binding, ok := rawCommand["command_timeline_binding"].(map[string]any)
+	if !ok ||
+		binding["summary"] != command.CompactTimeline ||
+		binding["lease_health_status"] != resumeReadback.LeaseHealthStatus ||
+		binding["checkpoint_freshness_status"] != resumeReadback.CheckpointFreshnessStatus ||
+		binding["first_executable_node"] != resumeReadback.FirstExecutableNode ||
+		binding["exact_next_action"] != resumeReadback.ExactNextAction ||
+		binding["return_gate_status"] != resumeReadback.ReturnGateStatus ||
+		binding["continuation_contract_reason"] != resumeReadback.ContinuationContract.Reason {
+		t.Fatalf("command readback missing structured timeline binding: %#v", rawCommand)
+	}
+	if command.ElapsedMinutes != 25 || command.FinalResponseAllowed ||
+		command.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		command.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		command.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		!strings.Contains(command.CompactTimeline, "continuation_contract_reason="+resumeReadback.ContinuationContract.Reason) ||
+		!strings.Contains(command.CompactTimeline, "exact_next_action="+resumeReadback.ExactNextAction) ||
+		command.CommandTimelineBinding.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		command.CommandTimelineBinding.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		command.CommandTimelineBinding.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		promoter.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		promoter.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		promoter.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		promoter.PromotionClaimed || !promoter.RSIRemainsDenied ||
+		foundry.NodeCompletionStatus != "nodes_in_progress" ||
+		foundry.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		foundry.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		foundry.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		foundry.LeaseCompletionStatus != "minimum_minutes_unmet" {
+		t.Fatalf("bad resume closure artifacts: command=%#v promoter=%#v foundry=%#v", command, promoter, foundry)
+	}
+	if reconciliation.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		reconciliation.CheckpointCount != 1 ||
+		reconciliation.FinalStateReconciliation.ContractVersion != "ao.atlas.final-state-reconciliation.v0.1" ||
+		reconciliation.FinalStateReconciliation.Status != reconciliation.Status ||
+		reconciliation.FinalStateReconciliation.WorkgraphStatus != resumeReadback.Status ||
+		reconciliation.FinalStateReconciliation.FoundryRollupStatus != foundry.Status ||
+		reconciliation.FinalStateReconciliation.PromoterVerdictStatus != promoter.Status ||
+		reconciliation.FinalStateReconciliation.CommandReadbackStatus != command.Status ||
+		reconciliation.FinalStateReconciliation.ExactNextAction != resumeReadback.ExactNextAction ||
+		reconciliation.FinalStateReconciliation.ContinuationReason != resumeReadback.ContinuationContract.Reason ||
+		!reconciliation.FinalStateReconciliation.ContinuationAgreement ||
+		reconciliation.FinalStateReconciliation.SchedulesWork ||
+		reconciliation.LeaseHealthStatus != resumeReadback.LeaseHealthStatus ||
+		reconciliation.CheckpointFreshnessStatus != resumeReadback.CheckpointFreshnessStatus ||
+		reconciliation.StaleRouteDecisionStatus != resumeReadback.StaleRouteDecisionStatus ||
+		reconciliation.ContinuationContractReason != resumeReadback.ContinuationContract.Reason ||
+		reconciliation.CommandContinuationReason != resumeReadback.ContinuationContract.Reason ||
+		reconciliation.PromoterContinuationReason != resumeReadback.ContinuationContract.Reason ||
+		reconciliation.FoundryContinuationReason != resumeReadback.ContinuationContract.Reason ||
+		!reconciliation.ContinuationReasonAgreement ||
+		!reconciliation.ArtifactsAgree ||
+		reconciliation.CommandReturnGateStatus != resumeReadback.ReturnGateStatus ||
+		reconciliation.FoundryReturnGateStatus != resumeReadback.ReturnGateStatus ||
+		reconciliation.PromotionClaimed {
+		t.Fatalf("bad reconciliation packet: %#v", reconciliation)
+	}
+	nextPrompt, err := os.ReadFile(nextPromptPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{
+		"Current status:",
+		"Completed nodes: 1 / 40",
+		"Continuation contract reason: `" + resumeReadback.ContinuationContract.Reason + "`",
+		"Early-return risk: `" + resumeReadback.EarlyReturnRiskStatus + "`",
+		"Next executable node: `mission-recommendation-next-02`",
+		"Exact next action:",
+		"Emit Foundry import for mission-recommendation-next-02 and execute exactly one active node.",
+		"If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.",
+		"If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.",
+	} {
+		if !strings.Contains(string(nextPrompt), want) {
+			t.Fatalf("resume next prompt missing %q:\n%s", want, string(nextPrompt))
+		}
+	}
+	schemaRoot := filepath.Join(repoRoot(t), "schemas")
+	for _, tc := range []struct {
+		schemaPath   string
+		artifactPath string
+	}{
+		{filepath.Join(schemaRoot, "recommendation-readback.schema.json"), resumeReadbackPath},
+		{filepath.Join(schemaRoot, "recommendation-checkpoint-readback.schema.json"), checkpointPath},
+		{filepath.Join(schemaRoot, "recommendation-command-readback.schema.json"), commandPath},
+		{filepath.Join(schemaRoot, "recommendation-promoter-readback.schema.json"), promoterPath},
+		{filepath.Join(schemaRoot, "recommendation-foundry-rollup.schema.json"), foundryPath},
+		{filepath.Join(schemaRoot, "recommendation-reconciliation-packet.schema.json"), reconciliationPath},
+	} {
+		assertSchemaRequiredFieldsPresent(t, tc.schemaPath, tc.artifactPath)
+	}
+}
+
+func TestMissionRecommendationsReadbackFinalGateTransitions(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	partial := completeRecommendationNodes(result.Workgraph, 30)
+	partialReadback, err := BuildAtlasRecommendationReadback(result.Wave, partial, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if partialReadback.LeaseHealthStatus != "minimum_met_continue_if_fast" ||
+		partialReadback.FinalResponseAllowed ||
+		partialReadback.ExactNextAction != "Emit Foundry import for mission-recommendation-next-31 and execute exactly one active node." {
+		t.Fatalf("partial readback must continue after minimum while ready nodes remain: %#v", partialReadback)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	completedReadback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:00-07:00",
+		CompletedAt:     "2026-07-04T09:20:00-07:00",
+		ElapsedMinutes:  120,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !completedReadback.FinalResponseAllowed ||
+		completedReadback.FinalResponseReason != "all generated nodes complete and no ready nodes remain" ||
+		completedReadback.LeaseHealthStatus != "all_generated_nodes_complete" ||
+		!completedReadback.MinMinutesMet ||
+		completedReadback.LeaseTimeStatus != "minimum_minutes_met" ||
+		completedReadback.ExactNextAction != "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks." {
+		t.Fatalf("completed readback must allow closure: %#v", completedReadback)
+	}
+	if completedReadback.FoundryRollupStatus != "completed_all_node_run_links_recorded" ||
+		completedReadback.PromoterReadbackStatus != "no_promotion_recorded" ||
+		completedReadback.PromoterNoPromotionStatus != "recorded_no_promotion_for_recommendation_wave" ||
+		completedReadback.CommandReadbackStatus != "compact_timeline_recorded" ||
+		completedReadback.CommandTimelineStatus != "recorded_compact_timeline_for_completed_wave" {
+		t.Fatalf("completed readback missing closure bindings: %#v", completedReadback)
+	}
+}
+
+func TestRecommendationReadbackRejectsReadyWorkgraphFinalGateDrift(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	partial := completeRecommendationNodes(result.Workgraph, 30)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, partial, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:00-07:00",
+		CompletedAt:     "2026-07-04T09:20:00-07:00",
+		ElapsedMinutes:  120,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.ReadyNodes == 0 || readback.FirstExecutableNode != "mission-recommendation-next-31" || readback.FinalResponseAllowed {
+		t.Fatalf("test setup expected ready continuation readback: %#v", readback)
+	}
+
+	tampered := readback
+	tampered.ReturnGateStatus = "final_response_allowed"
+	tampered.ExactNextActionReadback.ReturnGateStatus = tampered.ReturnGateStatus
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "ready nodes require return_gate_status=blocked_ready_nodes_remain") {
+		t.Fatalf("expected stale return gate rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.FinalResponseReason = "all generated nodes complete and no ready nodes remain"
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "ready nodes require final_response_reason=ready nodes or exact next actions remain") {
+		t.Fatalf("expected stale final reason rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.ExactNextAction = "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
+	tampered.ExactNextActionReadback.Action = tampered.ExactNextAction
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "ready nodes require exact_next_action to name first_executable_node") {
+		t.Fatalf("expected stale exact next action rejection, got %v", err)
+	}
+}
+
+func TestRecommendationReadbackRejectsCompletedWorkgraphFinalAllowanceDrift(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:00-07:00",
+		CompletedAt:     "2026-07-04T09:20:00-07:00",
+		ElapsedMinutes:  120,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !readback.FinalResponseAllowed || readback.ReadyNodes != 0 || readback.ReturnGateStatus != "final_response_allowed" {
+		t.Fatalf("test setup expected completed final-allowed readback: %#v", readback)
+	}
+
+	tampered := readback
+	tampered.Status = "in_progress"
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed requires status=completed") {
+		t.Fatalf("expected stale completed status rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.ReturnGateStatus = "blocked_ready_nodes_remain"
+	tampered.ExactNextActionReadback.ReturnGateStatus = tampered.ReturnGateStatus
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed requires return_gate_status=final_response_allowed") {
+		t.Fatalf("expected stale return gate rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.FinalResponseReason = "ready nodes or exact next actions remain"
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed requires final_response_reason=all generated nodes complete and no ready nodes remain") {
+		t.Fatalf("expected stale final reason rejection, got %v", err)
+	}
+
+	tampered = readback
+	tampered.ExactNextAction = "Emit Foundry import for mission-recommendation-next-40 and execute exactly one active node."
+	tampered.ExactNextActionReadback.Action = tampered.ExactNextAction
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed requires final exact_next_action") {
+		t.Fatalf("expected stale exact next action rejection, got %v", err)
+	}
+}
+
+func TestMissionRecommendationsDenyFinalResponseWhenLeaseMinutesUnmet(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T07:20:20-07:00",
+		CompletedAt:     "2026-07-04T07:42:06-07:00",
+		ElapsedMinutes:  22,
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.FinalResponseAllowed {
+		t.Fatalf("completed nodes cannot close before min_minutes: %#v", readback)
+	}
+	if readback.Status != "in_progress" ||
+		readback.MinMinutesMet ||
+		readback.LeaseTimeStatus != "minimum_minutes_unmet" ||
+		readback.LeaseHealthStatus != "minimum_minutes_unmet_continue_next_wave" ||
+		readback.EarlyReturnRiskStatus != "blocked_final_response_minimum_minutes_unmet" ||
+		readback.FinalResponseReason != "minimum lease minutes unmet" {
+		t.Fatalf("readback did not report unmet lease timing: %#v", readback)
+	}
+	if !strings.Contains(readback.ExactNextAction, "Generate and execute the next useful Atlas recommendation wave") {
+		t.Fatalf("readback missing continuation action after short run: %#v", readback)
+	}
+	if readback.ReadyNodes != 0 ||
+		readback.ContinuationContract.Status != "continuation_required" ||
+		!readback.ContinuationContract.RefusesFinalResponse ||
+		readback.ContinuationContract.Reason != "exact_next_action_remains" ||
+		readback.ContinuationContract.ExactNextAction != readback.ExactNextAction {
+		t.Fatalf("exact next action must keep final response denied after a short completed wave: %#v", readback.ContinuationContract)
+	}
+	execution := BuildAtlasRecommendationExecutionReadback(readback)
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("execution ledger should stay consistent for early timing denial: %v", err)
+	}
+	if execution.Status == "completed" {
+		t.Fatalf("execution ledger cannot be completed before min_minutes: %#v", execution)
+	}
+
+	tampered := readback
+	tampered.ContinuationContract.Reason = "ready_nodes_or_exact_next_action_remain"
+	if err := ValidateAtlasRecommendationReadback(tampered); err == nil ||
+		!strings.Contains(err.Error(), "continuation_contract.reason must be exact_next_action_remains") {
+		t.Fatalf("expected exact-next-action continuation reason rejection, got %v", err)
+	}
+}
+
+func TestMissionRecommendationsDenyFinalResponseWhenLeaseTimingMissing(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.FinalResponseAllowed ||
+		readback.MinMinutesMet ||
+		readback.LeaseTimeStatus != "lease_timing_missing" ||
+		readback.FinalResponseReason != "minimum lease timing evidence missing" {
+		t.Fatalf("completed long-run wave without timing must deny final response: %#v", readback)
+	}
+	if !strings.Contains(readback.ExactNextAction, "Record started_at, completed_at, and elapsed_minutes") {
+		t.Fatalf("missing timing denial should ask for timing evidence: %#v", readback)
+	}
+}
+
+func TestMissionRecommendationsDeriveElapsedMinutesFromTimestamps(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T08:00:00-07:00",
+		CompletedAt:     "2026-07-04T10:00:01-07:00",
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.ElapsedMinutes != 121 ||
+		!readback.MinMinutesMet ||
+		readback.LeaseTimeStatus != "minimum_minutes_met" ||
+		!readback.FinalResponseAllowed {
+		t.Fatalf("readback did not derive elapsed lease minutes: %#v", readback)
+	}
+}
+
+func TestMissionRecommendationsRejectInvalidLeaseTimestamps(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	_, err = BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:   "not-a-time",
+		CompletedAt: "2026-07-04T08:00:00-07:00",
+	})
+	if err == nil || !strings.Contains(err.Error(), "started_at must be RFC3339") {
+		t.Fatalf("expected invalid started_at rejection, got %v", err)
+	}
+	_, err = BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:   "2026-07-04T09:00:00-07:00",
+		CompletedAt: "2026-07-04T08:00:00-07:00",
+	})
+	if err == nil || !strings.Contains(err.Error(), "completed_at must be greater than or equal to started_at") {
+		t.Fatalf("expected reversed timestamp rejection, got %v", err)
+	}
+}
+
+func TestMissionRecommendationsDetectStaleClosureArtifacts(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	completed := completeRecommendationNodes(result.Workgraph, 40)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, completed, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T08:00:00-07:00",
+		CompletedAt:     "2026-07-04T08:22:00-07:00",
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := BuildAtlasRecommendationCommandReadback(readback)
+	promoter := BuildAtlasRecommendationPromoterReadback(readback)
+	foundry := BuildAtlasRecommendationFoundryRollup(readback)
+	command.FinalResponseAllowed = true
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback final_response_allowed disagrees") {
+		t.Fatalf("expected stale command readback rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	foundry.Status = "completed"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "foundry rollup completed while recommendation final response is denied") {
+		t.Fatalf("expected stale foundry rollup rejection, got %v", err)
+	}
+	foundry = BuildAtlasRecommendationFoundryRollup(readback)
+	command.Status = "completed"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback status disagrees") {
+		t.Fatalf("expected stale command status rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	foundry.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "foundry rollup continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale foundry continuation reason rejection, got %v", err)
+	}
+	foundry = BuildAtlasRecommendationFoundryRollup(readback)
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	promoter.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "promoter readback continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale promoter continuation reason rejection, got %v", err)
+	}
+	promoter = BuildAtlasRecommendationPromoterReadback(readback)
+	promoter.NoPromotionReasonSummary = "No authority promotion claimed; RSI remains denied."
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "promoter readback no_promotion_reason_summary must include continuation_contract_reason") {
+		t.Fatalf("expected stale promoter reason summary rejection, got %v", err)
+	}
+	promoter = BuildAtlasRecommendationPromoterReadback(readback)
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CommandTimelineBinding.ExactNextAction = "stale next action"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command timeline binding exact_next_action disagrees") {
+		t.Fatalf("expected stale command timeline binding rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale command continuation reason rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CommandTimelineBinding.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command timeline binding continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale command timeline continuation reason rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CompactTimeline = strings.Replace(command.CompactTimeline, "; continuation_contract_reason="+readback.ContinuationContract.Reason, "", 1)
+	command.CommandTimelineBinding.Summary = command.CompactTimeline
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command compact timeline continuation_contract_reason missing") {
+		t.Fatalf("expected stale command compact continuation reason rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CompactTimeline = strings.Replace(command.CompactTimeline, "; exact_next_action="+readback.ExactNextAction, "", 1)
+	command.CommandTimelineBinding.Summary = command.CompactTimeline
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command compact timeline exact_next_action missing") {
+		t.Fatalf("expected stale command compact exact next action rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.LeaseHealthStatus = "stale_lease_health"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback lease_health_status disagrees") {
+		t.Fatalf("expected stale command lease health rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CommandTimelineBinding.LeaseHealthStatus = "stale_lease_health"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command timeline binding lease_health_status disagrees") {
+		t.Fatalf("expected stale command timeline lease health rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	promoter.LeaseHealthStatus = "stale_lease_health"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "promoter readback lease_health_status disagrees") {
+		t.Fatalf("expected stale promoter lease health rejection, got %v", err)
+	}
+	promoter = BuildAtlasRecommendationPromoterReadback(readback)
+	foundry.LeaseHealthStatus = "stale_lease_health"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "foundry rollup lease_health_status disagrees") {
+		t.Fatalf("expected stale foundry lease health rejection, got %v", err)
+	}
+	foundry = BuildAtlasRecommendationFoundryRollup(readback)
+	command.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback checkpoint_freshness_status disagrees") {
+		t.Fatalf("expected stale command checkpoint freshness rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	command.CommandTimelineBinding.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command timeline binding checkpoint_freshness_status disagrees") {
+		t.Fatalf("expected stale command timeline checkpoint freshness rejection, got %v", err)
+	}
+	command = BuildAtlasRecommendationCommandReadback(readback)
+	promoter.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "promoter readback checkpoint_freshness_status disagrees") {
+		t.Fatalf("expected stale promoter checkpoint freshness rejection, got %v", err)
+	}
+	promoter = BuildAtlasRecommendationPromoterReadback(readback)
+	foundry.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "foundry rollup checkpoint_freshness_status disagrees") {
+		t.Fatalf("expected stale foundry checkpoint freshness rejection, got %v", err)
+	}
+	foundry = BuildAtlasRecommendationFoundryRollup(readback)
+	packet := BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.StaleRouteDecisionStatus = "stale_route_decision"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "reconciliation stale_route_decision_status disagrees") {
+		t.Fatalf("expected stale reconciliation route decision rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.CommandReadbackStatus = "stale_command_readback"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.command_readback_status disagrees") {
+		t.Fatalf("expected stale final-state command rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.FoundryRollupStatus = "stale_foundry_rollup"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.foundry_rollup_status disagrees") {
+		t.Fatalf("expected stale final-state Foundry rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "reconciliation continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale reconciliation continuation reason rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.PromoterContinuationReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "reconciliation promoter_continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale reconciliation Promoter continuation reason rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.ContinuationReasonAgreement = false
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "reconciliation continuation_reason_agreement disagrees") {
+		t.Fatalf("expected stale reconciliation continuation agreement rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.Status = "ready"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.status must match reconciliation status") {
+		t.Fatalf("expected stale final-state status rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.ContinuationReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale final-state continuation reason rejection, got %v", err)
+	}
+	packet = BuildAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry)
+	packet.FinalStateReconciliation.ContinuationAgreement = false
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, packet); err == nil ||
+		!strings.Contains(err.Error(), "final_state_reconciliation.continuation_reason_agreement disagrees") {
+		t.Fatalf("expected stale final-state continuation agreement rejection, got %v", err)
+	}
+}
+
+func TestRecommendationReconciliationStaleCommandStatusFixture(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	inProgress := completeRecommendationNodes(result.Workgraph, 1)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, inProgress, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T08:00:00-07:00",
+		CompletedAt:     "2026-07-04T08:25:00-07:00",
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := BuildAtlasRecommendationCommandReadback(readback)
+	promoter := BuildAtlasRecommendationPromoterReadback(readback)
+	foundry := BuildAtlasRecommendationFoundryRollup(readback)
+	command.Status = "completed"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback status disagrees") {
+		t.Fatalf("expected stale command status closure rejection, got %v", err)
+	}
+
+	fixture := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, filepath.Join(repoRoot(t), "examples", "invalid", "recommendation-reconciliation-stale-command-status.json"))
+	if fixture.Status != "blocked_stale_artifact" ||
+		fixture.ArtifactsAgree ||
+		fixture.FinalStateReconciliation.CommandReadbackStatus != "completed" ||
+		fixture.FinalStateReconciliation.ContinuationReason != readback.ContinuationContract.Reason ||
+		!fixture.FinalStateReconciliation.ContinuationAgreement ||
+		fixture.CommandFinalResponseAllowed ||
+		fixture.FinalResponseAllowed ||
+		!fixture.ContinuationReasonAgreement ||
+		fixture.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		fixture.ReadyNodes != 39 ||
+		fixture.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		fixture.ExactNextAction != readback.ExactNextAction ||
+		fixture.RSIRemainsDenied != true {
+		t.Fatalf("stale Command fixture lost mismatch readback: %#v", fixture)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, fixture); err != nil {
+		t.Fatalf("stale Command fixture should validate as blocked stale artifact: %v", err)
+	}
+}
+
+func TestRecommendationReconciliationStaleContinuationReasonFixture(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	inProgress := completeRecommendationNodes(result.Workgraph, 1)
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, inProgress, AtlasRecommendationReadbackOptions{
+		StartedAt:       "2026-07-04T08:00:00-07:00",
+		CompletedAt:     "2026-07-04T08:25:00-07:00",
+		LeaseTimingMode: "actual",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := BuildAtlasRecommendationCommandReadback(readback)
+	promoter := BuildAtlasRecommendationPromoterReadback(readback)
+	foundry := BuildAtlasRecommendationFoundryRollup(readback)
+	command.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err == nil ||
+		!strings.Contains(err.Error(), "command readback continuation_contract_reason disagrees") {
+		t.Fatalf("expected stale command continuation reason rejection, got %v", err)
+	}
+
+	fixture := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, filepath.Join(repoRoot(t), "examples", "invalid", "recommendation-reconciliation-stale-continuation-reason.json"))
+	if fixture.Status != "blocked_stale_artifact" ||
+		fixture.ArtifactsAgree ||
+		fixture.ContinuationReasonAgreement ||
+		fixture.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		fixture.CommandContinuationReason != "ready_nodes_remain" ||
+		fixture.PromoterContinuationReason != readback.ContinuationContract.Reason ||
+		fixture.FoundryContinuationReason != readback.ContinuationContract.Reason ||
+		fixture.FinalStateReconciliation.ContinuationAgreement ||
+		fixture.FinalStateReconciliation.CommandReadbackStatus != command.Status ||
+		fixture.ReadyNodes != 39 ||
+		fixture.ExactNextAction != readback.ExactNextAction ||
+		fixture.RSIRemainsDenied != true {
+		t.Fatalf("stale continuation reason fixture lost mismatch readback: %#v", fixture)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, fixture); err != nil {
+		t.Fatalf("stale continuation reason fixture should validate as blocked stale artifact: %v", err)
+	}
+}
+
+func TestRecommendationCompleteNodeRejectsMissingGateEvidence(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	node := result.Workgraph.Nodes[0]
+	link := recommendationRunLink(t, node.FactoryTask.ID, map[string]string{
+		"node_gate": recommendationEvidenceFile(t, "missing-gate", node.ID, "node-gate.json"),
+	})
+
+	_, _, err = CompleteAtlasRecommendationNodeWithRunLink(result.Wave, result.Workgraph, link, AtlasRecommendationCompleteNodeOptions{
+		ExpectedNodeID: node.ID,
+		EvidenceRoot:   repoRoot(t),
+	})
+	if err == nil || !strings.Contains(err.Error(), "missing evidence candidate_record") {
+		t.Fatalf("expected missing candidate record evidence, got %v", err)
+	}
+}
+
+func TestRecommendationCompleteNodeRejectsEvidenceMissingRequiredFields(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	node := result.Workgraph.Nodes[0]
+	evidence := recommendationEvidenceFiles(t, "missing-required-fields", node.ID)
+	candidatePath := filepath.Join(repoRoot(t), filepath.FromSlash(evidence["candidate_record"]))
+	if err := os.WriteFile(candidatePath, []byte(`{"schema":"ao.atlas.node-candidate.v0.1"}`+"\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	link := recommendationRunLink(t, node.FactoryTask.ID, evidence)
+
+	_, _, err = CompleteAtlasRecommendationNodeWithRunLink(result.Wave, result.Workgraph, link, AtlasRecommendationCompleteNodeOptions{
+		ExpectedNodeID: node.ID,
+		EvidenceRoot:   repoRoot(t),
+	})
+	if err == nil || !strings.Contains(err.Error(), "evidence candidate_record missing required field status") {
+		t.Fatalf("expected missing required evidence field rejection, got %v", err)
+	}
+}
+
+func TestRecommendationCompleteNodeRejectsOutOfOrderRunLink(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	firstNode := result.Workgraph.Nodes[0]
+	secondNode := result.Workgraph.Nodes[1]
+	link := recommendationRunLink(t, secondNode.FactoryTask.ID, recommendationEvidenceFiles(t, "out-of-order", secondNode.ID))
+
+	_, _, err = CompleteAtlasRecommendationNodeWithRunLink(result.Wave, result.Workgraph, link, AtlasRecommendationCompleteNodeOptions{
+		ExpectedNodeID: firstNode.ID,
+		EvidenceRoot:   repoRoot(t),
+	})
+	if err == nil || !strings.Contains(err.Error(), "run-link task_id must match executable node") {
+		t.Fatalf("expected out-of-order rejection, got %v", err)
+	}
+}
+
+func TestRecommendationCompleteNodeAdvancesReadbackAndExecutionLedger(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	firstNode := result.Workgraph.Nodes[0]
+	link := recommendationRunLink(t, firstNode.FactoryTask.ID, recommendationEvidenceFiles(t, "advance", firstNode.ID))
+
+	updated, completedNodeID, err := CompleteAtlasRecommendationNodeWithRunLink(result.Wave, result.Workgraph, link, AtlasRecommendationCompleteNodeOptions{
+		ExpectedNodeID: firstNode.ID,
+		EvidenceRoot:   repoRoot(t),
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if completedNodeID != "mission-recommendation-next-01" {
+		t.Fatalf("completed wrong node: %s", completedNodeID)
+	}
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, updated, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.CompletedNodes != 1 ||
+		readback.ReadyNodes != 39 ||
+		readback.FirstExecutableNode != "mission-recommendation-next-02" ||
+		readback.FinalResponseAllowed {
+		t.Fatalf("bad readback after first completion: %#v", readback)
+	}
+	execution := BuildAtlasRecommendationExecutionReadback(readback)
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("execution ledger should match readback: %v", err)
+	}
+	if execution.CompletedRecommendationNodes != 1 || execution.GeneratedWorkgraph.ExecutableReadyNodes != 1 {
+		t.Fatalf("bad execution ledger after first completion: %#v", execution)
+	}
+}
+
+func TestMissionRecommendationsCompleteNodeCLIWritesUpdatedArtifacts(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	importDir := filepath.Join(dir, "recommendations-out")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "import",
+		"--recommendations", recommendationsPath,
+		"--target-instance", "demo-stack",
+		"--out", importDir,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("recommendation import failed: %s", out.String())
+	}
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join(importDir, "recommendation-workgraph.json"))
+	firstNode := workgraph.Nodes[0]
+	link := recommendationRunLink(t, firstNode.FactoryTask.ID, recommendationEvidenceFiles(t, "cli", firstNode.ID))
+	linkPath := filepath.Join(dir, "run-link.json")
+	if err := WriteJSON(linkPath, link); err != nil {
+		t.Fatal(err)
+	}
+	updatedWorkgraphPath := filepath.Join(dir, "updated-workgraph.json")
+	readbackPath := filepath.Join(dir, "updated-readback.json")
+	executionPath := filepath.Join(dir, "updated-execution-readback.json")
+
+	out.Reset()
+	code = Run([]string{
+		"mission", "recommendations", "complete-node",
+		"--wave", filepath.Join(importDir, "recommendation-wave.json"),
+		"--workgraph", filepath.Join(importDir, "recommendation-workgraph.json"),
+		"--run-link", linkPath,
+		"--expected-node", firstNode.ID,
+		"--evidence-root", repoRoot(t),
+		"--readback-evidence-root", "docs/evidence/test-wave",
+		"--out-workgraph", updatedWorkgraphPath,
+		"--out-readback", readbackPath,
+		"--out-execution-readback", executionPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("complete-node failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "completed_nodes=1") ||
+		!strings.Contains(out.String(), "checkpoint_count=1") ||
+		!strings.Contains(out.String(), "return_gate_status=blocked_ready_nodes_remain") ||
+		!strings.Contains(out.String(), "next_executable_node=mission-recommendation-next-02") {
+		t.Fatalf("complete-node output missing progress readback: %s", out.String())
+	}
+	updated := mustLoadJSON[Workgraph](t, updatedWorkgraphPath)
+	if updated.Nodes[0].Status != "completed" || updated.Nodes[1].Status != "ready" {
+		t.Fatalf("bad updated workgraph statuses: %#v", updated.Nodes[:2])
+	}
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, readbackPath)
+	if readback.CompletedNodes != 1 || readback.EvidenceRoot != "docs/evidence/test-wave" {
+		t.Fatalf("bad readback artifact: %#v", readback)
+	}
+	if readback.ReturnGateStatus != "blocked_ready_nodes_remain" || readback.CheckpointCount != 1 {
+		t.Fatalf("readback must carry node checkpoint count and return gate status: %#v", readback)
+	}
+	execution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, executionPath)
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("bad execution artifact: %v", err)
+	}
+	if execution.GeneratedWorkgraph.ReturnGateStatus != readback.ReturnGateStatus ||
+		execution.GeneratedWorkgraph.CheckpointCount != readback.CheckpointCount {
+		t.Fatalf("execution readback missing status gate mirror: %#v", execution.GeneratedWorkgraph)
+	}
+}
+
+func TestMissionRecommendationsReadbackRejectsMismatchedWaveAndWorkgraph(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	result.Workgraph.TargetInstance = "other-stack"
+	if _, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{}); err == nil || !strings.Contains(err.Error(), "target_instance") {
+		t.Fatalf("expected target_instance mismatch rejection, got %v", err)
+	}
+}
+
+func TestRecommendationReadbackRejectsMissingPromoterNoPromotionPlaceholders(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	readback.PromoterNoPromotionPlaceholders = nil
+	if err := ValidateAtlasRecommendationReadback(readback); err == nil ||
+		!strings.Contains(err.Error(), "promoter_no_promotion_placeholders must include promotion_claim, rsi_boundary, and authority_advance") {
+		t.Fatalf("expected missing promoter no-promotion placeholders rejection, got %v", err)
+	}
+
+	readback, err = BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readback.PromoterNoPromotionPlaceholders[0].Status = "stale"
+	if err := ValidateAtlasRecommendationReadback(readback); err == nil ||
+		!strings.Contains(err.Error(), "promoter_no_promotion_placeholders.promotion_claim status must be pending_promoter_no_promotion") {
+		t.Fatalf("expected stale promoter no-promotion placeholder rejection, got %v", err)
+	}
+}
+
+func TestRecommendationExecutionReadbackRejectsFalseCompletedNodes(t *testing.T) {
+	readback := AtlasRecommendationReadback{
+		ContractVersion:             AtlasRecommendationReadbackContract,
+		MissionID:                   "mission-long-wave",
+		TargetInstance:              "demo-stack",
+		Status:                      "ready",
+		SourceDigest:                "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		TotalNodes:                  40,
+		MinimumNodes:                30,
+		CompletedNodes:              0,
+		ReadyNodes:                  40,
+		ExecutableReadyNodes:        1,
+		LeaseHealthStatus:           "minimum_unmet",
+		CheckpointFreshnessStatus:   "fresh_checkpoint_required_after_each_node_or_timed_interval",
+		StaleRouteDecisionStatus:    "fresh_atlas_supervises_foundry_owns_one_active_node",
+		EarlyReturnRiskStatus:       "blocked_final_response_ready_nodes_remain",
+		FoundryRollupStatus:         "required_pending_first_node_import",
+		PromoterReadbackStatus:      "required_not_bound",
+		CommandReadbackStatus:       "required_not_bound",
+		PublicSafetyScanStatus:      "required_pending_verification",
+		FinalResponseReason:         "ready nodes or exact next actions remain",
+		ExactNextAction:             "Emit Foundry import for mission-recommendation-next-01 and execute exactly one active node.",
+		NodeEvidence:                []AtlasRecommendationNodeEvidence{{NodeID: "mission-recommendation-next-01", TaskID: "mission-recommendation-next-01-task", Status: "ready", NodeGate: "recorded", CandidateRecord: "recorded", RollbackRecord: "recorded", ImplementationEvidence: "recorded", Tests: "recorded", Verification: "recorded", PublicSafetyWording: "recorded", PromoterReadback: "recorded", CommandReadback: "recorded", RequiredGates: []string{"node_gate"}, VerificationCommands: []string{"go test ./... -count=1"}}},
+		FeatureDepthRecommendations: []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"},
+		SafetyBoundaries:            map[string]bool{"provider_calls": false},
+	}
+	execution := BuildAtlasRecommendationExecutionReadback(readback)
+	execution.Status = "completed"
+	execution.CompletedRecommendationNodes = 40
+
+	err := ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "completed_recommendation_nodes must match recommendation readback completed_nodes") {
+		t.Fatalf("expected false completion rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.CompletedRunLinks = 40
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness completed_run_links must match recommendation readback completed_nodes") {
+		t.Fatalf("expected stale Foundry run-link readiness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.LeaseHealthStatus = "stale_lease_health"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "lease_health_status must match recommendation readback") {
+		t.Fatalf("expected stale execution lease health rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.GeneratedWorkgraph.LeaseHealthStatus = "stale_lease_health"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "generated_workgraph.lease_health_status must match recommendation readback") {
+		t.Fatalf("expected stale generated workgraph lease health rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.LeaseHealthStatus = "stale_lease_health"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness lease_health_status must match recommendation readback") {
+		t.Fatalf("expected stale Foundry lease health rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "checkpoint_freshness_status must match recommendation readback") {
+		t.Fatalf("expected stale execution checkpoint freshness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ContinuationContractReason = "ready_nodes_remain"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "continuation_contract_reason must match recommendation readback") {
+		t.Fatalf("expected stale execution continuation reason rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ExactNextAction = "stale exact next action"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "exact_next_action must match recommendation readback") {
+		t.Fatalf("expected stale execution exact next action rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.RefusesFinalResponse = !readback.ContinuationContract.RefusesFinalResponse
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "refuses_final_response must match recommendation readback") {
+		t.Fatalf("expected stale execution final refusal rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.GeneratedWorkgraph.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "generated_workgraph.checkpoint_freshness_status must match recommendation readback") {
+		t.Fatalf("expected stale generated workgraph checkpoint freshness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.CheckpointFreshnessStatus = "stale_checkpoint_freshness"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness checkpoint_freshness_status must match recommendation readback") {
+		t.Fatalf("expected stale Foundry checkpoint freshness rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.ContinuationContractReason = "ready_nodes_remain"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness continuation_contract_reason must match recommendation readback") {
+		t.Fatalf("expected stale Foundry continuation reason rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.ExactNextAction = "stale exact next action"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness exact_next_action must match recommendation readback") {
+		t.Fatalf("expected stale Foundry exact next action rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.FoundryRunLinkReadinessSummary.RefusesFinalResponse = !readback.ContinuationContract.RefusesFinalResponse
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "foundry run-link readiness refuses_final_response must match recommendation readback") {
+		t.Fatalf("expected stale Foundry refusal rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ContinuationReasonCoverage.ExpectedReason = "ready_nodes_remain"
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "continuation_reason_coverage.expected_reason must match recommendation readback") {
+		t.Fatalf("expected stale continuation reason coverage rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ContinuationReasonCoverage.IndexedSources = execution.ContinuationReasonCoverage.IndexedSources[:12]
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "continuation_reason_coverage.source_count must match indexed_sources length") {
+		t.Fatalf("expected stale continuation source count rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	for i := range execution.SourceArtifacts {
+		if execution.SourceArtifacts[i].Ref == "continuation_reason_coverage" {
+			execution.SourceArtifacts[i].Digest = "sha256:0000000000000000000000000000000000000000000000000000000000000000"
+		}
+	}
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "continuation_reason_coverage source artifact digest disagrees") {
+		t.Fatalf("expected stale continuation source artifact digest rejection, got %v", err)
+	}
+	execution = BuildAtlasRecommendationExecutionReadback(readback)
+	execution.ReasonArtifactAgreementSummary.SourceArtifactCount = 1
+	err = ValidateAtlasRecommendationExecutionReadback(execution, readback)
+	if err == nil || !strings.Contains(err.Error(), "reason_artifact_agreement_summary.source_artifact_count must match source_artifacts length") {
+		t.Fatalf("expected stale reason artifact summary rejection, got %v", err)
+	}
+}
+
+func TestRecommendationWorkgraphReadinessPacketRejectsStaleReadyNodeState(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	packet, err := BuildAtlasRecommendationWorkgraphReadinessPacket(readback, AtlasRecommendationWorkgraphReadinessPacketOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	stale := packet
+	stale.ReadyNodes = 0
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(stale, readback); err == nil ||
+		!strings.Contains(err.Error(), "ready_nodes must match recommendation readback") {
+		t.Fatalf("expected stale ready node rejection, got %v", err)
+	}
+
+	stale = packet
+	stale.OneExecutableMutationNodeActive = false
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(stale, readback); err == nil ||
+		!strings.Contains(err.Error(), "ready nodes require one_executable_mutation_node_active=true") {
+		t.Fatalf("expected missing one-active-node rejection, got %v", err)
+	}
+
+	stale = packet
+	stale.FinalResponseAllowed = true
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(stale, readback); err == nil ||
+		!strings.Contains(err.Error(), "final_response_allowed must match recommendation readback") {
+		t.Fatalf("expected stale final response rejection, got %v", err)
+	}
+
+	stale = packet
+	stale.ContinuationContractReason = "ready_nodes_remain"
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(stale, readback); err == nil ||
+		!strings.Contains(err.Error(), "continuation_contract_reason must match recommendation readback") {
+		t.Fatalf("expected stale continuation reason rejection, got %v", err)
+	}
+}
+
+func TestRecommendationExecutionReadbackArtifactsStayConsistent(t *testing.T) {
+	root := repoRoot(t)
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "docs", "evidence", "ao-atlas-long-recommendation-wave-v03", "recommendation-readback.json"))
+	execution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, filepath.Join(root, "docs", "evidence", "ao-atlas-long-recommendation-wave-v03", "execution-readback.json"))
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("v0.3 execution ledger is inconsistent with recommendation readback: %v", err)
+	}
+}
+
+func TestLeaseResumeWaveFinalStateEvidenceMatchesPrompt(t *testing.T) {
+	root := filepath.Join(repoRoot(t), "docs", "evidence", "ao-atlas-lease-resume-wave-v01")
+	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(root, "recommendation-wave.json"))
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(root, "recommendation-readback.json"))
+	execution := mustLoadJSON[AtlasRecommendationExecutionReadback](t, filepath.Join(root, "execution-readback.json"))
+	command := mustLoadJSON[AtlasRecommendationCommandReadback](t, filepath.Join(root, "command-readback.json"))
+	promoter := mustLoadJSON[AtlasRecommendationPromoterReadback](t, filepath.Join(root, "promoter-readback.json"))
+	foundry := mustLoadJSON[AtlasRecommendationFoundryRollup](t, filepath.Join(root, "foundry-rollup.json"))
+	reconciliation := mustLoadJSON[AtlasRecommendationReconciliationPacket](t, filepath.Join(root, "reconciliation-packet.json"))
+	var synthesis struct {
+		CompletedNodes             int    `json:"completed_nodes"`
+		TotalNodes                 int    `json:"total_nodes"`
+		ReadyNodes                 int    `json:"ready_nodes"`
+		CheckpointCount            int    `json:"checkpoint_count"`
+		ElapsedMinutes             int    `json:"elapsed_minutes"`
+		ReturnGateStatus           string `json:"return_gate_status"`
+		FinalResponseAllowed       bool   `json:"final_response_allowed"`
+		ExactNextAction            string `json:"exact_next_action"`
+		ContinuationContractReason string `json:"continuation_contract_reason"`
+		RefusesFinalResponse       bool   `json:"refuses_final_response"`
+		NextRecommendedPrompt      string `json:"next_recommended_prompt"`
+	}
+	synthesis = mustLoadJSON[struct {
+		CompletedNodes             int    `json:"completed_nodes"`
+		TotalNodes                 int    `json:"total_nodes"`
+		ReadyNodes                 int    `json:"ready_nodes"`
+		CheckpointCount            int    `json:"checkpoint_count"`
+		ElapsedMinutes             int    `json:"elapsed_minutes"`
+		ReturnGateStatus           string `json:"return_gate_status"`
+		FinalResponseAllowed       bool   `json:"final_response_allowed"`
+		ExactNextAction            string `json:"exact_next_action"`
+		ContinuationContractReason string `json:"continuation_contract_reason"`
+		RefusesFinalResponse       bool   `json:"refuses_final_response"`
+		NextRecommendedPrompt      string `json:"next_recommended_prompt"`
+	}](t, filepath.Join(root, "final-synthesis.json"))
+	if err := ValidateAtlasRecommendationWave(wave); err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasRecommendationExecutionReadback(execution, readback); err != nil {
+		t.Fatalf("final execution readback should agree with lease-resume readback: %v", err)
+	}
+	if err := ValidateAtlasRecommendationClosureArtifacts(readback, command, promoter, foundry); err != nil {
+		t.Fatalf("final closure artifacts should agree with lease-resume readback: %v", err)
+	}
+	if err := ValidateAtlasRecommendationReconciliationPacket(readback, command, promoter, foundry, reconciliation); err != nil {
+		t.Fatalf("final reconciliation packet should agree with lease-resume readback: %v", err)
+	}
+	workgraphPath := filepath.Join(root, "recommendation-workgraph.json")
+	if readback.CompletedNodes > 0 {
+		workgraphPath = filepath.Join(root, "nodes", "mission-recommendation-next-"+twoDigit(readback.CompletedNodes), "workgraph-after.json")
+	}
+	workgraph := mustLoadJSON[Workgraph](t, workgraphPath)
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		t.Fatal(err)
+	}
+	workgraphDigest, err := digestFileWithNormalizedLineEndings(workgraphPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if readback.WorkgraphDigest != workgraphDigest {
+		t.Fatalf("root readback workgraph digest does not match latest workgraph: readback=%s latest=%s path=%s", readback.WorkgraphDigest, workgraphDigest, workgraphPath)
+	}
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if wave.TotalTasks != readback.TotalNodes ||
+		len(workgraph.Nodes) != readback.TotalNodes ||
+		state.NodeCounts["completed"] != readback.CompletedNodes ||
+		state.NodeCounts["ready"] != readback.ReadyNodes ||
+		len(state.ExecutableReadyNodeIDs) != readback.ExecutableReadyNodes {
+		t.Fatalf("wave, workgraph, and readback disagree: wave=%#v state=%#v readback=%#v", wave, state, readback)
+	}
+	if readback.FirstExecutableNode != "" && (len(state.ExecutableReadyNodeIDs) == 0 || state.ExecutableReadyNodeIDs[0] != readback.FirstExecutableNode) {
+		t.Fatalf("readback first executable node disagrees with workgraph state: state=%#v readback=%#v", state.ExecutableReadyNodeIDs, readback.FirstExecutableNode)
+	}
+	if synthesis.CompletedNodes != readback.CompletedNodes ||
+		synthesis.TotalNodes != readback.TotalNodes ||
+		synthesis.ReadyNodes != readback.ReadyNodes ||
+		synthesis.CheckpointCount != readback.CheckpointCount ||
+		synthesis.ElapsedMinutes != readback.ElapsedMinutes ||
+		synthesis.ReturnGateStatus != readback.ReturnGateStatus ||
+		synthesis.FinalResponseAllowed != readback.FinalResponseAllowed ||
+		synthesis.ExactNextAction != readback.ExactNextAction ||
+		synthesis.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		synthesis.RefusesFinalResponse != readback.ContinuationContract.RefusesFinalResponse {
+		t.Fatalf("final synthesis does not match root readback: synthesis=%#v readback=%#v", synthesis, readback)
+	}
+	if execution.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		execution.RefusesFinalResponse != readback.ContinuationContract.RefusesFinalResponse ||
+		execution.FoundryRunLinkReadinessSummary.ContinuationContractReason != readback.ContinuationContract.Reason ||
+		execution.ContinuationReasonCoverage.ExpectedReason != readback.ContinuationContract.Reason {
+		t.Fatalf("execution readback lost lease-resume continuation reason: execution=%#v readback=%#v", execution, readback)
+	}
+	promptPath := filepath.Join(root, "next-recommended-prompt.md")
+	if synthesis.NextRecommendedPrompt != "docs/evidence/ao-atlas-lease-resume-wave-v01/next-recommended-prompt.md" {
+		t.Fatalf("final synthesis points at wrong prompt: %#v", synthesis.NextRecommendedPrompt)
+	}
+	promptBytes, err := os.ReadFile(promptPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	prompt := string(promptBytes)
+	workgraphRef := filepath.ToSlash(workgraphPath)
+	if idx := strings.Index(workgraphRef, "docs/"); idx >= 0 {
+		workgraphRef = workgraphRef[idx:]
+	}
+	nextExecutableNode := readback.FirstExecutableNode
+	if nextExecutableNode == "" {
+		nextExecutableNode = "none"
+	}
+	for _, want := range []string{
+		"Current workgraph: `" + workgraphRef + "`",
+		"Completed nodes: " + strconv.Itoa(readback.CompletedNodes) + " / " + strconv.Itoa(readback.TotalNodes),
+		"Ready nodes: " + strconv.Itoa(readback.ReadyNodes),
+		"Elapsed minutes at latest checkpoint: " + strconv.Itoa(readback.ElapsedMinutes),
+		"`final_response_allowed=" + strconv.FormatBool(readback.FinalResponseAllowed) + "`",
+		"Return gate: `" + readback.ReturnGateStatus + "`",
+		"Continuation contract reason: `" + readback.ContinuationContract.Reason + "`",
+		"Early-return risk: `" + readback.EarlyReturnRiskStatus + "`",
+		"Checkpoint count: " + strconv.Itoa(readback.CheckpointCount),
+		"Next executable node: `" + nextExecutableNode + "`",
+		readback.ExactNextAction,
+		"If `ready_nodes > 0` or `exact_next_action` is non-empty, do not produce a final response.",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("continuation prompt missing final-state evidence %q:\n%s", want, prompt)
+		}
+	}
+}

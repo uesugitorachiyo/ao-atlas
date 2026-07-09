@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.refactoring.tests.v0.1",
+  "node_id": "refactoring-next-wave-36",
+  "status": "targeted_regression_passed",
+  "targeted_tests": [
+    {
+      "command": "go test ./internal/atlas -run 'TestMissionRecommendations|TestRecommendation|TestLongRunHardeningWave|TestFinalClosureConsolidation|TestProductionReadiness' -count=1",
+      "status": "passed"
+    }
+  ],
+  "rsi_remains_denied": true
+}

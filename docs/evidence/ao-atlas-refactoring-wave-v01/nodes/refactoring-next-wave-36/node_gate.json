@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.refactoring.node-gate.v0.1",
+  "node_id": "refactoring-next-wave-36",
+  "status": "cleared",
+  "theme": "test-structure",
+  "task": "Split oversized recommendation tests into focused files by routing, evidence, readback, and lifecycle domain.",
+  "bounded_scope": [
+    "internal/atlas/mission_recommendations_test.go",
+    "internal/atlas/mission_recommendations_routing_evidence_test.go",
+    "internal/atlas/mission_recommendations_readback_lifecycle_test.go",
+    "internal/atlas/mission_recommendations_hardening_lifecycle_test.go",
+    "internal/atlas/mission_recommendations_final_closure_lifecycle_test.go",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-36"
+  ],
+  "execution_clearance": "mechanical_test_split",
+  "requires_new_authorization": false,
+  "requires_policy_change": false,
+  "requires_provider_call": false,
+  "requires_dependency_update": false,
+  "rsi_remains_denied": true
+}
