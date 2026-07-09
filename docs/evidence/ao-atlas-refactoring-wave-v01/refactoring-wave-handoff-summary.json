@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.refactoring.wave-handoff-summary.v0.1",
+  "status": "handoff_documented_pending_node_40_pr",
+  "wave_id": "ao-atlas-refactoring-wave-v01",
+  "total_nodes": 40,
+  "completed_nodes_before_node_40_pr": 39,
+  "ready_nodes_before_node_40_pr": 1,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "handoff_markdown": "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-wave-handoff.md",
+  "ranked_task_source": "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-recommendations.json",
+  "verification_gates": [
+    "jq empty docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-40/*.json",
+    "go test ./internal/atlas -run TestRefactoringWaveHandoffDocumentsRankedTasksAndVerificationGates -count=1",
+    "scripts/recommendation-targeted-regressions.sh validator-boundaries",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "scoped public-safety wording scan"
+  ],
+  "merged_prs": [444, 445, 446, 447, 448, 449, 450, 451, 452],
+  "node_40_pr": "pending",
+  "promoter_status": "no_promotion_requested",
+  "command_readback_status": "readback_agrees_no_promotion",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

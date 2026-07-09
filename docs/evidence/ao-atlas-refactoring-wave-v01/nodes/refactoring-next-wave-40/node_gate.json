@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.refactoring.node-gate.v0.1",
+  "node_id": "refactoring-next-wave-40",
+  "status": "cleared",
+  "theme": "developer-experience",
+  "task": "Document the refactoring wave handoff with ranked tasks and verification gates.",
+  "bounded_scope": [
+    "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-wave-handoff.md",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-wave-handoff-summary.json",
+    "internal/atlas/mission_refactoring_wave_handoff_test.go",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-40"
+  ],
+  "execution_clearance": "documentation_and_handoff_regression",
+  "requires_new_authorization": false,
+  "requires_policy_change": false,
+  "requires_provider_call": false,
+  "requires_dependency_update": false,
+  "rsi_remains_denied": true
+}
