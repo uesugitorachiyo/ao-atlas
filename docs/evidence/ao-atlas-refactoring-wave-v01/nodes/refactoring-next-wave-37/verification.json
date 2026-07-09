@@ -1,0 +1,41 @@
+{
+  "schema": "ao.atlas.refactoring.verification.v0.1",
+  "node_id": "refactoring-next-wave-37",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "jq empty docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-37/*.json",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./internal/atlas -run 'TestRecommendationTestFixtureBuildersCoverWaveNodeAndReadbackDomains|TestMissionRecommendations|TestRecommendation|TestLongRunHardeningWave|TestFinalClosureConsolidation|TestProductionReadiness' -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    }
+  ],
+  "public_safety_scan_status": "passed_with_defensive_fixture_matches",
+  "rsi_remains_denied": true
+}

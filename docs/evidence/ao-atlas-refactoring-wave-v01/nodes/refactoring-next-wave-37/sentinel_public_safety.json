@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.refactoring.sentinel-public-safety.v0.1",
+  "node_id": "refactoring-next-wave-37",
+  "status": "passed_with_defensive_fixture_matches",
+  "scope": [
+    "internal/atlas/mission_recommendations_fixture_builders_test.go",
+    "internal/atlas/mission_recommendations_final_closure_lifecycle_test.go",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-37"
+  ],
+  "public_claims_reviewed": true,
+  "promotion_claim_detected": false,
+  "rsi_claim_detected": false,
+  "scan_command": "rg -n \"fully_unsupervised_complex_mutation.*(live[-_ ]?proven|proven|approved)|RSI.*(proven|approved|allowed)|safe_to_execute|credential|token|secret\" internal/atlas/mission_recommendations_fixture_builders_test.go internal/atlas/mission_recommendations_final_closure_lifecycle_test.go docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-37 || true",
+  "scan_result": "matches_are_defensive_fixture_fields_or_existing_negative_unsafe_continuation_assertions",
+  "rsi_remains_denied": true
+}

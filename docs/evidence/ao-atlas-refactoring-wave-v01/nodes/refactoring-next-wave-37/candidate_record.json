@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.refactoring.candidate-record.v0.1",
+  "node_id": "refactoring-next-wave-37",
+  "status": "implemented_locally",
+  "candidate_summary": "Move shared recommendation wave, node completion, evidence file, and run-link builders into a dedicated fixture-builder test file with regression coverage.",
+  "implementation_refs": [
+    "internal/atlas/mission_recommendations_fixture_builders_test.go",
+    "internal/atlas/mission_recommendations_final_closure_lifecycle_test.go"
+  ],
+  "shared_builders": [
+    "writeFeatureDepthBundle",
+    "twoDigit",
+    "completeRecommendationNodes",
+    "recommendationRunLink",
+    "hasSourceArtifact",
+    "recommendationEvidenceFiles",
+    "recommendationEvidenceFile"
+  ],
+  "promotion_requested": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

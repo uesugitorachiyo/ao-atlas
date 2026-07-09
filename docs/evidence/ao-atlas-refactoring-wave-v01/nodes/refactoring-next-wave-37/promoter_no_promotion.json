@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.refactoring.promoter-no-promotion.v0.1",
+  "node_id": "refactoring-next-wave-37",
+  "status": "no_promotion_requested",
+  "promotion_granted": false,
+  "authority_advance": false,
+  "highest_proven_live_class_changed": false,
+  "next_denied_class_changed": false,
+  "rsi_remains_denied": true
+}
