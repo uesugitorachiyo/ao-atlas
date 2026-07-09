@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.refactoring.candidate-record.v0.1",
+  "node_id": "refactoring-next-wave-40",
+  "status": "implemented_locally",
+  "candidate_summary": "Document the refactoring wave handoff with ranked tasks, merged PR ledger, verification gates, and next recommendations.",
+  "implementation_refs": [
+    "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-wave-handoff.md",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-wave-handoff-summary.json",
+    "internal/atlas/mission_refactoring_wave_handoff_test.go"
+  ],
+  "promotion_requested": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

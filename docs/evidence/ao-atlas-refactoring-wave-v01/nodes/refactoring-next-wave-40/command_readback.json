@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.refactoring.command-readback.v0.1",
+  "node_id": "refactoring-next-wave-40",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes": 40,
+  "ready_nodes": 0,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "next_node": "",
+  "final_response_allowed": true,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.refactoring.rollback-record.v0.1",
+  "node_id": "refactoring-next-wave-40",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "Remove refactoring wave handoff markdown and summary.",
+    "Remove handoff regression test.",
+    "Remove node 40 evidence artifacts."
+  ],
+  "rollback_risk": "low",
+  "data_migration_required": false,
+  "release_or_deploy_required": false,
+  "rsi_remains_denied": true
+}

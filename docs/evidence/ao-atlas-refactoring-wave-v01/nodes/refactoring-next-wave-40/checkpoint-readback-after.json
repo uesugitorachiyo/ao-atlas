@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.refactoring.checkpoint-readback.v0.1",
+  "node_id": "refactoring-next-wave-40",
+  "status": "all_nodes_completed_locally_pending_pr",
+  "completed_nodes": 40,
+  "ready_nodes": 0,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "first_executable_node": "",
+  "exact_next_action": "Open PR for refactoring-next-wave-40, wait for CI, merge, sync main, delete codex branch, confirm clean synced state, then final response is allowed.",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true
+}
