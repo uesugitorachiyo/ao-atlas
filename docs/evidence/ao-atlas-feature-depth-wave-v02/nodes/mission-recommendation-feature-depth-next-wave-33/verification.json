@@ -1,0 +1,37 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-33",
+  "task_id": "mission-recommendation-feature-depth-next-wave-33-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "passed_commands": [
+    "go test ./internal/atlas -run 'TestFeatureDepthWaveMissionDashboardClosureBindingRowsBindAtlasClosureEvidence|TestFeatureDepthWaveV02MissionDashboardClosureBindingRowsBindAtlasClosureEvidence' -count=1",
+    "find docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-33 -name '*.json' -print0 | xargs -0 jq empty && jq empty docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-32/foundry-rollup.json",
+    "go run ./cmd/atlas mission recommendations scoped-public-safety-scan --node-id mission-recommendation-feature-depth-next-wave-33 --scope internal/atlas/mission_dashboard_closure_binding_test.go --scope docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-32/foundry-rollup.json --scope docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-33 --out docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-33/scoped-public-safety-scan.json",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-wave-v02 --out docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-33/feature-depth-evidence-validation-report.json",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/ao-atlas-node33-build ./cmd/atlas && rm -f target/ao-atlas-node33-build",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "required_commands": [
+    "go test ./internal/atlas -run 'TestFeatureDepthWaveMissionDashboardClosureBindingRowsBindAtlasClosureEvidence|TestFeatureDepthWaveV02MissionDashboardClosureBindingRowsBindAtlasClosureEvidence' -count=1",
+    "find docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-33 -name '*.json' -print0 | xargs -0 jq empty",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-atlas-feature-depth-wave-v02 --out docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-33/feature-depth-evidence-validation-report.json",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "repair_notes": [
+    "Dashboard closure binding rows require a node 32 Foundry rollup artifact.",
+    "Generated node 32 Foundry rollup repair evidence before node 33 fixture generation.",
+    "Scoped public-safety scan passed with zero unsafe matches.",
+    "Local verification passed before public-safety readback binding.",
+    "No promotion requested and RSI remains denied."
+  ]
+}

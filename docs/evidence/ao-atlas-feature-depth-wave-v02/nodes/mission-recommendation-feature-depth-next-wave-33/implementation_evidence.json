@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-33",
+  "task_id": "mission-recommendation-feature-depth-next-wave-33-task",
+  "status": "implemented",
+  "implementation_summary": [
+    "Added v02 regression coverage for Mission dashboard closure-binding rows.",
+    "Generated mission-dashboard-closure-binding.json for the v02 wave.",
+    "Generated missing node 32 Foundry rollup repair artifact required by the Foundry dashboard row."
+  ],
+  "changed_paths": [
+    "internal/atlas/mission_dashboard_closure_binding_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-32/foundry-rollup.json",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-33"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
