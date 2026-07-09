@@ -1,0 +1,11 @@
+{
+  "schema": "ao.foundry.import.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-07",
+  "task_id": "mission-recommendation-feature-depth-next-wave-07-task",
+  "status": "ready",
+  "target_repo": "ao-atlas",
+  "objective": "Validate required node evidence fields before recommendation readback advances.",
+  "active_node_count": 1,
+  "safe_to_execute": true,
+  "authority_boundary": "atlas_recommendation_planning_only"
+}
