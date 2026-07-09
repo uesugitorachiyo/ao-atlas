@@ -718,6 +718,7 @@ func runMissionRecommendationsExportRefactoringWave(args []string, stdout io.Wri
 	sourceReadbackPath := fs.String("source-readback", "", "source recommendation readback path")
 	sourceAssertionPath := fs.String("source-assertion", "", "source no-promotion/no-RSI assertion path")
 	nextTrackDecisionPath := fs.String("next-track-decision", "", "next-track decision path")
+	consumedLedgerPath := fs.String("consumed-ledger", "", "consumed recommendation ledger path")
 	minTasks := fs.Int("min-tasks", 40, "minimum ranked refactoring tasks")
 	outPath := fs.String("out", "", "output refactoring recommendations path")
 	jsonOut := fs.Bool("json", false, "json output")
@@ -729,6 +730,7 @@ func runMissionRecommendationsExportRefactoringWave(args []string, stdout io.Wri
 		"--source-readback":      *sourceReadbackPath,
 		"--source-assertion":     *sourceAssertionPath,
 		"--next-track-decision":  *nextTrackDecisionPath,
+		"--consumed-ledger":      *consumedLedgerPath,
 	} {
 		if strings.TrimSpace(value) == "" {
 			return fmt.Errorf("%s is required", flagName)
@@ -737,18 +739,19 @@ func runMissionRecommendationsExportRefactoringWave(args []string, stdout io.Wri
 	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
 		return fmt.Errorf("--out or --json is required")
 	}
-	for _, input := range []string{*sourceEvidenceRoot, *sourceReadbackPath, *sourceAssertionPath, *nextTrackDecisionPath} {
+	for _, input := range []string{*sourceEvidenceRoot, *sourceReadbackPath, *sourceAssertionPath, *nextTrackDecisionPath, *consumedLedgerPath} {
 		if strings.TrimSpace(*outPath) != "" && samePath(input, *outPath) {
 			return fmt.Errorf("refusing to overwrite input artifact")
 		}
 	}
 	bundle, err := BuildAtlasNextWaveRefactoringRecommendations(AtlasNextWaveRefactoringExportOptions{
-		MissionID:             *missionID,
-		SourceEvidenceRoot:    *sourceEvidenceRoot,
-		SourceReadbackPath:    *sourceReadbackPath,
-		SourceAssertionPath:   *sourceAssertionPath,
-		NextTrackDecisionPath: *nextTrackDecisionPath,
-		MinTasks:              *minTasks,
+		MissionID:                  *missionID,
+		SourceEvidenceRoot:         *sourceEvidenceRoot,
+		SourceReadbackPath:         *sourceReadbackPath,
+		SourceAssertionPath:        *sourceAssertionPath,
+		NextTrackDecisionPath:      *nextTrackDecisionPath,
+		ConsumedRecommendationPath: *consumedLedgerPath,
+		MinTasks:                   *minTasks,
 	})
 	if err != nil {
 		return err

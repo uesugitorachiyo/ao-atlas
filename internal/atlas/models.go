@@ -235,6 +235,8 @@ type AOMissionRefactoringRecommendations struct {
 	SourceAssertionPath     string                     `json:"source_assertion_path"`
 	NextTrackDecisionPath   string                     `json:"next_track_decision_path"`
 	NextTrackDecisionDigest string                     `json:"next_track_decision_digest"`
+	ConsumedLedgerPath      string                     `json:"consumed_recommendation_ledger_path,omitempty"`
+	ConsumedLedgerDigest    string                     `json:"consumed_recommendation_ledger_digest,omitempty"`
 	Tasks                   []AOMissionRefactoringTask `json:"tasks"`
 	NoPromotionRequested    bool                       `json:"no_promotion_requested"`
 	PromotionGranted        bool                       `json:"promotion_granted"`
