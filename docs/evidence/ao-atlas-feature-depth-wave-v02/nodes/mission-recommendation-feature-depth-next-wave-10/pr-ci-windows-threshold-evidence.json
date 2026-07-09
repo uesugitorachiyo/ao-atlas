@@ -1,0 +1,58 @@
+{
+  "schema": "ao.atlas.pr-ci-windows-threshold-evidence.v0.1",
+  "status": "windows_thresholds_recorded",
+  "source_summary_path": "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-09/pr-ci-timing-summary.json",
+  "source_summary_digest": "sha256:17c8de4cbc826199435ea919541f057ab0521082e3cb20dfaccfd00042a6385c",
+  "threshold_seconds": 90,
+  "row_count": 4,
+  "long_running_windows_checks": 4,
+  "max_windows_seconds": 127,
+  "max_over_threshold_seconds": 37,
+  "rows": [
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-05",
+      "pr_number": 460,
+      "ci_status": "passed",
+      "merge_commit": "0359069ff5d3ae704ac60b4e83f61980016bcf8f",
+      "windows_seconds": 115,
+      "threshold_seconds": 90,
+      "exceeds_threshold": true,
+      "over_threshold_seconds": 25
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-06",
+      "pr_number": 461,
+      "ci_status": "passed",
+      "merge_commit": "36a203d0e1355e5dc21878469b4e707875575384",
+      "windows_seconds": 127,
+      "threshold_seconds": 90,
+      "exceeds_threshold": true,
+      "over_threshold_seconds": 37
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-07",
+      "pr_number": 462,
+      "ci_status": "passed",
+      "merge_commit": "783a4c98f91f58a89f964411d1cdcea41d52317a",
+      "windows_seconds": 112,
+      "threshold_seconds": 90,
+      "exceeds_threshold": true,
+      "over_threshold_seconds": 22
+    },
+    {
+      "node_id": "mission-recommendation-feature-depth-next-wave-08",
+      "pr_number": 463,
+      "ci_status": "passed",
+      "merge_commit": "43bc5734041ff422347eedd7b613b6aca1445375",
+      "windows_seconds": 116,
+      "threshold_seconds": 90,
+      "exceeds_threshold": true,
+      "over_threshold_seconds": 26
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
