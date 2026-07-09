@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-35",
+  "task_id": "mission-recommendation-feature-depth-next-wave-35-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-35",
+  "source_task_digest": "sha256:3135c4a6617c2b3e62350b7a6086d1e2db3a398c21336284993d20e96d3ee2e9",
+  "selected_work": [
+    "Generate v02 Mission dashboard freshness checks from node 34 provenance and post-merge lifecycle evidence.",
+    "Validate PR merge, CI pass, synced main, branch deletion, codex branch cleanup, and source freshness rows.",
+    "Preserve final-response denial, no-promotion, and RSI-denied invariants."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
