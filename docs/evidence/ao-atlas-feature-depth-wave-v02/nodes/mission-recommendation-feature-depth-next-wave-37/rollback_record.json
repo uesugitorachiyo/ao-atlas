@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-37",
+  "task_id": "mission-recommendation-feature-depth-next-wave-37-task",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "Remove the v02 ranked export regression test if incorrect.",
+    "Remove docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-37 generated evidence artifacts."
+  ],
+  "rollback_command": "git revert <merge-commit-for-node-37>",
+  "data_loss_risk": "none_generated_evidence_only",
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}
