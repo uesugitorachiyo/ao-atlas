@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-36",
+  "task_id": "mission-recommendation-feature-depth-next-wave-36-task",
+  "status": "implemented",
+  "implementation_summary": [
+    "Added v02 regression coverage for Mission dashboard compact filters.",
+    "Generated mission-dashboard-compact-filters.json for the v02 wave.",
+    "Bound ready, blocked, failed, completed, track, schema-health, CI, and cleanup filter rows."
+  ],
+  "changed_paths": [
+    "internal/atlas/mission_dashboard_compact_filters_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-36"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
