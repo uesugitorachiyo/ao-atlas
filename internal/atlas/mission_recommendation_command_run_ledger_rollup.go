@@ -52,7 +52,7 @@ func BuildAtlasRecommendationCommandRunLedgerRollup(ledgerPaths []string) (Atlas
 		})
 		commands = append(commands, ledger.Command)
 		outputStatusCounts[ledger.OutputStatus]++
-		if !oneOf(ledger.OutputStatus, "ready", "passed") {
+		if ClassifyAtlasRecommendationRunLedgerOutputStatus(ledger.OutputStatus).CountsAsFailedOutput {
 			failedCommands = append(failedCommands, ledger.Command)
 		}
 		allRecordInvocation = allRecordInvocation && ledger.RecordsInvocation
@@ -94,6 +94,29 @@ func recommendationArtifactSummaryFromCommandRunLedger(ledger AtlasRecommendatio
 		Schema:         ledger.ArtifactSchema,
 		TypedValidator: ledger.TypedValidator,
 		OutputStatus:   ledger.OutputStatus,
+	}
+}
+
+func ClassifyAtlasRecommendationRunLedgerOutputStatus(status string) AtlasRecommendationRunLedgerOutputStatusClassification {
+	status = strings.TrimSpace(status)
+	category := "failed"
+	countsAsFailed := true
+	switch status {
+	case "passed":
+		category = "pass"
+		countsAsFailed = false
+	case "ready":
+		category = "ready"
+		countsAsFailed = false
+	case "blocked", "blocked_hard_blocker":
+		category = "blocked"
+	default:
+		category = "failed"
+	}
+	return AtlasRecommendationRunLedgerOutputStatusClassification{
+		OutputStatus:         status,
+		Category:             category,
+		CountsAsFailedOutput: countsAsFailed,
 	}
 }
 
@@ -141,7 +164,7 @@ func ValidateAtlasRecommendationCommandRunLedgerRollup(rollup AtlasRecommendatio
 			errs = append(errs, prefix+".command must match commands order")
 		}
 		expectedStatusCounts[entry.OutputStatus]++
-		if !oneOf(entry.OutputStatus, "ready", "passed") {
+		if ClassifyAtlasRecommendationRunLedgerOutputStatus(entry.OutputStatus).CountsAsFailedOutput {
 			expectedFailedCommands = append(expectedFailedCommands, entry.Command)
 		}
 		expectedRecordInvocation = expectedRecordInvocation && entry.RecordsInvocation

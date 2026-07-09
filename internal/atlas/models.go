@@ -419,6 +419,12 @@ type AtlasRecommendationArtifactSummary struct {
 	OutputStatus   string `json:"output_status"`
 }
 
+type AtlasRecommendationRunLedgerOutputStatusClassification struct {
+	OutputStatus         string `json:"output_status"`
+	Category             string `json:"category"`
+	CountsAsFailedOutput bool   `json:"counts_as_failed_output"`
+}
+
 type AtlasRecommendationCommandRunLedger struct {
 	Schema                 string `json:"schema"`
 	Status                 string `json:"status"`

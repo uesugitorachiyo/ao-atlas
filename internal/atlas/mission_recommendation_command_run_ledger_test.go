@@ -655,3 +655,28 @@ func TestMissionRecommendationsArtifactSummaryBindsRunLedgerRollupAndCoverageChe
 		t.Fatal(err)
 	}
 }
+
+func TestRecommendationRunLedgerOutputStatusClassificationCoversPassReadyFailedBlocked(t *testing.T) {
+	cases := []struct {
+		status       string
+		category     string
+		countsFailed bool
+	}{
+		{"passed", "pass", false},
+		{"ready", "ready", false},
+		{"failed", "failed", true},
+		{"blocked", "blocked", true},
+		{"blocked_hard_blocker", "blocked", true},
+		{"unknown_status", "failed", true},
+	}
+	for _, tc := range cases {
+		t.Run(tc.status, func(t *testing.T) {
+			classification := ClassifyAtlasRecommendationRunLedgerOutputStatus(tc.status)
+			if classification.OutputStatus != tc.status ||
+				classification.Category != tc.category ||
+				classification.CountsAsFailedOutput != tc.countsFailed {
+				t.Fatalf("unexpected classification for %s: %#v", tc.status, classification)
+			}
+		})
+	}
+}
