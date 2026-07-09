@@ -20,8 +20,11 @@ Do not ask the operator for permission. Do not stop after one node, one PR, one 
 Current completed sources:
 - Feature Depth wave: docs/evidence/ao-atlas-feature-depth-wave-v01
 - Feature Depth final readback: docs/evidence/ao-atlas-feature-depth-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/recommendation-readback-after.json
+- Feature Depth final readback digest: sha256:2f8db366915afd3efdb6c7d15b6c8eafe71dadd14fb4100df2159ff319367e0e
 - Final closure assertion: docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/no-promotion-no-rsi-assertion.json
 - Next-track decision: docs/evidence/ao-atlas-refactoring-wave-v01/next-track-decision.json
+- Consumed recommendation ledger: docs/evidence/ao-atlas-refactoring-wave-v01/consumed-recommendation-ledger.json
+- Consumed recommendation ledger digest: sha256:7fe7731e1a9f9b37219d4492de27ae71b1edc9ca11a093114f60fad466b690b6
 - Refactoring recommendations: docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-recommendations.json
 
 Mission objective:

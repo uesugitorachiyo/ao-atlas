@@ -32,6 +32,9 @@ func TestRefactoringWaveDurableHandoffFixtureRoutesPastCompletedFeatureDepth(t *
 	}
 	if recommendations.MissionID != "ao-atlas-refactoring-wave-v01" ||
 		recommendations.Track != "refactoring" ||
+		!digestPattern.MatchString(recommendations.SourceReadbackDigest) ||
+		recommendations.ConsumedLedgerPath != "docs/evidence/ao-atlas-refactoring-wave-v01/consumed-recommendation-ledger.json" ||
+		!digestPattern.MatchString(recommendations.ConsumedLedgerDigest) ||
 		recommendations.MinimumTasks != 40 ||
 		recommendations.RecommendationCount != 40 ||
 		len(recommendations.Tasks) != 40 ||
@@ -72,6 +75,9 @@ func TestRefactoringWaveDurableHandoffFixtureRoutesPastCompletedFeatureDepth(t *
 	for _, want := range []string{
 		"ao-atlas-refactoring-wave-v01",
 		"refactoring-recommendations.json",
+		"Feature Depth final readback digest: " + recommendations.SourceReadbackDigest,
+		"Consumed recommendation ledger: " + recommendations.ConsumedLedgerPath,
+		"Consumed recommendation ledger digest: " + recommendations.ConsumedLedgerDigest,
 		"Target 2-3 hours",
 		"Complete at least 12 bounded refactoring nodes",
 		"Do not stop after one node",

@@ -232,6 +232,7 @@ type AOMissionRefactoringRecommendations struct {
 	RecommendationCount     int                        `json:"recommendation_count"`
 	SourceEvidenceRoot      string                     `json:"source_evidence_root"`
 	SourceReadbackPath      string                     `json:"source_readback_path"`
+	SourceReadbackDigest    string                     `json:"source_readback_digest"`
 	SourceAssertionPath     string                     `json:"source_assertion_path"`
 	NextTrackDecisionPath   string                     `json:"next_track_decision_path"`
 	NextTrackDecisionDigest string                     `json:"next_track_decision_digest"`
