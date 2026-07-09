@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.refactoring.run-link.v0.1",
+  "node_id": "refactoring-next-wave-38",
+  "status": "local_run_recorded",
+  "branch": "codex/refactoring-no-promotion-rsi-validator-tests",
+  "run_started_at": "2026-07-09T15:09:57Z",
+  "run_mode": "codex_goal_continuation",
+  "evidence_root": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-38",
+  "rsi_remains_denied": true
+}

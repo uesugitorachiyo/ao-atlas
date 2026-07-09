@@ -3,6 +3,7 @@ package atlas
 import (
 	"bytes"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -64,5 +65,66 @@ func TestFeatureDepthWaveCommandPromoterAgreementRollupBindsNoPromotionReadbacks
 	}
 	if validator != "typed:command-promoter-agreement-rollup" {
 		t.Fatalf("expected typed Command/Promoter agreement rollup validator, got %s", validator)
+	}
+}
+
+func TestCommandPromoterAgreementRollupValidatorRejectsPromotionAndRSIBoundaryDrift(t *testing.T) {
+	root := repoRoot(t)
+	recordedPath := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-26", "command-promoter-agreement-rollup.json")
+	valid := mustLoadJSON[AtlasCommandPromoterAgreementRollup](t, recordedPath)
+	if err := ValidateAtlasCommandPromoterAgreementRollup(valid); err != nil {
+		t.Fatal(err)
+	}
+
+	cases := []struct {
+		name    string
+		mutate  func(*AtlasCommandPromoterAgreementRollup)
+		wantErr string
+	}{
+		{
+			name: "aggregate promotion status",
+			mutate: func(rollup *AtlasCommandPromoterAgreementRollup) {
+				rollup.AggregatePromotionStatus = "promotion_blocked"
+			},
+			wantErr: "aggregate_promotion_status must be no_promotion_requested",
+		},
+		{
+			name: "promotion requested",
+			mutate: func(rollup *AtlasCommandPromoterAgreementRollup) {
+				rollup.PromotionRequested = true
+			},
+			wantErr: "promotion_requested must be false",
+		},
+		{
+			name: "promotion granted",
+			mutate: func(rollup *AtlasCommandPromoterAgreementRollup) {
+				rollup.PromotionGranted = true
+			},
+			wantErr: "promotion_granted must be false",
+		},
+		{
+			name: "authority advance claim",
+			mutate: func(rollup *AtlasCommandPromoterAgreementRollup) {
+				rollup.ClaimsAuthorityAdvance = true
+			},
+			wantErr: "claims_authority_advance must be false",
+		},
+		{
+			name: "rsi no longer denied",
+			mutate: func(rollup *AtlasCommandPromoterAgreementRollup) {
+				rollup.RSIRemainsDenied = false
+			},
+			wantErr: "rsi_remains_denied must be true",
+		},
+	}
+	for _, tt := range cases {
+		t.Run(tt.name, func(t *testing.T) {
+			mutated := valid
+			tt.mutate(&mutated)
+			err := ValidateAtlasCommandPromoterAgreementRollup(mutated)
+			if err == nil || !strings.Contains(err.Error(), tt.wantErr) {
+				t.Fatalf("expected %q validation error, got %v", tt.wantErr, err)
+			}
+		})
 	}
 }

@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.refactoring.candidate-record.v0.1",
+  "node_id": "refactoring-next-wave-38",
+  "status": "implemented_locally",
+  "candidate_summary": "Add table-driven validator tests that mutate recorded Promoter and Command/Promoter rollups to ensure promotion and RSI boundary drift is rejected.",
+  "implementation_refs": [
+    "internal/atlas/mission_promoter_no_promotion_rollup_test.go",
+    "internal/atlas/mission_command_promoter_agreement_rollup_test.go"
+  ],
+  "covered_boundary_fields": [
+    "aggregate_promotion_status",
+    "promotion_requested",
+    "promotion_granted",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "promotion_requested": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
