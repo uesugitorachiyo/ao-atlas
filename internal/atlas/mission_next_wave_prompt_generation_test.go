@@ -120,6 +120,56 @@ func TestFeatureDepthWaveNextWavePromptPreservesMinimumTwoHourBudget(t *testing.
 	}
 }
 
+func TestRecommendationPromptGenerationUsesStructuredWaveBudgetAndStopConditions(t *testing.T) {
+	wave := AtlasRecommendationWave{
+		MissionID:            "ao-atlas-structured-budget-test",
+		TargetInstance:       "ao-atlas-structured-budget-test-v01",
+		TotalTasks:           40,
+		MinimumTasks:         30,
+		NodeBudget:           40,
+		EstimatedMinutes:     120,
+		FinalResponseAllowed: false,
+		FinalResponseReason:  "ready_nodes_or_exact_next_action_remain",
+		SourceDigest:         "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+		Supervisor: &AtlasLongRunSupervisor{
+			MinNodes:             30,
+			MinMinutes:           120,
+			MaxMinutes:           180,
+			ContinueIfFastTarget: 40,
+			ReturnOnlyWhen:       "all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker",
+			CheckpointPolicy:     "after_each_node_with_pr_ci_merge_cleanup",
+		},
+		Tasks: []AtlasRecommendationTask{
+			{ID: "next-01", Task: "Structured budget prompt test node.", Owner: "ao-atlas"},
+		},
+	}
+	budget := BuildAtlasRecommendationPromptBudget(wave)
+	if budget.MinNodes != 30 ||
+		budget.MinMinutes != 120 ||
+		budget.MaxMinutes != 180 ||
+		budget.MaxIterations != 40 ||
+		budget.ReturnOnlyWhen != "all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker" ||
+		budget.CheckpointPolicy != "after_each_node_with_pr_ci_merge_cleanup" ||
+		len(budget.StopConditions) != 5 {
+		t.Fatalf("structured prompt budget lost supervisor fields: %#v", budget)
+	}
+	prompt := buildAtlasRecommendationPrompt(wave)
+	for _, want := range []string{
+		"min_nodes: 30",
+		"min_minutes: 120",
+		"max_minutes: 180",
+		"max_iterations: 40",
+		"return_only_when: all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker",
+		"checkpoint_policy: after_each_node_with_pr_ci_merge_cleanup",
+		"Lease floor stop gate: do not return before min_minutes=120 unless a true hard blocker remains.",
+		"Ready-work stop gate: if ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response.",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("structured prompt budget missing %q:\n%s", want, prompt)
+		}
+	}
+}
+
 func TestFeatureDepthWaveImportRejectsCompletedFollowupRecommendationSource(t *testing.T) {
 	root := repoRoot(t)
 	previousDir, err := os.Getwd()
