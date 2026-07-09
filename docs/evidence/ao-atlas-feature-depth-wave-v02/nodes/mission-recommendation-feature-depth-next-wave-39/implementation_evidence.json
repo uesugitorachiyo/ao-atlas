@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-39",
+  "task_id": "mission-recommendation-feature-depth-next-wave-39-task",
+  "status": "implemented",
+  "implementation_summary": [
+    "Added v02 regression coverage for next-wave planning-only validation.",
+    "Generated next-wave-planning-only-validation.json for the v02 wave.",
+    "Confirmed source recommendations, generated wave, and generated readback remain planning-only with no import/run-link artifacts."
+  ],
+  "changed_paths": [
+    "internal/atlas/mission_next_wave_planning_only_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-39"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
