@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-28",
+  "task_id": "mission-recommendation-feature-depth-next-wave-28-task",
+  "status": "selected",
+  "source_recommendation": "feature-depth-next-wave-28",
+  "source_task_digest": "sha256:ca4a303f4a41158db56252f7b8e87dd235445e9e2bc6cb60db0aad0e108d65e6",
+  "selected_work": [
+    "Generate a v02 Command/Promoter disagreement denial fixture from typed Atlas command output.",
+    "Record final-response denial evidence for Command/Promoter disagreement cases.",
+    "Preserve no-promotion and RSI-denied invariants without executing or approving work."
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
