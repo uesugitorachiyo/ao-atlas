@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-18",
+  "task_id": "mission-recommendation-feature-depth-next-wave-18-task",
+  "status": "implemented",
+  "implementation_files": [
+    "internal/atlas/mission_compaction_resume_regression_test.go",
+    "internal/atlas/mission_compaction_resume_regression.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/recommendation_evidence_validation.go"
+  ],
+  "evidence_files": [
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-18/compaction-resume-regression.json"
+  ],
+  "summary": "Node 18 adds v02 regression coverage and generated evidence that the node 17 resume prompt preserves ready-node and exact-action continuation state.",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
