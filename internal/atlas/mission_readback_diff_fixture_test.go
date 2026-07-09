@@ -87,3 +87,46 @@ func TestMissionRecommendationsReadbackDiffFixtureCLIWritesDeterministicArtifact
 		t.Fatalf("CLI diff fixture output drifted\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
 	}
 }
+
+func TestFeatureDepthWaveV02ReadbackDiffFixturePreservesCompletedAndReadyTransitions(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v02")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-02")
+	sourceReadback := filepath.Join(waveRoot, "nodes", "mission-recommendation-feature-depth-next-wave-01", "recommendation-readback-after.json")
+	targetReadback := filepath.Join(nodeDir, "recommendation-readback-after.json")
+	deltaPath := filepath.Join(nodeDir, "mission-readback-delta.json")
+	fixturePath := filepath.Join(nodeDir, "resumable-readback-diff-fixture.json")
+
+	fixture, err := BuildAtlasMissionReadbackDiffFixture(sourceReadback, targetReadback, deltaPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasMissionReadbackDiffFixture(fixture); err != nil {
+		t.Fatal(err)
+	}
+	recorded := mustLoadJSON[AtlasMissionReadbackDiffFixture](t, fixturePath)
+	if err := ValidateAtlasMissionReadbackDiffFixture(recorded); err != nil {
+		t.Fatal(err)
+	}
+	if digestValue(fixture) != digestValue(recorded) {
+		t.Fatalf("v02 resumable readback diff fixture drifted\nwant %s\ngot  %s", digestValue(fixture), digestValue(recorded))
+	}
+	if fixture.CompletedNodeTransition.Before != 1 ||
+		fixture.CompletedNodeTransition.After != 2 ||
+		fixture.ReadyNodeTransition.Before != 39 ||
+		fixture.ReadyNodeTransition.After != 38 ||
+		fixture.CheckpointTransition.Before != 1 ||
+		fixture.CheckpointTransition.After != 2 ||
+		fixture.FirstExecutableNodeBefore != "mission-recommendation-feature-depth-next-wave-02" ||
+		fixture.FirstExecutableNodeAfter != "mission-recommendation-feature-depth-next-wave-03" ||
+		fixture.FinalResponseAllowedBefore ||
+		fixture.FinalResponseAllowedAfter ||
+		!fixture.ResumeRequired ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("v02 fixture must preserve resumable completed/ready transitions without authority expansion: %#v", fixture)
+	}
+}

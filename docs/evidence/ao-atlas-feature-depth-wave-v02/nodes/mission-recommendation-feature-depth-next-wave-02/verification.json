@@ -1,0 +1,44 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-02",
+  "task_id": "mission-recommendation-feature-depth-next-wave-02-task",
+  "status": "passed",
+  "commands": [
+    {
+      "command": "go test ./internal/atlas -run TestFeatureDepthWaveV02ReadbackDiffFixturePreservesCompletedAndReadyTransitions -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build ./cmd/atlas && rm -f atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    },
+    {
+      "command": "jq empty over node JSON evidence",
+      "status": "passed"
+    },
+    {
+      "command": "scoped public-safety wording scan over changed docs/tests",
+      "status": "passed"
+    }
+  ]
+}
