@@ -338,6 +338,189 @@ func ValidateAtlasRecommendationRunLedgerOperatorSummaryBinding(binding AtlasRec
 	return joinErrors(errs)
 }
 
+func BuildAtlasRecommendationRunLedgerRetryFixturePack(nodeID string, attempts []AtlasRecommendationRunLedgerRetryAttempt) (AtlasRecommendationRunLedgerRetryFixturePack, error) {
+	nodeID = strings.TrimSpace(nodeID)
+	if nodeID == "" {
+		return AtlasRecommendationRunLedgerRetryFixturePack{}, fmt.Errorf("node id is required")
+	}
+	if len(attempts) == 0 {
+		return AtlasRecommendationRunLedgerRetryFixturePack{}, fmt.Errorf("at least one retry attempt is required")
+	}
+
+	classifiedAttempts := make([]AtlasRecommendationRunLedgerRetryAttempt, 0, len(attempts))
+	attemptsByCommand := map[string]int{}
+	resumedSessions := map[string]bool{}
+	failedOrBlockedAttemptCount := 0
+	allClassified := true
+	planningOnly := true
+
+	for _, rawAttempt := range attempts {
+		attempt := rawAttempt
+		attempt.Command = strings.TrimSpace(attempt.Command)
+		attempt.SessionID = strings.TrimSpace(attempt.SessionID)
+		attempt.OutputStatus = strings.TrimSpace(attempt.OutputStatus)
+		attempt.RetryReason = strings.TrimSpace(attempt.RetryReason)
+		classification := ClassifyAtlasRecommendationRunLedgerOutputStatus(attempt.OutputStatus)
+		attempt.OutputCategory = classification.Category
+		attempt.StatusClassification = classification
+		attempt.PlanningOnly = true
+		attempt.PromotionGranted = false
+		attempt.ClaimsAuthorityAdvance = false
+		attempt.RSIRemainsDenied = true
+		attempt.SafeToExecute = false
+		attempt.SchedulesWork = false
+		attempt.ExecutesWork = false
+		attempt.ApprovesWork = false
+		attempt.MutatesRepositories = false
+		classifiedAttempts = append(classifiedAttempts, attempt)
+
+		attemptsByCommand[attempt.Command]++
+		if strings.Contains(attempt.RetryReason, "resume") || strings.Contains(attempt.RetryReason, "resumed") {
+			resumedSessions[attempt.SessionID] = true
+		}
+		if classification.CountsAsFailedOutput || classification.Category == "blocked" {
+			failedOrBlockedAttemptCount++
+		}
+		allClassified = allClassified && attempt.OutputStatus != "" && attempt.OutputCategory != ""
+		planningOnly = planningOnly && attempt.PlanningOnly && !attempt.SafeToExecute && !attempt.SchedulesWork && !attempt.ExecutesWork && !attempt.ApprovesWork && !attempt.MutatesRepositories
+	}
+
+	retryCommandCount := 0
+	for _, count := range attemptsByCommand {
+		if count > 1 {
+			retryCommandCount++
+		}
+	}
+
+	pack := AtlasRecommendationRunLedgerRetryFixturePack{
+		Schema:                      AtlasRecommendationRunLedgerRetryFixturePackContract,
+		Status:                      "covered",
+		NodeID:                      nodeID,
+		AttemptCount:                len(classifiedAttempts),
+		RetryCommandCount:           retryCommandCount,
+		ResumedSessionCount:         len(resumedSessions),
+		FailedOrBlockedAttemptCount: failedOrBlockedAttemptCount,
+		AllAttemptsClassified:       allClassified,
+		RetryReplayPlanningOnly:     planningOnly,
+		Attempts:                    classifiedAttempts,
+		PromotionGranted:            false,
+		ClaimsAuthorityAdvance:      false,
+		RSIRemainsDenied:            true,
+		SafeToExecute:               false,
+		SchedulesWork:               false,
+		ExecutesWork:                false,
+		ApprovesWork:                false,
+		MutatesRepositories:         false,
+	}
+	if err := ValidateAtlasRecommendationRunLedgerRetryFixturePack(pack); err != nil {
+		return AtlasRecommendationRunLedgerRetryFixturePack{}, err
+	}
+	return pack, nil
+}
+
+func ValidateAtlasRecommendationRunLedgerRetryFixturePack(pack AtlasRecommendationRunLedgerRetryFixturePack) error {
+	var errs []string
+	requireContract(&errs, "recommendation_run_ledger_retry_fixture_pack", pack.Schema, AtlasRecommendationRunLedgerRetryFixturePackContract)
+	if pack.Status != "covered" {
+		errs = append(errs, "status must be covered")
+	}
+	requireField(&errs, "node_id", pack.NodeID)
+	checkPublicPath(&errs, "node_id", pack.NodeID, true)
+	if pack.AttemptCount <= 0 {
+		errs = append(errs, "attempt_count must be positive")
+	}
+	if pack.AttemptCount != len(pack.Attempts) {
+		errs = append(errs, "attempt_count must match attempts")
+	}
+
+	attemptsByCommand := map[string]int{}
+	resumedSessions := map[string]bool{}
+	failedOrBlockedAttemptCount := 0
+	allClassified := true
+	planningOnly := true
+	for index, attempt := range pack.Attempts {
+		prefix := fmt.Sprintf("attempts[%d]", index)
+		requireField(&errs, prefix+".command", attempt.Command)
+		if !oneOf(attempt.Command, missionRecommendationRunLedgerCommandNames()...) {
+			errs = append(errs, prefix+".command must be "+formatCommandList(missionRecommendationRunLedgerCommandNames()))
+		}
+		requireField(&errs, prefix+".session_id", attempt.SessionID)
+		checkPublicPath(&errs, prefix+".session_id", attempt.SessionID, true)
+		if attempt.Attempt <= 0 {
+			errs = append(errs, prefix+".attempt must be positive")
+		}
+		requireField(&errs, prefix+".output_status", attempt.OutputStatus)
+		requireField(&errs, prefix+".output_category", attempt.OutputCategory)
+		requireField(&errs, prefix+".retry_reason", attempt.RetryReason)
+		checkPublicPath(&errs, prefix+".retry_reason", attempt.RetryReason, true)
+		classification := ClassifyAtlasRecommendationRunLedgerOutputStatus(attempt.OutputStatus)
+		if attempt.OutputCategory != classification.Category {
+			errs = append(errs, prefix+".output_category must match status classification")
+		}
+		if attempt.StatusClassification != classification {
+			errs = append(errs, prefix+".status_classification must match output_status")
+		}
+		if !attempt.PlanningOnly {
+			errs = append(errs, prefix+".planning_only must be true")
+		}
+		if attempt.PromotionGranted {
+			errs = append(errs, prefix+".promotion_granted must be false")
+		}
+		if attempt.ClaimsAuthorityAdvance {
+			errs = append(errs, prefix+".claims_authority_advance must be false")
+		}
+		if !attempt.RSIRemainsDenied {
+			errs = append(errs, prefix+".rsi_remains_denied must be true")
+		}
+		if attempt.SafeToExecute || attempt.SchedulesWork || attempt.ExecutesWork || attempt.ApprovesWork || attempt.MutatesRepositories {
+			errs = append(errs, prefix+" must not execute, schedule, approve, mutate repositories, or mark safe_to_execute")
+		}
+		attemptsByCommand[attempt.Command]++
+		if strings.Contains(attempt.RetryReason, "resume") || strings.Contains(attempt.RetryReason, "resumed") {
+			resumedSessions[attempt.SessionID] = true
+		}
+		if classification.CountsAsFailedOutput || classification.Category == "blocked" {
+			failedOrBlockedAttemptCount++
+		}
+		allClassified = allClassified && attempt.OutputStatus != "" && attempt.OutputCategory != ""
+		planningOnly = planningOnly && attempt.PlanningOnly && !attempt.SafeToExecute && !attempt.SchedulesWork && !attempt.ExecutesWork && !attempt.ApprovesWork && !attempt.MutatesRepositories
+	}
+	retryCommandCount := 0
+	for _, count := range attemptsByCommand {
+		if count > 1 {
+			retryCommandCount++
+		}
+	}
+	if pack.RetryCommandCount != retryCommandCount {
+		errs = append(errs, "retry_command_count must match commands with repeated attempts")
+	}
+	if pack.ResumedSessionCount != len(resumedSessions) {
+		errs = append(errs, "resumed_session_count must match resume retry reasons")
+	}
+	if pack.FailedOrBlockedAttemptCount != failedOrBlockedAttemptCount {
+		errs = append(errs, "failed_or_blocked_attempt_count must match classified attempts")
+	}
+	if pack.AllAttemptsClassified != allClassified || !pack.AllAttemptsClassified {
+		errs = append(errs, "all_attempts_classified must be true and match attempts")
+	}
+	if pack.RetryReplayPlanningOnly != planningOnly || !pack.RetryReplayPlanningOnly {
+		errs = append(errs, "retry_replay_planning_only must be true and match attempts")
+	}
+	if pack.PromotionGranted {
+		errs = append(errs, "promotion_granted must be false")
+	}
+	if pack.ClaimsAuthorityAdvance {
+		errs = append(errs, "claims_authority_advance must be false")
+	}
+	if !pack.RSIRemainsDenied {
+		errs = append(errs, "rsi_remains_denied must be true")
+	}
+	if pack.SafeToExecute || pack.SchedulesWork || pack.ExecutesWork || pack.ApprovesWork || pack.MutatesRepositories {
+		errs = append(errs, "pack must not execute, schedule, approve, mutate repositories, or mark safe_to_execute")
+	}
+	return joinErrors(errs)
+}
+
 func intMapsEqual(a, b map[string]int) bool {
 	if len(a) != len(b) {
 		return false

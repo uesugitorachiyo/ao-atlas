@@ -535,6 +535,46 @@ type AtlasRecommendationRunLedgerOperatorSummaryBinding struct {
 	MutatesRepositories              bool   `json:"mutates_repositories"`
 }
 
+type AtlasRecommendationRunLedgerRetryFixturePack struct {
+	Schema                      string                                     `json:"schema"`
+	Status                      string                                     `json:"status"`
+	NodeID                      string                                     `json:"node_id"`
+	AttemptCount                int                                        `json:"attempt_count"`
+	RetryCommandCount           int                                        `json:"retry_command_count"`
+	ResumedSessionCount         int                                        `json:"resumed_session_count"`
+	FailedOrBlockedAttemptCount int                                        `json:"failed_or_blocked_attempt_count"`
+	AllAttemptsClassified       bool                                       `json:"all_attempts_classified"`
+	RetryReplayPlanningOnly     bool                                       `json:"retry_replay_planning_only"`
+	Attempts                    []AtlasRecommendationRunLedgerRetryAttempt `json:"attempts"`
+	PromotionGranted            bool                                       `json:"promotion_granted"`
+	ClaimsAuthorityAdvance      bool                                       `json:"claims_authority_advance"`
+	RSIRemainsDenied            bool                                       `json:"rsi_remains_denied"`
+	SafeToExecute               bool                                       `json:"safe_to_execute"`
+	SchedulesWork               bool                                       `json:"schedules_work"`
+	ExecutesWork                bool                                       `json:"executes_work"`
+	ApprovesWork                bool                                       `json:"approves_work"`
+	MutatesRepositories         bool                                       `json:"mutates_repositories"`
+}
+
+type AtlasRecommendationRunLedgerRetryAttempt struct {
+	Command                string                                                 `json:"command"`
+	SessionID              string                                                 `json:"session_id"`
+	Attempt                int                                                    `json:"attempt"`
+	OutputStatus           string                                                 `json:"output_status"`
+	OutputCategory         string                                                 `json:"output_category"`
+	RetryReason            string                                                 `json:"retry_reason"`
+	StatusClassification   AtlasRecommendationRunLedgerOutputStatusClassification `json:"status_classification"`
+	PlanningOnly           bool                                                   `json:"planning_only"`
+	PromotionGranted       bool                                                   `json:"promotion_granted"`
+	ClaimsAuthorityAdvance bool                                                   `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                                   `json:"rsi_remains_denied"`
+	SafeToExecute          bool                                                   `json:"safe_to_execute"`
+	SchedulesWork          bool                                                   `json:"schedules_work"`
+	ExecutesWork           bool                                                   `json:"executes_work"`
+	ApprovesWork           bool                                                   `json:"approves_work"`
+	MutatesRepositories    bool                                                   `json:"mutates_repositories"`
+}
+
 type AtlasRecommendationFinalResponseGates struct {
 	Schema                               string                                      `json:"schema"`
 	Status                               string                                      `json:"status"`

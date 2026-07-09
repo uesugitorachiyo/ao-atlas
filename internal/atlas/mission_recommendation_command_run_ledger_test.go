@@ -841,3 +841,48 @@ func TestRecommendationRunLedgerRollupBindsOperatorSummaryWithoutSelfReference(t
 		t.Fatalf("rollup operator summary binding lost no-self-reference safety: %#v", binding)
 	}
 }
+
+func TestRecommendationRunLedgerRetryFixturePackCoversRetriesAndResumedSessions(t *testing.T) {
+	pack, err := BuildAtlasRecommendationRunLedgerRetryFixturePack("refactoring-next-wave-20", []AtlasRecommendationRunLedgerRetryAttempt{
+		{Command: "schema-registry-coverage", SessionID: "session-1", Attempt: 1, OutputStatus: "failed", RetryReason: "missing_registry_schema"},
+		{Command: "schema-registry-coverage", SessionID: "session-1", Attempt: 2, OutputStatus: "passed", RetryReason: "safe_retry_after_fixture_repair"},
+		{Command: "validate-evidence", SessionID: "session-2", Attempt: 1, OutputStatus: "blocked_hard_blocker", RetryReason: "resume_after_compaction"},
+		{Command: "validate-evidence", SessionID: "session-3", Attempt: 2, OutputStatus: "passed", RetryReason: "resumed_session_replay"},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasRecommendationRunLedgerRetryFixturePack(pack); err != nil {
+		t.Fatal(err)
+	}
+	if pack.Schema != AtlasRecommendationRunLedgerRetryFixturePackContract ||
+		pack.Status != "covered" ||
+		pack.NodeID != "refactoring-next-wave-20" ||
+		pack.AttemptCount != 4 ||
+		pack.RetryCommandCount != 2 ||
+		pack.ResumedSessionCount != 2 ||
+		pack.FailedOrBlockedAttemptCount != 2 ||
+		!pack.AllAttemptsClassified ||
+		!pack.RetryReplayPlanningOnly ||
+		pack.PromotionGranted ||
+		pack.ClaimsAuthorityAdvance ||
+		!pack.RSIRemainsDenied ||
+		pack.SafeToExecute ||
+		pack.SchedulesWork ||
+		pack.ExecutesWork ||
+		pack.ApprovesWork ||
+		pack.MutatesRepositories {
+		t.Fatalf("retry fixture pack lost retry/resume safety state: %#v", pack)
+	}
+	categories := map[string]int{}
+	for _, attempt := range pack.Attempts {
+		categories[attempt.OutputCategory]++
+		if attempt.StatusClassification.OutputStatus != attempt.OutputStatus ||
+			attempt.StatusClassification.Category != attempt.OutputCategory {
+			t.Fatalf("attempt classification drifted: %#v", attempt)
+		}
+	}
+	if categories["pass"] != 2 || categories["failed"] != 1 || categories["blocked"] != 1 {
+		t.Fatalf("retry fixture pack did not cover pass/failed/blocked attempts: %#v", categories)
+	}
+}
