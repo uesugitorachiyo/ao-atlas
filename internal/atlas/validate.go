@@ -89,6 +89,7 @@ const AtlasRecommendationCommandRunLedgerContract = "ao.atlas.recommendation-com
 const AtlasRecommendationCommandRunLedgerRollupContract = "ao.atlas.recommendation-command-run-ledger-rollup.v0.1"
 const AtlasRecommendationRunLedgerCoverageCheckContract = "ao.atlas.recommendation-run-ledger-coverage-check.v0.1"
 const AtlasRecommendationFinalResponseGatesContract = "ao.atlas.recommendation-final-response-gates.v0.1"
+const AtlasRecommendationStaleReadbackTrackFixtureContract = "ao.atlas.recommendation-stale-readback-track-fixture.v0.1"
 const AtlasRecommendationEvidenceSchemaRegistryContract = "ao.atlas.recommendation-evidence-schema-registry.v0.1"
 const AtlasRecommendationEvidenceSchemaRegistryCoverageContract = "ao.atlas.recommendation-evidence-schema-registry-coverage.v0.1"
 const AtlasSchemaHealthRepairPromptContract = "ao.atlas.schema-health-repair-prompt.v0.1"

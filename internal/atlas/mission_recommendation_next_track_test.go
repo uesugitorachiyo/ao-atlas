@@ -87,3 +87,69 @@ func TestMissionRecommendationsNextTrackRoutesCompletedFeatureDepthToRefactoring
 		t.Fatalf("expected typed next-track decision validator, got %s", validator)
 	}
 }
+
+func TestRecommendationStaleReadbackTrackFixtureCoversAllRecommendationTracks(t *testing.T) {
+	dir := t.TempDir()
+	recommendationsPath := filepath.Join(dir, "feature-depth-recommendations.json")
+	writeFeatureDepthBundle(t, recommendationsPath, 40, false)
+	result, err := BuildAtlasRecommendationWave(AtlasRecommendationWaveOptions{
+		RecommendationsPath: recommendationsPath,
+		TargetInstance:      "demo-stack",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	readback, err := BuildAtlasRecommendationReadback(result.Wave, result.Workgraph, AtlasRecommendationReadbackOptions{})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fixture, err := BuildAtlasRecommendationStaleReadbackTrackFixture(readback, []string{
+		"docs/evidence/ao-atlas-feature-depth-wave-v01",
+		"docs/evidence/ao-atlas-refactoring-wave-v01",
+		"docs/evidence/ao-atlas-rsi-boundary-hardening-wave-v01",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasRecommendationStaleReadbackTrackFixture(fixture); err != nil {
+		t.Fatal(err)
+	}
+	if fixture.Schema != AtlasRecommendationStaleReadbackTrackFixtureContract ||
+		fixture.Status != "passed" ||
+		fixture.CoveredTrackCount != 3 ||
+		fixture.StaleRejectionCount != 3 ||
+		fixture.NoPromotionRequested != true ||
+		fixture.PromotionGranted ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.MutatesRepositories {
+		t.Fatalf("stale readback fixture must cover all tracks without authority effects: %#v", fixture)
+	}
+
+	casesByTrack := map[string]AtlasRecommendationStaleReadbackTrackCase{}
+	for _, fixtureCase := range fixture.Cases {
+		casesByTrack[fixtureCase.Track] = fixtureCase
+	}
+	for _, track := range []string{"feature_depth", "refactoring", "rsi_boundary_hardening"} {
+		fixtureCase, ok := casesByTrack[track]
+		if !ok {
+			t.Fatalf("fixture missing stale readback case for %s: %#v", track, fixture)
+		}
+		if fixtureCase.Status != "stale_rejected" ||
+			fixtureCase.StaleMutation != "return_gate_final_response_drift" ||
+			fixtureCase.Validator != "typed:recommendation-readback" ||
+			!strings.Contains(fixtureCase.RejectionMessage, "ready nodes require return_gate_status=blocked_ready_nodes_remain") ||
+			fixtureCase.SafeToExecute ||
+			fixtureCase.SchedulesWork ||
+			fixtureCase.ExecutesWork ||
+			fixtureCase.ApprovesWork ||
+			fixtureCase.MutatesRepositories {
+			t.Fatalf("track %s fixture did not preserve stale rejection safety: %#v", track, fixtureCase)
+		}
+	}
+}
