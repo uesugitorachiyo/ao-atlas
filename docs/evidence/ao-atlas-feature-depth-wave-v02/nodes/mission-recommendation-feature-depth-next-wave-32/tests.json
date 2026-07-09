@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-32",
+  "task_id": "mission-recommendation-feature-depth-next-wave-32-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveFoundryTerminalStatusExamplesBindReadbackEnums|TestFeatureDepthWaveV02FoundryTerminalStatusExamplesBindReadbackEnums' -count=1",
+    "status": "failed_before_fixture_generation",
+    "failure": "missing v02 foundry-terminal-status-examples.json fixture"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestFeatureDepthWaveFoundryTerminalStatusExamplesBindReadbackEnums|TestFeatureDepthWaveV02FoundryTerminalStatusExamplesBindReadbackEnums' -count=1",
+    "status": "passed",
+    "output": "ok github.com/uesugitorachiyo/ao-atlas/internal/atlas"
+  }
+}
