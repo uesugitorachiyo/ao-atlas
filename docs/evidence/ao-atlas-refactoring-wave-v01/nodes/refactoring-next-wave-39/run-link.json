@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.refactoring.run-link.v0.1",
+  "node_id": "refactoring-next-wave-39",
+  "status": "local_run_recorded",
+  "branch": "codex/refactoring-targeted-regression-suites",
+  "run_started_at": "2026-07-09T15:15:11Z",
+  "run_mode": "codex_goal_continuation",
+  "evidence_root": "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-39",
+  "rsi_remains_denied": true
+}

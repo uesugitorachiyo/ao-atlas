@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.refactoring.node-gate.v0.1",
+  "node_id": "refactoring-next-wave-39",
+  "status": "cleared",
+  "theme": "architecture-boundaries",
+  "task": "Create targeted regression suites that avoid rerunning unrelated long-wave fixture assertions.",
+  "bounded_scope": [
+    "scripts/recommendation-targeted-regressions.sh",
+    "internal/atlas/mission_recommendation_targeted_regression_suites_test.go",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-39"
+  ],
+  "execution_clearance": "test_routing_script_and_regression",
+  "requires_new_authorization": false,
+  "requires_policy_change": false,
+  "requires_provider_call": false,
+  "requires_dependency_update": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.refactoring.rollback-record.v0.1",
+  "node_id": "refactoring-next-wave-39",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "Remove scripts/recommendation-targeted-regressions.sh.",
+    "Remove targeted regression suite test coverage.",
+    "Remove node 39 evidence artifacts."
+  ],
+  "rollback_risk": "low",
+  "data_migration_required": false,
+  "release_or_deploy_required": false,
+  "rsi_remains_denied": true
+}
