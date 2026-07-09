@@ -1,0 +1,60 @@
+{
+  "schema": "ao.atlas.pr-lifecycle-replay-fixture.v0.1",
+  "status": "guarded",
+  "source_recommendation": "docs/evidence/ao-atlas-refactoring-wave-v01/refactoring-recommendations.json#refactoring-next-wave-25",
+  "case_count": 3,
+  "cases": [
+    {
+      "case_id": "interrupted_merge",
+      "pr_number": 437,
+      "pr_state": "open",
+      "ci_status": "passed",
+      "merge_commit": "",
+      "local_main_synced": false,
+      "working_tree_clean": true,
+      "local_codex_branches_remaining": 1,
+      "remote_codex_branches_remaining": 1,
+      "operator_action": "merge_after_checks_pass",
+      "final_response_allowed": false,
+      "safe_to_select_next_node": false,
+      "claims_authority_advance": false,
+      "rsi_remains_denied": true
+    },
+    {
+      "case_id": "interrupted_sync",
+      "pr_number": 437,
+      "pr_state": "merged",
+      "ci_status": "passed",
+      "merge_commit": "27be9d0988108aa9cc9144225ca97f50a8357630",
+      "local_main_synced": false,
+      "working_tree_clean": true,
+      "local_codex_branches_remaining": 1,
+      "remote_codex_branches_remaining": 1,
+      "operator_action": "sync_main_before_cleanup",
+      "final_response_allowed": false,
+      "safe_to_select_next_node": false,
+      "claims_authority_advance": false,
+      "rsi_remains_denied": true
+    },
+    {
+      "case_id": "interrupted_cleanup",
+      "pr_number": 437,
+      "pr_state": "merged",
+      "ci_status": "passed",
+      "merge_commit": "27be9d0988108aa9cc9144225ca97f50a8357630",
+      "local_main_synced": true,
+      "working_tree_clean": true,
+      "local_codex_branches_remaining": 1,
+      "remote_codex_branches_remaining": 1,
+      "operator_action": "delete_codex_branches_before_next_node",
+      "final_response_allowed": false,
+      "safe_to_select_next_node": false,
+      "claims_authority_advance": false,
+      "rsi_remains_denied": true
+    }
+  ],
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
