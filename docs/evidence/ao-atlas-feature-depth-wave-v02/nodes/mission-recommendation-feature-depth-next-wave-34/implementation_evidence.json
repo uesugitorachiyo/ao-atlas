@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-34",
+  "task_id": "mission-recommendation-feature-depth-next-wave-34-task",
+  "status": "implemented",
+  "implementation_summary": [
+    "Added v02 regression coverage for Mission dashboard provenance links.",
+    "Generated mission-dashboard-provenance-links.json for the v02 wave.",
+    "Bound provenance links to Foundry, Promoter, Command, and Sentinel closure artifacts."
+  ],
+  "changed_paths": [
+    "internal/atlas/mission_dashboard_provenance_links_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-34"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
