@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-feature-depth-next-wave-20",
+  "task_id": "mission-recommendation-feature-depth-next-wave-20-task",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "internal/atlas/mission_resume_denial_evidence_test.go",
+    "docs/evidence/ao-atlas-feature-depth-wave-v02/nodes/mission-recommendation-feature-depth-next-wave-20"
+  ],
+  "rollback_command": "git revert the node 20 commit or remove the node 20 v02 resume denial evidence before merge",
+  "rsi_remains_denied": true
+}
