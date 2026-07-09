@@ -247,3 +247,67 @@ func TestMissionDashboardCompactFiltersIncludeTrackCIAndCleanupStateRows(t *test
 		t.Fatalf("cleanup state filter did not expose ready-work cleanup state: %#v", filters["cleanup_state"])
 	}
 }
+
+func TestMissionDashboardCompactFiltersRenderCompletedWaveWithNoReadyNodes(t *testing.T) {
+	root := repoRoot(t)
+	sourceNodeDir := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-40")
+	sourceReadbackPath := filepath.Join(sourceNodeDir, "recommendation-readback-after.json")
+	workgraphPath := filepath.Join(sourceNodeDir, "workgraph-after.json")
+
+	fixture, err := BuildAtlasMissionDashboardCompactFilters("mission-recommendation-feature-depth-next-wave-40-dashboard", sourceReadbackPath, workgraphPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateAtlasMissionDashboardCompactFilters(fixture); err != nil {
+		t.Fatal(err)
+	}
+
+	filters := map[string]AtlasMissionDashboardCompactFilter{}
+	for _, filter := range fixture.Filters {
+		filters[filter.Key] = filter
+	}
+	if fixture.TotalNodes != 40 ||
+		fixture.CompletedNodes != 40 ||
+		fixture.ReadyNodes != 0 ||
+		fixture.BlockedNodes != 0 ||
+		fixture.FailedNodes != 0 ||
+		fixture.ExecutableReadyNodes != 0 ||
+		fixture.FirstExecutableNode != "" ||
+		fixture.ActiveFilterKey != "completed" ||
+		fixture.ReturnGateStatus != "final_response_allowed" ||
+		!fixture.FinalResponseAllowed ||
+		fixture.ReadyFilterActionable ||
+		!fixture.BlockedFilterEmpty ||
+		!fixture.FailedFilterEmpty ||
+		!fixture.CompletedHistoryAvailable ||
+		!fixture.ReadbackCountsMatchWorkgraphCounts ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("compact dashboard filters lost completed-wave state: %#v", fixture)
+	}
+	if filters["ready"].DashboardStatus != "no_ready_nodes" ||
+		filters["ready"].Count != 0 ||
+		!filters["ready"].Empty ||
+		filters["ready"].Actionable {
+		t.Fatalf("ready filter should render an empty completed-wave state: %#v", filters["ready"])
+	}
+	if filters["completed"].DashboardStatus != "completed_history" ||
+		filters["completed"].Count != 40 ||
+		filters["completed"].FirstNodeID != "mission-recommendation-feature-depth-next-wave-01" ||
+		filters["completed"].LastNodeID != "mission-recommendation-feature-depth-next-wave-40" ||
+		len(filters["completed"].PreviewNodeIDs) != 3 ||
+		filters["completed"].PreviewNodeIDs[0] != "mission-recommendation-feature-depth-next-wave-38" ||
+		filters["completed"].PreviewNodeIDs[2] != "mission-recommendation-feature-depth-next-wave-40" ||
+		filters["completed"].OmittedNodeCount != 37 {
+		t.Fatalf("completed filter should render compact completed-wave history: %#v", filters["completed"])
+	}
+	if filters["ci_state"].DashboardStatus != "ci_state_passed" ||
+		filters["ci_state"].Actionable ||
+		filters["cleanup_state"].DashboardStatus != "cleanup_state_complete" ||
+		filters["cleanup_state"].Actionable {
+		t.Fatalf("completed-wave CI and cleanup filters should be closed: ci=%#v cleanup=%#v", filters["ci_state"], filters["cleanup_state"])
+	}
+}
