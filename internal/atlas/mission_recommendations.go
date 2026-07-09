@@ -1153,42 +1153,8 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		return AtlasRecommendationReadback{}, err
 	}
 	finalAllowed := nodesComplete && leaseTiming.MinMinutesMet
-	finalReason := "ready nodes or exact next actions remain"
-	exactNextAction := "Complete dependency chain so the next Atlas recommendation node becomes executable-ready."
-	leaseHealth := "minimum_unmet"
-	earlyReturnRisk := "blocked_final_response_minimum_unmet"
-	if finalAllowed {
-		finalReason = "all generated nodes complete and no ready nodes remain"
-		exactNextAction = "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
-		leaseHealth = "all_generated_nodes_complete"
-		earlyReturnRisk = "cleared_no_ready_nodes_remain"
-	} else if nodesComplete && leaseTiming.LeaseTimeStatus == "lease_timing_missing" {
-		finalReason = "minimum lease timing evidence missing"
-		exactNextAction = "Record started_at, completed_at, and elapsed_minutes before evaluating final response for the long-run lease."
-		leaseHealth = "minimum_minutes_timing_missing"
-		earlyReturnRisk = "blocked_final_response_minimum_timing_missing"
-	} else if nodesComplete && !leaseTiming.MinMinutesMet {
-		finalReason = "minimum lease minutes unmet"
-		exactNextAction = "Generate and execute the next useful Atlas recommendation wave until elapsed_minutes meets supervisor.min_minutes, or record a true hard blocker."
-		leaseHealth = "minimum_minutes_unmet_continue_next_wave"
-		earlyReturnRisk = "blocked_final_response_minimum_minutes_unmet"
-	} else if blocked > 0 || failed > 0 {
-		finalReason = "true hard blocker requires exact repair evidence"
-		exactNextAction = "Resolve blocked or failed recommendation node with exact repair evidence."
-		leaseHealth = "hard_blocker_requires_repair"
-		earlyReturnRisk = "hard_blocker_requires_exact_missing_evidence"
-	} else {
-		if completed >= wave.MinimumTasks {
-			leaseHealth = "minimum_met_continue_if_fast"
-		}
-		if ready > 0 {
-			earlyReturnRisk = "blocked_final_response_ready_nodes_remain"
-		}
-		if firstExecutable != "" {
-			exactNextAction = fmt.Sprintf("Emit Foundry import for %s and execute exactly one active node.", firstExecutable)
-		}
-	}
-	finalGate := recommendationFinalResponseGateEvaluation(finalAllowed, nodesComplete, leaseTiming, ready, blocked, failed, exactNextAction, firstExecutable)
+	transition := recommendationReadbackTransition(finalAllowed, nodesComplete, leaseTiming, completed, wave.MinimumTasks, ready, blocked, failed, firstExecutable)
+	finalGate := recommendationFinalResponseGateEvaluation(finalAllowed, nodesComplete, leaseTiming, ready, blocked, failed, transition.ExactNextAction, firstExecutable)
 	status := "ready"
 	if finalAllowed {
 		status = "completed"
@@ -1261,10 +1227,10 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		FailedNodes:               failed,
 		ExecutableReadyNodes:      executableReady,
 		FirstExecutableNode:       firstExecutable,
-		LeaseHealthStatus:         leaseHealth,
+		LeaseHealthStatus:         transition.LeaseHealthStatus,
 		CheckpointFreshnessStatus: "fresh_checkpoint_required_after_each_node_or_timed_interval",
 		StaleRouteDecisionStatus:  "fresh_atlas_supervises_foundry_owns_one_active_node",
-		EarlyReturnRiskStatus:     earlyReturnRisk,
+		EarlyReturnRiskStatus:     transition.EarlyReturnRiskStatus,
 		FoundryRollupStatus:       foundryRollupStatus,
 		FoundryTerminalStatusReadback: map[string]string{
 			"completed": "terminal_success_can_close_when_all_nodes_and_readbacks_are_complete",
@@ -1286,8 +1252,8 @@ func BuildAtlasRecommendationReadback(wave AtlasRecommendationWave, workgraph Wo
 		CheckpointCount:                 completed,
 		FinalResponseAllowed:            finalAllowed,
 		FinalResponseDenialGate:         finalGate.FinalResponseDenialGate,
-		FinalResponseReason:             finalReason,
-		ExactNextAction:                 exactNextAction,
+		FinalResponseReason:             transition.FinalResponseReason,
+		ExactNextAction:                 transition.ExactNextAction,
 		ContinuationContract:            finalGate.ContinuationContract,
 		ExactNextActionReadback:         finalGate.ExactNextActionReadback,
 		NodeEvidence:                    recommendationNodeEvidence(workgraph),
@@ -1326,6 +1292,60 @@ func buildExactNextActionReadback(action, nextExecutableNode, returnGateStatus s
 		FinalResponseAllowed: finalResponseAllowed,
 		Source:               "recommendation_readback",
 	}
+}
+
+type atlasRecommendationReadbackTransition struct {
+	FinalResponseReason   string
+	ExactNextAction       string
+	LeaseHealthStatus     string
+	EarlyReturnRiskStatus string
+}
+
+func recommendationReadbackTransition(finalAllowed bool, nodesComplete bool, leaseTiming atlasRecommendationLeaseTiming, completed, minimum, ready, blocked, failed int, firstExecutable string) atlasRecommendationReadbackTransition {
+	transition := atlasRecommendationReadbackTransition{
+		FinalResponseReason:   "ready nodes or exact next actions remain",
+		ExactNextAction:       "Complete dependency chain so the next Atlas recommendation node becomes executable-ready.",
+		LeaseHealthStatus:     "minimum_unmet",
+		EarlyReturnRiskStatus: "blocked_final_response_minimum_unmet",
+	}
+	if finalAllowed {
+		transition.FinalResponseReason = "all generated nodes complete and no ready nodes remain"
+		transition.ExactNextAction = "Finalize AO Atlas long-run wave with Promoter, Command, and public-safety readbacks."
+		transition.LeaseHealthStatus = "all_generated_nodes_complete"
+		transition.EarlyReturnRiskStatus = "cleared_no_ready_nodes_remain"
+		return transition
+	}
+	if nodesComplete && leaseTiming.LeaseTimeStatus == "lease_timing_missing" {
+		transition.FinalResponseReason = "minimum lease timing evidence missing"
+		transition.ExactNextAction = "Record started_at, completed_at, and elapsed_minutes before evaluating final response for the long-run lease."
+		transition.LeaseHealthStatus = "minimum_minutes_timing_missing"
+		transition.EarlyReturnRiskStatus = "blocked_final_response_minimum_timing_missing"
+		return transition
+	}
+	if nodesComplete && !leaseTiming.MinMinutesMet {
+		transition.FinalResponseReason = "minimum lease minutes unmet"
+		transition.ExactNextAction = "Generate and execute the next useful Atlas recommendation wave until elapsed_minutes meets supervisor.min_minutes, or record a true hard blocker."
+		transition.LeaseHealthStatus = "minimum_minutes_unmet_continue_next_wave"
+		transition.EarlyReturnRiskStatus = "blocked_final_response_minimum_minutes_unmet"
+		return transition
+	}
+	if blocked > 0 || failed > 0 {
+		transition.FinalResponseReason = "true hard blocker requires exact repair evidence"
+		transition.ExactNextAction = "Resolve blocked or failed recommendation node with exact repair evidence."
+		transition.LeaseHealthStatus = "hard_blocker_requires_repair"
+		transition.EarlyReturnRiskStatus = "hard_blocker_requires_exact_missing_evidence"
+		return transition
+	}
+	if completed >= minimum {
+		transition.LeaseHealthStatus = "minimum_met_continue_if_fast"
+	}
+	if ready > 0 {
+		transition.EarlyReturnRiskStatus = "blocked_final_response_ready_nodes_remain"
+	}
+	if firstExecutable != "" {
+		transition.ExactNextAction = fmt.Sprintf("Emit Foundry import for %s and execute exactly one active node.", firstExecutable)
+	}
+	return transition
 }
 
 func commandTimelinePlaceholders() []AtlasCommandTimelinePlaceholder {
