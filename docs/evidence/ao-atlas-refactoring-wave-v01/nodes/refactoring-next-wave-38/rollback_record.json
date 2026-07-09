@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.refactoring.rollback-record.v0.1",
+  "node_id": "refactoring-next-wave-38",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "Remove table-driven Promoter rollup validator boundary test.",
+    "Remove table-driven Command/Promoter agreement rollup validator boundary test.",
+    "Remove node 38 evidence artifacts."
+  ],
+  "rollback_risk": "low",
+  "data_migration_required": false,
+  "release_or_deploy_required": false,
+  "rsi_remains_denied": true
+}

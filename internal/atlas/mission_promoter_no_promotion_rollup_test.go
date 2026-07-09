@@ -3,6 +3,7 @@ package atlas
 import (
 	"bytes"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -88,5 +89,68 @@ func TestFeatureDepthWavePromoterNoPromotionRollupAggregatesCompletedWaves(t *te
 	}
 	if validator != "typed:promoter-no-promotion-rollup" {
 		t.Fatalf("expected typed promoter no-promotion rollup validator, got %s", validator)
+	}
+}
+
+func TestPromoterNoPromotionRollupValidatorRejectsPromotionAndRSIBoundaryDrift(t *testing.T) {
+	root := repoRoot(t)
+	recordedPath := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-25", "promoter-no-promotion-rollup.json")
+	valid := mustLoadJSON[AtlasPromoterNoPromotionRollup](t, recordedPath)
+	if err := ValidateAtlasPromoterNoPromotionRollup(valid); err != nil {
+		t.Fatal(err)
+	}
+
+	cases := []struct {
+		name    string
+		mutate  func(*AtlasPromoterNoPromotionRollup)
+		wantErr string
+	}{
+		{
+			name: "promotion requested count",
+			mutate: func(rollup *AtlasPromoterNoPromotionRollup) {
+				rollup.PromotionRequested = true
+				rollup.PromotionRequestedCount = 1
+				rollup.WaveSummaries[0].PromotionRequestedCount = 1
+			},
+			wantErr: "no_promotion_invariant_holds",
+		},
+		{
+			name: "promotion granted count",
+			mutate: func(rollup *AtlasPromoterNoPromotionRollup) {
+				rollup.PromotionGranted = true
+				rollup.PromotionGrantedCount = 1
+				rollup.WaveSummaries[0].PromotionGrantedCount = 1
+			},
+			wantErr: "no_promotion_invariant_holds",
+		},
+		{
+			name: "authority advance claim",
+			mutate: func(rollup *AtlasPromoterNoPromotionRollup) {
+				rollup.ClaimsAuthorityAdvance = true
+				rollup.AuthorityAdvanceClaimCount = 1
+				rollup.WaveSummaries[0].AuthorityAdvanceClaimCount = 1
+			},
+			wantErr: "claims_authority_advance must be false",
+		},
+		{
+			name: "rsi no longer denied",
+			mutate: func(rollup *AtlasPromoterNoPromotionRollup) {
+				rollup.RSIRemainsDenied = false
+				rollup.RSIDeniedCount--
+				rollup.WaveSummaries[0].RSIRemainsDenied = false
+				rollup.WaveSummaries[0].RSIDeniedCount--
+			},
+			wantErr: "rsi_remains_denied must be true",
+		},
+	}
+	for _, tt := range cases {
+		t.Run(tt.name, func(t *testing.T) {
+			mutated := clonePromoterNoPromotionRollup(valid)
+			tt.mutate(&mutated)
+			err := ValidateAtlasPromoterNoPromotionRollup(mutated)
+			if err == nil || !strings.Contains(err.Error(), tt.wantErr) {
+				t.Fatalf("expected %q validation error, got %v", tt.wantErr, err)
+			}
+		})
 	}
 }

@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.refactoring.node-gate.v0.1",
+  "node_id": "refactoring-next-wave-38",
+  "status": "cleared",
+  "theme": "test-structure",
+  "task": "Add table-driven validator tests for no-promotion and RSI-denied boundary fields.",
+  "bounded_scope": [
+    "internal/atlas/mission_promoter_no_promotion_rollup_test.go",
+    "internal/atlas/mission_command_promoter_agreement_rollup_test.go",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-38"
+  ],
+  "execution_clearance": "test_only_validator_coverage",
+  "requires_new_authorization": false,
+  "requires_policy_change": false,
+  "requires_provider_call": false,
+  "requires_dependency_update": false,
+  "rsi_remains_denied": true
+}

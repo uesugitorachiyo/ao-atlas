@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.refactoring.sentinel-public-safety.v0.1",
+  "node_id": "refactoring-next-wave-38",
+  "status": "passed",
+  "scope": [
+    "internal/atlas/mission_promoter_no_promotion_rollup_test.go",
+    "internal/atlas/mission_command_promoter_agreement_rollup_test.go",
+    "docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-38"
+  ],
+  "public_claims_reviewed": true,
+  "promotion_claim_detected": false,
+  "rsi_claim_detected": false,
+  "scan_command": "rg -n \"fully_unsupervised_complex_mutation.*(live[-_ ]?proven|proven|approved)|RSI.*(proven|approved|allowed)|safe_to_execute|credential|token|secret\" internal/atlas/mission_promoter_no_promotion_rollup_test.go internal/atlas/mission_command_promoter_agreement_rollup_test.go docs/evidence/ao-atlas-refactoring-wave-v01/nodes/refactoring-next-wave-38 || true",
+  "scan_result": "no_matches",
+  "rsi_remains_denied": true
+}
