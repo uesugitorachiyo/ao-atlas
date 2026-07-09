@@ -510,6 +510,31 @@ type AtlasRecommendationRunLedgerCoverageCheck struct {
 	MutatesRepositories            bool     `json:"mutates_repositories"`
 }
 
+type AtlasRecommendationRunLedgerOperatorSummaryBinding struct {
+	Schema                           string `json:"schema"`
+	Status                           string `json:"status"`
+	SourceRollupPath                 string `json:"source_rollup_path"`
+	SourceRollupDigest               string `json:"source_rollup_digest"`
+	SourceOperatorSummaryCheckPath   string `json:"source_operator_summary_check_path"`
+	SourceOperatorSummaryCheckDigest string `json:"source_operator_summary_check_digest"`
+	RollupLedgerCount                int    `json:"rollup_ledger_count"`
+	RollupFailedOutputCount          int    `json:"rollup_failed_output_count"`
+	OperatorSummaryStatus            string `json:"operator_summary_status"`
+	OperatorSummaryExactNextAction   string `json:"operator_summary_exact_next_action"`
+	SummaryRequiresOwnRunLedger      bool   `json:"summary_requires_own_run_ledger"`
+	RollupRequiresSummaryRunLedger   bool   `json:"rollup_requires_summary_run_ledger"`
+	SelfReferentialLedgerRequirement bool   `json:"self_referential_ledger_requirement"`
+	AllOutputsNoPromotion            bool   `json:"all_outputs_no_promotion"`
+	PromotionGranted                 bool   `json:"promotion_granted"`
+	ClaimsAuthorityAdvance           bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied                 bool   `json:"rsi_remains_denied"`
+	SafeToExecute                    bool   `json:"safe_to_execute"`
+	SchedulesWork                    bool   `json:"schedules_work"`
+	ExecutesWork                     bool   `json:"executes_work"`
+	ApprovesWork                     bool   `json:"approves_work"`
+	MutatesRepositories              bool   `json:"mutates_repositories"`
+}
+
 type AtlasRecommendationFinalResponseGates struct {
 	Schema                               string                                      `json:"schema"`
 	Status                               string                                      `json:"status"`

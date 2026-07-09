@@ -223,6 +223,121 @@ func WriteAtlasRecommendationCommandRunLedgerRollup(path string, rollup AtlasRec
 	return WriteJSON(path, rollup)
 }
 
+func BuildAtlasRecommendationRunLedgerOperatorSummaryBinding(rollupPath, summaryCheckPath string) (AtlasRecommendationRunLedgerOperatorSummaryBinding, error) {
+	rollupPath = filepath.ToSlash(strings.TrimSpace(rollupPath))
+	summaryCheckPath = filepath.ToSlash(strings.TrimSpace(summaryCheckPath))
+	if rollupPath == "" {
+		return AtlasRecommendationRunLedgerOperatorSummaryBinding{}, fmt.Errorf("rollup path is required")
+	}
+	if summaryCheckPath == "" {
+		return AtlasRecommendationRunLedgerOperatorSummaryBinding{}, fmt.Errorf("operator summary check path is required")
+	}
+	rollup, err := LoadJSON[AtlasRecommendationCommandRunLedgerRollup](rollupPath)
+	if err != nil {
+		return AtlasRecommendationRunLedgerOperatorSummaryBinding{}, err
+	}
+	if err := ValidateAtlasRecommendationCommandRunLedgerRollup(rollup); err != nil {
+		return AtlasRecommendationRunLedgerOperatorSummaryBinding{}, err
+	}
+	summaryCheck, err := LoadJSON[AtlasMissionOperatorSummaryCheck](summaryCheckPath)
+	if err != nil {
+		return AtlasRecommendationRunLedgerOperatorSummaryBinding{}, err
+	}
+	if err := ValidateAtlasMissionOperatorSummaryCheck(summaryCheck); err != nil {
+		return AtlasRecommendationRunLedgerOperatorSummaryBinding{}, err
+	}
+	rollupDigest, err := digestFile(rollupPath)
+	if err != nil {
+		return AtlasRecommendationRunLedgerOperatorSummaryBinding{}, err
+	}
+	summaryCheckDigest, err := digestFile(summaryCheckPath)
+	if err != nil {
+		return AtlasRecommendationRunLedgerOperatorSummaryBinding{}, err
+	}
+	binding := AtlasRecommendationRunLedgerOperatorSummaryBinding{
+		Schema:                           AtlasRecommendationRunLedgerOperatorSummaryBindingContract,
+		Status:                           "bound",
+		SourceRollupPath:                 publicArtifactRef(rollupPath),
+		SourceRollupDigest:               rollupDigest,
+		SourceOperatorSummaryCheckPath:   publicArtifactRef(summaryCheckPath),
+		SourceOperatorSummaryCheckDigest: summaryCheckDigest,
+		RollupLedgerCount:                rollup.LedgerCount,
+		RollupFailedOutputCount:          rollup.FailedOutputCount,
+		OperatorSummaryStatus:            summaryCheck.Status,
+		OperatorSummaryExactNextAction:   summaryCheck.ExactNextAction,
+		SummaryRequiresOwnRunLedger:      false,
+		RollupRequiresSummaryRunLedger:   false,
+		SelfReferentialLedgerRequirement: false,
+		AllOutputsNoPromotion:            rollup.AllOutputsNoPromotion && !rollup.PromotionGranted && !rollup.ClaimsAuthorityAdvance,
+		PromotionGranted:                 false,
+		ClaimsAuthorityAdvance:           false,
+		RSIRemainsDenied:                 rollup.RSIRemainsDenied && summaryCheck.RSIRemainsDenied,
+		SafeToExecute:                    false,
+		SchedulesWork:                    false,
+		ExecutesWork:                     false,
+		ApprovesWork:                     false,
+		MutatesRepositories:              false,
+	}
+	if err := ValidateAtlasRecommendationRunLedgerOperatorSummaryBinding(binding); err != nil {
+		return AtlasRecommendationRunLedgerOperatorSummaryBinding{}, err
+	}
+	return binding, nil
+}
+
+func ValidateAtlasRecommendationRunLedgerOperatorSummaryBinding(binding AtlasRecommendationRunLedgerOperatorSummaryBinding) error {
+	var errs []string
+	requireContract(&errs, "recommendation_run_ledger_operator_summary_binding", binding.Schema, AtlasRecommendationRunLedgerOperatorSummaryBindingContract)
+	if binding.Status != "bound" {
+		errs = append(errs, "status must be bound")
+	}
+	for field, value := range map[string]string{
+		"source_rollup_path":                 binding.SourceRollupPath,
+		"source_operator_summary_check_path": binding.SourceOperatorSummaryCheckPath,
+		"operator_summary_status":            binding.OperatorSummaryStatus,
+		"operator_summary_exact_next_action": binding.OperatorSummaryExactNextAction,
+	} {
+		requireField(&errs, field, value)
+		checkPublicPath(&errs, field, value, true)
+	}
+	if !digestPattern.MatchString(binding.SourceRollupDigest) {
+		errs = append(errs, "source_rollup_digest must be sha256 digest")
+	}
+	if !digestPattern.MatchString(binding.SourceOperatorSummaryCheckDigest) {
+		errs = append(errs, "source_operator_summary_check_digest must be sha256 digest")
+	}
+	if binding.RollupLedgerCount <= 0 {
+		errs = append(errs, "rollup_ledger_count must be positive")
+	}
+	if binding.RollupFailedOutputCount < 0 {
+		errs = append(errs, "rollup_failed_output_count must not be negative")
+	}
+	if binding.SummaryRequiresOwnRunLedger {
+		errs = append(errs, "summary_requires_own_run_ledger must be false")
+	}
+	if binding.RollupRequiresSummaryRunLedger {
+		errs = append(errs, "rollup_requires_summary_run_ledger must be false")
+	}
+	if binding.SelfReferentialLedgerRequirement {
+		errs = append(errs, "self_referential_ledger_requirement must be false")
+	}
+	if !binding.AllOutputsNoPromotion {
+		errs = append(errs, "all_outputs_no_promotion must be true")
+	}
+	if binding.PromotionGranted {
+		errs = append(errs, "promotion_granted must be false")
+	}
+	if binding.ClaimsAuthorityAdvance {
+		errs = append(errs, "claims_authority_advance must be false")
+	}
+	if !binding.RSIRemainsDenied {
+		errs = append(errs, "rsi_remains_denied must be true")
+	}
+	if binding.SafeToExecute || binding.SchedulesWork || binding.ExecutesWork || binding.ApprovesWork || binding.MutatesRepositories {
+		errs = append(errs, "binding must not execute, schedule, approve, mutate repositories, or mark safe_to_execute")
+	}
+	return joinErrors(errs)
+}
+
 func intMapsEqual(a, b map[string]int) bool {
 	if len(a) != len(b) {
 		return false
