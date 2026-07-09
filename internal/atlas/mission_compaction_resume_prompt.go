@@ -109,16 +109,7 @@ func BuildAtlasCompactionResumePrompt(readback AtlasRecommendationReadback, fixt
 	b.WriteString("- Do not restart completed nodes.\n")
 	b.WriteString("- Do not produce a final response while ready nodes or exact next action remain.\n")
 	b.WriteString("- Continue from the next executable node named above unless a true hard blocker remains.\n\n")
-	b.WriteString("Safety boundaries:\n")
-	b.WriteString("- No provider calls.\n")
-	b.WriteString("- No credential or token inspection.\n")
-	b.WriteString("- No direct main mutation.\n")
-	b.WriteString("- No release, deploy, publish, upload, or tag.\n")
-	b.WriteString("- No dependency updates unless separately authorized.\n")
-	b.WriteString("- No auth, policy, or config widening.\n")
-	b.WriteString("- No hidden instruction mutation.\n")
-	b.WriteString("- No broad RSI claim.\n")
-	b.WriteString("- RSI remains denied.\n")
+	writeAtlasPromptSafetyBoundaries(&b, AtlasPromptSafetyBoundaryOptions{})
 	return b.String()
 }
 
