@@ -1,0 +1,73 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "foundry_evidence_externalization_plan",
+  "node_id": "mission-recommendation-month2-contract-convergence-17",
+  "task_id": "mission-recommendation-month2-contract-convergence-17-task",
+  "status": "planning_only_externalization_not_authorized",
+  "source_owner": "ao-foundry",
+  "source_repository": "ao-foundry",
+  "source_commit": "a610f10b09591416509c712313cd9021a2cb7da7",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "source_audit",
+  "tracked_evidence_files": 57370,
+  "tracked_evidence_scope": "docs/evidence",
+  "evidence_wave_count": 45,
+  "current_storage": "Git-tracked Foundry docs/evidence artifacts plus local excluded/readiness output",
+  "observations": [
+    "Foundry has a large tracked evidence corpus with repeated campaign readbacks and run links",
+    "Foundry scripts already emit digest-bound local artifacts and enforce public-safe relative paths",
+    "release and upload surfaces exist in the repository but are outside this node and remain prohibited",
+    "externalization without preserving digest, schema, replay, and no-promotion flags would weaken auditability"
+  ],
+  "proposed_catalog_record": {
+    "required_fields": [
+      "artifact_id",
+      "schema_version",
+      "producer_commit",
+      "content_digest",
+      "byte_size",
+      "visibility",
+      "retention_class",
+      "replay_command",
+      "source_refs",
+      "supersedes"
+    ],
+    "public_fixture_policy": "retain small contract fixtures, readiness gates, negative controls, and safety assertions in Git",
+    "bulk_artifact_policy": "move historical campaign outputs to an operator-approved content-addressed catalog",
+    "dual_read_policy": "Foundry local readback and catalog readback must agree before retirement",
+    "deletion_policy": "no deletion or upload is authorized by this node"
+  },
+  "staged_plan": [
+    {
+      "stage": "inventory",
+      "gate": "classify tracked evidence by contract, campaign, and replayability"
+    },
+    {
+      "stage": "catalog_schema",
+      "gate": "define owner, digest, replay, retention, and visibility fields"
+    },
+    {
+      "stage": "dual_read",
+      "gate": "compare local and catalog readbacks without changing source artifacts"
+    },
+    {
+      "stage": "operator_authorization",
+      "gate": "separate explicit authorization before external storage or upload"
+    },
+    {
+      "stage": "retirement",
+      "gate": "only after rollback and replay evidence is complete"
+    }
+  ],
+  "current_gate": "blocked_pending_foundry_catalog_contract_and_external_storage_authorization",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
