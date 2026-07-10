@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-19",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records the AO Mission import readback proving the P0-B readback was recorded while safe_to_execute, executes_work, and approves_work stayed false.",
+  "command": "ao-mission import atlas-recommendation-readback",
+  "typed_validator": "targeted-regression:mission-import-readback"
+}

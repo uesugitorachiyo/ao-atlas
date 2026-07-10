@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-19",
+  "candidate": "Import P0-B Atlas recommendation readback into AO Mission without final response.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-19-mission-import-readback",
+  "files_changed": [
+    "internal/atlas/mission_p0b_mission_import_readback_test.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-19"
+  ],
+  "digest_fields": [
+    "artifact.digest",
+    "exact_next_action",
+    "safe_to_execute",
+    "executes_work",
+    "approves_work"
+  ]
+}
