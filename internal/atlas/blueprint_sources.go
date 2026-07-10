@@ -66,6 +66,15 @@ func digestValue(value any) string {
 	return DigestBytes(data)
 }
 
+func digestPersistedJSON(value any) (string, error) {
+	data, err := json.MarshalIndent(value, "", "  ")
+	if err != nil {
+		return "", err
+	}
+	data = append(data, '\n')
+	return DigestBytes(data), nil
+}
+
 func shouldSkipBlueprintDigestDir(name string) bool {
 	switch name {
 	case ".git", "tmp", "target", ".idea", ".vscode", "__pycache__":

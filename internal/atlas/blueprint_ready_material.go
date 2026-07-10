@@ -31,8 +31,16 @@ func buildBlueprintReadyMaterial(inputs blueprintReadyMaterialInputs) (Blueprint
 	}
 	foundryImport := downstreamFoundry.FoundryImport
 	handoff := downstreamFoundry.Handoff
-	inputs.Digests["downstream_foundry_import"] = digestValue(foundryImport)
-	inputs.Digests["downstream_foundry_continuation_handoff"] = digestValue(handoff)
+	foundryDigest, err := digestPersistedJSON(foundryImport)
+	if err != nil {
+		return BlueprintCompileArtifacts{}, err
+	}
+	handoffDigest, err := digestPersistedJSON(handoff)
+	if err != nil {
+		return BlueprintCompileArtifacts{}, err
+	}
+	inputs.Digests["downstream_foundry_import"] = foundryDigest
+	inputs.Digests["downstream_foundry_continuation_handoff"] = handoffDigest
 	record, err := buildBlueprintReadyRecord(blueprintReadyRecordInputs{
 		Record:        inputs.Record,
 		Candidate:     candidate,
