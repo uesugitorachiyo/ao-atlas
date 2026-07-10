@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "foundry_cli_split_compatibility",
+  "node_id": "mission-recommendation-month2-contract-convergence-18",
+  "task_id": "mission-recommendation-month2-contract-convergence-18-task",
+  "source_owner": "ao-foundry",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "compatibility_audit",
+  "status": "blocked_missing_characterization_contract",
+  "producer": "ao-foundry",
+  "consumer": "ao-atlas",
+  "compatibility_status": "planning_only",
+  "required_gates": [
+    "golden CLI output fixtures",
+    "command registry parity",
+    "authority-negative tests",
+    "readiness ledger parity",
+    "RSI denial parity",
+    "no provider execution"
+  ],
+  "current_gap": "the inspected Foundry CLI monolith has no recorded module-boundary compatibility manifest or complete characterization suite proving behavior before extraction",
+  "compatibility_gate": "blocked_until_split_manifest_and_characterization_tests_exist",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
