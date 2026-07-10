@@ -1,0 +1,852 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-34",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T19:40:05Z",
+  "kind": "month2_contract_convergence_recommendations",
+  "recommendation_count": 40,
+  "minimum_required": 40,
+  "recommendations": [
+    {
+      "rank": 1,
+      "id": "month2-contract-convergence-1",
+      "title": "Covenant canonical schema registry ADR",
+      "owner": "ao-covenant",
+      "theme": "schema-registry",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "month2-contract-convergence-2",
+      "title": "Stack-wide schema owner inventory",
+      "owner": "ao-architecture",
+      "theme": "schema-registry",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "month2-contract-convergence-3",
+      "title": "Blueprint to Atlas producer consumer contract test",
+      "owner": "ao-blueprint",
+      "theme": "compatibility",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "month2-contract-convergence-4",
+      "title": "Atlas to Foundry import compatibility test",
+      "owner": "ao-atlas",
+      "theme": "compatibility",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "month2-contract-convergence-5",
+      "title": "Command to Covenant ticket validation parity test",
+      "owner": "ao-command",
+      "theme": "compatibility",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "month2-contract-convergence-6",
+      "title": "Promoter upstream verdict contract fixture",
+      "owner": "ao-promoter",
+      "theme": "compatibility",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "month2-contract-convergence-7",
+      "title": "Sentinel native verdict schema contract",
+      "owner": "ao-sentinel",
+      "theme": "compatibility",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "month2-contract-convergence-8",
+      "title": "Forge GoalRun packet schema owner binding",
+      "owner": "ao-forge",
+      "theme": "compatibility",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 9,
+      "id": "month2-contract-convergence-9",
+      "title": "AO2 provider run options model provenance field",
+      "owner": "ao2",
+      "theme": "provenance",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 10,
+      "id": "month2-contract-convergence-10",
+      "title": "Control plane observer event schema owner binding",
+      "owner": "ao2-control-plane",
+      "theme": "compatibility",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 11,
+      "id": "month2-contract-convergence-11",
+      "title": "Canonical JSON vector suite for Go repositories",
+      "owner": "ao-covenant",
+      "theme": "canonical-json",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 12,
+      "id": "month2-contract-convergence-12",
+      "title": "Canonical JSON vector suite for Rust repositories",
+      "owner": "ao2",
+      "theme": "canonical-json",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 13,
+      "id": "month2-contract-convergence-13",
+      "title": "Stable experimental deprecated contract classifier",
+      "owner": "ao-covenant",
+      "theme": "schema-registry",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 14,
+      "id": "month2-contract-convergence-14",
+      "title": "No copied schema without owner guard",
+      "owner": "ao-architecture",
+      "theme": "governance",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 15,
+      "id": "month2-contract-convergence-15",
+      "title": "Mission durable state migration inventory",
+      "owner": "ao-mission",
+      "theme": "state",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 16,
+      "id": "month2-contract-convergence-16",
+      "title": "Atlas evidence catalog externalization plan",
+      "owner": "ao-atlas",
+      "theme": "evidence-volume",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 17,
+      "id": "month2-contract-convergence-17",
+      "title": "Foundry evidence catalog externalization plan",
+      "owner": "ao-foundry",
+      "theme": "evidence-volume",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 18,
+      "id": "month2-contract-convergence-18",
+      "title": "Foundry CLI module split map",
+      "owner": "ao-foundry",
+      "theme": "monolith-split",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 19,
+      "id": "month2-contract-convergence-19",
+      "title": "AO2 CLI module split map",
+      "owner": "ao2",
+      "theme": "monolith-split",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 20,
+      "id": "month2-contract-convergence-20",
+      "title": "Forge CLI module split map",
+      "owner": "ao-forge",
+      "theme": "monolith-split",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 21,
+      "id": "month2-contract-convergence-21",
+      "title": "Command CLI module split map",
+      "owner": "ao-command",
+      "theme": "monolith-split",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 22,
+      "id": "month2-contract-convergence-22",
+      "title": "Contract registry generated Go type smoke",
+      "owner": "ao-covenant",
+      "theme": "generated-types",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 23,
+      "id": "month2-contract-convergence-23",
+      "title": "Contract registry generated Rust type smoke",
+      "owner": "ao-covenant",
+      "theme": "generated-types",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 24,
+      "id": "month2-contract-convergence-24",
+      "title": "Architecture generated compatibility table",
+      "owner": "ao-architecture",
+      "theme": "architecture",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 25,
+      "id": "month2-contract-convergence-25",
+      "title": "Mission metrics recompute after handoff correction",
+      "owner": "ao-mission",
+      "theme": "metrics",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 26,
+      "id": "month2-contract-convergence-26",
+      "title": "Blueprint sufficiency calibration fixture set",
+      "owner": "ao-blueprint",
+      "theme": "requirements",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 27,
+      "id": "month2-contract-convergence-27",
+      "title": "Atlas graph performance baseline",
+      "owner": "ao-atlas",
+      "theme": "performance",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 28,
+      "id": "month2-contract-convergence-28",
+      "title": "Foundry safe-next-work authority boundary test",
+      "owner": "ao-foundry",
+      "theme": "authority-boundary",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 29,
+      "id": "month2-contract-convergence-29",
+      "title": "Forge scripted provider boundary readback",
+      "owner": "ao-forge",
+      "theme": "execution-boundary",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 30,
+      "id": "month2-contract-convergence-30",
+      "title": "AO2 approval byte and base commit binding design test",
+      "owner": "ao2",
+      "theme": "approval-integrity",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 31,
+      "id": "month2-contract-convergence-31",
+      "title": "Covenant policy hash includes policy fields test",
+      "owner": "ao-covenant",
+      "theme": "policy-integrity",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 32,
+      "id": "month2-contract-convergence-32",
+      "title": "Control plane transactional GC test",
+      "owner": "ao2-control-plane",
+      "theme": "state",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 33,
+      "id": "month2-contract-convergence-33",
+      "title": "Arena hosted CI workflow parity",
+      "owner": "ao-arena",
+      "theme": "assurance-ci",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 34,
+      "id": "month2-contract-convergence-34",
+      "title": "Crucible hosted CI workflow parity",
+      "owner": "ao-crucible",
+      "theme": "assurance-ci",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 35,
+      "id": "month2-contract-convergence-35",
+      "title": "Sentinel hosted CI workflow parity",
+      "owner": "ao-sentinel",
+      "theme": "assurance-ci",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 36,
+      "id": "month2-contract-convergence-36",
+      "title": "Promoter signed assurance result input boundary",
+      "owner": "ao-promoter",
+      "theme": "promotion-boundary",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 37,
+      "id": "month2-contract-convergence-37",
+      "title": "Stack lockfile producer consumer gate",
+      "owner": "ao-architecture",
+      "theme": "stack-lock",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 38,
+      "id": "month2-contract-convergence-38",
+      "title": "Golden path tiny repository contract packet",
+      "owner": "ao-mission",
+      "theme": "golden-path",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 39,
+      "id": "month2-contract-convergence-39",
+      "title": "Month 2 long-run Atlas workgraph prompt",
+      "owner": "ao-atlas",
+      "theme": "long-run",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 40,
+      "id": "month2-contract-convergence-40",
+      "title": "Month 2 final no-promotion no-RSI rollup",
+      "owner": "ao-promoter",
+      "theme": "promotion-boundary",
+      "mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    }
+  ],
+  "rsi_remains_denied": true
+}
