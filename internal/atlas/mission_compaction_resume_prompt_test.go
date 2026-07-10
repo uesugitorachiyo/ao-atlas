@@ -207,6 +207,72 @@ func TestRefactoringWaveCompactionResumePromptPreservesNextActionAndFinalGateDen
 	}
 }
 
+func TestP0BContractConvergenceCompactionResumePromptPreservesNode25Continuation(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-stack-p0b-contract-convergence-wave-v01")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-p0b-contract-convergence-25")
+	sourceReadback := filepath.Join(waveRoot, "nodes", "mission-recommendation-p0b-contract-convergence-24", "recommendation-readback-after.json")
+	sourceWorkgraph := filepath.Join(waveRoot, "nodes", "mission-recommendation-p0b-contract-convergence-24", "workgraph-after-complete.json")
+	checkpointReadback := filepath.Join(waveRoot, "nodes", "mission-recommendation-p0b-contract-convergence-24", "checkpoint-readback-after.json")
+	recordedPath := filepath.Join(nodeDir, "compaction-resume-prompt.json")
+	recordedPromptPath := filepath.Join(nodeDir, "compaction-resume-prompt.md")
+	outDir := t.TempDir()
+	outFixture := filepath.Join(outDir, "compaction-resume-prompt.json")
+	outPrompt := filepath.Join(outDir, "compaction-resume-prompt.md")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "compaction-resume-prompt",
+		"--source-readback", sourceReadback,
+		"--workgraph", sourceWorkgraph,
+		"--lease-start", filepath.Join(waveRoot, "lease-start.json"),
+		"--checkpoint-readback", checkpointReadback,
+		"--evidence-root", filepath.ToSlash(filepath.Join("docs", "evidence", "ao-stack-p0b-contract-convergence-wave-v01")),
+		"--node-id", "mission-recommendation-p0b-contract-convergence-25",
+		"--expected-next-node-after-completion", "mission-recommendation-p0b-contract-convergence-26",
+		"--prompt-out", outPrompt,
+		"--fixture-out", outFixture,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("compaction-resume-prompt command failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "status=generated") ||
+		!strings.Contains(out.String(), "first_executable_node=mission-recommendation-p0b-contract-convergence-25") ||
+		!strings.Contains(out.String(), "final_response_allowed=false") {
+		t.Fatalf("compaction-resume-prompt output missing P0-B resume state: %s", out.String())
+	}
+	recorded := mustLoadJSON[map[string]any](t, recordedPath)
+	generated := mustLoadJSON[map[string]any](t, outFixture)
+	generated["prompt_path"] = recorded["prompt_path"]
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("P0-B compaction resume prompt fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	promptBytes, err := os.ReadFile(recordedPromptPath)
+	if err != nil {
+		t.Fatalf("read recorded prompt: %v", err)
+	}
+	prompt := string(promptBytes)
+	for _, want := range []string{
+		"You are AO Atlas, resuming the AO Atlas recommendation wave after context compaction.",
+		"Current readback: `docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/recommendation-readback-after.json`",
+		"Completed nodes: 24 / 30",
+		"Ready nodes: 6",
+		"Next executable node: `mission-recommendation-p0b-contract-convergence-25`",
+		"Checkpoint count: `24`",
+		"Final response allowed: `false`",
+		"Emit Foundry import for mission-recommendation-p0b-contract-convergence-25 and execute exactly one active node.",
+		"Do not produce a final response while ready nodes or exact next action remain.",
+		"RSI remains denied.",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("P0-B compaction resume prompt missing %q:\n%s", want, prompt)
+		}
+	}
+	if strings.Contains(prompt, "mission-recommendation-p0b-contract-convergence-24 and execute") {
+		t.Fatalf("P0-B compaction resume prompt must not restart completed node 24:\n%s", prompt)
+	}
+}
+
 func TestFeatureDepthWaveCompactionResumePromptBindsCheckpointDigest(t *testing.T) {
 	root := repoRoot(t)
 	waveRoot := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01")

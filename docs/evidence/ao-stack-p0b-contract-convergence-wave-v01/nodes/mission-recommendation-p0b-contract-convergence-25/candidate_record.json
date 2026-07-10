@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-25",
+  "candidate": "Generate compaction-resume prompt from latest P0-B readback.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-25-compaction-resume",
+  "files_changed": [
+    "internal/atlas/mission_compaction_resume_prompt_test.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25"
+  ],
+  "digest_fields": [
+    "source_readback_digest",
+    "checkpoint_readback_digest",
+    "first_executable_node",
+    "exact_next_action",
+    "final_response_allowed"
+  ]
+}
