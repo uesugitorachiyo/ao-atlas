@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.command-covenant-rejected-ticket-input.v0.1",
+  "status": "recorded",
+  "request_canonical_json": "{\"schema\":\"ao.command.live-mutation-request.v0.1\",\"request_id\":\"p0b-command-covenant-rejected-ticket\",\"base_commit\":\"81e74349d44c768ab8dcadaa122302aa9fd24f4f\",\"resource\":\"/unauthorized/out-of-scope.txt\",\"mutation_class\":\"low_risk_code\"}",
+  "ticket_canonical_json": "{\"schema\":\"ao.covenant.ticket.v0.1\",\"ticket_id\":\"ticket-p0b-command-covenant-rejected\",\"decision\":\"rejected\",\"decision_id\":\"decision-p0b-rejected-out-of-scope\",\"resource\":\"/unauthorized/out-of-scope.txt\",\"reason\":\"policy_decision_rejected: requested resource is outside authorized write scope\"}",
+  "covenant_decision": "rejected",
+  "command_accepts_ticket": false,
+  "covenant_native_reason": "policy_decision_rejected: requested resource is outside authorized write scope",
+  "command_readback_reason": "policy_decision_rejected: requested resource is outside authorized write scope",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

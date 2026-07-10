@@ -1197,6 +1197,41 @@ type AtlasFailedCheckReplayFixtureCase struct {
 	Reason        string `json:"reason"`
 }
 
+type AtlasCommandCovenantRejectedTicketInput struct {
+	Schema                 string `json:"schema"`
+	Status                 string `json:"status"`
+	RequestCanonicalJSON   string `json:"request_canonical_json"`
+	TicketCanonicalJSON    string `json:"ticket_canonical_json"`
+	CovenantDecision       string `json:"covenant_decision"`
+	CommandAcceptsTicket   bool   `json:"command_accepts_ticket"`
+	CovenantNativeReason   string `json:"covenant_native_reason"`
+	CommandReadbackReason  string `json:"command_readback_reason"`
+	SchedulesWork          bool   `json:"schedules_work"`
+	ExecutesWork           bool   `json:"executes_work"`
+	ApprovesWork           bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+}
+
+type AtlasCommandCovenantRejectedTicketFixture struct {
+	Schema                 string `json:"schema"`
+	Status                 string `json:"status"`
+	SourceInputPath        string `json:"source_input_path"`
+	SourceInputDigest      string `json:"source_input_digest"`
+	RequestSHA256          string `json:"request_sha256"`
+	TicketSHA256           string `json:"ticket_sha256"`
+	CovenantDecision       string `json:"covenant_decision"`
+	CommandAcceptsTicket   bool   `json:"command_accepts_ticket"`
+	CovenantNativeReason   string `json:"covenant_native_reason"`
+	CommandReadbackReason  string `json:"command_readback_reason"`
+	ReasonPreserved        bool   `json:"reason_preserved"`
+	SchedulesWork          bool   `json:"schedules_work"`
+	ExecutesWork           bool   `json:"executes_work"`
+	ApprovesWork           bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasMergeCheckBindingInput struct {
 	Schema                 string                      `json:"schema"`
 	Status                 string                      `json:"status"`

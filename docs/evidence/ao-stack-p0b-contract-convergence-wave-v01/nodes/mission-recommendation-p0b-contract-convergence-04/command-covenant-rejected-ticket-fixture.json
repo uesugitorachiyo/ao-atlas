@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.command-covenant-rejected-ticket-fixture.v0.1",
+  "status": "rejected_ticket_reason_preserved",
+  "source_input_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-04/command-covenant-rejected-ticket-input.json",
+  "source_input_digest": "sha256:083597aec4220ed97d3d2432ed0a79f41867bca29d762b6fd3cfc25679eb100b",
+  "request_sha256": "sha256:45e0d47d6247758d8103700d1eb6ba54ac85e914915da78dd991e57ea142e4bc",
+  "ticket_sha256": "sha256:a890471900d26321afb6df3fcb293cac702c229beab44a29870b1b17da0a4b3e",
+  "covenant_decision": "rejected",
+  "command_accepts_ticket": false,
+  "covenant_native_reason": "policy_decision_rejected: requested resource is outside authorized write scope",
+  "command_readback_reason": "policy_decision_rejected: requested resource is outside authorized write scope",
+  "reason_preserved": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
