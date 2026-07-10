@@ -1,0 +1,69 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "covenant_generated_go_type_smoke",
+  "node_id": "mission-recommendation-month2-contract-convergence-22",
+  "task_id": "mission-recommendation-month2-contract-convergence-22-task",
+  "status": "blocked_missing_generated_type_path",
+  "source_owner": "ao-covenant",
+  "source_repository": "ao-covenant",
+  "source_commit": "ccfdd28751c5a5af9f00cf34950bcf6f439e0f24",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "compatibility_audit",
+  "source_files": [
+    {
+      "path": "internal/contract/types.go",
+      "digest": "sha256:cb0f7a971a964ab643c1d29ae5436609a3876a3032f77f9a2bc51404dfd617be",
+      "role": "handwritten contract types"
+    },
+    {
+      "path": "internal/schema/schema.go",
+      "digest": "sha256:981bedc5bda531c24446fb7d2f51a2fd6f02d59b886364a20e0374f6fd27236f",
+      "role": "embedded schema validation"
+    },
+    {
+      "path": "internal/contract/contract_test.go",
+      "digest": "sha256:9941b4c1bf42c32acd8a5ad8ab21ff177fe1e91e6da760dd71fc6e922914ea20",
+      "role": "contract behavior tests"
+    },
+    {
+      "path": "internal/schema/schema_test.go",
+      "digest": "sha256:7f2971d8ded3377c9853d051e56679b13fd5228d580936686f362130a16b8ac1",
+      "role": "schema validation tests"
+    }
+  ],
+  "observed_contract": {
+    "handwritten_go_types": true,
+    "schema_registry_present": true,
+    "generated_go_types_present": false,
+    "code_generator_present": false,
+    "canonical_vector_fixture_present": false,
+    "go_test_all_passed": true
+  },
+  "smoke_contract_required": {
+    "source_schema_digest": "required",
+    "generated_type_digest": "required",
+    "canonical_json_fixture_digest": "required",
+    "encode_decode_roundtrip": "required",
+    "unknown_field_behavior": "required",
+    "schema_validation_result": "required",
+    "producer_consumer_version": "required"
+  },
+  "safe_follow_up": [
+    "choose a generator or explicitly document handwritten types as the supported path",
+    "generate types from canonical Covenant schemas in a separate authorized change",
+    "add canonical JSON vectors and encode/decode round-trip fixtures",
+    "run Go consumer smoke against Blueprint, Atlas, Foundry, and Command samples",
+    "keep generated output out of public tracked state unless the ownership and regeneration policy is explicit"
+  ],
+  "current_gate": "blocked_until_generated_type_strategy_and_cross_consumer_smoke_contract_exist",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
