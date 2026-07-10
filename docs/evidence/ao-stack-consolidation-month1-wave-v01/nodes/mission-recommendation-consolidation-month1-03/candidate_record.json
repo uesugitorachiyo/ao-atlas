@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-03",
+  "owner": "ao-architecture",
+  "target": "docs/adr/2026-07-10-consolidation-topology.md",
+  "mutation_class": "low_risk_docs",
+  "source_mission": "mission-56bed010dd085a0f",
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

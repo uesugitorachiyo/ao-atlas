@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-03",
+  "kind": "architecture_topology_adr",
+  "repository": "ao-architecture",
+  "path": "docs/adr/2026-07-10-consolidation-topology.md",
+  "pull_request": 93,
+  "merge_commit": "8bc67c3a1e5be9392ee88283fecb9928f18b6da3",
+  "migration_started": false,
+  "claims_runtime_execution": false
+}
