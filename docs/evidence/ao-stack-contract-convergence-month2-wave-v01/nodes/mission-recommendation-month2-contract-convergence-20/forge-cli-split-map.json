@@ -1,0 +1,111 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "forge_cli_split_map",
+  "node_id": "mission-recommendation-month2-contract-convergence-20",
+  "task_id": "mission-recommendation-month2-contract-convergence-20-task",
+  "status": "partial_split_map",
+  "source_owner": "ao-forge",
+  "source_repository": "ao-forge",
+  "source_commit": "27c74bfa5713fe50c052e86a375afca27cc01469",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "source_audit",
+  "source_files": [
+    {
+      "path": "internal/cli/cli.go",
+      "digest": "sha256:16e3d9482aedf2ad8562d1ee2664b008a6354542276ec831534bb6f491dee48",
+      "line_count": 9451,
+      "byte_count": 331261
+    },
+    {
+      "path": "internal/foundation/foundation.go",
+      "digest": "sha256:b2223537719ea0b896ac5779aad435c2f54c14abb0aec8b55409cfa453119706",
+      "role": "doctor and baseline verification"
+    },
+    {
+      "path": "internal/cli/dashboard.go",
+      "digest": "sha256:b7d5e2368c4d4239bc9d9737afae3242a23ad7343b8b3f031f91f5151e291c65",
+      "role": "operator dashboard presentation"
+    }
+  ],
+  "split_boundaries": [
+    {
+      "module": "models_and_plan",
+      "lines": "73-1519",
+      "responsibility": "factory brief, plan, gate, packet, and validation models",
+      "guard": "contract fixtures and plan/gate parity"
+    },
+    {
+      "module": "goal_run_and_ao2",
+      "lines": "1520-2790",
+      "responsibility": "GoalRun, resume, once, AO2 workcell execution",
+      "guard": "dry-run, cancellation, rollback, and no-provider defaults"
+    },
+    {
+      "module": "control_plane",
+      "lines": "2790-3260",
+      "responsibility": "control-plane packet/signature and upload/readback boundary",
+      "guard": "intent-only defaults, path safety, and explicit credentials prohibition"
+    },
+    {
+      "module": "workcell_orchestration",
+      "lines": "3261-4393",
+      "responsibility": "workcell state, concurrent workcell runner, AO2 and repair workcells",
+      "guard": "single-run ownership, kill switch, and no hidden concurrency"
+    },
+    {
+      "module": "commands_and_live_docs",
+      "lines": "4394-5361",
+      "responsibility": "init, packet, contract, and live-docs gates",
+      "guard": "Covenant/Sentinel/Command negative controls"
+    },
+    {
+      "module": "goal_commands",
+      "lines": "5750-7882",
+      "responsibility": "GoalRun transitions, evidence verification, retention, and cleanup",
+      "guard": "GoalRun state machine and evidence digest tests"
+    },
+    {
+      "module": "artifact_and_readiness",
+      "lines": "7883-8753",
+      "responsibility": "artifact checksums, release candidate, production readiness",
+      "guard": "readback and no-release execution tests"
+    },
+    {
+      "module": "release_preview",
+      "lines": "8754-end",
+      "responsibility": "release preview and mutation boundary",
+      "guard": "release/deploy/publish prohibition and explicit operator approval"
+    }
+  ],
+  "overlap_risks": [
+    "Forge GoalRun overlaps AO2 runtime lifecycle and should not become a second execution authority",
+    "workcell concurrency and AO2 execution are adjacent to safety gates and require characterization before extraction",
+    "control-plane upload/readback code must remain outside the planning-only Atlas node"
+  ],
+  "refactor_order": [
+    "extract models and contract readers",
+    "extract GoalRun lifecycle",
+    "extract workcell orchestration behind interfaces",
+    "extract control-plane readback",
+    "extract live-docs gates",
+    "leave release preview isolated until contract registry is stable"
+  ],
+  "non_goals": [
+    "do not execute Forge live runs",
+    "do not call providers",
+    "do not upload artifacts",
+    "do not widen policy or auth",
+    "do not claim Forge is a production orchestrator"
+  ],
+  "current_gate": "blocked_until_goalrun_workcell_and_control_plane_characterization_tests_exist",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
