@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-17",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T17:49:07Z",
+  "implementation_pr": {
+    "repo": "ao-atlas",
+    "number": 548,
+    "state": "merged",
+    "merge_commit": "bcecde2c05b61b43e7d1bf655572a16be792f258",
+    "ci_status": "passed",
+    "checks_successful": 9,
+    "checks_failing": 0
+  },
+  "local_verification": "full Atlas verification to be refreshed after complete-node readback before evidence PR",
+  "branch_cleanup": {
+    "implementation_branch_deleted_local": true,
+    "implementation_branch_deleted_remote": true
+  },
+  "rsi_remains_denied": true
+}

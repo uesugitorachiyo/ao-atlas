@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1",
+  "node": "mission-recommendation-consolidation-month1-17",
+  "status": "ready_for_complete_node",
+  "generated_at_utc": "2026-07-10T17:49:07Z",
+  "checkpoint_before": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-16/recommendation-readback-after.json",
+  "expected_checkpoint_after": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-17/recommendation-readback-after.json",
+  "expected_completed_nodes_after": 17,
+  "expected_ready_nodes_after": 19,
+  "rsi_remains_denied": true
+}

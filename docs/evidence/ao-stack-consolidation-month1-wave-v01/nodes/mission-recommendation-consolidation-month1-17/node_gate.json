@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "node": "mission-recommendation-consolidation-month1-17",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "gate_class": "planning_fixture",
+  "scope": "content-addressed evidence catalog plan retaining small replayable golden fixtures",
+  "previous_completed_node": "mission-recommendation-consolidation-month1-16",
+  "generated_at_utc": "2026-07-10T17:49:07Z",
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "policy_or_authorization_change": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "ao.atlas.consolidation-evidence-catalog-plan.v0.1",
+  "status": "planned",
+  "wave": "ao-stack-consolidation-month1-wave-v01",
+  "generated_at_utc": "2026-07-10T17:49:07Z",
+  "retention_model": "golden_fixtures_in_git_bulk_campaign_output_cataloged",
+  "catalog_principles": [
+    "Keep small hand-authored valid and invalid fixtures in repository history.",
+    "Move large campaign/readback progress output to content-addressed storage after a migration tool exists.",
+    "Preserve SHA-256 digest, source repo, source commit, schema, node id, generated timestamp, and public-safety scan status in the catalog index.",
+    "Require consumer readbacks to verify catalog digests before treating externalized evidence as current."
+  ],
+  "proposed_catalog_record_fields": [
+    "schema",
+    "artifact_digest",
+    "artifact_kind",
+    "source_repo",
+    "source_commit",
+    "wave",
+    "node",
+    "relative_original_path",
+    "storage_uri",
+    "size_bytes",
+    "generated_at_utc",
+    "public_safety_scan_status",
+    "rsi_remains_denied"
+  ],
+  "non_goals": [
+    "No evidence is moved by this node.",
+    "No storage provider is selected by this node.",
+    "No release, upload, or publish is authorized by this node."
+  ],
+  "next_implementation_candidates": [
+    "schema-owned catalog record fixture",
+    "read-only catalog validator",
+    "dry-run migration inventory"
+  ],
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "rsi_remains_denied": true
+}

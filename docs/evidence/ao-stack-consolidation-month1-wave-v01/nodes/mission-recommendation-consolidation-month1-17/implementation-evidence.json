@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-17",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T17:49:07Z",
+  "kind": "content_addressed_evidence_catalog_plan_schema",
+  "repository": "ao-atlas",
+  "implementation_pr": 548,
+  "merge_commit": "bcecde2c05b61b43e7d1bf655572a16be792f258",
+  "changed_paths": [
+    "examples/valid/evidence-catalog-plan.json",
+    "internal/atlas/mission_recommendation_strict_schema_registry_test.go",
+    "internal/atlas/recommendation_evidence_strict_schema_registry.go",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/evidence-catalog-plan.json"
+  ],
+  "rsi_remains_denied": true
+}
