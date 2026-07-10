@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-02",
+  "candidate": "Add Covenant regression fixtures proving policy-field changes alter the event hash.",
+  "implementation_repo": "ao-covenant",
+  "branch": "codex/p0b-node-02-covenant-hash-fixtures",
+  "commit": "86a3913",
+  "pull_request": "https://github.com/uesugitorachiyo/ao-covenant/pull/115",
+  "merge_commit": "1c78e4c2fd9459246b4de6db6525392c6e06c28e",
+  "fixture": "internal/run/testdata/policy_event_hash_fields.json"
+}
