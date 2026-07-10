@@ -1,0 +1,42 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-23",
+  "task_id": "mission-recommendation-month2-contract-convergence-23-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "go test ./... -count=1 in ao-covenant",
+    "cargo test -p ao2-cp-schema --test canonical -- --nocapture in ao2-control-plane",
+    "Covenant tracked Rust and Cargo file inventory",
+    "AO2 Control Plane Covenant contract identifier search",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/atlas-node23-verification ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "go run ./cmd/atlas mission recommendations run-link-digest-check --node-id mission-recommendation-month2-contract-convergence-23 --run-link docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-23/run-link.json --evidence-root .",
+    "scoped public-safety scan over the complete wave root",
+    "scoped public-safety scan status=passed unsafe_match_count=0 over 625 files"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "go run ./cmd/atlas mission recommendations run-link-digest-check --node-id mission-recommendation-month2-contract-convergence-23 --run-link docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-23/run-link.json --evidence-root .",
+    "git diff --check",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "repair_notes": [
+    "The Covenant and AO2 Control Plane source audits are read-only; no schema generation, dependency update, or source mutation is performed.",
+    "The Rust canonical-vector pass is not promoted to Covenant contract compatibility.",
+    "The Atlas build output is written below target and removed before the working-tree check.",
+    "The cross-language type strategy remains a separate authorization and compatibility decision."
+  ],
+  "rsi_remains_denied": true,
+  "objective": "Coordinate ao-covenant Contract registry generated Rust type smoke through a bounded Atlas compatibility evidence node with no promotion."
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-23",
+  "task_id": "mission-recommendation-month2-contract-convergence-23-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records the absence of a Covenant Rust type path without generating or mutating Covenant or AO2 Control Plane artifacts"
+  },
+  "targeted_test": {
+    "command": "go test ./... -count=1 in ao-covenant",
+    "status": "passed",
+    "output": "AO Covenant full Go test suite passed"
+  },
+  "integration_test": {
+    "command": "cargo test -p ao2-cp-schema --test canonical -- --nocapture in ao2-control-plane",
+    "status": "passed",
+    "output": "AO2 Control Plane Rust canonical JSON test passed all 6 tests, including the shared golden-vector test"
+  },
+  "source_boundary_test": {
+    "command": "Covenant tracked Rust and Cargo file inventory; AO2 Control Plane Covenant contract identifier search",
+    "status": "passed",
+    "output": "No Covenant Rust or Cargo source and no AO2 Control Plane Covenant contract identifier references were found; existing AO2 canonical vectors are a separate contract"
+  },
+  "objective": "Coordinate ao-covenant Contract registry generated Rust type smoke through a bounded Atlas compatibility evidence node with no promotion."
+}
