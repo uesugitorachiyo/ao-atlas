@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-05",
+  "commands": ["jq empty stack/ao-stack.lock.json", "git status --porcelain", "git rev-parse HEAD", "git describe --tags --abbrev=0"],
+  "repository_count": 14,
+  "unversioned_states_explicit": true
+}

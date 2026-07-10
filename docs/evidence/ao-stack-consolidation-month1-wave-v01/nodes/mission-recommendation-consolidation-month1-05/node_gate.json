@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-05",
+  "safe_to_execute": true,
+  "scope": "current checked-out stack lockfile generation",
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

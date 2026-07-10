@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-05",
+  "kind": "stack_lockfile",
+  "repository": "ao-architecture",
+  "path": "stack/ao-stack.lock.json",
+  "pull_request": 95,
+  "merge_commit": "a9fb06cf0c70221bc23c9d53f2b1ba159b24cdf0",
+  "repository_count": 14,
+  "migration_started": false,
+  "claims_runtime_execution": false
+}
