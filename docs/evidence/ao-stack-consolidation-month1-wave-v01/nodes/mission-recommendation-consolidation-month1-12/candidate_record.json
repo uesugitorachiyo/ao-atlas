@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-12",
+  "owner": "ao-atlas",
+  "target": "strict evidence schema validation, unknown-schema fixture, and validator readback",
+  "mutation_class": "low_risk_validation",
+  "source_node": "mission-recommendation-consolidation-month1-11",
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

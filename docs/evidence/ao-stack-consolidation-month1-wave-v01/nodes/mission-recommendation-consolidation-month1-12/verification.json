@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-12",
+  "atlas_implementation_pr": 540,
+  "atlas_implementation_merge_commit": "50e20796fa841d3e2b39362f063abad251a7f192",
+  "ci_status": "passed",
+  "branch_cleanup": "passed",
+  "public_safety_scan": "passed",
+  "strict_schema_validation": "passed"
+}
