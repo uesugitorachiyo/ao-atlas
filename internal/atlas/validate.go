@@ -49,6 +49,8 @@ const (
 	AtlasTicketDigestReadbackBindingFixtureContract   = "ao.atlas.ticket-digest-readback-binding-fixture.v0.1"
 	AtlasPolicyHashMismatchRejectionInputContract     = "ao.atlas.policy-hash-mismatch-rejection-input.v0.1"
 	AtlasPolicyHashMismatchRejectionFixtureContract   = "ao.atlas.policy-hash-mismatch-rejection-fixture.v0.1"
+	AtlasPolicyVersionReplayRejectionInputContract    = "ao.atlas.policy-version-replay-rejection-input.v0.1"
+	AtlasPolicyVersionReplayRejectionFixtureContract  = "ao.atlas.policy-version-replay-rejection-fixture.v0.1"
 	AtlasMergeCheckBindingInputContract               = "ao.atlas.merge-check-binding-input.v0.1"
 	AtlasMergeCheckBindingContract                    = "ao.atlas.merge-check-binding.v0.1"
 	AtlasPostMergeBranchDeletionReadbackContract      = "ao.atlas.post-merge-branch-deletion-readback.v0.1"

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ao.local/schemas/policy-version-replay-rejection-fixture.schema.json",
+  "title": "AO Atlas Policy Version Replay Rejection Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "status",
+    "source_input_path",
+    "source_input_digest",
+    "case_count",
+    "rejected_cases",
+    "safe_to_accept",
+    "all_stale_versions_rejected",
+    "cases",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": { "const": "ao.atlas.policy-version-replay-rejection-fixture.v0.1" },
+    "status": { "const": "stale_policy_versions_rejected" },
+    "source_input_path": { "type": "string", "minLength": 1 },
+    "source_input_digest": { "$ref": "#/$defs/sha256" },
+    "case_count": { "type": "integer", "minimum": 1 },
+    "rejected_cases": { "type": "integer", "minimum": 1 },
+    "safe_to_accept": { "const": false },
+    "all_stale_versions_rejected": { "const": true },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/case" }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ticket_sha256",
+        "ticket_policy_version",
+        "current_policy_version",
+        "expected_decision",
+        "rejection_reason"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "ticket_sha256": { "$ref": "#/$defs/sha256" },
+        "ticket_policy_version": { "type": "string", "minLength": 1 },
+        "current_policy_version": { "type": "string", "minLength": 1 },
+        "expected_decision": { "const": "rejected" },
+        "rejection_reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

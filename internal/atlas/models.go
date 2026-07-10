@@ -1394,6 +1394,43 @@ type AtlasPolicyHashMismatchRejectionFixture struct {
 	RSIRemainsDenied       bool                                   `json:"rsi_remains_denied"`
 }
 
+type AtlasPolicyVersionReplayRejectionInput struct {
+	Schema                 string                                  `json:"schema"`
+	Status                 string                                  `json:"status"`
+	Cases                  []AtlasPolicyVersionReplayRejectionCase `json:"cases"`
+	SchedulesWork          bool                                    `json:"schedules_work"`
+	ExecutesWork           bool                                    `json:"executes_work"`
+	ApprovesWork           bool                                    `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                    `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                    `json:"rsi_remains_denied"`
+}
+
+type AtlasPolicyVersionReplayRejectionCase struct {
+	ID                   string `json:"id"`
+	TicketSHA256         string `json:"ticket_sha256"`
+	TicketPolicyVersion  string `json:"ticket_policy_version"`
+	CurrentPolicyVersion string `json:"current_policy_version"`
+	ExpectedDecision     string `json:"expected_decision"`
+	RejectionReason      string `json:"rejection_reason"`
+}
+
+type AtlasPolicyVersionReplayRejectionFixture struct {
+	Schema                   string                                  `json:"schema"`
+	Status                   string                                  `json:"status"`
+	SourceInputPath          string                                  `json:"source_input_path"`
+	SourceInputDigest        string                                  `json:"source_input_digest"`
+	CaseCount                int                                     `json:"case_count"`
+	RejectedCases            int                                     `json:"rejected_cases"`
+	SafeToAccept             bool                                    `json:"safe_to_accept"`
+	AllStaleVersionsRejected bool                                    `json:"all_stale_versions_rejected"`
+	Cases                    []AtlasPolicyVersionReplayRejectionCase `json:"cases"`
+	SchedulesWork            bool                                    `json:"schedules_work"`
+	ExecutesWork             bool                                    `json:"executes_work"`
+	ApprovesWork             bool                                    `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool                                    `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool                                    `json:"rsi_remains_denied"`
+}
+
 type AtlasMergeCheckBindingInput struct {
 	Schema                 string                      `json:"schema"`
 	Status                 string                      `json:"status"`

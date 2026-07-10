@@ -398,6 +398,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:policy-hash-mismatch-rejection-fixture", err
 		}
 		return "typed:policy-hash-mismatch-rejection-fixture", ValidateAtlasPolicyHashMismatchRejectionFixture(value)
+	case AtlasPolicyVersionReplayRejectionFixtureContract:
+		value, err := LoadJSON[AtlasPolicyVersionReplayRejectionFixture](path)
+		if err != nil {
+			return "typed:policy-version-replay-rejection-fixture", err
+		}
+		return "typed:policy-version-replay-rejection-fixture", ValidateAtlasPolicyVersionReplayRejectionFixture(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {
