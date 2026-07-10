@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-21",
+  "candidate": "Add P0-B PR/CI ledger with merge-head and branch-cleanup fields.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-21-pr-ci-ledger",
+  "files_changed": [
+    "internal/atlas/mission_p0b_pr_ci_ledger.go",
+    "internal/atlas/mission_p0b_pr_ci_ledger_test.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-21"
+  ],
+  "digest_fields": [
+    "entries.pr_number",
+    "entries.merge_commit",
+    "entries.ci_status",
+    "entries.local_branch_deleted",
+    "entries.remote_branch_deleted",
+    "branches_remaining_total"
+  ]
+}
