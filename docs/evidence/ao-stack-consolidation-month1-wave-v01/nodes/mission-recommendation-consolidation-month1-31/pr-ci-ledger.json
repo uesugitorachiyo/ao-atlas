@@ -1,0 +1,3158 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-31",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T19:27:05Z",
+  "kind": "pr_ci_timing_ledger",
+  "repository": "ao-atlas",
+  "pr_count": 49,
+  "repositories": [
+    "ao-architecture",
+    "ao-arena",
+    "ao-atlas",
+    "ao-crucible",
+    "ao-mission",
+    "ao-sentinel"
+  ],
+  "open_pr_count": 0,
+  "failed_check_pr_count": 0,
+  "entries": [
+    {
+      "repo": "ao-architecture",
+      "pr": 93,
+      "state": "MERGED",
+      "title": "docs: record consolidation topology decision",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-node-03",
+      "merged_at": "2026-07-10T13:56:38Z",
+      "merge_commit": "8bc67c3a1e5be9392ee88283fecb9928f18b6da3",
+      "checks": [
+        {
+          "name": "Verify",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:56:20Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-architecture/actions/runs/29097908185/job/86379023932"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-architecture",
+      "pr": 94,
+      "state": "MERGED",
+      "title": "feat: validate architecture authority inventory",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-node-04",
+      "merged_at": "2026-07-10T14:03:44Z",
+      "merge_commit": "1e052c1764fe352c5711b08ce630034c8e5163af",
+      "checks": [
+        {
+          "name": "Verify",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:03:35Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-architecture/actions/runs/29098366714/job/86380590076"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-architecture",
+      "pr": 95,
+      "state": "MERGED",
+      "title": "docs: add AO stack lockfile",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-node-05",
+      "merged_at": "2026-07-10T14:09:50Z",
+      "merge_commit": "a9fb06cf0c70221bc23c9d53f2b1ba159b24cdf0",
+      "checks": [
+        {
+          "name": "Verify",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:09:36Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-architecture/actions/runs/29098744086/job/86381863090"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-architecture",
+      "pr": 96,
+      "state": "MERGED",
+      "title": "feat: validate AO stack lockfile",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-node-06",
+      "merged_at": "2026-07-10T14:16:16Z",
+      "merge_commit": "e1228e8e4ae4537d9bf80ca01e51bc18cb1eb569",
+      "checks": [
+        {
+          "name": "Verify",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:16:01Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-architecture/actions/runs/29099145706/job/86383211347"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-architecture",
+      "pr": 97,
+      "state": "MERGED",
+      "title": "docs: add complete readiness inventory",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-node-07",
+      "merged_at": "2026-07-10T14:22:10Z",
+      "merge_commit": "dae0c9baa0578c72428d7d047bf60f8f940821eb",
+      "checks": [
+        {
+          "name": "Verify",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:21:55Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-architecture/actions/runs/29099522054/job/86384496734"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-architecture",
+      "pr": 98,
+      "state": "MERGED",
+      "title": "test: guard readiness wording scope",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-architecture-node-08",
+      "merged_at": "2026-07-10T14:30:13Z",
+      "merge_commit": "fbfa1217db951336951a501032bd5a06fed5196e",
+      "checks": [
+        {
+          "name": "Verify",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:30:06Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-architecture/actions/runs/29100038826/job/86386262342"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-architecture",
+      "pr": 99,
+      "state": "MERGED",
+      "title": "feat: add contract inventory baseline",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-architecture-node-09",
+      "merged_at": "2026-07-10T14:43:35Z",
+      "merge_commit": "dff1ea7e75547fa7983a24f8c9fe4c1bf7d93b1f",
+      "checks": [
+        {
+          "name": "Verify",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:43:24Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-architecture/actions/runs/29100889983/job/86389158671"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-architecture",
+      "pr": 100,
+      "state": "MERGED",
+      "title": "feat: propose contract owner registry",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-architecture-node-10",
+      "merged_at": "2026-07-10T14:51:37Z",
+      "merge_commit": "bf2fec0c8ea000b9751e587f4b66e5bab2deea29",
+      "checks": [
+        {
+          "name": "Verify",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:51:22Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-architecture/actions/runs/29101400588/job/86390907516"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-architecture",
+      "pr": 101,
+      "state": "MERGED",
+      "title": "feat: add contract compatibility matrix",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-architecture-node-11",
+      "merged_at": "2026-07-10T14:59:28Z",
+      "merge_commit": "7ca55c4dae9ad85799f83d7d684392e53aa448a0",
+      "checks": [
+        {
+          "name": "Verify",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:59:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-architecture/actions/runs/29101918062/job/86392690140"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-arena",
+      "pr": 1,
+      "state": "MERGED",
+      "title": "ci: add native Arena checks",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-arena-ci",
+      "merged_at": "2026-07-10T18:08:38Z",
+      "merge_commit": "8d926890b1df472729750bd2c2129e4b73fc9de9",
+      "checks": [
+        {
+          "name": "native-checks (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:07:55Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-arena/actions/runs/29113424624/job/86430931581"
+        },
+        {
+          "name": "native-checks (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:07:56Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-arena/actions/runs/29113424624/job/86430931539"
+        },
+        {
+          "name": "native-checks (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:08:18Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-arena/actions/runs/29113424624/job/86430931522"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 529,
+      "state": "MERGED",
+      "title": "docs: initialize consolidation month one wave",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-wave",
+      "merged_at": "2026-07-10T13:45:20Z",
+      "merge_commit": "2a95e3443c187a3cc23f0f5b73c59a894a3073eb",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:44:07Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097126662/job/86376355725"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:44:08Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097126579/job/86376355433"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:44:03Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097123434/job/86376343799"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:44:15Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097126662/job/86376355717"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:44:10Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097126579/job/86376355448"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:44:11Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097123434/job/86376343835"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:45:06Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097126662/job/86376355758"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:45:09Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097126579/job/86376355425"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:45:01Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097123434/job/86376343754"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 530,
+      "state": "MERGED",
+      "title": "feat: classify pre-existing consolidation workspace state",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-node-02",
+      "merged_at": "2026-07-10T13:54:51Z",
+      "merge_commit": "4e9ab4b973da53cf9c040b9fef6921a6cb501f13",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:53:34Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097702781/job/86378325457"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:53:35Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097702775/job/86378325385"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:53:28Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097699696/job/86378315781"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:54:09Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097702781/job/86378325407"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:53:34Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097702775/job/86378325501"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:53:49Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097699696/job/86378315740"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:54:36Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097702781/job/86378325455"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:54:29Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097702775/job/86378325377"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:54:43Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29097699696/job/86378315872"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 531,
+      "state": "MERGED",
+      "title": "docs: record consolidation topology node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-03",
+      "merged_at": "2026-07-10T14:00:38Z",
+      "merge_commit": "f3256d0af7c18e3c2065443ccfdc530b87b9f3fc",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:59:02Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098042218/job/86379487530"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:59:04Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098042886/job/86379490688"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:58:59Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098038917/job/86379476308"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:59:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098042218/job/86379487516"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:59:14Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098042886/job/86379490669"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T13:59:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098038917/job/86379476391"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:00:11Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098042218/job/86379487467"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:00:05Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098042886/job/86379490656"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:00:23Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098038917/job/86379476345"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 532,
+      "state": "MERGED",
+      "title": "docs: record authority inventory node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-04",
+      "merged_at": "2026-07-10T14:07:37Z",
+      "merge_commit": "44585d1a36e196f8d01633c9c1db2c7ee3407d4d",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:06:07Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098498062/job/86381017109"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:06:11Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098497922/job/86381016682"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:06:02Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098494129/job/86381003670"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:06:24Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098498062/job/86381017264"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:06:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098497922/job/86381016638"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:06:21Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098494129/job/86381003594"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:07:24Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098498062/job/86381017080"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:07:20Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098497922/job/86381016643"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:07:06Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098494129/job/86381003666"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 533,
+      "state": "MERGED",
+      "title": "docs: record stack lockfile node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-05",
+      "merged_at": "2026-07-10T14:13:53Z",
+      "merge_commit": "1675f9e465a5b0d25ecd2b19a565708e06fea2a2",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:12:12Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098871899/job/86382299621"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:12:09Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098871800/job/86382299164"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:12:02Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098868195/job/86382286318"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:12:31Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098871899/job/86382299612"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:12:18Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098871800/job/86382299106"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:12:49Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098868195/job/86382286368"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:13:15Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098871899/job/86382299650"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:13:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098871800/job/86382299115"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:12:59Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29098868195/job/86382286301"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 534,
+      "state": "MERGED",
+      "title": "docs: record stack lock validator node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-06",
+      "merged_at": "2026-07-10T14:20:14Z",
+      "merge_commit": "f519990ea481d715d27f8bdd478e044ad8239d9d",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:18:41Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099279244/job/86383674051"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:18:41Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099279668/job/86383674712"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:18:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099276401/job/86383663057"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:19:14Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099279244/job/86383673979"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:18:52Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099279668/job/86383674761"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:18:45Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099276401/job/86383663024"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:19:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099279244/job/86383674069"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:19:36Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099279668/job/86383674750"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:19:33Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099276401/job/86383663062"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 535,
+      "state": "MERGED",
+      "title": "docs: record readiness inventory node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-07",
+      "merged_at": "2026-07-10T14:27:20Z",
+      "merge_commit": "829694b18226f5bec736dd7040e18b9a6859a2b3",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:24:27Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099653412/job/86384939020"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:24:31Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099653470/job/86384939294"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:24:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099650456/job/86384929179"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:24:30Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099653412/job/86384939030"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:25:01Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099653470/job/86384939193"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:24:55Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099650456/job/86384929145"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:25:24Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099653412/job/86384938985"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:25:29Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099653470/job/86384939176"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:25:15Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29099650456/job/86384929182"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 536,
+      "state": "MERGED",
+      "title": "docs: record consolidation wording node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-08",
+      "merged_at": "2026-07-10T14:38:38Z",
+      "merge_commit": "75797a7e124efcd12a6f4783c68b01efe11c6e23",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:37:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29100480272/job/86387756883"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:37:22Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29100480260/job/86387756923"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:37:22Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29100469911/job/86387721753"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:37:37Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29100480272/job/86387756925"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:37:35Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29100480260/job/86387757614"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:37:27Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29100469911/job/86387721764"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:38:18Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29100480272/job/86387756864"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:38:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29100480260/job/86387756927"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:38:10Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29100469911/job/86387721722"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 537,
+      "state": "MERGED",
+      "title": "docs: record contract inventory node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-09",
+      "merged_at": "2026-07-10T14:48:23Z",
+      "merge_commit": "b25172b9b6869800ae0f24d9476bc9bbeb166f76",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:47:12Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101100972/job/86389881234"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:47:13Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101100979/job/86389881179"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:46:57Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101090708/job/86389845099"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:47:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101100972/job/86389881182"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:47:31Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101100979/job/86389881221"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:47:13Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101090708/job/86389845139"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:48:10Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101100972/job/86389881192"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:48:04Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101100979/job/86389881181"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:48:01Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101090708/job/86389845148"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 538,
+      "state": "MERGED",
+      "title": "docs: record contract owner node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-10",
+      "merged_at": "2026-07-10T14:56:24Z",
+      "merge_commit": "527e07aabcd6f46bd157bcd6e6d4f9596bf5b16a",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:54:50Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101588412/job/86391550636"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:54:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101588441/job/86391550695"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:54:37Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101577200/job/86391516826"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:54:50Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101588412/job/86391550629"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:54:52Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101588441/job/86391550690"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:54:51Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101577200/job/86391516795"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:56:15Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101588412/job/86391550627"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:55:49Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101588441/job/86391550693"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T14:55:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29101577200/job/86391516783"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 539,
+      "state": "MERGED",
+      "title": "docs: record compatibility matrix node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-11",
+      "merged_at": "2026-07-10T15:05:01Z",
+      "merge_commit": "c9de48b3e7362dc98d08a6f97cdf12b6aa6c1a01",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:02:42Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102114167/job/86393354414"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:02:48Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102114166/job/86393354613"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:02:32Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102102514/job/86393315199"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:02:49Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102114167/job/86393354383"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:03:38Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102114166/job/86393354669"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:02:39Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102102514/job/86393315200"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:03:53Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102114167/job/86393354388"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:03:44Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102114166/job/86393354646"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:04:42Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102102514/job/86393315185"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 540,
+      "state": "MERGED",
+      "title": "feat: fail closed on unknown consolidation schemas",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-12",
+      "merged_at": "2026-07-10T15:15:21Z",
+      "merge_commit": "50e20796fa841d3e2b39362f063abad251a7f192",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:13:54Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102828531/job/86395769413"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:13:49Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102828604/job/86395769546"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:13:39Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102817390/job/86395732801"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:14:02Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102828531/job/86395769327"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:14:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102828604/job/86395769537"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:14:12Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102817390/job/86395732927"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:15:13Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102828531/job/86395769354"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:14:50Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102828604/job/86395769657"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:14:45Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29102817390/job/86395732806"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 541,
+      "state": "MERGED",
+      "title": "docs: record strict schema node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-12-evidence",
+      "merged_at": "2026-07-10T15:21:21Z",
+      "merge_commit": "6976092d00e5246600d83bcea50bd010ee1aaf4b",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:19:49Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29103210664/job/86397070935"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:19:50Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29103210665/job/86397071012"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:19:38Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29103195982/job/86397028666"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:20:17Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29103210664/job/86397070905"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:20:09Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29103210665/job/86397070915"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:20:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29103195982/job/86397028698"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:20:56Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29103210664/job/86397070934"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:20:51Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29103210665/job/86397070954"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:20:33Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29103195982/job/86397028632"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 542,
+      "state": "MERGED",
+      "title": "docs: record lifecycle metrics node",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-13",
+      "merged_at": "2026-07-10T15:34:33Z",
+      "merge_commit": "ac3a6a50b3754eeaa506192b6401ecb27573d880",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:33:09Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104054306/job/86399959791"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:33:12Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104053628/job/86399957069"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:32:55Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104041150/job/86399915324"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:33:29Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104054306/job/86399959818"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:33:14Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104053628/job/86399957083"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:33:04Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104041150/job/86399915280"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:34:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104054306/job/86399960011"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:34:08Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104053628/job/86399957078"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:33:57Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104041150/job/86399915310"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 543,
+      "state": "MERGED",
+      "title": "evidence: close consolidation wave node 14",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-14",
+      "merged_at": "2026-07-10T15:48:02Z",
+      "merge_commit": "3b7d3d2a50b8c47fbdcec09d42b6ea0cfcda3705",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:46:41Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104894381/job/86402790568"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:46:42Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104894093/job/86402789436"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:46:37Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104890667/job/86402776538"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:46:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104894381/job/86402790567"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:46:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104894093/job/86402789434"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:46:41Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104890667/job/86402776510"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:47:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104894381/job/86402790462"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:47:48Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104894093/job/86402789412"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:47:41Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29104890667/job/86402776514"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 544,
+      "state": "MERGED",
+      "title": "test: reject handoff-only lifecycle completion claims",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-15",
+      "merged_at": "2026-07-10T15:53:33Z",
+      "merge_commit": "d37f7032ae48c2e99df92d784a16ebe35127c711",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:51:52Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105214145/job/86403889719"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:51:45Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105214119/job/86403889658"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:51:45Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105211068/job/86403880052"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:51:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105214145/job/86403889678"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:52:15Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105214119/job/86403889694"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:52:03Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105211068/job/86403880038"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:53:04Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105214145/job/86403889730"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:53:16Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105214119/job/86403889659"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:52:39Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105211068/job/86403880037"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 545,
+      "state": "MERGED",
+      "title": "evidence: close consolidation wave node 15",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-15-evidence",
+      "merged_at": "2026-07-10T15:58:03Z",
+      "merge_commit": "b77883316cc48c172ec156e780a2ab0fd429cad9",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:56:45Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105521470/job/86404929970"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:56:44Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105521481/job/86404930327"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:56:45Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105518124/job/86404918045"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:56:57Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105521470/job/86404929988"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:56:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105521481/job/86404930175"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:56:42Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105518124/job/86404918054"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:57:46Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105521470/job/86404929953"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:57:45Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105521481/job/86404930162"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:57:42Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105518124/job/86404918058"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 546,
+      "state": "MERGED",
+      "title": "test: register evidence volume baseline schema",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-16",
+      "merged_at": "2026-07-10T17:35:27Z",
+      "merge_commit": "c78b5e1fdc132594a64f349d3ce288b1c7cdb125",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T16:03:16Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105935956/job/86406306835"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T16:03:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105935949/job/86406306404"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T16:03:14Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105932319/job/86406294233"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T16:03:21Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105935956/job/86406306869"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T16:03:18Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105935949/job/86406306403"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T16:03:26Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105932319/job/86406294189"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T16:04:35Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105935956/job/86406306852"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T16:04:33Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105935949/job/86406306429"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T16:04:50Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29105932319/job/86406294188"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 547,
+      "state": "MERGED",
+      "title": "docs: record consolidation node 16 evidence baseline",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-16-evidence",
+      "merged_at": "2026-07-10T17:44:46Z",
+      "merge_commit": "834244168c86b5e5acbcce5606bb6e07c200053a",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:43:24Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29111949818/job/86426158175"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:43:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29111949848/job/86426158226"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:43:24Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29111947947/job/86426152508"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:43:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29111949818/job/86426158159"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:43:31Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29111949848/job/86426158184"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:43:37Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29111947947/job/86426152521"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:44:28Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29111949818/job/86426158161"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:44:29Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29111949848/job/86426158233"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:44:20Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29111947947/job/86426152499"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 548,
+      "state": "MERGED",
+      "title": "test: register evidence catalog plan schema",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-17",
+      "merged_at": "2026-07-10T17:48:55Z",
+      "merge_commit": "bcecde2c05b61b43e7d1bf655572a16be792f258",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:47:28Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112188126/job/86426927445"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:47:20Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112188120/job/86426927339"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:47:23Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112185164/job/86426920043"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:47:50Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112188126/job/86426927442"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:47:29Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112188120/job/86426927321"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:47:32Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112185164/job/86426920046"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:48:41Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112188126/job/86426927409"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:48:37Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112188120/job/86426927313"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:48:35Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112185164/job/86426920047"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 549,
+      "state": "MERGED",
+      "title": "docs: record consolidation node 17 catalog plan",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-17-evidence",
+      "merged_at": "2026-07-10T17:55:55Z",
+      "merge_commit": "cad2c1d522d6a675bf919d6aba5b9288cd29f187",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:51:35Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112427433/job/86427717777"
+        },
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:00Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112575085/job/86428191476"
+        },
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112600399/job/86428270272"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:51:36Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112427442/job/86427717792"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:01Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112575158/job/86428191735"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112600356/job/86428270381"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:51:27Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112424210/job/86427707097"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:53:45Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112563352/job/86428155443"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:20Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112592317/job/86428246579"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:52:00Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112427433/job/86427717763"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:07Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112575085/job/86428191446"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:55:27Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112600399/job/86428270357"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:51:38Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112427442/job/86427717813"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:04Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112575158/job/86428191695"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:43Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112600356/job/86428270421"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:51:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112424210/job/86427707100"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:16Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112563352/job/86428155441"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112592317/job/86428246596"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:52:37Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112427433/job/86427717736"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:55:46Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112575085/job/86428191432"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:55:29Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112600399/job/86428270305"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:52:35Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112427442/job/86427717793"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:54:53Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112575158/job/86428191690"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:55:32Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112600356/job/86428270412"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:52:39Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112424210/job/86427707152"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:55:00Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112563352/job/86428155370"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T17:55:13Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112592317/job/86428246587"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 550,
+      "state": "MERGED",
+      "title": "test: guard recommendation evidence provenance fields",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-18",
+      "merged_at": "2026-07-10T18:01:57Z",
+      "merge_commit": "28efac59c45121a0d9a9f2a92376f75349324ab3",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:00:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112963429/job/86429440808"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:00:38Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112963427/job/86429440976"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:00:34Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112963240/job/86429440174"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:00:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112963429/job/86429440813"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:00:51Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112963427/job/86429440924"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:00:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112963240/job/86429440207"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:01:37Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112963429/job/86429440878"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:01:37Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112963427/job/86429440963"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:01:33Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29112963240/job/86429440184"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 551,
+      "state": "MERGED",
+      "title": "docs: record consolidation node 18 provenance guard",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-18-evidence",
+      "merged_at": "2026-07-10T18:06:21Z",
+      "merge_commit": "87b3da88d93bda6c6ed697d938ea975d9f2e72e2",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:04:41Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113213434/job/86430241757"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:04:43Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113213531/job/86430243129"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:04:42Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113211540/job/86430234725"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:05:10Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113213434/job/86430241752"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:05:20Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113213531/job/86430243098"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:05:05Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113211540/job/86430234678"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:05:54Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113213434/job/86430241741"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:05:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113213531/job/86430243134"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:05:56Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113211540/job/86430234685"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 552,
+      "state": "MERGED",
+      "title": "docs: record consolidation node 19 arena ci",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-19-evidence",
+      "merged_at": "2026-07-10T18:12:47Z",
+      "merge_commit": "015868bc90385c1c3b5d2c5599cfb651142130a0",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:11:24Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113610351/job/86431542547"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:11:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113610359/job/86431542789"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:11:14Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113604765/job/86431523326"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:11:28Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113610351/job/86431542572"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:11:58Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113610359/job/86431542777"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:11:24Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113604765/job/86431523323"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:12:17Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113610351/job/86431542621"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:12:10Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113610359/job/86431542746"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:12:13Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113604765/job/86431523340"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 553,
+      "state": "MERGED",
+      "title": "docs: record consolidation node 20 arena local verification",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-atlas-node-20-evidence",
+      "merged_at": "2026-07-10T18:17:27Z",
+      "merge_commit": "5c9ca211af479e38d2681ae95529841a0586bff1",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:15:36Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113862383/job/86432378505"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:15:34Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113862403/job/86432378568"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:15:35Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113859823/job/86432369913"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:15:55Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113862383/job/86432378455"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:15:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113862403/job/86432378532"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:16:01Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113859823/job/86432369806"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:17:02Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113862383/job/86432378512"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:16:39Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113862403/job/86432378528"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:16:55Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29113859823/job/86432369836"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 554,
+      "state": "MERGED",
+      "title": "Record consolidation node 21 evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-21-crucible-ci-evidence",
+      "merged_at": "2026-07-10T18:26:55Z",
+      "merge_commit": "bc01453cc14d0dc6171ef1012b28b88a5198da3f",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:25:27Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114443152/job/86434271314"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:25:21Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114441081/job/86434264040"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:25:14Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114432645/job/86434237336"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:25:30Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114443152/job/86434271458"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:26:15Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114441081/job/86434264105"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:25:31Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114432645/job/86434237321"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:26:39Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114443152/job/86434271276"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:26:43Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114441081/job/86434263980"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:26:14Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114432645/job/86434237288"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 555,
+      "state": "MERGED",
+      "title": "Record consolidation node 22 evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-22-crucible-local-evidence",
+      "merged_at": "2026-07-10T18:32:01Z",
+      "merge_commit": "f5fee50e853701420a8dfa108f9254cefb83c9c7",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:29:57Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114715045/job/86435164741"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:29:59Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114715013/job/86435164870"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:29:48Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114701638/job/86435119331"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:30:02Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114715045/job/86435164819"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:30:35Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114715013/job/86435164900"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:29:55Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114701638/job/86435119384"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:31:00Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114715045/job/86435164796"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:31:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114715013/job/86435164886"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:30:48Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29114701638/job/86435119332"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 556,
+      "state": "MERGED",
+      "title": "Record consolidation node 23 evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-23-sentinel-ci-evidence",
+      "merged_at": "2026-07-10T18:41:45Z",
+      "merge_commit": "e9e1d340895b6b4a6abc49c2575fe3d63a77116a",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:40:09Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115329315/job/86437183193"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:40:06Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115329228/job/86437182992"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:39:54Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115316244/job/86437138132"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:40:53Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115329315/job/86437183184"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:40:46Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115329228/job/86437183000"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:39:56Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115316244/job/86437138145"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:41:07Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115329315/job/86437183201"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:41:08Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115329228/job/86437182965"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:41:03Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115316244/job/86437138154"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 557,
+      "state": "MERGED",
+      "title": "Record consolidation node 24 evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-24-sentinel-local-evidence",
+      "merged_at": "2026-07-10T18:47:00Z",
+      "merge_commit": "2339a954d28b2581e3118ff69e3cf017bfd46874",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:44:55Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115605575/job/86438092338"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:44:52Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115605574/job/86438092340"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:44:37Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115594348/job/86438053737"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:45:17Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115605575/job/86438092315"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:45:31Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115605574/job/86438092324"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:44:44Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115594348/job/86438053715"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:45:54Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115605575/job/86438092362"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:46:08Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115605574/job/86438092322"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:46:43Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115594348/job/86438053766"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 558,
+      "state": "MERGED",
+      "title": "Record consolidation node 25 evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-25-assurance-ci-rollup",
+      "merged_at": "2026-07-10T18:51:38Z",
+      "merge_commit": "789c1dec90e8a09e199e793180e3629e58ed3f36",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:50:23Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115932161/job/86439152473"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:50:26Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115932127/job/86439152315"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:50:14Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115922033/job/86439118681"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:50:34Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115932161/job/86439152431"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:50:27Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115932127/job/86439152362"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:50:20Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115922033/job/86439118671"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:51:28Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115932161/job/86439152454"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:51:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115932127/job/86439152364"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:51:13Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29115922033/job/86439118683"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 559,
+      "state": "MERGED",
+      "title": "Record consolidation node 26 evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-26-schema-digest-validation",
+      "merged_at": "2026-07-10T18:58:17Z",
+      "merge_commit": "d316aef5294b3e5f9bbc97db8f7cd82c4e2b4307",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:56:26Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116275591/job/86440312884"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:56:33Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116275534/job/86440312182"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:56:25Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116265785/job/86440278233"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:56:47Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116275591/job/86440312948"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:57:02Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116275534/job/86440312218"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:56:33Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116265785/job/86440278207"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:57:44Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116275591/job/86440312893"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:57:40Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116275534/job/86440312202"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:57:38Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116265785/job/86440278209"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 560,
+      "state": "MERGED",
+      "title": "Record consolidation node 27 evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-27-foundry-one-safe-node",
+      "merged_at": "2026-07-10T19:04:37Z",
+      "merge_commit": "e6833d15cb3f22676b112c0d1b3713692616cc6a",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:02:57Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116643419/job/86441573203"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:02:59Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116643478/job/86441573383"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:02:46Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116626256/job/86441516349"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:03:01Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116643419/job/86441573174"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:03:21Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116643478/job/86441573416"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:02:48Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116626256/job/86441516305"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:04:02Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116643419/job/86441573208"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:04:10Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116643478/job/86441573385"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:03:44Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116626256/job/86441516370"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 561,
+      "state": "MERGED",
+      "title": "Record consolidation node 28 evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-28-command-readback",
+      "merged_at": "2026-07-10T19:10:37Z",
+      "merge_commit": "14974e05f82d6dc90322c0d55a6f4231e047dd11",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:08:01Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116893958/job/86442432034"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:07:27Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116893974/job/86442431901"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:07:14Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116882833/job/86442393633"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:07:31Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116893958/job/86442432036"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:07:58Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116893974/job/86442431928"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:07:17Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116882833/job/86442393632"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:08:28Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116893958/job/86442432018"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:08:28Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116893974/job/86442431911"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:08:15Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29116882833/job/86442393626"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 562,
+      "state": "MERGED",
+      "title": "Record consolidation node 29 promoter rollup evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-29-promoter-rollup",
+      "merged_at": "2026-07-10T19:20:12Z",
+      "merge_commit": "f8db1ce5a247f2e7284256f7705df62230c37c9c",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:18:50Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117531068/job/86444548674"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:18:52Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117530763/job/86444547686"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:18:49Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117527403/job/86444536118"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:19:33Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117531068/job/86444548669"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:19:04Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117530763/job/86444547663"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:19:06Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117527403/job/86444536090"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:19:58Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117531068/job/86444548668"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:19:42Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117530763/job/86444547669"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:20:04Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117527403/job/86444536097"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-atlas",
+      "pr": 563,
+      "state": "MERGED",
+      "title": "Record consolidation node 30 public safety scan evidence",
+      "base": "main",
+      "head": "codex/consolidation-node-30-public-safety-scan",
+      "merged_at": "2026-07-10T19:24:46Z",
+      "merge_commit": "1a68db2e75001c215e38dcedc4c84137cc2c7531",
+      "checks": [
+        {
+          "name": "Production readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:23:18Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117792742/job/86445408687"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:23:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117792755/job/86445408897"
+        },
+        {
+          "name": "production-readiness (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:23:21Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117790666/job/86445402630"
+        },
+        {
+          "name": "Production readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:23:19Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117792742/job/86445408680"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:24:21Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117792755/job/86445408875"
+        },
+        {
+          "name": "production-readiness (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:23:18Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117790666/job/86445402656"
+        },
+        {
+          "name": "Production readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:24:20Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117792742/job/86445408683"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:24:29Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117792755/job/86445408918"
+        },
+        {
+          "name": "production-readiness (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T19:24:06Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/29117790666/job/86445402619"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-crucible",
+      "pr": 1,
+      "state": "MERGED",
+      "title": "Add Crucible CI workflow",
+      "base": "main",
+      "head": "codex/consolidation-node-21-crucible-ci",
+      "merged_at": "2026-07-10T18:21:57Z",
+      "merge_commit": "3fb2311ffa6efc2374089c5085b6b894236fcf21",
+      "checks": [
+        {
+          "name": "native-checks (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:20:36Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-crucible/actions/runs/29114175477/job/86433403834"
+        },
+        {
+          "name": "native-checks (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:20:34Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-crucible/actions/runs/29114175477/job/86433403753"
+        },
+        {
+          "name": "native-checks (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:21:20Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-crucible/actions/runs/29114175477/job/86433403737"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-mission",
+      "pr": 69,
+      "state": "MERGED",
+      "title": "feat: add evidence-backed lifecycle metrics",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-mission-node-13",
+      "merged_at": "2026-07-10T15:29:07Z",
+      "merge_commit": "f9da8770e503620e90f2fd4833ec56157ba7b086",
+      "checks": [
+        {
+          "name": "test (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:27:15Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-mission/actions/runs/29103683098/job/86398697910"
+        },
+        {
+          "name": "test (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:27:24Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-mission/actions/runs/29103683098/job/86398697924"
+        },
+        {
+          "name": "test (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:28:54Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-mission/actions/runs/29103683098/job/86398697899"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-mission",
+      "pr": 70,
+      "state": "MERGED",
+      "title": "feat: add digest-bound lifecycle projection",
+      "base": "main",
+      "head": "codex/ao-stack-consolidation-month1-mission-node-14",
+      "merged_at": "2026-07-10T15:41:44Z",
+      "merge_commit": "dc0c7931f309e9fcbb2063397377dd2ce48e358b",
+      "checks": [
+        {
+          "name": "test (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:40:44Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-mission/actions/runs/29104532386/job/86401578023"
+        },
+        {
+          "name": "test (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:40:59Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-mission/actions/runs/29104532386/job/86401577924"
+        },
+        {
+          "name": "test (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T15:41:32Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-mission/actions/runs/29104532386/job/86401577974"
+        }
+      ],
+      "all_checks_success": true
+    },
+    {
+      "repo": "ao-sentinel",
+      "pr": 36,
+      "state": "MERGED",
+      "title": "Add Sentinel CI workflow",
+      "base": "main",
+      "head": "codex/consolidation-node-23-sentinel-ci",
+      "merged_at": "2026-07-10T18:37:23Z",
+      "merge_commit": "a4b5d64f15a0f57fbd9b7f8b518dbab031fe3cde",
+      "checks": [
+        {
+          "name": "native-checks (ubuntu-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:36:39Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-sentinel/actions/runs/29115141851/job/86436565625"
+        },
+        {
+          "name": "native-checks (macos-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:37:06Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-sentinel/actions/runs/29115141851/job/86436565656"
+        },
+        {
+          "name": "native-checks (windows-latest)",
+          "conclusion": "SUCCESS",
+          "status": "COMPLETED",
+          "completed_at": "2026-07-10T18:37:12Z",
+          "details_url": "https://github.com/uesugitorachiyo/ao-sentinel/actions/runs/29115141851/job/86436565629"
+        }
+      ],
+      "all_checks_success": true
+    }
+  ],
+  "rsi_remains_denied": true
+}

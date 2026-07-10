@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "node": "mission-recommendation-consolidation-month1-31",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "generated_at_utc": "2026-07-10T19:27:05Z",
+  "reason": "Node is bounded to recording PR/CI merge ledger evidence; no live mutation, provider call, release, deploy, credential use, or authority promotion is requested.",
+  "safety_limits": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-31",
+  "status": "candidate_recorded",
+  "generated_at_utc": "2026-07-10T19:27:05Z",
+  "repository": "ao-atlas",
+  "branch": "codex/consolidation-node-31-pr-ci-ledger",
+  "mutation_class": "low_risk_code",
+  "objective": "Record PR required-check merge and CI timing evidence for every touched repository.",
+  "writes": [
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-31",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-31"
+  ],
+  "source_recommendation": "consolidation-month1-31",
+  "source_digest": "sha256:e776ea250456c59d92eb6758e6fbf3ac1abdc7ad821c08d9cc9b520a390b4b5e",
+  "source_task_digest": "sha256:6ae5682842ff8447ebf5922c2cd2f219cb1e0652cfffd730b92dcb3c9f36d6e9"
+}
