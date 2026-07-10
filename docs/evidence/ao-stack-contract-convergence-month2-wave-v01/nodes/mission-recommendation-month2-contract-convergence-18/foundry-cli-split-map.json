@@ -1,0 +1,110 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "foundry_cli_split_map",
+  "node_id": "mission-recommendation-month2-contract-convergence-18",
+  "task_id": "mission-recommendation-month2-contract-convergence-18-task",
+  "status": "partial_split_map",
+  "source_owner": "ao-foundry",
+  "source_repository": "ao-foundry",
+  "source_commit": "a610f10b09591416509c712313cd9021a2cb7da7",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "source_audit",
+  "source_files": [
+    {
+      "path": "internal/cli/cli.go",
+      "digest": "sha256:3907d03a594f67e6607d792de93a9a4fc5129ba5e920e591ced03e718eddb9ba",
+      "line_count": 15759,
+      "byte_count": 650720
+    },
+    {
+      "path": "internal/cli/pulse_atlas_scheduler.go",
+      "digest": "sha256:0b08cc43ddcf67b64dd2dc69a6791076eae673d4627d2f81c6954ea74ab121a8",
+      "role": "Pulse/Atlas scheduler compatibility"
+    },
+    {
+      "path": "internal/cli/pulse_closure_packet.go",
+      "digest": "sha256:58100f3381184cfbc8c8e0eba7e2bf66eeeaed79668f41ffbcdbf2a4de5180a",
+      "role": "Pulse closure packet"
+    },
+    {
+      "path": "internal/cli/pulse_sources.go",
+      "digest": "sha256:7591fe6c163c2a4e10a66e331e994ad59366cf60b6aa9f5e58e65143afb5245c",
+      "role": "Pulse source readers"
+    }
+  ],
+  "split_boundaries": [
+    {
+      "module": "models",
+      "lines": "73-1350",
+      "responsibility": "contract and evidence structs",
+      "guard": "schema fixture and JSON round-trip tests"
+    },
+    {
+      "module": "command_router",
+      "lines": "1351-1497",
+      "responsibility": "Run dispatch and help",
+      "guard": "CLI command catalog and help output tests"
+    },
+    {
+      "module": "ao_mission_adapter",
+      "lines": "1498-2245",
+      "responsibility": "Mission smoke, rollup, and artifact digest compatibility",
+      "guard": "Mission fixture and authority-boundary tests"
+    },
+    {
+      "module": "readiness",
+      "lines": "2246-2625",
+      "responsibility": "registry, task, next, readiness audit, snapshot, ledger, rollup",
+      "guard": "readiness ledger and stale-run tests"
+    },
+    {
+      "module": "goal_run",
+      "lines": "2626-2788",
+      "responsibility": "goal, run validation, ingest, inspect",
+      "guard": "goal/run schema and no-execution tests"
+    },
+    {
+      "module": "atlas_adapter",
+      "lines": "2789-2917",
+      "responsibility": "Atlas import, readback, status",
+      "guard": "Atlas import path and one-active-node tests"
+    },
+    {
+      "module": "mutation_gates",
+      "lines": "2918-4227",
+      "responsibility": "class gates and fully-unsupervised closure evaluation",
+      "guard": "negative-control, authority, and RSI-denial tests"
+    },
+    {
+      "module": "closure_helpers",
+      "lines": "4228-end",
+      "responsibility": "closure object readers and shared helpers",
+      "guard": "digest, blocker, and readback agreement tests"
+    }
+  ],
+  "refactor_order": [
+    "extract models without behavior change",
+    "extract command router and preserve dispatch",
+    "extract readiness and ledger adapters",
+    "extract GoalRun and Atlas adapters",
+    "extract mutation gates behind existing interfaces",
+    "remove duplicate helpers only after contract tests pass"
+  ],
+  "non_goals": [
+    "do not change command names or output contracts",
+    "do not widen mutation authority",
+    "do not execute AO2 or provider calls",
+    "do not change release or upload surfaces"
+  ],
+  "current_risk": "the monolith combines CLI dispatch, contract models, readiness, Mission compatibility, Atlas compatibility, and mutation-gate evaluation; splitting without characterization tests could alter safety decisions",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
