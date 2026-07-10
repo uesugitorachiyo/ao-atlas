@@ -3551,6 +3551,7 @@ func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) 
 	evidenceRoot := fs.String("evidence-root", "", "Atlas recommendation evidence root")
 	outPath := fs.String("out", "", "validation report output path")
 	jsonOut := fs.Bool("json", false, "json output")
+	strictSchemaRegistry := fs.Bool("strict-schema-registry", false, "reject evidence schemas absent from the consolidation allowlist")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -3563,7 +3564,7 @@ func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) 
 	if strings.TrimSpace(*outPath) != "" && samePath(*evidenceRoot, *outPath) {
 		return fmt.Errorf("refusing to overwrite input artifact")
 	}
-	report, err := BuildAtlasRecommendationEvidenceValidationReport(*evidenceRoot)
+	report, err := BuildAtlasRecommendationEvidenceValidationReportWithOptions(*evidenceRoot, *strictSchemaRegistry)
 	if strings.TrimSpace(*outPath) != "" {
 		if writeErr := WriteJSON(*outPath, report); writeErr != nil {
 			return writeErr
@@ -3574,12 +3575,14 @@ func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) 
 			return printErr
 		}
 	} else {
-		fmt.Fprintf(stdout, "status=%s\nnode_count=%d\njson_files=%d\nschema_bound_files=%d\ntyped_validator_files=%d\nmissing_schema_files=%d\nfailed_files=%d\nrecommendation_evidence_validation_report=%s\n",
+		fmt.Fprintf(stdout, "status=%s\nnode_count=%d\njson_files=%d\nschema_bound_files=%d\ntyped_validator_files=%d\nstrict_schema_registry=%t\nunknown_schema_files=%d\nmissing_schema_files=%d\nfailed_files=%d\nrecommendation_evidence_validation_report=%s\n",
 			report.Status,
 			report.NodeCount,
 			report.JSONFileCount,
 			report.SchemaBoundFiles,
 			report.TypedValidatorFiles,
+			report.StrictSchemaRegistry,
+			len(report.UnknownSchemaFiles),
 			len(report.MissingSchemaFiles),
 			len(report.FailedFiles),
 			filepath.ToSlash(*outPath),
