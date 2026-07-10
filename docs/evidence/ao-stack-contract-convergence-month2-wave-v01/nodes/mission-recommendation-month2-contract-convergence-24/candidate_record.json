@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-24",
+  "task_id": "mission-recommendation-month2-contract-convergence-24-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-24",
+  "source_owner": "ao-architecture",
+  "source_task_digest": "sha256:56765befdf14718141d35865092ddcbfab648dc430428668c52c89502467fc9d",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Audit the proposed Architecture contract owner registry and producer-consumer compatibility matrix.",
+    "Run the Architecture inventory, owner, compatibility, stack-lock, and architecture validators.",
+    "Record pending canonical-vector and consumer-test gates plus any inventory snapshot drift without changing Architecture."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-24"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "7ca55c4dae9ad85799f83d7d684392e53aa448a0",
+  "objective": "Coordinate ao-architecture Architecture generated compatibility table through a bounded Atlas compatibility evidence node with no promotion.",
+  "selection_reason": "single ready node selected from the post-node-23 workgraph; Architecture compatibility table is read-only audited",
+  "mutates_repositories": false
+}

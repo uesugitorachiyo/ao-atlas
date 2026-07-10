@@ -1,0 +1,68 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "architecture_generated_compatibility_table",
+  "node_id": "mission-recommendation-month2-contract-convergence-24",
+  "task_id": "mission-recommendation-month2-contract-convergence-24-task",
+  "status": "blocked_pending_canonical_vectors",
+  "source_owner": "ao-architecture",
+  "source_repository": "ao-architecture",
+  "source_commit": "7ca55c4dae9ad85799f83d7d684392e53aa448a0",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "inventory_snapshot_commit": "fbfa1217db951336951a501032bd5a06fed5196e",
+  "evidence_class": "compatibility_audit",
+  "source_files": [
+    {
+      "path": "stack/contract-owner-registry.json",
+      "digest": "sha256:c33847ce707a268ce2ec4538861e2c2c1a8bff4721858fc2e3d4920e986e5e94",
+      "role": "proposed contract owner registry"
+    },
+    {
+      "path": "stack/contract-compatibility-matrix.json",
+      "digest": "sha256:39f89b2576480861e9f77e6fb03842a8cdfb6046aecda307e5d909ab65cac2ed",
+      "role": "proposed producer-consumer compatibility matrix"
+    },
+    {
+      "path": "stack/contract-inventory.json",
+      "digest": "sha256:d6672e07bd80e4120bec33ca761bc73ad35dabb877507af2cd7a0d21b7fa5bc0",
+      "role": "baseline contract inventory"
+    },
+    {
+      "path": "stack/ao-stack.lock.json",
+      "digest": "sha256:ad1b16a2ea1a7e677ae4c700f8ccc30e1fc72618e7608e717ece131cd6e7a803",
+      "role": "stack lock and repository snapshot"
+    }
+  ],
+  "observed_contract": {
+    "owner_registry_status": "proposed",
+    "compatibility_matrix_status": "proposed",
+    "edge_count": 16,
+    "canonical_vector_count": 0,
+    "consumer_test_count": 0,
+    "compatibility_gate_complete": false,
+    "generated_compatibility_table_present": false,
+    "static_table_present": true,
+    "inventory_snapshot_matches_current_architecture_commit": false,
+    "inventory_snapshot_commit": "fbfa1217db951336951a501032bd5a06fed5196e",
+    "current_architecture_commit": "7ca55c4dae9ad85799f83d7d684392e53aa448a0",
+    "validators_passed": true
+  },
+  "required_gate": [
+    "one canonical owner for each gate-critical contract",
+    "canonical vectors for each compatibility edge",
+    "consumer-driven tests for each edge",
+    "generated or reproducibly emitted compatibility table",
+    "current stack snapshot bound to the table",
+    "compatibility_gate_complete=true only after all edge evidence passes"
+  ],
+  "current_gate": "blocked_until_canonical_vectors_consumer_tests_and_current_snapshot_binding_exist",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
