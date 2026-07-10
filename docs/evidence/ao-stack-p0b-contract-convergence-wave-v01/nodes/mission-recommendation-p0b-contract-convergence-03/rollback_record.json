@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.p0b.rollback-record.v0.1",
+  "status": "ready",
+  "node_id": "mission-recommendation-p0b-contract-convergence-03",
+  "rollback_scope": [
+    "Revert ao-command PR #110 if accepted approval digest readback must be backed out.",
+    "Revert this Atlas node-readback evidence if the completion record is invalidated."
+  ],
+  "rollback_command": "git revert 81e74349d44c768ab8dcadaa122302aa9fd24f4f",
+  "requires_release_or_deploy": false
+}

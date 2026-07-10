@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-03",
+  "implementation_repo": "ao-command",
+  "pull_request": "https://github.com/uesugitorachiyo/ao-command/pull/110",
+  "merge_commit": "81e74349d44c768ab8dcadaa122302aa9fd24f4f",
+  "changed_files": [
+    "internal/cli/cli.go",
+    "internal/cli/cli_test.go"
+  ],
+  "summary": "Command live-mutation approval readback now binds accepted request and ticket fixture bytes by SHA-256."
+}

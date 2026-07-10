@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.p0b.verification.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-03",
+  "local_verification": [
+    "go test ./internal/cli -run 'TestLiveMutationApprovalReportsApprovedTicketReadOnly|TestLiveMutationApprovalBlocksPendingTicketReadOnly' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/ao-command-p0b-node-03 ./cmd/ao-command",
+    "scripts/ao-command-smoke.sh --forge ../ao-forge --foundry ../ao-foundry --out tmp/ao-command-smoke",
+    "scripts/public-readiness-audit.sh --forge ../ao-forge --out tmp/public-readiness-audit.json",
+    "scripts/production-readiness-audit.sh --forge ../ao-forge --foundry ../ao-foundry --covenant ../ao-covenant --architecture ../ao-architecture --out tmp/production-readiness-audit.json --skip-remote-admin",
+    "git diff --check",
+    "scoped public-safety wording scan over changed files"
+  ],
+  "ci_status": "passed",
+  "ci_checks": [
+    "Go",
+    "License policy",
+    "Workflow lint",
+    "Production readiness audit"
+  ]
+}
