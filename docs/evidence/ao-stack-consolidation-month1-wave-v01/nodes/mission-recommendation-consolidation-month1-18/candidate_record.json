@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-18",
+  "candidate": "provenance-field-guard",
+  "status": "selected",
+  "owner": "ao-atlas",
+  "objective": "Add an opt-in validation guard that reports missing source_digest and evidence_class fields without changing historical default validation output.",
+  "mutation_class": "low_risk_code",
+  "source_node": "mission-recommendation-consolidation-month1-17",
+  "generated_at_utc": "2026-07-10T18:02:20Z",
+  "expected_outputs": [
+    "--require-provenance-fields validation option",
+    "missing provenance report fields",
+    "node readback"
+  ],
+  "safety": {
+    "no_direct_main_mutation": true,
+    "no_provider_calls": true,
+    "no_release_deploy_publish_upload_tag": true,
+    "no_dependency_updates": true,
+    "no_policy_auth_config_widening": true,
+    "rsi_remains_denied": true
+  }
+}

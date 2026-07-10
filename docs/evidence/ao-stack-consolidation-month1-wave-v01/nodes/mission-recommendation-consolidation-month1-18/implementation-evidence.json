@@ -1,0 +1,29 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-18",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T18:02:20Z",
+  "kind": "provenance_field_guard",
+  "repository": "ao-atlas",
+  "implementation_pr": 550,
+  "merge_commit": "28efac59c45121a0d9a9f2a92376f75349324ab3",
+  "guard": {
+    "flag": "--require-provenance-fields",
+    "required_fields": [
+      "source_digest",
+      "evidence_class"
+    ],
+    "default_compatibility": "historical validation report shape remains stable when flag is off",
+    "report_fields": [
+      "require_provenance_fields",
+      "missing_source_digest_files",
+      "missing_evidence_class_files"
+    ]
+  },
+  "changed_paths": [
+    "internal/atlas/cli.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/mission_recommendation_evidence_provenance_test.go"
+  ],
+  "rsi_remains_denied": true
+}
