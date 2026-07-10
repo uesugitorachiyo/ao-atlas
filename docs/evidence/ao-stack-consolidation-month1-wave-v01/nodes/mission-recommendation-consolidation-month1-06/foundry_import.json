@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.consolidation-foundry-import.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-06",
+  "target_factory_repo": "ao-atlas",
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false
+}

@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-06",
+  "red_test": "missing verify_stack_lock module",
+  "green_test": "python3 -m unittest scripts/test_verify_stack_lock.py",
+  "unit_tests": 2,
+  "duplicate_commit_rejection": true
+}
