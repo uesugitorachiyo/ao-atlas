@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-23",
+  "candidate": "sentinel-hosted-ci-native-checks",
+  "status": "selected",
+  "owner": "ao-sentinel",
+  "objective": "Add minimal hosted CI coverage for Sentinel native Go tests, vet, and build checks across Ubuntu, macOS, and Windows; repair Linux portability in tmp-output validation uncovered by CI.",
+  "mutation_class": "low_risk_code",
+  "source_node": "mission-recommendation-consolidation-month1-22",
+  "generated_at_utc": "2026-07-10T18:38:40Z",
+  "expected_outputs": [
+    "Sentinel hosted CI workflow",
+    "portable tmp-output guard",
+    "GitHub PR check rollup",
+    "node readback"
+  ],
+  "safety": {
+    "no_direct_main_mutation": true,
+    "no_provider_calls": true,
+    "no_release_deploy_publish_upload_tag": true,
+    "no_dependency_updates": true,
+    "no_policy_auth_config_widening": true,
+    "rsi_remains_denied": true
+  }
+}

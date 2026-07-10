@@ -1,0 +1,29 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-23",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:38:40Z",
+  "commands": [
+    "AO Sentinel branch: go test ./internal/cli -run TestSafetyScanRedactsFindingsAndRequiresTmpOutput -count=1 -v",
+    "AO Sentinel branch: go test ./... -count=1",
+    "AO Sentinel branch: go vet ./...",
+    "AO Sentinel branch: go build ./cmd/sentinel",
+    "AO Sentinel branch: git diff --check",
+    "AO Sentinel PR #36 hosted CI: native-checks ubuntu-latest",
+    "AO Sentinel PR #36 hosted CI: native-checks macos-latest",
+    "AO Sentinel PR #36 hosted CI: native-checks windows-latest",
+    "AO Atlas evidence verification: go test ./... -count=1",
+    "AO Atlas evidence verification: go vet ./...",
+    "AO Atlas evidence verification: go build -o target/atlas-node-23-evidence ./cmd/atlas",
+    "AO Atlas evidence verification: scripts/production-readiness.sh",
+    "AO Atlas evidence verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry"
+  ],
+  "sentinel": {
+    "repo": "ao-sentinel",
+    "main_commit": "a4b5d64f15a0f57fbd9b7f8b518dbab031fe3cde",
+    "workflow": ".github/workflows/ci.yml",
+    "local_status": "passed",
+    "hosted_ci_status": "passed",
+    "ci_repair": "portable tmp-output guard rejects system temp root outputs"
+  }
+}

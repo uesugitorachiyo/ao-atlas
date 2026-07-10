@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-23",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:38:40Z",
+  "implementation_pr": {
+    "repo": "ao-sentinel",
+    "number": 36,
+    "state": "merged",
+    "merge_commit": "a4b5d64f15a0f57fbd9b7f8b518dbab031fe3cde",
+    "ci_status": "passed",
+    "checks_successful": 3,
+    "checks_failing": 0,
+    "check_urls": [
+      "https://github.com/uesugitorachiyo/ao-sentinel/actions/runs/29115141851/job/86436565625",
+      "https://github.com/uesugitorachiyo/ao-sentinel/actions/runs/29115141851/job/86436565656",
+      "https://github.com/uesugitorachiyo/ao-sentinel/actions/runs/29115141851/job/86436565629"
+    ]
+  },
+  "local_verification": {
+    "repo": "ao-sentinel",
+    "commit": "c170e0e471947d04373e8a85f7d772fc504cf512",
+    "commands_successful": 5,
+    "commands_failing": 0
+  },
+  "branch_cleanup": {
+    "temporary_worktree_removed": true,
+    "node_branch_deleted_local": true,
+    "node_branch_deleted_remote": true,
+    "pre_existing_unrelated_branch_preserved": "codex/mission-v02-hardening"
+  },
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-23",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T18:38:40Z",
+  "kind": "sentinel_hosted_ci_workflow_with_portability_repair",
+  "repository": "ao-sentinel",
+  "implementation_pr": 36,
+  "merge_commit": "a4b5d64f15a0f57fbd9b7f8b518dbab031fe3cde",
+  "workflow": ".github/workflows/ci.yml",
+  "support_repair": "requireTmpOutput now rejects absolute paths rooted directly at the system tmp segment while accepting nested tmp directories.",
+  "verified_commands": [
+    "go test ./internal/cli -run TestSafetyScanRedactsFindingsAndRequiresTmpOutput -count=1 -v",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/sentinel",
+    "git diff --check"
+  ],
+  "hosted_checks": [
+    "native-checks (ubuntu-latest)",
+    "native-checks (macos-latest)",
+    "native-checks (windows-latest)"
+  ],
+  "rsi_remains_denied": true
+}

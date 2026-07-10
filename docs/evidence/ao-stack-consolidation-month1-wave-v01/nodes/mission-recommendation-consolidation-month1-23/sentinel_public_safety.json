@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1",
+  "node": "mission-recommendation-consolidation-month1-23",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:38:40Z",
+  "scan_scope": [
+    "ao-sentinel/.github/workflows/ci.yml",
+    "ao-sentinel/internal/cli/cli.go tmp-output guard repair",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23"
+  ],
+  "findings": [],
+  "public_claim_guard": "No live mutation, provider, promotion, release, or RSI proof claim introduced.",
+  "rsi_remains_denied": true
+}
