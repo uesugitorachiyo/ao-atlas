@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-5",
+  "task_id": "mission-recommendation-month2-contract-convergence-5-task",
+  "status": "recorded",
+  "implementation_files": [],
+  "evidence_files": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/command-covenant-rejected-ticket-input.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/command-covenant-rejected-ticket-fixture.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/command-covenant-compatibility.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/run-link-digest-check.json"
+  ],
+  "summary": "Recorded Command-to-Covenant ticket validation parity with explicit rejection, preserved native reason, bound request/ticket digests, and no-promotion planning-only status.",
+  "producer_consumer_contract_status": "compatible_rejection",
+  "command_accepts_ticket": false,
+  "reason_preserved": true,
+  "planning_only": true,
+  "safe_to_execute": false,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "foundry_manifest_projection": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/foundry-import/foundry-import.json",
+  "run_link_digest_status": "run_link_digest_verified"
+}
