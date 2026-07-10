@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-16",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T17:36:23Z",
+  "commands": [
+    "go test ./internal/atlas -run TestStrictRecommendationEvidenceSchemaRegistryAcceptsEvidenceVolumeBaseline -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/atlas-node-16-evidence ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-consolidation-month1-wave-v01",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-consolidation-month1-wave-v01 --strict-schema-registry",
+    "git diff --check"
+  ],
+  "red_green": {
+    "red_test_observed": true,
+    "red_failure": "strict registry rejected ao.atlas.consolidation-evidence-volume-baseline.v0.1 before registration",
+    "green_test_passed": true
+  }
+}
