@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.foundry-ticket-schema-compatibility-ledger-input.v0.1",
+  "status": "recorded",
+  "entries": [
+    {
+      "id": "foundry-import-ticket-digests",
+      "producer_schema": "ao.atlas.foundry-import.v0.1",
+      "consumer_schema": "ao.foundry.import-readiness.v0.1",
+      "required_fields": [
+        "source_task_digest",
+        "source_digest",
+        "ticket_sha256"
+      ],
+      "compatible": true
+    },
+    {
+      "id": "foundry-run-link-ticket-evidence",
+      "producer_schema": "ao.atlas.run-link.v0.1",
+      "consumer_schema": "ao.foundry.run-link-readback.v0.1",
+      "required_fields": [
+        "run_link_digest",
+        "policy_sha256",
+        "decision_sha256"
+      ],
+      "compatible": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

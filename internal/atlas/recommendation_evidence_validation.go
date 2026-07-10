@@ -428,6 +428,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:atlas-ticket-schema-compatibility-ledger", err
 		}
 		return "typed:atlas-ticket-schema-compatibility-ledger", ValidateAtlasTicketSchemaCompatibilityLedger(value)
+	case AtlasFoundryTicketSchemaCompatibilityLedgerContract:
+		value, err := LoadJSON[AtlasFoundryTicketSchemaCompatibilityLedger](path)
+		if err != nil {
+			return "typed:foundry-ticket-schema-compatibility-ledger", err
+		}
+		return "typed:foundry-ticket-schema-compatibility-ledger", ValidateAtlasFoundryTicketSchemaCompatibilityLedger(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {
