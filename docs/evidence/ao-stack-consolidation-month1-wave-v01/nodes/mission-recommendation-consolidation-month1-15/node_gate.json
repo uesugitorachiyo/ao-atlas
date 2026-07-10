@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-15",
+  "safe_to_execute": true,
+  "scope": "Atlas typed Mission lifecycle-metrics ingestion guard and handoff-count regression",
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
