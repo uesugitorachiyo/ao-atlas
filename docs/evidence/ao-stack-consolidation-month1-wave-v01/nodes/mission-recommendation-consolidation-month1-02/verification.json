@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-02",
+  "typed_contract": "ao.atlas.consolidation-repository-baseline.v0.1",
+  "schema_file": "schemas/consolidation-repository-baseline.schema.json",
+  "git_diff_check": "passed",
+  "public_safety_scan": "passed"
+}

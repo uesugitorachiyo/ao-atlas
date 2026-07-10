@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-02",
+  "red_test": "undefined typed baseline contract and validator",
+  "green_test": "TestConsolidationRepositoryBaselineSeparatesPreExistingStateFromWaveChanges",
+  "command": "go test ./internal/atlas -run TestConsolidationRepositoryBaselineSeparatesPreExistingStateFromWaveChanges -count=1"
+}

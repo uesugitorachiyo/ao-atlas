@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ao.atlas.consolidation-repository-baseline.v0.1",
+  "type": "object",
+  "required": ["schema", "mission_id", "target_instance", "generated_at_utc", "status", "repositories"],
+  "properties": {
+    "schema": {"const": "ao.atlas.consolidation-repository-baseline.v0.1"},
+    "mission_id": {"type": "string", "minLength": 1},
+    "target_instance": {"type": "string", "minLength": 1},
+    "generated_at_utc": {"type": "string", "minLength": 1},
+    "source_kind": {"const": "read_only_repository_inventory"},
+    "status": {"const": "passed"},
+    "safe_to_execute": {"type": "boolean"},
+    "executes_work": {"const": false},
+    "approves_work": {"const": false},
+    "mutates_repositories": {"const": false},
+    "repositories": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "items": {
+        "type": "object",
+        "required": ["repository", "branch", "head", "clean", "dirty_files", "pre_existing_dirty_files", "wave_owned_files", "state_class", "ahead_of_origin_main", "behind_origin_main"],
+        "properties": {
+          "repository": {"type": "string", "minLength": 1},
+          "branch": {"type": "string", "minLength": 1},
+          "head": {"type": "string", "minLength": 1},
+          "upstream": {"type": "string"},
+          "clean": {"type": "boolean"},
+          "dirty_files": {"type": "string"},
+          "pre_existing_dirty_files": {"type": "array", "items": {"type": "string"}},
+          "wave_owned_files": {"type": "array", "maxItems": 0, "items": {"type": "string"}},
+          "state_class": {"type": "string", "minLength": 1},
+          "ahead_of_origin_main": {"type": "integer"},
+          "behind_origin_main": {"type": "integer"}
+        }
+      }
+    }
+  }
+}

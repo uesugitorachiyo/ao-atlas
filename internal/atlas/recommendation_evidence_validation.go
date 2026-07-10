@@ -290,6 +290,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:foundry-continuation-handoff", err
 		}
 		return "typed:foundry-continuation-handoff", ValidateFoundryContinuationHandoff(value)
+	case ConsolidationRepositoryBaselineContract:
+		value, err := LoadJSON[ConsolidationRepositoryBaseline](path)
+		if err != nil {
+			return "typed:consolidation-repository-baseline", err
+		}
+		return "typed:consolidation-repository-baseline", ValidateConsolidationRepositoryBaseline(value)
 	case AtlasRecommendationReadbackContract:
 		value, err := LoadJSON[AtlasRecommendationReadback](path)
 		if err != nil {
