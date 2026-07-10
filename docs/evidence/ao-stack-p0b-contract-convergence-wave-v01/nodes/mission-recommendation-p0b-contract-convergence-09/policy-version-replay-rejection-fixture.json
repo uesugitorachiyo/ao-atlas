@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.policy-version-replay-rejection-fixture.v0.1",
+  "status": "stale_policy_versions_rejected",
+  "source_input_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-09/policy-version-replay-rejection-input.json",
+  "source_input_digest": "sha256:216c27316c7f0c61bd8cbee301a9170d2718659446173279a6d1324e1ee2e0f8",
+  "case_count": 2,
+  "rejected_cases": 2,
+  "safe_to_accept": false,
+  "all_stale_versions_rejected": true,
+  "cases": [
+    {
+      "id": "stale-policy-version",
+      "ticket_sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+      "ticket_policy_version": "policy-v1",
+      "current_policy_version": "policy-v2",
+      "expected_decision": "rejected",
+      "rejection_reason": "policy_version_replay: ticket policy version is older than current policy version"
+    },
+    {
+      "id": "replayed-old-policy-ticket",
+      "ticket_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+      "ticket_policy_version": "policy-v1",
+      "current_policy_version": "policy-v3",
+      "expected_decision": "rejected",
+      "rejection_reason": "policy_version_replay: stale approval ticket cannot be replayed under a newer policy version"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

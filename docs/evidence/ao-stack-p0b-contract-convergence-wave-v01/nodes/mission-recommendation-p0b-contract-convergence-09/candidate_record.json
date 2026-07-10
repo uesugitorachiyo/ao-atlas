@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-09",
+  "candidate": "Add stale ticket policy-version replay rejection fixtures.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-09-policy-version-replay",
+  "files_changed": [
+    "internal/atlas/mission_policy_version_replay_rejection.go",
+    "internal/atlas/mission_policy_version_replay_rejection_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "schemas/policy-version-replay-rejection-fixture.schema.json",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-09"
+  ],
+  "digest_fields": [
+    "ticket_sha256",
+    "ticket_policy_version",
+    "current_policy_version",
+    "source_input_digest"
+  ]
+}
