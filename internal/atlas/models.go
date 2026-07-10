@@ -1499,6 +1499,42 @@ type AtlasCommandCompactRejectionReasonFixture struct {
 	RSIRemainsDenied       bool                                     `json:"rsi_remains_denied"`
 }
 
+type AtlasBlueprintTicketSchemaCompatibilityLedgerInput struct {
+	Schema                 string                                               `json:"schema"`
+	Status                 string                                               `json:"status"`
+	Entries                []AtlasBlueprintTicketSchemaCompatibilityLedgerEntry `json:"entries"`
+	SchedulesWork          bool                                                 `json:"schedules_work"`
+	ExecutesWork           bool                                                 `json:"executes_work"`
+	ApprovesWork           bool                                                 `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                                 `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                                 `json:"rsi_remains_denied"`
+}
+
+type AtlasBlueprintTicketSchemaCompatibilityLedgerEntry struct {
+	ID                    string   `json:"id"`
+	BlueprintTicketSchema string   `json:"blueprint_ticket_schema"`
+	CovenantTicketSchema  string   `json:"covenant_ticket_schema"`
+	CommandTicketSchema   string   `json:"command_ticket_schema"`
+	RequiredFields        []string `json:"required_fields"`
+	Compatible            bool     `json:"compatible"`
+}
+
+type AtlasBlueprintTicketSchemaCompatibilityLedger struct {
+	Schema                 string                                               `json:"schema"`
+	Status                 string                                               `json:"status"`
+	SourceInputPath        string                                               `json:"source_input_path"`
+	SourceInputDigest      string                                               `json:"source_input_digest"`
+	EntryCount             int                                                  `json:"entry_count"`
+	CompatibleEntryCount   int                                                  `json:"compatible_entry_count"`
+	AllEntriesCompatible   bool                                                 `json:"all_entries_compatible"`
+	Entries                []AtlasBlueprintTicketSchemaCompatibilityLedgerEntry `json:"entries"`
+	SchedulesWork          bool                                                 `json:"schedules_work"`
+	ExecutesWork           bool                                                 `json:"executes_work"`
+	ApprovesWork           bool                                                 `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                                 `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                                 `json:"rsi_remains_denied"`
+}
+
 type AtlasMergeCheckBindingInput struct {
 	Schema                 string                      `json:"schema"`
 	Status                 string                      `json:"status"`

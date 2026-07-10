@@ -416,6 +416,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:command-compact-rejection-reason-fixture", err
 		}
 		return "typed:command-compact-rejection-reason-fixture", ValidateAtlasCommandCompactRejectionReasonFixture(value)
+	case AtlasBlueprintTicketSchemaCompatibilityLedgerContract:
+		value, err := LoadJSON[AtlasBlueprintTicketSchemaCompatibilityLedger](path)
+		if err != nil {
+			return "typed:blueprint-ticket-schema-compatibility-ledger", err
+		}
+		return "typed:blueprint-ticket-schema-compatibility-ledger", ValidateAtlasBlueprintTicketSchemaCompatibilityLedger(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {

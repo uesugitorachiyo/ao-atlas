@@ -459,6 +459,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "policy-version-replay-rejection-fixture", run: runMissionRecommendationsPolicyVersionReplayRejectionFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "covenant-evidence-digest-readback-fixture", run: runMissionRecommendationsCovenantEvidenceDigestReadbackFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-compact-rejection-reason-fixture", run: runMissionRecommendationsCommandCompactRejectionReasonFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "blueprint-ticket-schema-compatibility-ledger", run: runMissionRecommendationsBlueprintTicketSchemaCompatibilityLedger, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair, commandClass: missionRecommendationCommandClassPlanningOnly},
@@ -2106,6 +2107,45 @@ func runMissionRecommendationsCommandCompactRejectionReasonFixture(args []string
 		fixture.Status,
 		fixture.ReasonsRendered,
 		fixture.CaseCount,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsBlueprintTicketSchemaCompatibilityLedger(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations blueprint-ticket-schema-compatibility-ledger", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	inputPath := fs.String("input", "", "blueprint ticket schema compatibility ledger input path")
+	outPath := fs.String("out", "", "blueprint ticket schema compatibility ledger output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*inputPath) == "" {
+		return fmt.Errorf("--input is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*inputPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	ledger, err := BuildAtlasBlueprintTicketSchemaCompatibilityLedger(*inputPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, ledger); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, ledger)
+	}
+	fmt.Fprintf(stdout, "status=%s\nall_entries_compatible=%t\nentry_count=%d\nblueprint_ticket_schema_compatibility_ledger=%s\n",
+		ledger.Status,
+		ledger.AllEntriesCompatible,
+		ledger.EntryCount,
 		filepath.ToSlash(*outPath),
 	)
 	return nil

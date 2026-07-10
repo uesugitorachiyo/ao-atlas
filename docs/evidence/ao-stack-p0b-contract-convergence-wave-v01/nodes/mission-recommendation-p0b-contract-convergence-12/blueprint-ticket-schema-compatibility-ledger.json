@@ -1,0 +1,39 @@
+{
+  "schema": "ao.atlas.blueprint-ticket-schema-compatibility-ledger.v0.1",
+  "status": "blueprint_ticket_schema_compatible",
+  "source_input_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-12/blueprint-ticket-schema-compatibility-ledger-input.json",
+  "source_input_digest": "sha256:ec874461b27f6ea8c1b28a6ef17645357fd2d6d740a18af7f166a71e6a03bd1e",
+  "entry_count": 2,
+  "compatible_entry_count": 2,
+  "all_entries_compatible": true,
+  "entries": [
+    {
+      "id": "ticket-digest-fields",
+      "blueprint_ticket_schema": "ao.blueprint.authorization-ticket.v0.1",
+      "covenant_ticket_schema": "ao.covenant.authorization-ticket.v0.1",
+      "command_ticket_schema": "ao.command.authorization-ticket-readback.v0.1",
+      "required_fields": [
+        "ticket_sha256",
+        "policy_sha256",
+        "decision_sha256"
+      ],
+      "compatible": true
+    },
+    {
+      "id": "rejection-reason-field",
+      "blueprint_ticket_schema": "ao.blueprint.authorization-ticket.v0.1",
+      "covenant_ticket_schema": "ao.covenant.authorization-ticket.v0.1",
+      "command_ticket_schema": "ao.command.compact-status.v0.1",
+      "required_fields": [
+        "covenant_native_reason",
+        "command_compact_reason"
+      ],
+      "compatible": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
