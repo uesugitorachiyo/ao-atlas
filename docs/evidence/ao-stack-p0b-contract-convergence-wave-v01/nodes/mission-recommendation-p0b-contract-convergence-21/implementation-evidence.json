@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-21",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed P0-B PR/CI ledger for nodes 1-20 that binds PR numbers, merge heads, passed CI status, and local and remote branch cleanup fields.",
+  "command": "typed fixture plus recommendation evidence validator",
+  "typed_validator": "typed:p0b-pr-ci-ledger"
+}

@@ -1,0 +1,115 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-mission-710327df54728420-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-mission-710327df54728420",
+  "target_instance": "ao-stack-p0b-contract-convergence-wave-v01",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-20/workgraph-after-complete.json",
+      "digest": "sha256:56fb4d6632c17e5552202f4271ffa81a51741cf93d4120f92da30f58ce121cc9"
+    },
+    {
+      "ref": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/stack-instance.json",
+      "digest": "sha256:47dffc4fb9ad71c122bf7013f4a413f2d32b265038e62594e2c1dbe169b1b1af"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-21",
+      "task_id": "mission-recommendation-p0b-contract-convergence-21-task",
+      "path": "tasks/mission-recommendation-p0b-contract-convergence-21-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:cf89a398e652f05a3c6bf713a973691e610a6c42b584fadaa75edad07c698d16",
+        "source_recommendation:p0b-contract-convergence-21",
+        "source_task_digest:sha256:510ab6485bcf169d0a406fc75748fe6e06a9b6433e90f8924a631b95487da5b8"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-p0b-contract-convergence-21-task",
+        "objective": "Add P0-B PR/CI ledger with merge-head and branch-cleanup fields.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-21",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:cf89a398e652f05a3c6bf713a973691e610a6c42b584fadaa75edad07c698d16",
+          "source_recommendation:p0b-contract-convergence-21",
+          "source_task_digest:sha256:510ab6485bcf169d0a406fc75748fe6e06a9b6433e90f8924a631b95487da5b8"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-p0b-contract-convergence-20"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:889ffdf7855a4928951199178a95be46890224c9d237d84bcd19b2e7d4b3be6a"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

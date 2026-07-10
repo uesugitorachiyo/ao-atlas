@@ -67,6 +67,7 @@ const (
 	AtlasCovenantTicketSchemaAuthorityLedgerContract           = "ao.atlas.covenant-ticket-schema-authority-ledger.v0.1"
 	AtlasPolicyTicketPublicSafetyScanInputContract             = "ao.atlas.policy-ticket-public-safety-scan-input.v0.1"
 	AtlasPolicyTicketPublicSafetyScanContract                  = "ao.atlas.policy-ticket-public-safety-scan.v0.1"
+	AtlasP0BPRCILedgerContract                                 = "ao.atlas.p0b-pr-ci-ledger.v0.1"
 	AtlasMergeCheckBindingInputContract                        = "ao.atlas.merge-check-binding-input.v0.1"
 	AtlasMergeCheckBindingContract                             = "ao.atlas.merge-check-binding.v0.1"
 	AtlasPostMergeBranchDeletionReadbackContract               = "ao.atlas.post-merge-branch-deletion-readback.v0.1"
