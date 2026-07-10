@@ -1,0 +1,1240 @@
+{
+  "schema": "ao.mission.feature-depth-recommendations.v0.3",
+  "mission_id": "mission-56bed010dd085a0f-month2-contract-convergence-v01",
+  "status": "ready",
+  "minimum_tasks": 30,
+  "recommendation_count": 40,
+  "source_evidence_root": "docs/evidence/ao-stack-consolidation-month1-wave-v01",
+  "source_recommendations_path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+  "source_recommendations_digest": "sha256:23571e80b30403f4391e21d80375923bb8f61ac029342b7d1ed16a45c8b5b7bf",
+  "source_contract_schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "source_readback_path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:03eb3f56aa30d04e3083608d6351fa91ca8b3486a269c04cf9a5d6d5ed68a20c",
+  "source_assertion_path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json",
+  "source_assertion_digest": "sha256:9880fc684a74c7522543fee204d1ce424ccc01ad7d3f8394f90ea94f33d3113a",
+  "source_owner_set": [
+    "ao-architecture",
+    "ao-arena",
+    "ao-atlas",
+    "ao-blueprint",
+    "ao-command",
+    "ao-covenant",
+    "ao-crucible",
+    "ao-forge",
+    "ao-foundry",
+    "ao-mission",
+    "ao-promoter",
+    "ao-sentinel",
+    "ao2",
+    "ao2-control-plane"
+  ],
+  "one_executable_node_active": true,
+  "initial_executable_node": "mission-recommendation-month2-contract-convergence-1",
+  "tasks": [
+    {
+      "rank": 1,
+      "id": "month2-contract-convergence-1",
+      "owner": "ao-atlas",
+      "theme": "schema-registry-ao-covenant",
+      "task": "Coordinate ao-covenant Covenant canonical schema registry ADR through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-1",
+      "source_owner": "ao-covenant",
+      "source_title": "Covenant canonical schema registry ADR",
+      "source_theme": "schema-registry",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "month2-contract-convergence-2",
+      "owner": "ao-atlas",
+      "theme": "schema-registry-ao-architecture",
+      "task": "Coordinate ao-architecture Stack-wide schema owner inventory through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-2",
+      "source_owner": "ao-architecture",
+      "source_title": "Stack-wide schema owner inventory",
+      "source_theme": "schema-registry",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "month2-contract-convergence-3",
+      "owner": "ao-atlas",
+      "theme": "compatibility-ao-blueprint",
+      "task": "Coordinate ao-blueprint Blueprint to Atlas producer consumer contract test through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-3",
+      "source_owner": "ao-blueprint",
+      "source_title": "Blueprint to Atlas producer consumer contract test",
+      "source_theme": "compatibility",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "month2-contract-convergence-4",
+      "owner": "ao-atlas",
+      "theme": "compatibility-ao-atlas",
+      "task": "Coordinate ao-atlas Atlas to Foundry import compatibility test through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-4",
+      "source_owner": "ao-atlas",
+      "source_title": "Atlas to Foundry import compatibility test",
+      "source_theme": "compatibility",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "month2-contract-convergence-5",
+      "owner": "ao-atlas",
+      "theme": "compatibility-ao-command",
+      "task": "Coordinate ao-command Command to Covenant ticket validation parity test through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-5",
+      "source_owner": "ao-command",
+      "source_title": "Command to Covenant ticket validation parity test",
+      "source_theme": "compatibility",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "month2-contract-convergence-6",
+      "owner": "ao-atlas",
+      "theme": "compatibility-ao-promoter",
+      "task": "Coordinate ao-promoter Promoter upstream verdict contract fixture through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-6",
+      "source_owner": "ao-promoter",
+      "source_title": "Promoter upstream verdict contract fixture",
+      "source_theme": "compatibility",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "month2-contract-convergence-7",
+      "owner": "ao-atlas",
+      "theme": "compatibility-ao-sentinel",
+      "task": "Coordinate ao-sentinel Sentinel native verdict schema contract through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-7",
+      "source_owner": "ao-sentinel",
+      "source_title": "Sentinel native verdict schema contract",
+      "source_theme": "compatibility",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "month2-contract-convergence-8",
+      "owner": "ao-atlas",
+      "theme": "compatibility-ao-forge",
+      "task": "Coordinate ao-forge Forge GoalRun packet schema owner binding through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-8",
+      "source_owner": "ao-forge",
+      "source_title": "Forge GoalRun packet schema owner binding",
+      "source_theme": "compatibility",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 9,
+      "id": "month2-contract-convergence-9",
+      "owner": "ao-atlas",
+      "theme": "provenance-ao2",
+      "task": "Coordinate ao2 AO2 provider run options model provenance field through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-9",
+      "source_owner": "ao2",
+      "source_title": "AO2 provider run options model provenance field",
+      "source_theme": "provenance",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 10,
+      "id": "month2-contract-convergence-10",
+      "owner": "ao-atlas",
+      "theme": "compatibility-ao2-control-plane",
+      "task": "Coordinate ao2-control-plane Control plane observer event schema owner binding through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-10",
+      "source_owner": "ao2-control-plane",
+      "source_title": "Control plane observer event schema owner binding",
+      "source_theme": "compatibility",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 11,
+      "id": "month2-contract-convergence-11",
+      "owner": "ao-atlas",
+      "theme": "canonical-json-ao-covenant",
+      "task": "Coordinate ao-covenant Canonical JSON vector suite for Go repositories through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-11",
+      "source_owner": "ao-covenant",
+      "source_title": "Canonical JSON vector suite for Go repositories",
+      "source_theme": "canonical-json",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 12,
+      "id": "month2-contract-convergence-12",
+      "owner": "ao-atlas",
+      "theme": "canonical-json-ao2",
+      "task": "Coordinate ao2 Canonical JSON vector suite for Rust repositories through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-12",
+      "source_owner": "ao2",
+      "source_title": "Canonical JSON vector suite for Rust repositories",
+      "source_theme": "canonical-json",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 13,
+      "id": "month2-contract-convergence-13",
+      "owner": "ao-atlas",
+      "theme": "schema-registry-ao-covenant",
+      "task": "Coordinate ao-covenant Stable experimental deprecated contract classifier through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-13",
+      "source_owner": "ao-covenant",
+      "source_title": "Stable experimental deprecated contract classifier",
+      "source_theme": "schema-registry",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 14,
+      "id": "month2-contract-convergence-14",
+      "owner": "ao-atlas",
+      "theme": "governance-ao-architecture",
+      "task": "Coordinate ao-architecture No copied schema without owner guard through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-14",
+      "source_owner": "ao-architecture",
+      "source_title": "No copied schema without owner guard",
+      "source_theme": "governance",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 15,
+      "id": "month2-contract-convergence-15",
+      "owner": "ao-atlas",
+      "theme": "state-ao-mission",
+      "task": "Coordinate ao-mission Mission durable state migration inventory through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-15",
+      "source_owner": "ao-mission",
+      "source_title": "Mission durable state migration inventory",
+      "source_theme": "state",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 16,
+      "id": "month2-contract-convergence-16",
+      "owner": "ao-atlas",
+      "theme": "evidence-volume-ao-atlas",
+      "task": "Coordinate ao-atlas Atlas evidence catalog externalization plan through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-16",
+      "source_owner": "ao-atlas",
+      "source_title": "Atlas evidence catalog externalization plan",
+      "source_theme": "evidence-volume",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 17,
+      "id": "month2-contract-convergence-17",
+      "owner": "ao-atlas",
+      "theme": "evidence-volume-ao-foundry",
+      "task": "Coordinate ao-foundry Foundry evidence catalog externalization plan through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-17",
+      "source_owner": "ao-foundry",
+      "source_title": "Foundry evidence catalog externalization plan",
+      "source_theme": "evidence-volume",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 18,
+      "id": "month2-contract-convergence-18",
+      "owner": "ao-atlas",
+      "theme": "monolith-split-ao-foundry",
+      "task": "Coordinate ao-foundry Foundry CLI module split map through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-18",
+      "source_owner": "ao-foundry",
+      "source_title": "Foundry CLI module split map",
+      "source_theme": "monolith-split",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 19,
+      "id": "month2-contract-convergence-19",
+      "owner": "ao-atlas",
+      "theme": "monolith-split-ao2",
+      "task": "Coordinate ao2 AO2 CLI module split map through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-19",
+      "source_owner": "ao2",
+      "source_title": "AO2 CLI module split map",
+      "source_theme": "monolith-split",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 20,
+      "id": "month2-contract-convergence-20",
+      "owner": "ao-atlas",
+      "theme": "monolith-split-ao-forge",
+      "task": "Coordinate ao-forge Forge CLI module split map through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-20",
+      "source_owner": "ao-forge",
+      "source_title": "Forge CLI module split map",
+      "source_theme": "monolith-split",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 21,
+      "id": "month2-contract-convergence-21",
+      "owner": "ao-atlas",
+      "theme": "monolith-split-ao-command",
+      "task": "Coordinate ao-command Command CLI module split map through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-21",
+      "source_owner": "ao-command",
+      "source_title": "Command CLI module split map",
+      "source_theme": "monolith-split",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 22,
+      "id": "month2-contract-convergence-22",
+      "owner": "ao-atlas",
+      "theme": "generated-types-ao-covenant",
+      "task": "Coordinate ao-covenant Contract registry generated Go type smoke through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-22",
+      "source_owner": "ao-covenant",
+      "source_title": "Contract registry generated Go type smoke",
+      "source_theme": "generated-types",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 23,
+      "id": "month2-contract-convergence-23",
+      "owner": "ao-atlas",
+      "theme": "generated-types-ao-covenant",
+      "task": "Coordinate ao-covenant Contract registry generated Rust type smoke through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-23",
+      "source_owner": "ao-covenant",
+      "source_title": "Contract registry generated Rust type smoke",
+      "source_theme": "generated-types",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 24,
+      "id": "month2-contract-convergence-24",
+      "owner": "ao-atlas",
+      "theme": "architecture-ao-architecture",
+      "task": "Coordinate ao-architecture Architecture generated compatibility table through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-24",
+      "source_owner": "ao-architecture",
+      "source_title": "Architecture generated compatibility table",
+      "source_theme": "architecture",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 25,
+      "id": "month2-contract-convergence-25",
+      "owner": "ao-atlas",
+      "theme": "metrics-ao-mission",
+      "task": "Coordinate ao-mission Mission metrics recompute after handoff correction through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-25",
+      "source_owner": "ao-mission",
+      "source_title": "Mission metrics recompute after handoff correction",
+      "source_theme": "metrics",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 26,
+      "id": "month2-contract-convergence-26",
+      "owner": "ao-atlas",
+      "theme": "requirements-ao-blueprint",
+      "task": "Coordinate ao-blueprint Blueprint sufficiency calibration fixture set through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-26",
+      "source_owner": "ao-blueprint",
+      "source_title": "Blueprint sufficiency calibration fixture set",
+      "source_theme": "requirements",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 27,
+      "id": "month2-contract-convergence-27",
+      "owner": "ao-atlas",
+      "theme": "performance-ao-atlas",
+      "task": "Coordinate ao-atlas Atlas graph performance baseline through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-27",
+      "source_owner": "ao-atlas",
+      "source_title": "Atlas graph performance baseline",
+      "source_theme": "performance",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 28,
+      "id": "month2-contract-convergence-28",
+      "owner": "ao-atlas",
+      "theme": "authority-boundary-ao-foundry",
+      "task": "Coordinate ao-foundry Foundry safe-next-work authority boundary test through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-28",
+      "source_owner": "ao-foundry",
+      "source_title": "Foundry safe-next-work authority boundary test",
+      "source_theme": "authority-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 29,
+      "id": "month2-contract-convergence-29",
+      "owner": "ao-atlas",
+      "theme": "execution-boundary-ao-forge",
+      "task": "Coordinate ao-forge Forge scripted provider boundary readback through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-29",
+      "source_owner": "ao-forge",
+      "source_title": "Forge scripted provider boundary readback",
+      "source_theme": "execution-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 30,
+      "id": "month2-contract-convergence-30",
+      "owner": "ao-atlas",
+      "theme": "approval-integrity-ao2",
+      "task": "Coordinate ao2 AO2 approval byte and base commit binding design test through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-30",
+      "source_owner": "ao2",
+      "source_title": "AO2 approval byte and base commit binding design test",
+      "source_theme": "approval-integrity",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 31,
+      "id": "month2-contract-convergence-31",
+      "owner": "ao-atlas",
+      "theme": "policy-integrity-ao-covenant",
+      "task": "Coordinate ao-covenant Covenant policy hash includes policy fields test through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-31",
+      "source_owner": "ao-covenant",
+      "source_title": "Covenant policy hash includes policy fields test",
+      "source_theme": "policy-integrity",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 32,
+      "id": "month2-contract-convergence-32",
+      "owner": "ao-atlas",
+      "theme": "state-ao2-control-plane",
+      "task": "Coordinate ao2-control-plane Control plane transactional GC test through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-32",
+      "source_owner": "ao2-control-plane",
+      "source_title": "Control plane transactional GC test",
+      "source_theme": "state",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 33,
+      "id": "month2-contract-convergence-33",
+      "owner": "ao-atlas",
+      "theme": "assurance-ci-ao-arena",
+      "task": "Coordinate ao-arena Arena hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-33",
+      "source_owner": "ao-arena",
+      "source_title": "Arena hosted CI workflow parity",
+      "source_theme": "assurance-ci",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 34,
+      "id": "month2-contract-convergence-34",
+      "owner": "ao-atlas",
+      "theme": "assurance-ci-ao-crucible",
+      "task": "Coordinate ao-crucible Crucible hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-34",
+      "source_owner": "ao-crucible",
+      "source_title": "Crucible hosted CI workflow parity",
+      "source_theme": "assurance-ci",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 35,
+      "id": "month2-contract-convergence-35",
+      "owner": "ao-atlas",
+      "theme": "assurance-ci-ao-sentinel",
+      "task": "Coordinate ao-sentinel Sentinel hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-35",
+      "source_owner": "ao-sentinel",
+      "source_title": "Sentinel hosted CI workflow parity",
+      "source_theme": "assurance-ci",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 36,
+      "id": "month2-contract-convergence-36",
+      "owner": "ao-atlas",
+      "theme": "promotion-boundary-ao-promoter",
+      "task": "Coordinate ao-promoter Promoter signed assurance result input boundary through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-36",
+      "source_owner": "ao-promoter",
+      "source_title": "Promoter signed assurance result input boundary",
+      "source_theme": "promotion-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 37,
+      "id": "month2-contract-convergence-37",
+      "owner": "ao-atlas",
+      "theme": "stack-lock-ao-architecture",
+      "task": "Coordinate ao-architecture Stack lockfile producer consumer gate through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-37",
+      "source_owner": "ao-architecture",
+      "source_title": "Stack lockfile producer consumer gate",
+      "source_theme": "stack-lock",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 38,
+      "id": "month2-contract-convergence-38",
+      "owner": "ao-atlas",
+      "theme": "golden-path-ao-mission",
+      "task": "Coordinate ao-mission Golden path tiny repository contract packet through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-38",
+      "source_owner": "ao-mission",
+      "source_title": "Golden path tiny repository contract packet",
+      "source_theme": "golden-path",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 39,
+      "id": "month2-contract-convergence-39",
+      "owner": "ao-atlas",
+      "theme": "long-run-ao-atlas",
+      "task": "Coordinate ao-atlas Month 2 long-run Atlas workgraph prompt through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-39",
+      "source_owner": "ao-atlas",
+      "source_title": "Month 2 long-run Atlas workgraph prompt",
+      "source_theme": "long-run",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    },
+    {
+      "rank": 40,
+      "id": "month2-contract-convergence-40",
+      "owner": "ao-atlas",
+      "theme": "promotion-boundary-ao-promoter",
+      "task": "Coordinate ao-promoter Month 2 final no-promotion no-RSI rollup through a bounded Atlas compatibility evidence node with no promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/recommendation-readback-after.json",
+        "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-36/final-closure-evidence.json"
+      ],
+      "source_recommendation_id": "month2-contract-convergence-40",
+      "source_owner": "ao-promoter",
+      "source_title": "Month 2 final no-promotion no-RSI rollup",
+      "source_theme": "promotion-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "contract owner bound",
+        "producer consumer check planned or passing",
+        "no promotion requested"
+      ]
+    }
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
