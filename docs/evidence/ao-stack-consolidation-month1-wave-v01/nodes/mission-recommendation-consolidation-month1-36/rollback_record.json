@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.consolidation-rollback-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-36",
+  "status": "rollback_available",
+  "generated_at_utc": "2026-07-10T19:48:23Z",
+  "rollback_scope": [
+    "revert node-specific Atlas generated evidence",
+    "drop progress/after-node-36 checkpoint files"
+  ],
+  "rollback_command_hint": "git revert the node 36 Atlas evidence commit before merge, or revert the squash merge after merge if needed",
+  "irreversible_actions": false
+}
