@@ -1,0 +1,44 @@
+{
+  "schema": "ao.atlas.command-ticket-schema-compatibility-ledger-input.v0.1",
+  "status": "recorded",
+  "entries": [
+    {
+      "id": "command-ticket-byte-preservation",
+      "producer_schema": "ao.atlas.command-ticket-byte-preservation-fixture.v0.1",
+      "consumer_schema": "ao.command.ticket-readback.v0.1",
+      "required_fields": [
+        "ticket_sha256",
+        "canonical_ticket_bytes_sha256",
+        "preserves_exact_bytes"
+      ],
+      "compatible": true
+    },
+    {
+      "id": "command-compact-rejection-reason",
+      "producer_schema": "ao.atlas.command-compact-rejection-reason-fixture.v0.1",
+      "consumer_schema": "ao.command.compact-status.v0.1",
+      "required_fields": [
+        "rejection_reason",
+        "covenant_verdict",
+        "readback_renders_reason"
+      ],
+      "compatible": true
+    },
+    {
+      "id": "command-covenant-rejected-ticket",
+      "producer_schema": "ao.atlas.command-covenant-rejected-ticket-fixture.v0.1",
+      "consumer_schema": "ao.command.covenant-ticket-readback.v0.1",
+      "required_fields": [
+        "ticket_sha256",
+        "covenant_accepts_ticket",
+        "command_accepts_ticket"
+      ],
+      "compatible": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
