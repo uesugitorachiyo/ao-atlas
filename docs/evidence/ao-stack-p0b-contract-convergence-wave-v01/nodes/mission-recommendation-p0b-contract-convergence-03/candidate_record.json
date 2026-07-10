@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-03",
+  "candidate": "Add Command-to-Covenant accepted ticket fixture with canonical bytes and digest.",
+  "implementation_repo": "ao-command",
+  "branch": "codex/p0b-node-03-command-ticket-digest",
+  "commit": "3646295",
+  "pull_request": "https://github.com/uesugitorachiyo/ao-command/pull/110",
+  "merge_commit": "81e74349d44c768ab8dcadaa122302aa9fd24f4f",
+  "digest_fields": [
+    "request_sha256",
+    "ticket_sha256"
+  ]
+}

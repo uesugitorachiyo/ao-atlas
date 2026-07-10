@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.tests.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-03",
+  "red_test": "go test ./internal/cli -run TestLiveMutationApprovalReportsApprovedTicketReadOnly -count=1 failed before implementation because request_sha256 was missing.",
+  "targeted_tests": [
+    "go test ./internal/cli -run 'TestLiveMutationApprovalReportsApprovedTicketReadOnly|TestLiveMutationApprovalBlocksPendingTicketReadOnly' -count=1"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./..."
+  ]
+}
