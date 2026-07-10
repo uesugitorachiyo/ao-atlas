@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-28",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:05:59Z",
+  "commands": [
+    "jq validation of compact-command-progress-readback.json",
+    "AO Atlas evidence verification: go test ./... -count=1",
+    "AO Atlas evidence verification: go vet ./...",
+    "AO Atlas evidence verification: go build -o target/atlas-node-28-evidence ./cmd/atlas",
+    "AO Atlas evidence verification: scripts/production-readiness.sh",
+    "AO Atlas evidence verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry"
+  ],
+  "compact_readback": {
+    "path": "compact-command-progress-readback.json",
+    "status": "early_return_denied"
+  }
+}

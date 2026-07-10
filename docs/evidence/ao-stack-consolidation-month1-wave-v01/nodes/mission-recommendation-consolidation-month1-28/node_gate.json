@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "node": "mission-recommendation-consolidation-month1-28",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "gate_class": "command_readback",
+  "scope": "compact Command readback for wave progress exact action and denial state",
+  "previous_completed_node": "mission-recommendation-consolidation-month1-27",
+  "generated_at_utc": "2026-07-10T19:05:59Z",
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "policy_or_authorization_change": false,
+  "rsi_remains_denied": true
+}
