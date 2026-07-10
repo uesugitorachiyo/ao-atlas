@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-14",
+  "safe_to_execute": true,
+  "scope": "Mission digest-bound lifecycle projection CLI, contract, and source readback",
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
