@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-3",
+  "task_id": "mission-recommendation-month2-contract-convergence-3-task",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3"
+  ],
+  "rollback_command": "remove node 3 Blueprint/Atlas compatibility evidence before merge; no provider or runtime state is changed",
+  "data_loss_risk": "none; fixture and planning evidence only",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

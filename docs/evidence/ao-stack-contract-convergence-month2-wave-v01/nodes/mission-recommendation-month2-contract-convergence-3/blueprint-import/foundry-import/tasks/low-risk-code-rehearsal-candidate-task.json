@@ -1,0 +1,53 @@
+{
+  "contract_version": "ao.atlas.factory-task.v0.1",
+  "id": "low-risk-code-rehearsal-candidate-task",
+  "objective": "Compile the low_risk_code rehearsal plan into dry-run Atlas and Foundry material.",
+  "target_factory_repo": "ao-foundry",
+  "factory_folder": "factory/blueprint-low-risk-code-rehearsal",
+  "mutation_class": "low_risk_code",
+  "acceptance_criteria": [
+    "Atlas import is ready and digest-bound",
+    "Foundry import validates",
+    "low_risk_code live execution remains blocked"
+  ],
+  "non_goals": [
+    "do not execute live code mutation",
+    "do not claim low_risk_code is live-proven"
+  ],
+  "write_scope": [
+    "internal/atlas/validate.go",
+    "internal/atlas/atlas_test.go"
+  ],
+  "required_gates": [
+    "atlas_blueprint_import",
+    "atlas_classification",
+    "foundry_atlas_readback",
+    "command_readback",
+    "ci_passed"
+  ],
+  "rollback_scope": [
+    "internal/atlas/validate.go",
+    "internal/atlas/atlas_test.go"
+  ],
+  "verification_commands": [
+    "go test ./..."
+  ],
+  "required_evidence": [
+    "blueprint_pack:ready",
+    "atlas_import:ready",
+    "foundry_import:ready",
+    "mutation_class:low_risk_code",
+    "dry_run:low_risk_code"
+  ],
+  "safety_limits": [
+    "safe_to_execute:false",
+    "do_not_advance:low_risk_code_live_execution_denied",
+    "do_not_execute_live_mutation",
+    "private_paths_under:excluded"
+  ],
+  "authority_boundary": "atlas_compile_only",
+  "dependency_refs": null,
+  "context_pack_refs": [
+    "context-packs/low-risk-code-rehearsal-candidate-context-pack.json"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "contract_version": "ao.atlas.context-pack.v0.1",
+  "id": "low-risk-code-rehearsal-candidate-context-pack",
+  "task_id": "low-risk-code-rehearsal-candidate-task",
+  "budget_bytes": 8192,
+  "source_refs": [
+    {
+      "ref": "implementation-spec.md",
+      "digest": "sha256:00781221753071997f1f4c70a1a88a9604d08945afa1d18d57a08550093d972f"
+    },
+    {
+      "ref": "quality-profile.md",
+      "digest": "sha256:9457de36c730b5d79134d52ae6fe234c2cbb8c3b318719fd22f05d38ff24fbe2"
+    },
+    {
+      "ref": "examples/valid/blueprint-import-low-risk-code/blueprint-pack/candidate-rules.json",
+      "digest": "sha256:e5ca1235dd6462b3b0d770f3a3eb9494eb09f0dc3f1a3c25cae3979273f64f52"
+    },
+    {
+      "ref": "excluded/private-paths.md",
+      "digest": "sha256:539a7c94f0869201c5ada6ebdfecf0c0c13b17b427d5ab3261f3e81d64235fa2"
+    }
+  ],
+  "summaries": [
+    "Blueprint pack is authorized for Atlas compile into Foundry import material.",
+    "Mutation class low_risk_code remains dry-run/readback only."
+  ],
+  "assumptions": [
+    "AO Blueprint owns requirements authorization.",
+    "AO Atlas does not schedule or execute work."
+  ],
+  "exclusions": [
+    "live code mutation",
+    "provider calls",
+    "private local paths outside excluded placeholders"
+  ],
+  "missing_context_protocol": "Return to AO Blueprint for missing requirements or authorization before widening scope."
+}

@@ -1,0 +1,117 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "blueprint-low-risk-code-rehearsal-workgraph-foundry-import",
+  "workgraph_id": "blueprint-low-risk-code-rehearsal-workgraph",
+  "target_instance": "demo-stack",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "examples/valid/blueprint-import-low-risk-code/blueprint-pack",
+      "digest": "sha256:668ce08bc3899899ca66273ca8ef7b2e243b605accddc92e915c1afcf2047036"
+    },
+    {
+      "ref": "examples/valid/blueprint-import-low-risk-code/build-authorization.json",
+      "digest": "sha256:cc13e7b5fe722c2bcb48701a12bd7366d82d39f67819cf0d4d3e36cb132d8f53"
+    },
+    {
+      "ref": "candidate-selection.json",
+      "digest": "sha256:eda390576123f484b1376701ac22cdb3203366ed0ac5daf8d5a74824967e3ee8"
+    },
+    {
+      "ref": "context-packs/low-risk-code-rehearsal-candidate-context-pack.json",
+      "digest": "sha256:d198e5cdbe0b4e3968120aaf45eb8baec9324bb1f841b8a6c7966d177cdb3300"
+    },
+    {
+      "ref": "workgraph.json",
+      "digest": "sha256:a891555e807ea777dcb670eb453c14ee7b00ba7292ea0e131ae76fb0f5c5f20b"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "low-risk-code-rehearsal-candidate-node",
+      "task_id": "low-risk-code-rehearsal-candidate-task",
+      "path": "tasks/low-risk-code-rehearsal-candidate-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas/validate.go",
+        "internal/atlas/atlas_test.go"
+      ],
+      "rollback_scope": [
+        "internal/atlas/validate.go",
+        "internal/atlas/atlas_test.go"
+      ],
+      "required_gates": [
+        "atlas_blueprint_import",
+        "atlas_classification",
+        "foundry_atlas_readback",
+        "command_readback",
+        "ci_passed"
+      ],
+      "required_evidence": [
+        "blueprint_pack:ready",
+        "atlas_import:ready",
+        "foundry_import:ready",
+        "mutation_class:low_risk_code",
+        "dry_run:low_risk_code"
+      ],
+      "authority_boundary": "atlas_compile_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "low-risk-code-rehearsal-candidate-task",
+        "objective": "Compile the low_risk_code rehearsal plan into dry-run Atlas and Foundry material.",
+        "target_factory_repo": "ao-foundry",
+        "factory_folder": "factory/blueprint-low-risk-code-rehearsal",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "Atlas import is ready and digest-bound",
+          "Foundry import validates",
+          "low_risk_code live execution remains blocked"
+        ],
+        "non_goals": [
+          "do not execute live code mutation",
+          "do not claim low_risk_code is live-proven"
+        ],
+        "write_scope": [
+          "internal/atlas/validate.go",
+          "internal/atlas/atlas_test.go"
+        ],
+        "required_gates": [
+          "atlas_blueprint_import",
+          "atlas_classification",
+          "foundry_atlas_readback",
+          "command_readback",
+          "ci_passed"
+        ],
+        "rollback_scope": [
+          "internal/atlas/validate.go",
+          "internal/atlas/atlas_test.go"
+        ],
+        "verification_commands": [
+          "go test ./..."
+        ],
+        "required_evidence": [
+          "blueprint_pack:ready",
+          "atlas_import:ready",
+          "foundry_import:ready",
+          "mutation_class:low_risk_code",
+          "dry_run:low_risk_code"
+        ],
+        "safety_limits": [
+          "safe_to_execute:false",
+          "do_not_advance:low_risk_code_live_execution_denied",
+          "do_not_execute_live_mutation",
+          "private_paths_under:excluded"
+        ],
+        "authority_boundary": "atlas_compile_only",
+        "dependency_refs": null,
+        "context_pack_refs": [
+          "context-packs/low-risk-code-rehearsal-candidate-context-pack.json"
+        ]
+      },
+      "task_digest": "sha256:a43eb5484e0f9a60b29725f5fb55400b1ae5a0015198f584f11375b3894cb2eb"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
