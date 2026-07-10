@@ -41,6 +41,8 @@ const (
 	AtlasFailedCheckReplayFixtureContract             = "ao.atlas.failed-check-replay-fixture.v0.1"
 	AtlasCommandCovenantRejectedTicketInputContract   = "ao.atlas.command-covenant-rejected-ticket-input.v0.1"
 	AtlasCommandCovenantRejectedTicketFixtureContract = "ao.atlas.command-covenant-rejected-ticket-fixture.v0.1"
+	AtlasCommandCovenantQuarantineInputContract       = "ao.atlas.command-covenant-quarantine-input.v0.1"
+	AtlasCommandCovenantQuarantineFixtureContract     = "ao.atlas.command-covenant-quarantine-fixture.v0.1"
 	AtlasMergeCheckBindingInputContract               = "ao.atlas.merge-check-binding-input.v0.1"
 	AtlasMergeCheckBindingContract                    = "ao.atlas.merge-check-binding.v0.1"
 	AtlasPostMergeBranchDeletionReadbackContract      = "ao.atlas.post-merge-branch-deletion-readback.v0.1"

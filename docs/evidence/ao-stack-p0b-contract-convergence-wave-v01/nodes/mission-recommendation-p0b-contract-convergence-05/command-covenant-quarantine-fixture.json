@@ -1,0 +1,48 @@
+{
+  "schema": "ao.atlas.command-covenant-quarantine-fixture.v0.1",
+  "status": "rejected_paths_quarantined",
+  "source_input_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-05/command-covenant-quarantine-input.json",
+  "source_input_digest": "sha256:767cb676442e7293fe3ec3ee6b1590b37e9da1d8a19424aef02f674ab5e78fdb",
+  "case_count": 3,
+  "rejected_command_acceptance_paths": 2,
+  "quarantined_paths": 2,
+  "safe_to_accept": false,
+  "all_rejected_acceptance_paths_quarantined": true,
+  "cases": [
+    {
+      "id": "live-mutation-approval-text",
+      "command_validation_path": "ao-command live-mutation approval text readback",
+      "ticket_sha256": "sha256:1ee35c2e3488ffa4c589bb5dde7939279931c769caf6af65c2ed4572deaa2f9f",
+      "covenant_decision": "rejected",
+      "command_would_accept_ticket": true,
+      "covenant_native_reason": "policy_decision_rejected: requested resource is outside authorized write scope",
+      "quarantine_decision": "quarantined",
+      "safe_to_accept": false
+    },
+    {
+      "id": "live-mutation-approval-json",
+      "command_validation_path": "ao-command live-mutation approval json readback",
+      "ticket_sha256": "sha256:d75c3b44719806640e79d7489263513a4242ca689631108403d5fd2c2ffb5901",
+      "covenant_decision": "rejected",
+      "command_would_accept_ticket": true,
+      "covenant_native_reason": "policy_decision_rejected: approval ticket digest does not match request digest",
+      "quarantine_decision": "quarantined",
+      "safe_to_accept": false
+    },
+    {
+      "id": "live-mutation-approval-pending",
+      "command_validation_path": "ao-command pending-ticket readback",
+      "ticket_sha256": "sha256:75913cfb629219a90791bd0c90986f0145026023f92f048e9f9d88c6bcf13774",
+      "covenant_decision": "accepted",
+      "command_would_accept_ticket": false,
+      "covenant_native_reason": "",
+      "quarantine_decision": "not_required",
+      "safe_to_accept": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
