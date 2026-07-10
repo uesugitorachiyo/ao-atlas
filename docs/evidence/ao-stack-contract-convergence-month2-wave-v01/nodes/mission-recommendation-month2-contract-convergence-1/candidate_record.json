@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-1",
+  "task_id": "mission-recommendation-month2-contract-convergence-1-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-1",
+  "source_task_digest": "sha256:f4d260a903e4d6e19c2bb987c64b3af27e20a23906a8fffa8724fcfe9c92f349",
+  "selected_work": [
+    "Coordinate ao-covenant Covenant canonical schema registry ADR through a bounded Atlas compatibility evidence node with no promotion.",
+    "Normalize the Month 2 recommendation schema into the canonical Mission planning-only input.",
+    "Emit exactly one Foundry fixture import and preserve no-promotion and RSI-denied invariants."
+  ],
+  "source_digests": {
+    "canonical_input": "sha256:04707e713037a7310d6ed827161ef4f14dda14c3bb503b79404abd9bbd7d52ee",
+    "original_month2_recommendations": "sha256:595f9d37379546313dcffa047b42a6fd38d89dd4eb9ee9f4a069e5d0edf2e0c9"
+  },
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

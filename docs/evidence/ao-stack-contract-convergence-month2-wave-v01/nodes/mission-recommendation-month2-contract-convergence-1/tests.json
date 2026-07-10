@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-1",
+  "task_id": "mission-recommendation-month2-contract-convergence-1-task",
+  "status": "passed",
+  "red_test": {
+    "command": "go run ./cmd/atlas mission recommendations import --recommendations docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json --target-instance ao-stack-contract-convergence-month2-20260710 --min-tasks 30 --node-budget 40 --min-minutes 120 --max-minutes 180 --continue-if-fast-target 40 --out /tmp/ao-month2-contract-red",
+    "status": "failed_before_bridge",
+    "failure": "source used ao.atlas.consolidation-implementation-evidence.v0.1 and recommendations[] rather than the canonical Mission tasks[] contract"
+  },
+  "targeted_test": {
+    "command": "go run ./cmd/atlas mission recommendations import --recommendations docs/evidence/ao-stack-contract-convergence-month2-wave-v01/month2-contract-convergence-input.json --target-instance ao-stack-contract-convergence-month2-20260710 --min-tasks 30 --node-budget 40 --min-minutes 120 --max-minutes 180 --continue-if-fast-target 40 --out docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "status": "passed",
+    "output": "40 tasks imported; one executable node; final response denied"
+  },
+  "regression_test": {
+    "command": "go test ./internal/atlas -run TestMonth2ContractConvergenceInputPreservesSourceMetadata|TestMissionRecommendationsDefaultToTwoToThreeHourSupervisorWave|TestMissionRecommendationsFirstNodeFoundryImportSmoke -count=1",
+    "status": "passed",
+    "output": "Month 2 source metadata, Atlas recommendation defaults, and one-node Foundry import smoke passed"
+  }
+}

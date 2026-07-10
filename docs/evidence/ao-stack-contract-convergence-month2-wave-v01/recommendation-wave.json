@@ -1,0 +1,1514 @@
+{
+  "contract_version": "ao.atlas.recommendation-wave.v0.1",
+  "mission_id": "mission-56bed010dd085a0f-month2-contract-convergence-v01",
+  "target_instance": "ao-stack-contract-convergence-month2-20260710",
+  "status": "ready",
+  "source_digest": "sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+  "minimum_tasks": 30,
+  "total_tasks": 40,
+  "node_budget": 40,
+  "estimated_minutes": 120,
+  "supervisor": {
+    "contract_version": "ao.atlas.long-run-supervisor.v0.2",
+    "min_nodes": 30,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 40,
+    "return_only_when": "all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker",
+    "checkpoint_policy": "after_each_node_or_timed_interval",
+    "evidence_policy": "node_gate_candidate_rollback_tests_verification_public_safety_promoter_command",
+    "final_report_contract": "ao.atlas.long-run-final-report.v0.2"
+  },
+  "tasks": [
+    {
+      "id": "month2-contract-convergence-1",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-covenant Covenant canonical schema registry ADR through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-1",
+      "task_id": "mission-recommendation-month2-contract-convergence-1-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c78e382d492e69606cb29b79a82076ee42fd21655ec3c2f9f15e78cd20e87ae9",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-1",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-2",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-architecture Stack-wide schema owner inventory through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-2",
+      "task_id": "mission-recommendation-month2-contract-convergence-2-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1cfd9f556ef66a502d10de7216d30dd5fce5939757ae46622d6301889c23512b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-2",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-3",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-blueprint Blueprint to Atlas producer consumer contract test through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-3",
+      "task_id": "mission-recommendation-month2-contract-convergence-3-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:0b8d8eb83305bbafdb6d840e5645d2c31e79466f0e672053b7a1b1413c4362ba",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-3",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-4",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-atlas Atlas to Foundry import compatibility test through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-4",
+      "task_id": "mission-recommendation-month2-contract-convergence-4-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:041e62d8a1972c16d58e9ca21a5cf5e3b247edfa8504bae60f0a5eaa2638b3a0",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-4",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-5",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-command Command to Covenant ticket validation parity test through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-5",
+      "task_id": "mission-recommendation-month2-contract-convergence-5-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1920bbb618473e290b31105c6c7e25717a1a8f32fbc3615098ee0f4320afdaaf",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-5",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-6",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-promoter Promoter upstream verdict contract fixture through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-6",
+      "task_id": "mission-recommendation-month2-contract-convergence-6-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:2f9a2c5afc52b7d29a78efa25009b1148f3644621c27928a147649cf5a2fdf7b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-6",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-7",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-sentinel Sentinel native verdict schema contract through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-7",
+      "task_id": "mission-recommendation-month2-contract-convergence-7-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9c7835c6a153a7ee1c2ca0f34eeefaf65dc6c9a04da6067abd954f5f37e9c9ac",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-7",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-8",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-forge Forge GoalRun packet schema owner binding through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-8",
+      "task_id": "mission-recommendation-month2-contract-convergence-8-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:35c850a4acf2910fd4f0c1d409a421df1840678a9da808809d01a4830d790e6a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-8",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-9",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao2 AO2 provider run options model provenance field through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-9",
+      "task_id": "mission-recommendation-month2-contract-convergence-9-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:4189a2c073fce691ccaa269ddfd69707dde72fca12bee4b778f0cccaa6bff622",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-9",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-10",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao2-control-plane Control plane observer event schema owner binding through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-10",
+      "task_id": "mission-recommendation-month2-contract-convergence-10-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c507f35ef5fcc49a908a241817d0ded08d68193c61bc7a79dd35ff615123bbfe",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-10",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-11",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-covenant Canonical JSON vector suite for Go repositories through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-11",
+      "task_id": "mission-recommendation-month2-contract-convergence-11-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:ef620851350abf8e9156ee7b2d9ab66734f4cbd4b67cdfecaab9914cadc081ae",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-11",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-12",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao2 Canonical JSON vector suite for Rust repositories through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-12",
+      "task_id": "mission-recommendation-month2-contract-convergence-12-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:902aad31f8bcbed0cc35f59eecada4dd3cbf6b4739841b963c83ebc622e7145d",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-12",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-13",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-covenant Stable experimental deprecated contract classifier through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-13",
+      "task_id": "mission-recommendation-month2-contract-convergence-13-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9c7ba92cf981a84cb5cee4a871f2e601c8823c5970df0e23be6cc8ebac69b659",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-13",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-14",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-architecture No copied schema without owner guard through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-14",
+      "task_id": "mission-recommendation-month2-contract-convergence-14-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b527f0b2203815ff9f09b42eb2a04b7418734d341fb2424017e2e2360e3cd86b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-14",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-15",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-mission Mission durable state migration inventory through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-15",
+      "task_id": "mission-recommendation-month2-contract-convergence-15-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f4de7e40450768c796cb35a84204bb7bcde2068fbe26a80ca8492beb358949e1",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-15",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-16",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-atlas Atlas evidence catalog externalization plan through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-16",
+      "task_id": "mission-recommendation-month2-contract-convergence-16-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1c8beb895a5c57af5b55ee8a67e1ba0d832a182a58e559f46bd2c1f45ee85b48",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-16",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-17",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-foundry Foundry evidence catalog externalization plan through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-17",
+      "task_id": "mission-recommendation-month2-contract-convergence-17-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:160e5236ea45ae347e2166f2c3e74463f6a308aa8210dd6fb833ece3dcc5642d",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-17",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-18",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-foundry Foundry CLI module split map through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-18",
+      "task_id": "mission-recommendation-month2-contract-convergence-18-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:aa5986f738190b4b3c320411faba02c5071e3d29ea02a8d3945ba6565d292c60",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-18",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-19",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao2 AO2 CLI module split map through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-19",
+      "task_id": "mission-recommendation-month2-contract-convergence-19-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:4914fa8f66a2bae44c5badc37705e1a5afea98acf99333a458e2986f862c3b36",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-19",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-20",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-forge Forge CLI module split map through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-20",
+      "task_id": "mission-recommendation-month2-contract-convergence-20-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:169dd6511d691c23a3762748224c5e1f097dcaa416ea546c1159febb5076ee88",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-20",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-21",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-command Command CLI module split map through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-21",
+      "task_id": "mission-recommendation-month2-contract-convergence-21-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8cf6888597b1a38806c95c37e6c42f8d23bf12106b1a58cc4652374292dd69dc",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-21",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-22",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-covenant Contract registry generated Go type smoke through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-22",
+      "task_id": "mission-recommendation-month2-contract-convergence-22-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9491486e65b68d1e09c2f3dfe55083af39ffe34a37d3415d4a3785eb07d1dae0",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-22",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-23",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-covenant Contract registry generated Rust type smoke through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-23",
+      "task_id": "mission-recommendation-month2-contract-convergence-23-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:896eb0273cd464c16e1ba67853edfed3065450948c9728d43b0967ea8f87c090",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-23",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-24",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-architecture Architecture generated compatibility table through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-24",
+      "task_id": "mission-recommendation-month2-contract-convergence-24-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:56765befdf14718141d35865092ddcbfab648dc430428668c52c89502467fc9d",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-24",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-25",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-mission Mission metrics recompute after handoff correction through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-25",
+      "task_id": "mission-recommendation-month2-contract-convergence-25-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:4c6c1229ca8245e04a487255bee5d8e925f2b1986a379c2f7b461bce03a02595",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-25",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-26",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-blueprint Blueprint sufficiency calibration fixture set through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-26",
+      "task_id": "mission-recommendation-month2-contract-convergence-26-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:6f45b703445bb46c3f7e37a3803d9dace4f846b927194191fd425f2313241e8f",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-26",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-27",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-atlas Atlas graph performance baseline through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-27",
+      "task_id": "mission-recommendation-month2-contract-convergence-27-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f4212baa0433a82ec6b03dc702dfc5222a34f9af556e13e07e3228f7cc68d3cb",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-27",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-28",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-foundry Foundry safe-next-work authority boundary test through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-28",
+      "task_id": "mission-recommendation-month2-contract-convergence-28-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:0117689cdcf3c369b560e120ece7acc901789d4ad55b8b5a48731459c2fe5005",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-28",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-29",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-forge Forge scripted provider boundary readback through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-29",
+      "task_id": "mission-recommendation-month2-contract-convergence-29-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:6fda6c98c4b66bcb7b7edd5e3b632d65323ac5722bf55dbd88603b48bb39b5d1",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-29",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-30",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao2 AO2 approval byte and base commit binding design test through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-30",
+      "task_id": "mission-recommendation-month2-contract-convergence-30-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:43bc7c33dd12d937eb5f24e6dca5f723742381a0671ebb2fa8532f97730c4544",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-30",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-31",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-covenant Covenant policy hash includes policy fields test through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-31",
+      "task_id": "mission-recommendation-month2-contract-convergence-31-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7c3cf9d4e5e18a83bd8479c64c8c539159f1089dd688bb60da6be0d2d93cbb02",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-31",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-32",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao2-control-plane Control plane transactional GC test through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-32",
+      "task_id": "mission-recommendation-month2-contract-convergence-32-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:5b28ea06982aa6f0dc638a0cd02a6bfba811cb075165a8b20d792485a0e27ef5",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-32",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-33",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-arena Arena hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-33",
+      "task_id": "mission-recommendation-month2-contract-convergence-33-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f866ae62d0d8ed73a87367332100847d698a3e0bfc8a8c0720eff86dce4bb54a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-33",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-34",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-crucible Crucible hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-34",
+      "task_id": "mission-recommendation-month2-contract-convergence-34-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:30a11d0ab420245435ecf76a5b6c3480530108adbe71fa496d18d7964c74fac2",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-34",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-35",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-sentinel Sentinel hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-35",
+      "task_id": "mission-recommendation-month2-contract-convergence-35-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9c000a8610e3bab95182ec771823a82bda0f5cbae8caaf3a84e9fc8d75a6494b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-35",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-36",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-promoter Promoter signed assurance result input boundary through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-36",
+      "task_id": "mission-recommendation-month2-contract-convergence-36-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:ea9a2325d9e03e9477f21bf929346d08b78e706cc19aa8308a3979811bd6898e",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-36",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-37",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-architecture Stack lockfile producer consumer gate through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-37",
+      "task_id": "mission-recommendation-month2-contract-convergence-37-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:71dc6c529bf744914f79e8f039c89c67147f8038d0abc00c1d2049b40bd16d72",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-37",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-38",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-mission Golden path tiny repository contract packet through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-38",
+      "task_id": "mission-recommendation-month2-contract-convergence-38-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9a3d4d1a1ad5a7a486fc33fff97649a97ab93ab6b3605acbb35585c15b62867b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-38",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-39",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-atlas Month 2 long-run Atlas workgraph prompt through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-39",
+      "task_id": "mission-recommendation-month2-contract-convergence-39-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:dede409d11cbebdd7269bb57df2832f91116e0de680a1e84edbc35813c3c9cd4",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-39",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month2-contract-convergence-40",
+      "owner": "ao-atlas",
+      "task": "Coordinate ao-promoter Month 2 final no-promotion no-RSI rollup through a bounded Atlas compatibility evidence node with no promotion.",
+      "node_id": "mission-recommendation-month2-contract-convergence-40",
+      "task_id": "mission-recommendation-month2-contract-convergence-40-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:330e98d0613c1b458d8ac96ca35393ab8b5607f61d6e2b974497709fdfb1b394",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-40",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    }
+  ],
+  "next_recommended_prompt": "You are AO Atlas, coordinating AO Foundry, AO Promoter, AO Command, and AO Architecture for a long-run Atlas-owned correction wave.\n\nDo not ask the operator for permission. Do not stop after one repo, one PR, one CI pass, one Foundry import, one route decision, one evidence artifact, or one short batch. Continue until the workgraph is completed with evidence, at least the lease minimum is met, or a true hard blocker remains after all safe repair, repack, and support work has been attempted.\n\nCurrent state:\n- Mission: mission-56bed010dd085a0f-month2-contract-convergence-v01.\n- Target instance: ao-stack-contract-convergence-month2-20260710.\n- Generated Atlas-owned nodes: 40.\n- Lease minimum: 30 nodes, 120 to 180 minutes.\n- Continue-if-fast target: 40 nodes.\n- Final response allowed: false, because ready nodes or exact next actions remain.\n- Source digest: sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6.\n\nProblem:\n- Recent AO Atlas/Mission recommendation prompts returned after short batches instead of sustaining 2-3 hour workgraphs.\n- Double the previous short batch when explicitly requested, and otherwise use the v0.2 2-3 hour supervisor default.\n- This continuation must behave like a long-run supervisor: Atlas owns sequencing, Foundry owns bounded implementation nodes, and Blueprint is used only for genuinely new requirements or authorization.\n\nGoal:\n- Target 2-3 hours and complete a durable AO Atlas long-run wave for mission-56bed010dd085a0f-month2-contract-convergence-v01.\n- Execute at least 30 bounded Atlas nodes from the generated workgraph.\n- Complete at least 30 bounded implementation/evidence nodes before final response unless a true hard blocker remains.\n- If the first 30 nodes finish quickly and no blocker remains, continue through the 40-node continue-if-fast target.\n\nReturn only after all generated nodes complete, at least 30 bounded Atlas nodes complete, or a true hard blocker remains after safe repair attempts.\n\nMinimum work budget:\n- min_nodes: 30\n- min_minutes: 120\n- max_minutes: 180\n- max_iterations: 40\n- return_only_when: all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker\n- checkpoint_policy: after_each_node_or_timed_interval\n\nStop gates:\n- Target duration: 120 to 180 minutes.\n- Node floor stop gate: complete at least 30 nodes before final response unless a true hard blocker remains.\n- Lease floor stop gate: do not return before min_minutes=120 unless a true hard blocker remains.\n- Continue-if-fast stop gate: if 30 nodes finish quickly and no blocker remains, continue through 40 nodes.\n- Ready-work stop gate: if ready_nodes \u003e 0 or exact_next_action is non-empty, do not produce a final response.\n- Checkpoint stop gate: record a checkpoint after each node or timed interval before evaluating final response.\n\nSafety boundaries:\n- Keep exactly one executable mutation node active at a time.\n- No provider calls.\n- No credential or token inspection.\n- No direct main mutation.\n- No release, deploy, publish, upload, or tag.\n- No dependency updates unless separately authorized.\n- No auth, policy, or config widening.\n- No hidden instruction mutation.\n- No broad RSI claim.\n- RSI remains denied.\n- Use existing repo auth only for normal PR, CI, and merge if available without exposing credentials.\n\nRequired work:\nmonth2-contract-convergence-1. Coordinate ao-covenant Covenant canonical schema registry ADR through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-2. Coordinate ao-architecture Stack-wide schema owner inventory through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-3. Coordinate ao-blueprint Blueprint to Atlas producer consumer contract test through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-4. Coordinate ao-atlas Atlas to Foundry import compatibility test through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-5. Coordinate ao-command Command to Covenant ticket validation parity test through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-6. Coordinate ao-promoter Promoter upstream verdict contract fixture through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-7. Coordinate ao-sentinel Sentinel native verdict schema contract through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-8. Coordinate ao-forge Forge GoalRun packet schema owner binding through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-9. Coordinate ao2 AO2 provider run options model provenance field through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-10. Coordinate ao2-control-plane Control plane observer event schema owner binding through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-11. Coordinate ao-covenant Canonical JSON vector suite for Go repositories through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-12. Coordinate ao2 Canonical JSON vector suite for Rust repositories through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-13. Coordinate ao-covenant Stable experimental deprecated contract classifier through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-14. Coordinate ao-architecture No copied schema without owner guard through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-15. Coordinate ao-mission Mission durable state migration inventory through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-16. Coordinate ao-atlas Atlas evidence catalog externalization plan through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-17. Coordinate ao-foundry Foundry evidence catalog externalization plan through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-18. Coordinate ao-foundry Foundry CLI module split map through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-19. Coordinate ao2 AO2 CLI module split map through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-20. Coordinate ao-forge Forge CLI module split map through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-21. Coordinate ao-command Command CLI module split map through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-22. Coordinate ao-covenant Contract registry generated Go type smoke through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-23. Coordinate ao-covenant Contract registry generated Rust type smoke through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-24. Coordinate ao-architecture Architecture generated compatibility table through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-25. Coordinate ao-mission Mission metrics recompute after handoff correction through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-26. Coordinate ao-blueprint Blueprint sufficiency calibration fixture set through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-27. Coordinate ao-atlas Atlas graph performance baseline through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-28. Coordinate ao-foundry Foundry safe-next-work authority boundary test through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-29. Coordinate ao-forge Forge scripted provider boundary readback through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-30. Coordinate ao2 AO2 approval byte and base commit binding design test through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-31. Coordinate ao-covenant Covenant policy hash includes policy fields test through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-32. Coordinate ao2-control-plane Control plane transactional GC test through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-33. Coordinate ao-arena Arena hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-34. Coordinate ao-crucible Crucible hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-35. Coordinate ao-sentinel Sentinel hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-36. Coordinate ao-promoter Promoter signed assurance result input boundary through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-37. Coordinate ao-architecture Stack lockfile producer consumer gate through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-38. Coordinate ao-mission Golden path tiny repository contract packet through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-39. Coordinate ao-atlas Month 2 long-run Atlas workgraph prompt through a bounded Atlas compatibility evidence node with no promotion.\nmonth2-contract-convergence-40. Coordinate ao-promoter Month 2 final no-promotion no-RSI rollup through a bounded Atlas compatibility evidence node with no promotion.\n\nPer-node requirements:\n- Generate or validate node gate, candidate record, rollback record, implementation evidence, tests, verification command output, Sentinel/public-safety wording evidence where applicable, Promoter/no-promotion or promotion-readiness evidence where applicable, and Command/readback evidence where applicable.\n- Emit a Foundry import for exactly one active node at a time, execute the node, verify locally, record run-link evidence, complete the node in Atlas, evaluate the next stop gate, and continue.\n\nRegression tests:\n- Prove the recommendation wave defaults to at least 30 nodes and 120 minutes.\n- Prove the continue-if-fast target generates 40 bounded Atlas-owned tasks.\n- Prove mixed-owner default waves are rejected with exact readback.\n- Prove final response remains denied while ready nodes or exact next actions remain.\n\nVerification:\n- go test ./... -count=1\n- go vet ./...\n- go build ./cmd/atlas\n- scripts/production-readiness.sh\n- scripts/atlas-foundry-roundtrip-smoke.sh\n- Public-safety wording scan over changed docs and readbacks.\n\nFinal response only after completion or true hard blocker:\n- Include `early_return_risk_status` in continuation prompts and treat any blocked risk status as final-response denial evidence.\n- If ready_nodes \u003e 0 or exact_next_action is non-empty, do not produce a final response.\n- If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.\n- completed nodes / total nodes\n- list of node statuses\n- merged PRs by repo or local commits if remote lifecycle is blocked\n- evidence roots\n- final AO Atlas long-run supervisor status\n- Foundry rollup\n- Command readback\n- Feature Depth Recommendations, at least 40 tasks\n- verification results\n- clean/synced repo status\n- exact next action\n",
+  "final_response_allowed": false,
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "promoter_readback_status": "required_not_bound",
+  "command_readback_status": "required_not_bound",
+  "public_safety_scan_status": "required_pending_verification",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

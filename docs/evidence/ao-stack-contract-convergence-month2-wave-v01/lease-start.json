@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-lease-start.v0.1",
+  "status": "started",
+  "mission_id": "mission-56bed010dd085a0f-month2-contract-convergence-v01",
+  "target_instance": "ao-stack-contract-convergence-month2-20260710",
+  "evidence_root": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+  "started_at": "2026-07-10T20:09:10Z",
+  "min_minutes": 120,
+  "max_minutes": 180,
+  "continue_if_fast_target": 40,
+  "checkpoint_policy": "after_each_node_or_timed_interval",
+  "wave_digest": "sha256:06ee3bb2fa7980bf337d74ca1553bc04a986ccf501366c11c36a9c15e7ecec5b",
+  "workgraph_digest": "sha256:c00b18acbd381f5e0939b45602d814e21acb6b13f6131d546baccdfaaba4c11f",
+  "final_response_allowed": false,
+  "final_response_reason": "lease start marker does not allow final response",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "claims_authority_advance": false
+}
