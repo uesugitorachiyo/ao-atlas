@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-26",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:54:02Z",
+  "commands": [
+    "atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-consolidation-month1-wave-v01",
+    "atlas mission recommendations validate-evidence --strict-schema-registry --evidence-root docs/evidence/ao-stack-consolidation-month1-wave-v01",
+    "shasum -a 256 over wave nodes/progress JSON and Markdown files",
+    "AO Atlas evidence verification: go test ./... -count=1",
+    "AO Atlas evidence verification: go vet ./...",
+    "AO Atlas evidence verification: go build -o target/atlas-node-26-evidence ./cmd/atlas",
+    "AO Atlas evidence verification: scripts/production-readiness.sh",
+    "AO Atlas evidence verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry"
+  ],
+  "validation_reports": {
+    "normal": "pre-node-26-evidence-validation-report.json",
+    "strict": "pre-node-26-strict-evidence-validation-report.json",
+    "digest_manifest": "wave-evidence-schema-digest-validation.json"
+  }
+}

@@ -1,0 +1,2577 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-26",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T18:54:27Z",
+  "kind": "wave_evidence_schema_digest_validation",
+  "repository": "ao-atlas",
+  "validation_scope": "ao-stack-consolidation-month1-wave-v01 nodes and progress evidence",
+  "file_count": 487,
+  "json_file_count": 476,
+  "markdown_file_count": 11,
+  "missing_schema_json_files": [
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/run-link.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/foundry-task.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/foundry_import.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/wave-evidence-schema-digest-validation.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-01/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-01/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-02/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-02/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-03/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-03/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-04/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-04/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-05/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-05/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-06/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-06/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-07/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-07/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-08/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-08/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-09/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-09/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-10/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-10/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-11/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-11/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-12/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-12/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-13/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-13/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-14/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-14/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-15/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-15/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-16/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-16/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-17/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-17/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-18/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-18/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-19/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-19/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-20/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-20/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-21/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-21/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-22/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-22/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-23/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-23/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-24/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-24/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-25/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-25/workgraph-after-complete.json"
+  ],
+  "entries": [
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/candidate_record.json",
+      "digest": "sha256:2471d3f3360dc003d0e8d42674195ff38b3ffd5d14a72f55a387580a2a66ee3e",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/checkpoint-bundle.json",
+      "digest": "sha256:243c134fb419b46f9941a275bf6e79d26f60fdb2209e0a3319e54455ee81dda6",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/checkpoint-readback-after.json",
+      "digest": "sha256:24bb206af38916d2fdd854a83f7632265b4598ff19a12504ac3301b6e31ad863",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/command_readback.json",
+      "digest": "sha256:614994b87507fe4263032bf29c1b3863568156f970dbd8653394f9b2a044a408",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/foundry-import.json",
+      "digest": "sha256:bfa92d34c8bd5465d94dc82fc33f57ec67a7bed5a1aff05abfb834c7372c6253",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/implementation-evidence.json",
+      "digest": "sha256:93645508dfcc8652b35bae0914fd02379c3c952a374ef868ce347df76c8789ca",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/node_gate.json",
+      "digest": "sha256:79e3fbc592260a3b2cd4a379d28bd3df7128a3e90bfbfd0da0a51171c3138ecb",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/promoter_no_promotion.json",
+      "digest": "sha256:ee0ece94d060a481cffe658e14bc62189ae1d0ef955df450604589d8fbaf00cb",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/recommendation-readback-after.json",
+      "digest": "sha256:3ed540bcd663e304c30203826c5437f033220f09552ba9ad15c4632c5eae80cf",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/repository-baseline.json",
+      "digest": "sha256:45a74c87c13bfee3fdc40f3443b474c0ef909d0155dd1651c98c18b43678f252",
+      "schema": "ao.atlas.consolidation-repository-baseline.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/rollback_record.json",
+      "digest": "sha256:d8e0d42965f2a33cb7d602138e11da88a934abb66ecede4c328f5948260381f1",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/run-link.json",
+      "digest": "sha256:14761ca464a66552c68b6081d7798c9f15cab5f8281d370b1ac3122a5b46bf2f",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/sentinel_public_safety.json",
+      "digest": "sha256:55d0b7ec0afd9a2d99a2fa2f552e9cab93936203ff568fa3a908727e96d3999f",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/tests.json",
+      "digest": "sha256:602ee6db73c772aff04e8f069cbe597467d36579097aec0e0ee8615d97767c93",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-01/verification.json",
+      "digest": "sha256:e8beb10c98d861d24ab2750b08f17f04428994c089e65e90f834e2e70d6e02fb",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/candidate_record.json",
+      "digest": "sha256:b40ba8a15b05a97ed8325e38aa92535cd1f7a0bb7839c8a81239f5de0a182453",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/checkpoint-bundle.json",
+      "digest": "sha256:5d260e58f2e852ccb43dbd6ea8751b40cad1a6fa7c8c91a1f8f46a05a7125336",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/checkpoint-readback-after.json",
+      "digest": "sha256:5f47fe3fa91669158b6b2c273ae8019baf03baf20b285ac35880d6ef8e6ee2af",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/command_readback.json",
+      "digest": "sha256:5e34026c1f0dd471b265fe5b685c084e75047c79694685b13a5fa3cb181b262b",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/foundry-import.json",
+      "digest": "sha256:f640e283db4172c6348c57d5563664431478826b80edeae17389949582e7b716",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/implementation-evidence.json",
+      "digest": "sha256:98bc55899fe297a0d252bb3a681d093c30fb32c4be45cb788db895a24b5cbeb8",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/node_gate.json",
+      "digest": "sha256:b32b1accfa0d3b67c04f48c9a1c75fb92b991a9508a6e426f3557e95ef8aacd4",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/promoter_no_promotion.json",
+      "digest": "sha256:2a270a316446e7263157fc7530cda1e38be552009521adc06ba833fce4e5c688",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/recommendation-readback-after.json",
+      "digest": "sha256:1d2968f044ad908bd18c15247f9051cecc02780ed3e53c843bfca6207d799161",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/rollback_record.json",
+      "digest": "sha256:0df7495b78803e1be28d2279a9585f46f6127665d161433a971afd8c0d6be5bf",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/run-link.json",
+      "digest": "sha256:77158ea692c20174f22d7d043665c5f90efa877dd4f340c1a6dcd4a95d308360",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/sentinel_public_safety.json",
+      "digest": "sha256:a50dd5272f742afbe49ba7dba984ac490c5f1ce2fd5ee780e73dbf7e5ca273d8",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/tests.json",
+      "digest": "sha256:031f06c42e3e9b3eddd6541713ee06d3477823eada42248eb8a8d4bf742c5bf1",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-02/verification.json",
+      "digest": "sha256:b43a6ab0af5937e6f0ca2363b5e65258ed7c9075dc820c81c2d1000c30e26ee5",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/candidate_record.json",
+      "digest": "sha256:44ec2d23de35b0a39d437cf1e51e16911457e7f18d1a477df4228ad3f4ea4004",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/checkpoint-bundle.json",
+      "digest": "sha256:43b3b6eec9ea336e8ae47be77cfb99975c2cb5c8b52a6150ed5e9309ebb291db",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/checkpoint-readback-after.json",
+      "digest": "sha256:cac232a1215c20f535614037527dfbc0eb4bee1d6a71dbf59f2168a30c935995",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/command_readback.json",
+      "digest": "sha256:ce0e96b9b52c04932cbb9f0d2389fbc34e5e0b4875a837cfc98cff3c6d45b2ed",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/foundry_import.json",
+      "digest": "sha256:e79e6c66f402a6a0ff752e698bb86ba95f6d0dee3ef54d20437a63b2f67bc8d3",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/implementation-evidence.json",
+      "digest": "sha256:f90a1653a0f11f44feaef7ddbf5f0ba63fb42a6613c39d605c1462526484e5a6",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/node_gate.json",
+      "digest": "sha256:0030b893796beefac7cdf0ed2b2a2495ca1e21fb68bd68ef61fe0bf7868093f0",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/promoter_no_promotion.json",
+      "digest": "sha256:8638e3dca8110f1e0ed8406bebdc91b083a73cd75aac2d8a082a447bc7fdd50a",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/recommendation-readback-after.json",
+      "digest": "sha256:e75e06551a1b1cad9ce13f5e011b5f6f1500dc736487e178edfe0b9b8956425e",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/rollback_record.json",
+      "digest": "sha256:59b97f5fd0bb1bd1534e0023db53bdda4cd61a9eb53839a8ad5533919b0053f8",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/run-link.json",
+      "digest": "sha256:47dacf019e93c516a5465f6d79d856bcd6ea135a03ed6ccd4e8954ab81e6d621",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/sentinel_public_safety.json",
+      "digest": "sha256:e1c90ba1ecf2a736b49d7e8137757fbf7626777500d1f6bdb93b820d8d63c101",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/tests.json",
+      "digest": "sha256:7da7fc1ba69af89cc2e929dc4539a6a46282b060fd09b869cabb552eac5678ca",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-03/verification.json",
+      "digest": "sha256:da30f7d085e76bfc72deb1fd51c34c12588bcbd6010b0045e04cf13f610c443a",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/candidate_record.json",
+      "digest": "sha256:4e054d2c22fd3172cb2b064afcaa78852a4efb0e8607ac22930b29dad665db2d",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/checkpoint-bundle.json",
+      "digest": "sha256:11ef37d4a4fa2b6d7a8e7910c2aae40187c95326bac6622fe05e32ad8ebe982d",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/checkpoint-readback-after.json",
+      "digest": "sha256:2a38706ec884719ae79d9dac1fda4b101248e5b0af3451e90e9d59fbc5881df7",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/command_readback.json",
+      "digest": "sha256:c615111d148340bcda9deff1bbf584b8012846bf353596cd5f436b051d37a58f",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/foundry_import.json",
+      "digest": "sha256:5be6dc0f213a11bb8c93f4ff3c0c0c272aad0f5b0aaa18e12aaf655f5ca6154d",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/implementation-evidence.json",
+      "digest": "sha256:b5626e62f671a25b59d0aa4451187a7af72004592eb6e224096d0fc1734f68a0",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/node_gate.json",
+      "digest": "sha256:f11a5117341770a4e0a83fa19ac1043c3ecc68bee441487d2af87ecac49a04d5",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/promoter_no_promotion.json",
+      "digest": "sha256:e1f4da99e417fe702260242385b34abbf5bb250141176e34c9710c7648b49d67",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/recommendation-readback-after.json",
+      "digest": "sha256:ae41a3d8c9d4b2d2804cace265304a4d802caee84b9283f2b142d5fe5673d593",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/rollback_record.json",
+      "digest": "sha256:084b3adc0472e8cf819fb7fa286c841554bf3f548268d522f9724cb0e52f47b3",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/run-link.json",
+      "digest": "sha256:a36d923d348dc6346df05268817aa53b86f717f73903bd5f9cb3e73f7fa40f1b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/sentinel_public_safety.json",
+      "digest": "sha256:3ae2324eb19ce24a87789c63b28b2cd5f32b40f49da3a818c3582ad39f862bc0",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/tests.json",
+      "digest": "sha256:7673a0b1e7e5f2e266a7adfa69b478f88416dce3a47222db4ecf7d6b53964b9b",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-04/verification.json",
+      "digest": "sha256:e99062a0584c7910acccda7fbfb218d68fea76e1f42aa0ee859a8ec7c2633ef9",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/candidate_record.json",
+      "digest": "sha256:16d5a49e846071a5b36486ee879c832049ce5ecc8e9d3215ede7b90987640301",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/checkpoint-bundle.json",
+      "digest": "sha256:bc92b1faa2a4795f71481a17487246248f8b3d44d14cfb84b59d096eebbe31a7",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/checkpoint-readback-after.json",
+      "digest": "sha256:8fccc50f17e18d8c49e1bc0ae612a8dcc683025b49acb0f75e19dfad3a656472",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/command_readback.json",
+      "digest": "sha256:b30ef6b2c0da7f2c0f5bec994789a770c74c0bd93c31ad671d2e68084011c38f",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/foundry_import.json",
+      "digest": "sha256:3394f965c65eafb2c86bf1034d042ab1a00f737c417747b74d44a1b80cbd6cde",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/implementation-evidence.json",
+      "digest": "sha256:22fc0730eaa1e3f006935c4a85f28e18194e59467b72bf724a528f61e9e14c37",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/node_gate.json",
+      "digest": "sha256:fa725249366e005248099f53263dd2fcb734c1be9d045ae5fc527eb129631972",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/promoter_no_promotion.json",
+      "digest": "sha256:bb54726fcd42ede42b1b73de8bfa5becfdec3442ab411d855ef778eb31959b88",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/recommendation-readback-after.json",
+      "digest": "sha256:c3ebdc18529eca7f3d6b7f8a49b81c3783e6de384427caca8ebbea457030f9e9",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/rollback_record.json",
+      "digest": "sha256:8dab43a9197f1f096e5656707b0dd3aa08efe5a498cbb090d428f7499debe475",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/run-link.json",
+      "digest": "sha256:946f071f155abd5dab12a700b47d14c7f58fb4c57bdcb41d3cac03b3d72411a1",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/sentinel_public_safety.json",
+      "digest": "sha256:3d44ae47ae2af6ee75521e77da12a8a10974101221ecb286cf214d8709f5fb21",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/tests.json",
+      "digest": "sha256:088029bbe2edb63a50a01f27e47b8a7e278b4fbc6a52f1b7df043a3d1dbb9fd2",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-05/verification.json",
+      "digest": "sha256:ee72e52033c5bc8c58d6f73956d90d4b7b1b73683e1b0496b3b4b5fb9b2aac82",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/candidate_record.json",
+      "digest": "sha256:6ce34f925f6dfe2c62136b84bfd6a33d64171dabc2350dae88d45bd8bf066b2e",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/checkpoint-bundle.json",
+      "digest": "sha256:36a2d8e323cf3b111f5c5a4bfd08c3be64fc40637761a63acb6b4c9198b1f4ca",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/checkpoint-readback-after.json",
+      "digest": "sha256:9895e526f61ad17da6d4aa5314a94db7ff232a359176f5680cc041f6d7206447",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/command_readback.json",
+      "digest": "sha256:691ef2385938bf80bc803309c1d49912659e4334cec8806d1419b6ddcf34e7a8",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/foundry_import.json",
+      "digest": "sha256:a9da226f7932b8ea3908fc7becad9060ecca31b1d94c784a93041c2823b91cb1",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/implementation-evidence.json",
+      "digest": "sha256:10aebda3968e5f99e4762f50cef8dc5e18eb3e333bd0201caa20afc32a53421f",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/node_gate.json",
+      "digest": "sha256:ac99e79f79a2e516e03c0b38cf349effd67566b3ab335899f54711136815e787",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/promoter_no_promotion.json",
+      "digest": "sha256:04e1406550d682ff8ff86034108d16a69c69e061e1162dcfb7ab7822ac50e58f",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/recommendation-readback-after.json",
+      "digest": "sha256:7416ac2d955934ffbb87e8d4b8c294ae9aac0dfbcce7435b920f160740c6c932",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/rollback_record.json",
+      "digest": "sha256:b0fa727d91410f3520a3f4804e6712866f7ed5a84fb3c1125abe602af5404e8e",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/run-link.json",
+      "digest": "sha256:7558b3c82ffd8a92b217a213a9895ad4c9b657f7e82a736f1ef709529f3534f3",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/sentinel_public_safety.json",
+      "digest": "sha256:037de78023d960637405a9226da38a84c285530c81b17f3cc3ea541ce809f595",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/tests.json",
+      "digest": "sha256:55664f3fffb32253ce71f629691a29c26c790ec54844c792d17581ff45ca47a2",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-06/verification.json",
+      "digest": "sha256:7ff5bb17045b1252de37c606d9a6dec648841972830052040016bc749fa489b0",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/candidate_record.json",
+      "digest": "sha256:17fa95301fa12f1280703dcbc61de56d310948eeeecddb697ea3cd165f82893f",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/checkpoint-bundle.json",
+      "digest": "sha256:e144467d10b69426fcc8071a44f24ce395530bfb812ded213b97a92347d1087b",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/checkpoint-readback-after.json",
+      "digest": "sha256:bf178c0ece4dd9b36854841020f2990ecb244899773e55051f80c470e37a95af",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/command_readback.json",
+      "digest": "sha256:45c8802bc4689430c43e0342502606dc2b84adcd4e2f9810a40543b1b8a73c1b",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/foundry_import.json",
+      "digest": "sha256:c96bad82a102be4a93b8bb02ea89b3575d5398e16b93c30ce5e13757d327ca75",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/implementation-evidence.json",
+      "digest": "sha256:0f3368ee90a8348ac5b1137ea4b7fedbc9d03508b3717709b16f318607b51a02",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/node_gate.json",
+      "digest": "sha256:33aac5657018d36c6ad0f93e4033b5525fb5be845db14a2b1c66955211ea68f7",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/promoter_no_promotion.json",
+      "digest": "sha256:28255795f091f437c3a84b8b6a2f00131f81fbd95e09704b58c891f71ef67c1a",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/recommendation-readback-after.json",
+      "digest": "sha256:f3a8ad065348d7dfd72d7c9bc815d1319e1089bc6a7ee4aa923b380e27ca5d81",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/rollback_record.json",
+      "digest": "sha256:a5313ab32a3c642c569994613bdcb1c7462f161bcead649f1991821aedba541f",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/run-link.json",
+      "digest": "sha256:4365b5dc6b623470e52b59bf6bfece1c2dc42a633de6c0fc26ece1cadbd5ab79",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/sentinel_public_safety.json",
+      "digest": "sha256:768f1589954d8e1864014f402a93d9f88dd104ad69fcaf41fcd35de125866453",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/tests.json",
+      "digest": "sha256:22e6522d2371b873e1500ddfee645790baf828033c2d7a9be1da1ee06437a7ef",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-07/verification.json",
+      "digest": "sha256:e89239d5a83597552b8ba07d9d717841d92973520d6d9bfbd027adf7e0a3b884",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/candidate_record.json",
+      "digest": "sha256:bde2320656359c8f5cf3ad4e6cec89755ba642657bc5ec69d1fe811a332a3f5b",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/checkpoint-bundle.json",
+      "digest": "sha256:09cca2bba009b6f37d0e28f62092cdb1e185e08af5c5d60628b3e0f06bc02e89",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/checkpoint-readback-after.json",
+      "digest": "sha256:8e85ccab1191f34a8584f1024af5775ad1becf590a90f25da482d5a225429938",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/command_readback.json",
+      "digest": "sha256:5579f873d0548f82f96d73269d6790bd68ee965d3ea3f24cc829a2d37b260bbf",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/foundry_import.json",
+      "digest": "sha256:32cf15f5bd162d9dba62fc307e9b34f4c133b2112d11f30beeee179e25d19718",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/implementation-evidence.json",
+      "digest": "sha256:da96a4a85b1f2e401c825e4d92caed4fcc03271654f5ba124e8a185de96612c6",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/node_gate.json",
+      "digest": "sha256:0b3a9096d943efec1aef289319f3df045097f993fdd475b965213825707667f2",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/promoter_no_promotion.json",
+      "digest": "sha256:28255795f091f437c3a84b8b6a2f00131f81fbd95e09704b58c891f71ef67c1a",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/recommendation-readback-after.json",
+      "digest": "sha256:34a8f1f1ff3bdda985f44cc8455e12455f78fe468887da55f454488995b54899",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/rollback_record.json",
+      "digest": "sha256:13b2bcebac3e5fdf6a549aaee0f6d1935abe2e0541f6f57a8b820a535b30346b",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/run-link.json",
+      "digest": "sha256:4e8addf4615166a7d25c106f3c512f3b00304c6a33962f4ca2d644a9e6299b28",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/sentinel_public_safety.json",
+      "digest": "sha256:1f6392bc4784565c3babe4a0ce75776574297249dbd6f562a53fbdfbd63d9eb3",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/tests.json",
+      "digest": "sha256:bf12e6042a3d663d58169b410756566363bb6b615f19e85e060694fdf0cd751b",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-08/verification.json",
+      "digest": "sha256:35f8c9f2e781ad04b635541e7c377458d08326793875c2fb201bfbbc1c2255af",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/candidate_record.json",
+      "digest": "sha256:2631569abface8a6b009ae2c6376d62ca8174f5847ba597d701d5abe5c0fb4db",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/checkpoint-bundle.json",
+      "digest": "sha256:5942caf0cc46426c8a313f421242b0aeb4bfedbc4339fd8215ecd5c49ecfc028",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/checkpoint-readback-after.json",
+      "digest": "sha256:b8dc2b9d649a3df49d8651401d0d316e450f1850e9597750874aa15299e107fa",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/command_readback.json",
+      "digest": "sha256:1e9826cb7d2d8e434170f843b20a8b32fa46ef7efcbd13f576551720bc2cd757",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/foundry_import.json",
+      "digest": "sha256:d638cf483334e507e5f7922ab22f5db82a70a82bc5815731e1a0e164662eb5a3",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/implementation-evidence.json",
+      "digest": "sha256:61344264112e8970e9282eea68ddff302656b160983f50de1766c815ea14fbd6",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/node_gate.json",
+      "digest": "sha256:cb3ff2f3edc3623dc646523518e1e959d8623210891b2da60f4227972dc768cb",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/promoter_no_promotion.json",
+      "digest": "sha256:28255795f091f437c3a84b8b6a2f00131f81fbd95e09704b58c891f71ef67c1a",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/recommendation-readback-after.json",
+      "digest": "sha256:97185e7aba565641b43bf5627612247e6b1d9ceac69c9e6f9ea92cb8647dd3bb",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/rollback_record.json",
+      "digest": "sha256:73b1c64bc99c6cfcc2bbf2f5cc4276fa12981cc02f058788f92774b7e1733244",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/run-link.json",
+      "digest": "sha256:d462eab850357cb9fbd8da7910806b1f1d7bec8840962333fd78911b1925a93b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/sentinel_public_safety.json",
+      "digest": "sha256:af7d0df8c013e4688d8a6f0e1766ed9b17ee54d463c2e622835b5fdbf56bab20",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/tests.json",
+      "digest": "sha256:66773f6d6f3eecc8019b9453ea92411cedd39d30cb758ab6a6ee2f7c76eb0d22",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-09/verification.json",
+      "digest": "sha256:7f5700f443deeac9d64296a8a6d5090788ce1ba4456b8543dec91c3effa29760",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/candidate_record.json",
+      "digest": "sha256:d9db8ae18b3bc15367e430f1b25a0f96189e87e0c0a042cd6274e04201d13b0a",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/checkpoint-bundle.json",
+      "digest": "sha256:98488809637842135e81fd36a3dd8345764d30278e5fea6b8e764f12f4dcf202",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/checkpoint-readback-after.json",
+      "digest": "sha256:16563fc2a096d668651b6a808936f42da4743720d194da828db15f6c1281177a",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/command_readback.json",
+      "digest": "sha256:6695b5813e07f1cef648e99d1c6160557ec19574d124b91ae7fee60483cb6a4f",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/foundry_import.json",
+      "digest": "sha256:fda04baa2ac1921ed1d865bd2a932a3cf22640970c90f309b45708e6067b132e",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/implementation-evidence.json",
+      "digest": "sha256:f571ee14887c2c7378631922f0ca3df095b26377929b9363bb4ebb05eb824297",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/node_gate.json",
+      "digest": "sha256:66e2fabc0542e0841fb8b71295dfb2d8b8c760a78b911ce9ef7591b6a54ea734",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/promoter_no_promotion.json",
+      "digest": "sha256:28255795f091f437c3a84b8b6a2f00131f81fbd95e09704b58c891f71ef67c1a",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/recommendation-readback-after.json",
+      "digest": "sha256:9a5528331da8383be7a11d59def820b09ea122aa74cb1af9c0ca163f8f79c5b7",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/rollback_record.json",
+      "digest": "sha256:e6743de761e274afa8084f1fe307fc261f4d57580d485776dc9a7a51e84573f0",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/run-link.json",
+      "digest": "sha256:25cfeab49a979ad77e4e76f6a6a46e359e6552d51d6232d1d101ddc20717f46d",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/sentinel_public_safety.json",
+      "digest": "sha256:cbc02b425f31a59265847a48628775c6508e602da7bf161ec080e57905494277",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/tests.json",
+      "digest": "sha256:7087770462ccb3c6c5ecc8f06d4b8aaff44fb886c8bc97f993665523cfc3970d",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-10/verification.json",
+      "digest": "sha256:8823b485d3a22b187709d8728d843401f644dfddb7e8dabfc8c81143813d8fd4",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/candidate_record.json",
+      "digest": "sha256:151aa1899fd0ad900a6b9aa3b1721360ecd2e7f0831bc7aabefb717a5472f7ff",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/checkpoint-bundle.json",
+      "digest": "sha256:60268ad640e37da5eeb4552dfef362e5305dc52cd37e6c47ffa82e73279e3545",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/checkpoint-readback-after.json",
+      "digest": "sha256:34b933400fadc4e1ec790b004b1ebe7823153d483dedd77117644159733ce4bc",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/command_readback.json",
+      "digest": "sha256:f16ebb14c57450d59aabd041335280249e9dc3c49437848235080b95800537cd",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/foundry_import.json",
+      "digest": "sha256:1e1f4859a359ddacced7aa568387a9bcb3e0d4e9a5e95f49390b441929959f19",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/implementation-evidence.json",
+      "digest": "sha256:d2626c354bf000a1d6fed837d4a7fa296f5cea0578d04e632ea67ec1f6af84e2",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/node_gate.json",
+      "digest": "sha256:5e66fc0cd89e2bb97b2ef4b48d08c99eb9ebb4b465e41eb7196eb373fad2a6f9",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/promoter_no_promotion.json",
+      "digest": "sha256:28255795f091f437c3a84b8b6a2f00131f81fbd95e09704b58c891f71ef67c1a",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/recommendation-readback-after.json",
+      "digest": "sha256:33c69bbe9d71c7b173c9ab0a25206345670c9bfae54a1944f03d39f64c5fac09",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/rollback_record.json",
+      "digest": "sha256:ba1ac8d7a10b733bdc38a98777c6a5ddcc950dda75bf039898e605c75b0e925f",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/run-link.json",
+      "digest": "sha256:60812c8fb0e714799501bc12d07af054056460067cf0dc9b2e1a13deb48c7775",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/sentinel_public_safety.json",
+      "digest": "sha256:fa5a0dd974f70bd822e1a471684a8fc6bc96fd20cf39b9ad38e2307eee647251",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/tests.json",
+      "digest": "sha256:ba022beeb38a9a5b8f3f153bd9c5bdf43f504bb206c87b0c799f3becea1db1d5",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-11/verification.json",
+      "digest": "sha256:e41c0782fc2d2ee43013aef9867265a2b3db8f5314a8ddc4f1d573552ddd0f0d",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/candidate_record.json",
+      "digest": "sha256:74a373b75b6f005ee742cfea58198a1badb4df85828a2891cb1d443b5639653f",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/checkpoint-bundle.json",
+      "digest": "sha256:44dd09942c5d1e53f0d6084843ec46c37aae25b5e0b1fb2e03e264b63f3820c5",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/checkpoint-readback-after.json",
+      "digest": "sha256:78815feaabe9f30734897a28c23fb280f2af9a95fe383651afa58244ce1927b2",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/command_readback.json",
+      "digest": "sha256:6bd3813f789ae3d119f0153afc3bd59960c457563c876dfe43089ec37b2e43e5",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/foundry_import.json",
+      "digest": "sha256:86ff7740a57faab306fab9168aa45cf5535d7c2d48e07e21bf325c38fff287bc",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/implementation-evidence.json",
+      "digest": "sha256:77783008e703c2778c6d5bab8a4e604cb6ac23464ee34aa2908e5d8be8f403ad",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/node_gate.json",
+      "digest": "sha256:9896b87cff1fe086446b73799f29fe1d04f56285e3ea6a5b400e43a676a594aa",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/promoter_no_promotion.json",
+      "digest": "sha256:c6a7b3c17b3855276306a6456c380e50e5f4f1b3f1855cb1fe050a6c6e30660d",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/recommendation-readback-after.json",
+      "digest": "sha256:c5bd28585e903c9b50e152e55fc8c5df5b4eee2f6f14414a0d7928703616b2a1",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/rollback_record.json",
+      "digest": "sha256:4edeb938c71e1497b44caba14be4ce2fa581ce3f0869ea30d8982c2b4566c0c8",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/run-link.json",
+      "digest": "sha256:bc2cdafc3973f914d22d4e1517f0ac7920a497538bbbea80d903ce87b9b91601",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/sentinel_public_safety.json",
+      "digest": "sha256:8757494090515b5fa8a94a1b66d7cb3c0f6a9b86ebce70f1e4ab6f6768e7de0a",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/tests.json",
+      "digest": "sha256:17804cc593cb2cdf3e69831a9fefc7d6851cbf1d45a088f59c3646e666cbfecd",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-12/verification.json",
+      "digest": "sha256:da8e44c2f627ae52ed33168c95fe10e4955b202408ecb858a66307c1ea2ca5ea",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/candidate_record.json",
+      "digest": "sha256:8158cc01da6735a9629b57bb38c8c10c19333aeecc33891db4d54de64c981928",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/checkpoint-bundle.json",
+      "digest": "sha256:bb40a94ede8e173678d77e3957d14775417392f8ff783ac3c2df5cc9f1a00436",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/checkpoint-readback-after.json",
+      "digest": "sha256:3cd17cbba2b9e98ef80c9aebc41eaed557924bc9e78d75e0f22ad37bb12d2779",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/command_readback.json",
+      "digest": "sha256:6892c8d953d53609f23f7b1c8bb0f863a5a20b1f3877b8f7e1f247534a4df413",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/foundry_import.json",
+      "digest": "sha256:4a520e99ca7151bcb0d6319b76b7f23975481602079e4abdcf64df5509d2dd66",
+      "schema": "ao.atlas.consolidation-foundry-import.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/implementation-evidence.json",
+      "digest": "sha256:ed21b72b8c953f52eba7b96c0e7a2f2d70272642628cc84f938340b45a880c7e",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/node_gate.json",
+      "digest": "sha256:2b982d5e2b0538626106596309da249d7269686b447af7703beb6b0b26141989",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/promoter_no_promotion.json",
+      "digest": "sha256:c6a7b3c17b3855276306a6456c380e50e5f4f1b3f1855cb1fe050a6c6e30660d",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/recommendation-readback-after.json",
+      "digest": "sha256:6e352f87ac7d783636bd626b1200d8cc098b4ceb27a11cb078726f4087af78b7",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/rollback_record.json",
+      "digest": "sha256:6005eb95b6626d24feae98557bf4e0cb8a6053ed02df36e15cc610d36f817c68",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/run-link.json",
+      "digest": "sha256:ab865e66339e5bed2f38eb8b3305e95e15e018be7860508c3893149e4eb66f3b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/sentinel_public_safety.json",
+      "digest": "sha256:f5ae9a1771653295d87ac0d2442376ffb9d22942c925d9628acd5d1fffd42402",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/tests.json",
+      "digest": "sha256:fe3427b0c441a7f9ab5134bfa355e84e59c65296c62860ac74a0991c471f35bb",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-13/verification.json",
+      "digest": "sha256:a71568dd1c7c5af06974dab2a8412c7dedf1e61eac94be79aba57b9151d8f672",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/candidate_record.json",
+      "digest": "sha256:35468cd6a1c7c749d8b45092d845fa7474d26e877a675a3a146f453e5445e907",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/checkpoint-bundle.json",
+      "digest": "sha256:9610a0d299fac987956faed199238e97c53bba3f88b3768bd1fc4bf23ac90b96",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/checkpoint-readback-after.json",
+      "digest": "sha256:82ac2a46d8442e6ceffa10ab635924d103090250c3327c277e65d9ba31d1e5f8",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/command_readback.json",
+      "digest": "sha256:83a9e2b7e8d548ca9fc358d740069bcc5c6fff03fccf61274585b414d88fa91a",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/foundry_import.json",
+      "digest": "sha256:112ceac69167e3c3137371458c65f1ac85d39ba6a18fd6b07b4237334a15dc78",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/implementation-evidence.json",
+      "digest": "sha256:b188136334c8bf6d6911709fc7e727675fcfa5a6ef7e4521ca7d1db6584e8c52",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/node_gate.json",
+      "digest": "sha256:9eaf9a4c23de470b0c3ae7c7382b64f6addfe031b0e337f4c94f346278742e55",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/promoter_no_promotion.json",
+      "digest": "sha256:d49107cc79396cfce14ff21b6b661061b69fa8706c3f70bd8190d767690eb706",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/recommendation-readback-after.json",
+      "digest": "sha256:0df111eb42d5a5d624eaf5d2c214e674e625538ee748eae0ed94cfbf906e319b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/rollback_record.json",
+      "digest": "sha256:cbb6ff647dfdc4cfe9da63e5d725ae8320f193af5f1200eee3f12d2cb32ca901",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/run-link.json",
+      "digest": "sha256:c45f574e1e3640bc89a9a14829049689457f1c5e50e4569c541f14550d64d59c",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/sentinel_public_safety.json",
+      "digest": "sha256:84d14392dc7fcdc98b72c1cb60292b5ed7e6e4065d25854af4560db7df57902c",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/tests.json",
+      "digest": "sha256:cb7454b7276269e042a3a98fb1145a47cd9d5b037f16d5f2847cab71b714a510",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/verification.json",
+      "digest": "sha256:fe5a1c4232efbea90766658db0a63204e592eb6bd77e268b64c7f80a671b3fdb",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/candidate_record.json",
+      "digest": "sha256:f200babf5e24df8eb53601745ef32d7bd91f4329a7837d2c2045babb1321c969",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/checkpoint-bundle.json",
+      "digest": "sha256:5327421a1bdfb6f922d976c079f7c0f4092e039f2d671c34cc25055facb99b95",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/checkpoint-readback-after.json",
+      "digest": "sha256:7537e7fb3f061ff415f855ec1be950aa3cacd5f2b4e1e4c903a743845b27633c",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/command_readback.json",
+      "digest": "sha256:0a1f8de1a8d10add6b7142953de0446d0a78dbf8361ab379bf0b7bcc8dab1a15",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/foundry_import.json",
+      "digest": "sha256:92e7daea040a82b6496eed7d7084265b7e81871fddf115805aec070f9ef276a4",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/implementation-evidence.json",
+      "digest": "sha256:35c2eac617c68e16ccd42324d06af16f30b468cce83c5b51c84db14e43ed4bcf",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/node_gate.json",
+      "digest": "sha256:55690f738e69a50c366e25480e7f5294ae18373a73e9dfaa06bf4e49096eb91a",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/promoter_no_promotion.json",
+      "digest": "sha256:dac991cab517c1c6e09564f620c5d14038b2a9e40fdb5982ce9a0f2347e06764",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/recommendation-readback-after.json",
+      "digest": "sha256:e2cec2bc5e29496319193f444579b86d9a12ddae1c4fc47090cc06574ead2a21",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/rollback_record.json",
+      "digest": "sha256:a2c292f74e776f8298fca85344142f02deb3b260de03029a01bbe655b6ad841b",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/run-link.json",
+      "digest": "sha256:bd194a47512f0f4e90ea624c524770dcb71ff2ebfd9423932b8ab106433d5449",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/sentinel_public_safety.json",
+      "digest": "sha256:3a90779a9e04fa8f31715aaab22b1641f8cfd0bc44a2fa423ef8452615ad1f8b",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/tests.json",
+      "digest": "sha256:89c5f284b260c1c734380ea0c2090f015dabb9ce49f17be7889752531b437f2a",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-15/verification.json",
+      "digest": "sha256:d393f7d75338ce66e0c3dbc10f1846a0203fae7976b8844344f4181b3df3cc63",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/candidate_record.json",
+      "digest": "sha256:b2c769a10b8ea6cc6cbea28e5b454254a6fb0650b4851c3e2c159fc7235afaff",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/checkpoint-bundle.json",
+      "digest": "sha256:0f9ff5d2e23f9fde8bc82d3f7a0d1fbf2975de3075d40274c66e7f60359a7127",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/checkpoint-readback-after.json",
+      "digest": "sha256:26eb3062a3f64dd9a8e95bae0b844170bb8dc34ba94f985bf4702b118fc40956",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/command_readback.json",
+      "digest": "sha256:ad8ae2fd2a823beaf32b35dd9baa9c7530cd001bba0cf79321dee7df6912ceeb",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/evidence-volume-baseline.json",
+      "digest": "sha256:ee90adfe45f4e46c55091de184ec1f58a9f15e3a089da346968ee9f11b4de343",
+      "schema": "ao.atlas.consolidation-evidence-volume-baseline.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/foundry-continuation-prompt.md",
+      "digest": "sha256:b13a593b5409bdbd9cc038bcdaf27c88bb937bb53fcd9902915a2d79c03102c0",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/foundry-task.json",
+      "digest": "sha256:1de9a603a58fcb9da10ee838c77ab0cb116ec6da636f1c6e7034d6b6ef072760",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/foundry_import.json",
+      "digest": "sha256:287b7cbff4dd3e2c2b3d2755ae7a54a9e20eeb5b3ed3ef4b10482b009ce2ee77",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/implementation-evidence.json",
+      "digest": "sha256:f21ba571e8d4930659750e5b9583399170623cb1978ff38ca89bcbd8d133ca99",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/node_gate.json",
+      "digest": "sha256:d74855fbecedab87c09f52c46ad86bda101935f25500d8468b029bc0f9a9ee9a",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/promoter_no_promotion.json",
+      "digest": "sha256:fe3935343e1aa3a700df8933f7fcff7b63546f5181d7d3c1b56d48d259d3ea6f",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/recommendation-readback-after.json",
+      "digest": "sha256:04f0c9839057d2b34353a7a0e156f15b26fd0ba3187cb403f4dae89f7fabec5f",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/rollback_record.json",
+      "digest": "sha256:63b55e7b21e4c55d1efd0e7d70f2f05151c2cee5980a4e45b4a0da57831dc677",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/run-link.json",
+      "digest": "sha256:3b7b9961cdf0db5dfa8ea858431d0e263d3349089aecee50e8286fff058d15be",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/sentinel_public_safety.json",
+      "digest": "sha256:fa06548484a880aefbf97a39ddc7d6c13f52631c0fa570a4ff4f3212f58207af",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/tests.json",
+      "digest": "sha256:aa004c577bfd50051c9fd68d6729a2f733877a30c18ca55916e9ebcad7af26da",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/verification.json",
+      "digest": "sha256:7a434de1fdeaa715650124e30f350096a242223b0131605dad755bbd7a2e9dd2",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/candidate_record.json",
+      "digest": "sha256:604929345630f70fbdcd8f559c4a9d0439554bb2e2a127bea717f43e8d6cd6ab",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/checkpoint-bundle.json",
+      "digest": "sha256:7f4d935e1a9bec222084a231dc27eb64fe2a60a824d1fcbd7e3b0644a451d306",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/checkpoint-readback-after.json",
+      "digest": "sha256:3f5be9fde0c7208b9b7b1ba3e67ad603e66420bd2e14d17f2e3311c048e61208",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/command_readback.json",
+      "digest": "sha256:107c710604427db34d65548afa14afd9fa0b9078a9355696770d703d7454a163",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/evidence-catalog-plan.json",
+      "digest": "sha256:9e533bc6e59addddc2d7f6ae96e17750cc691f7b0e704f689e4fa18cf05ab9c3",
+      "schema": "ao.atlas.consolidation-evidence-catalog-plan.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/foundry-continuation-prompt.md",
+      "digest": "sha256:0825f7187c6ac66b63736a7c5e5e640a0c04b1d46bbc08c806eeca813b122a6b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/foundry-task.json",
+      "digest": "sha256:933cf0641a2a1278e674974bc16cf4076ab2254940e87944ad58677f389988c7",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/foundry_import.json",
+      "digest": "sha256:8ea13081d92a0a4130f2052d873d65dcc334983a6854ef3612a114d98e397297",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/implementation-evidence.json",
+      "digest": "sha256:62b2ad20e7413bb5a723540758d8bb1216b0d7cc8c7434d2737de3926900e5ba",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/node_gate.json",
+      "digest": "sha256:ed023de89170048f0d3948c41de6baa0f0f2d09939aec1ee97be4b8261db7935",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/promoter_no_promotion.json",
+      "digest": "sha256:78d4cecb64e016193502f736b230fb4659904f1b6fe27ef31eb1c6f3d9c1349e",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/recommendation-readback-after.json",
+      "digest": "sha256:568f4c4186920e4f319e9abcb91882520dbefe0688096b9b014d0c98cf6ab810",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/rollback_record.json",
+      "digest": "sha256:77695aa69045bb673dc18b9f4d050966e4f70eb48374243dd56209b172cc96ef",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/run-link.json",
+      "digest": "sha256:06eea5e331ac027379f32bd0fb92b3a8b91037406030f03a016c5484cf2a4649",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/sentinel_public_safety.json",
+      "digest": "sha256:9567141616b5dc6a3a6f3d6bf2128dd9fcf87e6856dc951179fefab741ae8ed8",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/tests.json",
+      "digest": "sha256:fb84821194694d052c962344ef801d32e8b6256feb9f037047bb26fccba83666",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-17/verification.json",
+      "digest": "sha256:989ca497c3377789825af40b5cdb0ebbe1579d69256fbbebc0d612dd881b29e9",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/candidate_record.json",
+      "digest": "sha256:aa42e6dac3082be543928fefc6b17beadd830fc5dbbd799405ae7572ea1e1fb2",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/checkpoint-bundle.json",
+      "digest": "sha256:18c65368cf48b27711625ec2828c5c709c686f935ea25e73d53392d7f8f3b442",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/checkpoint-readback-after.json",
+      "digest": "sha256:1797d867ca09eb6482b04f36d5aba53cd96919e208de01a400b2220da71447c5",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/command_readback.json",
+      "digest": "sha256:9ddf53e2cad2d74c1d8594476d15736eababc93af98e728d72b19c9a669dc023",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/foundry-continuation-prompt.md",
+      "digest": "sha256:b1a9509e12f1912e1829fc4da458302a1ce3b08d12a9e21b51212fce609318df",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/foundry-task.json",
+      "digest": "sha256:ef4fef7880e623dd99b5cfe6ceb241a1ee448abad9f9e414a14749326ca0ca1e",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/foundry_import.json",
+      "digest": "sha256:e15d0b9cb9edd508ac4eedbd48168dc423e0814eed51fd3a52a666bc00ea38ff",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/implementation-evidence.json",
+      "digest": "sha256:e7edd42198422cc9856efb4f3a648d286ea2e604b66ca17aef137fff9b891002",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/node_gate.json",
+      "digest": "sha256:5e091daec36ee3762ac809b53ee7e3ae8832187e7ccf7e6521ee7ed6af12d43e",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/promoter_no_promotion.json",
+      "digest": "sha256:00813ebe379be831dd3a3f07e1bcb26af775dfa4252e847b8164758242ab0bf4",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/recommendation-readback-after.json",
+      "digest": "sha256:8387fc9f2489e2cc63b1325be348069d61389332d30985879c953377519b62e2",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/rollback_record.json",
+      "digest": "sha256:79f19d253e9a86e64529ca86b0113fc92581dd4abf22dcd093616e9882746794",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/run-link.json",
+      "digest": "sha256:4b2d1136fed9a73cb7b9b3a5f845ce679136a38ffb329c78f11fb02228611e43",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/sentinel_public_safety.json",
+      "digest": "sha256:9f539d65a58de81d475b7a932b8141ba3bcb8c33343b30d64d50c59ee7d3a36a",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/tests.json",
+      "digest": "sha256:38ef235f1d1c7c23fa7c86abb91722c1e41ea7e2c049819f859f1601c8b09238",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18/verification.json",
+      "digest": "sha256:641667d973a4106659f9e27623a7d906fb743331c095289a2e855347492d6959",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/candidate_record.json",
+      "digest": "sha256:88de0c92c8b659bddfa96f2766183e623e584a28ae725a4aa63a4c8acd16b406",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/checkpoint-bundle.json",
+      "digest": "sha256:06d1ae70297ca5e49f38b9aa5f6511d565d3d495ebd734ce8207d3a23b93f8b9",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/checkpoint-readback-after.json",
+      "digest": "sha256:2e7e12ecc4c90363b20bb447e0545ba9a458bb4a4c0a9c5013fcf7d7b9675d1f",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/command_readback.json",
+      "digest": "sha256:de38e9631efdf828ab33646619d0a90721034f15216f9ec5cb2f09ca006ef452",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/foundry-continuation-prompt.md",
+      "digest": "sha256:a1b7be1bc05e3af5a3bf1c831a3f740298c3a672b2826544a5de4708626481d4",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/foundry-task.json",
+      "digest": "sha256:de1e6f41e32b543f8fbc86df0294af2a4f93abb90d542c3f8fae9969c888132d",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/foundry_import.json",
+      "digest": "sha256:ecd96764a434c9e1407274bc15ca03c648fe1f68d99248289048a690321ca5eb",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/implementation-evidence.json",
+      "digest": "sha256:de1a277edf253fb2bbbd9baff3b274faa355ee371a7000fab914d6e13573328b",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/node_gate.json",
+      "digest": "sha256:c26423ec37e8bddab09b6664e73939f954cc3a77658542c9a721a8a01253a333",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/promoter_no_promotion.json",
+      "digest": "sha256:25d4e259fe8d5e9dc474a0f0c44b5bdf2b6bbe0093340cf32fe2eb201fd759a5",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/recommendation-readback-after.json",
+      "digest": "sha256:843a30daf88f935cc4446f38e3b610c12a9ce7df9ddd427a56b03fa0f6f4a461",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/rollback_record.json",
+      "digest": "sha256:6a18568512766b22842a6e5f5ba34f84aa3327981018f82013e74425200f5aa8",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/run-link.json",
+      "digest": "sha256:f427797eefbcbb402393f4f3b98bf3f6495953ec6425f7bead11879fd79427d6",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/sentinel_public_safety.json",
+      "digest": "sha256:8131d25466221e678c9b1efbd1f011d2fee0865560723116f531de0e9c00e6d8",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/tests.json",
+      "digest": "sha256:2f493a8d060ee0dfd0e8658018d7fbc08eb9f0dae4864912bc83cd9949634334",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-19/verification.json",
+      "digest": "sha256:2e6037c56bbb35dcde15bdf5c1b18cef5c51f861a8389d995360f7cef5c0f9f8",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/candidate_record.json",
+      "digest": "sha256:245af660e70b592073af4eb8ce2aab4fdc3ce8532821bd3d438a6f6ceb996974",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/checkpoint-bundle.json",
+      "digest": "sha256:8e372f7b53a4905af5f5a22cb5aff931494d1687b33051ec0fe600e530e7bbcb",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/checkpoint-readback-after.json",
+      "digest": "sha256:e6ac90591ed028dc6ed4028b1fc7f82f818440e98f384eb1daa452a9e037fe34",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/command_readback.json",
+      "digest": "sha256:0a75c5136a33674cae9c48f2f9ed2f9c40ec88b19726abf1c885167c18112ebd",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/foundry-continuation-prompt.md",
+      "digest": "sha256:2876fc97bd97bb1d59fd38da3c8f97968f327c41df1ce5729fd354d1b5374f58",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/foundry-task.json",
+      "digest": "sha256:75c73f1ad0e97cc208ea964187bba13e1e984ac03d0666e6fa371a09950671d2",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/foundry_import.json",
+      "digest": "sha256:79138706a3432e47d089bab325b726d66bf35a52a1e3b6ed71dc1f74c10b8752",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/implementation-evidence.json",
+      "digest": "sha256:9b32614403e6ab89e665e48002bf1668a644710f1bfa9d3231fcaaea84b37196",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/node_gate.json",
+      "digest": "sha256:e4897ddcec53f221ea610da209687b8fb157410885195d28d7c0e115c3307afa",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/promoter_no_promotion.json",
+      "digest": "sha256:5d8d97a956fe335507599f8ce4ad80ec7dbf044f3175c17aad2155f42965a3c1",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/recommendation-readback-after.json",
+      "digest": "sha256:3ba2f53c779534c826e1550f5c8a541783b591d3733a32553052e21c21ee8d65",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/rollback_record.json",
+      "digest": "sha256:b06cea567c898cf32c7d3d958e5877d93548ae71841df566378282e785de59dd",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/run-link.json",
+      "digest": "sha256:0aedc5ce100fd02b14ff9d5fcc7f2aa94ed4f9973c06c08245213c8bb82cec61",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/sentinel_public_safety.json",
+      "digest": "sha256:e38037a1fcd2b1e6a4c288c1e58d2595e530bf15e7c70f90d8075d8cdf275388",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/tests.json",
+      "digest": "sha256:45715061386243817bcdfdf1875fad934b602cc268f6cd54047ace1811d89923",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-20/verification.json",
+      "digest": "sha256:927bea4c4f46782dff522dfb53580661982ba2129b31f8bfea8bbae7361d3012",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/candidate_record.json",
+      "digest": "sha256:56bf93175cfad152f9082ece28d7c232edb61c6883c357b290ee457db71a559f",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/checkpoint-bundle.json",
+      "digest": "sha256:3bd3d554a397d068b2eeaadc6ded6f885bc0ccdcc6455aada8d7c5c92bf95dac",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/checkpoint-readback-after.json",
+      "digest": "sha256:f1a854b702994a2cc48a91df70594e03857f9516338c1b029094e87681d2a3f0",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/command_readback.json",
+      "digest": "sha256:b2ce1b39a76d6fc064a62fb77acea85b031bdbd942b0aa223af382fb551756db",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/foundry-continuation-prompt.md",
+      "digest": "sha256:a92dad1388c79c725163d1b1bb85ee78821e5a1dd381f8d8cd7dc98a897f1dc4",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/foundry-task.json",
+      "digest": "sha256:1c077e7bdecee65d935a0eb3e13266279e0ce5b5d74e1bf16bebddb5edad1774",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/foundry_import.json",
+      "digest": "sha256:3e6498667b7e9378be70c33b08067b97fc23760afe1de8c004f0bf64d5239e8a",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/implementation-evidence.json",
+      "digest": "sha256:f819a5719af2b1fd30191a5ead564cb3630fc544b302b93e06e731cb1a3b24ae",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/node_gate.json",
+      "digest": "sha256:48afef171df60494ddc0cfb99345b5b77978886973569969b4b06c436e4838c1",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/promoter_no_promotion.json",
+      "digest": "sha256:041d77e116246a5b50d69eaf2f66994fe9e8feb9a519e1e149aae05bab453122",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/recommendation-readback-after.json",
+      "digest": "sha256:72b552ce4f74b52fc9c73e774fd826288c12b06f15b0d291e3f5b1f6817292e1",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/rollback_record.json",
+      "digest": "sha256:b7b072036c2f29ddc55d90a1b4c299c2a4b46d603a8f10902cebacb5e381dbcd",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/run-link.json",
+      "digest": "sha256:f87c3cff22d8bd397e07cd0ecdc85b63a49bcfb38e7783f9c89927bd766a500c",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/sentinel_public_safety.json",
+      "digest": "sha256:14e7560fe3a25077e0f5ca0e143772ad08c7db1fe37c802e1d655e903a06c8b5",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/tests.json",
+      "digest": "sha256:a5b8609f964c0efaccb6a26dcd34bd5b12dde848f4cfa822de0ccec3aa09df4b",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-21/verification.json",
+      "digest": "sha256:616bc2d5c96fc0e3ddd15e53038c6fc450585f70f235ccc7ea7292c989851f02",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/candidate_record.json",
+      "digest": "sha256:0b3bcc58243ef8e0f91803b61a973dd6f07a9ab43334e732e9df86ec9bd570a5",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/checkpoint-bundle.json",
+      "digest": "sha256:fe116d148647a60bb629993fc9d2af184da6e74f5fdd19842f9619aa5963a181",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/checkpoint-readback-after.json",
+      "digest": "sha256:1647c80fe4aeb5c3729e01c5b50f1c02715c770ebff25bf763b63a5e08797a8f",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/command_readback.json",
+      "digest": "sha256:55ecaa864464864c18c9eb06ecf80a0e108afdeed3f052c2e8d44a2acbc1d077",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/foundry-continuation-prompt.md",
+      "digest": "sha256:5506e3862feba68e91cebec1d9b2eeb72455c51a087ff414d04c537e1d3e0261",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/foundry-task.json",
+      "digest": "sha256:90fe617626c91d5b09d79da4efedad9e313d2111e072040bdec3117f94f3b1c2",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/foundry_import.json",
+      "digest": "sha256:a22019d7af50c40d00517d395390da37dc6616f0e6fdd4d54380f0b4a7d41149",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/implementation-evidence.json",
+      "digest": "sha256:2d48074dd52c9e10c510d58dacdec1212c78438c117776d90b889aec0384537a",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/node_gate.json",
+      "digest": "sha256:977d730740ff78fa6491b66aa304ee6b572a87506b4c5825a4411a9c73fb0c87",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/promoter_no_promotion.json",
+      "digest": "sha256:2688ec0be304b7367487e29b9fd9c813e58077bf937b4d226b18c70f77c4cf5f",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/recommendation-readback-after.json",
+      "digest": "sha256:5e2059bb463517adf83478fbad54761903b5796f8dc59c4daf2cb1d202afea4b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/rollback_record.json",
+      "digest": "sha256:3c20fe9a58150fe64fb2457dafb2c35bbb94dcb7515978fe6e57a600aab12423",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/run-link.json",
+      "digest": "sha256:a9973428e75576df4de0548c20985d9d83e487d223a35f366e14dff239350d2a",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/sentinel_public_safety.json",
+      "digest": "sha256:e9c841945a845d8aeb14479925d6f652b445f555f5579a40cb6f164549fe2074",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/tests.json",
+      "digest": "sha256:e1d7e5f219f1e8fd1605f9f3a84fa2365101361f505becefd7063cc3d5ecc3f5",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-22/verification.json",
+      "digest": "sha256:f72daab87e072ad2b709d09d416272e4e333e7aed94790166359ac9bb63f7595",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/candidate_record.json",
+      "digest": "sha256:31950668c80b8ff0e3e760030403e4308c4845c2a23921ea2f4fa9f8f5ed6742",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/checkpoint-bundle.json",
+      "digest": "sha256:dd778e7a4aa6d84068241e61d66eac0d936bf9cb99da64b6aace99c3bc54fe8c",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/checkpoint-readback-after.json",
+      "digest": "sha256:3aae7fa28b256a7f634e22f7afad78369f61d3ffd63a02cea43092d574c23ca3",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/command_readback.json",
+      "digest": "sha256:eeb3dd4332ead269028e5a8220b37882c75beeb4700c9a209aaec471cea47fc3",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/foundry-continuation-prompt.md",
+      "digest": "sha256:0d8eba5d6f86e05fc03c8d2ce6f55037bde3e2cd51aa3116374ac30454b901f5",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/foundry-task.json",
+      "digest": "sha256:92c4fa9e3d32c70cc347e5740624768e7d297df1a67a39217bf3dbeae81f6dc7",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/foundry_import.json",
+      "digest": "sha256:1b3caf6fb06e336f96405cc40f32982170a11f0b8033298f97d476aaf31b162a",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/implementation-evidence.json",
+      "digest": "sha256:07a2f214f2267007187064a2f7c2072145e8ef4d1f63ddab8cd3235d81ed9396",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/node_gate.json",
+      "digest": "sha256:0ed02517024ee68ec858b1cfc27b301b114c7864f004a79bed90074a55eefb17",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/promoter_no_promotion.json",
+      "digest": "sha256:5a3516be65d424baba98266e9a584eed30b7e575684f000bd3048fe39274cf25",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/recommendation-readback-after.json",
+      "digest": "sha256:0eabddd19a9696861f44c4479e0c3a32d8d7a863993305be09b6ec3c77a8438b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/rollback_record.json",
+      "digest": "sha256:569623b810a5667e7521e65157e8ebb8078489068c9b4e0fd4e0306096a6ed55",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/run-link.json",
+      "digest": "sha256:faf07aae8561f91bd24ea7310c45fcef8a96dff2347a64117d0804fbe7b6bd89",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/sentinel_public_safety.json",
+      "digest": "sha256:64d4aef410e9b245510f6d26779fa1961fa3d91dbf9b3546632d024ba4a645de",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/tests.json",
+      "digest": "sha256:c033e5fd7ecacfd22ef29c55e4b8c9fd84d00e7998219e6a1cca71babfc1ca8d",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23/verification.json",
+      "digest": "sha256:424e3d4a608cdc33b1a7354327e2d154b77128b8c03e64e774cdf040349a58e4",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/candidate_record.json",
+      "digest": "sha256:8f4c3b814e20e03bf5bf826aba0e991a26bc45423a802574ed84b49790e4f394",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/checkpoint-bundle.json",
+      "digest": "sha256:97ac5b39d804abcde1a349c193cdcb39a802c030d9c20fffe3d0126f71b6ac5b",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/checkpoint-readback-after.json",
+      "digest": "sha256:06a9c5402ee2569c2745d77f1bbd2de4eeb6736bab4b71f7c9c9f3e923e76612",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/command_readback.json",
+      "digest": "sha256:2ddd152766e3097bc6ddda00ecd2306bbcb45d904850597bc324d0a7bec296f2",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/foundry-continuation-prompt.md",
+      "digest": "sha256:6bf95cd806622f35593fb4f880f09dc2bbfe56ccf60da21694dac20b92ad641e",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/foundry-task.json",
+      "digest": "sha256:01680ef20a5c8e447c364da4f872343f7259298b74782b2197ac10972f3fbcc1",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/foundry_import.json",
+      "digest": "sha256:a87f821a789a62048e00b73a6daf871ec3d8ed95356ab35b8c58654c51605a72",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/implementation-evidence.json",
+      "digest": "sha256:eea507770dedfd3b9e5441688b074cc5b5978df570ed9840c023f686cc42bf1c",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/node_gate.json",
+      "digest": "sha256:7fc76a68d95a3ec9a4c358a449191cc509b4314b90fe073380a810643fe1969e",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/promoter_no_promotion.json",
+      "digest": "sha256:25eb45a8671e059b597cac5f1a608b3fd7005ed2fbe00e6726e55c382c2430a7",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/recommendation-readback-after.json",
+      "digest": "sha256:5e1d7fa4f49d2ebb0771ee1f58135fbc6bce266244b8b1a81ee815bfd447a7c4",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/rollback_record.json",
+      "digest": "sha256:ffae6bd2caaf35e0c7c46dfa927981d20912ca8c49078c868c58e790f6e25e13",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/run-link.json",
+      "digest": "sha256:ed3d65698f320d7cedfbc14dd643201dca815f39dfe82b8de77c37a31529a7b1",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/sentinel_public_safety.json",
+      "digest": "sha256:fb37cefca489861b5cfd9c792216bc4c7412aad0ee7703cb8865ff544eeb96da",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/tests.json",
+      "digest": "sha256:41b4fdc663a7474eec40f0daa866881448fbbd74d80a9f8c4ef2e67bbceb9857",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-24/verification.json",
+      "digest": "sha256:85e724a230ce35d7bac2f13b99935ed274446e068d744ae3dbc33bca824b9b0c",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/assurance-ci-readiness-rollup.json",
+      "digest": "sha256:c57bf1139a6fc86a7fda43ce724f61f644c03c002f33b9077217d30da1e89d5f",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/candidate_record.json",
+      "digest": "sha256:3702e35f2ff81bfb7e047ea7ac2d2d70036d1eb89038e3374ecc4afbf4d7fe18",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/checkpoint-bundle.json",
+      "digest": "sha256:6bc867e84981064a58aefc63457c5d27c1c46654d987ff9e75fdf3a28fc09cf4",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/checkpoint-readback-after.json",
+      "digest": "sha256:bb517d69a4cb8b07d55bb2aa1711d0828f6c2758907133e26fc11829e59f7997",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/command_readback.json",
+      "digest": "sha256:fc3918ebc5289e5e3d958282af1d044138496af2ca58043599903000c12e5d38",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/foundry-continuation-prompt.md",
+      "digest": "sha256:6d7d04095019d35b1e378a918ac2992308699429378fd48fed61cf0397346942",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/foundry-task.json",
+      "digest": "sha256:67e6f6e425f953a233303558a916ce305aa362f976f46fcdb73f3d0fd72bcb07",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/foundry_import.json",
+      "digest": "sha256:ada74b1fa15cd6b7ce6d0e0cd7a63b5cfd602526d1512653d31b4156b4e2393d",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/implementation-evidence.json",
+      "digest": "sha256:c57bf1139a6fc86a7fda43ce724f61f644c03c002f33b9077217d30da1e89d5f",
+      "schema": "ao.atlas.consolidation-implementation-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/node_gate.json",
+      "digest": "sha256:fdd1303a8238e22f39e4230db9d746207b30f2355edfbf24952bc784e3294f5e",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/promoter_no_promotion.json",
+      "digest": "sha256:0d0bcfcf822055d07da95ddd832f25b8238f37a86d3ab3f328635f522acd4ea9",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/recommendation-readback-after.json",
+      "digest": "sha256:562e7cf82e1d74d44288ae4bc054e46f692dd68324536dc346a1c5580104e50b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/rollback_record.json",
+      "digest": "sha256:65767536fbc66cf909c62eada9f996d30af2480a9d97d9cfa30f81c8327e36e2",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/run-link.json",
+      "digest": "sha256:389dbe79263a9e6f35da325bc1bff66eab7506485fc4505a24eacaac858fdae0",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/sentinel_public_safety.json",
+      "digest": "sha256:cb39f71f24052a7d42f77a3915d40d9c57434245375e9d68aa8f00c83b0bda7f",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/tests.json",
+      "digest": "sha256:3b210ad07ae280ea24110c38a94d5efd3ff6c5419d670a28830e20ba318cca3a",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/verification.json",
+      "digest": "sha256:b50904ef6e872dd61ecd598a5ef5e611f9e51326c8564064bd3039107c974238",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/candidate_record.json",
+      "digest": "sha256:3e074c6f17cec6f4a2c6f16fb1b2d4770bafda945f862aca956a50fad03fce81",
+      "schema": "ao.atlas.consolidation-candidate-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/checkpoint-bundle.json",
+      "digest": "sha256:edc74e96bd1431d92d174eff1b31ce7f61b866ffdd1cc77d7d09692dc3c20144",
+      "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/command_readback.json",
+      "digest": "sha256:2f75bc98f36252c07e4308b553c50b5063bf07db175a393b6e6cf3a8558a38ac",
+      "schema": "ao.atlas.consolidation-command-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/foundry-continuation-prompt.md",
+      "digest": "sha256:6629d16fee2bbc25335ecfb76d8400d66264d8954c5ca28c820546c41d458357",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/foundry-task.json",
+      "digest": "sha256:73d755177e67703685fbabc86f47f6c497d1c36626b5eed61cfd3c577a83184a",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/foundry_import.json",
+      "digest": "sha256:2e63a44bf67d7eb17947dae237df1593457da8527727fc3522c68e8f7ec52641",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/node_gate.json",
+      "digest": "sha256:5d5f49be854725f44e1f8de905a91617f8278fdb233b2c6de610458eb0b86c6d",
+      "schema": "ao.atlas.consolidation-node-gate.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/promoter_no_promotion.json",
+      "digest": "sha256:89c90eaf475454adf565ce141546f662c0a21864792f7996781c8e64188da394",
+      "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/rollback_record.json",
+      "digest": "sha256:fc647cd9560c323d5bc224c921df4cc46d13116b9363b5a70de5ff5c09cfc274",
+      "schema": "ao.atlas.consolidation-rollback-record.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/sentinel_public_safety.json",
+      "digest": "sha256:8f2414d066a91178115641f5b76b9f997bd451eaa31beb555c5b1e0530148d5e",
+      "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/tests.json",
+      "digest": "sha256:23fe41a200bb88e9fee5219fe803cb8e15f2b767adc24c20965bda51635a4d62",
+      "schema": "ao.atlas.consolidation-test-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/verification.json",
+      "digest": "sha256:6b9a96e1f6b16b258996dc77cce2e487255bff692d0fa7a74aac2ec79f06d189",
+      "schema": "ao.atlas.consolidation-verification-evidence.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/wave-evidence-schema-digest-validation.json",
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-01/checkpoint-readback-after.json",
+      "digest": "sha256:24bb206af38916d2fdd854a83f7632265b4598ff19a12504ac3301b6e31ad863",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-01/execution-readback-after.json",
+      "digest": "sha256:46619d35ddb27aa5ed1aba239a9ca8fceda3073c4fef70ef4dbedc7e5ed2c751",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-01/recommendation-readback-after.json",
+      "digest": "sha256:3ed540bcd663e304c30203826c5437f033220f09552ba9ad15c4632c5eae80cf",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-01/workgraph-after-complete.json",
+      "digest": "sha256:737375cd31b981169390bdca0f6e6c7e3480bbafcc7d4793641809eaebd069a2",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-02/checkpoint-readback-after.json",
+      "digest": "sha256:c1694c81b7d232b0520c3c965b3225dad9d2fb91a068a669d79865f4bc9cdaf2",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-02/execution-readback-after.json",
+      "digest": "sha256:715b27ed3cdde475beb9f2089b53ee2285858ec2eb2ba958706bb184e01b9827",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-02/recommendation-readback-after.json",
+      "digest": "sha256:4b3d1976ab74e7d08ff8c655cfc1f83c4b486f203f124987f75b36c2535f705b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-02/workgraph-after-complete.json",
+      "digest": "sha256:fea325b7311265f0c24189d61ffe5311aee40ff4610cc32a9eb21db0b0352f85",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-03/checkpoint-readback-after.json",
+      "digest": "sha256:cac232a1215c20f535614037527dfbc0eb4bee1d6a71dbf59f2168a30c935995",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-03/execution-readback-after.json",
+      "digest": "sha256:46c48c70e2e69d593bda66ec81562f9ba9ba9bbfca57ab62cf95289f843c5eac",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-03/recommendation-readback-after.json",
+      "digest": "sha256:e75e06551a1b1cad9ce13f5e011b5f6f1500dc736487e178edfe0b9b8956425e",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-03/workgraph-after-complete.json",
+      "digest": "sha256:45140f254c5fbbada660e0b7119d67a300c688997947c79ef90ff2b49d04c47b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-04/checkpoint-readback-after.json",
+      "digest": "sha256:2a38706ec884719ae79d9dac1fda4b101248e5b0af3451e90e9d59fbc5881df7",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-04/execution-readback-after.json",
+      "digest": "sha256:75e416f7b6bbc16d2f953d1b04198d053a9a6b3f2800c883e9d459b40d634d87",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-04/recommendation-readback-after.json",
+      "digest": "sha256:ae41a3d8c9d4b2d2804cace265304a4d802caee84b9283f2b142d5fe5673d593",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-04/workgraph-after-complete.json",
+      "digest": "sha256:26e21f923d7306d1e88731ff8b6d1d8202c96c339dd7f01afef614e6965d773a",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-05/checkpoint-readback-after.json",
+      "digest": "sha256:8fccc50f17e18d8c49e1bc0ae612a8dcc683025b49acb0f75e19dfad3a656472",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-05/execution-readback-after.json",
+      "digest": "sha256:4374dc35f3fdd1a58c58fff5dc4bf0c7fc4307bc70b8357c9de5c470c8fd8b10",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-05/recommendation-readback-after.json",
+      "digest": "sha256:c3ebdc18529eca7f3d6b7f8a49b81c3783e6de384427caca8ebbea457030f9e9",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-05/workgraph-after-complete.json",
+      "digest": "sha256:76ba2f63ed0468a12bcc42a0ec028b0ba098916c36714fb12a61fe50ab575b2d",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-06/checkpoint-readback-after.json",
+      "digest": "sha256:9895e526f61ad17da6d4aa5314a94db7ff232a359176f5680cc041f6d7206447",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-06/execution-readback-after.json",
+      "digest": "sha256:a7c14a018bba636d096b80a699c620ca840fda6d59b60f58c05c1de89ea5d117",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-06/recommendation-readback-after.json",
+      "digest": "sha256:7416ac2d955934ffbb87e8d4b8c294ae9aac0dfbcce7435b920f160740c6c932",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-06/workgraph-after-complete.json",
+      "digest": "sha256:4ae1d788d1bb45209eda2f087643059f6d6bdd72d2575eadcfe57a4bf5579e1a",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-07/checkpoint-readback-after.json",
+      "digest": "sha256:bf178c0ece4dd9b36854841020f2990ecb244899773e55051f80c470e37a95af",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-07/execution-readback-after.json",
+      "digest": "sha256:7be19faa7d2758ccd309c2313a3be3877da4c7afc80214bc4534919de73f3f35",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-07/recommendation-readback-after.json",
+      "digest": "sha256:f3a8ad065348d7dfd72d7c9bc815d1319e1089bc6a7ee4aa923b380e27ca5d81",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-07/workgraph-after-complete.json",
+      "digest": "sha256:ae33d3d50b7b7017dd745cac3edb95aec254e456abcede703121ce4558b18097",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-08/checkpoint-readback-after.json",
+      "digest": "sha256:8e85ccab1191f34a8584f1024af5775ad1becf590a90f25da482d5a225429938",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-08/execution-readback-after.json",
+      "digest": "sha256:fe066ee0cec1e6ac7b2afa8cc97ec137bdfaef524730e4265b03dc97bb39821e",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-08/recommendation-readback-after.json",
+      "digest": "sha256:34a8f1f1ff3bdda985f44cc8455e12455f78fe468887da55f454488995b54899",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-08/workgraph-after-complete.json",
+      "digest": "sha256:66931e3b4fe4db079ff2feb0ee79bcbbf4683304964e9f5384f04ed11054c702",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-09/checkpoint-readback-after.json",
+      "digest": "sha256:b8dc2b9d649a3df49d8651401d0d316e450f1850e9597750874aa15299e107fa",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-09/execution-readback-after.json",
+      "digest": "sha256:f44adcfb4697df4f0b7b6f06e856f7957d0c7d7644613a03097e86ce7467dc68",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-09/recommendation-readback-after.json",
+      "digest": "sha256:97185e7aba565641b43bf5627612247e6b1d9ceac69c9e6f9ea92cb8647dd3bb",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-09/workgraph-after-complete.json",
+      "digest": "sha256:14541177270cbf2e5d812319904d55b0eda1276caaee9ee807514b6c7705e11f",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-10/checkpoint-readback-after.json",
+      "digest": "sha256:16563fc2a096d668651b6a808936f42da4743720d194da828db15f6c1281177a",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-10/execution-readback-after.json",
+      "digest": "sha256:1d7df6f798899fd18acfdcc604c4582d545244cc17991c611fd57ce3ee871562",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-10/recommendation-readback-after.json",
+      "digest": "sha256:9a5528331da8383be7a11d59def820b09ea122aa74cb1af9c0ca163f8f79c5b7",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-10/workgraph-after-complete.json",
+      "digest": "sha256:5881e2d518ca52ccbf4872c338834f11b7473fced426c5f7ffe53e389bfd5c47",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-11/checkpoint-readback-after.json",
+      "digest": "sha256:34b933400fadc4e1ec790b004b1ebe7823153d483dedd77117644159733ce4bc",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-11/execution-readback-after.json",
+      "digest": "sha256:ea10941846cdc2d4b12dc47a8145220adf5671b8fbe1d6db0d0042e300b4a8a8",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-11/recommendation-readback-after.json",
+      "digest": "sha256:33c69bbe9d71c7b173c9ab0a25206345670c9bfae54a1944f03d39f64c5fac09",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-11/workgraph-after-complete.json",
+      "digest": "sha256:362cdc3edd4c8251b7ea3db8c4271df785f1cf5958269193b7b11c4acb641353",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-12/checkpoint-readback-after.json",
+      "digest": "sha256:78815feaabe9f30734897a28c23fb280f2af9a95fe383651afa58244ce1927b2",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-12/execution-readback-after.json",
+      "digest": "sha256:649b3ee35a415ac240edd645d978cb810afc6dc4009c6dca1a589e1a113e912f",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-12/recommendation-readback-after.json",
+      "digest": "sha256:c5bd28585e903c9b50e152e55fc8c5df5b4eee2f6f14414a0d7928703616b2a1",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-12/workgraph-after-complete.json",
+      "digest": "sha256:8ecc1fc717d010ef93eb3ce31b15a7c8bee44b92547cdb01c621b3c5771c13f5",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-13/checkpoint-readback-after.json",
+      "digest": "sha256:3cd17cbba2b9e98ef80c9aebc41eaed557924bc9e78d75e0f22ad37bb12d2779",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-13/execution-readback-after.json",
+      "digest": "sha256:4a4669a3020a2d17d82fdaa2d4de6ca6033edd00ed26be6d165800712c09553d",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-13/recommendation-readback-after.json",
+      "digest": "sha256:6e352f87ac7d783636bd626b1200d8cc098b4ceb27a11cb078726f4087af78b7",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-13/workgraph-after-complete.json",
+      "digest": "sha256:a5e899c2b6998a35f1e654c252e4b843fbc5965755cb1ef587fc117651809830",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-14/checkpoint-readback-after.json",
+      "digest": "sha256:82ac2a46d8442e6ceffa10ab635924d103090250c3327c277e65d9ba31d1e5f8",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-14/execution-readback-after.json",
+      "digest": "sha256:1e5a25e8d92b459df9aab997aa0b6dcaf757955e905ae41f85a2b93222e449c3",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-14/recommendation-readback-after.json",
+      "digest": "sha256:0df111eb42d5a5d624eaf5d2c214e674e625538ee748eae0ed94cfbf906e319b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-14/workgraph-after-complete.json",
+      "digest": "sha256:c7b7ebdf4d9c22466808a33637cc896c21ac553d4aaf14b275a623cf69e48d71",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-15/checkpoint-readback-after.json",
+      "digest": "sha256:7537e7fb3f061ff415f855ec1be950aa3cacd5f2b4e1e4c903a743845b27633c",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-15/execution-readback-after.json",
+      "digest": "sha256:8ad5b52ea6d91e792e739af95061a6fd12adebeeec88e334c56a4143400e25f5",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-15/recommendation-readback-after.json",
+      "digest": "sha256:e2cec2bc5e29496319193f444579b86d9a12ddae1c4fc47090cc06574ead2a21",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-15/workgraph-after-complete.json",
+      "digest": "sha256:32ee960cb060680a7fb1939420a4940f9ddf81a2802eccc2b218b24d591cc5f0",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-16/checkpoint-readback-after.json",
+      "digest": "sha256:26eb3062a3f64dd9a8e95bae0b844170bb8dc34ba94f985bf4702b118fc40956",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-16/execution-readback-after.json",
+      "digest": "sha256:bbfbbb64e830ff49edcf14530e92f869f0c993a1d92cf96ced1a904dc70fd755",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-16/recommendation-readback-after.json",
+      "digest": "sha256:04f0c9839057d2b34353a7a0e156f15b26fd0ba3187cb403f4dae89f7fabec5f",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-16/workgraph-after-complete.json",
+      "digest": "sha256:917af3932918c9e65bfd98e1a53e56090963f6202d75e9f59d58563d9de207f2",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-17/checkpoint-readback-after.json",
+      "digest": "sha256:3f5be9fde0c7208b9b7b1ba3e67ad603e66420bd2e14d17f2e3311c048e61208",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-17/execution-readback-after.json",
+      "digest": "sha256:d08b213faf8380409cd0de8d6a282b8bb3a3b1ffaa26e79c783988b176ee2dac",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-17/recommendation-readback-after.json",
+      "digest": "sha256:568f4c4186920e4f319e9abcb91882520dbefe0688096b9b014d0c98cf6ab810",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-17/workgraph-after-complete.json",
+      "digest": "sha256:3e02e3b83e7a9b46bfa0381621d3ec12ce18707f18af9d2f7a71ad368149df8f",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-18/checkpoint-readback-after.json",
+      "digest": "sha256:1797d867ca09eb6482b04f36d5aba53cd96919e208de01a400b2220da71447c5",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-18/execution-readback-after.json",
+      "digest": "sha256:85ec0d1318f3ed6c3ff3baea27205f414bb41af811c73e5fd2f414ca7c002dde",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-18/recommendation-readback-after.json",
+      "digest": "sha256:8387fc9f2489e2cc63b1325be348069d61389332d30985879c953377519b62e2",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-18/workgraph-after-complete.json",
+      "digest": "sha256:58b4835b200e6e3a1b66c1e35dbdc5f6261a1186f131a5ff23bc38ff77eeb98a",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-19/checkpoint-readback-after.json",
+      "digest": "sha256:2e7e12ecc4c90363b20bb447e0545ba9a458bb4a4c0a9c5013fcf7d7b9675d1f",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-19/execution-readback-after.json",
+      "digest": "sha256:2831f7c2b0bac78be7e7d4e1b03cba1a7cd3c277bfdcdd583225c087f4beddce",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-19/recommendation-readback-after.json",
+      "digest": "sha256:843a30daf88f935cc4446f38e3b610c12a9ce7df9ddd427a56b03fa0f6f4a461",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-19/workgraph-after-complete.json",
+      "digest": "sha256:6b1d4d766a05e138617ca4668e2c127420e1a37c5044081b7959108dea7f871e",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-20/checkpoint-readback-after.json",
+      "digest": "sha256:e6ac90591ed028dc6ed4028b1fc7f82f818440e98f384eb1daa452a9e037fe34",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-20/execution-readback-after.json",
+      "digest": "sha256:9ba0f9b51a08844b7e7480625a85ba0fee00d81da1c78f1af8b5562b79bdb61b",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-20/recommendation-readback-after.json",
+      "digest": "sha256:3ba2f53c779534c826e1550f5c8a541783b591d3733a32553052e21c21ee8d65",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-20/workgraph-after-complete.json",
+      "digest": "sha256:16ba4d01d8fa246b6ee72d13352a6611273b49c607de86d15a8bb2fa23665b83",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-21/checkpoint-readback-after.json",
+      "digest": "sha256:f1a854b702994a2cc48a91df70594e03857f9516338c1b029094e87681d2a3f0",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-21/execution-readback-after.json",
+      "digest": "sha256:b853a819acae783361c61c5d503f2556802626286bff4fcbcd80d81dc5b287c6",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-21/recommendation-readback-after.json",
+      "digest": "sha256:72b552ce4f74b52fc9c73e774fd826288c12b06f15b0d291e3f5b1f6817292e1",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-21/workgraph-after-complete.json",
+      "digest": "sha256:ea06cd13b4ff146742b9c99ab16976eb30e314dc444a411b7c362e16d1286496",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-22/checkpoint-readback-after.json",
+      "digest": "sha256:1647c80fe4aeb5c3729e01c5b50f1c02715c770ebff25bf763b63a5e08797a8f",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-22/execution-readback-after.json",
+      "digest": "sha256:6b523c6755f532b43f3473df87751ef6a8c628f9597ba087eb0dea726e5f6591",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-22/recommendation-readback-after.json",
+      "digest": "sha256:5e2059bb463517adf83478fbad54761903b5796f8dc59c4daf2cb1d202afea4b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-22/workgraph-after-complete.json",
+      "digest": "sha256:b8402b3ba3bcecc5358178dd78b08b70365bd40d4b97d64c829a78c85a62658b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-23/checkpoint-readback-after.json",
+      "digest": "sha256:3aae7fa28b256a7f634e22f7afad78369f61d3ffd63a02cea43092d574c23ca3",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-23/execution-readback-after.json",
+      "digest": "sha256:6f7ffc9249cd0dc401abf5b0d599ffae0d72e13aa2427abf45486526583c884b",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-23/recommendation-readback-after.json",
+      "digest": "sha256:0eabddd19a9696861f44c4479e0c3a32d8d7a863993305be09b6ec3c77a8438b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-23/workgraph-after-complete.json",
+      "digest": "sha256:00ff4e7e86ed5e3fac1de7fc125a016da3de0f80720b3278929cb533d5fcb488",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-24/checkpoint-readback-after.json",
+      "digest": "sha256:06a9c5402ee2569c2745d77f1bbd2de4eeb6736bab4b71f7c9c9f3e923e76612",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-24/execution-readback-after.json",
+      "digest": "sha256:aa30bc4f3ce90899b106b05cd71a5cb1d753f3f1cace06407193359fe0d2db18",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-24/recommendation-readback-after.json",
+      "digest": "sha256:5e1d7fa4f49d2ebb0771ee1f58135fbc6bce266244b8b1a81ee815bfd447a7c4",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-24/workgraph-after-complete.json",
+      "digest": "sha256:d7f247b1fd35a8e8b9a84c36d63c995e680bdc61b65b515c639aa2f437853ffb",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-25/checkpoint-readback-after.json",
+      "digest": "sha256:bb517d69a4cb8b07d55bb2aa1711d0828f6c2758907133e26fc11829e59f7997",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-25/execution-readback-after.json",
+      "digest": "sha256:64a1038794e74dd97764f6a5d5b236474f5cb46df6631ad2e00277208ad6f7d4",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3"
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-25/recommendation-readback-after.json",
+      "digest": "sha256:562e7cf82e1d74d44288ae4bc054e46f692dd68324536dc346a1c5580104e50b",
+      "schema": ""
+    },
+    {
+      "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-25/workgraph-after-complete.json",
+      "digest": "sha256:c442485209c950acef47c3232eac75d7c7338c3b6d17ccc7aac443ff38240b61",
+      "schema": ""
+    }
+  ],
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,22 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-consolidation-month1-26-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/checkpoint-bundle.json",
+    "command_readback": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/command_readback.json",
+    "foundry_import": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/foundry_import.json",
+    "implementation_evidence": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/implementation-evidence.json",
+    "node_gate": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/node_gate.json",
+    "normal_validation_report": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/pre-node-26-evidence-validation-report.json",
+    "promoter_no_promotion": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/sentinel_public_safety.json",
+    "strict_validation_report": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/pre-node-26-strict-evidence-validation-report.json",
+    "tests": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/tests.json",
+    "verification": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/verification.json",
+    "wave_evidence_schema_digest_validation": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-26/wave-evidence-schema-digest-validation.json"
+  },
+  "digest": "sha256:b66f03c5d963c13eba5a1d23891304bd63acbf71a4067de0b19c85402c2fc571"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-26",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:54:02Z",
+  "schema_validation": {
+    "normal_status": "passed",
+    "strict_status": "passed",
+    "unknown_schema_files": 0,
+    "failed_files": 0
+  },
+  "digest_validation": {
+    "algorithm": "sha256",
+    "manifest": "wave-evidence-schema-digest-validation.json"
+  },
+  "branch_cleanup": {
+    "current_node_branch_created": true,
+    "implementation_branch_required": false
+  },
+  "rsi_remains_denied": true
+}
