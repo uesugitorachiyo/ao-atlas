@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-33",
+  "status": "candidate_recorded",
+  "generated_at_utc": "2026-07-10T19:35:36Z",
+  "repository": "ao-atlas",
+  "branch": "codex/consolidation-node-33-wave-safety-scan",
+  "mutation_class": "low_risk_code",
+  "objective": "Scan wave artifacts for provider release credential and authority-widening instructions.",
+  "writes": [
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-33",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-33"
+  ],
+  "source_recommendation": "consolidation-month1-33",
+  "source_digest": "sha256:e776ea250456c59d92eb6758e6fbf3ac1abdc7ad821c08d9cc9b520a390b4b5e",
+  "source_task_digest": "sha256:b7a6d38a689e34d04f3c97630a1f5295b8b15c8bc13af3d227bd2321e7ac8a6b"
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1",
+  "node": "mission-recommendation-consolidation-month1-33",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:35:36Z",
+  "scan_scope": [
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01"
+  ],
+  "public_claim_guard": "Wave-wide scan treats safety-boundary prohibitions as expected guardrail text and flags imperative provider, release, credential, or authority-widening instructions.",
+  "guardrail_term_matches": 7878,
+  "unsafe_instruction_matches": 0,
+  "provider_or_release_instruction_found": false,
+  "authority_widening_instruction_found": false,
+  "rsi_remains_denied": true,
+  "reviewed_at_utc": "2026-07-10T19:36:23Z",
+  "classification": "reviewed_matches_are_task_titles_readbacks_or_safety_boundaries_not_executable_instructions",
+  "review_note": "Filtered matches were task descriptions, readback summaries, or explicit safety boundaries; no executable provider call, credential inspection, release/deploy/publish/upload/tag, auth/policy/config widening, or broad RSI instruction was found."
+}

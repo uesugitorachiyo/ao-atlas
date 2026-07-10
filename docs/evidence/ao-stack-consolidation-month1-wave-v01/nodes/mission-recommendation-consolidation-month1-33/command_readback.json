@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.consolidation-command-readback.v0.1",
+  "node": "mission-recommendation-consolidation-month1-33",
+  "status": "readback_agrees_no_promotion",
+  "generated_at_utc": "2026-07-10T19:35:36Z",
+  "completed_nodes_after_this_node": 33,
+  "expected_ready_nodes_after_this_node": 3,
+  "expected_next_node": "mission-recommendation-consolidation-month1-34",
+  "final_response_allowed": false,
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

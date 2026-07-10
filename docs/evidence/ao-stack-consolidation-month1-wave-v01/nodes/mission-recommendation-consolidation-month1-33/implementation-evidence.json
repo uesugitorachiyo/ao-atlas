@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-33",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T19:35:36Z",
+  "kind": "wave_safety_instruction_scan",
+  "repository": "ao-atlas",
+  "artifact": "wave-safety-instruction-scan.json",
+  "completed_nodes": 32,
+  "total_nodes": 36,
+  "ready_nodes": 4,
+  "blocked_nodes": 0,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-33 and execute exactly one active node.",
+  "rsi_remains_denied": true
+}
