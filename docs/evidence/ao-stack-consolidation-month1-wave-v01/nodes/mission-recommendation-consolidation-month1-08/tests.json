@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-08",
+  "commands": [
+    "python3 -m unittest scripts/test_verify_readiness_wording.py",
+    "python3 scripts/verify_readiness_wording.py",
+    "python3 scripts/verify_architecture.py",
+    "python3 scripts/verify_topology.py",
+    "python3 scripts/verify_stack_lock.py"
+  ],
+  "wording_boundary_tested": true,
+  "runtime_readiness_claims_allowed": false
+}

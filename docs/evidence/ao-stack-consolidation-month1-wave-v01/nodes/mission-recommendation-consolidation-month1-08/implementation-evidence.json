@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-08",
+  "kind": "readiness_wording_guard",
+  "repository": "ao-architecture",
+  "paths": ["scripts/verify_readiness_wording.py", "scripts/test_verify_readiness_wording.py", "overview/PRODUCTION-READINESS.md", ".github/workflows/ci.yml"],
+  "pull_request": 98,
+  "merge_commit": "fbfa1217db951336951a501032bd5a06fed5196e",
+  "claims_runtime_execution": false
+}
