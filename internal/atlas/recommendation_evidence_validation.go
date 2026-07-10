@@ -386,6 +386,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:command-ticket-byte-preservation-fixture", err
 		}
 		return "typed:command-ticket-byte-preservation-fixture", ValidateAtlasCommandTicketBytePreservationFixture(value)
+	case AtlasTicketDigestReadbackBindingFixtureContract:
+		value, err := LoadJSON[AtlasTicketDigestReadbackBindingFixture](path)
+		if err != nil {
+			return "typed:ticket-digest-readback-binding-fixture", err
+		}
+		return "typed:ticket-digest-readback-binding-fixture", ValidateAtlasTicketDigestReadbackBindingFixture(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ao.local/schemas/ticket-digest-readback-binding-fixture.schema.json",
+  "title": "AO Atlas Ticket Digest Readback Binding Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "status", "source_input_path", "source_input_digest", "case_count", "mismatched_cases", "digest_binding_passed", "cases", "schedules_work", "executes_work", "approves_work", "claims_authority_advance", "rsi_remains_denied"],
+  "properties": {
+    "schema": { "const": "ao.atlas.ticket-digest-readback-binding-fixture.v0.1" },
+    "status": { "const": "ticket_digest_readbacks_bound" },
+    "source_input_path": { "type": "string", "minLength": 1 },
+    "source_input_digest": { "$ref": "#/$defs/sha256" },
+    "case_count": { "type": "integer", "minimum": 1 },
+    "mismatched_cases": { "const": 0 },
+    "digest_binding_passed": { "const": true },
+    "cases": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/case" } },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "command_readback_path", "covenant_readback_path", "command_ticket_sha256", "covenant_ticket_sha256"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "command_readback_path": { "type": "string", "minLength": 1 },
+        "covenant_readback_path": { "type": "string", "minLength": 1 },
+        "command_ticket_sha256": { "$ref": "#/$defs/sha256" },
+        "covenant_ticket_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    }
+  }
+}

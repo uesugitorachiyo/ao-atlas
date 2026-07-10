@@ -45,6 +45,8 @@ const (
 	AtlasCommandCovenantQuarantineFixtureContract     = "ao.atlas.command-covenant-quarantine-fixture.v0.1"
 	AtlasCommandTicketBytePreservationInputContract   = "ao.atlas.command-ticket-byte-preservation-input.v0.1"
 	AtlasCommandTicketBytePreservationFixtureContract = "ao.atlas.command-ticket-byte-preservation-fixture.v0.1"
+	AtlasTicketDigestReadbackBindingInputContract     = "ao.atlas.ticket-digest-readback-binding-input.v0.1"
+	AtlasTicketDigestReadbackBindingFixtureContract   = "ao.atlas.ticket-digest-readback-binding-fixture.v0.1"
 	AtlasMergeCheckBindingInputContract               = "ao.atlas.merge-check-binding-input.v0.1"
 	AtlasMergeCheckBindingContract                    = "ao.atlas.merge-check-binding.v0.1"
 	AtlasPostMergeBranchDeletionReadbackContract      = "ao.atlas.post-merge-branch-deletion-readback.v0.1"
