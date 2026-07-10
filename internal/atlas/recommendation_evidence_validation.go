@@ -374,6 +374,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:command-covenant-rejected-ticket-fixture", err
 		}
 		return "typed:command-covenant-rejected-ticket-fixture", ValidateAtlasCommandCovenantRejectedTicketFixture(value)
+	case AtlasCommandCovenantQuarantineFixtureContract:
+		value, err := LoadJSON[AtlasCommandCovenantQuarantineFixture](path)
+		if err != nil {
+			return "typed:command-covenant-quarantine-fixture", err
+		}
+		return "typed:command-covenant-quarantine-fixture", ValidateAtlasCommandCovenantQuarantineFixture(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {

@@ -452,6 +452,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "pr-ci-windows-threshold", run: runMissionRecommendationsPRCIWindowsThreshold, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "failed-check-replay", run: runMissionRecommendationsFailedCheckReplay, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-rejected-ticket-fixture", run: runMissionRecommendationsCommandCovenantRejectedTicketFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "command-covenant-quarantine-fixture", run: runMissionRecommendationsCommandCovenantQuarantineFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair, commandClass: missionRecommendationCommandClassPlanningOnly},
@@ -1826,6 +1827,45 @@ func runMissionRecommendationsCommandCovenantRejectedTicketFixture(args []string
 		fixture.Status,
 		fixture.CommandAcceptsTicket,
 		fixture.ReasonPreserved,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsCommandCovenantQuarantineFixture(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations command-covenant-quarantine-fixture", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	inputPath := fs.String("input", "", "Command/Covenant quarantine input path")
+	outPath := fs.String("out", "", "Command/Covenant quarantine fixture output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*inputPath) == "" {
+		return fmt.Errorf("--input is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*inputPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	fixture, err := BuildAtlasCommandCovenantQuarantineFixture(*inputPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, fixture); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, fixture)
+	}
+	fmt.Fprintf(stdout, "status=%s\nquarantined_paths=%d\nsafe_to_accept=%t\ncommand_covenant_quarantine_fixture=%s\n",
+		fixture.Status,
+		fixture.QuarantinedPaths,
+		fixture.SafeToAccept,
 		filepath.ToSlash(*outPath),
 	)
 	return nil

@@ -1232,6 +1232,55 @@ type AtlasCommandCovenantRejectedTicketFixture struct {
 	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasCommandCovenantQuarantineInput struct {
+	Schema                 string                               `json:"schema"`
+	Status                 string                               `json:"status"`
+	Cases                  []AtlasCommandCovenantQuarantineCase `json:"cases"`
+	SchedulesWork          bool                                 `json:"schedules_work"`
+	ExecutesWork           bool                                 `json:"executes_work"`
+	ApprovesWork           bool                                 `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                 `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                 `json:"rsi_remains_denied"`
+}
+
+type AtlasCommandCovenantQuarantineCase struct {
+	ID                       string `json:"id"`
+	CommandValidationPath    string `json:"command_validation_path"`
+	TicketCanonicalJSON      string `json:"ticket_canonical_json"`
+	CovenantDecision         string `json:"covenant_decision"`
+	CommandWouldAcceptTicket bool   `json:"command_would_accept_ticket"`
+	CovenantNativeReason     string `json:"covenant_native_reason"`
+}
+
+type AtlasCommandCovenantQuarantineFixture struct {
+	Schema                                string                                      `json:"schema"`
+	Status                                string                                      `json:"status"`
+	SourceInputPath                       string                                      `json:"source_input_path"`
+	SourceInputDigest                     string                                      `json:"source_input_digest"`
+	CaseCount                             int                                         `json:"case_count"`
+	RejectedCommandAcceptancePaths        int                                         `json:"rejected_command_acceptance_paths"`
+	QuarantinedPaths                      int                                         `json:"quarantined_paths"`
+	SafeToAccept                          bool                                        `json:"safe_to_accept"`
+	AllRejectedAcceptancePathsQuarantined bool                                        `json:"all_rejected_acceptance_paths_quarantined"`
+	Cases                                 []AtlasCommandCovenantQuarantineFixtureCase `json:"cases"`
+	SchedulesWork                         bool                                        `json:"schedules_work"`
+	ExecutesWork                          bool                                        `json:"executes_work"`
+	ApprovesWork                          bool                                        `json:"approves_work"`
+	ClaimsAuthorityAdvance                bool                                        `json:"claims_authority_advance"`
+	RSIRemainsDenied                      bool                                        `json:"rsi_remains_denied"`
+}
+
+type AtlasCommandCovenantQuarantineFixtureCase struct {
+	ID                       string `json:"id"`
+	CommandValidationPath    string `json:"command_validation_path"`
+	TicketSHA256             string `json:"ticket_sha256"`
+	CovenantDecision         string `json:"covenant_decision"`
+	CommandWouldAcceptTicket bool   `json:"command_would_accept_ticket"`
+	CovenantNativeReason     string `json:"covenant_native_reason"`
+	QuarantineDecision       string `json:"quarantine_decision"`
+	SafeToAccept             bool   `json:"safe_to_accept"`
+}
+
 type AtlasMergeCheckBindingInput struct {
 	Schema                 string                      `json:"schema"`
 	Status                 string                      `json:"status"`

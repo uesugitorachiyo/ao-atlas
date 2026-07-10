@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.command-covenant-quarantine-input.v0.1",
+  "status": "recorded",
+  "cases": [
+    {
+      "id": "live-mutation-approval-text",
+      "command_validation_path": "ao-command live-mutation approval text readback",
+      "ticket_canonical_json": "{\"schema\":\"ao.covenant.ticket.v0.1\",\"ticket_id\":\"ticket-p0b-rejected-text\",\"decision\":\"rejected\",\"decision_id\":\"decision-p0b-text\",\"reason\":\"policy_decision_rejected: requested resource is outside authorized write scope\"}",
+      "covenant_decision": "rejected",
+      "command_would_accept_ticket": true,
+      "covenant_native_reason": "policy_decision_rejected: requested resource is outside authorized write scope"
+    },
+    {
+      "id": "live-mutation-approval-json",
+      "command_validation_path": "ao-command live-mutation approval json readback",
+      "ticket_canonical_json": "{\"schema\":\"ao.covenant.ticket.v0.1\",\"ticket_id\":\"ticket-p0b-rejected-json\",\"decision\":\"rejected\",\"decision_id\":\"decision-p0b-json\",\"reason\":\"policy_decision_rejected: approval ticket digest does not match request digest\"}",
+      "covenant_decision": "rejected",
+      "command_would_accept_ticket": true,
+      "covenant_native_reason": "policy_decision_rejected: approval ticket digest does not match request digest"
+    },
+    {
+      "id": "live-mutation-approval-pending",
+      "command_validation_path": "ao-command pending-ticket readback",
+      "ticket_canonical_json": "{\"schema\":\"ao.covenant.ticket.v0.1\",\"ticket_id\":\"ticket-p0b-pending\",\"decision\":\"accepted\",\"decision_id\":\"decision-p0b-pending\"}",
+      "covenant_decision": "accepted",
+      "command_would_accept_ticket": false,
+      "covenant_native_reason": ""
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
