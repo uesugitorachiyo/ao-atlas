@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1",
+  "node": "mission-recommendation-consolidation-month1-30",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:21:33Z",
+  "scan_scope": [
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-30",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-29"
+  ],
+  "public_claim_guard": "Scoped scan found only expected safety-boundary and denial wording.",
+  "rsi_remains_denied": true
+}

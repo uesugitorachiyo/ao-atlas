@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1",
+  "node": "mission-recommendation-consolidation-month1-30",
+  "status": "pending_complete_node",
+  "generated_at_utc": "2026-07-10T19:21:33Z",
+  "checkpoint": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-30",
+  "rsi_remains_denied": true
+}

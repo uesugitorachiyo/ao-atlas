@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-30",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T19:21:33Z",
+  "kind": "scoped_public_safety_wording_scan",
+  "repository": "ao-atlas",
+  "artifact": "public-safety-wording-scan.json",
+  "scan_status": "passed",
+  "unsafe_claims_found": false,
+  "completed_nodes": 29,
+  "total_nodes": 36,
+  "ready_nodes": 7,
+  "blocked_nodes": 0,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-30 and execute exactly one active node.",
+  "rsi_remains_denied": true
+}

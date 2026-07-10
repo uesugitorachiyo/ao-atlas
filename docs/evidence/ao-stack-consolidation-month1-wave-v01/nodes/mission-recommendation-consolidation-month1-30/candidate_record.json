@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-30",
+  "status": "candidate_recorded",
+  "generated_at_utc": "2026-07-10T19:21:33Z",
+  "repository": "ao-atlas",
+  "branch": "codex/consolidation-node-30-public-safety-scan",
+  "mutation_class": "low_risk_code",
+  "objective": "Run a scoped public-safety wording scan over changed documentation and workflows.",
+  "writes": [
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-30",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-30"
+  ],
+  "source_recommendation": "consolidation-month1-30",
+  "source_digest": "sha256:e776ea250456c59d92eb6758e6fbf3ac1abdc7ad821c08d9cc9b520a390b4b5e",
+  "source_task_digest": "sha256:41eb52977623902b27303c503f17575a662632ee40c125ba54230338a3bbb6cd"
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1",
+  "node": "mission-recommendation-consolidation-month1-30",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:21:33Z",
+  "scan_scope": [
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-30",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-29"
+  ],
+  "scan_terms": [
+    "provider calls",
+    "credential inspection",
+    "release deploy publish upload tag",
+    "auth policy config widening",
+    "broad RSI claim",
+    "RSI remains denied",
+    "live-proven"
+  ],
+  "match_count": 196,
+  "classification": "expected_safety_boundary_and_denial_terms_only",
+  "unsafe_claims_found": false,
+  "absolute_local_paths_found": false,
+  "provider_or_release_instruction_found": false,
+  "authority_widening_instruction_found": false,
+  "rsi_promotion_claim_found": false
+}

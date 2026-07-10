@@ -1,0 +1,61 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-30",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:21:33Z",
+  "commands": [
+    {
+      "command": "find node evidence JSON files and validate with jq",
+      "status": "passed"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-consolidation-month1-wave-v01",
+      "status": "passed"
+    },
+    {
+      "command": "go run ./cmd/atlas mission recommendations validate-evidence --strict-schema-registry --evidence-root docs/evidence/ao-stack-consolidation-month1-wave-v01",
+      "status": "passed"
+    },
+    {
+      "command": "go test ./... -count=1",
+      "status": "passed"
+    },
+    {
+      "command": "go vet ./...",
+      "status": "passed"
+    },
+    {
+      "command": "go build -o target/atlas-node-30-evidence ./cmd/atlas",
+      "status": "passed"
+    },
+    {
+      "command": "scripts/production-readiness.sh",
+      "status": "passed",
+      "summary": "target/production-readiness/summary.json"
+    },
+    {
+      "command": "scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry",
+      "status": "passed",
+      "summary": "target/atlas-foundry-roundtrip/summary.json"
+    },
+    {
+      "command": "git diff --check",
+      "status": "passed"
+    },
+    {
+      "command": "scoped public-safety wording scan over node 30 and after-node-30 readbacks",
+      "status": "passed_with_expected_safety_boundary_terms"
+    }
+  ],
+  "public_safety_scan": {
+    "path": "public-safety-wording-scan.json",
+    "status": "passed",
+    "unsafe_claims_found": false
+  },
+  "branch_cleanup": {
+    "current_node_branch_created": true,
+    "implementation_branch_required": false
+  },
+  "rsi_remains_denied": true,
+  "verified_at_utc": "2026-07-10T19:22:24Z"
+}
