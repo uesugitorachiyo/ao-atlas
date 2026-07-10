@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-27",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records post-merge cleanup evidence for P0-B nodes 21-26, proving each merged PR has passed CI, local branch deletion, remote branch deletion, and zero remaining codex branches.",
+  "command": "go run ./cmd/atlas mission recommendations post-merge-branch-deletion-readback",
+  "typed_validator": "typed:post-merge-branch-deletion-readback"
+}

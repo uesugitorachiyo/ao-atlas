@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.post-merge-lifecycle.v0.1",
+  "node_id": "mission-recommendation-p0b-contract-convergence-24",
+  "status": "merged_and_cleaned",
+  "pr_number": 522,
+  "merge_commit": "7db41c7b097c820fbf0341c42121b3c87c1cab07",
+  "ci_status": "passed",
+  "local_main_synced": true,
+  "local_branch_deleted": true,
+  "remote_branch_deleted": true,
+  "local_codex_branches_remaining": 0,
+  "remote_codex_branches_remaining": 0
+}
