@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-20",
+  "candidate": "arena-workflow-equivalent-local-verification",
+  "status": "selected",
+  "owner": "ao-arena",
+  "objective": "Verify the Arena hosted workflow commands locally on the synced main branch without provider calls or uploads.",
+  "mutation_class": "low_risk_verification",
+  "source_node": "mission-recommendation-consolidation-month1-19",
+  "generated_at_utc": "2026-07-10T18:13:14Z",
+  "expected_outputs": [
+    "Arena local command evidence",
+    "node readback"
+  ],
+  "safety": {
+    "no_direct_main_mutation": true,
+    "no_provider_calls": true,
+    "no_release_deploy_publish_upload_tag": true,
+    "no_dependency_updates": true,
+    "no_policy_auth_config_widening": true,
+    "rsi_remains_denied": true
+  }
+}
