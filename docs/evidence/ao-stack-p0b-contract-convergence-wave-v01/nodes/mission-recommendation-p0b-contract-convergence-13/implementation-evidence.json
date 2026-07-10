@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-13",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed Atlas ticket-schema compatibility ledger that binds Atlas producer and consumer schemas for ticket digest evidence fields.",
+  "command": "mission recommendations atlas-ticket-schema-compatibility-ledger",
+  "typed_validator": "typed:atlas-ticket-schema-compatibility-ledger"
+}

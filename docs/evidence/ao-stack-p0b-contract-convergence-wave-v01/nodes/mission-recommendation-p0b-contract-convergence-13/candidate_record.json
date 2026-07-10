@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-13",
+  "candidate": "Add Atlas ticket-schema compatibility ledger entries.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-13-atlas-ticket-ledger",
+  "files_changed": [
+    "internal/atlas/mission_atlas_ticket_schema_compatibility_ledger.go",
+    "internal/atlas/mission_atlas_ticket_schema_compatibility_ledger_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "schemas/atlas-ticket-schema-compatibility-ledger.schema.json",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-13"
+  ],
+  "digest_fields": [
+    "source_input_digest",
+    "producer_schema",
+    "consumer_schema",
+    "required_fields"
+  ]
+}

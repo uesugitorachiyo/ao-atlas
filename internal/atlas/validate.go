@@ -57,6 +57,8 @@ const (
 	AtlasCommandCompactRejectionReasonFixtureContract          = "ao.atlas.command-compact-rejection-reason-fixture.v0.1"
 	AtlasBlueprintTicketSchemaCompatibilityLedgerInputContract = "ao.atlas.blueprint-ticket-schema-compatibility-ledger-input.v0.1"
 	AtlasBlueprintTicketSchemaCompatibilityLedgerContract      = "ao.atlas.blueprint-ticket-schema-compatibility-ledger.v0.1"
+	AtlasTicketSchemaCompatibilityLedgerInputContract          = "ao.atlas.atlas-ticket-schema-compatibility-ledger-input.v0.1"
+	AtlasTicketSchemaCompatibilityLedgerContract               = "ao.atlas.atlas-ticket-schema-compatibility-ledger.v0.1"
 	AtlasMergeCheckBindingInputContract                        = "ao.atlas.merge-check-binding-input.v0.1"
 	AtlasMergeCheckBindingContract                             = "ao.atlas.merge-check-binding.v0.1"
 	AtlasPostMergeBranchDeletionReadbackContract               = "ao.atlas.post-merge-branch-deletion-readback.v0.1"

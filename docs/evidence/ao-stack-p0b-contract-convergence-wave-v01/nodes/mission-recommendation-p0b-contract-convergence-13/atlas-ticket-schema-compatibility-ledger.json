@@ -1,0 +1,38 @@
+{
+  "schema": "ao.atlas.atlas-ticket-schema-compatibility-ledger.v0.1",
+  "status": "atlas_ticket_schema_compatible",
+  "source_input_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-13/atlas-ticket-schema-compatibility-ledger-input.json",
+  "source_input_digest": "sha256:05d3c90d2624e06a0c05f0ecfebf3e8a77ebfcfb1aabf8b403c2e138883c0519",
+  "entry_count": 2,
+  "compatible_entry_count": 2,
+  "all_entries_compatible": true,
+  "entries": [
+    {
+      "id": "atlas-import-ticket-digests",
+      "producer_schema": "ao.atlas.foundry-import.v0.1",
+      "consumer_schema": "ao.atlas.factory-task.v0.1",
+      "required_fields": [
+        "source_task_digest",
+        "source_digest",
+        "ticket_sha256"
+      ],
+      "compatible": true
+    },
+    {
+      "id": "run-link-ticket-evidence",
+      "producer_schema": "ao.atlas.run-link.v0.1",
+      "consumer_schema": "ao.atlas.recommendation-readback.v0.1",
+      "required_fields": [
+        "run_link_digest",
+        "policy_sha256",
+        "decision_sha256"
+      ],
+      "compatible": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
