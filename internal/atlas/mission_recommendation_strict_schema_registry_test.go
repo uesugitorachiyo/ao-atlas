@@ -40,3 +40,14 @@ func TestStrictRecommendationEvidenceSchemaRegistryAcceptsEvidenceVolumeBaseline
 		t.Fatalf("evidence volume baseline used validator %q", validator)
 	}
 }
+
+func TestStrictRecommendationEvidenceSchemaRegistryAcceptsEvidenceCatalogPlan(t *testing.T) {
+	path := filepath.Join(repoRoot(t), "examples", "valid", "evidence-catalog-plan.json")
+	validator, err := validateRecommendationEvidenceTypedFileStrict(path, "ao.atlas.consolidation-evidence-catalog-plan.v0.1")
+	if err != nil {
+		t.Fatalf("evidence catalog plan schema was rejected: %v", err)
+	}
+	if validator != "strict:generic:schema-marker" {
+		t.Fatalf("evidence catalog plan used validator %q", validator)
+	}
+}

@@ -6,6 +6,7 @@ var strictRecommendationEvidenceGenericSchemas = map[string]struct{}{
 	"ao.atlas.consolidation-candidate-record.v0.1":         {},
 	"ao.atlas.consolidation-checkpoint-bundle.v0.1":        {},
 	"ao.atlas.consolidation-command-readback.v0.1":         {},
+	"ao.atlas.consolidation-evidence-catalog-plan.v0.1":    {},
 	"ao.atlas.consolidation-evidence-volume-baseline.v0.1": {},
 	"ao.atlas.consolidation-foundry-import.v0.1":           {},
 	"ao.atlas.consolidation-implementation-evidence.v0.1":  {},

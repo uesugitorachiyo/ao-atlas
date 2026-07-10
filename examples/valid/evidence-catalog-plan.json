@@ -1,0 +1,6 @@
+{
+  "schema": "ao.atlas.consolidation-evidence-catalog-plan.v0.1",
+  "status": "planned",
+  "wave": "ao-stack-consolidation-month1-wave-v01",
+  "retention_model": "golden_fixtures_in_git_bulk_campaign_output_cataloged"
+}
