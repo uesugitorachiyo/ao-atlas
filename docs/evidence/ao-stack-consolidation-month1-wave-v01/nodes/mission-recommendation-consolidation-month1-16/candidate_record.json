@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-16",
+  "candidate": "evidence-volume-baseline",
+  "status": "selected",
+  "owner": "ao-atlas",
+  "objective": "Record tracked source, test, schema, fixture, and evidence JSON byte counts for Atlas and Foundry.",
+  "mutation_class": "low_risk_measurement",
+  "source_node": "mission-recommendation-consolidation-month1-15",
+  "generated_at_utc": "2026-07-10T17:36:23Z",
+  "expected_outputs": [
+    "evidence-volume-baseline.json",
+    "strict schema registry coverage",
+    "node readback"
+  ],
+  "safety": {
+    "no_direct_main_mutation": true,
+    "no_provider_calls": true,
+    "no_release_deploy_publish_upload_tag": true,
+    "no_dependency_updates": true,
+    "no_policy_auth_config_widening": true,
+    "rsi_remains_denied": true
+  }
+}

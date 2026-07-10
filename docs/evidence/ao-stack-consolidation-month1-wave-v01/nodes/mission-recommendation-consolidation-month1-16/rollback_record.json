@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.consolidation-rollback-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-16",
+  "status": "rollback_available",
+  "generated_at_utc": "2026-07-10T17:36:23Z",
+  "rollback_scope": [
+    "Remove evidence-volume baseline fixture/schema registration if needed.",
+    "Remove node 16 evidence and progress records if node completion is invalidated."
+  ],
+  "restores_previous_checkpoint": "mission-recommendation-consolidation-month1-15",
+  "data_loss_expected": false,
+  "rsi_remains_denied": true
+}

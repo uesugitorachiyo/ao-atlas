@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-16",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T17:36:23Z",
+  "kind": "evidence_volume_baseline_schema_and_measurement",
+  "repository": "ao-atlas",
+  "implementation_pr": 546,
+  "merge_commit": "c78b5e1fdc132594a64f349d3ce288b1c7cdb125",
+  "changed_paths": [
+    "examples/valid/evidence-volume-baseline.json",
+    "internal/atlas/mission_recommendation_strict_schema_registry_test.go",
+    "internal/atlas/recommendation_evidence_strict_schema_registry.go",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-16/evidence-volume-baseline.json"
+  ],
+  "rsi_remains_denied": true
+}

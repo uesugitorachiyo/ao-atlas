@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1",
+  "node": "mission-recommendation-consolidation-month1-16",
+  "status": "no_promotion_requested",
+  "generated_at_utc": "2026-07-10T17:36:23Z",
+  "promotion_requested": false,
+  "promotion_safe": false,
+  "reason": "Measurement fixture and evidence readback only; no authority-class promotion is requested.",
+  "highest_proven_live_class": "unchanged",
+  "rsi_remains_denied": true
+}

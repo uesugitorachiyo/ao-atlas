@@ -1,0 +1,49 @@
+{
+  "schema": "ao.atlas.consolidation-evidence-volume-baseline.v0.1",
+  "status": "recorded",
+  "wave": "ao-stack-consolidation-month1-wave-v01",
+  "measurement_basis": "tracked_files_only",
+  "generated_at_utc": "2026-07-10T17:36:23Z",
+  "repositories": [
+    {
+      "repo": "ao-atlas",
+      "commit": "c78b5e1fdc132594a64f349d3ce288b1c7cdb125",
+      "tracked_files": 11809,
+      "tracked_bytes": 132065588,
+      "json_files": 10995,
+      "json_bytes": 128433987,
+      "evidence_json_files": 10768,
+      "evidence_json_bytes": 127883934,
+      "source_json_files": 227,
+      "source_json_bytes": 550053,
+      "schema_files": 90,
+      "test_files": 92,
+      "fixture_files": 99
+    },
+    {
+      "repo": "ao-foundry",
+      "commit": "a610f10b09591416509c712313cd9021a2cb7da7",
+      "tracked_files": 57826,
+      "tracked_bytes": 68040175,
+      "json_files": 57456,
+      "json_bytes": 66190493,
+      "evidence_json_files": 57075,
+      "evidence_json_bytes": 65704264,
+      "source_json_files": 381,
+      "source_json_bytes": 486229,
+      "schema_files": 2,
+      "test_files": 2,
+      "fixture_files": 278
+    }
+  ],
+  "findings": {
+    "atlas_evidence_json_share_of_json_bytes": 0.99572,
+    "foundry_evidence_json_share_of_json_bytes": 0.99266,
+    "recommendation": "Retain small replayable golden fixtures in Git and move bulk campaign output to a generated catalog or content-addressed storage."
+  },
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "rsi_remains_denied": true
+}
