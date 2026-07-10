@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-27",
+  "candidate": "Record post-merge cleanup evidence after branch deletion.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-27-post-merge-cleanup",
+  "files_changed": [
+    "internal/atlas/mission_branch_deletion_readback_test.go",
+    "internal/atlas/mission_p0b_evidence_validation_test.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-27"
+  ],
+  "digest_fields": [
+    "entries.node_id",
+    "entries.pr_number",
+    "entries.merge_commit",
+    "entries.local_branch_deleted",
+    "entries.remote_branch_deleted",
+    "branches_remaining_total"
+  ]
+}

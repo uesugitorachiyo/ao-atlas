@@ -107,6 +107,72 @@ func TestPostMergeBranchDeletionUsesReusableLocalAndRemoteCleanupRecords(t *test
 	}
 }
 
+func TestP0BContractConvergencePostMergeCleanupReadbackCoversRecentMergedNodes(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-stack-p0b-contract-convergence-wave-v01")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-p0b-contract-convergence-27")
+	recordedPath := filepath.Join(nodeDir, "post-merge-branch-deletion-readback.json")
+	outPath := filepath.Join(t.TempDir(), "post-merge-branch-deletion-readback.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "post-merge-branch-deletion-readback",
+		"--evidence-root", waveRoot,
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("post-merge-branch-deletion-readback command failed: %s", out.String())
+	}
+	for _, want := range []string{
+		"status=branch_deletion_bound",
+		"post_merge_lifecycle_count=6",
+		"local_branch_deleted_count=6",
+		"remote_branch_deleted_count=6",
+		"branches_remaining_total=0",
+	} {
+		if !strings.Contains(out.String(), want) {
+			t.Fatalf("post-merge-branch-deletion-readback output missing %q:\n%s", want, out.String())
+		}
+	}
+	recorded := mustLoadJSON[AtlasPostMergeBranchDeletionReadback](t, recordedPath)
+	if err := ValidateAtlasPostMergeBranchDeletionReadback(recorded); err != nil {
+		t.Fatal(err)
+	}
+	if recorded.PostMergeLifecycleCount != 6 ||
+		recorded.LocalBranchDeletedCount != 6 ||
+		recorded.RemoteBranchDeletedCount != 6 ||
+		recorded.BranchesRemainingTotal != 0 ||
+		recorded.ClaimsAuthorityAdvance ||
+		!recorded.RSIRemainsDenied {
+		t.Fatalf("P0-B post-merge cleanup readback must bind six clean node lifecycles without authority effects: %#v", recorded)
+	}
+	wantNodes := map[string]bool{
+		"mission-recommendation-p0b-contract-convergence-21": false,
+		"mission-recommendation-p0b-contract-convergence-22": false,
+		"mission-recommendation-p0b-contract-convergence-23": false,
+		"mission-recommendation-p0b-contract-convergence-24": false,
+		"mission-recommendation-p0b-contract-convergence-25": false,
+		"mission-recommendation-p0b-contract-convergence-26": false,
+	}
+	for _, entry := range recorded.Entries {
+		if _, ok := wantNodes[entry.NodeID]; ok {
+			wantNodes[entry.NodeID] = true
+		}
+		if entry.CIStatus != "passed" ||
+			!entry.LocalBranchDeleted ||
+			!entry.RemoteBranchDeleted ||
+			entry.LocalCodexBranchesRemaining != 0 ||
+			entry.RemoteCodexBranchesRemaining != 0 {
+			t.Fatalf("P0-B cleanup entry must prove passed CI and local/remote branch deletion: %#v", entry)
+		}
+	}
+	for nodeID, seen := range wantNodes {
+		if !seen {
+			t.Fatalf("P0-B cleanup readback missing node %s", nodeID)
+		}
+	}
+}
+
 func branchDeletionCheckpointRoot(t *testing.T, waveRoot string, recorded map[string]any) string {
 	t.Helper()
 	checkpointRoot := filepath.Join(t.TempDir(), "evidence")

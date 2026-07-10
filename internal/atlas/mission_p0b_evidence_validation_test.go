@@ -25,7 +25,6 @@ func TestP0BContractConvergenceEvidenceValidationCommandCoversWholeWave(t *testi
 	}
 	for _, want := range []string{
 		"status=passed",
-		"node_count=26",
 		"failed_files=0",
 	} {
 		if !strings.Contains(out.String(), want) {
@@ -34,17 +33,28 @@ func TestP0BContractConvergenceEvidenceValidationCommandCoversWholeWave(t *testi
 	}
 
 	recorded := mustLoadJSON[AtlasRecommendationEvidenceValidationReport](t, recordedPath)
+	generated := mustLoadJSON[AtlasRecommendationEvidenceValidationReport](t, outPath)
 	if err := ValidateAtlasRecommendationEvidenceValidationReport(recorded); err != nil {
 		t.Fatal(err)
 	}
+	if err := ValidateAtlasRecommendationEvidenceValidationReport(generated); err != nil {
+		t.Fatal(err)
+	}
 	if recorded.Status != "passed" ||
-		recorded.NodeCount != 26 ||
+		recorded.NodeCount < 26 ||
 		recorded.JSONFileCount == 0 ||
 		recorded.ValidatedJSONFiles != recorded.JSONFileCount ||
 		len(recorded.MissingSchemaFiles) != 0 ||
 		len(recorded.FailedFiles) != 0 ||
 		!recorded.RequiredFilenamesCovered {
 		t.Fatalf("P0-B evidence validation report did not cover the whole wave cleanly: %#v", recorded)
+	}
+	if generated.NodeCount < recorded.NodeCount ||
+		generated.ValidatedJSONFiles != generated.JSONFileCount ||
+		len(generated.MissingSchemaFiles) != 0 ||
+		len(generated.FailedFiles) != 0 ||
+		!generated.RequiredFilenamesCovered {
+		t.Fatalf("P0-B generated evidence validation report regressed below recorded coverage: recorded=%#v generated=%#v", recorded, generated)
 	}
 	if recorded.SchemaCounts[AtlasCompactionResumePromptContract] == 0 ||
 		recorded.SchemaCounts[AtlasP0BCommandPromoterAgreementContract] == 0 ||
