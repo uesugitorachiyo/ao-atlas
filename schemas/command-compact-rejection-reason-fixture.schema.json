@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ao.local/schemas/command-compact-rejection-reason-fixture.schema.json",
+  "title": "AO Atlas Command Compact Rejection Reason Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "status",
+    "source_input_path",
+    "source_input_digest",
+    "case_count",
+    "reasons_rendered",
+    "cases",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": { "const": "ao.atlas.command-compact-rejection-reason-fixture.v0.1" },
+    "status": { "const": "command_compact_rejection_reasons_rendered" },
+    "source_input_path": { "type": "string", "minLength": 1 },
+    "source_input_digest": { "$ref": "#/$defs/sha256" },
+    "case_count": { "type": "integer", "minimum": 1 },
+    "reasons_rendered": { "const": true },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/case" }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "command_compact_status_path",
+        "covenant_native_reason",
+        "command_compact_reason"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "command_compact_status_path": { "type": "string", "minLength": 1 },
+        "covenant_native_reason": { "type": "string", "minLength": 1 },
+        "command_compact_reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

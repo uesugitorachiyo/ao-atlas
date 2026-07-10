@@ -53,6 +53,8 @@ const (
 	AtlasPolicyVersionReplayRejectionFixtureContract   = "ao.atlas.policy-version-replay-rejection-fixture.v0.1"
 	AtlasCovenantEvidenceDigestReadbackInputContract   = "ao.atlas.covenant-evidence-digest-readback-input.v0.1"
 	AtlasCovenantEvidenceDigestReadbackFixtureContract = "ao.atlas.covenant-evidence-digest-readback-fixture.v0.1"
+	AtlasCommandCompactRejectionReasonInputContract    = "ao.atlas.command-compact-rejection-reason-input.v0.1"
+	AtlasCommandCompactRejectionReasonFixtureContract  = "ao.atlas.command-compact-rejection-reason-fixture.v0.1"
 	AtlasMergeCheckBindingInputContract                = "ao.atlas.merge-check-binding-input.v0.1"
 	AtlasMergeCheckBindingContract                     = "ao.atlas.merge-check-binding.v0.1"
 	AtlasPostMergeBranchDeletionReadbackContract       = "ao.atlas.post-merge-branch-deletion-readback.v0.1"
