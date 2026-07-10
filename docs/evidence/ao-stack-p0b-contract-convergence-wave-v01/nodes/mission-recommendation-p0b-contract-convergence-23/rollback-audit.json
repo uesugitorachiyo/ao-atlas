@@ -1,0 +1,224 @@
+{
+  "schema": "ao.atlas.p0b-rollback-audit.v0.1",
+  "node_id": "mission-recommendation-p0b-contract-convergence-23",
+  "status": "complete",
+  "source": "p0b_nodes_01_22_rollback_records",
+  "covered_node_start": 1,
+  "covered_node_end": 22,
+  "entry_count": 22,
+  "all_rollback_records_present": true,
+  "all_rollback_records_ready": true,
+  "missing_rollback_record_count": 0,
+  "release_or_deploy_rollback_count": 0,
+  "completed_nodes_before": 22,
+  "ready_nodes_before": 8,
+  "final_response_allowed": false,
+  "expected_next_node": "mission-recommendation-p0b-contract-convergence-24",
+  "entries": [
+    {
+      "node_number": 1,
+      "node_id": "mission-recommendation-p0b-contract-convergence-01",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-01/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-01-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 2,
+      "node_id": "mission-recommendation-p0b-contract-convergence-02",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-02/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-02-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 3,
+      "node_id": "mission-recommendation-p0b-contract-convergence-03",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-03/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-03-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 4,
+      "node_id": "mission-recommendation-p0b-contract-convergence-04",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-04/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-04-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 5,
+      "node_id": "mission-recommendation-p0b-contract-convergence-05",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-05/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-05-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 6,
+      "node_id": "mission-recommendation-p0b-contract-convergence-06",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-06/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-06-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 7,
+      "node_id": "mission-recommendation-p0b-contract-convergence-07",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-07/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-07-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 8,
+      "node_id": "mission-recommendation-p0b-contract-convergence-08",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-08/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-08-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 9,
+      "node_id": "mission-recommendation-p0b-contract-convergence-09",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-09/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-09-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 10,
+      "node_id": "mission-recommendation-p0b-contract-convergence-10",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-10/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-10-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 11,
+      "node_id": "mission-recommendation-p0b-contract-convergence-11",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-11/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-11-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 12,
+      "node_id": "mission-recommendation-p0b-contract-convergence-12",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-12/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-12-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 13,
+      "node_id": "mission-recommendation-p0b-contract-convergence-13",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-13/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-13-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 14,
+      "node_id": "mission-recommendation-p0b-contract-convergence-14",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-14/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-14-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 15,
+      "node_id": "mission-recommendation-p0b-contract-convergence-15",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-15/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-15-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 16,
+      "node_id": "mission-recommendation-p0b-contract-convergence-16",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-16/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-16-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 17,
+      "node_id": "mission-recommendation-p0b-contract-convergence-17",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-17/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-17-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 18,
+      "node_id": "mission-recommendation-p0b-contract-convergence-18",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-18/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-18-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 19,
+      "node_id": "mission-recommendation-p0b-contract-convergence-19",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-19/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-19-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 20,
+      "node_id": "mission-recommendation-p0b-contract-convergence-20",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-20/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-20-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 21,
+      "node_id": "mission-recommendation-p0b-contract-convergence-21",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-21/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-21-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    },
+    {
+      "node_number": 22,
+      "node_id": "mission-recommendation-p0b-contract-convergence-22",
+      "rollback_record_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-22/rollback_record.json",
+      "status": "ready",
+      "rollback_command": "git revert <node-22-merge-commit>",
+      "rollback_scope_count": 1,
+      "requires_release_or_deploy": false
+    }
+  ],
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

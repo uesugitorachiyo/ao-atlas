@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.p0b.checkpoint-bundle.v0.1",
+  "status": "ready",
+  "node_id": "mission-recommendation-p0b-contract-convergence-23",
+  "completed_nodes_after_this_node": 23,
+  "ready_nodes_after_this_node": 7,
+  "blocked_nodes_after_this_node": 0,
+  "failed_nodes_after_this_node": 0,
+  "final_response_allowed": false,
+  "exact_next_action": "Continue to mission-recommendation-p0b-contract-convergence-24."
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-23",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed rollback audit proving completed P0-B nodes 1-22 each have ready rollback records with non-release rollback commands before closure.",
+  "command": "typed fixture plus recommendation evidence validator",
+  "typed_validator": "typed:p0b-rollback-audit"
+}

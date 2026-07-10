@@ -368,6 +368,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:p0b-windows-ci-wait-telemetry", err
 		}
 		return "typed:p0b-windows-ci-wait-telemetry", ValidateAtlasP0BWindowsCIWaitTelemetry(value)
+	case AtlasP0BRollbackAuditContract:
+		value, err := LoadJSON[AtlasP0BRollbackAudit](path)
+		if err != nil {
+			return "typed:p0b-rollback-audit", err
+		}
+		return "typed:p0b-rollback-audit", ValidateAtlasP0BRollbackAudit(value)
 	case AtlasFailedCheckReplayFixtureContract:
 		value, err := LoadJSON[AtlasFailedCheckReplayFixture](path)
 		if err != nil {

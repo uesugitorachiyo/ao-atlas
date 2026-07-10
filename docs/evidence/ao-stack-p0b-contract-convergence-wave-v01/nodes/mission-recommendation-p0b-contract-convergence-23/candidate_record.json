@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-23",
+  "candidate": "Audit rollback records for every P0-B node before closure.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-23-rollback-audit",
+  "files_changed": [
+    "internal/atlas/mission_p0b_rollback_audit.go",
+    "internal/atlas/mission_p0b_rollback_audit_test.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-23"
+  ],
+  "digest_fields": [
+    "entries.rollback_record_path",
+    "entries.status",
+    "entries.rollback_command",
+    "entries.requires_release_or_deploy",
+    "all_rollback_records_present",
+    "all_rollback_records_ready"
+  ]
+}
