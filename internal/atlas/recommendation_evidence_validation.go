@@ -12,36 +12,46 @@ import (
 const AtlasRecommendationEvidenceValidationReportContract = "ao.atlas.recommendation-evidence-validation-report.v0.1"
 
 type AtlasRecommendationEvidenceValidationReport struct {
-	Schema                   string                                       `json:"schema"`
-	Status                   string                                       `json:"status"`
-	EvidenceRoot             string                                       `json:"evidence_root"`
-	NodeRoot                 string                                       `json:"node_root"`
-	NodeCount                int                                          `json:"node_count"`
-	JSONFileCount            int                                          `json:"json_file_count"`
-	ValidatedJSONFiles       int                                          `json:"validated_json_files"`
-	SchemaBoundFiles         int                                          `json:"schema_bound_files"`
-	TypedValidatorFiles      int                                          `json:"typed_validator_files"`
-	GenericSchemaFiles       int                                          `json:"generic_schema_files"`
-	MissingSchemaFiles       []string                                     `json:"missing_schema_files"`
-	FailedFiles              []string                                     `json:"failed_files"`
-	MissingRequiredFiles     []string                                     `json:"missing_required_files"`
-	RequiredFilenames        []string                                     `json:"required_filenames"`
-	RequiredFilenamesCovered bool                                         `json:"required_filenames_covered"`
-	StrictSchemaRegistry     bool                                         `json:"strict_schema_registry,omitempty"`
-	UnknownSchemaFiles       []string                                     `json:"unknown_schema_files,omitempty"`
-	SchemaCounts             map[string]int                               `json:"schema_counts"`
-	Validators               map[string]int                               `json:"validators"`
-	Entries                  []AtlasRecommendationEvidenceValidationEntry `json:"entries"`
+	Schema                    string                                       `json:"schema"`
+	Status                    string                                       `json:"status"`
+	EvidenceRoot              string                                       `json:"evidence_root"`
+	NodeRoot                  string                                       `json:"node_root"`
+	NodeCount                 int                                          `json:"node_count"`
+	JSONFileCount             int                                          `json:"json_file_count"`
+	ValidatedJSONFiles        int                                          `json:"validated_json_files"`
+	SchemaBoundFiles          int                                          `json:"schema_bound_files"`
+	TypedValidatorFiles       int                                          `json:"typed_validator_files"`
+	GenericSchemaFiles        int                                          `json:"generic_schema_files"`
+	MissingSchemaFiles        []string                                     `json:"missing_schema_files"`
+	FailedFiles               []string                                     `json:"failed_files"`
+	MissingRequiredFiles      []string                                     `json:"missing_required_files"`
+	RequiredFilenames         []string                                     `json:"required_filenames"`
+	RequiredFilenamesCovered  bool                                         `json:"required_filenames_covered"`
+	StrictSchemaRegistry      bool                                         `json:"strict_schema_registry,omitempty"`
+	RequireProvenanceFields   bool                                         `json:"require_provenance_fields,omitempty"`
+	UnknownSchemaFiles        []string                                     `json:"unknown_schema_files,omitempty"`
+	MissingSourceDigestFiles  []string                                     `json:"missing_source_digest_files,omitempty"`
+	MissingEvidenceClassFiles []string                                     `json:"missing_evidence_class_files,omitempty"`
+	SchemaCounts              map[string]int                               `json:"schema_counts"`
+	Validators                map[string]int                               `json:"validators"`
+	Entries                   []AtlasRecommendationEvidenceValidationEntry `json:"entries"`
 }
 
 type AtlasRecommendationEvidenceValidationEntry struct {
-	Path      string `json:"path"`
-	NodeID    string `json:"node_id"`
-	Filename  string `json:"filename"`
-	Schema    string `json:"schema"`
-	Validator string `json:"validator"`
-	Status    string `json:"status"`
-	Error     string `json:"error,omitempty"`
+	Path          string `json:"path"`
+	NodeID        string `json:"node_id"`
+	Filename      string `json:"filename"`
+	Schema        string `json:"schema"`
+	SourceDigest  string `json:"source_digest,omitempty"`
+	EvidenceClass string `json:"evidence_class,omitempty"`
+	Validator     string `json:"validator"`
+	Status        string `json:"status"`
+	Error         string `json:"error,omitempty"`
+}
+
+type AtlasRecommendationEvidenceValidationOptions struct {
+	StrictSchemaRegistry    bool
+	RequireProvenanceFields bool
 }
 
 func BuildAtlasRecommendationEvidenceValidationReport(evidenceRoot string) (AtlasRecommendationEvidenceValidationReport, error) {
@@ -49,22 +59,29 @@ func BuildAtlasRecommendationEvidenceValidationReport(evidenceRoot string) (Atla
 }
 
 func BuildAtlasRecommendationEvidenceValidationReportWithOptions(evidenceRoot string, strictSchemaRegistry bool) (AtlasRecommendationEvidenceValidationReport, error) {
+	return BuildAtlasRecommendationEvidenceValidationReportWithValidationOptions(evidenceRoot, AtlasRecommendationEvidenceValidationOptions{StrictSchemaRegistry: strictSchemaRegistry})
+}
+
+func BuildAtlasRecommendationEvidenceValidationReportWithValidationOptions(evidenceRoot string, options AtlasRecommendationEvidenceValidationOptions) (AtlasRecommendationEvidenceValidationReport, error) {
 	evidenceRoot = strings.TrimSpace(evidenceRoot)
 	report := AtlasRecommendationEvidenceValidationReport{
-		Schema:                   AtlasRecommendationEvidenceValidationReportContract,
-		Status:                   "passed",
-		EvidenceRoot:             filepath.ToSlash(evidenceRoot),
-		NodeRoot:                 filepath.ToSlash(filepath.Join(evidenceRoot, "nodes")),
-		SchemaCounts:             map[string]int{},
-		Validators:               map[string]int{},
-		RequiredFilenames:        requiredRecommendationEvidenceFilenames(),
-		RequiredFilenamesCovered: true,
-		StrictSchemaRegistry:     strictSchemaRegistry,
-		UnknownSchemaFiles:       []string{},
-		MissingSchemaFiles:       []string{},
-		FailedFiles:              []string{},
-		MissingRequiredFiles:     []string{},
-		Entries:                  []AtlasRecommendationEvidenceValidationEntry{},
+		Schema:                    AtlasRecommendationEvidenceValidationReportContract,
+		Status:                    "passed",
+		EvidenceRoot:              filepath.ToSlash(evidenceRoot),
+		NodeRoot:                  filepath.ToSlash(filepath.Join(evidenceRoot, "nodes")),
+		SchemaCounts:              map[string]int{},
+		Validators:                map[string]int{},
+		RequiredFilenames:         requiredRecommendationEvidenceFilenames(),
+		RequiredFilenamesCovered:  true,
+		StrictSchemaRegistry:      options.StrictSchemaRegistry,
+		RequireProvenanceFields:   options.RequireProvenanceFields,
+		UnknownSchemaFiles:        []string{},
+		MissingSourceDigestFiles:  []string{},
+		MissingEvidenceClassFiles: []string{},
+		MissingSchemaFiles:        []string{},
+		FailedFiles:               []string{},
+		MissingRequiredFiles:      []string{},
+		Entries:                   []AtlasRecommendationEvidenceValidationEntry{},
 	}
 	if evidenceRoot == "" {
 		report.Status = "failed"
@@ -97,7 +114,7 @@ func BuildAtlasRecommendationEvidenceValidationReportWithOptions(evidenceRoot st
 
 	nodeFiles := map[string]map[string]bool{}
 	for _, path := range paths {
-		entry := validateRecommendationEvidenceJSONFileWithOptions(evidenceRoot, nodeRoot, path, strictSchemaRegistry)
+		entry := validateRecommendationEvidenceJSONFileWithValidationOptions(evidenceRoot, nodeRoot, path, options)
 		report.Entries = append(report.Entries, entry)
 		report.JSONFileCount++
 		if entry.NodeID != "" {
@@ -112,6 +129,12 @@ func BuildAtlasRecommendationEvidenceValidationReportWithOptions(evidenceRoot st
 			report.FailedFiles = append(report.FailedFiles, entry.Path)
 			if entry.Validator == "strict:unknown-schema" {
 				report.UnknownSchemaFiles = append(report.UnknownSchemaFiles, entry.Path)
+			}
+			if strings.Contains(entry.Error, "missing source_digest") {
+				report.MissingSourceDigestFiles = append(report.MissingSourceDigestFiles, entry.Path)
+			}
+			if strings.Contains(entry.Error, "missing evidence_class") {
+				report.MissingEvidenceClassFiles = append(report.MissingEvidenceClassFiles, entry.Path)
 			}
 		}
 		if entry.Schema == "" {
@@ -217,6 +240,10 @@ func validateRecommendationEvidenceJSONFile(evidenceRoot, nodeRoot, path string)
 }
 
 func validateRecommendationEvidenceJSONFileWithOptions(evidenceRoot, nodeRoot, path string, strictSchemaRegistry bool) AtlasRecommendationEvidenceValidationEntry {
+	return validateRecommendationEvidenceJSONFileWithValidationOptions(evidenceRoot, nodeRoot, path, AtlasRecommendationEvidenceValidationOptions{StrictSchemaRegistry: strictSchemaRegistry})
+}
+
+func validateRecommendationEvidenceJSONFileWithValidationOptions(evidenceRoot, nodeRoot, path string, options AtlasRecommendationEvidenceValidationOptions) AtlasRecommendationEvidenceValidationEntry {
 	rel, err := filepath.Rel(evidenceRoot, path)
 	if err != nil {
 		rel = path
@@ -254,7 +281,7 @@ func validateRecommendationEvidenceJSONFileWithOptions(evidenceRoot, nodeRoot, p
 		return entry
 	}
 	validator, err := validateRecommendationEvidenceTypedFile(path, entry.Schema)
-	if strictSchemaRegistry {
+	if options.StrictSchemaRegistry {
 		validator, err = validateRecommendationEvidenceTypedFileStrict(path, entry.Schema)
 	}
 	entry.Validator = validator
@@ -262,6 +289,24 @@ func validateRecommendationEvidenceJSONFileWithOptions(evidenceRoot, nodeRoot, p
 		entry.Status = "failed"
 		entry.Error = err.Error()
 		return entry
+	}
+	if options.RequireProvenanceFields {
+		entry.SourceDigest, _ = raw["source_digest"].(string)
+		entry.SourceDigest = strings.TrimSpace(entry.SourceDigest)
+		entry.EvidenceClass, _ = raw["evidence_class"].(string)
+		entry.EvidenceClass = strings.TrimSpace(entry.EvidenceClass)
+		var errs []string
+		if !strings.HasPrefix(entry.SourceDigest, "sha256:") || len(entry.SourceDigest) <= len("sha256:") {
+			errs = append(errs, "missing source_digest")
+		}
+		if entry.EvidenceClass == "" {
+			errs = append(errs, "missing evidence_class")
+		}
+		if len(errs) != 0 {
+			entry.Status = "failed"
+			entry.Error = strings.Join(errs, "; ")
+			return entry
+		}
 	}
 	entry.Status = "passed"
 	return entry
