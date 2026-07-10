@@ -1,0 +1,42 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "mission_durable_migration_compatibility",
+  "node_id": "mission-recommendation-month2-contract-convergence-15",
+  "task_id": "mission-recommendation-month2-contract-convergence-15-task",
+  "status": "blocked_missing_migration_contract",
+  "source_owner": "ao-mission",
+  "source_repository": "ao-mission",
+  "source_commit": "8055933d9eebdd12a01d9ccca6edcbbf9bc69c37",
+  "producer": "ao-mission",
+  "consumer": "ao-atlas",
+  "compatibility_status": "planning_only",
+  "source_contracts": [
+    "ao.mission.record.v0.1",
+    "ao.mission.checkpoint-resume-bundle.v0.3",
+    "ao.mission.ledger-compaction-readback.v0.1",
+    "ao.mission.event-index.v0.2"
+  ],
+  "migration_contract_required": {
+    "source_version": "explicit",
+    "target_version": "explicit",
+    "transform_digest": "required",
+    "fixture_digest": "required",
+    "rollback_receipt": "required",
+    "atomicity_status": "required",
+    "recovery_readback": "required"
+  },
+  "current_gap": "no durable migration registry or cross-version fixture is present in the inspected Mission source and contracts",
+  "compatibility_gate": "blocked_until_migration_registry_and_atomic_write_recovery_tests_exist",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "compatibility_audit",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

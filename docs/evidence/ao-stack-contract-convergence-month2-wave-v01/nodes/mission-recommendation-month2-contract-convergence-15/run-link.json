@@ -1,0 +1,21 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-month2-contract-convergence-15-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/command_readback.json",
+    "foundry_import": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/foundry-import/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/promoter_no_promotion.json",
+    "public_safety_readback_before_binding": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/recommendation-readback-before-public-safety-binding.json",
+    "public_safety_readback_binding": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/public-safety-readback-binding.json",
+    "rollback_record": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/tests.json",
+    "verification": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/verification.json"
+  },
+  "digest": "sha256:202a6b995098e4d49c564cd0260e2a3e8981c586767741bb69c0cea39293f445"
+}
