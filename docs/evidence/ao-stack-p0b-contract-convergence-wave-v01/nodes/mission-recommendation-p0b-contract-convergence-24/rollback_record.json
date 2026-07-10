@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.rollback-record.v0.1",
+  "status": "ready",
+  "node_id": "mission-recommendation-p0b-contract-convergence-24",
+  "rollback_scope": [
+    "Revert AO Atlas node 24 Command/Promoter agreement validator, regression test, fixture, and generated evidence files."
+  ],
+  "rollback_command": "git revert <node-24-merge-commit>",
+  "requires_release_or_deploy": false
+}
