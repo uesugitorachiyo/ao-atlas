@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-18",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a P0-B aggregate Promoter no-promotion rollup proving completed P0-B nodes preserve no-promotion and RSI-denied invariants.",
+  "command": "mission recommendations promoter-no-promotion-rollup",
+  "typed_validator": "typed:promoter-no-promotion-rollup"
+}
