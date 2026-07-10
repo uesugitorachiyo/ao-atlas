@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-32",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T19:31:18Z",
+  "kind": "post_merge_branch_cleanup",
+  "repository": "ao-atlas",
+  "active_branch": "codex/consolidation-node-32-branch-cleanup",
+  "local_codex_branches": [
+    "codex/consolidation-node-32-branch-cleanup"
+  ],
+  "remote_codex_branches": [],
+  "stale_local_codex_branches": [],
+  "stale_remote_codex_branches": [],
+  "post_merge_cleanup_status": "clean_except_active_node_branch",
+  "rsi_remains_denied": true
+}
