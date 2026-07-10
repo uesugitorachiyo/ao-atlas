@@ -1,0 +1,81 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "canonical_json_go_vector_contract",
+  "node_id": "mission-recommendation-month2-contract-convergence-11",
+  "status": "blocked_missing_covenant_vector_suite",
+  "producer": "ao-covenant",
+  "consumer": "ao-atlas",
+  "source_commits": {
+    "ao_covenant": "ccfdd28751c5a5af9f00cf34950bcf6f439e0f24",
+    "ao2_control_plane": "6226dcc585d16871cd6ff9d7638628de465b6221"
+  },
+  "canonical_owner_expected": "ao-covenant",
+  "source_files": [
+    {
+      "repository": "ao-covenant",
+      "path": "internal/contract/canonical.go",
+      "digest": "sha256:3027053cf9e0196e181e6e8221d8a5d4cc267ea6c099586175d63c89190dfa93",
+      "fields_checked": [
+        "CanonicalJSON",
+        "Digest",
+        "encoding/json.Marshal"
+      ]
+    },
+    {
+      "repository": "ao-covenant",
+      "path": "internal/contract/contract_test.go",
+      "digest": "sha256:9941b4c1bf42c32acd8a5ad8ab21ff177fe1e91e6da760dd71fc6e922914ea20",
+      "fields_checked": [
+        "TestDigestIsStableForCanonicalContract",
+        "TestCompileRiskyChangeBrief"
+      ]
+    },
+    {
+      "repository": "ao2-control-plane",
+      "path": "tests/fixtures/canonical-json-vectors.json",
+      "digest": "sha256:296d1eb7abe9d04e0743dd3e8852f9833f50783cada4a942700d407a2a76fd3f",
+      "fields_checked": [
+        "ao2.canonical-json-vectors.v1",
+        "ao2-canonical-v1",
+        "three golden vectors"
+      ]
+    },
+    {
+      "repository": "ao2-control-plane",
+      "path": "crates/ao2-cp-schema/src/canonical.rs",
+      "digest": "sha256:8f1e3a5b69c574b305361cb3c90995ff8e8ffa834c8349e5a17e6b4d61d4822b",
+      "fields_checked": [
+        "canonical_json",
+        "sha256_of_canonical",
+        "sorted keys",
+        "number formatting"
+      ]
+    }
+  ],
+  "covenant_go_behavior": {
+    "serializer": "encoding/json.Marshal",
+    "fixed_byte_vectors": false,
+    "stable_digest_test": true,
+    "explicit_algorithm_identifier": false
+  },
+  "consumer_rust_behavior": {
+    "serializer": "ao2-canonical-v1",
+    "fixed_byte_vectors": true,
+    "vector_count": 3,
+    "fixture_owner": "ao2-control-plane"
+  },
+  "compatibility_status": "blocked_missing_covenant_vector_suite",
+  "cross_repository_binding_present": false,
+  "number_semantics_risk": "Go any values and Rust serde_json values require shared vectors before contract digests are treated as cross-language compatible",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "provider_calls": false,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
