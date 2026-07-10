@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-19",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T18:08:50Z",
+  "kind": "arena_hosted_ci",
+  "repository": "ao-arena",
+  "implementation_pr": 1,
+  "merge_commit": "8d926890b1df472729750bd2c2129e4b73fc9de9",
+  "changed_paths": [
+    ".github/workflows/ci.yml"
+  ],
+  "workflow": {
+    "name": "ci",
+    "jobs": [
+      "native-checks"
+    ],
+    "platforms": [
+      "ubuntu-latest",
+      "macos-latest",
+      "windows-latest"
+    ],
+    "commands": [
+      "go test ./... -count=1",
+      "go vet ./...",
+      "go build ./cmd/arena"
+    ]
+  },
+  "rsi_remains_denied": true
+}

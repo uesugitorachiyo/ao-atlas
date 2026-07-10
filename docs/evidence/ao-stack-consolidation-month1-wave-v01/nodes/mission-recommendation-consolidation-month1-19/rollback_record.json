@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.consolidation-rollback-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-19",
+  "status": "rollback_available",
+  "generated_at_utc": "2026-07-10T18:08:50Z",
+  "rollback_scope": [
+    "Revert AO Arena .github/workflows/ci.yml if hosted checks need replacement.",
+    "Remove node 19 evidence and progress records if node completion is invalidated."
+  ],
+  "restores_previous_checkpoint": "mission-recommendation-consolidation-month1-18",
+  "data_loss_expected": false,
+  "rsi_remains_denied": true
+}

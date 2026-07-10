@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-19",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:08:50Z",
+  "commands": [
+    "AO Arena: go test ./... -count=1",
+    "AO Arena: go vet ./...",
+    "AO Arena: go build -o target/arena-ci-check ./cmd/arena",
+    "AO Arena: git diff --check",
+    "GitHub CI: native-checks ubuntu-latest, macos-latest, windows-latest passed",
+    "AO Atlas evidence verification: go test ./... -count=1",
+    "AO Atlas evidence verification: go vet ./...",
+    "AO Atlas evidence verification: go build -o target/atlas-node-19-evidence ./cmd/atlas",
+    "AO Atlas evidence verification: scripts/production-readiness.sh",
+    "AO Atlas evidence verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry"
+  ],
+  "hosted_ci": {
+    "repo": "ao-arena",
+    "pr": 1,
+    "merge_commit": "8d926890b1df472729750bd2c2129e4b73fc9de9",
+    "checks": [
+      "native-checks (ubuntu-latest)",
+      "native-checks (macos-latest)",
+      "native-checks (windows-latest)"
+    ],
+    "checks_successful": 3,
+    "checks_failing": 0
+  }
+}
