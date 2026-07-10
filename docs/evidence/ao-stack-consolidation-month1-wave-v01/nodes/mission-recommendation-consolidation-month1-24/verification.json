@@ -1,0 +1,29 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-24",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:43:25Z",
+  "implementation_pr": {
+    "repo": "ao-sentinel",
+    "number": 36,
+    "state": "merged",
+    "merge_commit": "a4b5d64f15a0f57fbd9b7f8b518dbab031fe3cde",
+    "ci_status": "passed",
+    "checks_successful": 3,
+    "checks_failing": 0
+  },
+  "local_verification": {
+    "repo": "ao-sentinel",
+    "commit": "a4b5d64f15a0f57fbd9b7f8b518dbab031fe3cde",
+    "commands_successful": 5,
+    "commands_failing": 0
+  },
+  "branch_cleanup": {
+    "temporary_worktree_removed": true,
+    "current_node_branch_created": false,
+    "implementation_branch_deleted_local": true,
+    "implementation_branch_deleted_remote": true,
+    "pre_existing_unrelated_branch_preserved": "codex/mission-v02-hardening"
+  },
+  "rsi_remains_denied": true
+}
