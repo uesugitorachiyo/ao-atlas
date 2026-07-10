@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-15",
+  "kind": "mission_lifecycle_metrics_ingestion_guard",
+  "repository": "ao-atlas",
+  "paths": ["internal/atlas/mission_lifecycle_metrics_evidence.go", "internal/atlas/recommendation_evidence_validation.go", "internal/atlas/mission_lifecycle_metrics_evidence_test.go", "examples/valid/mission-lifecycle-metrics-readback.json", "examples/invalid/mission-lifecycle-metrics-handoff-count.json"],
+  "pull_request": 544,
+  "merge_commit": "d37f7032ae48c2e99df92d784a16ebe35127c711",
+  "claims_runtime_execution": false
+}
