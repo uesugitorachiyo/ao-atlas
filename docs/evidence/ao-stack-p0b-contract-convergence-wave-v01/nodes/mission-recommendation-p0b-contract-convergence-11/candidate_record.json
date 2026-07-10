@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-11",
+  "candidate": "Render Covenant-native rejection reasons in Command compact status.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-11-command-rejection-reasons",
+  "files_changed": [
+    "internal/atlas/mission_command_compact_rejection_reason.go",
+    "internal/atlas/mission_command_compact_rejection_reason_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "schemas/command-compact-rejection-reason-fixture.schema.json",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-11"
+  ],
+  "digest_fields": [
+    "source_input_digest",
+    "covenant_native_reason",
+    "command_compact_reason"
+  ]
+}

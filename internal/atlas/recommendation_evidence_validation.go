@@ -410,6 +410,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:covenant-evidence-digest-readback-fixture", err
 		}
 		return "typed:covenant-evidence-digest-readback-fixture", ValidateAtlasCovenantEvidenceDigestReadbackFixture(value)
+	case AtlasCommandCompactRejectionReasonFixtureContract:
+		value, err := LoadJSON[AtlasCommandCompactRejectionReasonFixture](path)
+		if err != nil {
+			return "typed:command-compact-rejection-reason-fixture", err
+		}
+		return "typed:command-compact-rejection-reason-fixture", ValidateAtlasCommandCompactRejectionReasonFixture(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {

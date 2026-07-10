@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-11",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed Command compact rejection reason fixture that requires Command compact status to render Covenant-native rejection reasons exactly.",
+  "command": "mission recommendations command-compact-rejection-reason-fixture",
+  "typed_validator": "typed:command-compact-rejection-reason-fixture"
+}
