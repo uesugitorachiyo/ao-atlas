@@ -11,8 +11,8 @@
     "Emit exactly one Foundry fixture import and preserve no-promotion and RSI-denied invariants."
   ],
   "source_digests": {
-    "canonical_input": "sha256:04707e713037a7310d6ed827161ef4f14dda14c3bb503b79404abd9bbd7d52ee",
-    "original_month2_recommendations": "sha256:595f9d37379546313dcffa047b42a6fd38d89dd4eb9ee9f4a069e5d0edf2e0c9"
+    "canonical_input": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+    "original_month2_recommendations": "sha256:23571e80b30403f4391e21d80375923bb8f61ac029342b7d1ed16a45c8b5b7bf"
   },
   "write_scope": [
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01"

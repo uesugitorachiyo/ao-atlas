@@ -7,7 +7,7 @@
   "source_artifacts": [
     {
       "ref": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
-      "digest": "sha256:c00b18acbd381f5e0939b45602d814e21acb6b13f6131d546baccdfaaba4c11f"
+      "digest": "sha256:a379b7edb16f25121b60834365824b0345cf4ea85fab5acc6f33a49343236df8"
     },
     {
       "ref": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-1/stack-instance.json",
@@ -40,7 +40,7 @@
         "command_readback"
       ],
       "required_evidence": [
-        "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+        "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
         "source_recommendation:month2-contract-convergence-1",
         "source_task_digest:sha256:c78e382d492e69606cb29b79a82076ee42fd21655ec3c2f9f15e78cd20e87ae9"
       ],
@@ -87,7 +87,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-1",
           "source_task_digest:sha256:c78e382d492e69606cb29b79a82076ee42fd21655ec3c2f9f15e78cd20e87ae9"
         ],
@@ -104,7 +104,7 @@
         "dependency_refs": null,
         "context_pack_refs": []
       },
-      "task_digest": "sha256:5d2a129a47747122ac74c79db31d5623e1aa45cf1d908619175c38371f003939"
+      "task_digest": "sha256:78729944587d7ca457ab39bd80cf4f478ceb5d2f7fc14e09d49be3f71b25ec6a"
     }
   ],
   "schedules_work": false,

@@ -48,7 +48,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-1",
           "source_task_digest:sha256:c78e382d492e69606cb29b79a82076ee42fd21655ec3c2f9f15e78cd20e87ae9"
         ],
@@ -114,7 +114,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-2",
           "source_task_digest:sha256:1cfd9f556ef66a502d10de7216d30dd5fce5939757ae46622d6301889c23512b"
         ],
@@ -184,7 +184,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-3",
           "source_task_digest:sha256:0b8d8eb83305bbafdb6d840e5645d2c31e79466f0e672053b7a1b1413c4362ba"
         ],
@@ -254,7 +254,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-4",
           "source_task_digest:sha256:041e62d8a1972c16d58e9ca21a5cf5e3b247edfa8504bae60f0a5eaa2638b3a0"
         ],
@@ -324,7 +324,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-5",
           "source_task_digest:sha256:1920bbb618473e290b31105c6c7e25717a1a8f32fbc3615098ee0f4320afdaaf"
         ],
@@ -394,7 +394,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-6",
           "source_task_digest:sha256:2f9a2c5afc52b7d29a78efa25009b1148f3644621c27928a147649cf5a2fdf7b"
         ],
@@ -464,7 +464,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-7",
           "source_task_digest:sha256:9c7835c6a153a7ee1c2ca0f34eeefaf65dc6c9a04da6067abd954f5f37e9c9ac"
         ],
@@ -534,7 +534,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-8",
           "source_task_digest:sha256:35c850a4acf2910fd4f0c1d409a421df1840678a9da808809d01a4830d790e6a"
         ],
@@ -604,7 +604,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-9",
           "source_task_digest:sha256:4189a2c073fce691ccaa269ddfd69707dde72fca12bee4b778f0cccaa6bff622"
         ],
@@ -674,7 +674,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-10",
           "source_task_digest:sha256:c507f35ef5fcc49a908a241817d0ded08d68193c61bc7a79dd35ff615123bbfe"
         ],
@@ -744,7 +744,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-11",
           "source_task_digest:sha256:ef620851350abf8e9156ee7b2d9ab66734f4cbd4b67cdfecaab9914cadc081ae"
         ],
@@ -814,7 +814,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-12",
           "source_task_digest:sha256:902aad31f8bcbed0cc35f59eecada4dd3cbf6b4739841b963c83ebc622e7145d"
         ],
@@ -884,7 +884,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-13",
           "source_task_digest:sha256:9c7ba92cf981a84cb5cee4a871f2e601c8823c5970df0e23be6cc8ebac69b659"
         ],
@@ -954,7 +954,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-14",
           "source_task_digest:sha256:b527f0b2203815ff9f09b42eb2a04b7418734d341fb2424017e2e2360e3cd86b"
         ],
@@ -1024,7 +1024,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-15",
           "source_task_digest:sha256:f4de7e40450768c796cb35a84204bb7bcde2068fbe26a80ca8492beb358949e1"
         ],
@@ -1094,7 +1094,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-16",
           "source_task_digest:sha256:1c8beb895a5c57af5b55ee8a67e1ba0d832a182a58e559f46bd2c1f45ee85b48"
         ],
@@ -1164,7 +1164,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-17",
           "source_task_digest:sha256:160e5236ea45ae347e2166f2c3e74463f6a308aa8210dd6fb833ece3dcc5642d"
         ],
@@ -1234,7 +1234,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-18",
           "source_task_digest:sha256:aa5986f738190b4b3c320411faba02c5071e3d29ea02a8d3945ba6565d292c60"
         ],
@@ -1304,7 +1304,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-19",
           "source_task_digest:sha256:4914fa8f66a2bae44c5badc37705e1a5afea98acf99333a458e2986f862c3b36"
         ],
@@ -1374,7 +1374,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-20",
           "source_task_digest:sha256:169dd6511d691c23a3762748224c5e1f097dcaa416ea546c1159febb5076ee88"
         ],
@@ -1444,7 +1444,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-21",
           "source_task_digest:sha256:8cf6888597b1a38806c95c37e6c42f8d23bf12106b1a58cc4652374292dd69dc"
         ],
@@ -1514,7 +1514,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-22",
           "source_task_digest:sha256:9491486e65b68d1e09c2f3dfe55083af39ffe34a37d3415d4a3785eb07d1dae0"
         ],
@@ -1584,7 +1584,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-23",
           "source_task_digest:sha256:896eb0273cd464c16e1ba67853edfed3065450948c9728d43b0967ea8f87c090"
         ],
@@ -1654,7 +1654,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-24",
           "source_task_digest:sha256:56765befdf14718141d35865092ddcbfab648dc430428668c52c89502467fc9d"
         ],
@@ -1724,7 +1724,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-25",
           "source_task_digest:sha256:4c6c1229ca8245e04a487255bee5d8e925f2b1986a379c2f7b461bce03a02595"
         ],
@@ -1794,7 +1794,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-26",
           "source_task_digest:sha256:6f45b703445bb46c3f7e37a3803d9dace4f846b927194191fd425f2313241e8f"
         ],
@@ -1864,7 +1864,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-27",
           "source_task_digest:sha256:f4212baa0433a82ec6b03dc702dfc5222a34f9af556e13e07e3228f7cc68d3cb"
         ],
@@ -1934,7 +1934,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-28",
           "source_task_digest:sha256:0117689cdcf3c369b560e120ece7acc901789d4ad55b8b5a48731459c2fe5005"
         ],
@@ -2004,7 +2004,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-29",
           "source_task_digest:sha256:6fda6c98c4b66bcb7b7edd5e3b632d65323ac5722bf55dbd88603b48bb39b5d1"
         ],
@@ -2074,7 +2074,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-30",
           "source_task_digest:sha256:43bc7c33dd12d937eb5f24e6dca5f723742381a0671ebb2fa8532f97730c4544"
         ],
@@ -2144,7 +2144,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-31",
           "source_task_digest:sha256:7c3cf9d4e5e18a83bd8479c64c8c539159f1089dd688bb60da6be0d2d93cbb02"
         ],
@@ -2214,7 +2214,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-32",
           "source_task_digest:sha256:5b28ea06982aa6f0dc638a0cd02a6bfba811cb075165a8b20d792485a0e27ef5"
         ],
@@ -2284,7 +2284,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-33",
           "source_task_digest:sha256:f866ae62d0d8ed73a87367332100847d698a3e0bfc8a8c0720eff86dce4bb54a"
         ],
@@ -2354,7 +2354,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-34",
           "source_task_digest:sha256:30a11d0ab420245435ecf76a5b6c3480530108adbe71fa496d18d7964c74fac2"
         ],
@@ -2424,7 +2424,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-35",
           "source_task_digest:sha256:9c000a8610e3bab95182ec771823a82bda0f5cbae8caaf3a84e9fc8d75a6494b"
         ],
@@ -2494,7 +2494,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-36",
           "source_task_digest:sha256:ea9a2325d9e03e9477f21bf929346d08b78e706cc19aa8308a3979811bd6898e"
         ],
@@ -2564,7 +2564,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-37",
           "source_task_digest:sha256:71dc6c529bf744914f79e8f039c89c67147f8038d0abc00c1d2049b40bd16d72"
         ],
@@ -2634,7 +2634,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-38",
           "source_task_digest:sha256:9a3d4d1a1ad5a7a486fc33fff97649a97ab93ab6b3605acbb35585c15b62867b"
         ],
@@ -2704,7 +2704,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-39",
           "source_task_digest:sha256:dede409d11cbebdd7269bb57df2832f91116e0de680a1e84edbc35813c3c9cd4"
         ],
@@ -2774,7 +2774,7 @@
           "scripts/atlas-foundry-roundtrip-smoke.sh"
         ],
         "required_evidence": [
-          "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
           "source_recommendation:month2-contract-convergence-40",
           "source_task_digest:sha256:330e98d0613c1b458d8ac96ca35393ab8b5607f61d6e2b974497709fdfb1b394"
         ],

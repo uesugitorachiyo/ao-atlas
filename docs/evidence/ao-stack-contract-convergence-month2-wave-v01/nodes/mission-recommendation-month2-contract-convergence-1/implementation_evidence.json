@@ -13,12 +13,15 @@
   "summary": "Recorded a planning-only bridge from the Month 2 consolidation recommendation source into the canonical Mission recommendation contract while preserving source digests and exactly one active Foundry fixture node.",
   "source_contract": "ao.atlas.consolidation-implementation-evidence.v0.1",
   "canonical_contract": "ao.mission.feature-depth-recommendations.v0.3",
-  "source_input_digest": "sha256:595f9d37379546313dcffa047b42a6fd38d89dd4eb9ee9f4a069e5d0edf2e0c9",
-  "canonical_input_digest": "sha256:04707e713037a7310d6ed827161ef4f14dda14c3bb503b79404abd9bbd7d52ee",
+  "source_input_digest": "sha256:23571e80b30403f4391e21d80375923bb8f61ac029342b7d1ed16a45c8b5b7bf",
+  "canonical_input_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
   "source_owner_preserved_in_objective": true,
   "schedules_work": false,
   "executes_work": false,
   "approves_work": false,
   "claims_authority_advance": false,
-  "rsi_remains_denied": true
+  "rsi_remains_denied": true,
+  "source_recommendations_digest": "sha256:23571e80b30403f4391e21d80375923bb8f61ac029342b7d1ed16a45c8b5b7bf",
+  "source_readback_digest": "sha256:03eb3f56aa30d04e3083608d6351fa91ca8b3486a269c04cf9a5d6d5ed68a20c",
+  "source_assertion_digest": "sha256:9880fc684a74c7522543fee204d1ce424ccc01ad7d3f8394f90ea94f33d3113a"
 }

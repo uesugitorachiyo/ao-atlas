@@ -3,9 +3,9 @@
   "mission_id": "mission-56bed010dd085a0f-month2-contract-convergence-v01",
   "target_instance": "ao-stack-contract-convergence-month2-20260710",
   "status": "ready",
-  "source_digest": "sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
-  "wave_digest": "sha256:06ee3bb2fa7980bf337d74ca1553bc04a986ccf501366c11c36a9c15e7ecec5b",
-  "workgraph_digest": "sha256:c00b18acbd381f5e0939b45602d814e21acb6b13f6131d546baccdfaaba4c11f",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "wave_digest": "sha256:2e4e69edc487da8dc8c9cd82e9316b0ce38dbe36260eebac42e1078cb7e17c70",
+  "workgraph_digest": "sha256:a379b7edb16f25121b60834365824b0345cf4ea85fab5acc6f33a49343236df8",
   "evidence_root": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
   "supervisor": {
     "contract_version": "ao.atlas.long-run-supervisor.v0.2",

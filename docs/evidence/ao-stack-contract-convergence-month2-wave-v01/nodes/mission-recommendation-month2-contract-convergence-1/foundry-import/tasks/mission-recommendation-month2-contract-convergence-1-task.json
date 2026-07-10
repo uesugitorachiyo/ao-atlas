@@ -40,7 +40,7 @@
     "scripts/atlas-foundry-roundtrip-smoke.sh"
   ],
   "required_evidence": [
-    "source_digest:sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6",
+    "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
     "source_recommendation:month2-contract-convergence-1",
     "source_task_digest:sha256:c78e382d492e69606cb29b79a82076ee42fd21655ec3c2f9f15e78cd20e87ae9"
   ],

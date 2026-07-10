@@ -9,7 +9,7 @@ Current state:
 - Lease minimum: 30 nodes, 120 to 180 minutes.
 - Continue-if-fast target: 40 nodes.
 - Final response allowed: false, because ready nodes or exact next actions remain.
-- Source digest: sha256:ae4a6aa6156cbf04ffb8364b4baef4d1999aacfef3f264c3021b677bdaee44f6.
+- Source digest: sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857.
 
 Problem:
 - Recent AO Atlas/Mission recommendation prompts returned after short batches instead of sustaining 2-3 hour workgraphs.
