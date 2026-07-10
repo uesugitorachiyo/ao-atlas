@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-22",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records typed P0-B Windows CI wait-state telemetry for AO Command and AO Covenant shards, including pending wait and completed-success states without allowing final response or authority advancement.",
+  "command": "typed fixture plus recommendation evidence validator",
+  "typed_validator": "typed:p0b-windows-ci-wait-telemetry"
+}

@@ -362,6 +362,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:pr-ci-windows-threshold-evidence", err
 		}
 		return "typed:pr-ci-windows-threshold-evidence", ValidateAtlasPRCIWindowsThresholdEvidence(value)
+	case AtlasP0BWindowsCIWaitTelemetryContract:
+		value, err := LoadJSON[AtlasP0BWindowsCIWaitTelemetry](path)
+		if err != nil {
+			return "typed:p0b-windows-ci-wait-telemetry", err
+		}
+		return "typed:p0b-windows-ci-wait-telemetry", ValidateAtlasP0BWindowsCIWaitTelemetry(value)
 	case AtlasFailedCheckReplayFixtureContract:
 		value, err := LoadJSON[AtlasFailedCheckReplayFixture](path)
 		if err != nil {
