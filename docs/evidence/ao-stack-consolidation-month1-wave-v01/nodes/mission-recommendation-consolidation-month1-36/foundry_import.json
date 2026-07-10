@@ -1,0 +1,115 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-mission-56bed010dd085a0f-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-mission-56bed010dd085a0f",
+  "target_instance": "ao-stack-consolidation-month1-20260710",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-35/workgraph-after-complete.json",
+      "digest": "sha256:b25b69f43f096572da9ca252241796b8824f86e48ec2f5c5bf70fbd9a58b6622"
+    },
+    {
+      "ref": "target/ao-stack-consolidation-month1-node-36/stack-instance.json",
+      "digest": "sha256:607ed6186f4533b00407bfb5ae891d7970f5468d12478a7485a641c075a533de"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-consolidation-month1-36",
+      "task_id": "mission-recommendation-consolidation-month1-36-task",
+      "path": "tasks/mission-recommendation-consolidation-month1-36-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:e776ea250456c59d92eb6758e6fbf3ac1abdc7ad821c08d9cc9b520a390b4b5e",
+        "source_recommendation:consolidation-month1-36",
+        "source_task_digest:sha256:ca2d3c3d33473289eaad31bef93798e98995f622cc4e1b44c12e25bf68f05d90"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-consolidation-month1-36-task",
+        "objective": "Close the wave only after verification cleanup and exact next prompt agree.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-36",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:e776ea250456c59d92eb6758e6fbf3ac1abdc7ad821c08d9cc9b520a390b4b5e",
+          "source_recommendation:consolidation-month1-36",
+          "source_task_digest:sha256:ca2d3c3d33473289eaad31bef93798e98995f622cc4e1b44c12e25bf68f05d90"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-consolidation-month1-35"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:70bd9ec4e38fb212e8e8a33648789f35beb9fea9a2817df11a1fd4cce3f6d52f"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
