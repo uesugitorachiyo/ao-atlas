@@ -61,6 +61,8 @@ const (
 	AtlasTicketSchemaCompatibilityLedgerContract               = "ao.atlas.atlas-ticket-schema-compatibility-ledger.v0.1"
 	AtlasFoundryTicketSchemaCompatibilityLedgerInputContract   = "ao.atlas.foundry-ticket-schema-compatibility-ledger-input.v0.1"
 	AtlasFoundryTicketSchemaCompatibilityLedgerContract        = "ao.atlas.foundry-ticket-schema-compatibility-ledger.v0.1"
+	AtlasCommandTicketSchemaCompatibilityLedgerInputContract   = "ao.atlas.command-ticket-schema-compatibility-ledger-input.v0.1"
+	AtlasCommandTicketSchemaCompatibilityLedgerContract        = "ao.atlas.command-ticket-schema-compatibility-ledger.v0.1"
 	AtlasMergeCheckBindingInputContract                        = "ao.atlas.merge-check-binding-input.v0.1"
 	AtlasMergeCheckBindingContract                             = "ao.atlas.merge-check-binding.v0.1"
 	AtlasPostMergeBranchDeletionReadbackContract               = "ao.atlas.post-merge-branch-deletion-readback.v0.1"
