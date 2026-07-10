@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1",
+  "node": "mission-recommendation-consolidation-month1-18",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:02:20Z",
+  "scan_scope": [
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/mission_recommendation_evidence_provenance_test.go",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-18"
+  ],
+  "findings": [],
+  "public_claim_guard": "No live mutation, provider, promotion, release, or RSI proof claim introduced.",
+  "rsi_remains_denied": true
+}

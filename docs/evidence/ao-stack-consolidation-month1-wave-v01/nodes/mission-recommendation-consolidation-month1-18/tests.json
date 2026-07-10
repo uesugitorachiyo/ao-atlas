@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-18",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:02:20Z",
+  "commands": [
+    "go test ./internal/atlas -run TestRecommendationEvidenceValidationRequiresProvenanceFieldsWhenEnabled -count=1 (red: undefined API)",
+    "go test ./internal/atlas -run 'TestRecommendationEvidenceValidation(Requires|Accepts|ReportRecords)ProvenanceFields|TestFeatureDepthWaveV02ClosureRollupArtifactsUseTypedEvidenceValidation' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/atlas-node-18-evidence ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-consolidation-month1-wave-v01",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-consolidation-month1-wave-v01 --strict-schema-registry",
+    "git diff --check"
+  ],
+  "red_green": {
+    "red_test_observed": true,
+    "red_failure": "provenance validation API and options were undefined before implementation",
+    "green_test_passed": true,
+    "regression_guard": "historical v02 validation report digest remains stable when provenance mode is off"
+  }
+}
