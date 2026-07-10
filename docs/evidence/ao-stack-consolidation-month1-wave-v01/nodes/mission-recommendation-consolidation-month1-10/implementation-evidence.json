@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-10",
+  "kind": "contract_owner_registry",
+  "repository": "ao-architecture",
+  "paths": ["stack/contract-owner-registry.json", "scripts/verify_contract_owner_registry.py", "scripts/test_verify_contract_owner_registry.py", ".github/workflows/ci.yml"],
+  "pull_request": 100,
+  "merge_commit": "bf2fec0c8ea000b9751e587f4b66e5bab2deea29",
+  "claims_runtime_execution": false
+}

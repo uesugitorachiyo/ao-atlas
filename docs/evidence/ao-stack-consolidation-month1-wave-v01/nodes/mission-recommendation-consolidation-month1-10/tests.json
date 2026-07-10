@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-10",
+  "commands": [
+    "python3 -m unittest scripts/test_verify_contract_owner_registry.py",
+    "python3 scripts/verify_contract_owner_registry.py",
+    "python3 scripts/verify_architecture.py",
+    "python3 scripts/verify_topology.py",
+    "python3 scripts/verify_stack_lock.py"
+  ],
+  "repository_count": 14,
+  "owner_assignment_complete": true,
+  "compatibility_gate_complete": false,
+  "promotion_granted": false
+}
