@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-11",
+  "commands": [
+    "python3 -m unittest scripts/test_verify_compatibility_matrix.py",
+    "python3 scripts/verify_compatibility_matrix.py",
+    "python3 scripts/verify_architecture.py",
+    "python3 scripts/verify_topology.py",
+    "python3 scripts/verify_stack_lock.py"
+  ],
+  "repository_count": 14,
+  "edge_count": 16,
+  "canonical_vector_count": 0,
+  "consumer_test_count": 0,
+  "compatibility_gate_complete": false
+}

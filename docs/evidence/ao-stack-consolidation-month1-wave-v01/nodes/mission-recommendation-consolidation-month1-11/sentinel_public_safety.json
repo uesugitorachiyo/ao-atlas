@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-11",
+  "scan_scope": "proposed compatibility edges, pending canonical vectors, and CI",
+  "unsafe_claims": [],
+  "provider_calls": false,
+  "credential_use": false,
+  "release_or_publish": false,
+  "rsi_remains_denied": true
+}

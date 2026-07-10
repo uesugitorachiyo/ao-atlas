@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-11",
+  "owner": "ao-architecture",
+  "target": "stack/contract-compatibility-matrix.json and scripts/verify_compatibility_matrix.py",
+  "mutation_class": "low_risk_compatibility_mapping",
+  "source_node": "mission-recommendation-consolidation-month1-10",
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}
