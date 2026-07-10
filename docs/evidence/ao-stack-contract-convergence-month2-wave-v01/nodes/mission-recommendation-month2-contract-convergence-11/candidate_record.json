@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-11",
+  "task_id": "mission-recommendation-month2-contract-convergence-11-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-11",
+  "source_owner": "ao-covenant",
+  "source_task_digest": "sha256:ef620851350abf8e9156ee7b2d9ab66734f4cbd4b67cdfecaab9914cadc081ae",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Bind the canonical JSON vector ownership question to ao-covenant and record the existing AO2 consumer vectors.",
+    "Inspect Covenant Go canonicalization and tests plus the AO2 Control Plane Rust vector fixture without mutating either repository.",
+    "Preserve the missing cross-language vector suite as a fail-closed compatibility gap; do not widen authority or promotion."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-11"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

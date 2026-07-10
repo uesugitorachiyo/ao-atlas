@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-11",
+  "task_id": "mission-recommendation-month2-contract-convergence-11-task",
+  "status": "recorded",
+  "implementation_files": [],
+  "evidence_files": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-11/canonical-json-go-vector-compatibility.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-11/canonical-json-go-vector-contract.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-11/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-11/run-link-digest-check.json"
+  ],
+  "summary": "Recorded that Covenant has a stable Go digest test but no canonical byte vectors, while AO2 Control Plane has a separate Rust three-vector suite; cross-language contract compatibility remains fail-closed until Covenant owns shared vectors.",
+  "producer_consumer_contract_status": "blocked_missing_covenant_vector_suite",
+  "canonical_owner_expected": "ao-covenant",
+  "go_vector_suite_present": false,
+  "consumer_rust_vector_suite_present": true,
+  "cross_language_compatibility_proven": false,
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "foundry_manifest_projection": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-11/foundry-import/foundry-import.json",
+  "run_link_digest_status": "run_link_digest_verified"
+}

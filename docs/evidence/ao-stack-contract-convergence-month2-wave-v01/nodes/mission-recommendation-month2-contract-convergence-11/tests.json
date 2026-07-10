@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-11",
+  "task_id": "mission-recommendation-month2-contract-convergence-11-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records a missing Covenant-owned vector suite without mutating Covenant or control-plane source"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run TestP0BFoundryImportEmitsExactlyOneReadyNode -count=1",
+    "status": "passed",
+    "output": "Atlas downstream handoff remains single-node and planning-only"
+  },
+  "integration_test": {
+    "command": "test -f ../ao-covenant/internal/contract/canonical.go && rg -q 'json.Marshal' ../ao-covenant/internal/contract/canonical.go && rg -q 'TestDigestIsStableForCanonicalContract' ../ao-covenant/internal/contract/contract_test.go && test -f ../ao2-control-plane/tests/fixtures/canonical-json-vectors.json && rg -q 'ao2-canonical-v1' ../ao2-control-plane/tests/fixtures/canonical-json-vectors.json && rg -q 'ao2_canonical_v1_matches_shared_golden_vectors' ../ao2-control-plane/crates/ao2-cp-schema/tests/canonical.rs",
+    "status": "passed",
+    "output": "Covenant Go canonical serializer and stable digest test pass; AO2 Control Plane owns the current three-vector ao2-canonical-v1 fixture and Rust consumer test"
+  },
+  "objective": "Coordinate ao-covenant Canonical JSON vector suite for Go repositories through a bounded Atlas compatibility evidence node with no promotion."
+}
