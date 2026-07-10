@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-29",
+  "status": "candidate_recorded",
+  "generated_at_utc": "2026-07-10T19:12:35Z",
+  "repository": "ao-atlas",
+  "branch": "codex/consolidation-node-29-promoter-rollup",
+  "mutation_class": "low_risk_code",
+  "objective": "Generate Promoter no-promotion rollup with explicit denied authority and RSI state.",
+  "writes": [
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-29",
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/progress/after-node-29"
+  ],
+  "source_recommendation": "consolidation-month1-29",
+  "source_digest": "sha256:e776ea250456c59d92eb6758e6fbf3ac1abdc7ad821c08d9cc9b520a390b4b5e",
+  "source_task_digest": "sha256:9675f447b62ab5557dd1c5a65a69431a8ab523c393e47dae2b79785b24af26f7"
+}

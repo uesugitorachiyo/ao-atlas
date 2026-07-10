@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-29",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:12:35Z",
+  "targeted_artifact": "promoter-final-rollup.json",
+  "commands": [
+    "jq validation of node 29 evidence JSON files",
+    "AO Atlas evidence validation normal",
+    "AO Atlas evidence validation strict schema registry",
+    "AO Atlas verification: go test ./... -count=1",
+    "AO Atlas verification: go vet ./...",
+    "AO Atlas verification: go build -o target/atlas-node-29-evidence ./cmd/atlas",
+    "AO Atlas verification: scripts/production-readiness.sh",
+    "AO Atlas verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry",
+    "AO Atlas verification: git diff --check",
+    "AO Atlas scoped public-safety wording scan"
+  ],
+  "verified_at_utc": "2026-07-10T19:15:32Z"
+}

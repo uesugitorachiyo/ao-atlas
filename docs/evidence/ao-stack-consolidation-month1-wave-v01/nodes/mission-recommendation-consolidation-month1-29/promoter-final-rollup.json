@@ -1,0 +1,29 @@
+{
+  "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1",
+  "node": "mission-recommendation-consolidation-month1-29",
+  "status": "no_promotion_requested",
+  "generated_at_utc": "2026-07-10T19:12:35Z",
+  "wave": "ao-stack-consolidation-month1-wave-v01",
+  "promotion_requested": false,
+  "promotion_safe": false,
+  "promotion_decision": "deny_promotion",
+  "denied_authority": {
+    "fully_unsupervised_complex_mutation": "denied",
+    "rsi": "denied"
+  },
+  "highest_proven_live_class": "unchanged",
+  "next_denied_class": "unchanged",
+  "completed_nodes_before_rollup": 28,
+  "ready_nodes_before_rollup": 8,
+  "blocked_nodes_before_rollup": 0,
+  "failed_nodes_before_rollup": 0,
+  "reason": "Month 1 consolidation evidence improves auditability and product-readiness foundations only; it does not request an authority-class promotion.",
+  "required_before_any_future_promotion": [
+    "all ready nodes completed",
+    "final readback allows response",
+    "Promoter promotion verdict explicitly requests and supports promotion",
+    "Command readback agrees",
+    "RSI remains separately denied unless governed evidence changes it"
+  ],
+  "rsi_remains_denied": true
+}
