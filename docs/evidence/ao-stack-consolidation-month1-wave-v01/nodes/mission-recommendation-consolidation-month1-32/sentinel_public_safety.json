@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-sentinel-public-safety.v0.1",
+  "node": "mission-recommendation-consolidation-month1-32",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:31:18Z",
+  "scan_scope": [
+    "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-32"
+  ],
+  "public_claim_guard": "Branch cleanup evidence introduces no release, provider, credential, authority-widening, or broad RSI claim.",
+  "rsi_remains_denied": true
+}
