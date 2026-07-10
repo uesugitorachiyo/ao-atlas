@@ -454,6 +454,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "command-covenant-rejected-ticket-fixture", run: runMissionRecommendationsCommandCovenantRejectedTicketFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-quarantine-fixture", run: runMissionRecommendationsCommandCovenantQuarantineFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-ticket-byte-preservation-fixture", run: runMissionRecommendationsCommandTicketBytePreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "ticket-digest-readback-binding-fixture", run: runMissionRecommendationsTicketDigestReadbackBindingFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair, commandClass: missionRecommendationCommandClassPlanningOnly},
@@ -1905,6 +1906,45 @@ func runMissionRecommendationsCommandTicketBytePreservationFixture(args []string
 	fmt.Fprintf(stdout, "status=%s\nbyte_preservation_passed=%t\ncase_count=%d\ncommand_ticket_byte_preservation_fixture=%s\n",
 		fixture.Status,
 		fixture.BytePreservationPassed,
+		fixture.CaseCount,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsTicketDigestReadbackBindingFixture(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations ticket-digest-readback-binding-fixture", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	inputPath := fs.String("input", "", "ticket digest readback binding input path")
+	outPath := fs.String("out", "", "ticket digest readback binding fixture output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*inputPath) == "" {
+		return fmt.Errorf("--input is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*inputPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	fixture, err := BuildAtlasTicketDigestReadbackBindingFixture(*inputPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, fixture); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, fixture)
+	}
+	fmt.Fprintf(stdout, "status=%s\ndigest_binding_passed=%t\ncase_count=%d\nticket_digest_readback_binding_fixture=%s\n",
+		fixture.Status,
+		fixture.DigestBindingPassed,
 		fixture.CaseCount,
 		filepath.ToSlash(*outPath),
 	)
