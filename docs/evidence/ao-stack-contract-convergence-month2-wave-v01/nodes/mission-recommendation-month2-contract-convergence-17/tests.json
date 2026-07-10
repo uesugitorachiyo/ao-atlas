@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-17",
+  "task_id": "mission-recommendation-month2-contract-convergence-17-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records the Foundry evidence-volume and externalization boundary without mutating Foundry or storage"
+  },
+  "targeted_test": {
+    "command": "go test ./... -count=1 (ao-foundry)",
+    "status": "passed",
+    "output": "AO Foundry repository tests passed in the inspected source checkout"
+  },
+  "integration_test": {
+    "command": "git -C ../ao-foundry ls-files docs/evidence | wc -l; rg -n externaliz ../ao-foundry/internal ../ao-foundry/docs ../ao-foundry/scripts",
+    "status": "passed",
+    "output": "Foundry tracked evidence inventory recorded 57370 files across 45 evidence wave roots; local digest-bound artifact and public-relative-path controls are present"
+  },
+  "objective": "Coordinate ao-foundry Foundry evidence catalog externalization plan through a bounded Atlas compatibility evidence node with no promotion."
+}

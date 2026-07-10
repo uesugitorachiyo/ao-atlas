@@ -1,0 +1,38 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-17",
+  "task_id": "mission-recommendation-month2-contract-convergence-17-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "go test ./... -count=1 (ao-foundry)",
+    "git -C ../ao-foundry ls-files docs/evidence | wc -l",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/atlas-node17-verification ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "go run ./cmd/atlas mission recommendations run-link-digest-check --node-id mission-recommendation-month2-contract-convergence-17 --run-link docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-17/run-link.json --evidence-root .",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "go run ./cmd/atlas mission recommendations run-link-digest-check --node-id mission-recommendation-month2-contract-convergence-17 --run-link docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-17/run-link.json --evidence-root .",
+    "git diff --check",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "repair_notes": [
+    "The Foundry source audit is read-only; no Foundry source, storage, upload, or release state is changed.",
+    "The Atlas build output is written below target and removed before the working-tree check.",
+    "The externalization plan preserves digest, replay, retention, visibility, and no-promotion requirements."
+  ],
+  "rsi_remains_denied": true,
+  "objective": "Coordinate ao-foundry Foundry evidence catalog externalization plan through a bounded Atlas compatibility evidence node with no promotion."
+}
