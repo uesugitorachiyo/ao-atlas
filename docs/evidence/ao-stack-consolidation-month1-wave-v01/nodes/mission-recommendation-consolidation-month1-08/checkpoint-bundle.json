@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1",
+  "status": "recorded",
+  "mission_id": "mission-56bed010dd085a0f",
+  "node_id": "mission-recommendation-consolidation-month1-08",
+  "completed_nodes_before": 7,
+  "completed_nodes_after": 8,
+  "ready_nodes_after": 28,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-09 and execute exactly one active node.",
+  "rsi_remains_denied": true
+}
