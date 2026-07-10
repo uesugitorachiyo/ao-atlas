@@ -1,0 +1,6 @@
+{
+  "schema": "ao.atlas.consolidation-evidence-volume-baseline.v0.1",
+  "status": "recorded",
+  "wave": "ao-stack-consolidation-month1-wave-v01",
+  "measurement_basis": "tracked_files_only"
+}
