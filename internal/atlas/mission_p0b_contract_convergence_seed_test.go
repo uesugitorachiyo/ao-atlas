@@ -1,6 +1,7 @@
 package atlas
 
 import (
+	"bytes"
 	"os"
 	"path/filepath"
 	"strings"
@@ -9,7 +10,8 @@ import (
 
 func TestP0BContractConvergenceWaveSeedsThirtyMissionBoundNodes(t *testing.T) {
 	root := repoRoot(t)
-	waveRoot := filepath.Join(root, "docs", "evidence", "ao-stack-p0b-contract-convergence-wave-v01")
+	waveRootRel := filepath.Join("docs", "evidence", "ao-stack-p0b-contract-convergence-wave-v01")
+	waveRoot := filepath.Join(root, waveRootRel)
 
 	source := mustLoadJSON[AOMissionFeatureDepthRecommendations](t, filepath.Join(waveRoot, "source-feature-depth-recommendations.json"))
 	if err := ValidateAtlasNextWaveFeatureDepthRecommendations(source, 30); err != nil {
@@ -108,6 +110,122 @@ func TestP0BContractConvergenceWaveSeedsThirtyMissionBoundNodes(t *testing.T) {
 		if !strings.Contains(prompt, want) {
 			t.Fatalf("P0-B prompt missing %q", want)
 		}
+	}
+}
+
+func TestP0BContractConvergenceWorkgraphReadinessMaterializesFirstExecutableNode(t *testing.T) {
+	root := repoRoot(t)
+	waveRootRel := filepath.Join("docs", "evidence", "ao-stack-p0b-contract-convergence-wave-v01")
+	waveRoot := filepath.Join(root, waveRootRel)
+
+	wave := mustLoadJSON[AtlasRecommendationWave](t, filepath.Join(waveRoot, "recommendation-wave.json"))
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join(waveRoot, "recommendation-workgraph.json"))
+	if err := ValidateWorkgraph(workgraph); err != nil {
+		t.Fatal(err)
+	}
+	if workgraph.ID != "ao-atlas-recommendation-wave-mission-710327df54728420" ||
+		workgraph.TargetInstance != "ao-stack-p0b-contract-convergence-wave-v01" ||
+		len(workgraph.Nodes) != 30 {
+		t.Fatalf("P0-B workgraph lost mission identity or node budget: %#v", workgraph)
+	}
+	first := workgraph.Nodes[0]
+	if first.ID != "mission-recommendation-p0b-contract-convergence-01" ||
+		first.Status != "ready" ||
+		len(first.Dependencies) != 0 ||
+		!first.StitchTask ||
+		first.FactoryTask.ID != "mission-recommendation-p0b-contract-convergence-01-task" ||
+		first.FactoryTask.Objective != wave.Tasks[0].Task ||
+		first.FactoryTask.AuthorityBoundary != "atlas_recommendation_planning_only" {
+		t.Fatalf("first P0-B workgraph node is not the Mission-recorded executable node: %#v", first)
+	}
+	second := workgraph.Nodes[1]
+	if len(second.Dependencies) != 1 || second.Dependencies[0] != first.ID {
+		t.Fatalf("second P0-B node must remain serialized behind first node: %#v", second)
+	}
+	for _, want := range []string{
+		"source_digest:" + wave.SourceDigest,
+		"source_recommendation:p0b-contract-convergence-01",
+		"source_task_digest:" + wave.Tasks[0].SourceTaskDigest,
+	} {
+		if !containsString(first.FactoryTask.RequiredEvidence, want) {
+			t.Fatalf("first P0-B node lost source evidence binding %q: %#v", want, first.FactoryTask.RequiredEvidence)
+		}
+	}
+	for _, want := range []string{
+		"no provider calls",
+		"no credential inspection",
+		"no direct main mutation",
+		"no broad RSI claim",
+	} {
+		if !containsString(first.FactoryTask.SafetyLimits, want) {
+			t.Fatalf("first P0-B node lost safety limit %q: %#v", want, first.FactoryTask.SafetyLimits)
+		}
+	}
+
+	readback := mustLoadJSON[AtlasRecommendationReadback](t, filepath.Join(waveRoot, "recommendation-readback.json"))
+	packet := mustLoadJSON[AtlasRecommendationWorkgraphReadinessPacket](t, filepath.Join(waveRoot, "workgraph-readiness-packet.json"))
+	if err := ValidateAtlasRecommendationWorkgraphReadinessPacket(packet, readback); err != nil {
+		t.Fatal(err)
+	}
+	if packet.TotalNodes != 30 ||
+		packet.MinimumNodes != 30 ||
+		packet.NodeBudget != 30 ||
+		packet.ContinueIfFastTarget != 30 ||
+		packet.ExecutableReadyNodes != 1 ||
+		packet.FirstExecutableNode != first.ID ||
+		packet.FinalResponseAllowed ||
+		!packet.RefusesFinalResponse ||
+		packet.ReturnGateStatus != "blocked_ready_nodes_remain" ||
+		!packet.RSIRemainsDenied {
+		t.Fatalf("P0-B readiness packet must deny final response and expose exactly one executable node: %#v", packet)
+	}
+
+	instance := mustLoadJSON[Instance](t, filepath.Join(waveRoot, "stack-instance.json"))
+	if err := ValidateInstance(instance); err != nil {
+		t.Fatal(err)
+	}
+	if instance.ID != workgraph.TargetInstance {
+		t.Fatalf("stack instance id must match P0-B workgraph target: instance=%s workgraph=%s", instance.ID, workgraph.TargetInstance)
+	}
+
+	foundryOut := filepath.Join("..", "..", "target", "p0b-contract-convergence-first-node-foundry-import")
+	foundryOutAbs := filepath.Join(root, "target", "p0b-contract-convergence-first-node-foundry-import")
+	if err := os.RemoveAll(foundryOutAbs); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() {
+		_ = os.RemoveAll(foundryOutAbs)
+	})
+	var out bytes.Buffer
+	code := Run([]string{
+		"foundry", "import",
+		"--workgraph", filepath.Join("..", "..", waveRootRel, "recommendation-workgraph.json"),
+		"--instance", filepath.Join("..", "..", waveRootRel, "stack-instance.json"),
+		"--node", first.ID,
+		"--out", foundryOut,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("P0-B foundry import failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "tasks=1") ||
+		!strings.Contains(out.String(), "next_recommended_action=Move to ../ao-foundry") {
+		t.Fatalf("P0-B foundry import output lost single-node continuation readback: %s", out.String())
+	}
+	manifest := mustLoadJSON[FoundryImport](t, filepath.Join(foundryOutAbs, "foundry-import.json"))
+	if err := ValidateFoundryImport(manifest); err != nil {
+		t.Fatal(err)
+	}
+	if err := ValidateFoundryImportMatchesWorkgraph(workgraph, manifest); err != nil {
+		t.Fatal(err)
+	}
+	if len(manifest.Tasks) != 1 ||
+		manifest.Tasks[0].NodeID != first.ID ||
+		manifest.Tasks[0].TaskID != first.FactoryTask.ID ||
+		manifest.Tasks[0].AuthorityBoundary != "atlas_recommendation_planning_only" ||
+		manifest.SchedulesWork ||
+		manifest.ExecutesWork ||
+		manifest.ApprovesWork {
+		t.Fatalf("P0-B foundry import must stay fixture-only for exactly the first node: %#v", manifest)
 	}
 }
 
