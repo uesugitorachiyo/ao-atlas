@@ -172,3 +172,49 @@ func TestFeatureDepthWaveV02OperatorSummaryCheckPreservesExactNextActionWording(
 		}
 	}
 }
+
+func TestP0BContractConvergenceOperatorSummaryPreservesContinuationDenial(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-stack-p0b-contract-convergence-wave-v01")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-p0b-contract-convergence-28")
+	readbackPath := filepath.Join(waveRoot, "nodes", "mission-recommendation-p0b-contract-convergence-27", "recommendation-readback-after.json")
+	summaryPath := filepath.Join(nodeDir, "operator-summary.md")
+	fixturePath := filepath.Join(nodeDir, "operator-summary-check.json")
+
+	fixture, err := BuildAtlasMissionOperatorSummaryCheck(readbackPath, summaryPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	recorded := mustLoadJSON[AtlasMissionOperatorSummaryCheck](t, fixturePath)
+	if err := ValidateAtlasMissionOperatorSummaryCheck(recorded); err != nil {
+		t.Fatal(err)
+	}
+	if digestValue(fixture) != digestValue(recorded) {
+		t.Fatalf("P0-B operator summary check fixture drifted\nwant %s\ngot  %s", digestValue(fixture), digestValue(recorded))
+	}
+	summaryBytes, err := os.ReadFile(summaryPath)
+	if err != nil {
+		t.Fatalf("read P0-B operator summary: %v", err)
+	}
+	summary := string(summaryBytes)
+	for _, want := range []string{
+		"Completed nodes: 27 / 30",
+		"Ready nodes: 3",
+		"Next executable node: `mission-recommendation-p0b-contract-convergence-28`",
+		"Emit Foundry import for mission-recommendation-p0b-contract-convergence-28 and execute exactly one active node.",
+		"Do not produce a final response while ready nodes or exact next action remain.",
+		"RSI remains denied.",
+	} {
+		if !strings.Contains(summary, want) {
+			t.Fatalf("P0-B operator summary missing %q:\n%s", want, summary)
+		}
+	}
+	if recorded.FinalResponseAllowed ||
+		!recorded.RefusesFinalResponse ||
+		!recorded.FinalResponseDeniedWordingPresent ||
+		recorded.ExactNextActionOccurrences != 1 ||
+		recorded.ClaimsAuthorityAdvance ||
+		!recorded.RSIRemainsDenied {
+		t.Fatalf("P0-B operator summary must preserve continuation denial without authority effects: %#v", recorded)
+	}
+}

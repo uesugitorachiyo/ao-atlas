@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-28",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a P0-B operator summary generated from the latest readback, preserving completed and ready node counts, exact next action, final-response denial, and RSI denial wording.",
+  "command": "go run ./cmd/atlas mission recommendations operator-summary-check",
+  "typed_validator": "typed:mission-operator-summary-check"
+}
