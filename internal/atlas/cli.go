@@ -457,6 +457,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "ticket-digest-readback-binding-fixture", run: runMissionRecommendationsTicketDigestReadbackBindingFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "policy-hash-mismatch-rejection-fixture", run: runMissionRecommendationsPolicyHashMismatchRejectionFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "policy-version-replay-rejection-fixture", run: runMissionRecommendationsPolicyVersionReplayRejectionFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "covenant-evidence-digest-readback-fixture", run: runMissionRecommendationsCovenantEvidenceDigestReadbackFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair, commandClass: missionRecommendationCommandClassPlanningOnly},
@@ -2026,6 +2027,45 @@ func runMissionRecommendationsPolicyVersionReplayRejectionFixture(args []string,
 		fixture.Status,
 		fixture.RejectedCases,
 		fixture.SafeToAccept,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsCovenantEvidenceDigestReadbackFixture(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations covenant-evidence-digest-readback-fixture", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	inputPath := fs.String("input", "", "covenant evidence digest readback input path")
+	outPath := fs.String("out", "", "covenant evidence digest readback fixture output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*inputPath) == "" {
+		return fmt.Errorf("--input is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*inputPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	fixture, err := BuildAtlasCovenantEvidenceDigestReadbackFixture(*inputPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, fixture); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, fixture)
+	}
+	fmt.Fprintf(stdout, "status=%s\ndigest_readback_complete=%t\ncase_count=%d\ncovenant_evidence_digest_readback_fixture=%s\n",
+		fixture.Status,
+		fixture.DigestReadbackComplete,
+		fixture.CaseCount,
 		filepath.ToSlash(*outPath),
 	)
 	return nil

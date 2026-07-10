@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-10",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed Covenant evidence digest readback fixture that requires policy, ticket, and decision SHA-256 fields for each Covenant readback case.",
+  "command": "mission recommendations covenant-evidence-digest-readback-fixture",
+  "typed_validator": "typed:covenant-evidence-digest-readback-fixture"
+}

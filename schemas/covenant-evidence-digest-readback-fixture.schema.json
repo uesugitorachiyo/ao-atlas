@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ao.local/schemas/covenant-evidence-digest-readback-fixture.schema.json",
+  "title": "AO Atlas Covenant Evidence Digest Readback Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "status",
+    "source_input_path",
+    "source_input_digest",
+    "case_count",
+    "digest_readback_complete",
+    "cases",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": { "const": "ao.atlas.covenant-evidence-digest-readback-fixture.v0.1" },
+    "status": { "const": "covenant_digest_readback_recorded" },
+    "source_input_path": { "type": "string", "minLength": 1 },
+    "source_input_digest": { "$ref": "#/$defs/sha256" },
+    "case_count": { "type": "integer", "minimum": 1 },
+    "digest_readback_complete": { "const": true },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/case" }
+    },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "covenant_readback_path",
+        "policy_sha256",
+        "ticket_sha256",
+        "decision_sha256",
+        "decision"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "covenant_readback_path": { "type": "string", "minLength": 1 },
+        "policy_sha256": { "$ref": "#/$defs/sha256" },
+        "ticket_sha256": { "$ref": "#/$defs/sha256" },
+        "decision_sha256": { "$ref": "#/$defs/sha256" },
+        "decision": { "enum": ["accepted", "rejected"] }
+      }
+    }
+  }
+}

@@ -404,6 +404,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:policy-version-replay-rejection-fixture", err
 		}
 		return "typed:policy-version-replay-rejection-fixture", ValidateAtlasPolicyVersionReplayRejectionFixture(value)
+	case AtlasCovenantEvidenceDigestReadbackFixtureContract:
+		value, err := LoadJSON[AtlasCovenantEvidenceDigestReadbackFixture](path)
+		if err != nil {
+			return "typed:covenant-evidence-digest-readback-fixture", err
+		}
+		return "typed:covenant-evidence-digest-readback-fixture", ValidateAtlasCovenantEvidenceDigestReadbackFixture(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {

@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.covenant-evidence-digest-readback-fixture.v0.1",
+  "status": "covenant_digest_readback_recorded",
+  "source_input_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-10/covenant-evidence-digest-readback-input.json",
+  "source_input_digest": "sha256:4d5ecca62ce070dc5cb89727219f2bdbc6ed2a484fa3ab3e31b575edd2fa2a7b",
+  "case_count": 2,
+  "digest_readback_complete": true,
+  "cases": [
+    {
+      "id": "accepted-ticket-readback",
+      "covenant_readback_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/fixtures/covenant/accepted-ticket-readback.json",
+      "policy_sha256": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+      "ticket_sha256": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+      "decision_sha256": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+      "decision": "accepted"
+    },
+    {
+      "id": "rejected-ticket-readback",
+      "covenant_readback_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/fixtures/covenant/rejected-ticket-readback.json",
+      "policy_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "ticket_sha256": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "decision_sha256": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "decision": "rejected"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
