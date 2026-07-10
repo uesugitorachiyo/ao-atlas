@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-18",
+  "candidate": "Add aggregate no-promotion/no-RSI rollup across P0-B nodes.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-18-no-promotion-rollup",
+  "files_changed": [
+    "internal/atlas/mission_promoter_no_promotion_rollup_test.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-18"
+  ],
+  "digest_fields": [
+    "source_readback_digest",
+    "promoter_no_promotion_files",
+    "no_promotion_invariant_holds",
+    "rsi_remains_denied"
+  ]
+}

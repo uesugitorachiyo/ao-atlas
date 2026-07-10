@@ -183,6 +183,71 @@ func TestFeatureDepthWaveV02PromoterNoPromotionRollupAggregatesCompletedWaves(t 
 	}
 }
 
+func TestP0BContractConvergencePromoterNoPromotionRollupAggregatesCompletedNodes(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-stack-p0b-contract-convergence-wave-v01")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-p0b-contract-convergence-18")
+	sourceReadbackPath := filepath.Join(waveRoot, "nodes", "mission-recommendation-p0b-contract-convergence-17", "recommendation-readback-after.json")
+	recordedPath := filepath.Join(nodeDir, "promoter-no-promotion-rollup.json")
+	outPath := filepath.Join(t.TempDir(), "promoter-no-promotion-rollup.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "promoter-no-promotion-rollup",
+		"--node-id", "mission-recommendation-p0b-contract-convergence-18",
+		"--source-readback", sourceReadbackPath,
+		"--evidence-root", waveRoot,
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("P0-B promoter-no-promotion-rollup command failed: %s", out.String())
+	}
+	recorded := mustLoadJSON[AtlasPromoterNoPromotionRollup](t, recordedPath)
+	generated := mustLoadJSON[AtlasPromoterNoPromotionRollup](t, outPath)
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("P0-B promoter no-promotion rollup fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	if err := ValidateAtlasPromoterNoPromotionRollup(recorded); err != nil {
+		t.Fatal(err)
+	}
+	if recorded.Status != "no_promotion_rollup_bound" ||
+		recorded.SourceReadbackCompletedNodes != 17 ||
+		recorded.SourceReadbackReadyNodes != 13 ||
+		recorded.CompletedNodesTotal != 17 ||
+		recorded.PromoterNoPromotionFiles != 17 ||
+		recorded.MissingPromoterNodesTotal != 0 ||
+		recorded.NoPromotionStatusCount != 17 ||
+		recorded.PromotionRequestedCount != 0 ||
+		recorded.PromotionGrantedCount != 0 ||
+		recorded.PromotionClaimedCount != 0 ||
+		recorded.AuthorityAdvanceClaimCount != 0 ||
+		recorded.RSIDeniedCount != 17 ||
+		recorded.AggregatePromotionStatus != "no_promotion_requested" ||
+		!recorded.AllCompletedNodesCovered ||
+		!recorded.AllPromoterStatusesNoPromotion ||
+		!recorded.NoPromotionInvariantHolds ||
+		recorded.PromotionRequested ||
+		recorded.PromotionGranted ||
+		recorded.ClaimsAuthorityAdvance ||
+		!recorded.RSIRemainsDenied ||
+		recorded.SchedulesWork ||
+		recorded.ExecutesWork ||
+		recorded.ApprovesWork {
+		t.Fatalf("P0-B promoter rollup lost no-promotion/no-RSI invariants: %#v", recorded)
+	}
+	if len(recorded.WaveSummaries) != 1 || recorded.WaveSummaries[0].CompletedNodes != 17 {
+		t.Fatalf("expected one P0-B wave summary with 17 completed nodes: %#v", recorded.WaveSummaries)
+	}
+
+	validator, err := validateRecommendationEvidenceTypedFile(recordedPath, "ao.atlas.promoter-no-promotion-rollup.v0.1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if validator != "typed:promoter-no-promotion-rollup" {
+		t.Fatalf("expected typed promoter no-promotion rollup validator, got %s", validator)
+	}
+}
+
 func TestPromoterNoPromotionRollupValidatorRejectsPromotionAndRSIBoundaryDrift(t *testing.T) {
 	root := repoRoot(t)
 	recordedPath := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-25", "promoter-no-promotion-rollup.json")
