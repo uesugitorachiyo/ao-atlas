@@ -1,0 +1,135 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-month2-contract-convergence-2",
+  "status": "recorded",
+  "kind": "schema_owner_inventory",
+  "generated_at_utc": "2026-07-10T20:35:43Z",
+  "source_recommendation_path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-34/month2-contract-convergence-recommendations.json",
+  "inventory_scope": "active AO repositories; generated evidence excluded from schema counts",
+  "owner_bindings": [
+    {
+      "repository": "ao-architecture",
+      "canonical_owner": "ao-architecture",
+      "schema_count": 0,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-mission",
+      "canonical_owner": "ao-mission",
+      "schema_count": 34,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-blueprint",
+      "canonical_owner": "ao-blueprint",
+      "schema_count": 12,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-atlas",
+      "canonical_owner": "ao-atlas",
+      "schema_count": 82,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-foundry",
+      "canonical_owner": "ao-foundry",
+      "schema_count": 55,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-forge",
+      "canonical_owner": "ao-forge",
+      "schema_count": 29,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-covenant",
+      "canonical_owner": "ao-covenant",
+      "schema_count": 67,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao2",
+      "canonical_owner": "ao2",
+      "schema_count": 16,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao2-control-plane",
+      "canonical_owner": "ao2-control-plane",
+      "schema_count": 1,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-command",
+      "canonical_owner": "ao-command",
+      "schema_count": 6,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-arena",
+      "canonical_owner": "ao-arena",
+      "schema_count": 8,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-crucible",
+      "canonical_owner": "ao-crucible",
+      "schema_count": 10,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-sentinel",
+      "canonical_owner": "ao-sentinel",
+      "schema_count": 17,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    },
+    {
+      "repository": "ao-promoter",
+      "canonical_owner": "ao-promoter",
+      "schema_count": 12,
+      "owner_binding_status": "assigned",
+      "lifecycle_classification": "experimental_until_registry_adoption",
+      "producer_consumer_gate": "required_before_stable"
+    }
+  ],
+  "active_repository_count": 14,
+  "owner_binding_coverage": 14,
+  "stable_contracts_require_compatibility_gate": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
