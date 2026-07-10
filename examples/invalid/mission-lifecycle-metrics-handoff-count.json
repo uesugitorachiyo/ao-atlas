@@ -1,0 +1,23 @@
+{
+  "schema": "ao.mission.lifecycle-metrics.v0.1",
+  "mission_id": "mission-lifecycle-metrics-invalid",
+  "status": "audited",
+  "handoff_steps": 4,
+  "evidence_completed_nodes": 0,
+  "completed_nodes": 4,
+  "total_nodes": 4,
+  "ready_nodes": 0,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "completion_basis": "handoff_steps",
+  "handoff_steps_count_as_completed_nodes": true,
+  "final_response_allowed": true,
+  "return_gate_status": "final_response_allowed",
+  "exact_next_action": "",
+  "safe_to_execute": true,
+  "executes_work": true,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "rsi_remains_denied": true,
+  "generated_at_utc": "2026-07-10T00:00:00Z"
+}
