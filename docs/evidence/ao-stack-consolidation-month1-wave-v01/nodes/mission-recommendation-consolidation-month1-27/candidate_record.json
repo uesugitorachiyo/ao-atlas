@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-27",
+  "candidate": "foundry-one-safe-node-source-digest-binding",
+  "status": "selected",
+  "owner": "ao-atlas",
+  "objective": "Bind Foundry single-node import/readiness artifacts to source and task digests for replayable one-safe-node checks.",
+  "mutation_class": "low_risk_evidence",
+  "source_node": "mission-recommendation-consolidation-month1-26",
+  "generated_at_utc": "2026-07-10T19:00:28Z",
+  "expected_outputs": [
+    "Foundry one-safe-node source digest binding",
+    "node readback"
+  ],
+  "safety": {
+    "no_direct_main_mutation": true,
+    "no_provider_calls": true,
+    "no_release_deploy_publish_upload_tag": true,
+    "no_dependency_updates": true,
+    "no_policy_auth_config_widening": true,
+    "rsi_remains_denied": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-27",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:01:07Z",
+  "commands": [
+    "jq validation of foundry-one-safe-node-source-digest-binding.json",
+    "AO Atlas evidence verification: go test ./... -count=1",
+    "AO Atlas evidence verification: go vet ./...",
+    "AO Atlas evidence verification: go build -o target/atlas-node-27-evidence ./cmd/atlas",
+    "AO Atlas evidence verification: scripts/production-readiness.sh",
+    "AO Atlas evidence verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry"
+  ],
+  "binding": {
+    "path": "foundry-one-safe-node-source-digest-binding.json",
+    "status": "passed",
+    "scope": "executable imports only; zero-task imports recorded separately"
+  }
+}

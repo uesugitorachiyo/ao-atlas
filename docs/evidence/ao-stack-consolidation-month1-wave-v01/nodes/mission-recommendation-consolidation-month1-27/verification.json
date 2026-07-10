@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-27",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:01:07Z",
+  "foundry_binding": {
+    "all_executable_imports_single_task": true,
+    "all_imports_planning_only": true,
+    "all_executable_authority_boundaries_planning_only": true,
+    "zero_task_imports_recorded": true
+  },
+  "branch_cleanup": {
+    "current_node_branch_created": true,
+    "implementation_branch_required": false
+  },
+  "rsi_remains_denied": true
+}
