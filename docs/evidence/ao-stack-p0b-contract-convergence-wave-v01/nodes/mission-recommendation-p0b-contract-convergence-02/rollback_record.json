@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.p0b.rollback-record.v0.1",
+  "status": "ready",
+  "node_id": "mission-recommendation-p0b-contract-convergence-02",
+  "rollback_scope": [
+    "Revert ao-covenant PR #115 if fixture-backed coverage must be removed.",
+    "Revert this Atlas node-readback evidence if the completion record is invalidated."
+  ],
+  "rollback_command": "git revert 1c78e4c2fd9459246b4de6db6525392c6e06c28e",
+  "requires_release_or_deploy": false
+}

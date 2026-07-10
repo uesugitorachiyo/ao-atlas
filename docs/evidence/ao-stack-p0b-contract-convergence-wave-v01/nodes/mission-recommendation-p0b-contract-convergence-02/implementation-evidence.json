@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-02",
+  "implementation_repo": "ao-covenant",
+  "pull_request": "https://github.com/uesugitorachiyo/ao-covenant/pull/115",
+  "merge_commit": "1c78e4c2fd9459246b4de6db6525392c6e06c28e",
+  "changed_files": [
+    "internal/run/executor_test.go",
+    "internal/run/testdata/policy_event_hash_fields.json"
+  ],
+  "summary": "Covenant now has fixture-backed regression coverage for policy event hash field changes."
+}

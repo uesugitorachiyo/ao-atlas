@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.p0b.tests.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-02",
+  "targeted_tests": [
+    "go test ./internal/run -run 'TestEventContentHashBindsPolicyDecisionFields|TestEventContentHashBindsPolicyDecisionFieldsFromFixture' -count=1"
+  ],
+  "fixture_validation": [
+    "jq empty internal/run/testdata/policy_event_hash_fields.json"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./..."
+  ]
+}
