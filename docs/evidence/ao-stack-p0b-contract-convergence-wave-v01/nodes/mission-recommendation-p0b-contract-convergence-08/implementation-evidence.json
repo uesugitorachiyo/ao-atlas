@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-08",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed policy-hash mismatch rejection fixture that rejects stale or substituted approval tickets when ticket policy SHA-256 differs from current policy SHA-256.",
+  "command": "mission recommendations policy-hash-mismatch-rejection-fixture",
+  "typed_validator": "typed:policy-hash-mismatch-rejection-fixture"
+}

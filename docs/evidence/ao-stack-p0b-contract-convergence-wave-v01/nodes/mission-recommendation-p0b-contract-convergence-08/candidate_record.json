@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-08",
+  "candidate": "Add policy-hash mismatch rejection fixtures.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-08-policy-hash-mismatch",
+  "files_changed": [
+    "internal/atlas/mission_policy_hash_mismatch_rejection.go",
+    "internal/atlas/mission_policy_hash_mismatch_rejection_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "schemas/policy-hash-mismatch-rejection-fixture.schema.json",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-08"
+  ],
+  "digest_fields": [
+    "ticket_policy_sha256",
+    "current_policy_sha256",
+    "source_input_digest"
+  ]
+}

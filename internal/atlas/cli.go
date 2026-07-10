@@ -455,6 +455,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "command-covenant-quarantine-fixture", run: runMissionRecommendationsCommandCovenantQuarantineFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-ticket-byte-preservation-fixture", run: runMissionRecommendationsCommandTicketBytePreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "ticket-digest-readback-binding-fixture", run: runMissionRecommendationsTicketDigestReadbackBindingFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "policy-hash-mismatch-rejection-fixture", run: runMissionRecommendationsPolicyHashMismatchRejectionFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair, commandClass: missionRecommendationCommandClassPlanningOnly},
@@ -1946,6 +1947,45 @@ func runMissionRecommendationsTicketDigestReadbackBindingFixture(args []string, 
 		fixture.Status,
 		fixture.DigestBindingPassed,
 		fixture.CaseCount,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsPolicyHashMismatchRejectionFixture(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations policy-hash-mismatch-rejection-fixture", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	inputPath := fs.String("input", "", "policy hash mismatch rejection input path")
+	outPath := fs.String("out", "", "policy hash mismatch rejection fixture output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*inputPath) == "" {
+		return fmt.Errorf("--input is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*inputPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	fixture, err := BuildAtlasPolicyHashMismatchRejectionFixture(*inputPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, fixture); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, fixture)
+	}
+	fmt.Fprintf(stdout, "status=%s\nrejected_cases=%d\nsafe_to_accept=%t\npolicy_hash_mismatch_rejection_fixture=%s\n",
+		fixture.Status,
+		fixture.RejectedCases,
+		fixture.SafeToAccept,
 		filepath.ToSlash(*outPath),
 	)
 	return nil
