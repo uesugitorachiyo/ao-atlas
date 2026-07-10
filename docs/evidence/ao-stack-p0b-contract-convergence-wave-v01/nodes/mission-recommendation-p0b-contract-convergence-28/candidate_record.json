@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-28",
+  "candidate": "Generate final operator summary from the P0-B terminal readback.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-28-operator-summary",
+  "files_changed": [
+    "internal/atlas/mission_operator_summary_check_test.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-28"
+  ],
+  "digest_fields": [
+    "source_readback_digest",
+    "completed_nodes",
+    "ready_nodes",
+    "first_executable_node",
+    "exact_next_action",
+    "final_response_allowed"
+  ]
+}
