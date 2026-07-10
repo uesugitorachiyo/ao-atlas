@@ -3552,6 +3552,7 @@ func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) 
 	outPath := fs.String("out", "", "validation report output path")
 	jsonOut := fs.Bool("json", false, "json output")
 	strictSchemaRegistry := fs.Bool("strict-schema-registry", false, "reject evidence schemas absent from the consolidation allowlist")
+	requireProvenanceFields := fs.Bool("require-provenance-fields", false, "require source_digest and evidence_class on evidence files")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -3564,7 +3565,10 @@ func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) 
 	if strings.TrimSpace(*outPath) != "" && samePath(*evidenceRoot, *outPath) {
 		return fmt.Errorf("refusing to overwrite input artifact")
 	}
-	report, err := BuildAtlasRecommendationEvidenceValidationReportWithOptions(*evidenceRoot, *strictSchemaRegistry)
+	report, err := BuildAtlasRecommendationEvidenceValidationReportWithValidationOptions(*evidenceRoot, AtlasRecommendationEvidenceValidationOptions{
+		StrictSchemaRegistry:    *strictSchemaRegistry,
+		RequireProvenanceFields: *requireProvenanceFields,
+	})
 	if strings.TrimSpace(*outPath) != "" {
 		if writeErr := WriteJSON(*outPath, report); writeErr != nil {
 			return writeErr
@@ -3575,15 +3579,18 @@ func runMissionRecommendationsValidateEvidence(args []string, stdout io.Writer) 
 			return printErr
 		}
 	} else {
-		fmt.Fprintf(stdout, "status=%s\nnode_count=%d\njson_files=%d\nschema_bound_files=%d\ntyped_validator_files=%d\nstrict_schema_registry=%t\nunknown_schema_files=%d\nmissing_schema_files=%d\nfailed_files=%d\nrecommendation_evidence_validation_report=%s\n",
+		fmt.Fprintf(stdout, "status=%s\nnode_count=%d\njson_files=%d\nschema_bound_files=%d\ntyped_validator_files=%d\nstrict_schema_registry=%t\nrequire_provenance_fields=%t\nunknown_schema_files=%d\nmissing_schema_files=%d\nmissing_source_digest_files=%d\nmissing_evidence_class_files=%d\nfailed_files=%d\nrecommendation_evidence_validation_report=%s\n",
 			report.Status,
 			report.NodeCount,
 			report.JSONFileCount,
 			report.SchemaBoundFiles,
 			report.TypedValidatorFiles,
 			report.StrictSchemaRegistry,
+			report.RequireProvenanceFields,
 			len(report.UnknownSchemaFiles),
 			len(report.MissingSchemaFiles),
+			len(report.MissingSourceDigestFiles),
+			len(report.MissingEvidenceClassFiles),
 			len(report.FailedFiles),
 			filepath.ToSlash(*outPath),
 		)
