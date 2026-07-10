@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-9",
+  "task_id": "mission-recommendation-month2-contract-convergence-9-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records a source contract gap without mutating AO2 or executing a provider"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestP0BFoundryImportEmitsExactlyOneReadyNode' -count=1",
+    "status": "passed",
+    "output": "Atlas downstream handoff remains single-node and planning-only"
+  },
+  "integration_test": {
+    "command": "if rg -q '\\bmodel\\b' ../ao2/crates/ao2-runtime/src/lib.rs; then exit 1; fi; if rg -q -- '--model' ../ao2/crates/ao2-adapter-codex/src/lib.rs; then exit 1; fi; rg -n 'pub struct RunOptions|pub struct ProviderRunOptions|--sandbox' ../ao2/crates/ao2-runtime/src/lib.rs ../ao2/crates/ao2-adapter-codex/src/lib.rs",
+    "status": "passed",
+    "output": "AO2 RunOptions and ProviderRunOptions lack model fields and the Codex adapter lacks --model; provenance gap recorded without provider execution"
+  },
+  "objective": "Coordinate ao2 AO2 provider run options model provenance field through a bounded Atlas compatibility evidence node with no promotion."
+}

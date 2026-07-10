@@ -1,0 +1,40 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "ao2_model_provenance_contract",
+  "status": "blocked_missing_model_field",
+  "producer": "ao2",
+  "consumer": "ao-atlas",
+  "source_commit": "541e766b5da00b65fa2c2e34b1d7ff0dc363eef6",
+  "source_files": [
+    {
+      "path": "crates/ao2-runtime/src/lib.rs",
+      "digest": "sha256:dedb3ece217d51cf9f2e69b6b80be174da51f08981a5460eb9a43a80c968014b",
+      "fields_checked": [
+        "RunOptions",
+        "ProviderRunOptions"
+      ]
+    },
+    {
+      "path": "crates/ao2-adapter-codex/src/lib.rs",
+      "digest": "sha256:0b8f54f0f934dc91c0dcce6e6d9a33135b46fd67b008147b4d6c91d7180f0d16",
+      "fields_checked": [
+        "build_args"
+      ]
+    }
+  ],
+  "run_options_model_field_present": false,
+  "provider_run_options_model_field_present": false,
+  "codex_adapter_model_flag_present": false,
+  "provenance_required": true,
+  "provider_calls": false,
+  "safe_to_execute": false,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
