@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-28",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T19:05:59Z",
+  "compact_readback": {
+    "completed_nodes": 27,
+    "ready_nodes": 9,
+    "final_response_allowed": false,
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "exact_next_action_bound": true
+  },
+  "branch_cleanup": {
+    "current_node_branch_created": true,
+    "implementation_branch_required": false
+  },
+  "rsi_remains_denied": true
+}
