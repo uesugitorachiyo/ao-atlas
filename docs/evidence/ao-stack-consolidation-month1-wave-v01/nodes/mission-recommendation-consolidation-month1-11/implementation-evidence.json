@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-11",
+  "kind": "contract_compatibility_matrix",
+  "repository": "ao-architecture",
+  "paths": ["stack/contract-compatibility-matrix.json", "scripts/verify_compatibility_matrix.py", "scripts/test_verify_compatibility_matrix.py", ".github/workflows/ci.yml"],
+  "pull_request": 101,
+  "merge_commit": "7ca55c4dae9ad85799f83d7d684392e53aa448a0",
+  "claims_runtime_execution": false
+}
