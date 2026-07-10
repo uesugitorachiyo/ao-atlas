@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-2",
+  "task_id": "mission-recommendation-month2-contract-convergence-2-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-2",
+  "source_owner": "ao-architecture",
+  "source_task_digest": "sha256:1cfd9f556ef66a502d10de7216d30dd5fce5939757ae46622d6301889c23512b",
+  "selected_work": [
+    "Coordinate ao-architecture Stack-wide schema owner inventory through a bounded Atlas compatibility evidence node with no promotion.",
+    "Inventory all active AO repository schema artifacts with generated evidence excluded.",
+    "Bind one canonical owner and compatibility-gate requirement per repository without changing policy or promotion authority."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

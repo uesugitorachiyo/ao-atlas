@@ -1,0 +1,99 @@
+{
+  "schema": "ao.atlas.recommendation-evidence-schema-registry.v0.1",
+  "status": "ready",
+  "registry_purpose": "recommendation_control_plane_typed_artifact_coverage",
+  "schemas": [
+    {
+      "schema": "ao.mission.refactoring-recommendations.v0.1",
+      "artifact": "recommendation-refactoring-recommendations",
+      "command": "export-refactoring-wave",
+      "typed_validator": "typed:recommendation-refactoring-recommendations",
+      "status_field": "status",
+      "safety_class": "planning_readback_no_execution",
+      "planning_only": true
+    },
+    {
+      "schema": "ao.atlas.recommendation-next-track-decision.v0.1",
+      "artifact": "recommendation-next-track-decision",
+      "command": "next-track",
+      "typed_validator": "typed:recommendation-next-track-decision",
+      "status_field": "status",
+      "safety_class": "planning_readback_no_execution",
+      "planning_only": true
+    },
+    {
+      "schema": "ao.atlas.consumed-recommendation-ledger.v0.1",
+      "artifact": "consumed-recommendation-ledger",
+      "command": "consumed-ledger",
+      "typed_validator": "typed:consumed-recommendation-ledger",
+      "status_field": "status",
+      "safety_class": "planning_readback_no_execution",
+      "planning_only": true
+    },
+    {
+      "schema": "ao.atlas.recommendation-track-registry.v0.1",
+      "artifact": "recommendation-track-registry",
+      "command": "track-registry",
+      "typed_validator": "typed:recommendation-track-registry",
+      "status_field": "status",
+      "safety_class": "planning_readback_no_execution",
+      "planning_only": true
+    },
+    {
+      "schema": "ao.atlas.recommendation-command-run-ledger.v0.1",
+      "artifact": "recommendation-command-run-ledger",
+      "command": "run-ledger",
+      "typed_validator": "typed:recommendation-command-run-ledger",
+      "status_field": "status",
+      "safety_class": "planning_readback_no_execution",
+      "planning_only": true
+    },
+    {
+      "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+      "artifact": "recommendation-evidence-validation-report",
+      "command": "validate-evidence",
+      "typed_validator": "typed:recommendation-evidence-validation-report",
+      "status_field": "status",
+      "safety_class": "planning_readback_no_execution",
+      "planning_only": true
+    },
+    {
+      "schema": "ao.atlas.recommendation-final-response-gates.v0.1",
+      "artifact": "recommendation-final-response-gates",
+      "command": "final-response-gates",
+      "typed_validator": "typed:recommendation-final-response-gates",
+      "status_field": "status",
+      "safety_class": "planning_readback_no_execution",
+      "planning_only": true
+    },
+    {
+      "schema": "ao.atlas.recommendation-evidence-schema-registry-coverage.v0.1",
+      "artifact": "recommendation-evidence-schema-registry-coverage",
+      "command": "schema-registry-coverage",
+      "typed_validator": "typed:recommendation-evidence-schema-registry-coverage",
+      "status_field": "status",
+      "safety_class": "planning_readback_no_execution",
+      "planning_only": true
+    },
+    {
+      "schema": "ao.atlas.schema-health-repair-prompt.v0.1",
+      "artifact": "schema-health-repair-prompt",
+      "command": "schema-health-repair-prompt",
+      "typed_validator": "typed:schema-health-repair-prompt",
+      "status_field": "status",
+      "safety_class": "planning_readback_no_execution",
+      "planning_only": true
+    }
+  ],
+  "schema_count": 9,
+  "typed_validator_coverage_complete": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
