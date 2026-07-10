@@ -321,6 +321,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:recommendation-readback", err
 		}
 		return "typed:recommendation-readback", ValidateAtlasRecommendationReadback(value)
+	case MissionLifecycleMetricsEvidenceContract:
+		value, err := LoadJSON[MissionLifecycleMetricsEvidence](path)
+		if err != nil {
+			return "typed:mission-lifecycle-metrics", err
+		}
+		return "typed:mission-lifecycle-metrics", ValidateMissionLifecycleMetricsEvidence(value)
 	case AtlasMissionReadbackDeltaContract:
 		value, err := LoadJSON[AtlasMissionReadbackDelta](path)
 		if err != nil {
