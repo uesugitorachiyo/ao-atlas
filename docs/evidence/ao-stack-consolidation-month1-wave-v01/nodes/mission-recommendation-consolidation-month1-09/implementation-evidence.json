@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-09",
+  "kind": "contract_inventory_baseline",
+  "repository": "ao-architecture",
+  "paths": ["stack/contract-inventory.json", "scripts/verify_contract_inventory.py", "scripts/test_verify_contract_inventory.py", ".github/workflows/ci.yml"],
+  "pull_request": 99,
+  "merge_commit": "dff1ea7e75547fa7983a24f8c9fe4c1bf7d93b1f",
+  "claims_runtime_execution": false
+}
