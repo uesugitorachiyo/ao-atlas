@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.tests.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-25",
+  "red_test": "go test ./internal/atlas -run 'TestP0BContractConvergenceCompactionResumePrompt' -count=1 failed before fixture generation because node 25 compaction-resume-prompt.json was missing.",
+  "targeted_tests": [
+    "go test ./internal/atlas -run 'TestP0BContractConvergenceCompactionResumePrompt' -count=1"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./..."
+  ]
+}

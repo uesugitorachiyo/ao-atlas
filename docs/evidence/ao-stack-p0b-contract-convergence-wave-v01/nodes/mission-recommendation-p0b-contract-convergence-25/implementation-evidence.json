@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-25",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a P0-B compaction resume prompt fixture generated from the latest node 24 readback, preserving node 25 continuation, checkpoint digest, final-response denial, and no-RSI-promotion state.",
+  "command": "go run ./cmd/atlas mission recommendations compaction-resume-prompt",
+  "typed_validator": "typed:compaction-resume-prompt"
+}

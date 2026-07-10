@@ -1,0 +1,21 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-p0b-contract-convergence-25-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/checkpoint-bundle.json",
+    "command_readback": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/command_readback.json",
+    "compaction_resume_markdown": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/compaction-resume-prompt.md",
+    "compaction_resume_prompt": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/compaction-resume-prompt.json",
+    "foundry_import": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/foundry-import/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/implementation-evidence.json",
+    "node_gate": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/tests.json",
+    "verification": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/verification.json"
+  },
+  "digest": "sha256:87432bc95816928937b0d4b50fc8bdd2821058fc49f5f7c3b2066b528da9e5c8"
+}
