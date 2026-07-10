@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.tests.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-26",
+  "red_test": "go test ./internal/atlas -run 'TestP0BContractConvergenceEvidenceValidationCommandCoversWholeWave' -count=1 failed before node 26 evidence existed because validate-evidence only reported node_count=25.",
+  "targeted_tests": [
+    "go test ./internal/atlas -run 'TestP0BContractConvergenceEvidenceValidationCommandCoversWholeWave' -count=1"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./..."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.p0b.node-gate.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-26",
+  "task_id": "mission-recommendation-p0b-contract-convergence-26-task",
+  "safe_to_execute": true,
+  "owning_repo": "ao-atlas",
+  "scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "safety_boundaries": {
+    "direct_main_mutation": false,
+    "credential_inspection": false,
+    "provider_calls": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-26",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records P0-B one-command evidence validation proving the wave evidence root validates with no missing schemas, failed files, or missing required node evidence files.",
+  "command": "go run ./cmd/atlas mission recommendations validate-evidence",
+  "typed_validator": "typed:recommendation-evidence-validation-report"
+}

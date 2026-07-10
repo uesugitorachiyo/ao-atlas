@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-26",
+  "candidate": "Validate every P0-B evidence JSON file in one command.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-26-evidence-validation",
+  "files_changed": [
+    "internal/atlas/mission_p0b_evidence_validation_test.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-26"
+  ],
+  "digest_fields": [
+    "node_count",
+    "json_file_count",
+    "validated_json_files",
+    "missing_schema_files",
+    "failed_files",
+    "required_filenames_covered"
+  ]
+}
