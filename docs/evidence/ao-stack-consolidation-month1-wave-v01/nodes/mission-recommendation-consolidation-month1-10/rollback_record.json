@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.consolidation-rollback-record.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-10",
+  "rollback_scope": "revert proposed owner registry, validator, regression test, and CI steps",
+  "rollback_result": "available_after_merge_by_reviewed_revert",
+  "destructive_commands_used": false
+}

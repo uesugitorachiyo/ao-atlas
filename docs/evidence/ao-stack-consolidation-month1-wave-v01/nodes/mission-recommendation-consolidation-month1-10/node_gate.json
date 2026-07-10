@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-10",
+  "safe_to_execute": true,
+  "scope": "proposed cross-repository contract owner registry",
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
