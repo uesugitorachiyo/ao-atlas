@@ -1,0 +1,99 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "command_cli_split_map",
+  "node_id": "mission-recommendation-month2-contract-convergence-21",
+  "task_id": "mission-recommendation-month2-contract-convergence-21-task",
+  "status": "partial_split_map",
+  "source_owner": "ao-command",
+  "source_repository": "ao-command",
+  "source_commit": "81e74349d44c768ab8dcadaa122302aa9fd24f4f",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "source_audit",
+  "source_files": [
+    {
+      "path": "internal/cli/cli.go",
+      "digest": "sha256:b98203a51572f82f0d5aab54faffb02f5a78f9952c62ac5db48db03464b8a0eb",
+      "line_count": 6251,
+      "byte_count": 272180
+    },
+    {
+      "path": "internal/cli/cli_test.go",
+      "digest": "sha256:598bf0cdb1e312df4ba99640d96e1ca512a2c9d55c43c07d08bd7220db093576",
+      "role": "large command and boundary regression suite"
+    }
+  ],
+  "split_boundaries": [
+    {
+      "module": "command_core",
+      "lines": "26-149",
+      "responsibility": "App, Runner, top-level dispatch, and help",
+      "guard": "command catalog and runner injection tests"
+    },
+    {
+      "module": "mission_client",
+      "lines": "150-628",
+      "responsibility": "Mission aggregate, status, next, artifacts, history, dashboard, readiness, gateway, evidence",
+      "guard": "Mission contract and authority-negative fixtures"
+    },
+    {
+      "module": "stack_readback",
+      "lines": "649-1260",
+      "responsibility": "Foundry, Atlas, Pulse, Blueprint compatibility, complex-refactor, and live-mutation readbacks",
+      "guard": "read-only status and stale-artifact tests"
+    },
+    {
+      "module": "assurance_readback",
+      "lines": "1261-1400",
+      "responsibility": "RSI health and manifest presentation",
+      "guard": "RSI denied and claim-boundary tests"
+    },
+    {
+      "module": "operator_commands",
+      "lines": "1401-1539",
+      "responsibility": "next, goals, evidence, rehearse",
+      "guard": "thin-client command routing tests"
+    },
+    {
+      "module": "process_adapter",
+      "lines": "1541-1585",
+      "responsibility": "Foundry process invocation and JSON output",
+      "guard": "runner interface and no-provider default tests"
+    },
+    {
+      "module": "readback_models",
+      "lines": "1586-end",
+      "responsibility": "presentation models and JSON serialization",
+      "guard": "schema and output compatibility tests"
+    }
+  ],
+  "architectural_boundary": "Command should become a thin client over Mission and control-plane APIs; domain validation and readiness truth should remain owned by the producing authority.",
+  "duplication_findings": [
+    "Command contains broad readback and compatibility logic for Mission, Foundry, Atlas, Pulse, Blueprint, live mutation, and RSI.",
+    "Command tests encode many domain contracts locally, increasing drift risk when upstream schemas change.",
+    "The Runner abstraction is a useful boundary for replacing direct subprocess calls with a versioned client later."
+  ],
+  "refactor_order": [
+    "extract readback models and adapters",
+    "define versioned Mission/control-plane client interfaces",
+    "move upstream validation to producers",
+    "retain presentation and stale-artifact checks",
+    "delete duplicated domain truth only after consumer contract tests pass"
+  ],
+  "non_goals": [
+    "do not remove safety-negative tests",
+    "do not widen Command authority",
+    "do not add provider calls",
+    "do not claim RSI or mutation authority"
+  ],
+  "current_gate": "blocked_until_command_client_contract_and_upstream_consumer_tests_exist",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

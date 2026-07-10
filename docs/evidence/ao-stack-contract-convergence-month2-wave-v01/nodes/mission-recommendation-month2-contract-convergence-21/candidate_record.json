@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-21",
+  "task_id": "mission-recommendation-month2-contract-convergence-21-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-14",
+  "source_owner": "ao-command",
+  "source_task_digest": "sha256:8cf6888597b1a38806c95c37e6c42f8d23bf12106b1a58cc4652374292dd69dc",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Bind Architecture contract owner registry and compatibility matrix as the source guard for copied schemas.",
+    "Run the existing Architecture validators and inspect whether they reject an unowned copied schema.",
+    "Record the proposed/pending state and absence of an enforceable copied-schema guard without mutating Architecture."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-14"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "81e74349d44c768ab8dcadaa122302aa9fd24f4f",
+  "objective": "Coordinate ao-command Command CLI split map through a bounded Atlas compatibility evidence node with no promotion.",
+  "selection_reason": "single ready node selected from the post-node-20 workgraph; Command CLI duplication and presentation/domain boundary audit is read-only",
+  "mutates_repositories": false
+}

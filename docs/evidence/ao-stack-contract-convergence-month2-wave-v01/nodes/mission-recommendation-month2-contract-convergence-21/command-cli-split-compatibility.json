@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "command_cli_split_compatibility",
+  "node_id": "mission-recommendation-month2-contract-convergence-21",
+  "task_id": "mission-recommendation-month2-contract-convergence-21-task",
+  "source_owner": "ao-command",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "compatibility_audit",
+  "status": "blocked_missing_client_contract",
+  "producer": "ao-command",
+  "consumer": "ao-mission and ao2-control-plane",
+  "compatibility_status": "planning_only",
+  "required_gates": [
+    "versioned Mission client",
+    "control-plane readback client",
+    "upstream producer validation",
+    "presentation-only Command contract",
+    "authority-negative consumer tests"
+  ],
+  "current_gap": "Command currently owns local subprocess/readback and substantial domain validation logic without one versioned control-plane client contract",
+  "compatibility_gate": "blocked_until_command_client_contract_and_consumer_matrix_exist",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

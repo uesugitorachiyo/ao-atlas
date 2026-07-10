@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-21",
+  "task_id": "mission-recommendation-month2-contract-convergence-21-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records a Command thin-client and domain-boundary map from a read-only checkout"
+  },
+  "targeted_test": {
+    "command": "go test ./... -count=1 in ao-command",
+    "status": "passed",
+    "output": "AO Command CLI tests passed"
+  },
+  "integration_test": {
+    "command": "wc -l -c ../ao-command/internal/cli/cli.go; rg -n ^func ../ao-command/internal/cli/cli.go",
+    "status": "passed",
+    "output": "Command CLI is 6251 lines and 272180 bytes; Mission, stack readback, assurance, operator command, process adapter, and model boundaries were mapped"
+  },
+  "objective": "Coordinate ao-command Command CLI split map through a bounded Atlas compatibility evidence node with no promotion."
+}
