@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-01",
+  "commands": ["git status --porcelain", "git rev-parse HEAD", "git rev-list --left-right --count HEAD...origin/main"],
+  "repository_count": 14,
+  "read_only": true
+}

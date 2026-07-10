@@ -1,0 +1,1366 @@
+{
+  "contract_version": "ao.atlas.recommendation-wave.v0.1",
+  "mission_id": "mission-56bed010dd085a0f",
+  "target_instance": "ao-stack-consolidation-month1-20260710",
+  "status": "ready",
+  "source_digest": "sha256:e776ea250456c59d92eb6758e6fbf3ac1abdc7ad821c08d9cc9b520a390b4b5e",
+  "minimum_tasks": 36,
+  "total_tasks": 36,
+  "node_budget": 36,
+  "estimated_minutes": 120,
+  "supervisor": {
+    "contract_version": "ao.atlas.long-run-supervisor.v0.2",
+    "min_nodes": 36,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 36,
+    "return_only_when": "mission_done_or_true_hard_blocker_or_no_ready_work_and_no_exact_next_action",
+    "checkpoint_policy": "after_each_node_or_timed_interval",
+    "evidence_policy": "node_gate_candidate_rollback_tests_verification_public_safety_promoter_command_run_link_checkpoint",
+    "final_report_contract": "ao.atlas.long-run-final-report.v0.2"
+  },
+  "tasks": [
+    {
+      "id": "consolidation-month1-01",
+      "owner": "ao-atlas",
+      "task": "Baseline all fourteen active repositories and record current branch cleanliness and synchronization state.",
+      "node_id": "mission-recommendation-consolidation-month1-01",
+      "task_id": "mission-recommendation-consolidation-month1-01-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:0cb88ece56794721f1b50179cc75fa5a80255d562755499003f2af4bf1dbd646",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-01",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-02",
+      "owner": "ao-atlas",
+      "task": "Add a regression readback that distinguishes pre-existing dirty files from wave-owned changes.",
+      "node_id": "mission-recommendation-consolidation-month1-02",
+      "task_id": "mission-recommendation-consolidation-month1-02-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8401af0c727adc5cda866fe03fa21468a29fd08f6225d0ba96d7cb0555495a4c",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-02",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-03",
+      "owner": "ao-atlas",
+      "task": "Coordinate the Architecture topology ADR for the proposed five product boundaries.",
+      "node_id": "mission-recommendation-consolidation-month1-03",
+      "task_id": "mission-recommendation-consolidation-month1-03-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:d5e52263489b739556289303fcf02d0d4e36824944c3429de7acbc7eda714c8e",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-03",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-04",
+      "owner": "ao-atlas",
+      "task": "Validate that topology authority ownership has no undocumented overlapping final decisions.",
+      "node_id": "mission-recommendation-consolidation-month1-04",
+      "task_id": "mission-recommendation-consolidation-month1-04-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:624c17e419c705968281dd4e7dda17e299f230ae65d3fa097cd53f80f81a641a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-04",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-05",
+      "owner": "ao-atlas",
+      "task": "Generate a stack lockfile containing repository commit version maturity and owner fields.",
+      "node_id": "mission-recommendation-consolidation-month1-05",
+      "task_id": "mission-recommendation-consolidation-month1-05-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:388533122c56fe05859bef1ea21b8dd7f911b7413916ae3af526aab69107c0ac",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-05",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-06",
+      "owner": "ao-atlas",
+      "task": "Add lockfile validation for missing commits duplicate repositories and unsupported authority claims.",
+      "node_id": "mission-recommendation-consolidation-month1-06",
+      "task_id": "mission-recommendation-consolidation-month1-06-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:e4924ce0575fd302e287093bf9e047a402ded01404a0e7599b6fa3d20348a45b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-06",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-07",
+      "owner": "ao-atlas",
+      "task": "Expand the Architecture readiness inventory to include Mission and Blueprint explicitly.",
+      "node_id": "mission-recommendation-consolidation-month1-07",
+      "task_id": "mission-recommendation-consolidation-month1-07-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1c162fe10e4f4564a70925022e5aa09525770b5c0aefcaad6b8ec54ed1990df0",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-07",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-08",
+      "owner": "ao-atlas",
+      "task": "Add a wording regression that separates documentation readiness from system readiness.",
+      "node_id": "mission-recommendation-consolidation-month1-08",
+      "task_id": "mission-recommendation-consolidation-month1-08-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9deef369fb0ef226bb79d5986cf4450337fbf4471eb0c7db23b1358fa8675b9e",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-08",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-09",
+      "owner": "ao-atlas",
+      "task": "Inventory active JSON schemas and distinct schema versions while excluding generated evidence explicitly.",
+      "node_id": "mission-recommendation-consolidation-month1-09",
+      "task_id": "mission-recommendation-consolidation-month1-09-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:48214f6aec2ba342fc83434a8d0da1d68d6a0bd5bc608e21e374cc74df325472",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-09",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-10",
+      "owner": "ao-atlas",
+      "task": "Assign one canonical producer owner and lifecycle classification to every contract.",
+      "node_id": "mission-recommendation-consolidation-month1-10",
+      "task_id": "mission-recommendation-consolidation-month1-10-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7be06ed7ff05079fa6354a3625bd27cdaae1867896bafe0fb4be6cba627c9cff",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-10",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-11",
+      "owner": "ao-atlas",
+      "task": "Generate a producer consumer compatibility matrix for gate-critical contracts.",
+      "node_id": "mission-recommendation-consolidation-month1-11",
+      "task_id": "mission-recommendation-consolidation-month1-11-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:0d40ec77e653c97dfec6d9a72ce6910ddaf159bab348617f22d24cb7d9737a74",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-11",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-12",
+      "owner": "ao-atlas",
+      "task": "Add fail-closed fixtures for unknown schemas unsupported versions and field drift.",
+      "node_id": "mission-recommendation-consolidation-month1-12",
+      "task_id": "mission-recommendation-consolidation-month1-12-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:0d8e7eb546a9f9a22d03c1ce74fa2b9f14d4662bac7165a46757783b86760be4",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-12",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-13",
+      "owner": "ao-atlas",
+      "task": "Audit Mission completion metrics against the handoff-count correction commit.",
+      "node_id": "mission-recommendation-consolidation-month1-13",
+      "task_id": "mission-recommendation-consolidation-month1-13-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:59ff20d3dc17c2b9d989904034adb26e392a0f6fb3b716baf33ded1bc8f8ab70",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-13",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-14",
+      "owner": "ao-atlas",
+      "task": "Project implementation completion separately from handoff and readback evidence.",
+      "node_id": "mission-recommendation-consolidation-month1-14",
+      "task_id": "mission-recommendation-consolidation-month1-14-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:0460bdaa640cbfa23540540f86ff7b4a99c3a8a0638df8ba571ce7ffc92ae516",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-14",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-15",
+      "owner": "ao-atlas",
+      "task": "Add a red-green regression test for handoff-only nodes not counting complete.",
+      "node_id": "mission-recommendation-consolidation-month1-15",
+      "task_id": "mission-recommendation-consolidation-month1-15-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:696be94402bef49341f8442b3b3c9b7b7cb51d94c54aef018c3b285df64b787e",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-15",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-16",
+      "owner": "ao-atlas",
+      "task": "Measure tracked source test schema fixture and evidence bytes in Atlas and Foundry.",
+      "node_id": "mission-recommendation-consolidation-month1-16",
+      "task_id": "mission-recommendation-consolidation-month1-16-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:e11487bd7818fdea468014f54af228190f9934c7677ec8754af0abeaca308a8e",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-16",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-17",
+      "owner": "ao-atlas",
+      "task": "Write a content-addressed evidence catalog plan retaining small replayable golden fixtures.",
+      "node_id": "mission-recommendation-consolidation-month1-17",
+      "task_id": "mission-recommendation-consolidation-month1-17-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9f87b1c330eb52d9ad047a1983087c7eda3de2571ca1a4473dd4a3b58c417a74",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-17",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-18",
+      "owner": "ao-atlas",
+      "task": "Guard evidence records against missing schema source digest and evidence-class fields.",
+      "node_id": "mission-recommendation-consolidation-month1-18",
+      "task_id": "mission-recommendation-consolidation-month1-18-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b8fcbb05b2201cb5a860f28afc0c41445f4fa5567a305b08b5a20655ad61f339",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-18",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-19",
+      "owner": "ao-atlas",
+      "task": "Coordinate minimal hosted CI coverage for Arena native tests and static checks.",
+      "node_id": "mission-recommendation-consolidation-month1-19",
+      "task_id": "mission-recommendation-consolidation-month1-19-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f8421a9444fbca10cf1f47ef975288e91d17074042f4d1a09ff6a51064ae4413",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-19",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-20",
+      "owner": "ao-atlas",
+      "task": "Verify Arena workflow-equivalent commands locally without provider calls or uploads.",
+      "node_id": "mission-recommendation-consolidation-month1-20",
+      "task_id": "mission-recommendation-consolidation-month1-20-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:628f1f797be41990e7fc08dd27325cd560d474a9b22ce4250b88835aae6cf3e3",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-20",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-21",
+      "owner": "ao-atlas",
+      "task": "Coordinate minimal hosted CI coverage for Crucible native tests and static checks.",
+      "node_id": "mission-recommendation-consolidation-month1-21",
+      "task_id": "mission-recommendation-consolidation-month1-21-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:6f137733f754b196102ea50a54fb286212918d258db3f917b968b617048286ab",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-21",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-22",
+      "owner": "ao-atlas",
+      "task": "Verify Crucible workflow-equivalent commands locally without changing dependencies or policy.",
+      "node_id": "mission-recommendation-consolidation-month1-22",
+      "task_id": "mission-recommendation-consolidation-month1-22-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:fa6f0df9b8920f7fa19671e8d7d11ab4a7ab6c34c8b341006153cd0902163a7c",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-22",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-23",
+      "owner": "ao-atlas",
+      "task": "Coordinate minimal hosted CI coverage for Sentinel native tests and static checks.",
+      "node_id": "mission-recommendation-consolidation-month1-23",
+      "task_id": "mission-recommendation-consolidation-month1-23-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:3d7704c061543742119e1ebbb5ae3f0ae0305fa09e9b66721d80e4502a4ff0dd",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-23",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-24",
+      "owner": "ao-atlas",
+      "task": "Verify Sentinel workflow-equivalent commands locally and preserve fixture wording boundaries.",
+      "node_id": "mission-recommendation-consolidation-month1-24",
+      "task_id": "mission-recommendation-consolidation-month1-24-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:a60443ac134043750320e28a498f4682bfa39c70da912074e407b1d80205de0a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-24",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-25",
+      "owner": "ao-atlas",
+      "task": "Bind Arena Crucible and Sentinel CI conclusions into one readiness rollup.",
+      "node_id": "mission-recommendation-consolidation-month1-25",
+      "task_id": "mission-recommendation-consolidation-month1-25-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1b2d991d3d0b4c73a19448b7383fe21fa3f1068a7aa76b703b7991a8b44c18d0",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-25",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-26",
+      "owner": "ao-atlas",
+      "task": "Validate every new Atlas wave evidence file with schema and digest checks.",
+      "node_id": "mission-recommendation-consolidation-month1-26",
+      "task_id": "mission-recommendation-consolidation-month1-26-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:038552d1d6b6223f16c6197281d5a0ba9714d6df9ebd9037e7124db38e7e93ac",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-26",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-27",
+      "owner": "ao-atlas",
+      "task": "Bind Foundry one-safe-node readiness to the consolidation wave source digests.",
+      "node_id": "mission-recommendation-consolidation-month1-27",
+      "task_id": "mission-recommendation-consolidation-month1-27-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:dda717d0debfb5c51ffa8b1a7d4ec596b9a7dd203fd6a97c18344cda194975f4",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-27",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-28",
+      "owner": "ao-atlas",
+      "task": "Generate compact Command readback for wave progress exact action and denial state.",
+      "node_id": "mission-recommendation-consolidation-month1-28",
+      "task_id": "mission-recommendation-consolidation-month1-28-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:48c2dee10cc6e9d95482ff2222bab32d4cab8dc2cedfb63183bdb3255e2af677",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-28",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-29",
+      "owner": "ao-atlas",
+      "task": "Generate Promoter no-promotion rollup with explicit denied authority and RSI state.",
+      "node_id": "mission-recommendation-consolidation-month1-29",
+      "task_id": "mission-recommendation-consolidation-month1-29-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9675f447b62ab5557dd1c5a65a69431a8ab523c393e47dae2b79785b24af26f7",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-29",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-30",
+      "owner": "ao-atlas",
+      "task": "Run a scoped public-safety wording scan over changed documentation and workflows.",
+      "node_id": "mission-recommendation-consolidation-month1-30",
+      "task_id": "mission-recommendation-consolidation-month1-30-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:41eb52977623902b27303c503f17575a662632ee40c125ba54230338a3bbb6cd",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-30",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-31",
+      "owner": "ao-atlas",
+      "task": "Record PR required-check merge and CI timing evidence for every touched repository.",
+      "node_id": "mission-recommendation-consolidation-month1-31",
+      "task_id": "mission-recommendation-consolidation-month1-31-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:6ae5682842ff8447ebf5922c2cd2f219cb1e0652cfffd730b92dcb3c9f36d6e9",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-31",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-32",
+      "owner": "ao-atlas",
+      "task": "Record post-merge local and remote branch cleanup before selecting another node.",
+      "node_id": "mission-recommendation-consolidation-month1-32",
+      "task_id": "mission-recommendation-consolidation-month1-32-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b93d86cb66cb1200cf441b8344d3884baa5e7abcc830849767b32b53dd7e9577",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-32",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-33",
+      "owner": "ao-atlas",
+      "task": "Scan wave artifacts for provider release credential and authority-widening instructions.",
+      "node_id": "mission-recommendation-consolidation-month1-33",
+      "task_id": "mission-recommendation-consolidation-month1-33-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b7a6d38a689e34d04f3c97630a1f5295b8b15c8bc13af3d227bd2321e7ac8a6b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-33",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-34",
+      "owner": "ao-atlas",
+      "task": "Generate at least forty ranked Month 2 contract convergence recommendations.",
+      "node_id": "mission-recommendation-consolidation-month1-34",
+      "task_id": "mission-recommendation-consolidation-month1-34-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:4cd58fae96374d72524118c274635d66e5ba979450eee14ff932a6e50cd72503",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-34",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-35",
+      "owner": "ao-atlas",
+      "task": "Reconcile Mission Atlas Foundry Command Sentinel and Promoter terminal readbacks.",
+      "node_id": "mission-recommendation-consolidation-month1-35",
+      "task_id": "mission-recommendation-consolidation-month1-35-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:87d28f900f2f271a555d888135191f69dba2beb8b34bb0e6b06bfa986ae347d4",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-35",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "consolidation-month1-36",
+      "owner": "ao-atlas",
+      "task": "Close the wave only after verification cleanup and exact next prompt agree.",
+      "node_id": "mission-recommendation-consolidation-month1-36",
+      "task_id": "mission-recommendation-consolidation-month1-36-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:ca2d3c3d33473289eaad31bef93798e98995f622cc4e1b44c12e25bf68f05d90",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/consolidation-month1-36",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    }
+  ],
+  "next_recommended_prompt": "You are AO Atlas, coordinating AO Foundry, AO Promoter, AO Command, and AO Architecture for a long-run Atlas-owned correction wave.\n\nDo not ask the operator for permission. Do not stop after one repo, one PR, one CI pass, one Foundry import, one route decision, one evidence artifact, or one short batch. Continue until the workgraph is completed with evidence, at least the lease minimum is met, or a true hard blocker remains after all safe repair, repack, and support work has been attempted.\n\nCurrent state:\n- Mission: mission-56bed010dd085a0f.\n- Target instance: ao-stack-consolidation-month1-20260710.\n- Generated Atlas-owned nodes: 36.\n- Lease minimum: 36 nodes, 120 to 180 minutes.\n- Continue-if-fast target: 36 nodes.\n- Final response allowed: false, because ready nodes or exact next actions remain.\n- Source digest: sha256:e776ea250456c59d92eb6758e6fbf3ac1abdc7ad821c08d9cc9b520a390b4b5e.\n\nProblem:\n- Recent AO Atlas/Mission recommendation prompts returned after short batches instead of sustaining 2-3 hour workgraphs.\n- Double the previous short batch when explicitly requested, and otherwise use the v0.2 2-3 hour supervisor default.\n- This continuation must behave like a long-run supervisor: Atlas owns sequencing, Foundry owns bounded implementation nodes, and Blueprint is used only for genuinely new requirements or authorization.\n\nGoal:\n- Target 2-3 hours and complete a durable AO Atlas long-run wave for mission-56bed010dd085a0f.\n- Execute at least 36 bounded Atlas nodes from the generated workgraph.\n- Complete at least 36 bounded implementation/evidence nodes before final response unless a true hard blocker remains.\n- If the first 36 nodes finish quickly and no blocker remains, continue through the 36-node continue-if-fast target.\n\nReturn only after all generated nodes complete, at least 36 bounded Atlas nodes complete, or a true hard blocker remains after safe repair attempts.\n\nMinimum work budget:\n- min_nodes: 36\n- min_minutes: 120\n- max_minutes: 180\n- max_iterations: 36\n- return_only_when: mission_done_or_true_hard_blocker_or_no_ready_work_and_no_exact_next_action\n- checkpoint_policy: after_each_node_or_timed_interval\n\nStop gates:\n- Target duration: 120 to 180 minutes.\n- Node floor stop gate: complete at least 36 nodes before final response unless a true hard blocker remains.\n- Lease floor stop gate: do not return before min_minutes=120 unless a true hard blocker remains.\n- Continue-if-fast stop gate: if 36 nodes finish quickly and no blocker remains, continue through 36 nodes.\n- Ready-work stop gate: if ready_nodes \u003e 0 or exact_next_action is non-empty, do not produce a final response.\n- Checkpoint stop gate: record a checkpoint after each node or timed interval before evaluating final response.\n\nSafety boundaries:\n- Keep exactly one executable mutation node active at a time.\n- No provider calls.\n- No credential or token inspection.\n- No direct main mutation.\n- No release, deploy, publish, upload, or tag.\n- No dependency updates unless separately authorized.\n- No auth, policy, or config widening.\n- No hidden instruction mutation.\n- No broad RSI claim.\n- RSI remains denied.\n- Use existing repo auth only for normal PR, CI, and merge if available without exposing credentials.\n\nRequired work:\nconsolidation-month1-01. Baseline all fourteen active repositories and record current branch cleanliness and synchronization state.\nconsolidation-month1-02. Add a regression readback that distinguishes pre-existing dirty files from wave-owned changes.\nconsolidation-month1-03. Coordinate the Architecture topology ADR for the proposed five product boundaries.\nconsolidation-month1-04. Validate that topology authority ownership has no undocumented overlapping final decisions.\nconsolidation-month1-05. Generate a stack lockfile containing repository commit version maturity and owner fields.\nconsolidation-month1-06. Add lockfile validation for missing commits duplicate repositories and unsupported authority claims.\nconsolidation-month1-07. Expand the Architecture readiness inventory to include Mission and Blueprint explicitly.\nconsolidation-month1-08. Add a wording regression that separates documentation readiness from system readiness.\nconsolidation-month1-09. Inventory active JSON schemas and distinct schema versions while excluding generated evidence explicitly.\nconsolidation-month1-10. Assign one canonical producer owner and lifecycle classification to every contract.\nconsolidation-month1-11. Generate a producer consumer compatibility matrix for gate-critical contracts.\nconsolidation-month1-12. Add fail-closed fixtures for unknown schemas unsupported versions and field drift.\nconsolidation-month1-13. Audit Mission completion metrics against the handoff-count correction commit.\nconsolidation-month1-14. Project implementation completion separately from handoff and readback evidence.\nconsolidation-month1-15. Add a red-green regression test for handoff-only nodes not counting complete.\nconsolidation-month1-16. Measure tracked source test schema fixture and evidence bytes in Atlas and Foundry.\nconsolidation-month1-17. Write a content-addressed evidence catalog plan retaining small replayable golden fixtures.\nconsolidation-month1-18. Guard evidence records against missing schema source digest and evidence-class fields.\nconsolidation-month1-19. Coordinate minimal hosted CI coverage for Arena native tests and static checks.\nconsolidation-month1-20. Verify Arena workflow-equivalent commands locally without provider calls or uploads.\nconsolidation-month1-21. Coordinate minimal hosted CI coverage for Crucible native tests and static checks.\nconsolidation-month1-22. Verify Crucible workflow-equivalent commands locally without changing dependencies or policy.\nconsolidation-month1-23. Coordinate minimal hosted CI coverage for Sentinel native tests and static checks.\nconsolidation-month1-24. Verify Sentinel workflow-equivalent commands locally and preserve fixture wording boundaries.\nconsolidation-month1-25. Bind Arena Crucible and Sentinel CI conclusions into one readiness rollup.\nconsolidation-month1-26. Validate every new Atlas wave evidence file with schema and digest checks.\nconsolidation-month1-27. Bind Foundry one-safe-node readiness to the consolidation wave source digests.\nconsolidation-month1-28. Generate compact Command readback for wave progress exact action and denial state.\nconsolidation-month1-29. Generate Promoter no-promotion rollup with explicit denied authority and RSI state.\nconsolidation-month1-30. Run a scoped public-safety wording scan over changed documentation and workflows.\nconsolidation-month1-31. Record PR required-check merge and CI timing evidence for every touched repository.\nconsolidation-month1-32. Record post-merge local and remote branch cleanup before selecting another node.\nconsolidation-month1-33. Scan wave artifacts for provider release credential and authority-widening instructions.\nconsolidation-month1-34. Generate at least forty ranked Month 2 contract convergence recommendations.\nconsolidation-month1-35. Reconcile Mission Atlas Foundry Command Sentinel and Promoter terminal readbacks.\nconsolidation-month1-36. Close the wave only after verification cleanup and exact next prompt agree.\n\nPer-node requirements:\n- Generate or validate node gate, candidate record, rollback record, implementation evidence, tests, verification command output, Sentinel/public-safety wording evidence where applicable, Promoter/no-promotion or promotion-readiness evidence where applicable, and Command/readback evidence where applicable.\n- Emit a Foundry import for exactly one active node at a time, execute the node, verify locally, record run-link evidence, complete the node in Atlas, evaluate the next stop gate, and continue.\n\nRegression tests:\n- Prove the recommendation wave defaults to at least 30 nodes and 120 minutes.\n- Prove the continue-if-fast target generates 40 bounded Atlas-owned tasks.\n- Prove mixed-owner default waves are rejected with exact readback.\n- Prove final response remains denied while ready nodes or exact next actions remain.\n\nVerification:\n- go test ./... -count=1\n- go vet ./...\n- go build ./cmd/atlas\n- scripts/production-readiness.sh\n- scripts/atlas-foundry-roundtrip-smoke.sh\n- Public-safety wording scan over changed docs and readbacks.\n\nFinal response only after completion or true hard blocker:\n- Include `early_return_risk_status` in continuation prompts and treat any blocked risk status as final-response denial evidence.\n- If ready_nodes \u003e 0 or exact_next_action is non-empty, do not produce a final response.\n- If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.\n- completed nodes / total nodes\n- list of node statuses\n- merged PRs by repo or local commits if remote lifecycle is blocked\n- evidence roots\n- final AO Atlas long-run supervisor status\n- Foundry rollup\n- Command readback\n- Feature Depth Recommendations, at least 36 tasks\n- verification results\n- clean/synced repo status\n- exact next action\n",
+  "final_response_allowed": false,
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "promoter_readback_status": "required_not_bound",
+  "command_readback_status": "required_not_bound",
+  "public_safety_scan_status": "required_pending_verification",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

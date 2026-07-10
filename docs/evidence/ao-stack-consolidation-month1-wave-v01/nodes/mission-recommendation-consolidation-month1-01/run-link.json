@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-consolidation-month1-01-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "candidate-record.json",
+    "checkpoint_bundle": "checkpoint-bundle.json",
+    "command_readback": "command-readback.json",
+    "foundry_import": "foundry-import.json",
+    "implementation_evidence": "implementation-evidence.json",
+    "node_gate": "node-gate.json",
+    "promoter_no_promotion": "promoter-no-promotion.json",
+    "public_safety_readback_binding": "sentinel-public-safety.json",
+    "rollback_record": "rollback-record.json",
+    "sentinel_public_safety": "sentinel-public-safety.json",
+    "tests": "tests.json",
+    "verification": "verification.json"
+  },
+  "digest": "sha256:ed64a71dca907b021df6284c1798b718f5161f2641a68a131a9669a8a906dc7b"
+}
