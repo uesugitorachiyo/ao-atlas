@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-26",
+  "candidate": "wave-evidence-schema-digest-validation",
+  "status": "selected",
+  "owner": "ao-atlas",
+  "objective": "Validate the wave evidence set with normal and strict schema checks and bind file digests for audit replay.",
+  "mutation_class": "low_risk_evidence",
+  "source_node": "mission-recommendation-consolidation-month1-25",
+  "generated_at_utc": "2026-07-10T18:54:02Z",
+  "expected_outputs": [
+    "normal evidence validation report",
+    "strict evidence validation report",
+    "schema/digest manifest",
+    "node readback"
+  ],
+  "safety": {
+    "no_direct_main_mutation": true,
+    "no_provider_calls": true,
+    "no_release_deploy_publish_upload_tag": true,
+    "no_dependency_updates": true,
+    "no_policy_auth_config_widening": true,
+    "rsi_remains_denied": true
+  }
+}
