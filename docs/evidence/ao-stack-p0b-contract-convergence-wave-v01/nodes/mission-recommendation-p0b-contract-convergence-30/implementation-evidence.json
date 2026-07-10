@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-30",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a bounded P0-C Mission-to-Foundry real complete-path handoff prompt and typed handoff check that preserves the P0-B closure criteria, no-promotion state, and RSI-denial boundary.",
+  "command": "go test ./internal/atlas -run 'TestP0CMissionFoundryHandoff' -count=1",
+  "typed_validator": "typed:p0c-mission-foundry-handoff-check"
+}
