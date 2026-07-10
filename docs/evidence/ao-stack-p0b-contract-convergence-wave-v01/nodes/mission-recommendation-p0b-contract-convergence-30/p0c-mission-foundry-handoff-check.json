@@ -1,0 +1,43 @@
+{
+  "schema": "ao.atlas.p0c-mission-foundry-handoff-check.v0.1",
+  "node_id": "mission-recommendation-p0b-contract-convergence-30",
+  "status": "handoff_ready",
+  "prompt_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-30/p0c-mission-foundry-handoff.md",
+  "criteria_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-29/p0c-readiness-criteria.json",
+  "source_readback": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-29/recommendation-readback-after.json",
+  "completed_nodes_before": 29,
+  "ready_nodes_before": 1,
+  "minimum_generated_nodes": 30,
+  "minimum_completion_before_final_response": 20,
+  "requires_mission_foundry_complete_path": true,
+  "requires_single_active_node": true,
+  "provider_calls_allowed": false,
+  "credential_use_allowed": false,
+  "ao2_live_mutation_allowed": false,
+  "required_owners": [
+    "ao-mission",
+    "ao-atlas",
+    "ao-foundry",
+    "ao-command",
+    "ao-sentinel",
+    "ao-promoter"
+  ],
+  "safety_boundaries": [
+    "no direct main mutation",
+    "no credential inspection",
+    "no provider calls",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no hidden instruction mutation",
+    "no broad RSI claim",
+    "RSI remains denied"
+  ],
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

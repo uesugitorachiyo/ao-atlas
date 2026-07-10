@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-30",
+  "candidate": "Generate P0-C Mission to Foundry real complete-path handoff.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-30-p0c-handoff",
+  "files_changed": [
+    "internal/atlas/mission_p0c_handoff.go",
+    "internal/atlas/mission_p0c_handoff_test.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-30"
+  ],
+  "digest_fields": [
+    "prompt_path",
+    "criteria_path",
+    "minimum_generated_nodes",
+    "minimum_completion_before_final_response",
+    "safety_boundaries"
+  ]
+}
