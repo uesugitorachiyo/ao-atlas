@@ -446,6 +446,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:covenant-ticket-schema-authority-ledger", err
 		}
 		return "typed:covenant-ticket-schema-authority-ledger", ValidateAtlasCovenantTicketSchemaAuthorityLedger(value)
+	case AtlasPolicyTicketPublicSafetyScanContract:
+		value, err := LoadJSON[AtlasPolicyTicketPublicSafetyScan](path)
+		if err != nil {
+			return "typed:policy-ticket-public-safety-scan", err
+		}
+		return "typed:policy-ticket-public-safety-scan", ValidateAtlasPolicyTicketPublicSafetyScan(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {

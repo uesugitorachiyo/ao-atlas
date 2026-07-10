@@ -464,6 +464,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "foundry-ticket-schema-compatibility-ledger", run: runMissionRecommendationsFoundryTicketSchemaCompatibilityLedger, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-ticket-schema-compatibility-ledger", run: runMissionRecommendationsCommandTicketSchemaCompatibilityLedger, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "covenant-ticket-schema-authority-ledger", run: runMissionRecommendationsCovenantTicketSchemaAuthorityLedger, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "policy-ticket-public-safety-scan", run: runMissionRecommendationsPolicyTicketPublicSafetyScan, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair, commandClass: missionRecommendationCommandClassPlanningOnly},
@@ -2306,6 +2307,45 @@ func runMissionRecommendationsCovenantTicketSchemaAuthorityLedger(args []string,
 		ledger.Status,
 		ledger.AllEntriesCompatible,
 		ledger.EntryCount,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsPolicyTicketPublicSafetyScan(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations policy-ticket-public-safety-scan", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	inputPath := fs.String("input", "", "policy ticket public-safety scan input path")
+	outPath := fs.String("out", "", "policy ticket public-safety scan output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*inputPath) == "" {
+		return fmt.Errorf("--input is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*inputPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	scan, err := BuildAtlasPolicyTicketPublicSafetyScan(*inputPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, scan); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, scan)
+	}
+	fmt.Fprintf(stdout, "status=%s\nunsafe_claims_found=%d\nclaim_count=%d\npolicy_ticket_public_safety_scan=%s\n",
+		scan.Status,
+		scan.UnsafeClaimsFound,
+		scan.ClaimCount,
 		filepath.ToSlash(*outPath),
 	)
 	return nil

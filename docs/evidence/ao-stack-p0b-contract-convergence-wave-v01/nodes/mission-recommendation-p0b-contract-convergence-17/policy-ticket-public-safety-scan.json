@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.policy-ticket-public-safety-scan.v0.1",
+  "status": "passed_policy_ticket_public_safety_scan",
+  "source_input_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-17/policy-ticket-public-safety-scan-input.json",
+  "source_input_digest": "sha256:b3bcc4623590600cf13d48413751ae0d86df00303785e53aaf213d2aa015f491",
+  "claim_count": 4,
+  "blocked_phrase_count": 4,
+  "unsafe_claims_found": 0,
+  "unsafe_matches": null,
+  "claims": [
+    "Covenant ticket policy hashes remain bound for denial evidence only.",
+    "Policy-version replay claims are rejected and do not advance authority.",
+    "Ticket digest readbacks preserve policy, ticket, and decision digests.",
+    "RSI remains denied."
+  ],
+  "blocked_phrases": [
+    "fully unsupervised mutation live proof claim",
+    "RSI proof claim",
+    "authority is advanced",
+    "model-provider execution completed"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
