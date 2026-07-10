@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.command-ticket-byte-preservation-fixture.v0.1",
+  "status": "ticket_bytes_preserved",
+  "source_input_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-06/command-ticket-byte-preservation-input.json",
+  "source_input_digest": "sha256:b16ce9b7b6d77fca2ceb7b0d834d49ceb7a2305e1970435e0a22018facd588e2",
+  "case_count": 2,
+  "mismatched_cases": 0,
+  "byte_preservation_passed": true,
+  "cases": [
+    {
+      "id": "accepted-ticket-readback",
+      "command_readback_path": "ao-command live-mutation approval accepted readback",
+      "ticket_sha256": "sha256:9c2714f4fd9006074b12e5b1f2c8ac3940ec8579c395b2382db471e7547c461d",
+      "command_reported_ticket_sha256": "sha256:9c2714f4fd9006074b12e5b1f2c8ac3940ec8579c395b2382db471e7547c461d",
+      "bytes_preserved": true
+    },
+    {
+      "id": "rejected-ticket-readback",
+      "command_readback_path": "ao-command live-mutation approval rejected readback",
+      "ticket_sha256": "sha256:19d736b91c3ae317ece323251cbe868e8b10c571859488a95d9cd724cef92293",
+      "command_reported_ticket_sha256": "sha256:19d736b91c3ae317ece323251cbe868e8b10c571859488a95d9cd724cef92293",
+      "bytes_preserved": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

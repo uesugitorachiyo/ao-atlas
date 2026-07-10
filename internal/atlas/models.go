@@ -1281,6 +1281,48 @@ type AtlasCommandCovenantQuarantineFixtureCase struct {
 	SafeToAccept             bool   `json:"safe_to_accept"`
 }
 
+type AtlasCommandTicketBytePreservationInput struct {
+	Schema                 string                                     `json:"schema"`
+	Status                 string                                     `json:"status"`
+	Cases                  []AtlasCommandTicketBytePreservationInCase `json:"cases"`
+	SchedulesWork          bool                                       `json:"schedules_work"`
+	ExecutesWork           bool                                       `json:"executes_work"`
+	ApprovesWork           bool                                       `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                       `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                       `json:"rsi_remains_denied"`
+}
+
+type AtlasCommandTicketBytePreservationInCase struct {
+	ID                         string `json:"id"`
+	CommandReadbackPath        string `json:"command_readback_path"`
+	TicketCanonicalJSON        string `json:"ticket_canonical_json"`
+	CommandReportedTicketBytes string `json:"command_reported_ticket_bytes"`
+}
+
+type AtlasCommandTicketBytePreservationFixture struct {
+	Schema                 string                                          `json:"schema"`
+	Status                 string                                          `json:"status"`
+	SourceInputPath        string                                          `json:"source_input_path"`
+	SourceInputDigest      string                                          `json:"source_input_digest"`
+	CaseCount              int                                             `json:"case_count"`
+	MismatchedCases        int                                             `json:"mismatched_cases"`
+	BytePreservationPassed bool                                            `json:"byte_preservation_passed"`
+	Cases                  []AtlasCommandTicketBytePreservationFixtureCase `json:"cases"`
+	SchedulesWork          bool                                            `json:"schedules_work"`
+	ExecutesWork           bool                                            `json:"executes_work"`
+	ApprovesWork           bool                                            `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                            `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                            `json:"rsi_remains_denied"`
+}
+
+type AtlasCommandTicketBytePreservationFixtureCase struct {
+	ID                          string `json:"id"`
+	CommandReadbackPath         string `json:"command_readback_path"`
+	TicketSHA256                string `json:"ticket_sha256"`
+	CommandReportedTicketSHA256 string `json:"command_reported_ticket_sha256"`
+	BytesPreserved              bool   `json:"bytes_preserved"`
+}
+
 type AtlasMergeCheckBindingInput struct {
 	Schema                 string                      `json:"schema"`
 	Status                 string                      `json:"status"`
