@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-35",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T19:44:26Z",
+  "kind": "terminal_readback_reconciliation",
+  "repository": "ao-atlas",
+  "artifact": "terminal-readback-reconciliation.json",
+  "completed_nodes": 34,
+  "total_nodes": 36,
+  "ready_nodes": 2,
+  "blocked_nodes": 0,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-35 and execute exactly one active node.",
+  "rsi_remains_denied": true
+}

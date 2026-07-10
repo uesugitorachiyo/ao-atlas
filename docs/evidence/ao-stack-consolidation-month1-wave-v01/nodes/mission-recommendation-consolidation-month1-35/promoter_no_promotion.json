@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1",
+  "node": "mission-recommendation-consolidation-month1-35",
+  "status": "no_promotion_requested",
+  "generated_at_utc": "2026-07-10T19:44:26Z",
+  "promotion_requested": false,
+  "promotion_safe": false,
+  "reason": "Terminal readback reconciliation only; no authority-class promotion is requested.",
+  "highest_proven_live_class": "unchanged",
+  "fully_unsupervised_complex_mutation": "denied",
+  "rsi_remains_denied": true
+}
