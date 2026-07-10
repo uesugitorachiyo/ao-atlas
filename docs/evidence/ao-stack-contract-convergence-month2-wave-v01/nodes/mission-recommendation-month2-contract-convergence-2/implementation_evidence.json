@@ -7,7 +7,8 @@
   "evidence_files": [
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-2/schema-owner-inventory.json",
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-2/recommendation-evidence-schema-registry.json",
-    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-2/foundry_import.json"
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-2/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-2/recommendation-readback-before-public-safety-binding.json"
   ],
   "summary": "Recorded a stack-wide owner inventory and typed recommendation evidence registry for fourteen active AO repositories, excluding generated evidence from schema counts and preserving planning-only status.",
   "owner_binding_coverage": 14,
@@ -20,5 +21,6 @@
   "schedules_work": false,
   "executes_work": false,
   "approves_work": false,
-  "mutates_repositories": false
+  "mutates_repositories": false,
+  "foundry_manifest_projection": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-2/foundry-import/foundry-import.json"
 }

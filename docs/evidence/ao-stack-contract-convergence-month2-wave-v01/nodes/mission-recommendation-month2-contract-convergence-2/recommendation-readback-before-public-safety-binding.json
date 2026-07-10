@@ -19,8 +19,8 @@
     "final_report_contract": "ao.atlas.long-run-final-report.v0.2"
   },
   "started_at": "2026-07-10T20:09:10Z",
-  "completed_at": "2026-07-10T20:44:58Z",
-  "elapsed_minutes": 35,
+  "completed_at": "2026-07-10T20:39:55Z",
+  "elapsed_minutes": 30,
   "min_minutes_met": false,
   "lease_time_status": "minimum_minutes_unmet",
   "total_nodes": 40,
@@ -154,7 +154,7 @@
       "required_before_final_response": true
     }
   ],
-  "public_safety_scan_status": "passed",
+  "public_safety_scan_status": "required_pending_verification",
   "schema_health_status": "required_pending_schema_registry_health",
   "return_gate_status": "blocked_ready_nodes_remain",
   "checkpoint_count": 2,

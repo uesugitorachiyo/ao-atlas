@@ -13,9 +13,9 @@
     "output": "schema registry emitted 9 planning-only typed entries with complete validator coverage"
   },
   "inventory_check": {
-    "command": "jq owner inventory assertion over schema-owner-inventory.json",
+    "command": "jq inventory manifest assertion over schema-owner-inventory.json",
     "status": "passed",
-    "output": "fourteen repositories and fourteen owner bindings recorded"
+    "output": "fourteen repositories, fourteen owner bindings, 349 manifest entries, every count equals its manifest length, and generated evidence exclusion is recorded"
   },
   "objective": "Coordinate ao-architecture Stack-wide schema owner inventory through a bounded Atlas compatibility evidence node with no promotion."
 }
