@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-01",
+  "implementation_repo": "ao-covenant",
+  "pull_request": "https://github.com/uesugitorachiyo/ao-covenant/pull/114",
+  "merge_commit": "c376d1102c2ec7f9c7d516f4454dbb21834d42a3",
+  "changed_files": [
+    "internal/run/executor.go",
+    "internal/run/executor_test.go"
+  ],
+  "summary": "EventContentHash now includes policy decision metadata already recorded on policy_decided events."
+}
