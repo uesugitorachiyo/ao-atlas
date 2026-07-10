@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-01",
+  "kind": "read_only_repository_baseline",
+  "artifact": "repository-baseline.json",
+  "source_commit": "75f4941064ef06ed967f125db7dbdff24383dd87",
+  "claims_runtime_execution": false
+}

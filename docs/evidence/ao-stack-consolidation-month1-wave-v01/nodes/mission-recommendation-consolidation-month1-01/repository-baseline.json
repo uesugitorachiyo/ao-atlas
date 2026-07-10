@@ -1,0 +1,154 @@
+{
+  "schema": "ao.atlas.consolidation-repository-baseline.v0.1",
+  "mission_id": "mission-56bed010dd085a0f",
+  "target_instance": "ao-stack-consolidation-month1-20260710",
+  "generated_at_utc": "2026-07-10T13:40:00Z",
+  "source_kind": "read_only_repository_inventory",
+  "status": "passed",
+  "safe_to_execute": true,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "repositories": [
+    {
+      "repository": "ao-architecture",
+      "branch": "main",
+      "head": "1b28c65ce544321e2a03b7d8fe84dbec75b2a85d",
+      "upstream": "origin/main",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-mission",
+      "branch": "main",
+      "head": "8055933d9eebdd12a01d9ccca6edcbbf9bc69c37",
+      "upstream": "origin/main",
+      "clean": false,
+      "dirty_files": " M internal/mission/mission_test.go\n?? .ao-mission/\n?? docs/ao-stack-productization-draft-pr-advancement-handoff.md\n?? docs/ao-stack-productization-foundry-bridge-handoff.md\n?? docs/ao-stack-six-month-roadmap-handoff-prompt.md",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 1
+    },
+    {
+      "repository": "ao-blueprint",
+      "branch": "main",
+      "head": "011e4178b870219f7490857db3c73c346ca3f2de",
+      "upstream": "origin/main",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-atlas",
+      "branch": "main",
+      "head": "75f4941064ef06ed967f125db7dbdff24383dd87",
+      "upstream": "origin/main",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-foundry",
+      "branch": "main",
+      "head": "a610f10b09591416509c712313cd9021a2cb7da7",
+      "upstream": "origin/main",
+      "clean": false,
+      "dirty_files": "?? .foundry-local/",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-forge",
+      "branch": "main",
+      "head": "27c74bfa5713fe50c052e86a375afca27cc01469",
+      "upstream": "origin/main",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-covenant",
+      "branch": "codex/mission-v02-hardening",
+      "head": "ccfdd28751c5a5af9f00cf34950bcf6f439e0f24",
+      "upstream": "",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 1,
+      "behind_origin_main": 2
+    },
+    {
+      "repository": "ao2",
+      "branch": "main",
+      "head": "541e766b5da00b65fa2c2e34b1d7ff0dc363eef6",
+      "upstream": "origin/main",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao2-control-plane",
+      "branch": "main",
+      "head": "6226dcc585d16871cd6ff9d7638628de465b6221",
+      "upstream": "origin/main",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-command",
+      "branch": "main",
+      "head": "81e74349d44c768ab8dcadaa122302aa9fd24f4f",
+      "upstream": "origin/main",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-arena",
+      "branch": "main",
+      "head": "97276a292f83776115621978e4e62e2df514c65d",
+      "upstream": "origin/main",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-crucible",
+      "branch": "main",
+      "head": "26be45ee686abf2bb664175abdf66118fd3d8ead",
+      "upstream": "origin/main",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 0,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-sentinel",
+      "branch": "codex/mission-v02-hardening",
+      "head": "dcb4759682d2492877729ef6084c3356389b514e",
+      "upstream": "",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 1,
+      "behind_origin_main": 0
+    },
+    {
+      "repository": "ao-promoter",
+      "branch": "codex/mission-v02-hardening",
+      "head": "a2b3281711a1436aa46c34ca6c11b26d926ed57e",
+      "upstream": "",
+      "clean": true,
+      "dirty_files": "",
+      "ahead_of_origin_main": 1,
+      "behind_origin_main": 0
+    }
+  ]
+}

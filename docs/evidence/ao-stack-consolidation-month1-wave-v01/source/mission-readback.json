@@ -1,0 +1,12 @@
+{
+  "schema": "ao.mission.ao-stack-consolidation-month1-readback.v0.1",
+  "mission_id": "mission-56bed010dd085a0f",
+  "status": "active",
+  "current_route": "ao-atlas",
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "exact_next_action": "compile and validate the Atlas consolidation workgraph",
+  "source_kind": "mission-routing-readback",
+  "rsi_remains_denied": true
+}
