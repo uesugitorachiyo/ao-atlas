@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-13",
+  "status": "partial_missing_deprecated_level",
+  "kind": "stable_experimental_deprecated_contract_classifier",
+  "producer": "ao-covenant",
+  "consumer": "ao-atlas",
+  "consumer_contract": "ao.atlas.contract-maturity-classifier.v0.1",
+  "source_contract": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-13/contract-maturity-classifier-contract.json",
+  "canonical_owner": "ao-covenant",
+  "documented_levels": [
+    "stable",
+    "experimental",
+    "internal"
+  ],
+  "deprecated_level_present": false,
+  "machine_readable_maturity_field_present": false,
+  "stable_requires_docs_and_tests": true,
+  "experimental_default_for_undocumented": true,
+  "fail_closed_until_deprecated_and_machine_readback_exist": true,
+  "safe_to_execute": false,
+  "planning_only": true,
+  "provider_calls": false,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

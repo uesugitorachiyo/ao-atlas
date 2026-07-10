@@ -1,0 +1,59 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "stable_experimental_deprecated_contract_classifier",
+  "node_id": "mission-recommendation-month2-contract-convergence-13",
+  "status": "partial_missing_deprecated_level",
+  "producer": "ao-covenant",
+  "consumer": "ao-atlas",
+  "canonical_owner": "ao-covenant",
+  "source_commit": "ccfdd28751c5a5af9f00cf34950bcf6f439e0f24",
+  "source_files": [
+    {
+      "path": "docs/public-api-stability.md",
+      "digest": "sha256:859321a329c71bf410bc999fab9338d768faaeea34af254800bc973c9beeeb53",
+      "fields_checked": [
+        "Stability Levels",
+        "Stable Surfaces",
+        "Experimental Surfaces",
+        "Internal surfaces",
+        "pre-1.0 default"
+      ]
+    },
+    {
+      "path": "docs/public-schema-changelog.md",
+      "digest": "sha256:1816be96bfe29390b0476600c4a7f972f7f85d005582746aa83c97f545e85",
+      "fields_checked": [
+        "public schema scope",
+        "schema_version compatibility expectations"
+      ]
+    },
+    {
+      "path": "internal/cli/public_docs_test.go",
+      "digest": "sha256:a4c32f46bad5020271d69bfe5e4b81ca15ab2d843801c4950d018b4b13ba7934",
+      "fields_checked": [
+        "TestPublicAPIStabilityPolicyIsLinkedAndComplete",
+        "TestPublicSchemaChangelogIsLinkedAndComplete"
+      ]
+    }
+  ],
+  "documented_levels": [
+    "stable",
+    "experimental",
+    "internal"
+  ],
+  "deprecated_level_present": false,
+  "machine_readable_maturity_field_present": false,
+  "unclassified_default": "experimental",
+  "compatibility_status": "partial_missing_deprecated_level",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "provider_calls": false,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
