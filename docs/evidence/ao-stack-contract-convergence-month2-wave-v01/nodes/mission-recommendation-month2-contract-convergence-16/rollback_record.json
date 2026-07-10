@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-16",
+  "task_id": "mission-recommendation-month2-contract-convergence-16-task",
+  "status": "rollback_available",
+  "rollback_scope": "Atlas evidence node only; no storage migration or upload",
+  "rollback_command": "remove node 14 Architecture copied-schema guard evidence before merge; no Architecture source or runtime state is changed",
+  "data_loss_risk": "none; source audit and planning evidence only",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "rollback_steps": [
+    "remove this node evidence directory and revert the node-only Atlas commit before merge"
+  ],
+  "data_migration_required": false,
+  "operator_data_migration": "none"
+}
