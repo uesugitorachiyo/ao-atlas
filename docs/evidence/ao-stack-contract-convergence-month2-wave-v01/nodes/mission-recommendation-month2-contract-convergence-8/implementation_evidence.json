@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-8",
+  "task_id": "mission-recommendation-month2-contract-convergence-8-task",
+  "status": "recorded",
+  "implementation_files": [],
+  "evidence_files": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/forge-goalrun-packet.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/forge-goalrun-compatibility.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/run-link-digest-check.json"
+  ],
+  "summary": "Recorded Forge GoalRun/bounded packet owner binding with draft-blocked status, exact write and command boundaries, rollback/CI requirements, and no execution or promotion.",
+  "producer_consumer_contract_status": "compatible_blocked_packet",
+  "packet_status": "draft_blocked_until_gates_true",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "foundry_manifest_projection": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/foundry-import/foundry-import.json",
+  "run_link_digest_status": "run_link_digest_verified"
+}

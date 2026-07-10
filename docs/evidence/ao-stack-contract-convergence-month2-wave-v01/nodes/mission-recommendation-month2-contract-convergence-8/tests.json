@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-8",
+  "task_id": "mission-recommendation-month2-contract-convergence-8-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_existing_contract_path",
+    "reason": "node exercises the existing Forge bounded packet contract and records planning-only owner evidence"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run 'TestP0BFoundryImportEmitsExactlyOneReadyNode|TestBlueprintFoundrySourcesLiveInDedicatedModule' -count=1",
+    "status": "passed",
+    "output": "Single-node downstream material stays fixture-only and dedicated contract modules preserve source ownership"
+  },
+  "integration_test": {
+    "command": "jq -e '.schema == \"ao.forge-ao2.bounded-patch-packet-draft.v0.1\" and .status == \"draft_blocked_until_gates_true\" and .safe_to_execute == false and .schedules_work == false and .executes_work == false and .approves_work == false' docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/forge-goalrun-packet.json",
+    "status": "passed",
+    "output": "Forge packet remains draft-blocked with explicit command and authority boundaries"
+  },
+  "objective": "Coordinate ao-forge Forge GoalRun packet schema owner binding through a bounded Atlas compatibility evidence node with no promotion."
+}
