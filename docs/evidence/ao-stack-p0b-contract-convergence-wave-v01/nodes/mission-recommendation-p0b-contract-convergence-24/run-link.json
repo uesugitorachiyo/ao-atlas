@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-p0b-contract-convergence-24-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/checkpoint-bundle.json",
+    "command_promoter_agreement": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/command-promoter-agreement.json",
+    "command_readback": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/command_readback.json",
+    "foundry_import": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/foundry-import/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/implementation-evidence.json",
+    "node_gate": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/tests.json",
+    "verification": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/verification.json"
+  },
+  "digest": "sha256:e2926c895718ee49ebdfcf749f46733fb1f9a0287badbd82cbe956cd1064b0be"
+}

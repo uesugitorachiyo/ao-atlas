@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-24",
+  "candidate": "Bind Command and Promoter no-promotion agreement for P0-B.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-24-command-promoter-agreement",
+  "files_changed": [
+    "internal/atlas/mission_p0b_command_promoter_agreement.go",
+    "internal/atlas/mission_p0b_command_promoter_agreement_test.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24"
+  ],
+  "digest_fields": [
+    "entries.command_readback_path",
+    "entries.promoter_readback_path",
+    "all_command_readbacks_agree",
+    "all_promoter_readbacks_no_promotion",
+    "promotion_requested_count",
+    "authority_advance_claim_count"
+  ]
+}

@@ -374,6 +374,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:p0b-rollback-audit", err
 		}
 		return "typed:p0b-rollback-audit", ValidateAtlasP0BRollbackAudit(value)
+	case AtlasP0BCommandPromoterAgreementContract:
+		value, err := LoadJSON[AtlasP0BCommandPromoterAgreement](path)
+		if err != nil {
+			return "typed:p0b-command-promoter-agreement", err
+		}
+		return "typed:p0b-command-promoter-agreement", ValidateAtlasP0BCommandPromoterAgreement(value)
 	case AtlasFailedCheckReplayFixtureContract:
 		value, err := LoadJSON[AtlasFailedCheckReplayFixture](path)
 		if err != nil {

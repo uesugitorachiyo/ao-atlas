@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.tests.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-24",
+  "red_test": "go test ./internal/atlas -run 'TestP0BCommandPromoterAgreement' -count=1 failed before implementation because AtlasP0BCommandPromoterAgreement, ValidateAtlasP0BCommandPromoterAgreement, and AtlasP0BCommandPromoterAgreementContract were missing; after implementation it failed on the missing command-promoter-agreement fixture.",
+  "targeted_tests": [
+    "go test ./internal/atlas -run 'TestP0BCommandPromoterAgreement' -count=1"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./..."
+  ]
+}

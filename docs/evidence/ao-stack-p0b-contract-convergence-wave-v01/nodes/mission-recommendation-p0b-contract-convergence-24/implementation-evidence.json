@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-24",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed Command/Promoter agreement fixture proving completed P0-B nodes 1-23 keep no-promotion readbacks aligned and make no authority advance claim.",
+  "command": "typed fixture plus recommendation evidence validator",
+  "typed_validator": "typed:p0b-command-promoter-agreement"
+}
