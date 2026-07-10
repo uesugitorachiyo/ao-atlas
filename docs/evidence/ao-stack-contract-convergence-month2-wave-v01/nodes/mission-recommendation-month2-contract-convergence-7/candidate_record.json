@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-7",
+  "task_id": "mission-recommendation-month2-contract-convergence-7-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-7",
+  "source_owner": "ao-sentinel",
+  "source_task_digest": "null",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Coordinate ao-sentinel Sentinel native verdict schema contract through a bounded Atlas compatibility evidence node with no promotion.",
+    "Preserve the native ao.sentinel.repo-node-verdict.v0.1 hold verdict and its fail-closed safe_to_execute=false state.",
+    "Bind Sentinel release prohibition, downstream gate dependency, no promotion, and RSI denial without converting hold into readiness."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
