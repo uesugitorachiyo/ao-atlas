@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-p0b-contract-convergence-04",
+  "repo": "ao-atlas",
+  "status": "implemented",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed Command-to-Covenant rejected-ticket fixture that preserves Covenant-native rejection reason wording and binds request and ticket canonical bytes by SHA-256.",
+  "command": "mission recommendations command-covenant-rejected-ticket-fixture",
+  "typed_validator": "typed:command-covenant-rejected-ticket-fixture"
+}

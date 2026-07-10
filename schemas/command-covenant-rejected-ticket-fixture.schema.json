@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ao.local/schemas/command-covenant-rejected-ticket-fixture.schema.json",
+  "title": "AO Atlas Command Covenant Rejected Ticket Fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "status",
+    "source_input_path",
+    "source_input_digest",
+    "request_sha256",
+    "ticket_sha256",
+    "covenant_decision",
+    "command_accepts_ticket",
+    "covenant_native_reason",
+    "command_readback_reason",
+    "reason_preserved",
+    "schedules_work",
+    "executes_work",
+    "approves_work",
+    "claims_authority_advance",
+    "rsi_remains_denied"
+  ],
+  "properties": {
+    "schema": { "const": "ao.atlas.command-covenant-rejected-ticket-fixture.v0.1" },
+    "status": { "const": "rejected_ticket_reason_preserved" },
+    "source_input_path": { "type": "string", "minLength": 1 },
+    "source_input_digest": { "$ref": "#/$defs/sha256" },
+    "request_sha256": { "$ref": "#/$defs/sha256" },
+    "ticket_sha256": { "$ref": "#/$defs/sha256" },
+    "covenant_decision": { "const": "rejected" },
+    "command_accepts_ticket": { "const": false },
+    "covenant_native_reason": { "type": "string", "minLength": 1 },
+    "command_readback_reason": { "type": "string", "minLength": 1 },
+    "reason_preserved": { "const": true },
+    "schedules_work": { "const": false },
+    "executes_work": { "const": false },
+    "approves_work": { "const": false },
+    "claims_authority_advance": { "const": false },
+    "rsi_remains_denied": { "const": true }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  }
+}

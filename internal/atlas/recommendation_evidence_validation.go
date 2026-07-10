@@ -368,6 +368,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:failed-check-replay-fixture", err
 		}
 		return "typed:failed-check-replay-fixture", ValidateAtlasFailedCheckReplayFixture(value)
+	case AtlasCommandCovenantRejectedTicketFixtureContract:
+		value, err := LoadJSON[AtlasCommandCovenantRejectedTicketFixture](path)
+		if err != nil {
+			return "typed:command-covenant-rejected-ticket-fixture", err
+		}
+		return "typed:command-covenant-rejected-ticket-fixture", ValidateAtlasCommandCovenantRejectedTicketFixture(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {
