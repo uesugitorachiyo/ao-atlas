@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-20",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a node-specific Foundry import fixture proving exactly one ready P0-B task is emitted without widening scheduling, execution, or approval authority.",
+  "command": "atlas foundry import",
+  "typed_validator": "targeted-regression:foundry-import-one-node"
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.tests.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-20",
+  "red_test": "go test ./internal/atlas -run 'TestP0BFoundryImportEmitsExactlyOneReadyNode' -count=1 failed before fixture generation because foundry-import/foundry-import.json was missing.",
+  "targeted_tests": [
+    "go test ./internal/atlas -run 'TestP0BFoundryImportEmitsExactlyOneReadyNode' -count=1"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./..."
+  ]
+}
