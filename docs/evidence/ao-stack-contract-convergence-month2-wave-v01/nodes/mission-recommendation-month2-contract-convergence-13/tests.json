@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-13",
+  "task_id": "mission-recommendation-month2-contract-convergence-13-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records a partial maturity classifier without mutating Covenant or widening authority"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run TestP0BFoundryImportEmitsExactlyOneReadyNode -count=1",
+    "status": "passed",
+    "output": "Atlas downstream handoff remains single-node and planning-only"
+  },
+  "integration_test": {
+    "command": "test -f ../ao-covenant/docs/public-api-stability.md && rg -q 'Stable Surfaces' ../ao-covenant/docs/public-api-stability.md && rg -q 'Experimental Surfaces' ../ao-covenant/docs/public-api-stability.md && rg -q 'Internal surfaces' ../ao-covenant/docs/public-api-stability.md && rg -q 'TestPublicAPIStabilityPolicyIsLinkedAndComplete' ../ao-covenant/internal/cli/public_docs_test.go && rg -q 'TestPublicSchemaChangelogIsLinkedAndComplete' ../ao-covenant/internal/cli/public_docs_test.go && if rg -qi 'deprecated' ../ao-covenant/docs/public-api-stability.md; then exit 1; fi",
+    "status": "passed",
+    "output": "Covenant documents stable, experimental, and internal levels with public-doc tests; no deprecated level is documented"
+  },
+  "objective": "Coordinate ao-covenant Stable experimental deprecated contract classifier through a bounded Atlas compatibility evidence node with no promotion."
+}

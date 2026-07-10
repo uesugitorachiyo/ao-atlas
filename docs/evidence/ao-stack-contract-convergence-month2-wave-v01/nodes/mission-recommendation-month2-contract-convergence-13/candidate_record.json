@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-13",
+  "task_id": "mission-recommendation-month2-contract-convergence-13-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-13",
+  "source_owner": "ao-covenant",
+  "source_task_digest": "sha256:9c7ba92cf981a84cb5cee4a871e2f601c8823c5970df0e23be6cc8ebac69b659",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Bind the stable/experimental/deprecated classifier requirement to Covenant public stability and schema changelog policy.",
+    "Inspect the existing documented classifier and public-doc tests without mutating Covenant.",
+    "Record the absent deprecated level and absent machine-readable maturity field as a fail-closed compatibility gap."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-13"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

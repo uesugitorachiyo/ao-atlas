@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-13",
+  "task_id": "mission-recommendation-month2-contract-convergence-13-task",
+  "status": "recorded",
+  "implementation_files": [],
+  "evidence_files": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-13/contract-maturity-classifier-compatibility.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-13/contract-maturity-classifier-contract.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-13/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-13/run-link-digest-check.json"
+  ],
+  "summary": "Recorded Covenant maturity policy as stable, experimental, and internal, with public-doc tests, while preserving the missing deprecated class and machine-readable maturity field as a fail-closed gap.",
+  "producer_consumer_contract_status": "partial_missing_deprecated_level",
+  "canonical_owner": "ao-covenant",
+  "documented_levels": [
+    "stable",
+    "experimental",
+    "internal"
+  ],
+  "deprecated_level_present": false,
+  "machine_readable_maturity_field_present": false,
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "foundry_manifest_projection": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-13/foundry-import/foundry-import.json",
+  "run_link_digest_status": "run_link_digest_verified"
+}
