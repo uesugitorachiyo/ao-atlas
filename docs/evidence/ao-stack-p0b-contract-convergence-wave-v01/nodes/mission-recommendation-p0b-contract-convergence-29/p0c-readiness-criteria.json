@@ -1,0 +1,139 @@
+{
+  "schema": "ao.atlas.p0c-readiness-criteria.v0.1",
+  "node_id": "mission-recommendation-p0b-contract-convergence-29",
+  "status": "criteria_recorded",
+  "source_readback": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-28/recommendation-readback-after.json",
+  "source_workgraph": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-28/workgraph-after-complete.json",
+  "completed_nodes_before": 28,
+  "total_nodes": 30,
+  "ready_nodes_before": 2,
+  "blocked_nodes_before": 0,
+  "failed_nodes_before": 0,
+  "final_response_allowed": false,
+  "next_executable_node": "mission-recommendation-p0b-contract-convergence-30",
+  "requires_p0b_terminal_readback": true,
+  "requires_mission_to_foundry_complete_path": true,
+  "required_criterion_count": 12,
+  "required_criteria": [
+    {
+      "id": "p0b-terminal-readback",
+      "owner": "ao-atlas",
+      "evidence_kind": "recommendation-readback",
+      "requirement": "P0-B terminal readback records completed_nodes=30, ready_nodes=0, blocked_nodes=0, failed_nodes=0, and final_response_allowed=true.",
+      "required_status": "terminal_clean",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "p0b-terminal-workgraph",
+      "owner": "ao-atlas",
+      "evidence_kind": "workgraph",
+      "requirement": "Terminal workgraph has no ready, blocked, or failed P0-B nodes.",
+      "required_status": "closed",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "single-active-node-proof",
+      "owner": "ao-atlas",
+      "evidence_kind": "foundry-import-readback",
+      "requirement": "Every P0-B Foundry import binds exactly one active node before handoff.",
+      "required_status": "one_active_node",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "mission-import-readback",
+      "owner": "ao-mission",
+      "evidence_kind": "mission-import",
+      "requirement": "AO Mission imports the latest Atlas terminal readback and agrees there is no remaining P0-B exact_next_action.",
+      "required_status": "imported_terminal_readback",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "command-readback-agreement",
+      "owner": "ao-command",
+      "evidence_kind": "command-readback",
+      "requirement": "Command readback agrees no promotion is requested and no RSI authority is advanced.",
+      "required_status": "readback_agrees_no_promotion",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "promoter-no-promotion",
+      "owner": "ao-promoter",
+      "evidence_kind": "promoter-readback",
+      "requirement": "Promoter rollup remains no_promotion_requested for P0-B closure.",
+      "required_status": "no_promotion_requested",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "sentinel-public-safety",
+      "owner": "ao-sentinel",
+      "evidence_kind": "public-safety-scan",
+      "requirement": "Sentinel/public-safety scan covers changed docs, readbacks, and tests with only approved boundary wording matches.",
+      "required_status": "passed",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "pr-ci-merge-cleanup",
+      "owner": "ao-atlas",
+      "evidence_kind": "pr-ci-ledger",
+      "requirement": "PR, CI, merge commit, main sync, and branch deletion evidence is recorded for all P0-B mutation nodes.",
+      "required_status": "passed_clean",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "schema-validation",
+      "owner": "ao-atlas",
+      "evidence_kind": "evidence-validation-report",
+      "requirement": "One command validates every P0-B node evidence JSON file and records zero missing schemas or failed files.",
+      "required_status": "passed",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "p0c-complete-path-scope",
+      "owner": "ao-atlas",
+      "evidence_kind": "handoff-prompt",
+      "requirement": "P0-C handoff is scoped to Mission-to-Foundry real complete-path readiness and does not authorize provider calls or live mutation.",
+      "required_status": "bounded_handoff",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "safety-boundary-assertions",
+      "owner": "ao-covenant",
+      "evidence_kind": "safety-boundary-readback",
+      "requirement": "Closure evidence preserves no direct main mutation, no credential inspection, no provider calls, no releases, no dependency updates, and no auth policy config widening.",
+      "required_status": "boundaries_preserved",
+      "blocks_p0c_if_missing": true
+    },
+    {
+      "id": "rsi-denial",
+      "owner": "ao-mission",
+      "evidence_kind": "authority-readback",
+      "requirement": "RSI remains denied and no broad RSI claim is made.",
+      "required_status": "rsi_denied",
+      "blocks_p0c_if_missing": true
+    }
+  ],
+  "terminal_evidence_refs": [
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-30/recommendation-readback-after.json",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-30/workgraph-after-complete.json",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-30/p0c-mission-foundry-handoff.md",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-30/evidence-validation-report.json"
+  ],
+  "safety_boundaries": [
+    "no direct main mutation",
+    "no credential inspection",
+    "no provider calls",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no hidden instruction mutation",
+    "no broad RSI claim",
+    "RSI remains denied"
+  ],
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
