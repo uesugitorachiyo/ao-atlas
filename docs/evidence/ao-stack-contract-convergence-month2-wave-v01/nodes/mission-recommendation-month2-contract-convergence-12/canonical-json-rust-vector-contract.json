@@ -1,0 +1,67 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "canonical_json_rust_vector_contract",
+  "node_id": "mission-recommendation-month2-contract-convergence-12",
+  "status": "recorded",
+  "producer": "ao2",
+  "consumer": "ao-atlas",
+  "canonical_owner": "ao2",
+  "source_commit": "541e766b5da00b65fa2c2e34b1d7ff0dc363eef6",
+  "source_files": [
+    {
+      "repository": "ao2",
+      "path": "crates/ao2-cli/src/main.rs",
+      "digest": "sha256:acdf015c07ba857c49cde8d0afc6b9b0791885f8b94007413a04c8312bf9bb3a",
+      "fields_checked": [
+        "canonical_json_sha256",
+        "write_canonical_json_value",
+        "canonical_json_contract_tests"
+      ]
+    },
+    {
+      "repository": "ao2",
+      "path": "tests/fixtures/canonical-json-vectors.json",
+      "digest": "sha256:296d1eb7abe9d04e0743dd3e8852f9833f50783cada4a942700d407a2a76fd3f",
+      "fields_checked": [
+        "ao2.canonical-json-vectors.v1",
+        "ao2-canonical-v1",
+        "three golden vectors"
+      ]
+    },
+    {
+      "repository": "ao2",
+      "path": "docs/contracts/AO2-CANONICAL-V1.md",
+      "digest": "sha256:fbb9161498087c095371d62eff3bad9561540ae85c120e011db318f1cdc54f25",
+      "fields_checked": [
+        "algorithm",
+        "golden vector ownership",
+        "content-address migration boundary"
+      ]
+    },
+    {
+      "repository": "ao2-control-plane",
+      "path": "tests/fixtures/canonical-json-vectors.json",
+      "digest": "sha256:296d1eb7abe9d04e0743dd3e8852f9833f50783cada4a942700d407a2a76fd3f",
+      "fields_checked": [
+        "byte-identical shared fixture"
+      ]
+    }
+  ],
+  "algorithm": "ao2-canonical-v1",
+  "vector_count": 3,
+  "fixture_bytes_shared": true,
+  "fixture_digest_shared": true,
+  "rust_test_status": "passed",
+  "control_plane_consumer_test_present": true,
+  "provider_calls": false,
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

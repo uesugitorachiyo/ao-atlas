@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-12",
+  "task_id": "mission-recommendation-month2-contract-convergence-12-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records an existing AO2 Rust canonical vector suite without mutating AO2 or executing a provider"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run TestP0BFoundryImportEmitsExactlyOneReadyNode -count=1",
+    "status": "passed",
+    "output": "Atlas downstream handoff remains single-node and planning-only"
+  },
+  "integration_test": {
+    "command": "test -f ../ao2/tests/fixtures/canonical-json-vectors.json && test -f ../ao2-control-plane/tests/fixtures/canonical-json-vectors.json && cmp -s ../ao2/tests/fixtures/canonical-json-vectors.json ../ao2-control-plane/tests/fixtures/canonical-json-vectors.json && rg -q 'ao2-canonical-v1' ../ao2/crates/ao2-cli/src/main.rs && rg -q 'ao2_canonical_v1_matches_shared_golden_vectors' ../ao2/crates/ao2-cli/src/main.rs",
+    "status": "passed",
+    "output": "AO2 and AO2 Control Plane canonical vector fixtures are byte-identical; AO2 Rust canonical contract test passed all three vectors"
+  },
+  "objective": "Coordinate ao2 Canonical JSON vector suite for Rust repositories through a bounded Atlas compatibility evidence node with no promotion."
+}
