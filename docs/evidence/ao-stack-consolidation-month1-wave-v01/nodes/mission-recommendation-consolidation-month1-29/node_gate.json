@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "node": "mission-recommendation-consolidation-month1-29",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "generated_at_utc": "2026-07-10T19:12:35Z",
+  "reason": "Node is bounded to Atlas generated evidence for Promoter no-promotion rollup; no live mutation, provider call, release, deploy, credential use, or authority promotion is requested.",
+  "safety_limits": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "rsi_remains_denied": true
+}

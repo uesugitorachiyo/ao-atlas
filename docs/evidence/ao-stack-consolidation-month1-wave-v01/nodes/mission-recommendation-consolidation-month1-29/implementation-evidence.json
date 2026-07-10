@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-29",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T19:12:35Z",
+  "kind": "promoter_no_promotion_rollup",
+  "repository": "ao-atlas",
+  "artifact": "promoter-final-rollup.json",
+  "promotion_requested": false,
+  "promotion_decision": "deny_promotion",
+  "completed_nodes": 28,
+  "total_nodes": 36,
+  "ready_nodes": 8,
+  "blocked_nodes": 0,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-29 and execute exactly one active node.",
+  "rsi_remains_denied": true
+}
