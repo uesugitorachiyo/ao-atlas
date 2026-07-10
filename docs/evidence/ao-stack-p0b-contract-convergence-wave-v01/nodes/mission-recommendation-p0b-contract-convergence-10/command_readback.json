@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.p0b.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "node_id": "mission-recommendation-p0b-contract-convergence-10",
+  "completed_node": true,
+  "next_expected_node": "mission-recommendation-p0b-contract-convergence-11",
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

@@ -1431,6 +1431,41 @@ type AtlasPolicyVersionReplayRejectionFixture struct {
 	RSIRemainsDenied         bool                                    `json:"rsi_remains_denied"`
 }
 
+type AtlasCovenantEvidenceDigestReadbackInput struct {
+	Schema                 string                                    `json:"schema"`
+	Status                 string                                    `json:"status"`
+	Cases                  []AtlasCovenantEvidenceDigestReadbackCase `json:"cases"`
+	SchedulesWork          bool                                      `json:"schedules_work"`
+	ExecutesWork           bool                                      `json:"executes_work"`
+	ApprovesWork           bool                                      `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                      `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                      `json:"rsi_remains_denied"`
+}
+
+type AtlasCovenantEvidenceDigestReadbackCase struct {
+	ID                   string `json:"id"`
+	CovenantReadbackPath string `json:"covenant_readback_path"`
+	PolicySHA256         string `json:"policy_sha256"`
+	TicketSHA256         string `json:"ticket_sha256"`
+	DecisionSHA256       string `json:"decision_sha256"`
+	Decision             string `json:"decision"`
+}
+
+type AtlasCovenantEvidenceDigestReadbackFixture struct {
+	Schema                 string                                    `json:"schema"`
+	Status                 string                                    `json:"status"`
+	SourceInputPath        string                                    `json:"source_input_path"`
+	SourceInputDigest      string                                    `json:"source_input_digest"`
+	CaseCount              int                                       `json:"case_count"`
+	DigestReadbackComplete bool                                      `json:"digest_readback_complete"`
+	Cases                  []AtlasCovenantEvidenceDigestReadbackCase `json:"cases"`
+	SchedulesWork          bool                                      `json:"schedules_work"`
+	ExecutesWork           bool                                      `json:"executes_work"`
+	ApprovesWork           bool                                      `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                      `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                      `json:"rsi_remains_denied"`
+}
+
 type AtlasMergeCheckBindingInput struct {
 	Schema                 string                      `json:"schema"`
 	Status                 string                      `json:"status"`
