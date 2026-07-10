@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-24",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:43:25Z",
+  "commands": [
+    "AO Sentinel main: go test ./internal/cli -run TestSafetyScanRedactsFindingsAndRequiresTmpOutput -count=1 -v",
+    "AO Sentinel main: go test ./... -count=1",
+    "AO Sentinel main: go vet ./...",
+    "AO Sentinel main: go build -o target/sentinel-node-24-local ./cmd/sentinel",
+    "AO Sentinel main: git diff --check",
+    "AO Atlas evidence verification: go test ./... -count=1",
+    "AO Atlas evidence verification: go vet ./...",
+    "AO Atlas evidence verification: go build -o target/atlas-node-24-evidence ./cmd/atlas",
+    "AO Atlas evidence verification: scripts/production-readiness.sh",
+    "AO Atlas evidence verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry"
+  ],
+  "sentinel": {
+    "repo": "ao-sentinel",
+    "main_commit": "a4b5d64f15a0f57fbd9b7f8b518dbab031fe3cde",
+    "workflow": ".github/workflows/ci.yml",
+    "local_status": "passed",
+    "fixture_wording_boundaries": "preserved"
+  }
+}

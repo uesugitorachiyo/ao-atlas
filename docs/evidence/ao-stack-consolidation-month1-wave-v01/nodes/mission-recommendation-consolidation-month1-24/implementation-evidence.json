@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-24",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T18:43:25Z",
+  "kind": "sentinel_workflow_equivalent_local_verification",
+  "repository": "ao-sentinel",
+  "implementation_pr": 36,
+  "merge_commit": "a4b5d64f15a0f57fbd9b7f8b518dbab031fe3cde",
+  "verified_commands": [
+    "go test ./internal/cli -run TestSafetyScanRedactsFindingsAndRequiresTmpOutput -count=1 -v",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/sentinel-node-24-local ./cmd/sentinel",
+    "git diff --check"
+  ],
+  "rsi_remains_denied": true
+}
