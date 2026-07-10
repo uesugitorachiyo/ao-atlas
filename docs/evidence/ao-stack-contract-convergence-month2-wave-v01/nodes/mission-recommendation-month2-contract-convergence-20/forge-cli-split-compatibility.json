@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "forge_cli_split_compatibility",
+  "node_id": "mission-recommendation-month2-contract-convergence-20",
+  "task_id": "mission-recommendation-month2-contract-convergence-20-task",
+  "source_owner": "ao-forge",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "compatibility_audit",
+  "status": "blocked_missing_characterization_contract",
+  "producer": "ao-forge",
+  "consumer": "ao2",
+  "compatibility_status": "planning_only",
+  "required_gates": [
+    "GoalRun state parity",
+    "workcell concurrency parity",
+    "control-plane readback parity",
+    "Covenant/Sentinel/Command gate parity",
+    "no-provider default"
+  ],
+  "current_gap": "Forge CLI source combines planning, GoalRun, workcell execution, control-plane readback, live-docs gates, and release preview without one module-boundary compatibility manifest",
+  "compatibility_gate": "blocked_until_forge_split_manifest_and_negative_controls_exist",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
