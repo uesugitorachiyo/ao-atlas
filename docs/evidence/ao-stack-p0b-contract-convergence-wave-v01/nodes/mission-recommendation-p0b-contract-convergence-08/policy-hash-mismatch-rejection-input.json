@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.policy-hash-mismatch-rejection-input.v0.1",
+  "status": "recorded",
+  "cases": [
+    {
+      "id": "stale-policy-hash",
+      "ticket_policy_sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "current_policy_sha256": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "expected_decision": "rejected",
+      "rejection_reason": "policy_hash_mismatch: ticket policy hash does not match current policy hash"
+    },
+    {
+      "id": "substituted-policy-hash",
+      "ticket_policy_sha256": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "current_policy_sha256": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "expected_decision": "rejected",
+      "rejection_reason": "policy_hash_mismatch: approval ticket cannot be replayed under a different policy hash"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

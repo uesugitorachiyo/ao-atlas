@@ -392,6 +392,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:ticket-digest-readback-binding-fixture", err
 		}
 		return "typed:ticket-digest-readback-binding-fixture", ValidateAtlasTicketDigestReadbackBindingFixture(value)
+	case AtlasPolicyHashMismatchRejectionFixtureContract:
+		value, err := LoadJSON[AtlasPolicyHashMismatchRejectionFixture](path)
+		if err != nil {
+			return "typed:policy-hash-mismatch-rejection-fixture", err
+		}
+		return "typed:policy-hash-mismatch-rejection-fixture", ValidateAtlasPolicyHashMismatchRejectionFixture(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {
