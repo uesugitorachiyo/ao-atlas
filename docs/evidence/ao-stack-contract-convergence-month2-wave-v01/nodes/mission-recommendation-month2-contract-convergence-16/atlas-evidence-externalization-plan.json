@@ -1,0 +1,72 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "atlas_evidence_externalization_plan",
+  "node_id": "mission-recommendation-month2-contract-convergence-16",
+  "task_id": "mission-recommendation-month2-contract-convergence-16-task",
+  "status": "planning_only_externalization_not_authorized",
+  "source_owner": "ao-atlas",
+  "source_repository": "ao-atlas",
+  "source_commit": "fb523c90fbcc3c7893e99b7ed6338261472a84a7",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "source_audit",
+  "tracked_evidence_files": 12193,
+  "tracked_evidence_bytes": 139069824,
+  "evidence_wave_count": 26,
+  "current_storage": "Git-tracked docs/evidence JSON and Markdown",
+  "risks": [
+    "large tracked evidence volume obscures implementation review",
+    "duplicated campaign readbacks increase validation and maintenance cost",
+    "externalization without digest and replay bindings would weaken auditability"
+  ],
+  "proposed_catalog_record": {
+    "required_fields": [
+      "artifact_id",
+      "schema",
+      "producer",
+      "source_commit",
+      "content_digest",
+      "byte_size",
+      "visibility",
+      "retention_class",
+      "replay_command",
+      "supersedes"
+    ],
+    "public_fixture_policy": "retain small canonical fixtures, schemas, readbacks, and safety assertions in Git",
+    "bulk_artifact_policy": "move large historical campaign outputs to an operator-approved content-addressed catalog",
+    "deletion_policy": "do not delete tracked evidence until catalog digest, retrieval, replay, and rollback readbacks pass",
+    "migration_policy": "copy, verify, bind, then mark superseded; never silently rewrite evidence"
+  },
+  "staged_plan": [
+    {
+      "stage": "inventory",
+      "gate": "complete tracked path and digest inventory"
+    },
+    {
+      "stage": "catalog_fixture",
+      "gate": "publish catalog schema and golden-vector fixtures"
+    },
+    {
+      "stage": "dual_read",
+      "gate": "Git and catalog readbacks agree on digest and schema"
+    },
+    {
+      "stage": "operator_approval",
+      "gate": "separate authorization for external storage or upload"
+    },
+    {
+      "stage": "retire_bulk",
+      "gate": "only after replay and rollback evidence is complete"
+    }
+  ],
+  "current_gate": "blocked_pending_external_storage_authorization_and_catalog_implementation",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
