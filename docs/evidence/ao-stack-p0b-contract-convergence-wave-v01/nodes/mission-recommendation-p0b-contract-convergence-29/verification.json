@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.p0b.verification.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-29",
+  "local_verification": [
+    "find docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-29 -name '*.json' -print0 | xargs -0 -n 1 jq empty",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-p0b-contract-convergence-wave-v01 --out docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-29/evidence-validation-report.json",
+    "go test ./internal/atlas -run 'TestP0CReadinessBridge' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/atlas-p0b-node-29 ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "scoped public-safety wording scan over changed docs/readbacks/tests"
+  ],
+  "ci_status": "pending_pr",
+  "public_safety_scan_status": "passed_safe_boundary_matches_only",
+  "local_verification_passed": true
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-29",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed P0-C readiness criteria bridge that converts P0-B closure requirements into machine-readable Mission-to-Foundry handoff gates while preserving no-promotion and RSI-denial boundaries.",
+  "command": "go test ./internal/atlas -run 'TestP0CReadinessBridge' -count=1",
+  "typed_validator": "typed:p0c-readiness-criteria"
+}

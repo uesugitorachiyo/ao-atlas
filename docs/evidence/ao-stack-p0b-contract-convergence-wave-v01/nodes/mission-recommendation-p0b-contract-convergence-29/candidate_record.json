@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-29",
+  "candidate": "Bridge P0-B closure into P0-C Mission-to-Foundry readiness criteria.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-29-p0c-readiness",
+  "files_changed": [
+    "internal/atlas/mission_p0c_readiness_bridge.go",
+    "internal/atlas/mission_p0c_readiness_bridge_test.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-29"
+  ],
+  "digest_fields": [
+    "source_readback",
+    "source_workgraph",
+    "required_criteria",
+    "terminal_evidence_refs",
+    "safety_boundaries"
+  ]
+}

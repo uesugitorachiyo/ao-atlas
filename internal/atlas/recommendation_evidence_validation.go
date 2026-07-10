@@ -476,6 +476,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:p0b-pr-ci-ledger", err
 		}
 		return "typed:p0b-pr-ci-ledger", ValidateAtlasP0BPRCILedger(value)
+	case AtlasP0CReadinessCriteriaContract:
+		value, err := LoadJSON[AtlasP0CReadinessCriteria](path)
+		if err != nil {
+			return "typed:p0c-readiness-criteria", err
+		}
+		return "typed:p0c-readiness-criteria", ValidateAtlasP0CReadinessCriteria(value)
 	case AtlasMergeCheckBindingContract:
 		value, err := LoadJSON[AtlasMergeCheckBinding](path)
 		if err != nil {
