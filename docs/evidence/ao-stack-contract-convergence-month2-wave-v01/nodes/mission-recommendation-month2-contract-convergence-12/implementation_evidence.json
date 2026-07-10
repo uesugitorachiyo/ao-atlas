@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-12",
+  "task_id": "mission-recommendation-month2-contract-convergence-12-task",
+  "status": "recorded",
+  "implementation_files": [],
+  "evidence_files": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-12/canonical-json-rust-vector-compatibility.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-12/canonical-json-rust-vector-contract.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-12/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-12/run-link-digest-check.json"
+  ],
+  "summary": "Bound AO2 Rust canonical JSON v1 to its shared three-vector fixture, with byte-identical fixture content in AO2 Control Plane and a passing AO2 canonical contract test.",
+  "producer_consumer_contract_status": "shared_fixture_bound",
+  "canonical_owner": "ao2",
+  "algorithm": "ao2-canonical-v1",
+  "vector_count": 3,
+  "fixture_bytes_shared": true,
+  "rust_canonical_test_passed": true,
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "foundry_manifest_projection": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-12/foundry-import/foundry-import.json",
+  "run_link_digest_status": "run_link_digest_verified"
+}

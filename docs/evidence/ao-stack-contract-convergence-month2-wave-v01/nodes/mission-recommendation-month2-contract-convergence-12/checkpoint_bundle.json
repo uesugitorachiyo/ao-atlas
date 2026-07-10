@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-12",
+  "task_id": "mission-recommendation-month2-contract-convergence-12-task",
+  "status": "checkpoint_recorded",
+  "checkpoint_from": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-11/recommendation-readback-after.json",
+  "checkpoint_after": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-12/recommendation-readback-after.json",
+  "active_node": "mission-recommendation-month2-contract-convergence-12",
+  "expected_next_node": "mission-recommendation-month2-contract-convergence-13",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true
+}
