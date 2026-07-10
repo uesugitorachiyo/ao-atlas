@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-20",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:13:14Z",
+  "implementation_pr": {
+    "repo": "ao-arena",
+    "number": 1,
+    "state": "merged",
+    "merge_commit": "8d926890b1df472729750bd2c2129e4b73fc9de9",
+    "ci_status": "passed",
+    "checks_successful": 3,
+    "checks_failing": 0
+  },
+  "local_verification": {
+    "repo": "ao-arena",
+    "commit": "8d926890b1df472729750bd2c2129e4b73fc9de9",
+    "commands_successful": 4,
+    "commands_failing": 0
+  },
+  "branch_cleanup": {
+    "current_node_branch_created": false,
+    "implementation_branch_deleted_local": true,
+    "implementation_branch_deleted_remote": true
+  },
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-20",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:13:14Z",
+  "commands": [
+    "AO Arena main: go test ./... -count=1",
+    "AO Arena main: go vet ./...",
+    "AO Arena main: go build -o target/arena-node-20-local ./cmd/arena",
+    "AO Arena main: git diff --check",
+    "AO Atlas evidence verification: go test ./... -count=1",
+    "AO Atlas evidence verification: go vet ./...",
+    "AO Atlas evidence verification: go build -o target/atlas-node-20-evidence ./cmd/atlas",
+    "AO Atlas evidence verification: scripts/production-readiness.sh",
+    "AO Atlas evidence verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry"
+  ],
+  "arena": {
+    "repo": "ao-arena",
+    "main_commit": "8d926890b1df472729750bd2c2129e4b73fc9de9",
+    "workflow": ".github/workflows/ci.yml",
+    "local_status": "passed"
+  }
+}

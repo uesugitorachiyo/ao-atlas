@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-20",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T18:13:14Z",
+  "kind": "arena_workflow_equivalent_local_verification",
+  "repository": "ao-arena",
+  "implementation_pr": 1,
+  "merge_commit": "8d926890b1df472729750bd2c2129e4b73fc9de9",
+  "verified_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/arena-node-20-local ./cmd/arena",
+    "git diff --check"
+  ],
+  "rsi_remains_denied": true
+}
