@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-21",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:22:24Z",
+  "commands": [
+    "AO Crucible branch: go test ./... -count=1",
+    "AO Crucible branch: go vet ./...",
+    "AO Crucible branch: go build ./cmd/crucible",
+    "AO Crucible branch: git diff --check",
+    "AO Crucible PR #1 hosted CI: native-checks ubuntu-latest",
+    "AO Crucible PR #1 hosted CI: native-checks macos-latest",
+    "AO Crucible PR #1 hosted CI: native-checks windows-latest",
+    "AO Atlas evidence verification: go test ./... -count=1",
+    "AO Atlas evidence verification: go vet ./...",
+    "AO Atlas evidence verification: go build -o target/atlas-node-21-evidence ./cmd/atlas",
+    "AO Atlas evidence verification: scripts/production-readiness.sh",
+    "AO Atlas evidence verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry"
+  ],
+  "crucible": {
+    "repo": "ao-crucible",
+    "main_commit": "3fb2311ffa6efc2374089c5085b6b894236fcf21",
+    "workflow": ".github/workflows/ci.yml",
+    "local_status": "passed",
+    "hosted_ci_status": "passed"
+  }
+}
