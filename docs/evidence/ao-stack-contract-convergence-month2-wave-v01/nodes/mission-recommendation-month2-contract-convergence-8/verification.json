@@ -1,0 +1,34 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-8",
+  "task_id": "mission-recommendation-month2-contract-convergence-8-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "go test ./internal/atlas -run 'TestP0BFoundryImportEmitsExactlyOneReadyNode|TestBlueprintFoundrySourcesLiveInDedicatedModule' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/atlas-node8-verification ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "Forge GoalRun packet jq assertion",
+    "go run ./cmd/atlas mission recommendations scoped-public-safety-scan --node-id mission-recommendation-month2-contract-convergence-8 --scope docs/evidence/ao-stack-contract-convergence-month2-wave-v01 --out docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/scoped-public-safety-scan.json"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "go run ./cmd/atlas mission recommendations run-link-digest-check --node-id mission-recommendation-month2-contract-convergence-8 --run-link docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/run-link.json --evidence-root .",
+    "git diff --check",
+    "Forge GoalRun packet jq assertion",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "repair_notes": [
+    "Forge packet validation, single-node Foundry import, compatibility assertions, full Atlas verification, and the complete-wave Sentinel scan passed.",
+    "The build output was written below target and removed before the working tree check."
+  ]
+}
