@@ -1,0 +1,1 @@
+{"schema":"ao.atlas.p0b.rollback-record.v0.1","status":"ready","node_id":"mission-recommendation-p0b-contract-convergence-06","rollback_scope":["Revert AO Atlas node 06 ticket byte preservation fixture, schema, CLI, typed validator, and generated evidence files."],"rollback_command":"git revert <node-06-merge-commit>","requires_release_or_deploy":false}
