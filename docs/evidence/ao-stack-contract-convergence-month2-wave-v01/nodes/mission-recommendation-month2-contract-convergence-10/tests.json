@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-10",
+  "task_id": "mission-recommendation-month2-contract-convergence-10-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records an existing observer schema owner without mutating ao2-control-plane or executing a provider"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run TestP0BFoundryImportEmitsExactlyOneReadyNode -count=1",
+    "status": "passed",
+    "output": "Atlas downstream handoff remains single-node and planning-only"
+  },
+  "integration_test": {
+    "command": "test -f ../ao2-control-plane/crates/ao2-cp-server/src/audit_log.rs && test -f ../ao2-control-plane/crates/ao2-cp-server/src/handlers/audit_log.rs && rg -q 'ao2\\.cp-audit-log\\.v1' ../ao2-control-plane/crates/ao2-cp-server/src/handlers/audit_log.rs && rg -q 'ao2\\.cp-audit-log-dashboard\\.v1' ../ao2-control-plane/crates/ao2-cp-server/src/handlers/audit_log.rs && rg -q 'event: audit-log' ../ao2-control-plane/crates/ao2-cp-server/tests/audit_log_stream.rs && rg -q 'STREAM_BROADCAST_CAPACITY' ../ao2-control-plane/crates/ao2-cp-server/src/audit_log.rs",
+    "status": "passed",
+    "output": "Control-plane observer event schemas, SSE event name, and bounded stream capacity are present in the owned source and tests"
+  },
+  "objective": "Coordinate ao2-control-plane Control plane observer event schema owner binding through a bounded Atlas compatibility evidence node with no promotion."
+}

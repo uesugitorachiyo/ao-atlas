@@ -1,0 +1,80 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "control_plane_observer_event_schema_owner",
+  "node_id": "mission-recommendation-month2-contract-convergence-10",
+  "status": "recorded",
+  "producer": "ao2-control-plane",
+  "consumer": "ao-atlas",
+  "source_commit": "6226dcc585d16871cd6ff9d7638628de465b6221",
+  "canonical_owner": "ao2-control-plane",
+  "observer_role": "read_only_observer",
+  "source_files": [
+    {
+      "path": "crates/ao2-cp-server/src/audit_log.rs",
+      "digest": "sha256:5351b96ffa3e449ceb0898645ccbe0d5e06fc21cbdfe8703a2d8558534c5a420",
+      "fields_checked": [
+        "AuditEntry",
+        "AuditLog",
+        "STREAM_BROADCAST_CAPACITY"
+      ]
+    },
+    {
+      "path": "crates/ao2-cp-server/src/handlers/audit_log.rs",
+      "digest": "sha256:6873ccf065845bfe8df5103fbd2b7d6a673373dca4ac2fdee6e114a081493926",
+      "fields_checked": [
+        "ao2.cp-audit-log.v1",
+        "ao2.cp-audit-log-dashboard.v1",
+        "AuditLogQuery"
+      ]
+    },
+    {
+      "path": "crates/ao2-cp-storage/src/index.rs",
+      "digest": "sha256:5da39eadc54413a1fb7553b38d6b4e4926f3b3fc2be53b330b30d9c8c30d53e3",
+      "fields_checked": [
+        "IndexEntry",
+        "append_if_absent",
+        "rewrite"
+      ]
+    }
+  ],
+  "canonical_surfaces": [
+    {
+      "name": "audit_log_json",
+      "schema_version": "ao2.cp-audit-log.v1",
+      "owner": "ao2-control-plane",
+      "role": "read_only_observer"
+    },
+    {
+      "name": "audit_log_dashboard_json",
+      "schema_version": "ao2.cp-audit-log-dashboard.v1",
+      "owner": "ao2-control-plane",
+      "role": "read_only_observer"
+    },
+    {
+      "name": "audit_log_sse",
+      "event_name": "audit-log",
+      "owner": "ao2-control-plane",
+      "role": "lossy_live_observer_stream"
+    }
+  ],
+  "durability_boundary": {
+    "ring_buffer_bounded": true,
+    "persistence_ndjson_supported": true,
+    "structured_tracing_durable_record": true,
+    "sse_replay_fallback": "poll ao2.cp-audit-log.v1 when subscriber reports lag",
+    "control_plane_mutates_ao_artifacts": false
+  },
+  "schema_owner_status": "owner_bound",
+  "compatibility_status": "recorded_without_source_mutation",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "provider_calls": false,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
