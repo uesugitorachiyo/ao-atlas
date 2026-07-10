@@ -1675,6 +1675,36 @@ type AtlasCovenantTicketSchemaAuthorityLedger struct {
 	RSIRemainsDenied       bool                                            `json:"rsi_remains_denied"`
 }
 
+type AtlasPolicyTicketPublicSafetyScanInput struct {
+	Schema                 string   `json:"schema"`
+	Status                 string   `json:"status"`
+	Claims                 []string `json:"claims"`
+	BlockedPhrases         []string `json:"blocked_phrases"`
+	SchedulesWork          bool     `json:"schedules_work"`
+	ExecutesWork           bool     `json:"executes_work"`
+	ApprovesWork           bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+}
+
+type AtlasPolicyTicketPublicSafetyScan struct {
+	Schema                 string   `json:"schema"`
+	Status                 string   `json:"status"`
+	SourceInputPath        string   `json:"source_input_path"`
+	SourceInputDigest      string   `json:"source_input_digest"`
+	ClaimCount             int      `json:"claim_count"`
+	BlockedPhraseCount     int      `json:"blocked_phrase_count"`
+	UnsafeClaimsFound      int      `json:"unsafe_claims_found"`
+	UnsafeMatches          []string `json:"unsafe_matches"`
+	Claims                 []string `json:"claims"`
+	BlockedPhrases         []string `json:"blocked_phrases"`
+	SchedulesWork          bool     `json:"schedules_work"`
+	ExecutesWork           bool     `json:"executes_work"`
+	ApprovesWork           bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasMergeCheckBindingInput struct {
 	Schema                 string                      `json:"schema"`
 	Status                 string                      `json:"status"`

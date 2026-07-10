@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-17",
+  "candidate": "Add public-safety wording scan for policy and ticket claims.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-17-policy-ticket-safety",
+  "files_changed": [
+    "internal/atlas/mission_policy_ticket_public_safety_scan.go",
+    "internal/atlas/mission_policy_ticket_public_safety_scan_test.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/models.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "schemas/policy-ticket-public-safety-scan.schema.json",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-17"
+  ],
+  "digest_fields": [
+    "source_input_digest",
+    "claims",
+    "blocked_phrases",
+    "unsafe_claims_found"
+  ]
+}

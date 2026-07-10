@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.policy-ticket-public-safety-scan-input.v0.1",
+  "status": "recorded",
+  "claims": [
+    "Covenant ticket policy hashes remain bound for denial evidence only.",
+    "Policy-version replay claims are rejected and do not advance authority.",
+    "Ticket digest readbacks preserve policy, ticket, and decision digests.",
+    "RSI remains denied."
+  ],
+  "blocked_phrases": [
+    "fully unsupervised mutation live proof claim",
+    "RSI proof claim",
+    "authority is advanced",
+    "model-provider execution completed"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
