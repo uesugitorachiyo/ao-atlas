@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-14",
+  "commands": [
+    "go test ./internal/mission -run 'TestBuildMissionLifecycleProjection|TestMissionLifecycleProjectionCLI|TestLifecycleProjectionContractFixture' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/ao-mission-node-14 ./cmd/ao-mission",
+    "scripts/production-readiness.sh",
+    "git diff --check"
+  ],
+  "handoff_steps": 1,
+  "evidence_completed_nodes": 3,
+  "completed_nodes": 3,
+  "completion_basis": "downstream_evidence_not_handoff_steps",
+  "handoff_steps_count_as_completed_nodes": false
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-14",
+  "owner": "ao-mission",
+  "target": "mission lifecycle projection command, contract, event-index binding, and source-record digest",
+  "mutation_class": "low_risk_readback_contract",
+  "source_node": "mission-recommendation-consolidation-month1-13",
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

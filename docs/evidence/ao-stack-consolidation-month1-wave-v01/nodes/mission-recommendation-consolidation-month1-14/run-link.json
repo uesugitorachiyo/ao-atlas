@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-consolidation-month1-14-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/checkpoint-bundle.json",
+    "command_readback": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/command_readback.json",
+    "foundry_import": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/foundry_import.json",
+    "implementation_evidence": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/implementation-evidence.json",
+    "node_gate": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/promoter_no_promotion.json",
+    "public_safety_readback_binding": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/sentinel_public_safety.json",
+    "rollback_record": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/tests.json",
+    "verification": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-14/verification.json"
+  },
+  "digest": "sha256:6ebce08dde17f1adbae96efc750291a12af87f7eaea738116472f511fbcc36ba"
+}
