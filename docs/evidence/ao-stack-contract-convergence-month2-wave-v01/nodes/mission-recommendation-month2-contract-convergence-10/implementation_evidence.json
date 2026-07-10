@@ -1,0 +1,36 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-10",
+  "task_id": "mission-recommendation-month2-contract-convergence-10-task",
+  "status": "recorded",
+  "implementation_files": [],
+  "evidence_files": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/control-plane-observer-event-compatibility.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/control-plane-observer-event-contract.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/run-link-digest-check.json"
+  ],
+  "summary": "Bound the ao2-control-plane read-only observer event surfaces to their canonical owner, including JSON readback, dashboard projection, lossy SSE, and durable fallback semantics without changing the control-plane repository.",
+  "producer_consumer_contract_status": "owner_bound",
+  "canonical_owner": "ao2-control-plane",
+  "schema_versions": [
+    "ao2.cp-audit-log.v1",
+    "ao2.cp-audit-log-dashboard.v1"
+  ],
+  "sse_event_name": "audit-log",
+  "observer_only": true,
+  "sse_lossy_by_design": true,
+  "durable_fallback_required": true,
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "foundry_manifest_projection": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/foundry-import/foundry-import.json",
+  "run_link_digest_status": "run_link_digest_verified"
+}

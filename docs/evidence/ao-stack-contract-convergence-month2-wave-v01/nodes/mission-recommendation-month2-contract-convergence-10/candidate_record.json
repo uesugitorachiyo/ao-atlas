@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-10",
+  "task_id": "mission-recommendation-month2-contract-convergence-10-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-10",
+  "source_owner": "ao2-control-plane",
+  "source_task_digest": "sha256:c507f35ef5fcc49a908a241817d0ded08d68193c61bc7a79dd35ff615123bbfe",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Bind ao2-control-plane audit observer event schemas to their owning repository and observer-only trust boundary.",
+    "Inspect existing audit-log JSON, dashboard JSON, SSE, and index structures without mutating ao2-control-plane.",
+    "Record replay/durability limits and preserve no-promotion and RSI-denied boundaries."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
