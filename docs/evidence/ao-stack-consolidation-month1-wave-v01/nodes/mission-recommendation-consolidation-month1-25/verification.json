@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-25",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:48:55Z",
+  "rollup_verification": {
+    "repositories_covered": 3,
+    "hosted_ci_prs": [
+      "ao-arena#1",
+      "ao-crucible#1",
+      "ao-sentinel#36"
+    ],
+    "hosted_checks_successful": 9,
+    "hosted_checks_failing": 0,
+    "local_verification_nodes": [
+      "mission-recommendation-consolidation-month1-20",
+      "mission-recommendation-consolidation-month1-22",
+      "mission-recommendation-consolidation-month1-24"
+    ]
+  },
+  "branch_cleanup": {
+    "current_node_branch_created": true,
+    "implementation_branch_required": false
+  },
+  "rsi_remains_denied": true
+}
