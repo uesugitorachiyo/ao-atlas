@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.consolidation-rollback-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-23",
+  "status": "rollback_available",
+  "generated_at_utc": "2026-07-10T18:38:40Z",
+  "rollback_scope": [
+    "Revert ao-sentinel/.github/workflows/ci.yml and the tmp-output guard repair if hosted CI coverage must be removed.",
+    "Remove node 23 evidence and progress records if node completion is invalidated."
+  ],
+  "restores_previous_checkpoint": "mission-recommendation-consolidation-month1-22",
+  "data_loss_expected": false,
+  "rsi_remains_denied": true
+}

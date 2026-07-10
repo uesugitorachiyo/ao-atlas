@@ -1,0 +1,117 @@
+{
+  "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+  "status": "in_progress",
+  "mission_id": "mission-56bed010dd085a0f",
+  "evidence_root": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-23",
+  "lease_health_status": "minimum_unmet",
+  "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+  "return_gate_status": "blocked_ready_nodes_remain",
+  "continuation_contract_reason": "ready_nodes_or_exact_next_action_remain",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-24 and execute exactly one active node.",
+  "final_response_allowed": false,
+  "refuses_final_response": true,
+  "completed_recommendation_nodes": 23,
+  "total_recommendation_nodes": 36,
+  "generated_workgraph": {
+    "total_nodes": 36,
+    "ready_nodes": 13,
+    "executable_ready_nodes": 1,
+    "first_executable_node": "mission-recommendation-consolidation-month1-24",
+    "lease_health_status": "minimum_unmet",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "checkpoint_count": 23,
+    "final_response_allowed": false,
+    "final_response_reason": "ready nodes or exact next actions remain"
+  },
+  "foundry_run_link_readiness_summary": {
+    "status": "partial_run_links_recorded",
+    "summary": "23/36 Foundry run-links recorded; ready_nodes=13; next_executable_node=mission-recommendation-consolidation-month1-24",
+    "completed_run_links": 23,
+    "required_run_links": 36,
+    "missing_run_links": 13,
+    "ready_nodes": 13,
+    "next_executable_node": "mission-recommendation-consolidation-month1-24",
+    "lease_health_status": "minimum_unmet",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "continuation_contract_reason": "ready_nodes_or_exact_next_action_remain",
+    "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-24 and execute exactly one active node.",
+    "refuses_final_response": true,
+    "checkpoint_count": 23,
+    "final_response_allowed": false
+  },
+  "continuation_reason_coverage": {
+    "status": "coverage_sources_indexed",
+    "expected_reason": "ready_nodes_or_exact_next_action_remain",
+    "indexed_sources": [
+      "recommendation_readback",
+      "checkpoint_readback",
+      "workgraph_readiness_packet",
+      "command_readback",
+      "command_timeline_binding",
+      "promoter_readback",
+      "foundry_rollup",
+      "reconciliation_packet",
+      "reconciliation_command",
+      "reconciliation_promoter",
+      "reconciliation_foundry",
+      "final_state_reconciliation",
+      "resume_prompt"
+    ],
+    "source_count": 13,
+    "final_response_allowed": false,
+    "refuses_final_response": true,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-24 and execute exactly one active node.",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "lease_health_status": "minimum_unmet",
+    "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  },
+  "reason_artifact_agreement_summary": {
+    "status": "agreement",
+    "expected_reason": "ready_nodes_or_exact_next_action_remain",
+    "indexed_sources": [
+      "recommendation_readback",
+      "checkpoint_readback",
+      "workgraph_readiness_packet",
+      "command_readback",
+      "command_timeline_binding",
+      "promoter_readback",
+      "foundry_rollup",
+      "reconciliation_packet",
+      "reconciliation_command",
+      "reconciliation_promoter",
+      "reconciliation_foundry",
+      "final_state_reconciliation",
+      "resume_prompt"
+    ],
+    "source_count": 13,
+    "all_required_sources_indexed": true,
+    "source_artifact_refs": [
+      "foundry_run_link_readiness_summary",
+      "continuation_reason_coverage"
+    ],
+    "source_artifact_count": 2,
+    "source_artifacts_agree": true,
+    "foundry_run_link_readiness_digest": "sha256:c6ae18c2954e95e9177f21b8be007210efb419fcb82b4946c8a4b2a60a9667cf",
+    "continuation_reason_coverage_digest": "sha256:1bf0f8ea0f3ccd1a402c3a96449fab220f83aada0119e550f6a25fc0567c562b",
+    "final_response_allowed": false,
+    "refuses_final_response": true,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-24 and execute exactly one active node.",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  },
+  "source_artifacts": [
+    {
+      "ref": "foundry_run_link_readiness_summary",
+      "digest": "sha256:c6ae18c2954e95e9177f21b8be007210efb419fcb82b4946c8a4b2a60a9667cf"
+    },
+    {
+      "ref": "continuation_reason_coverage",
+      "digest": "sha256:1bf0f8ea0f3ccd1a402c3a96449fab220f83aada0119e550f6a25fc0567c562b"
+    }
+  ]
+}

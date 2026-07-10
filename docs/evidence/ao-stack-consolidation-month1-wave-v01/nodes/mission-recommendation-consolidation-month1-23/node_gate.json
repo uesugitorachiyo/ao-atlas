@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "node": "mission-recommendation-consolidation-month1-23",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "gate_class": "hosted_ci_enablement",
+  "scope": "Sentinel native hosted CI workflow coverage with CI-discovered portability repair",
+  "previous_completed_node": "mission-recommendation-consolidation-month1-22",
+  "generated_at_utc": "2026-07-10T18:38:40Z",
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": true,
+  "policy_or_authorization_change": false,
+  "rsi_remains_denied": true
+}
