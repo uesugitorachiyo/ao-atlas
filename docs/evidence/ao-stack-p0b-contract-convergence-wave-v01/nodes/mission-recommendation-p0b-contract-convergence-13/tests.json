@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.tests.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-13",
+  "red_test": "go test ./internal/atlas -run 'TestP0BAtlasTicketSchemaCompatibilityLedger' -count=1 failed before implementation because the command was missing and typed validation fell back to the generic schema marker.",
+  "targeted_tests": [
+    "go test ./internal/atlas -run 'TestP0BAtlasTicketSchemaCompatibilityLedger' -count=1"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./..."
+  ]
+}
