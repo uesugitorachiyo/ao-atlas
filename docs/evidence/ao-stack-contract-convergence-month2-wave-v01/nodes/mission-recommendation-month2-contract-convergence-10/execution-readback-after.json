@@ -2,7 +2,7 @@
   "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
   "status": "in_progress",
   "mission_id": "mission-56bed010dd085a0f-month2-contract-convergence-v01",
-  "evidence_root": "/Users/torachiyouesugi/Documents/public/ao-atlas/docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+  "evidence_root": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
   "lease_health_status": "minimum_unmet",
   "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
   "return_gate_status": "blocked_ready_nodes_remain",

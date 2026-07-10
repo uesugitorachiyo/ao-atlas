@@ -6,7 +6,7 @@
   "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
   "wave_digest": "sha256:2e4e69edc487da8dc8c9cd82e9316b0ce38dbe36260eebac42e1078cb7e17c70",
   "workgraph_digest": "sha256:e38b8df6b3aad7a9c6c0cae2497dc3388613acafadc824cbc7b8da00eef6af99",
-  "evidence_root": "/Users/torachiyouesugi/Documents/public/ao-atlas/docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+  "evidence_root": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
   "supervisor": {
     "contract_version": "ao.atlas.long-run-supervisor.v0.2",
     "min_nodes": 30,
@@ -19,8 +19,8 @@
     "final_report_contract": "ao.atlas.long-run-final-report.v0.2"
   },
   "started_at": "2026-07-10T20:09:10Z",
-  "completed_at": "2026-07-10T22:03:53Z",
-  "elapsed_minutes": 114,
+  "completed_at": "2026-07-10T22:07:08Z",
+  "elapsed_minutes": 117,
   "min_minutes_met": false,
   "lease_time_status": "minimum_minutes_unmet",
   "total_nodes": 40,

@@ -49,7 +49,6 @@
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/implementation_evidence.json",
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/node_gate.json",
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/promoter_no_promotion.json",
-    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/public-safety-readback-binding-before-complete.json",
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/public-safety-readback-binding.json",
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/recommendation-readback-after.json",
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/recommendation-readback-before-public-safety-binding.json",
@@ -291,8 +290,8 @@
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
     "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/workgraph-readiness-packet.json"
   ],
-  "scanned_file_count": 284,
-  "changed_evidence_files": 262,
+  "scanned_file_count": 283,
+  "changed_evidence_files": 261,
   "changed_prompt_artifacts": 22,
   "forbidden_patterns_redacted": true,
   "unsafe_match_count": 0,

@@ -3,7 +3,7 @@
   "node_id": "mission-recommendation-month2-contract-convergence-10",
   "status": "bound",
   "source_readback_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/recommendation-readback-before-public-safety-binding.json",
-  "source_readback_digest": "sha256:8c330b78cf08caff7744c3c090faf9562c85d3eb37e3ead4d63481560fd74794",
+  "source_readback_digest": "sha256:500cd2c339164d22cdfa34014776569adccfce3e7fdca282d81d4d5b45720a4c",
   "sentinel_evidence_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/sentinel_public_safety.json",
   "sentinel_evidence_digest": "sha256:6b7507060112b992ed7c442d2bf7fecd60614858edad73ea62e1d84872b05b60",
   "verification_summary_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/verification.json",
