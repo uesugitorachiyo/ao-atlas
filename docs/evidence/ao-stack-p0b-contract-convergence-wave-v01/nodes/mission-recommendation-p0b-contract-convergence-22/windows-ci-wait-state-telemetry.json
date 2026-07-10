@@ -1,0 +1,71 @@
+{
+  "schema": "ao.atlas.p0b-windows-ci-wait-telemetry.v0.1",
+  "node_id": "mission-recommendation-p0b-contract-convergence-22",
+  "status": "recorded",
+  "source": "p0b_covenant_command_windows_wait_fixture",
+  "long_running_os": "windows-latest",
+  "wait_threshold_seconds": 600,
+  "source_prs": [
+    519
+  ],
+  "windows_check_sample_count": 4,
+  "command_shard_count": 2,
+  "covenant_shard_count": 2,
+  "pending_state_observed": true,
+  "completed_pass_state_observed": true,
+  "failed_state_observed": false,
+  "max_observed_duration_seconds": 725,
+  "completed_nodes_before": 21,
+  "ready_nodes_before": 9,
+  "final_response_allowed": false,
+  "expected_next_node": "mission-recommendation-p0b-contract-convergence-23",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "windows_check_duration_samples": [
+    {
+      "shard": "ao-command",
+      "pr_number": 519,
+      "check_name": "AO Command readiness shard (windows-latest)",
+      "final_status": "IN_PROGRESS",
+      "final_conclusion": "",
+      "duration_seconds": 725,
+      "wait_state": "long_running_pending",
+      "operator_action": "wait_for_ci"
+    },
+    {
+      "shard": "ao-command",
+      "pr_number": 519,
+      "check_name": "AO Command readiness shard (windows-latest)",
+      "final_status": "COMPLETED",
+      "final_conclusion": "SUCCESS",
+      "duration_seconds": 642,
+      "wait_state": "long_running_pending_before_success",
+      "operator_action": "merge_after_all_required_checks_pass"
+    },
+    {
+      "shard": "ao-covenant",
+      "pr_number": 519,
+      "check_name": "AO Covenant readiness shard (windows-latest)",
+      "final_status": "PENDING",
+      "final_conclusion": "",
+      "duration_seconds": 681,
+      "wait_state": "long_running_pending",
+      "operator_action": "wait_for_ci"
+    },
+    {
+      "shard": "ao-covenant",
+      "pr_number": 519,
+      "check_name": "AO Covenant readiness shard (windows-latest)",
+      "final_status": "COMPLETED",
+      "final_conclusion": "SUCCESS",
+      "duration_seconds": 657,
+      "wait_state": "long_running_pending_before_success",
+      "operator_action": "merge_after_all_required_checks_pass"
+    }
+  ]
+}

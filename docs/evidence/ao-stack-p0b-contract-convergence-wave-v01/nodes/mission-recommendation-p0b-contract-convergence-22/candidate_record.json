@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-22",
+  "candidate": "Add long-running Windows CI wait-state telemetry for Covenant/Command shards.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-22-windows-ci-telemetry",
+  "files_changed": [
+    "internal/atlas/mission_p0b_windows_ci_wait_telemetry.go",
+    "internal/atlas/mission_p0b_windows_ci_wait_telemetry_test.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/validate.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-22"
+  ],
+  "digest_fields": [
+    "windows_check_duration_samples.shard",
+    "windows_check_duration_samples.wait_state",
+    "windows_check_duration_samples.operator_action",
+    "pending_state_observed",
+    "completed_pass_state_observed",
+    "final_response_allowed"
+  ]
+}
