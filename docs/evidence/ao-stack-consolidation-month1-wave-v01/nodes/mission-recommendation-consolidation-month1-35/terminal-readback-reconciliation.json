@@ -1,0 +1,41 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-35",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T19:44:26Z",
+  "kind": "terminal_readback_reconciliation",
+  "readbacks": {
+    "mission": {
+      "status": "active",
+      "final_response_allowed": false,
+      "ready_nodes_remaining_before_node": 2
+    },
+    "atlas": {
+      "completed_nodes_after_node": 35,
+      "ready_nodes_after_node": 1,
+      "final_response_allowed": false
+    },
+    "foundry": {
+      "status": "import_evidence_only",
+      "executes_work": false
+    },
+    "command": {
+      "status": "readback_agrees_no_promotion",
+      "promotion_requested": false
+    },
+    "sentinel": {
+      "status": "passed",
+      "unsafe_public_claims_found": false
+    },
+    "promoter": {
+      "status": "no_promotion_requested",
+      "promotion_requested": false
+    }
+  },
+  "agreement": {
+    "no_promotion_requested": true,
+    "rsi_remains_denied": true,
+    "final_response_denied_until_node_36": true
+  },
+  "rsi_remains_denied": true
+}
