@@ -29,3 +29,14 @@ func TestStrictRecommendationEvidenceSchemaRegistryAcceptsKnownConsolidationSche
 		t.Fatalf("known consolidation schema used validator %q", validator)
 	}
 }
+
+func TestStrictRecommendationEvidenceSchemaRegistryAcceptsEvidenceVolumeBaseline(t *testing.T) {
+	path := filepath.Join(repoRoot(t), "examples", "valid", "evidence-volume-baseline.json")
+	validator, err := validateRecommendationEvidenceTypedFileStrict(path, "ao.atlas.consolidation-evidence-volume-baseline.v0.1")
+	if err != nil {
+		t.Fatalf("evidence volume baseline schema was rejected: %v", err)
+	}
+	if validator != "strict:generic:schema-marker" {
+		t.Fatalf("evidence volume baseline used validator %q", validator)
+	}
+}
