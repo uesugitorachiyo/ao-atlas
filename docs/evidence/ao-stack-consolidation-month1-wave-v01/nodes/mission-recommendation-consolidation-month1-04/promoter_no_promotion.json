@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.consolidation-promoter-no-promotion.v0.1",
+  "status": "no_promotion_requested",
+  "node_id": "mission-recommendation-consolidation-month1-04",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
