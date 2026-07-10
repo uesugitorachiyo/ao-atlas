@@ -1,0 +1,61 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion-rollup.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-6",
+  "status": "no_promotion_rollup_bound",
+  "source_readback_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:7ebafc80f1affcb606fb0bc1501f31f9cf5fd51e1c94b2530d03b6d6b3155b40",
+  "source_readback_completed_nodes": 5,
+  "source_readback_ready_nodes": 35,
+  "source_readback_first_executable_node": "mission-recommendation-month2-contract-convergence-6",
+  "source_readback_final_response_allowed": false,
+  "evidence_roots": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01"
+  ],
+  "wave_summaries": [
+    {
+      "evidence_root": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+      "source_workgraph_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/workgraph-after.json",
+      "completed_nodes": 5,
+      "promoter_no_promotion_files": 5,
+      "missing_promoter_nodes": 0,
+      "no_promotion_status_count": 5,
+      "promotion_requested_count": 0,
+      "promotion_granted_count": 0,
+      "promotion_claimed_count": 0,
+      "authority_advance_claim_count": 0,
+      "rsi_denied_count": 5,
+      "all_completed_nodes_covered": true,
+      "all_promoter_statuses_no_promotion": true,
+      "no_promotion_invariant_holds": true,
+      "rsi_remains_denied": true
+    }
+  ],
+  "completed_nodes_total": 5,
+  "promoter_no_promotion_files": 5,
+  "missing_promoter_nodes_total": 0,
+  "no_promotion_status_count": 5,
+  "promotion_requested_count": 0,
+  "promotion_granted_count": 0,
+  "promotion_claimed_count": 0,
+  "authority_advance_claim_count": 0,
+  "rsi_denied_count": 5,
+  "missing_promoter_nodes": [],
+  "promoter_evidence_files": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-1/promoter_no_promotion.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-2/promoter_no_promotion.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/promoter_no_promotion.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-4/promoter_no_promotion.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/promoter_no_promotion.json"
+  ],
+  "aggregate_promotion_status": "no_promotion_requested",
+  "all_completed_nodes_covered": true,
+  "all_promoter_statuses_no_promotion": true,
+  "no_promotion_invariant_holds": true,
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
