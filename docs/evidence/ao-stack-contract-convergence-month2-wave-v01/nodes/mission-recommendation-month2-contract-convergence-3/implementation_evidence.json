@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-3",
+  "task_id": "mission-recommendation-month2-contract-convergence-3-task",
+  "status": "recorded",
+  "implementation_files": [],
+  "evidence_files": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/blueprint-atlas-compatibility.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/blueprint-import/blueprint-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/blueprint-import/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/run-link-digest-check.json"
+  ],
+  "summary": "Recorded a Blueprint-to-Atlas producer-consumer compatibility result using an authorized, digest-bound Blueprint pack and Atlas-generated Foundry fixture material.",
+  "producer_consumer_contract_status": "compatible",
+  "blueprint_import_status": "ready",
+  "foundry_import_status": "ready_for_foundry_fixture_import",
+  "run_link_digest_status": "run_link_digest_verified",
+  "authorization_bound": true,
+  "planning_only": true,
+  "safe_to_execute": false,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "foundry_manifest_projection": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/foundry-import/foundry-import.json"
+}

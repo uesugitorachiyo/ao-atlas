@@ -1,0 +1,104 @@
+{
+  "contract_version": "ao.atlas.blueprint-import.v0.1",
+  "id": "blueprint-low-risk-code-rehearsal-workgraph-blueprint-import",
+  "project_id": "low-risk-code-rehearsal",
+  "status": "ready",
+  "reason": "Blueprint authorization is ready and Atlas compiled digest-bound Foundry import material.",
+  "blueprint_pack": {
+    "ref": "examples/valid/blueprint-import-low-risk-code/blueprint-pack",
+    "digest": "sha256:668ce08bc3899899ca66273ca8ef7b2e243b605accddc92e915c1afcf2047036"
+  },
+  "build_authorization": {
+    "ref": "examples/valid/blueprint-import-low-risk-code/build-authorization.json",
+    "digest": "sha256:cc13e7b5fe722c2bcb48701a12bd7366d82d39f67819cf0d4d3e36cb132d8f53"
+  },
+  "target_instance": "demo-stack",
+  "workgraph_id": "blueprint-low-risk-code-rehearsal-workgraph",
+  "mutation_class": "low_risk_code",
+  "candidate_selection": {
+    "contract_version": "ao.atlas.blueprint-candidate-selection.v0.1",
+    "id": "low-risk-code-rehearsal-candidate-selection",
+    "project_id": "low-risk-code-rehearsal",
+    "status": "ready",
+    "selected_candidate_id": "low-risk-code-rehearsal-candidate",
+    "mutation_class": "low_risk_code",
+    "target_factory_repo": "ao-foundry",
+    "workgraph_id": "blueprint-low-risk-code-rehearsal-workgraph",
+    "node_id": "low-risk-code-rehearsal-candidate-node",
+    "task_id": "low-risk-code-rehearsal-candidate-task",
+    "required_gates": [
+      "atlas_blueprint_import",
+      "atlas_classification",
+      "foundry_atlas_readback",
+      "command_readback",
+      "ci_passed"
+    ],
+    "required_evidence": [
+      "blueprint_pack:ready",
+      "atlas_import:ready",
+      "foundry_import:ready",
+      "mutation_class:low_risk_code",
+      "dry_run:low_risk_code"
+    ],
+    "safety_limits": [
+      "safe_to_execute:false",
+      "do_not_advance:low_risk_code_live_execution_denied",
+      "do_not_execute_live_mutation",
+      "private_paths_under:excluded"
+    ],
+    "digests": {
+      "blueprint_pack": "sha256:668ce08bc3899899ca66273ca8ef7b2e243b605accddc92e915c1afcf2047036",
+      "build_authorization": "sha256:cc13e7b5fe722c2bcb48701a12bd7366d82d39f67819cf0d4d3e36cb132d8f53",
+      "candidate_rules": "sha256:e5ca1235dd6462b3b0d770f3a3eb9494eb09f0dc3f1a3c25cae3979273f64f52",
+      "context_pack": "sha256:d198e5cdbe0b4e3968120aaf45eb8baec9324bb1f841b8a6c7966d177cdb3300",
+      "implementation_spec": "sha256:00781221753071997f1f4c70a1a88a9604d08945afa1d18d57a08550093d972f",
+      "mutation_class_model": "sha256:b28cf535bd5a85a5a9174da12c4ee389cfd3c60f18702bb9588b5bc744e9ba12",
+      "quality_profile": "sha256:9457de36c730b5d79134d52ae6fe234c2cbb8c3b318719fd22f05d38ff24fbe2",
+      "stack_instance": "sha256:833ac56f56cfd8f058a786eb7ced74d9879e157db6510a28867c3e3c46ecf1b6",
+      "workgraph": "sha256:a891555e807ea777dcb670eb453c14ee7b00ba7292ea0e131ae76fb0f5c5f20b"
+    },
+    "schedules_work": false,
+    "executes_work": false,
+    "approves_work": false,
+    "mutates_repositories": false,
+    "safe_to_execute": false,
+    "live_execution_proven": false
+  },
+  "downstream_foundry_import": {
+    "ref": "foundry-import/foundry-import.json",
+    "digest": "sha256:21be7e9119603c8deabb58f14c511611a74c1a02638a0268eae3ffdb9d172194"
+  },
+  "downstream_foundry_continuation_handoff": {
+    "ref": "foundry-import/foundry-continuation-handoff.json",
+    "digest": "sha256:46c7b7aae5135aa28c9b6c69c9793a2631470110b2ead0b9178079fb6274e88a"
+  },
+  "digests": {
+    "blueprint_pack": "sha256:668ce08bc3899899ca66273ca8ef7b2e243b605accddc92e915c1afcf2047036",
+    "build_authorization": "sha256:cc13e7b5fe722c2bcb48701a12bd7366d82d39f67819cf0d4d3e36cb132d8f53",
+    "candidate_rules": "sha256:e5ca1235dd6462b3b0d770f3a3eb9494eb09f0dc3f1a3c25cae3979273f64f52",
+    "candidate_selection": "sha256:eda390576123f484b1376701ac22cdb3203366ed0ac5daf8d5a74824967e3ee8",
+    "context_pack": "sha256:d198e5cdbe0b4e3968120aaf45eb8baec9324bb1f841b8a6c7966d177cdb3300",
+    "downstream_foundry_continuation_handoff": "sha256:46c7b7aae5135aa28c9b6c69c9793a2631470110b2ead0b9178079fb6274e88a",
+    "downstream_foundry_import": "sha256:21be7e9119603c8deabb58f14c511611a74c1a02638a0268eae3ffdb9d172194",
+    "implementation_spec": "sha256:00781221753071997f1f4c70a1a88a9604d08945afa1d18d57a08550093d972f",
+    "mutation_class_model": "sha256:b28cf535bd5a85a5a9174da12c4ee389cfd3c60f18702bb9588b5bc744e9ba12",
+    "quality_profile": "sha256:9457de36c730b5d79134d52ae6fe234c2cbb8c3b318719fd22f05d38ff24fbe2",
+    "stack_instance": "sha256:833ac56f56cfd8f058a786eb7ced74d9879e157db6510a28867c3e3c46ecf1b6",
+    "workgraph": "sha256:a891555e807ea777dcb670eb453c14ee7b00ba7292ea0e131ae76fb0f5c5f20b"
+  },
+  "safety_limits": [
+    "safe_to_execute:false",
+    "do_not_advance:low_risk_code_live_execution_denied",
+    "do_not_execute_live_mutation",
+    "private_paths_under:excluded"
+  ],
+  "ready_for_foundry": true,
+  "safe_to_execute": false,
+  "live_execution_proven": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "release_or_publish_allowed": false
+}

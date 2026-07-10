@@ -1,0 +1,21 @@
+{
+  "contract_version": "ao.atlas.intake.v0.1",
+  "id": "low-risk-code-rehearsal-intake",
+  "target_instance": "demo-stack",
+  "broad_prompt": "Compile the low_risk_code rehearsal plan into dry-run Atlas and Foundry material. The work must pass through AO Atlas before AO Foundry gates and must remain dry-run readback only.",
+  "instruction_refs": [
+    "implementation-spec.md",
+    "quality-profile.md",
+    "candidate-rules.json"
+  ],
+  "folder_refs": [
+    "excluded/"
+  ],
+  "constraints": [
+    "Blueprint -\u003e Atlas -\u003e Foundry is mandatory",
+    "safe_to_execute:false",
+    "do_not_advance:low_risk_code_live_execution_denied",
+    "do_not_execute_live_mutation",
+    "private_paths_under:excluded"
+  ]
+}
