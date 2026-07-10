@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-06",
+  "kind": "stack_lock_validator",
+  "repository": "ao-architecture",
+  "paths": ["scripts/verify_stack_lock.py", "scripts/test_verify_stack_lock.py", ".github/workflows/ci.yml"],
+  "pull_request": 96,
+  "merge_commit": "e1228e8e4ae4537d9bf80ca01e51bc18cb1eb569",
+  "claims_runtime_execution": false
+}

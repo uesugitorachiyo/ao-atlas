@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-06",
+  "owner": "ao-architecture",
+  "target": "scripts/verify_stack_lock.py",
+  "mutation_class": "low_risk_code",
+  "source_node": "mission-recommendation-consolidation-month1-05",
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}
