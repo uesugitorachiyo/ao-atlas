@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-9",
+  "task_id": "mission-recommendation-month2-contract-convergence-9-task",
+  "status": "recorded",
+  "implementation_files": [],
+  "evidence_files": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-9/ao2-model-provenance-contract.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-9/ao2-model-provenance-compatibility.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-9/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-9/run-link-digest-check.json"
+  ],
+  "summary": "Recorded the AO2 model provenance gap from source inspection: runtime run options and Codex adapter arguments lack an explicit model field, so provenance remains blocked without executing AO2 or calling a provider.",
+  "producer_consumer_contract_status": "blocked_missing_model_field",
+  "model_field_present": false,
+  "provider_run_options_model_field_present": false,
+  "codex_adapter_model_flag_present": false,
+  "provenance_required": true,
+  "source_audit_status": "blocked_missing_model_field",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "foundry_manifest_projection": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-9/foundry-import/foundry-import.json",
+  "run_link_digest_status": "run_link_digest_verified"
+}
