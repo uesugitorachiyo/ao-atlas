@@ -17,6 +17,9 @@
       "upstream": "origin/main",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "clean_synced",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
@@ -27,6 +30,15 @@
       "upstream": "origin/main",
       "clean": false,
       "dirty_files": " M internal/mission/mission_test.go\n?? .ao-mission/\n?? docs/ao-stack-productization-draft-pr-advancement-handoff.md\n?? docs/ao-stack-productization-foundry-bridge-handoff.md\n?? docs/ao-stack-six-month-roadmap-handoff-prompt.md",
+      "pre_existing_dirty_files": [
+        "internal/mission/mission_test.go",
+        ".ao-mission/",
+        "docs/ao-stack-productization-draft-pr-advancement-handoff.md",
+        "docs/ao-stack-productization-foundry-bridge-handoff.md",
+        "docs/ao-stack-six-month-roadmap-handoff-prompt.md"
+      ],
+      "wave_owned_files": [],
+      "state_class": "pre_existing_dirty_and_behind",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 1
     },
@@ -37,16 +49,22 @@
       "upstream": "origin/main",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "clean_synced",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
     {
       "repository": "ao-atlas",
       "branch": "main",
-      "head": "75f4941064ef06ed967f125db7dbdff24383dd87",
+      "head": "2a95e3443c187a3cc23f0f5b73c59a894a3073eb",
       "upstream": "origin/main",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "clean_synced",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
@@ -57,6 +75,11 @@
       "upstream": "origin/main",
       "clean": false,
       "dirty_files": "?? .foundry-local/",
+      "pre_existing_dirty_files": [
+        ".foundry-local/"
+      ],
+      "wave_owned_files": [],
+      "state_class": "pre_existing_dirty",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
@@ -67,6 +90,9 @@
       "upstream": "origin/main",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "clean_synced",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
@@ -77,6 +103,9 @@
       "upstream": "",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "pre_existing_codex_branch_and_out_of_sync",
       "ahead_of_origin_main": 1,
       "behind_origin_main": 2
     },
@@ -87,6 +116,9 @@
       "upstream": "origin/main",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "clean_synced",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
@@ -97,6 +129,9 @@
       "upstream": "origin/main",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "clean_synced",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
@@ -107,6 +142,9 @@
       "upstream": "origin/main",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "clean_synced",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
@@ -117,6 +155,9 @@
       "upstream": "origin/main",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "clean_synced",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
@@ -127,6 +168,9 @@
       "upstream": "origin/main",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "clean_synced",
       "ahead_of_origin_main": 0,
       "behind_origin_main": 0
     },
@@ -137,6 +181,9 @@
       "upstream": "",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "pre_existing_codex_branch_and_out_of_sync",
       "ahead_of_origin_main": 1,
       "behind_origin_main": 0
     },
@@ -147,6 +194,9 @@
       "upstream": "",
       "clean": true,
       "dirty_files": "",
+      "pre_existing_dirty_files": [],
+      "wave_owned_files": [],
+      "state_class": "pre_existing_codex_branch_and_out_of_sync",
       "ahead_of_origin_main": 1,
       "behind_origin_main": 0
     }

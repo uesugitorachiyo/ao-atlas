@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-02",
+  "kind": "typed_pre_existing_state_classification",
+  "implementation_files": ["internal/atlas/consolidation_repository_baseline.go", "internal/atlas/recommendation_evidence_validation.go", "schemas/consolidation-repository-baseline.schema.json"],
+  "wave_owned_files": [],
+  "claims_runtime_execution": false
+}

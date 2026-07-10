@@ -1,6 +1,6 @@
 {
   "contract_version": "ao.atlas.run-link.v0.1",
-  "task_id": "mission-recommendation-consolidation-month1-01-task",
+  "task_id": "mission-recommendation-consolidation-month1-02-task",
   "status": "completed",
   "evidence": {
     "candidate_record": "candidate_record.json",
@@ -16,5 +16,5 @@
     "tests": "tests.json",
     "verification": "verification.json"
   },
-  "digest": "sha256:7f59b26a758afa8a19def29c9a72cc604bd895891e7d669fc5e326eea6bbc57a"
+  "digest": "sha256:359c05f3eb444c44f5ab75394e73b4e8aea661540c01543027ce5dd4a334a576"
 }
