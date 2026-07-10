@@ -1,0 +1,1144 @@
+{
+  "contract_version": "ao.atlas.recommendation-wave.v0.1",
+  "mission_id": "mission-710327df54728420",
+  "target_instance": "ao-stack-p0b-contract-convergence-wave-v01",
+  "status": "ready",
+  "source_digest": "sha256:cf89a398e652f05a3c6bf713a973691e610a6c42b584fadaa75edad07c698d16",
+  "minimum_tasks": 30,
+  "total_tasks": 30,
+  "node_budget": 30,
+  "estimated_minutes": 150,
+  "supervisor": {
+    "contract_version": "ao.atlas.long-run-supervisor.v0.2",
+    "min_nodes": 30,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 30,
+    "return_only_when": "all_30_p0b_contract_convergence_nodes_complete_or_true_hard_blocker",
+    "checkpoint_policy": "after_each_node_with_pr_ci_merge_cleanup",
+    "evidence_policy": "evidence_after_each_node",
+    "final_report_contract": "p0b_contract_convergence_readback_and_clean_repo_status"
+  },
+  "tasks": [
+    {
+      "id": "p0b-contract-convergence-01",
+      "owner": "ao-atlas",
+      "task": "Bind Covenant event hashes to policy fields that affect ticket acceptance.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-01",
+      "task_id": "mission-recommendation-p0b-contract-convergence-01-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f87cbea087ad742000a06da25d7ad4700ca082a6009ec5b81d8a96cb1a7ddbb8",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-01",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-02",
+      "owner": "ao-atlas",
+      "task": "Add Covenant regression fixtures proving policy-field changes alter the event hash.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-02",
+      "task_id": "mission-recommendation-p0b-contract-convergence-02-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:cb16111e65c1a3edaeba235cb4c48b3715598580d6d7fcdae672ee479f9d3c65",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-02",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-03",
+      "owner": "ao-atlas",
+      "task": "Add Command-to-Covenant accepted ticket fixture with canonical bytes and digest.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-03",
+      "task_id": "mission-recommendation-p0b-contract-convergence-03-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:58d1d00276050def5afe80c33808b00f491de9cf422775ff5882848935c92b2a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-03",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-04",
+      "owner": "ao-atlas",
+      "task": "Add Command-to-Covenant rejected ticket fixture preserving Covenant-native reason.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-04",
+      "task_id": "mission-recommendation-p0b-contract-convergence-04-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:a537908d2a87abcce22dea0c2df87b0d7bb44abced1a2d633379fc1b0186e5bd",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-04",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-05",
+      "owner": "ao-atlas",
+      "task": "Quarantine Command validation paths that accept tickets Covenant rejects.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-05",
+      "task_id": "mission-recommendation-p0b-contract-convergence-05-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:e77bfef8dcd753a4dc9bfd8f437b66f9509c637fefbb4efbe216f2257871c8e6",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-05",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-06",
+      "owner": "ao-atlas",
+      "task": "Add canonical ticket byte preservation across Command readback.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-06",
+      "task_id": "mission-recommendation-p0b-contract-convergence-06-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:12b48931c8b75255437a1b6fad2f9e4b0b07d93963f2cc3fbca8e45deef4bbc2",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-06",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-07",
+      "owner": "ao-atlas",
+      "task": "Bind ticket digest into compact Command and Covenant evidence readbacks.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-07",
+      "task_id": "mission-recommendation-p0b-contract-convergence-07-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:eedb41d8d1be5cebbb92e539c4f56bf794e93e536b3d0b9fc49c270b7dfde812",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-07",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-08",
+      "owner": "ao-atlas",
+      "task": "Add policy-hash mismatch rejection fixtures.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-08",
+      "task_id": "mission-recommendation-p0b-contract-convergence-08-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c51f75d032e6fb34ab1a67040bdc448a7aef71348b5b0255728a53a313821a80",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-08",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-09",
+      "owner": "ao-atlas",
+      "task": "Add stale ticket policy-version replay rejection fixtures.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-09",
+      "task_id": "mission-recommendation-p0b-contract-convergence-09-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c68ad48d05dea40d3c4085e60031f59f49675357f0e3d5421f9840ac697903c6",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-09",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-10",
+      "owner": "ao-atlas",
+      "task": "Add Covenant evidence readback with policy, ticket, and decision digests.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-10",
+      "task_id": "mission-recommendation-p0b-contract-convergence-10-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:2cd9e96114b7aca5d4ca5e065f0bd591c1afbef0d29873b8ab3e35833b2812cf",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-10",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-11",
+      "owner": "ao-atlas",
+      "task": "Render Covenant-native rejection reasons in Command compact status.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-11",
+      "task_id": "mission-recommendation-p0b-contract-convergence-11-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7d321d7b1393950c2527cbe4f75cf911b5620cc33a357908ea36b68e64ca1979",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-11",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-12",
+      "owner": "ao-atlas",
+      "task": "Add Blueprint ticket-schema compatibility ledger entries.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-12",
+      "task_id": "mission-recommendation-p0b-contract-convergence-12-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:90ec5087969b268f4ae9a0e183133a6248add421dc163f890c9897dc0e6b347f",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-12",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-13",
+      "owner": "ao-atlas",
+      "task": "Add Atlas ticket-schema compatibility ledger entries.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-13",
+      "task_id": "mission-recommendation-p0b-contract-convergence-13-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f54749480044d3d717345967e185cb64ff69e213084ddaf2e57525dbfcf51c60",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-13",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-14",
+      "owner": "ao-atlas",
+      "task": "Add Foundry ticket-schema compatibility ledger entries.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-14",
+      "task_id": "mission-recommendation-p0b-contract-convergence-14-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b3d43b1108259c3cf42c15ba94cbfa9bdcb4576db5da885ea2bf14b2cd00b673",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-14",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-15",
+      "owner": "ao-atlas",
+      "task": "Add Command ticket-schema producer/consumer compatibility entries.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-15",
+      "task_id": "mission-recommendation-p0b-contract-convergence-15-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:11cea08125ded62cb413961a2fc52c7fafa4df0b6380a9bcd5bdfacf0f57db71",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-15",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-16",
+      "owner": "ao-atlas",
+      "task": "Add Covenant ticket-schema authority compatibility entries.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-16",
+      "task_id": "mission-recommendation-p0b-contract-convergence-16-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:fe3de3021d956c9478d326ba340c06a9f650ebf0c54816592787cb89e0a946d5",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-16",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-17",
+      "owner": "ao-atlas",
+      "task": "Add public-safety wording scan for policy and ticket claims.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-17",
+      "task_id": "mission-recommendation-p0b-contract-convergence-17-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:53f8f705f992ae1215afa72fa2c967b04975d4a18447a9011ea5d34bca1105fa",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-17",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-18",
+      "owner": "ao-atlas",
+      "task": "Add aggregate no-promotion/no-RSI rollup across P0-B nodes.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-18",
+      "task_id": "mission-recommendation-p0b-contract-convergence-18-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:6e37778e548e18cacf60dccd3d31801816f9b773649e997a9c0c853fb745098a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-18",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-19",
+      "owner": "ao-atlas",
+      "task": "Import P0-B Atlas recommendation readback into AO Mission without final response.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-19",
+      "task_id": "mission-recommendation-p0b-contract-convergence-19-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:281969d585cd49b87b00f66deb8095b9439fb9b39f9298d0ca0d462f23f0fa3b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-19",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-20",
+      "owner": "ao-atlas",
+      "task": "Emit Foundry import for exactly one ready P0-B implementation node.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-20",
+      "task_id": "mission-recommendation-p0b-contract-convergence-20-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c54f33fcb32485270fefe497f2cb91ff2bdbcc4146daad313b4a3e0aa75c579b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-20",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-21",
+      "owner": "ao-atlas",
+      "task": "Add P0-B PR/CI ledger with merge-head and branch-cleanup fields.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-21",
+      "task_id": "mission-recommendation-p0b-contract-convergence-21-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:510ab6485bcf169d0a406fc75748fe6e06a9b6433e90f8924a631b95487da5b8",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-21",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-22",
+      "owner": "ao-atlas",
+      "task": "Add long-running Windows CI wait-state telemetry for Covenant/Command shards.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-22",
+      "task_id": "mission-recommendation-p0b-contract-convergence-22-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b1be5d0dea0cf0014f93717f960aef850e785279ae3c4f24a3af910fcf70f44d",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-22",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-23",
+      "owner": "ao-atlas",
+      "task": "Audit rollback records for every P0-B node before closure.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-23",
+      "task_id": "mission-recommendation-p0b-contract-convergence-23-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1bc9cfbe2730fdd16afc08ab28177916b5198637935d7316badafc205800adbf",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-23",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-24",
+      "owner": "ao-atlas",
+      "task": "Bind Command and Promoter no-promotion agreement for P0-B.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-24",
+      "task_id": "mission-recommendation-p0b-contract-convergence-24-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1b7360c0455e3f49860d2f77a77519e21ab534de34af1228495ba6e8053f2114",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-24",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-25",
+      "owner": "ao-atlas",
+      "task": "Generate compaction-resume prompt from latest P0-B readback.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-25",
+      "task_id": "mission-recommendation-p0b-contract-convergence-25-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f7e2ff147601d943887803abea619b10b4755820166fd176d986256c61013391",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-25",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-26",
+      "owner": "ao-atlas",
+      "task": "Validate every P0-B evidence JSON file in one command.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-26",
+      "task_id": "mission-recommendation-p0b-contract-convergence-26-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:0572b829f993461f31b82f9715a83baf9b1016219ea5ac0859c329be524335f9",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-26",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-27",
+      "owner": "ao-atlas",
+      "task": "Record post-merge cleanup evidence after branch deletion.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-27",
+      "task_id": "mission-recommendation-p0b-contract-convergence-27-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:670d8e325e33b3c3b11e847a48e5235769cd4ca42b261b4ec2c363c5524db37c",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-27",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-28",
+      "owner": "ao-atlas",
+      "task": "Generate final operator summary from the P0-B terminal readback.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-28",
+      "task_id": "mission-recommendation-p0b-contract-convergence-28-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:daa053517f0f48b9add5946fb3b573c3b439403a4670f0ab5f00743d8f256eda",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-28",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-29",
+      "owner": "ao-atlas",
+      "task": "Bridge P0-B closure into P0-C Mission-to-Foundry readiness criteria.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-29",
+      "task_id": "mission-recommendation-p0b-contract-convergence-29-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:9553bc2f58e1f1c192a7cc17549236c3fd4585f1f9ff5bf9dc0a129f39c9377a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-29",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "p0b-contract-convergence-30",
+      "owner": "ao-atlas",
+      "task": "Generate P0-C Mission to Foundry real complete-path handoff.",
+      "node_id": "mission-recommendation-p0b-contract-convergence-30",
+      "task_id": "mission-recommendation-p0b-contract-convergence-30-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8baf6b0bcc1908ae8c256cabaf9325f7224dbd8393d6a07687fa8959095e5890",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/p0b-contract-convergence-30",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    }
+  ],
+  "next_recommended_prompt": "Start a Codex goal and continue AO Mission supervised AO Stack P0-B contract convergence.\n\nMission: mission-710327df54728420\nTarget instance: ao-stack-p0b-contract-convergence-wave-v01\nLease minimum: 30 nodes, 120 to 180 minutes.\nevent_index_digest=sha256:fffb805b58f76f46980f6b1cb6351b31e89cc8e0e0b00d5456ae509f7a0a4423\nfinal_rollup_digest=sha256:7d81cd3bb89aa9236ee58e0978e1a6cdcfc617e232d415c1c25dfd883bd51f38\n\nDo not ask the operator for permission. Do not stop after one node, one Foundry import, one PR, or one CI pass. Continue until all 30 P0-B nodes complete with evidence, or until a true hard blocker remains after safe repair/repack/support work has been attempted.\n\nKeep exactly one executable mutation node active at a time. Route implementation nodes to the owning repo, but keep Atlas as workgraph and continuation owner.\n\nRequired terminal item:\n- p0b-contract-convergence-30. Generate P0-C Mission to Foundry real complete-path handoff.\n\nSafety boundaries remain: no direct main mutation, no credential/token inspection, no provider calls, no release/deploy/publish/upload/tag, no dependency updates, no auth/policy/config widening, no hidden instruction mutation, no broad RSI claim, and RSI remains denied.\n",
+  "final_response_allowed": false,
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "promoter_readback_status": "required_not_bound",
+  "command_readback_status": "required_not_bound",
+  "public_safety_scan_status": "required_pending_verification",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
