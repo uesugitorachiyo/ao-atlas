@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-13",
+  "kind": "lifecycle_metrics_audit",
+  "repository": "ao-mission",
+  "paths": ["internal/mission/lifecycle_metrics.go", "internal/mission/cli.go", "internal/mission/lifecycle_metrics_test.go", "docs/contracts/lifecycle-metrics-v0.1.schema.json", "examples/valid/lifecycle-metrics-readback.json"],
+  "pull_request": 69,
+  "merge_commit": "f9da8770e503620e90f2fd4833ec56157ba7b086",
+  "claims_runtime_execution": false
+}
