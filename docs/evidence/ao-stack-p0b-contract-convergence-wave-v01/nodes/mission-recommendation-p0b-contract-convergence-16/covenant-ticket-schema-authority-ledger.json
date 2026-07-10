@@ -1,0 +1,52 @@
+{
+  "schema": "ao.atlas.covenant-ticket-schema-authority-ledger.v0.1",
+  "status": "covenant_ticket_schema_authority_compatible",
+  "source_input_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-16/covenant-ticket-schema-authority-ledger-input.json",
+  "source_input_digest": "sha256:a75e500ea06794579642f7397a74c51a52c97e07bdcf3edc0af502aa835c898d",
+  "entry_count": 3,
+  "compatible_entry_count": 3,
+  "all_entries_compatible": true,
+  "entries": [
+    {
+      "id": "covenant-policy-hash-mismatch-authority",
+      "producer_schema": "ao.atlas.policy-hash-mismatch-rejection-fixture.v0.1",
+      "consumer_schema": "ao.covenant.ticket-policy-authority.v0.1",
+      "required_fields": [
+        "ticket_sha256",
+        "policy_sha256",
+        "rejected_policy_sha256",
+        "claims_authority_advance"
+      ],
+      "compatible": true
+    },
+    {
+      "id": "covenant-policy-version-replay-authority",
+      "producer_schema": "ao.atlas.policy-version-replay-rejection-fixture.v0.1",
+      "consumer_schema": "ao.covenant.ticket-policy-version.v0.1",
+      "required_fields": [
+        "ticket_sha256",
+        "policy_version",
+        "rejected_policy_version",
+        "claims_authority_advance"
+      ],
+      "compatible": true
+    },
+    {
+      "id": "covenant-evidence-digest-authority",
+      "producer_schema": "ao.atlas.covenant-evidence-digest-readback-fixture.v0.1",
+      "consumer_schema": "ao.covenant.evidence-readback.v0.1",
+      "required_fields": [
+        "policy_sha256",
+        "ticket_sha256",
+        "decision_sha256",
+        "claims_authority_advance"
+      ],
+      "compatible": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -463,6 +463,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "atlas-ticket-schema-compatibility-ledger", run: runMissionRecommendationsAtlasTicketSchemaCompatibilityLedger, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-ticket-schema-compatibility-ledger", run: runMissionRecommendationsFoundryTicketSchemaCompatibilityLedger, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-ticket-schema-compatibility-ledger", run: runMissionRecommendationsCommandTicketSchemaCompatibilityLedger, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "covenant-ticket-schema-authority-ledger", run: runMissionRecommendationsCovenantTicketSchemaAuthorityLedger, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "merge-check-binding", run: runMissionRecommendationsMergeCheckBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "post-merge-branch-deletion-readback", run: runMissionRecommendationsPostMergeBranchDeletionReadback, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "stale-remote-branch-repair", run: runMissionRecommendationsStaleRemoteBranchRepair, commandClass: missionRecommendationCommandClassPlanningOnly},
@@ -2263,6 +2264,45 @@ func runMissionRecommendationsCommandTicketSchemaCompatibilityLedger(args []stri
 		return printJSON(stdout, ledger)
 	}
 	fmt.Fprintf(stdout, "status=%s\nall_entries_compatible=%t\nentry_count=%d\ncommand_ticket_schema_compatibility_ledger=%s\n",
+		ledger.Status,
+		ledger.AllEntriesCompatible,
+		ledger.EntryCount,
+		filepath.ToSlash(*outPath),
+	)
+	return nil
+}
+
+func runMissionRecommendationsCovenantTicketSchemaAuthorityLedger(args []string, stdout io.Writer) error {
+	fs := flag.NewFlagSet("mission recommendations covenant-ticket-schema-authority-ledger", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	inputPath := fs.String("input", "", "covenant ticket schema authority ledger input path")
+	outPath := fs.String("out", "", "covenant ticket schema authority ledger output path")
+	jsonOut := fs.Bool("json", false, "json output")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*inputPath) == "" {
+		return fmt.Errorf("--input is required")
+	}
+	if strings.TrimSpace(*outPath) == "" && !*jsonOut {
+		return fmt.Errorf("--out or --json is required")
+	}
+	if strings.TrimSpace(*outPath) != "" && samePath(*inputPath, *outPath) {
+		return fmt.Errorf("refusing to overwrite input artifact")
+	}
+	ledger, err := BuildAtlasCovenantTicketSchemaAuthorityLedger(*inputPath)
+	if err != nil {
+		return err
+	}
+	if strings.TrimSpace(*outPath) != "" {
+		if err := WriteJSON(*outPath, ledger); err != nil {
+			return err
+		}
+	}
+	if *jsonOut {
+		return printJSON(stdout, ledger)
+	}
+	fmt.Fprintf(stdout, "status=%s\nall_entries_compatible=%t\nentry_count=%d\ncovenant_ticket_schema_authority_ledger=%s\n",
 		ledger.Status,
 		ledger.AllEntriesCompatible,
 		ledger.EntryCount,
