@@ -1,0 +1,38 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-19",
+  "task_id": "mission-recommendation-month2-contract-convergence-19-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "cargo test -p ao2-cli canonical_json_contract_tests -- --nocapture (ao2)",
+    "wc -l -c ../ao2/crates/ao2-cli/src/main.rs",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/atlas-node19-verification ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "go run ./cmd/atlas mission recommendations run-link-digest-check --node-id mission-recommendation-month2-contract-convergence-19 --run-link docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-19/run-link.json --evidence-root .",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "go run ./cmd/atlas mission recommendations run-link-digest-check --node-id mission-recommendation-month2-contract-convergence-19 --run-link docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-19/run-link.json --evidence-root .",
+    "git diff --check",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "repair_notes": [
+    "The AO2 source audit is read-only; no AO2 source refactor, provider launch, or runtime execution is performed.",
+    "The Atlas build output is written below target and removed before the working-tree check.",
+    "Model provenance and approval binding remain explicit follow-up gates."
+  ],
+  "rsi_remains_denied": true,
+  "objective": "Coordinate ao2 AO2 CLI split map through a bounded Atlas compatibility evidence node with no promotion."
+}

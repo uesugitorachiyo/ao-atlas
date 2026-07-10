@@ -1,0 +1,110 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "ao2_cli_split_map",
+  "node_id": "mission-recommendation-month2-contract-convergence-19",
+  "task_id": "mission-recommendation-month2-contract-convergence-19-task",
+  "status": "partial_split_map",
+  "source_owner": "ao2",
+  "source_repository": "ao2",
+  "source_commit": "541e766b5da00b65fa2c2e34b1d7ff0dc363eef6",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "source_audit",
+  "source_files": [
+    {
+      "path": "crates/ao2-cli/src/main.rs",
+      "digest": "sha256:acdf015c07ba857c49cde8d0afc6b9b0791885f8b94007413a04c8312bf9bb3a",
+      "line_count": 69977,
+      "byte_count": 2893993
+    },
+    {
+      "path": "crates/ao2-runtime/src/lib.rs",
+      "digest": "sha256:dedb3ece217d51cf9f2e69b6b80be174da51f08981a5460eb9a43a80c968014b",
+      "role": "run options and runtime contracts"
+    },
+    {
+      "path": "crates/ao2-adapters/src/lib.rs",
+      "digest": "sha256:db2d543694e5c03121ab939e245f5be575b337c631be0159b9211a5dffaef40e",
+      "role": "approval and adapter boundary"
+    },
+    {
+      "path": "crates/ao2-adapter-codex/src/lib.rs",
+      "digest": "sha256:0b8f54f0f934dc91c0dcce6e6d9a33135b46fd67b008147b4d6c91d7180f0d16",
+      "role": "Codex process launch and provider options"
+    }
+  ],
+  "split_boundaries": [
+    {
+      "module": "command_model",
+      "lines": "73-3949",
+      "responsibility": "CLI command enums and argument model",
+      "guard": "parser snapshots and command help parity"
+    },
+    {
+      "module": "main_dispatch",
+      "lines": "3940-4051",
+      "responsibility": "main and real_main dispatch",
+      "guard": "no-provider/no-network default tests"
+    },
+    {
+      "module": "pulse",
+      "lines": "4052-5007",
+      "responsibility": "Pulse orchestration, artifact execution, and task contract validation",
+      "guard": "dry-run, sandbox, and kill-switch fixtures"
+    },
+    {
+      "module": "contract_memory_evidence",
+      "lines": "5008-5572",
+      "responsibility": "contract, memory, and evidence command surfaces",
+      "guard": "canonical JSON and digest vectors"
+    },
+    {
+      "module": "factory_greenfield",
+      "lines": "5573-64400",
+      "responsibility": "factory, greenfield, project plan, queue, and completion contracts",
+      "guard": "queue/recovery, path validation, and approval-negative tests"
+    },
+    {
+      "module": "release_and_control_plane",
+      "lines": "64400-69807",
+      "responsibility": "release, control-plane, signing, packaging, and verification",
+      "guard": "release boundary and credential/provider denial tests"
+    },
+    {
+      "module": "runtime_boundary",
+      "lines": "crates/ao2-runtime and adapters",
+      "responsibility": "run options, approval binding, adapter process options",
+      "guard": "content/base-commit approval binding and explicit model provenance"
+    }
+  ],
+  "refactor_order": [
+    "extract command model and parser",
+    "extract Pulse and contract surfaces",
+    "extract factory/greenfield lifecycle into modules",
+    "extract release/control-plane surfaces",
+    "keep runtime and adapter contracts independent",
+    "add model field and approval digest characterization before behavior changes"
+  ],
+  "safety_findings": [
+    "AO2 CLI source is 69977 lines and combines command parsing, Pulse, factory lifecycle, release, control-plane, and verification.",
+    "Inspected AO2 runtime RunOptions does not include a model field.",
+    "Inspected Codex adapter launch path does not bind an explicit --model value.",
+    "CLI splitting alone must not be treated as approval-byte or provider-provenance hardening."
+  ],
+  "non_goals": [
+    "do not execute AO2",
+    "do not add provider calls",
+    "do not alter approval or release behavior in this planning node",
+    "do not claim model provenance or live mutation authority"
+  ],
+  "current_gate": "blocked_until_module_characterization_model_provenance_and_approval_binding_contracts_exist",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
