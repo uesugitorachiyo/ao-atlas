@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-24",
+  "task_id": "mission-recommendation-month2-contract-convergence-24-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 23,
+  "ready_nodes_before": 17,
+  "expected_completed_nodes_after": 24,
+  "expected_ready_nodes_after": 16,
+  "expected_next_executable_node_after": "mission-recommendation-month2-contract-convergence-25",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true,
+  "scope": "compact Atlas readback only",
+  "summary": "Atlas readback keeps the Architecture compatibility table proposed until all 16 edges have canonical vectors, consumer tests, and a current snapshot binding; no promotion is allowed.",
+  "promotion_granted": false,
+  "ready_nodes_before_completion": 17
+}
