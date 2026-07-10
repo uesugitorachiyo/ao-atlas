@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-19",
+  "task_id": "mission-recommendation-month2-contract-convergence-19-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records an AO2 CLI and runtime boundary map from a read-only checkout"
+  },
+  "targeted_test": {
+    "command": "cargo test -p ao2-cli canonical_json_contract_tests -- --nocapture",
+    "status": "passed",
+    "output": "AO2 canonical JSON contract vector test passed"
+  },
+  "integration_test": {
+    "command": "wc -l -c ../ao2/crates/ao2-cli/src/main.rs; rg -n model ../ao2/crates/ao2-runtime/src/lib.rs ../ao2/crates/ao2-adapter-codex/src/lib.rs",
+    "status": "passed",
+    "output": "AO2 CLI monolith is 69977 lines and 2893993 bytes; runtime and adapter model-provenance gap was preserved as a fail-closed finding"
+  },
+  "objective": "Coordinate ao2 AO2 CLI split map through a bounded Atlas compatibility evidence node with no promotion."
+}
