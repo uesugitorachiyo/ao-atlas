@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-34",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T19:40:05Z",
+  "kind": "month2_contract_convergence_recommendations",
+  "repository": "ao-atlas",
+  "artifact": "month2-contract-convergence-recommendations.json",
+  "recommendation_count": 40,
+  "completed_nodes": 33,
+  "total_nodes": 36,
+  "ready_nodes": 3,
+  "blocked_nodes": 0,
+  "final_response_allowed": false,
+  "exact_next_action": "Emit Foundry import for mission-recommendation-consolidation-month1-34 and execute exactly one active node.",
+  "rsi_remains_denied": true
+}
