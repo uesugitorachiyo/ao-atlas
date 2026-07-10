@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.p0b.tests.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-01",
+  "red_test": "go test ./internal/run -run TestEventContentHashBindsPolicyDecisionFields -count=1 failed before implementation because decision_id changes did not alter EventContentHash.",
+  "targeted_tests": [
+    "go test ./internal/run -run 'TestEventContentHashBindsPolicyDecisionFields|TestExecuteRecordsPolicyDecisionsInEvidence' -count=1"
+  ],
+  "full_tests": [
+    "go test ./... -count=1",
+    "go vet ./..."
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-01",
+  "candidate": "Bind Covenant event hashes to policy fields that affect ticket acceptance.",
+  "implementation_repo": "ao-covenant",
+  "branch": "codex/p0b-node-01-covenant-event-hash",
+  "commit": "c067e9e",
+  "pull_request": "https://github.com/uesugitorachiyo/ao-covenant/pull/114",
+  "merge_commit": "c376d1102c2ec7f9c7d516f4454dbb21834d42a3",
+  "policy_hash_fields_bound": [
+    "decision_id",
+    "decision",
+    "effect_type",
+    "resource",
+    "approval_ticket_id"
+  ]
+}

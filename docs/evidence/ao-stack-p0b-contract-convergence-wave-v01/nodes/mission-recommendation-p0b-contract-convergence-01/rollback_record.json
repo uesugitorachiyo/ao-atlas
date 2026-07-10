@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.p0b.rollback-record.v0.1",
+  "status": "ready",
+  "node_id": "mission-recommendation-p0b-contract-convergence-01",
+  "rollback_scope": [
+    "Revert ao-covenant PR #114 if policy event hash binding must be backed out.",
+    "Revert this Atlas node-readback evidence if the completion record is invalidated."
+  ],
+  "rollback_command": "git revert c376d1102c2ec7f9c7d516f4454dbb21834d42a3",
+  "requires_release_or_deploy": false
+}

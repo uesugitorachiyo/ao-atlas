@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.p0b.verification.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-01",
+  "local_verification": [
+    "go test ./internal/run -run 'TestEventContentHashBindsPolicyDecisionFields|TestExecuteRecordsPolicyDecisionsInEvidence' -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/covenant",
+    "scripts/release-readiness.sh",
+    "git diff --check",
+    "scoped public-safety wording scan over changed files"
+  ],
+  "ci_status": "passed",
+  "ci_checks": [
+    "Go ubuntu-latest",
+    "Go macos-26",
+    "Go windows-latest",
+    "License policy"
+  ]
+}
