@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-12",
+  "kind": "strict_unknown_schema_validation",
+  "repository": "ao-atlas",
+  "paths": ["internal/atlas/recommendation_evidence_strict_schema_registry.go", "internal/atlas/recommendation_evidence_validation.go", "internal/atlas/cli.go", "internal/atlas/mission_recommendation_strict_schema_registry_test.go", "examples/invalid/recommendation-evidence-unknown-schema.json"],
+  "pull_request": 540,
+  "merge_commit": "50e20796fa841d3e2b39362f063abad251a7f192",
+  "claims_runtime_execution": false
+}

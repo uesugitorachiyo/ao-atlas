@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-12",
+  "commands": [
+    "go test ./internal/atlas -run TestStrictRecommendationEvidenceSchemaRegistry -count=1",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-consolidation-month1-wave-v01 --strict-schema-registry --out target/strict-schema-validation.json",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/atlas-node-12 ./cmd/atlas"
+  ],
+  "unknown_schema_fixture_rejected": true,
+  "strict_schema_registry": true,
+  "unknown_schema_file_count": 0
+}

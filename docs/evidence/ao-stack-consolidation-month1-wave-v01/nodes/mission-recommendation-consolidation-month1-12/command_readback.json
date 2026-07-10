@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.consolidation-command-readback.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-12",
+  "operator_mode": "read_only",
+  "exact_next_action": "complete node 12 readback and advance to node 13",
+  "mutates_repositories": false,
+  "safe_to_execute": false
+}
