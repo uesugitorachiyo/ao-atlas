@@ -1,0 +1,96 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "mission_durable_migration_inventory",
+  "node_id": "mission-recommendation-month2-contract-convergence-15",
+  "task_id": "mission-recommendation-month2-contract-convergence-15-task",
+  "status": "partial_migration_inventory",
+  "source_owner": "ao-mission",
+  "source_repository": "ao-mission",
+  "source_commit": "8055933d9eebdd12a01d9ccca6edcbbf9bc69c37",
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "current_contracts": [
+    {
+      "path": "internal/mission/store.go",
+      "digest": "sha256:3279331b7955701a22299419d79ef46d07ba61f12f067ae861f68284f9bc67ba",
+      "behavior": [
+        "Store.Init creates missions directory",
+        "Load reads a mission JSON file",
+        "Save writes mission JSON directly with os.WriteFile",
+        "Update loads, mutates, and saves"
+      ]
+    },
+    {
+      "path": "internal/mission/ledger_compaction.go",
+      "digest": "sha256:e1ef0c37330495aa74657dbc8d2e6b7d3851687a1806dbd8e60173665934c64e",
+      "behavior": [
+        "dry-run compaction is read-only",
+        "non-dry-run compaction trims route and step history",
+        "compaction records evidence in the mission record"
+      ]
+    },
+    {
+      "path": "internal/mission/event_index.go",
+      "digest": "sha256:5f13aba8408c0bdef68678cee98933b9b9c86a41be16c58f5795de4f79c796f8",
+      "behavior": [
+        "BuildMissionEventIndex emits ao.mission.event-index.v0.2",
+        "index digest is validated",
+        "search readback is intent-only"
+      ]
+    },
+    {
+      "path": "internal/mission/types.go",
+      "digest": "sha256:ede4d61a13ae03539dc690d8dca0fcc70cef5cb129b39973b59c762f060bbdf1",
+      "behavior": [
+        "Record is ao.mission.record.v0.1",
+        "checkpoints and goal leases are embedded",
+        "no migration registry type is present in inspected source"
+      ]
+    }
+  ],
+  "migration_inventory": [
+    {
+      "contract": "ao.mission.record.v0.1",
+      "schema_path": "docs/contracts/mission-record-v0.1.schema.json",
+      "status": "current_contract_no_migration_entry"
+    },
+    {
+      "contract": "ao.mission.checkpoint-resume-bundle.v0.3",
+      "schema_path": "docs/contracts/checkpoint-resume-bundle-v0.3.schema.json",
+      "status": "current_contract_no_migration_entry"
+    },
+    {
+      "contract": "ao.mission.ledger-compaction-readback.v0.1",
+      "schema_path": "docs/contracts/ledger-compaction-readback-v0.1.schema.json",
+      "status": "current_contract_no_migration_entry"
+    },
+    {
+      "contract": "ao.mission.event-index.v0.2",
+      "schema_path": "docs/contracts/event-index-v0.2.schema.json",
+      "status": "versioned_readback_no_migration_entry"
+    }
+  ],
+  "findings": [
+    "Mission contracts expose versions but the source audit found no explicit versioned migration registry or migration runner.",
+    "Store.Save, SaveEventLoopDecision, and SaveCheckpointBundle write directly with os.WriteFile; atomic replacement is not present in the inspected store.",
+    "Ledger compaction is a bounded state transformation, not a general schema migration mechanism.",
+    "Event index source_digest and index_digest provide readback integrity but do not replace durable state migration metadata."
+  ],
+  "required_follow_up": [
+    "define a migration inventory owned by Mission with source and target contract versions",
+    "add fixture-driven migration tests before changing persisted bytes",
+    "define atomic write and recovery semantics for record, event-loop, and checkpoint files",
+    "bind migration readback to Mission checkpoint and event-index digests"
+  ],
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "source_audit",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

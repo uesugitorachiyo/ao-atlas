@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-15",
+  "task_id": "mission-recommendation-month2-contract-convergence-15-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records Mission migration inventory from a read-only cross-repository audit"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/mission -run 'TestMissionLifecycleAndSnapshot|TestContinueWritesCheckpointBundleAndDoctorSupervisorHealth|TestMissionLedgerCompactionTrimsHistoryAndRecordsEvidence|TestMissionEventIndexCarriesVersionAndDigest' -count=1",
+    "status": "passed",
+    "output": "Mission lifecycle, checkpoint/doctor, compaction, and event-index version/digest tests passed in the inspected source checkout"
+  },
+  "integration_test": {
+    "command": "sha256sum internal/mission/store.go internal/mission/ledger_compaction.go internal/mission/event_index.go internal/mission/types.go docs/contracts/mission-record-v0.1.schema.json docs/contracts/checkpoint-resume-bundle-v0.3.schema.json docs/contracts/ledger-compaction-readback-v0.1.schema.json docs/contracts/event-index-v0.2.schema.json; rg -n migration internal docs -g \"*.go\" -g \"*.json\" -g \"*.md\"",
+    "status": "passed",
+    "output": "Mission durable state, compaction, checkpoint, and event-index contracts were inventoried; no explicit versioned migration registry or runner was found"
+  },
+  "objective": "Coordinate ao-mission Mission durable state migration inventory through a bounded Atlas compatibility evidence node with no promotion."
+}
