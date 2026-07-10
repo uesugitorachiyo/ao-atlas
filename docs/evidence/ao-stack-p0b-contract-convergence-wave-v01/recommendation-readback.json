@@ -1,0 +1,1140 @@
+{
+  "contract_version": "ao.atlas.recommendation-readback.v0.1",
+  "mission_id": "mission-710327df54728420",
+  "target_instance": "ao-stack-p0b-contract-convergence-wave-v01",
+  "status": "ready",
+  "source_digest": "sha256:cf89a398e652f05a3c6bf713a973691e610a6c42b584fadaa75edad07c698d16",
+  "wave_digest": "sha256:7727c9f1b56584313622d648a78c4ac7635fd0d331fa06ac745fc801de86efef",
+  "workgraph_digest": "sha256:bfce9600e30f5745843888d526b270480ea9e64a1d08802581f693569eb8c29d",
+  "evidence_root": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01",
+  "supervisor": {
+    "contract_version": "ao.atlas.long-run-supervisor.v0.2",
+    "min_nodes": 30,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 30,
+    "return_only_when": "all_30_p0b_contract_convergence_nodes_complete_or_true_hard_blocker",
+    "checkpoint_policy": "after_each_node_with_pr_ci_merge_cleanup",
+    "evidence_policy": "evidence_after_each_node",
+    "final_report_contract": "p0b_contract_convergence_readback_and_clean_repo_status"
+  },
+  "elapsed_minutes": 0,
+  "min_minutes_met": false,
+  "lease_time_status": "in_progress_timing_pending",
+  "total_nodes": 30,
+  "minimum_nodes": 30,
+  "completed_nodes": 0,
+  "ready_nodes": 30,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "executable_ready_nodes": 1,
+  "first_executable_node": "mission-recommendation-p0b-contract-convergence-01",
+  "lease_health_status": "minimum_unmet",
+  "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+  "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
+  "early_return_risk_status": "blocked_final_response_ready_nodes_remain",
+  "foundry_rollup_status": "required_pending_first_node_import",
+  "foundry_terminal_status_readback": {
+    "blocked": "terminal_blocker_requires_repair_or_checkpoint_resume",
+    "completed": "terminal_success_can_close_when_all_nodes_and_readbacks_are_complete",
+    "denied": "terminal_denial_requires_exact_missing_evidence_readback",
+    "promoted": "terminal_success_can_close_when_promoter_and_command_agree"
+  },
+  "foundry_terminal_status_examples": [
+    {
+      "source_status": "completed",
+      "normalized_status": "completed",
+      "terminal": true,
+      "can_close_mission": true,
+      "required_readback": "Foundry rollup reports completed, all node evidence exists, and no ready nodes remain."
+    },
+    {
+      "source_status": "promoted",
+      "normalized_status": "completed",
+      "terminal": true,
+      "can_close_mission": true,
+      "required_readback": "Promoter and Command agree promotion is terminal, RSI remains denied, and no ready nodes remain."
+    },
+    {
+      "source_status": "denied",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "required_readback": "Denial readback includes exact missing evidence, no ready repair node remains, and no authority advance is claimed."
+    },
+    {
+      "source_status": "blocked",
+      "normalized_status": "blocked",
+      "terminal": true,
+      "can_close_mission": false,
+      "required_readback": "Blocker readback names the exact repair or resume action before final response can close."
+    }
+  ],
+  "foundry_denied_terminal_examples": [
+    {
+      "denial_reason": "missing_node_evidence",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "requires_exact_missing_evidence": true,
+      "required_readback": "Denied rollup names the missing node id, missing evidence key, and expected evidence path.",
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    },
+    {
+      "denial_reason": "missing_stop_gate_evidence",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "requires_exact_missing_evidence": true,
+      "required_readback": "Denied rollup names the uncleared stop gate and the exact artifact needed before promotion can be reconsidered.",
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    },
+    {
+      "denial_reason": "forbidden_surface_or_rsi_claim",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "requires_exact_missing_evidence": true,
+      "required_readback": "Denied rollup records the forbidden surface or RSI claim, refuses promotion, and keeps RSI denied.",
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    }
+  ],
+  "promoter_readback_status": "required_not_bound",
+  "promoter_no_promotion_status": "required_not_bound_until_promotion_evidence_exists",
+  "promoter_no_promotion_placeholders": [
+    {
+      "slot": "promotion_claim",
+      "source": "recommendation_readback",
+      "status": "pending_promoter_no_promotion",
+      "summary": "Bind promotion_claimed=false and the no-promotion summary before closure.",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "rsi_boundary",
+      "source": "recommendation_readback",
+      "status": "pending_promoter_no_promotion",
+      "summary": "Bind rsi_remains_denied=true and next_denied_class=RSI before closure.",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "authority_advance",
+      "source": "recommendation_readback",
+      "status": "pending_promoter_no_promotion",
+      "summary": "Bind claims_authority_advance=false plus no scheduling, execution, or approval authority.",
+      "required_before_final_response": true
+    }
+  ],
+  "command_readback_status": "required_not_bound",
+  "command_timeline_status": "compact_timeline_required_before_closure",
+  "command_timeline_placeholders": [
+    {
+      "slot": "checkpoint",
+      "source": "recommendation_readback",
+      "status": "pending_command_timeline",
+      "summary": "Bind completed_nodes, ready_nodes, checkpoint_count, and elapsed_minutes into the compact Command timeline.",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "exact_next_action",
+      "source": "recommendation_readback",
+      "status": "pending_command_timeline",
+      "summary": "Bind exact_next_action and first_executable_node into the compact Command timeline.",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "return_gate",
+      "source": "recommendation_readback",
+      "status": "pending_command_timeline",
+      "summary": "Bind return_gate_status and final_response_allowed into the compact Command timeline.",
+      "required_before_final_response": true
+    }
+  ],
+  "public_safety_scan_status": "required_pending_verification",
+  "schema_health_status": "required_pending_schema_registry_health",
+  "return_gate_status": "blocked_ready_nodes_remain",
+  "checkpoint_count": 0,
+  "final_response_allowed": false,
+  "final_response_denial_gate": "deny_ready_nodes_or_exact_next_action_remain",
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-p0b-contract-convergence-01 and execute exactly one active node.",
+  "continuation_contract": {
+    "contract_version": "ao.atlas.continuation-contract.v0.1",
+    "status": "continuation_required",
+    "ready_nodes": 30,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-p0b-contract-convergence-01 and execute exactly one active node.",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "final_response_allowed": false,
+    "refuses_final_response": true,
+    "reason": "ready_nodes_or_exact_next_action_remain",
+    "source": "recommendation_readback"
+  },
+  "exact_next_action_readback": {
+    "status": "continuation_required",
+    "action": "Emit Foundry import for mission-recommendation-p0b-contract-convergence-01 and execute exactly one active node.",
+    "next_executable_node": "mission-recommendation-p0b-contract-convergence-01",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "final_response_allowed": false,
+    "source": "recommendation_readback"
+  },
+  "node_evidence": [
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-01",
+      "task_id": "mission-recommendation-p0b-contract-convergence-01-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-02",
+      "task_id": "mission-recommendation-p0b-contract-convergence-02-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-03",
+      "task_id": "mission-recommendation-p0b-contract-convergence-03-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-04",
+      "task_id": "mission-recommendation-p0b-contract-convergence-04-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-05",
+      "task_id": "mission-recommendation-p0b-contract-convergence-05-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-06",
+      "task_id": "mission-recommendation-p0b-contract-convergence-06-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-07",
+      "task_id": "mission-recommendation-p0b-contract-convergence-07-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-08",
+      "task_id": "mission-recommendation-p0b-contract-convergence-08-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-09",
+      "task_id": "mission-recommendation-p0b-contract-convergence-09-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-10",
+      "task_id": "mission-recommendation-p0b-contract-convergence-10-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-11",
+      "task_id": "mission-recommendation-p0b-contract-convergence-11-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-12",
+      "task_id": "mission-recommendation-p0b-contract-convergence-12-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-13",
+      "task_id": "mission-recommendation-p0b-contract-convergence-13-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-14",
+      "task_id": "mission-recommendation-p0b-contract-convergence-14-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-15",
+      "task_id": "mission-recommendation-p0b-contract-convergence-15-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-16",
+      "task_id": "mission-recommendation-p0b-contract-convergence-16-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-17",
+      "task_id": "mission-recommendation-p0b-contract-convergence-17-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-18",
+      "task_id": "mission-recommendation-p0b-contract-convergence-18-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-19",
+      "task_id": "mission-recommendation-p0b-contract-convergence-19-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-20",
+      "task_id": "mission-recommendation-p0b-contract-convergence-20-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-21",
+      "task_id": "mission-recommendation-p0b-contract-convergence-21-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-22",
+      "task_id": "mission-recommendation-p0b-contract-convergence-22-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-23",
+      "task_id": "mission-recommendation-p0b-contract-convergence-23-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-24",
+      "task_id": "mission-recommendation-p0b-contract-convergence-24-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-25",
+      "task_id": "mission-recommendation-p0b-contract-convergence-25-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-26",
+      "task_id": "mission-recommendation-p0b-contract-convergence-26-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-27",
+      "task_id": "mission-recommendation-p0b-contract-convergence-27-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-28",
+      "task_id": "mission-recommendation-p0b-contract-convergence-28-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-29",
+      "task_id": "mission-recommendation-p0b-contract-convergence-29-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-p0b-contract-convergence-30",
+      "task_id": "mission-recommendation-p0b-contract-convergence-30-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    }
+  ],
+  "feature_depth_recommendations": [
+    "Bind Covenant event hashes to policy fields that affect ticket acceptance.",
+    "Add Covenant regression fixtures proving policy-field changes alter the event hash.",
+    "Add Command-to-Covenant accepted ticket fixture with canonical bytes and digest.",
+    "Add Command-to-Covenant rejected ticket fixture preserving Covenant-native reason.",
+    "Quarantine Command validation paths that accept tickets Covenant rejects.",
+    "Add canonical ticket byte preservation across Command readback.",
+    "Bind ticket digest into compact Command and Covenant evidence readbacks.",
+    "Add policy-hash mismatch rejection fixtures.",
+    "Add stale ticket policy-version replay rejection fixtures.",
+    "Add Covenant evidence readback with policy, ticket, and decision digests.",
+    "Render Covenant-native rejection reasons in Command compact status.",
+    "Add Blueprint ticket-schema compatibility ledger entries."
+  ],
+  "safety_boundaries": {
+    "no_provider_calls": true,
+    "no_credentials": true,
+    "no_direct_main_mutation": true,
+    "no_release_or_publish": true,
+    "no_dependency_updates": true,
+    "no_policy_widening": true,
+    "rsi_denied": true
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.p0b-contract-convergence-seed-summary.v0.1",
+  "status": "ready_for_long_run_execution",
+  "mission_id": "mission-710327df54728420",
+  "target_instance": "ao-stack-p0b-contract-convergence-wave-v01",
+  "event_index_digest": "sha256:fffb805b58f76f46980f6b1cb6351b31e89cc8e0e0b00d5456ae509f7a0a4423",
+  "final_rollup_digest": "sha256:7d81cd3bb89aa9236ee58e0978e1a6cdcfc617e232d415c1c25dfd883bd51f38",
+  "recommendation_count": 30,
+  "ready_nodes": 30,
+  "completed_nodes": 0,
+  "final_response_allowed": false,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

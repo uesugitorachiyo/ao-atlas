@@ -1,0 +1,347 @@
+{
+  "schema": "ao.mission.feature-depth-recommendations.v0.3",
+  "mission_id": "mission-710327df54728420",
+  "status": "ready",
+  "minimum_tasks": 30,
+  "recommendation_count": 30,
+  "source_evidence_root": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01",
+  "source_readback_path": "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+  "source_assertion_path": "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json",
+  "tasks": [
+    {
+      "rank": 1,
+      "id": "feature-depth-next-wave-01",
+      "owner": "ao-atlas",
+      "theme": "policy-hash-binding",
+      "task": "Bind Covenant event hashes to policy fields that affect ticket acceptance.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "feature-depth-next-wave-02",
+      "owner": "ao-atlas",
+      "theme": "policy-hash-regression",
+      "task": "Add Covenant regression fixtures proving policy-field changes alter the event hash.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "feature-depth-next-wave-03",
+      "owner": "ao-atlas",
+      "theme": "command-covenant-accepted-fixture",
+      "task": "Add Command-to-Covenant accepted ticket fixture with canonical bytes and digest.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "feature-depth-next-wave-04",
+      "owner": "ao-atlas",
+      "theme": "command-covenant-rejected-fixture",
+      "task": "Add Command-to-Covenant rejected ticket fixture preserving Covenant-native reason.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "feature-depth-next-wave-05",
+      "owner": "ao-atlas",
+      "theme": "command-validation-quarantine",
+      "task": "Quarantine Command validation paths that accept tickets Covenant rejects.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "feature-depth-next-wave-06",
+      "owner": "ao-atlas",
+      "theme": "canonical-ticket-bytes",
+      "task": "Add canonical ticket byte preservation across Command readback.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "feature-depth-next-wave-07",
+      "owner": "ao-atlas",
+      "theme": "ticket-digest-readback",
+      "task": "Bind ticket digest into compact Command and Covenant evidence readbacks.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "feature-depth-next-wave-08",
+      "owner": "ao-atlas",
+      "theme": "policy-mismatch-rejection",
+      "task": "Add policy-hash mismatch rejection fixtures that fail when Command and Covenant policy digests differ.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 9,
+      "id": "feature-depth-next-wave-09",
+      "owner": "ao-atlas",
+      "theme": "stale-policy-replay",
+      "task": "Add stale ticket policy-version replay rejection fixtures.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 10,
+      "id": "feature-depth-next-wave-10",
+      "owner": "ao-atlas",
+      "theme": "covenant-decision-digest",
+      "task": "Add Covenant evidence readback with policy, ticket, and decision digests.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 11,
+      "id": "feature-depth-next-wave-11",
+      "owner": "ao-atlas",
+      "theme": "command-native-reasons",
+      "task": "Render Covenant-native rejection reasons in Command compact status.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 12,
+      "id": "feature-depth-next-wave-12",
+      "owner": "ao-atlas",
+      "theme": "schema-ledger-blueprint",
+      "task": "Add Blueprint ticket-schema compatibility ledger entries.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 13,
+      "id": "feature-depth-next-wave-13",
+      "owner": "ao-atlas",
+      "theme": "schema-ledger-atlas",
+      "task": "Add Atlas ticket-schema compatibility ledger entries.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 14,
+      "id": "feature-depth-next-wave-14",
+      "owner": "ao-atlas",
+      "theme": "schema-ledger-foundry",
+      "task": "Add Foundry ticket-schema compatibility ledger entries.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 15,
+      "id": "feature-depth-next-wave-15",
+      "owner": "ao-atlas",
+      "theme": "schema-ledger-command",
+      "task": "Add Command ticket-schema producer/consumer compatibility entries.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 16,
+      "id": "feature-depth-next-wave-16",
+      "owner": "ao-atlas",
+      "theme": "schema-ledger-covenant",
+      "task": "Add Covenant ticket-schema authority compatibility entries.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 17,
+      "id": "feature-depth-next-wave-17",
+      "owner": "ao-atlas",
+      "theme": "public-safety-policy-wording",
+      "task": "Add public-safety wording scan for policy and ticket claims.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 18,
+      "id": "feature-depth-next-wave-18",
+      "owner": "ao-atlas",
+      "theme": "no-promotion-no-rsi-rollup",
+      "task": "Add aggregate no-promotion/no-RSI rollup across P0-B nodes.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 19,
+      "id": "feature-depth-next-wave-19",
+      "owner": "ao-atlas",
+      "theme": "mission-import-readback",
+      "task": "Import P0-B Atlas recommendation readback into AO Mission without final response.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 20,
+      "id": "feature-depth-next-wave-20",
+      "owner": "ao-atlas",
+      "theme": "foundry-import-contract",
+      "task": "Emit Foundry import for exactly one ready P0-B implementation node.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 21,
+      "id": "feature-depth-next-wave-21",
+      "owner": "ao-atlas",
+      "theme": "pr-ci-ledger",
+      "task": "Add P0-B PR/CI ledger with merge-head and branch-cleanup fields.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 22,
+      "id": "feature-depth-next-wave-22",
+      "owner": "ao-atlas",
+      "theme": "windows-ci-telemetry",
+      "task": "Add long-running Windows CI wait-state telemetry for Covenant/Command shards.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 23,
+      "id": "feature-depth-next-wave-23",
+      "owner": "ao-atlas",
+      "theme": "rollback-record-coverage",
+      "task": "Audit rollback records for every P0-B node before closure.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 24,
+      "id": "feature-depth-next-wave-24",
+      "owner": "ao-atlas",
+      "theme": "command-promoter-agreement",
+      "task": "Bind Command and Promoter no-promotion agreement for P0-B.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 25,
+      "id": "feature-depth-next-wave-25",
+      "owner": "ao-atlas",
+      "theme": "resume-prompt",
+      "task": "Generate compaction-resume prompt from latest P0-B readback.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 26,
+      "id": "feature-depth-next-wave-26",
+      "owner": "ao-atlas",
+      "theme": "final-evidence-validation",
+      "task": "Validate every P0-B evidence JSON file in one command.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 27,
+      "id": "feature-depth-next-wave-27",
+      "owner": "ao-atlas",
+      "theme": "postmerge-cleanup-readback",
+      "task": "Record post-merge cleanup evidence after branch deletion.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 28,
+      "id": "feature-depth-next-wave-28",
+      "owner": "ao-atlas",
+      "theme": "operator-summary",
+      "task": "Generate final operator summary from the P0-B terminal readback.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 29,
+      "id": "feature-depth-next-wave-29",
+      "owner": "ao-atlas",
+      "theme": "p0c-readiness-bridge",
+      "task": "Bridge P0-B closure into P0-C Mission-to-Foundry readiness criteria.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    },
+    {
+      "rank": 30,
+      "id": "feature-depth-next-wave-30",
+      "owner": "ao-atlas",
+      "theme": "p0c-handoff",
+      "task": "Generate P0-C Mission to Foundry real complete-path handoff.",
+      "evidence_refs": [
+        "docs/evidence/ao-atlas/.ao-mission/handoffs/mission-710327df54728420/atlas-continuation-prompt.json",
+        "docs/evidence/ao-stack-p0a-content-bound-approval-v01/nodes/p0a-terminal-readback-and-p0b-handoff/final-readback.json"
+      ]
+    }
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
