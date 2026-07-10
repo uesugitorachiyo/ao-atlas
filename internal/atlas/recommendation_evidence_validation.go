@@ -27,6 +27,8 @@ type AtlasRecommendationEvidenceValidationReport struct {
 	MissingRequiredFiles     []string                                     `json:"missing_required_files"`
 	RequiredFilenames        []string                                     `json:"required_filenames"`
 	RequiredFilenamesCovered bool                                         `json:"required_filenames_covered"`
+	StrictSchemaRegistry     bool                                         `json:"strict_schema_registry,omitempty"`
+	UnknownSchemaFiles       []string                                     `json:"unknown_schema_files,omitempty"`
 	SchemaCounts             map[string]int                               `json:"schema_counts"`
 	Validators               map[string]int                               `json:"validators"`
 	Entries                  []AtlasRecommendationEvidenceValidationEntry `json:"entries"`
@@ -43,6 +45,10 @@ type AtlasRecommendationEvidenceValidationEntry struct {
 }
 
 func BuildAtlasRecommendationEvidenceValidationReport(evidenceRoot string) (AtlasRecommendationEvidenceValidationReport, error) {
+	return BuildAtlasRecommendationEvidenceValidationReportWithOptions(evidenceRoot, false)
+}
+
+func BuildAtlasRecommendationEvidenceValidationReportWithOptions(evidenceRoot string, strictSchemaRegistry bool) (AtlasRecommendationEvidenceValidationReport, error) {
 	evidenceRoot = strings.TrimSpace(evidenceRoot)
 	report := AtlasRecommendationEvidenceValidationReport{
 		Schema:                   AtlasRecommendationEvidenceValidationReportContract,
@@ -53,6 +59,8 @@ func BuildAtlasRecommendationEvidenceValidationReport(evidenceRoot string) (Atla
 		Validators:               map[string]int{},
 		RequiredFilenames:        requiredRecommendationEvidenceFilenames(),
 		RequiredFilenamesCovered: true,
+		StrictSchemaRegistry:     strictSchemaRegistry,
+		UnknownSchemaFiles:       []string{},
 		MissingSchemaFiles:       []string{},
 		FailedFiles:              []string{},
 		MissingRequiredFiles:     []string{},
@@ -89,7 +97,7 @@ func BuildAtlasRecommendationEvidenceValidationReport(evidenceRoot string) (Atla
 
 	nodeFiles := map[string]map[string]bool{}
 	for _, path := range paths {
-		entry := validateRecommendationEvidenceJSONFile(evidenceRoot, nodeRoot, path)
+		entry := validateRecommendationEvidenceJSONFileWithOptions(evidenceRoot, nodeRoot, path, strictSchemaRegistry)
 		report.Entries = append(report.Entries, entry)
 		report.JSONFileCount++
 		if entry.NodeID != "" {
@@ -102,6 +110,9 @@ func BuildAtlasRecommendationEvidenceValidationReport(evidenceRoot string) (Atla
 			report.ValidatedJSONFiles++
 		} else {
 			report.FailedFiles = append(report.FailedFiles, entry.Path)
+			if entry.Validator == "strict:unknown-schema" {
+				report.UnknownSchemaFiles = append(report.UnknownSchemaFiles, entry.Path)
+			}
 		}
 		if entry.Schema == "" {
 			report.MissingSchemaFiles = append(report.MissingSchemaFiles, entry.Path)
@@ -109,9 +120,10 @@ func BuildAtlasRecommendationEvidenceValidationReport(evidenceRoot string) (Atla
 			report.SchemaBoundFiles++
 			report.SchemaCounts[entry.Schema]++
 		}
-		if strings.HasPrefix(entry.Validator, "typed:") {
+		validatorName := strings.TrimPrefix(entry.Validator, "strict:")
+		if strings.HasPrefix(validatorName, "typed:") {
 			report.TypedValidatorFiles++
-		} else if entry.Validator == "generic:schema-marker" {
+		} else if validatorName == "generic:schema-marker" || validatorName == "strict:generic:schema-marker" {
 			report.GenericSchemaFiles++
 		}
 		if entry.Validator != "" {
@@ -201,6 +213,10 @@ func ValidateAtlasRecommendationEvidenceValidationReport(report AtlasRecommendat
 }
 
 func validateRecommendationEvidenceJSONFile(evidenceRoot, nodeRoot, path string) AtlasRecommendationEvidenceValidationEntry {
+	return validateRecommendationEvidenceJSONFileWithOptions(evidenceRoot, nodeRoot, path, false)
+}
+
+func validateRecommendationEvidenceJSONFileWithOptions(evidenceRoot, nodeRoot, path string, strictSchemaRegistry bool) AtlasRecommendationEvidenceValidationEntry {
 	rel, err := filepath.Rel(evidenceRoot, path)
 	if err != nil {
 		rel = path
@@ -238,6 +254,9 @@ func validateRecommendationEvidenceJSONFile(evidenceRoot, nodeRoot, path string)
 		return entry
 	}
 	validator, err := validateRecommendationEvidenceTypedFile(path, entry.Schema)
+	if strictSchemaRegistry {
+		validator, err = validateRecommendationEvidenceTypedFileStrict(path, entry.Schema)
+	}
 	entry.Validator = validator
 	if err != nil {
 		entry.Status = "failed"
