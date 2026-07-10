@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "node": "mission-recommendation-consolidation-month1-25",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "gate_class": "readiness_rollup",
+  "scope": "Arena Crucible Sentinel native CI conclusion binding",
+  "previous_completed_node": "mission-recommendation-consolidation-month1-24",
+  "generated_at_utc": "2026-07-10T18:48:55Z",
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "policy_or_authorization_change": false,
+  "rsi_remains_denied": true
+}

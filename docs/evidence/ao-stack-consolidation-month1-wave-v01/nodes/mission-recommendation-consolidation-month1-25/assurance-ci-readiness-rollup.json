@@ -1,0 +1,71 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-25",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T18:48:55Z",
+  "kind": "assurance_ci_readiness_rollup",
+  "repository": "ao-atlas",
+  "rollup_status": "passed",
+  "summary": {
+    "repositories_covered": 3,
+    "hosted_ci_repositories": 3,
+    "local_verification_repositories": 3,
+    "total_hosted_checks": 9,
+    "failed_hosted_checks": 0,
+    "rollup_conclusion": "assurance_native_ci_ready"
+  },
+  "repositories": [
+    {
+      "name": "ao-arena",
+      "hosted_ci_pr": 1,
+      "merge_commit": "8d926890b1df472729750bd2c2129e4b73fc9de9",
+      "workflow": ".github/workflows/ci.yml",
+      "hosted_ci_status": "passed",
+      "local_verification_node": "mission-recommendation-consolidation-month1-20",
+      "hosted_ci_node": "mission-recommendation-consolidation-month1-19",
+      "checks": [
+        "native-checks (ubuntu-latest)",
+        "native-checks (macos-latest)",
+        "native-checks (windows-latest)"
+      ]
+    },
+    {
+      "name": "ao-crucible",
+      "hosted_ci_pr": 1,
+      "merge_commit": "3fb2311ffa6efc2374089c5085b6b894236fcf21",
+      "workflow": ".github/workflows/ci.yml",
+      "hosted_ci_status": "passed",
+      "local_verification_node": "mission-recommendation-consolidation-month1-22",
+      "hosted_ci_node": "mission-recommendation-consolidation-month1-21",
+      "checks": [
+        "native-checks (ubuntu-latest)",
+        "native-checks (macos-latest)",
+        "native-checks (windows-latest)"
+      ]
+    },
+    {
+      "name": "ao-sentinel",
+      "hosted_ci_pr": 36,
+      "merge_commit": "a4b5d64f15a0f57fbd9b7f8b518dbab031fe3cde",
+      "workflow": ".github/workflows/ci.yml",
+      "hosted_ci_status": "passed",
+      "local_verification_node": "mission-recommendation-consolidation-month1-24",
+      "hosted_ci_node": "mission-recommendation-consolidation-month1-23",
+      "support_repair": "portable tmp-output guard",
+      "checks": [
+        "native-checks (ubuntu-latest)",
+        "native-checks (macos-latest)",
+        "native-checks (windows-latest)"
+      ]
+    }
+  ],
+  "source_nodes": [
+    "mission-recommendation-consolidation-month1-19",
+    "mission-recommendation-consolidation-month1-20",
+    "mission-recommendation-consolidation-month1-21",
+    "mission-recommendation-consolidation-month1-22",
+    "mission-recommendation-consolidation-month1-23",
+    "mission-recommendation-consolidation-month1-24"
+  ],
+  "rsi_remains_denied": true
+}

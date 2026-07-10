@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-25",
+  "status": "passed",
+  "generated_at_utc": "2026-07-10T18:48:55Z",
+  "commands": [
+    "jq validation of assurance-ci-readiness-rollup.json",
+    "AO Atlas evidence verification: go test ./... -count=1",
+    "AO Atlas evidence verification: go vet ./...",
+    "AO Atlas evidence verification: go build -o target/atlas-node-25-evidence ./cmd/atlas",
+    "AO Atlas evidence verification: scripts/production-readiness.sh",
+    "AO Atlas evidence verification: scripts/atlas-foundry-roundtrip-smoke.sh --foundry-root ../ao-foundry"
+  ],
+  "rollup": {
+    "path": "docs/evidence/ao-stack-consolidation-month1-wave-v01/nodes/mission-recommendation-consolidation-month1-25/assurance-ci-readiness-rollup.json",
+    "repositories_covered": 3,
+    "total_hosted_checks": 9,
+    "failed_hosted_checks": 0,
+    "status": "passed"
+  }
+}
