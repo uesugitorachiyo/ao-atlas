@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.p0b.candidate-record.v0.1",
+  "status": "completed",
+  "node_id": "mission-recommendation-p0b-contract-convergence-20",
+  "candidate": "Emit Foundry import for exactly one ready P0-B implementation node.",
+  "implementation_repo": "ao-atlas",
+  "branch": "codex/p0b-node-20-foundry-import-one",
+  "files_changed": [
+    "internal/atlas/mission_p0b_foundry_import_one_node_test.go",
+    "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-20"
+  ],
+  "digest_fields": [
+    "foundry_import.tasks",
+    "node_id",
+    "task_id",
+    "authority_boundary",
+    "schedules_work",
+    "executes_work",
+    "approves_work"
+  ]
+}
