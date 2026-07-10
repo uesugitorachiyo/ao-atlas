@@ -1,0 +1,61 @@
+{
+  "contract_version": "ao.atlas.factory-task.v0.1",
+  "id": "mission-recommendation-month2-contract-convergence-14-task",
+  "objective": "Coordinate ao-architecture No copied schema without owner guard through a bounded Atlas compatibility evidence node with no promotion.",
+  "target_factory_repo": "ao-atlas",
+  "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-14",
+  "mutation_class": "low_risk_code",
+  "acceptance_criteria": [
+    "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+    "Atlas final response remains denied while ready work or exact next actions remain"
+  ],
+  "non_goals": [
+    "do not execute Foundry work from Atlas",
+    "do not widen AO authority or claim broad RSI"
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "examples",
+    "docs/evidence"
+  ],
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "rollback_scope": [
+    "revert node-specific Atlas changes and generated evidence"
+  ],
+  "verification_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ],
+  "required_evidence": [
+    "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+    "source_recommendation:month2-contract-convergence-14",
+    "source_task_digest:sha256:b527f0b2203815ff9f09b42eb2a04b7418734d341fb2424017e2e2360e3cd86b"
+  ],
+  "safety_limits": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates without separate authorization",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "dependency_refs": [
+    "mission-recommendation-month2-contract-convergence-13"
+  ],
+  "context_pack_refs": []
+}

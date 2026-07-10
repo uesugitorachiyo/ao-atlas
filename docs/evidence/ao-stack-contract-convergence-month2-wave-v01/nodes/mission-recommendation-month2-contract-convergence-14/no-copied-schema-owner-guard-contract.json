@@ -1,0 +1,80 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "no_copied_schema_without_owner_guard",
+  "node_id": "mission-recommendation-month2-contract-convergence-14",
+  "status": "partial_proposed_owner_guard",
+  "producer": "ao-architecture",
+  "consumer": "ao-atlas",
+  "canonical_owner_expected": "ao-covenant",
+  "source_commit": "7ca55c4dae9ad85799f83d7d684392e53aa448a0",
+  "source_files": [
+    {
+      "path": "stack/contract-owner-registry.json",
+      "digest": "sha256:c33847ce707a268ce2ec4538861e2c2c1a8bff4721858fc2e3d4920e986e5e94",
+      "fields_checked": [
+        "status",
+        "registry_authority",
+        "assignments",
+        "coverage",
+        "safety"
+      ]
+    },
+    {
+      "path": "stack/contract-inventory.json",
+      "digest": "sha256:d6672e07bd80e4120bec33ca761bc73ad35dabb877507af2cd7a0d21b7fa5bc0",
+      "fields_checked": [
+        "contract_owner_status",
+        "proposed_registry_owner",
+        "schema_document_count",
+        "distinct_schema_version_count"
+      ]
+    },
+    {
+      "path": "stack/contract-compatibility-matrix.json",
+      "digest": "sha256:39f89b2576480861e9f77e6fb03842a8cdfb6046aecda307e5d909ab65cac2ed",
+      "fields_checked": [
+        "status",
+        "registry_owner",
+        "edges",
+        "compatibility_status",
+        "coverage"
+      ]
+    },
+    {
+      "path": "scripts/verify_contract_owner_registry.py",
+      "digest": "sha256:e96f32db337082c82c79cbcb39ffff0f89a1b9bcf19c9d1e25af5a24524b9363",
+      "fields_checked": [
+        "status proposed",
+        "assignment checks",
+        "safety checks"
+      ]
+    },
+    {
+      "path": "scripts/verify_compatibility_matrix.py",
+      "digest": "sha256:dc5969ed2eb5302230327e4f54a708eaee44ca3e68a1ce33c69985cfaea0df7f",
+      "fields_checked": [
+        "pending_canonical_vectors",
+        "coverage gate"
+      ]
+    }
+  ],
+  "owner_registry_status": "proposed",
+  "compatibility_matrix_status": "proposed",
+  "inventory_owner_status": "pending_owner_assignment",
+  "unowned_schema_rejection_guard_present": false,
+  "copy_guard_active": false,
+  "canonical_vectors_required": true,
+  "consumer_tests_required": true,
+  "compatibility_gate_complete": false,
+  "safe_to_execute": false,
+  "planning_only": true,
+  "provider_calls": false,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
