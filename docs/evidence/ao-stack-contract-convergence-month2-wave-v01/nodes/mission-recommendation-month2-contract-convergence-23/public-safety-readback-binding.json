@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-23",
+  "status": "bound",
+  "source_readback_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-23/recommendation-readback-before-public-safety-binding.json",
+  "source_readback_digest": "sha256:2a7e870a551d25b7ab19a776a310047bbfb8a5578018ca42b7ddd9177ea75a67",
+  "sentinel_evidence_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-23/sentinel_public_safety.json",
+  "sentinel_evidence_digest": "sha256:69801e0ec52f210cd10e165524545b9f5ee811bbdb4647dfa464475ec41f651e",
+  "verification_summary_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-23/verification.json",
+  "verification_summary_digest": "sha256:fa0211f2852c3f93a785f1a3c1b297883fe45c08404c800c1c5e4b5a45722571",
+  "bound_public_safety_scan_status": "passed",
+  "previous_public_safety_scan_status": "required_pending_verification",
+  "ready_nodes_after_binding": 17,
+  "final_response_allowed_after_binding": false,
+  "rsi_remains_denied": true
+}

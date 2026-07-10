@@ -1,0 +1,48 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "covenant_generated_rust_type_compatibility",
+  "node_id": "mission-recommendation-month2-contract-convergence-23",
+  "task_id": "mission-recommendation-month2-contract-convergence-23-task",
+  "source_owner": "ao-covenant",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "compatibility_audit",
+  "status": "blocked_missing_rust_consumer_contract",
+  "producer": "ao-covenant",
+  "consumer": "ao2-control-plane",
+  "producer_language": "go",
+  "consumer_language": "rust",
+  "producer_contract": {
+    "schema_id": "covenant.contract.v1",
+    "type_strategy": "handwritten_go_types",
+    "generator_present": false
+  },
+  "consumer_contract": {
+    "schema_id": null,
+    "type_strategy": "ao2 canonical JSON helper only",
+    "generated_types_present": false,
+    "covenant_schema_reference_present": false
+  },
+  "compatibility_status": "planning_only",
+  "required_gates": [
+    "cross-language contract owner",
+    "generator or explicit handwritten compatibility policy",
+    "canonical Covenant contract vectors",
+    "Rust encode/decode round-trip",
+    "unknown field policy",
+    "schema version compatibility gate"
+  ],
+  "current_gap": "AO Covenant has no Rust source or Cargo manifest, and AO2 Control Plane only consumes its own ao2-canonical-v1 vectors; no Covenant contract Rust consumer or generated type contract was found",
+  "compatibility_gate": "blocked_until_covenant_rust_consumer_and_cross_language_vectors_exist",
+  "source_commit": "ccfdd28751c5a5af9f00cf34950bcf6f439e0f24",
+  "consumer_commit": "6226dcc585d16871cd6ff9d7638628de465b6221",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

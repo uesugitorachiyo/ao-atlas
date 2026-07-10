@@ -1,0 +1,45 @@
+{
+  "contract_version": "ao.atlas.foundry-continuation-handoff.v0.1",
+  "id": "ao-atlas-recommendation-wave-mission-56bed010dd085a0f-month2-contract-convergence-v01-foundry-import-continuation-handoff",
+  "target_folder": "../ao-foundry",
+  "command": "codex --yolo",
+  "next_recommended_action": "Move to ../ao-foundry; Run codex --yolo; Paste this prompt",
+  "prompt": "You are AO Foundry. Continue from the AO Atlas first-phase handoff.\n\nSource artifacts:\n- Blueprint pack: not_provided\n- Atlas import: not_provided\n- Atlas workgraph: docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-22/workgraph-after.json\n- Foundry import: docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-23/foundry-import/foundry-import.json\n\nCurrent Atlas readback:\n- first safe node: mission-recommendation-month2-contract-convergence-23\n- total nodes: 40\n- completed nodes: 22\n- ready nodes: 18\n- blocked nodes: 0\n- class boundary: Atlas import only for low_risk_code; Foundry must preserve Atlas no-execution boundary\n\nRequired continuation behavior:\n- Move to AO Foundry.\n- Run codex --yolo.\n- Paste this prompt.\n- Import and validate the Foundry import.\n- do not stop after import validation.\n- do not stop after one gate artifact.\n- do not stop after one node.\n- Continue until all generated slices/tasks/nodes are consumed or a true hard blocker remains.\n- If evidence/schema/readback support is missing and can be safely implemented, implement it with PR/CI/merge.\n\nHard safety prohibitions:\n- Atlas must not execute live mutation\n- no direct main mutation\n- no release deploy publish upload tag provider call credential use dependency update auth policy widening secret env exposure or config expansion\n- do not claim fully_unsupervised_complex_mutation or RSI proof\n- do not claim complex_repo_mutation is live-proven unless downstream evidence proves it\n- fully_unsupervised_complex_mutation remains denied.\n- RSI remains denied.\n\nStop conditions:\n- done\n- final denial\n- hard blocker\n- CI failure\n- unsafe scope drift\n- kill switch\n\nStop only on done, final denial, hard blocker, CI failure, unsafe scope drift, or kill switch.\n",
+  "blueprint_pack_path": "not_provided",
+  "atlas_import_path": "not_provided",
+  "workgraph_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-22/workgraph-after.json",
+  "foundry_import_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-23/foundry-import/foundry-import.json",
+  "mission_continuation_evidence_path": "not_provided",
+  "first_safe_node": "mission-recommendation-month2-contract-convergence-23",
+  "total_node_count": 40,
+  "completed_node_count": 22,
+  "blocked_node_count": 0,
+  "ready_node_count": 18,
+  "class_boundary": "Atlas import only for low_risk_code; Foundry must preserve Atlas no-execution boundary",
+  "stop_conditions": [
+    "done",
+    "final denial",
+    "hard blocker",
+    "CI failure",
+    "unsafe scope drift",
+    "kill switch"
+  ],
+  "safety_prohibitions": [
+    "Atlas must not execute live mutation",
+    "no direct main mutation",
+    "no release deploy publish upload tag provider call credential use dependency update auth policy widening secret env exposure or config expansion",
+    "do not claim fully_unsupervised_complex_mutation or RSI proof",
+    "do not claim complex_repo_mutation is live-proven unless downstream evidence proves it"
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "handoff_phase": "pre_node_execution",
+  "source_readback_state": "checkpoint_before_active_node_completion",
+  "expected_post_node_readback": {
+    "completed_nodes": 23,
+    "ready_nodes": 17,
+    "next_executable_node": "mission-recommendation-month2-contract-convergence-24",
+    "final_response_allowed": false
+  }
+}

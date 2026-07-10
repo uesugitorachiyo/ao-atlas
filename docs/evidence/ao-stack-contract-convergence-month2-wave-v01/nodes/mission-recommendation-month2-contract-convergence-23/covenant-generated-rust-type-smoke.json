@@ -1,0 +1,92 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "covenant_generated_rust_type_smoke",
+  "node_id": "mission-recommendation-month2-contract-convergence-23",
+  "task_id": "mission-recommendation-month2-contract-convergence-23-task",
+  "status": "blocked_missing_rust_type_path",
+  "source_owner": "ao-covenant",
+  "source_repository": "ao-covenant",
+  "source_commit": "ccfdd28751c5a5af9f00cf34950bcf6f439e0f24",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "compatibility_audit",
+  "source_files": [
+    {
+      "path": "internal/contract/types.go",
+      "digest": "sha256:cb0f7a971a964ab643c1d29ae5436609a3876a3032f77f9a2bc51404dfd617be",
+      "role": "handwritten Covenant contract types"
+    },
+    {
+      "path": "internal/schema/schema.go",
+      "digest": "sha256:981bedc5bda531c24446fb7d2f51a2fd6f02d59b886364a20e0374f6fd27236f",
+      "role": "embedded Covenant schema registry and validation"
+    },
+    {
+      "path": "internal/contract/contract_test.go",
+      "digest": "sha256:9941b4c1bf42c32acd8a5ad8ab21ff177fe1e91e6da760dd71fc6e922914ea20",
+      "role": "Covenant contract behavior tests"
+    },
+    {
+      "path": "internal/schema/schema_test.go",
+      "digest": "sha256:7f2971d8ded3377c9853d051e56679b13fd5228d580936686f362130a16b8ac1",
+      "role": "Covenant schema validation tests"
+    }
+  ],
+  "observed_contract": {
+    "handwritten_go_types": true,
+    "schema_registry_present": true,
+    "covenant_rust_source_present": false,
+    "covenant_cargo_manifest_present": false,
+    "generated_rust_types_present": false,
+    "code_generator_present": false,
+    "covenant_contract_vector_fixture_present": false,
+    "go_test_all_passed": true
+  },
+  "rust_consumer_audit": {
+    "repository": "ao2-control-plane",
+    "commit": "6226dcc585d16871cd6ff9d7638628de465b6221",
+    "canonicalizer_source": {
+      "path": "crates/ao2-cp-schema/src/canonical.rs",
+      "digest": "sha256:8f1e3a5b69c574b305361cb3c90995ff8e8ffa834c8349e5a17e6b4d61d4822b"
+    },
+    "canonical_test": {
+      "path": "crates/ao2-cp-schema/tests/canonical.rs",
+      "digest": "sha256:aa3baecffd12131169d1e5423c0322d01396addf26fc6fae470f041b327d67a7"
+    },
+    "vector_fixture": {
+      "path": "tests/fixtures/canonical-json-vectors.json",
+      "digest": "sha256:296d1eb7abe9d04e0743dd3e8852f9833f50783cada4a942700d407a2a76fd3f",
+      "algorithm": "ao2-canonical-v1"
+    },
+    "canonical_vector_smoke_passed": true,
+    "covenant_contract_identifier_references_present": false,
+    "covenant_contract_types_present": false,
+    "is_covenant_contract_consumer": false
+  },
+  "smoke_contract_required": [
+    "Covenant source schema digest",
+    "generated Rust type digest",
+    "canonical Covenant contract vector fixture digest",
+    "Rust encode/decode round-trip",
+    "unknown-field behavior",
+    "schema validation result",
+    "producer-consumer schema version"
+  ],
+  "safe_follow_up": [
+    "decide whether Covenant remains Go-only or publish an explicitly owned Rust consumer contract",
+    "if cross-language types are authorized, choose a generator and regeneration command",
+    "add canonical Covenant contract vectors with exact schema ownership and digest binding",
+    "add Rust encode/decode, unknown-field, and schema-version consumer tests",
+    "keep generated output outside public tracked state until ownership and regeneration policy are explicit"
+  ],
+  "current_gate": "blocked_until_rust_type_strategy_and_covenant_consumer_smoke_contract_exist",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

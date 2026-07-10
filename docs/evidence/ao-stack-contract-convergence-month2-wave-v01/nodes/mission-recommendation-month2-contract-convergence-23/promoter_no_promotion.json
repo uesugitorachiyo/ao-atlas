@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-23",
+  "task_id": "mission-recommendation-month2-contract-convergence-23-task",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "scope": "generated Rust type smoke planning only",
+  "summary": "The generated Rust type path is blocked because AO Covenant is Go-only at the inspected source boundary and AO2 Control Plane canonical vectors are not Covenant contract vectors; no cross-language generation or promotion is requested.",
+  "promotion_granted": false
+}
