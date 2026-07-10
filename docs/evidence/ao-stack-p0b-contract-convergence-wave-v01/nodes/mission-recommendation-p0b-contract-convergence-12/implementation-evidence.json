@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.p0b.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-p0b-contract-convergence-12",
+  "repo": "ao-atlas",
+  "implementation_repo": "ao-atlas",
+  "summary": "Atlas now records a typed Blueprint ticket-schema compatibility ledger that binds Blueprint ticket fields to Covenant and Command consumer schema expectations.",
+  "command": "mission recommendations blueprint-ticket-schema-compatibility-ledger",
+  "typed_validator": "typed:blueprint-ticket-schema-compatibility-ledger"
+}

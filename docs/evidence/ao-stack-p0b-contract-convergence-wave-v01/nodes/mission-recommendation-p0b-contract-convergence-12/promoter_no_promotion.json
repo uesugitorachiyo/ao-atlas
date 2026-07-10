@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.p0b.promoter-no-promotion.v0.1",
+  "status": "no_promotion_requested",
+  "node_id": "mission-recommendation-p0b-contract-convergence-12",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "highest_proven_live_class_unchanged": true,
+  "rsi_remains_denied": true
+}

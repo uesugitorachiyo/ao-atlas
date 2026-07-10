@@ -1,0 +1,34 @@
+{
+  "schema": "ao.atlas.blueprint-ticket-schema-compatibility-ledger-input.v0.1",
+  "status": "recorded",
+  "entries": [
+    {
+      "id": "ticket-digest-fields",
+      "blueprint_ticket_schema": "ao.blueprint.authorization-ticket.v0.1",
+      "covenant_ticket_schema": "ao.covenant.authorization-ticket.v0.1",
+      "command_ticket_schema": "ao.command.authorization-ticket-readback.v0.1",
+      "required_fields": [
+        "ticket_sha256",
+        "policy_sha256",
+        "decision_sha256"
+      ],
+      "compatible": true
+    },
+    {
+      "id": "rejection-reason-field",
+      "blueprint_ticket_schema": "ao.blueprint.authorization-ticket.v0.1",
+      "covenant_ticket_schema": "ao.covenant.authorization-ticket.v0.1",
+      "command_ticket_schema": "ao.command.compact-status.v0.1",
+      "required_fields": [
+        "covenant_native_reason",
+        "command_compact_reason"
+      ],
+      "compatible": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
