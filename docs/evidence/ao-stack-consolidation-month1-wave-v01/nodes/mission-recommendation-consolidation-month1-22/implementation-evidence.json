@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "node": "mission-recommendation-consolidation-month1-22",
+  "status": "recorded",
+  "generated_at_utc": "2026-07-10T18:28:24Z",
+  "kind": "crucible_workflow_equivalent_local_verification",
+  "repository": "ao-crucible",
+  "implementation_pr": 1,
+  "merge_commit": "3fb2311ffa6efc2374089c5085b6b894236fcf21",
+  "verified_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/crucible-node-22-local ./cmd/crucible",
+    "git diff --check"
+  ],
+  "rsi_remains_denied": true
+}

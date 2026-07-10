@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.consolidation-rollback-record.v0.1",
+  "node": "mission-recommendation-consolidation-month1-22",
+  "status": "rollback_available",
+  "generated_at_utc": "2026-07-10T18:28:24Z",
+  "rollback_scope": [
+    "No Crucible code rollback required for verification-only node.",
+    "Remove node 22 evidence and progress records if node completion is invalidated."
+  ],
+  "restores_previous_checkpoint": "mission-recommendation-consolidation-month1-21",
+  "data_loss_expected": false,
+  "rsi_remains_denied": true
+}
