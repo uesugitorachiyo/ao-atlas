@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-04",
+  "kind": "authority_inventory_validator",
+  "repository": "ao-architecture",
+  "paths": ["stack/authority-inventory.json", "scripts/verify_topology.py", "scripts/test_verify_topology.py", ".github/workflows/ci.yml"],
+  "pull_request": 94,
+  "merge_commit": "1e052c1764fe352c5711b08ce630034c8e5163af",
+  "migration_started": false,
+  "claims_runtime_execution": false
+}

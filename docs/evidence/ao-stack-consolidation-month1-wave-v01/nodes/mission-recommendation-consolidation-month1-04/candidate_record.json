@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "status": "recorded",
+  "node_id": "mission-recommendation-consolidation-month1-04",
+  "owner": "ao-architecture",
+  "target": "stack/authority-inventory.json and scripts/verify_topology.py",
+  "mutation_class": "low_risk_code",
+  "source_node": "mission-recommendation-consolidation-month1-03",
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

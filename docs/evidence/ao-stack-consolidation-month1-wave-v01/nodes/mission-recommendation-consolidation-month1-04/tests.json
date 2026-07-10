@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed",
+  "node_id": "mission-recommendation-consolidation-month1-04",
+  "commands": ["python3 -m unittest scripts/test_verify_topology.py", "python3 scripts/verify_topology.py", "python3 scripts/verify_architecture.py"],
+  "unit_tests": 2,
+  "authority_domains": 14
+}
