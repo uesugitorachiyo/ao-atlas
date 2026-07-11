@@ -1675,6 +1675,42 @@ type AtlasCovenantTicketSchemaAuthorityLedger struct {
 	RSIRemainsDenied       bool                                            `json:"rsi_remains_denied"`
 }
 
+type AtlasBoundedSignerContractFixture struct {
+	Schema                 string                           `json:"schema"`
+	Status                 string                           `json:"status"`
+	ContractPurpose        string                           `json:"contract_purpose"`
+	SignerCount            int                              `json:"signer_count"`
+	RotationBoundary       string                           `json:"rotation_boundary"`
+	RevocationBoundary     string                           `json:"revocation_boundary"`
+	SignerIdentities       []AtlasBoundedSignerIdentity     `json:"signer_identities"`
+	RequiredBindings       []string                         `json:"required_bindings"`
+	VerificationRules      []AtlasBoundedSignerVerification `json:"verification_rules"`
+	LiveKeyManagement      bool                             `json:"live_key_management"`
+	PolicyWidening         bool                             `json:"policy_widening"`
+	SchedulesWork          bool                             `json:"schedules_work"`
+	ExecutesWork           bool                             `json:"executes_work"`
+	ApprovesWork           bool                             `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                             `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                             `json:"rsi_remains_denied"`
+}
+
+type AtlasBoundedSignerIdentity struct {
+	ID          string `json:"id"`
+	Role        string `json:"role"`
+	KeyRef      string `json:"key_ref"`
+	ValidFrom   string `json:"valid_from"`
+	ValidUntil  string `json:"valid_until"`
+	RevokedAt   string `json:"revoked_at,omitempty"`
+	Revoked     bool   `json:"revoked"`
+	Fingerprint string `json:"fingerprint"`
+}
+
+type AtlasBoundedSignerVerification struct {
+	ID          string `json:"id"`
+	Description string `json:"description"`
+	Required    bool   `json:"required"`
+}
+
 type AtlasPolicyTicketPublicSafetyScanInput struct {
 	Schema                 string   `json:"schema"`
 	Status                 string   `json:"status"`

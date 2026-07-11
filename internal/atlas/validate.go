@@ -117,6 +117,7 @@ const AtlasMissionDashboardClosureBindingContract = "ao.atlas.mission-dashboard-
 const AtlasMissionDashboardProvenanceLinksContract = "ao.atlas.mission-dashboard-provenance-links.v0.1"
 const AtlasMissionDashboardFreshnessChecksContract = "ao.atlas.mission-dashboard-freshness-checks.v0.1"
 const AtlasMissionDashboardCompactFiltersContract = "ao.atlas.mission-dashboard-compact-filters.v0.1"
+const AtlasBoundedSignerContractFixtureContract = "ao.atlas.bounded-signer-contract-fixture.v0.1"
 const AOMissionRefactoringRecommendationsContract = "ao.mission.refactoring-recommendations.v0.1"
 const AtlasRecommendationNextTrackDecisionContract = "ao.atlas.recommendation-next-track-decision.v0.1"
 const AtlasConsumedRecommendationLedgerContract = "ao.atlas.consumed-recommendation-ledger.v0.1"

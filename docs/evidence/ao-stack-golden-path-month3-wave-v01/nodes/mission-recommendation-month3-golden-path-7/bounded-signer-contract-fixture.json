@@ -1,0 +1,68 @@
+{
+  "schema": "ao.atlas.bounded-signer-contract-fixture.v0.1",
+  "status": "bounded_signer_contract_ready",
+  "contract_purpose": "golden_path_signed_assurance_input_verification",
+  "signer_count": 2,
+  "rotation_boundary": "overlap_required",
+  "revocation_boundary": "deny_on_or_after_revoked_at",
+  "signer_identities": [
+    {
+      "id": "ao-assurance-primary-2026q3",
+      "role": "assurance_input_signer",
+      "key_ref": "covenant://signers/ao-assurance-primary-2026q3",
+      "valid_from": "2026-07-10T00:00:00Z",
+      "valid_until": "2026-10-10T00:00:00Z",
+      "revoked": false,
+      "fingerprint": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "id": "ao-assurance-previous-2026q2",
+      "role": "assurance_input_signer",
+      "key_ref": "covenant://signers/ao-assurance-previous-2026q2",
+      "valid_from": "2026-04-10T00:00:00Z",
+      "valid_until": "2026-08-10T00:00:00Z",
+      "revoked_at": "2026-08-10T00:00:00Z",
+      "revoked": true,
+      "fingerprint": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+    }
+  ],
+  "required_bindings": [
+    "signer_identity",
+    "signer_fingerprint",
+    "key_ref",
+    "evidence_digest",
+    "base_commit",
+    "issued_at",
+    "expires_at",
+    "revocation_epoch"
+  ],
+  "verification_rules": [
+    {
+      "id": "validity-window",
+      "description": "accept signatures only within signer and ticket validity windows",
+      "required": true
+    },
+    {
+      "id": "rotation-overlap",
+      "description": "require explicit overlap during rotation and deny gaps between old and new signer records",
+      "required": true
+    },
+    {
+      "id": "revocation-deny",
+      "description": "deny signatures issued on or after revoked_at for revoked signer records",
+      "required": true
+    },
+    {
+      "id": "digest-binding",
+      "description": "bind every signature to evidence_digest and base_commit before any promotion readback",
+      "required": true
+    }
+  ],
+  "live_key_management": false,
+  "policy_widening": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
