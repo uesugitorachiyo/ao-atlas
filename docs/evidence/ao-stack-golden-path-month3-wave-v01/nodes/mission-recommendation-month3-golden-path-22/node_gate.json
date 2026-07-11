@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-22",
+  "task_id": "mission-recommendation-month3-golden-path-22-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "gate_status": "cleared",
+  "objective": "Add a regression matrix proving default and malformed execution packets cannot invoke a provider or silently claim a changed result.",
+  "source_task_digest": "sha256:3bff891b4bbf1bf6dca9ea4dacaee453e35cd5b4b7f2152dd0e4c40b54844e03",
+  "source_workgraph_digest": "sha256:9db1ff251c760ee9856376201d2d0cd089084df629ea351c131106e53bb6ee23",
+  "safety_boundaries": ["no provider calls", "no credential inspection", "no direct main mutation", "no release deploy publish upload tag", "no dependency updates", "no auth policy config widening", "no broad RSI claim"],
+  "rsi_remains_denied": true
+}

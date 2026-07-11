@@ -1942,6 +1942,29 @@ type AtlasForgeGoalRunEvidenceFixture struct {
 	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasExecutionPacketRegressionCase struct {
+	Name                       string `json:"name"`
+	PacketState                string `json:"packet_state"`
+	ExpectedStatus             string `json:"expected_status"`
+	ProviderInvocationAllowed  bool   `json:"provider_invocation_allowed"`
+	SilentChangedResultAllowed bool   `json:"silent_changed_result_allowed"`
+	ChangedResultClaimed       bool   `json:"changed_result_claimed"`
+}
+
+type AtlasExecutionPacketRegressionMatrix struct {
+	Schema                     string                                `json:"schema"`
+	Status                     string                                `json:"status"`
+	Cases                      []AtlasExecutionPacketRegressionCase `json:"cases"`
+	CaseCount                  int                                   `json:"case_count"`
+	ProviderInvocationAllowed  bool                                  `json:"provider_invocation_allowed"`
+	SilentChangedResultAllowed bool                                  `json:"silent_changed_result_allowed"`
+	SchedulesWork              bool                                  `json:"schedules_work"`
+	ExecutesWork               bool                                  `json:"executes_work"`
+	ApprovesWork               bool                                  `json:"approves_work"`
+	ClaimsAuthorityAdvance     bool                                  `json:"claims_authority_advance"`
+	RSIRemainsDenied           bool                                  `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

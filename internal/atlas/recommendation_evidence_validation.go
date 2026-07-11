@@ -780,6 +780,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:forge-goalrun-evidence-fixture", err
 		}
 		return "typed:forge-goalrun-evidence-fixture", ValidateAtlasForgeGoalRunEvidenceFixture(value)
+	case AtlasExecutionPacketRegressionMatrixContract:
+		value, err := LoadJSON[AtlasExecutionPacketRegressionMatrix](path)
+		if err != nil {
+			return "typed:execution-packet-regression-matrix", err
+		}
+		return "typed:execution-packet-regression-matrix", ValidateAtlasExecutionPacketRegressionMatrix(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
