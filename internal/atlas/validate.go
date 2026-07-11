@@ -160,6 +160,7 @@ const AtlasMonth3OperatorDashboardReadbackContract = "ao.atlas.month3-operator-d
 const AtlasMonth3RestartResumeSoakContract = "ao.atlas.month3-restart-resume-soak.v0.1"
 const AtlasMonth3ProviderModelProvenanceContract = "ao.atlas.month3-provider-model-provenance.v0.1"
 const AtlasMonth3RollbackReplayNegativeContract = "ao.atlas.month3-rollback-replay-negative.v0.1"
+const AtlasMonth3ArchitectureSourceTruthChecklistContract = "ao.atlas.month3-architecture-source-truth-checklist.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"

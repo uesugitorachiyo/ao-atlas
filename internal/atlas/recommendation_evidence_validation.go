@@ -966,6 +966,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-rollback-replay-negative", err
 		}
 		return "typed:month3-rollback-replay-negative", ValidateAtlasMonth3RollbackReplayNegative(value)
+	case AtlasMonth3ArchitectureSourceTruthChecklistContract:
+		value, err := LoadJSON[AtlasMonth3ArchitectureSourceTruthChecklist](path)
+		if err != nil {
+			return "typed:month3-architecture-source-truth", err
+		}
+		return "typed:month3-architecture-source-truth", ValidateAtlasMonth3ArchitectureSourceTruthChecklist(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

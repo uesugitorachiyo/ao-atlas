@@ -1,0 +1,25 @@
+{
+  "contract_version": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-15-architecture-source-truth",
+  "task_id": "mission-recommendation-month3-final-closure-15-architecture-source-truth-task",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "mutation_class": "low_risk_code",
+  "target_factory_repo": "ao-atlas",
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "source_workgraph_digest": "sha256:91adc8cb17666ca29eeae666af41210e65095e040783288269ed1a033115931c",
+  "source_task_digest": "sha256:2c48783d5ff7f1caff745ab66431ab0355ffe858a1303a932292e9968e403f6e",
+  "safety_boundaries": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "rsi_remains_denied": true
+}
