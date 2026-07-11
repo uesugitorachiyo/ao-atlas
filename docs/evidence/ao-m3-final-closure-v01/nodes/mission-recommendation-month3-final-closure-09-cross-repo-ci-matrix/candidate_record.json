@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix",
+  "task_id": "mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix-task",
+  "status": "selected",
+  "objective": "Add cross-repo CI compatibility matrix for Mission Atlas Foundry Covenant Command and AO2.",
+  "selected_candidate": "month3-cross-repo-ci-matrix",
+  "selection_reason": "Node 9 is the next executable node after node 8 and records cross-repo CI compatibility criteria without invoking remote workflows.",
+  "source_recommendation": "month3-final-closure-09-cross-repo-ci-matrix",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "source_task_digest": "sha256:ddda06246d131e7be9db8f51116142c23b6a4f70e797357ad56b666bf8856032",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
