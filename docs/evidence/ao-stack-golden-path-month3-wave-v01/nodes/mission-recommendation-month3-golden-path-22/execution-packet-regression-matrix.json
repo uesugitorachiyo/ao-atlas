@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.execution-packet-regression-matrix.v0.1",
+  "status": "execution_packet_regression_matrix_ready",
+  "cases": [
+    {
+      "name": "default_packet",
+      "packet_state": "default",
+      "expected_status": "denied",
+      "provider_invocation_allowed": false,
+      "silent_changed_result_allowed": false,
+      "changed_result_claimed": false
+    },
+    {
+      "name": "malformed_packet",
+      "packet_state": "malformed",
+      "expected_status": "rejected",
+      "provider_invocation_allowed": false,
+      "silent_changed_result_allowed": false,
+      "changed_result_claimed": false
+    }
+  ],
+  "case_count": 2,
+  "provider_invocation_allowed": false,
+  "silent_changed_result_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

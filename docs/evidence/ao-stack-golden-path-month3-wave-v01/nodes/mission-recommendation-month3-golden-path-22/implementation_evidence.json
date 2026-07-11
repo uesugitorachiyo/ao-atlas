@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-22",
+  "task_id": "mission-recommendation-month3-golden-path-22-task",
+  "status": "implemented",
+  "fixture": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-22/execution-packet-regression-matrix.json",
+  "typed_validator": "typed:execution-packet-regression-matrix",
+  "case_count": 2,
+  "default_packet_covered": true,
+  "malformed_packet_covered": true,
+  "provider_invocation_allowed": false,
+  "silent_changed_result_allowed": false,
+  "rsi_remains_denied": true
+}

@@ -501,6 +501,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "workspace-root-preflight-fixture", run: runMissionRecommendationsWorkspaceRootPreflightFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "bounded-execution-packet-fixture", run: runMissionRecommendationsBoundedExecutionPacketFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "forge-goalrun-evidence-fixture", run: runMissionRecommendationsForgeGoalRunEvidenceFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "execution-packet-regression-matrix", run: runMissionRecommendationsExecutionPacketRegressionMatrix, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
