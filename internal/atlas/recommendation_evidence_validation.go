@@ -732,6 +732,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:canonical-json-vectors", err
 		}
 		return "typed:canonical-json-vectors", ValidateAtlasCanonicalJSONVectors(value)
+	case AtlasCanonicalJSONVectorSmokeChecksContract:
+		value, err := LoadJSON[AtlasCanonicalJSONVectorSmokeChecks](path)
+		if err != nil {
+			return "typed:canonical-json-vector-smoke-checks", err
+		}
+		return "typed:canonical-json-vector-smoke-checks", ValidateAtlasCanonicalJSONVectorSmokeChecks(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

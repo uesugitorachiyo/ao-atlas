@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-14",
+  "task_id": "mission-recommendation-month3-golden-path-14-task",
+  "status": "selected",
+  "candidate": "canonical-json-vector-smoke-checks",
+  "mutation_class": "low_risk_code",
+  "write_scope": ["internal/atlas", "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-14"],
+  "source_digests": {
+    "atlas_base_commit": "sha256:6aaa8c7d939d5039d0546317778372edc0086329",
+    "source_vectors": "sha256:a31b9719afb6f74a3726db6f6d7ec8fc664a444abae378efc8e4219afb4e4231",
+    "smoke_checks_fixture": "sha256:beb57274c1bcf789c8e4b82d54b326ac378a59fc3be514913894d968507213a4"
+  },
+  "no_provider_calls": true,
+  "rsi_remains_denied": true
+}

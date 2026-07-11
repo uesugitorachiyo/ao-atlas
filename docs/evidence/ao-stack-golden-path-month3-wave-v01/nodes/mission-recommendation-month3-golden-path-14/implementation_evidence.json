@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-14",
+  "task_id": "mission-recommendation-month3-golden-path-14-task",
+  "status": "implemented",
+  "fixture": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-14/canonical-json-vector-smoke-checks.json",
+  "source_vectors": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-10/canonical-json-vectors.json",
+  "typed_validator": "typed:canonical-json-vector-smoke-checks",
+  "go_dependency_free": true,
+  "rust_dependency_free": true,
+  "rsi_remains_denied": true
+}

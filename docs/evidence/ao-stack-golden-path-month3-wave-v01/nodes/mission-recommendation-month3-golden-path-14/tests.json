@@ -1,0 +1,8 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-14",
+  "task_id": "mission-recommendation-month3-golden-path-14-task",
+  "status": "passed",
+  "red_green": {"red_command": "go test ./internal/atlas -run TestMonth3CanonicalJSONVectorSmokeChecks -count=1", "red_result": "failed before the canonical-json-vector-smoke-checks builder and CLI existed", "green_command": "go test ./internal/atlas -run TestMonth3CanonicalJSONVectorSmokeChecks -count=1", "green_result": "passed after implementation and fixture generation"},
+  "commands": [{"repo": "ao-atlas", "command": "go test ./internal/atlas -run TestMonth3CanonicalJSONVectorSmokeChecks -count=1", "result": "passed"}]
+}

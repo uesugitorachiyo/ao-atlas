@@ -493,6 +493,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "canonical-contract-registry-manifest", run: runMissionRecommendationsCanonicalContractRegistryManifest, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "contract-compatibility-inventory", run: runMissionRecommendationsContractCompatibilityInventory, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "canonical-json-vectors", run: runMissionRecommendationsCanonicalJSONVectors, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "canonical-json-vector-smoke-checks", run: runMissionRecommendationsCanonicalJSONVectorSmokeChecks, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},

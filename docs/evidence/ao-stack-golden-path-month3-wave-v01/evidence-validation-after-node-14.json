@@ -1,0 +1,2761 @@
+{
+  "schema": "ao.atlas.recommendation-evidence-validation-report.v0.1",
+  "status": "passed",
+  "evidence_root": "docs/evidence/ao-stack-golden-path-month3-wave-v01",
+  "node_root": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes",
+  "node_count": 14,
+  "json_file_count": 334,
+  "validated_json_files": 334,
+  "schema_bound_files": 334,
+  "typed_validator_files": 227,
+  "generic_schema_files": 107,
+  "missing_schema_files": [],
+  "failed_files": [],
+  "missing_required_files": [],
+  "required_filenames": [
+    "node_gate.json",
+    "candidate_record.json",
+    "rollback_record.json",
+    "tests.json",
+    "verification.json",
+    "sentinel_public_safety.json",
+    "promoter_no_promotion.json",
+    "command_readback.json",
+    "run-link.json",
+    "recommendation-readback-after.json",
+    "checkpoint-readback-after.json"
+  ],
+  "required_filenames_covered": true,
+  "schema_counts": {
+    "ao.atlas.blueprint-canonical-preservation-fixture.v0.1": 1,
+    "ao.atlas.bounded-signer-contract-fixture.v0.1": 1,
+    "ao.atlas.candidate-record.v0.1": 14,
+    "ao.atlas.canonical-contract-registry-manifest.v0.1": 1,
+    "ao.atlas.canonical-json-vector-smoke-checks.v0.1": 1,
+    "ao.atlas.canonical-json-vectors.v0.1": 1,
+    "ao.atlas.checkpoint-bundle.v0.1": 14,
+    "ao.atlas.command-covenant-field-parity-fixture.v0.1": 1,
+    "ao.atlas.command-readback.v0.1": 14,
+    "ao.atlas.contract-compatibility-inventory.v0.1": 1,
+    "ao.atlas.external-implementation-pr-evidence.v0.1": 6,
+    "ao.atlas.factory-task.v0.1": 14,
+    "ao.atlas.foundry-canonical-import-fixture.v0.1": 1,
+    "ao.atlas.foundry-continuation-handoff.v0.1": 14,
+    "ao.atlas.foundry-import.v0.1": 28,
+    "ao.atlas.implementation-evidence.v0.1": 14,
+    "ao.atlas.long-recommendation-wave-execution.v0.3": 14,
+    "ao.atlas.node-gate.v0.1": 14,
+    "ao.atlas.promoter-no-promotion.v0.1": 14,
+    "ao.atlas.public-safety-readback-binding.v0.1": 13,
+    "ao.atlas.recommendation-checkpoint-readback.v0.1": 14,
+    "ao.atlas.recommendation-readback.v0.1": 26,
+    "ao.atlas.rollback-record.v0.1": 14,
+    "ao.atlas.run-link-digest-check.v0.1": 13,
+    "ao.atlas.run-link.v0.1": 14,
+    "ao.atlas.scoped-public-safety-scan.v0.1": 13,
+    "ao.atlas.sentinel-public-safety.v0.1": 14,
+    "ao.atlas.stack-instance.v0.1": 3,
+    "ao.atlas.tests-evidence.v0.1": 14,
+    "ao.atlas.verification-evidence.v0.1": 14,
+    "ao.atlas.workgraph.v0.1": 14
+  },
+  "validators": {
+    "generic:schema-marker": 107,
+    "typed:blueprint-canonical-preservation-fixture": 1,
+    "typed:bounded-signer-contract-fixture": 1,
+    "typed:canonical-contract-registry-manifest": 1,
+    "typed:canonical-json-vector-smoke-checks": 1,
+    "typed:canonical-json-vectors": 1,
+    "typed:command-covenant-field-parity-fixture": 1,
+    "typed:command-readback": 14,
+    "typed:contract-compatibility-inventory": 1,
+    "typed:factory-task": 14,
+    "typed:foundry-canonical-import-fixture": 1,
+    "typed:foundry-continuation-handoff": 14,
+    "typed:foundry-import": 28,
+    "typed:promoter-no-promotion": 14,
+    "typed:public-safety-readback-binding": 13,
+    "typed:recommendation-checkpoint-readback": 14,
+    "typed:recommendation-execution-readback": 14,
+    "typed:recommendation-readback": 26,
+    "typed:run-link": 14,
+    "typed:run-link-digest-check": 13,
+    "typed:scoped-public-safety-scan": 13,
+    "typed:sentinel-public-safety": 14,
+    "typed:workgraph": 14
+  },
+  "entries": [
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/ao2-pr-253-evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "ao2-pr-253-evidence.json",
+      "schema": "ao.atlas.external-implementation-pr-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/foundry-import/tasks/mission-recommendation-month3-golden-path-1-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "mission-recommendation-month3-golden-path-1-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/stack-instance.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "stack-instance.json",
+      "schema": "ao.atlas.stack-instance.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-1/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/canonical-json-vectors.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "canonical-json-vectors.json",
+      "schema": "ao.atlas.canonical-json-vectors.v0.1",
+      "validator": "typed:canonical-json-vectors",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/foundry-import/tasks/mission-recommendation-month3-golden-path-10-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "mission-recommendation-month3-golden-path-10-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-10/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/blueprint-canonical-preservation-fixture.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "blueprint-canonical-preservation-fixture.json",
+      "schema": "ao.atlas.blueprint-canonical-preservation-fixture.v0.1",
+      "validator": "typed:blueprint-canonical-preservation-fixture",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/foundry-import/tasks/mission-recommendation-month3-golden-path-11-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "mission-recommendation-month3-golden-path-11-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-11/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/foundry-canonical-import-fixture.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "foundry-canonical-import-fixture.json",
+      "schema": "ao.atlas.foundry-canonical-import-fixture.v0.1",
+      "validator": "typed:foundry-canonical-import-fixture",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/foundry-import/tasks/mission-recommendation-month3-golden-path-12-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "mission-recommendation-month3-golden-path-12-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-12/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/command-covenant-field-parity-fixture.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "command-covenant-field-parity-fixture.json",
+      "schema": "ao.atlas.command-covenant-field-parity-fixture.v0.1",
+      "validator": "typed:command-covenant-field-parity-fixture",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/foundry-import/tasks/mission-recommendation-month3-golden-path-13-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "mission-recommendation-month3-golden-path-13-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-13/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/canonical-json-vector-smoke-checks.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "canonical-json-vector-smoke-checks.json",
+      "schema": "ao.atlas.canonical-json-vector-smoke-checks.v0.1",
+      "validator": "typed:canonical-json-vector-smoke-checks",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/foundry-import/tasks/mission-recommendation-month3-golden-path-14-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "mission-recommendation-month3-golden-path-14-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-14/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/ao2-pr-254-evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "ao2-pr-254-evidence.json",
+      "schema": "ao.atlas.external-implementation-pr-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/foundry-import/tasks/mission-recommendation-month3-golden-path-2-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "mission-recommendation-month3-golden-path-2-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/stack-instance.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "stack-instance.json",
+      "schema": "ao.atlas.stack-instance.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-2/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/ao2-pr-255-evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "ao2-pr-255-evidence.json",
+      "schema": "ao.atlas.external-implementation-pr-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/foundry-import/tasks/mission-recommendation-month3-golden-path-3-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "mission-recommendation-month3-golden-path-3-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/stack-instance.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "stack-instance.json",
+      "schema": "ao.atlas.stack-instance.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-3/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/ao2-pr-256-evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "ao2-pr-256-evidence.json",
+      "schema": "ao.atlas.external-implementation-pr-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/foundry-import/tasks/mission-recommendation-month3-golden-path-4-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "mission-recommendation-month3-golden-path-4-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-4/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/ao2-pr-257-evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "ao2-pr-257-evidence.json",
+      "schema": "ao.atlas.external-implementation-pr-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/foundry-import/tasks/mission-recommendation-month3-golden-path-5-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "mission-recommendation-month3-golden-path-5-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-5/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/ao2-pr-258-evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "ao2-pr-258-evidence.json",
+      "schema": "ao.atlas.external-implementation-pr-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/foundry-import/tasks/mission-recommendation-month3-golden-path-6-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "mission-recommendation-month3-golden-path-6-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-6/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/bounded-signer-contract-fixture.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "bounded-signer-contract-fixture.json",
+      "schema": "ao.atlas.bounded-signer-contract-fixture.v0.1",
+      "validator": "typed:bounded-signer-contract-fixture",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/foundry-import/tasks/mission-recommendation-month3-golden-path-7-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "mission-recommendation-month3-golden-path-7-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-7/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/canonical-contract-registry-manifest.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "canonical-contract-registry-manifest.json",
+      "schema": "ao.atlas.canonical-contract-registry-manifest.v0.1",
+      "validator": "typed:canonical-contract-registry-manifest",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/foundry-import/tasks/mission-recommendation-month3-golden-path-8-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "mission-recommendation-month3-golden-path-8-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-8/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/candidate_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/checkpoint-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "checkpoint-readback-after.json",
+      "schema": "ao.atlas.recommendation-checkpoint-readback.v0.1",
+      "validator": "typed:recommendation-checkpoint-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/checkpoint_bundle.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/command_readback.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "validator": "typed:command-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/contract-compatibility-inventory.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "contract-compatibility-inventory.json",
+      "schema": "ao.atlas.contract-compatibility-inventory.v0.1",
+      "validator": "typed:contract-compatibility-inventory",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/execution-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "execution-readback-after.json",
+      "schema": "ao.atlas.long-recommendation-wave-execution.v0.3",
+      "validator": "typed:recommendation-execution-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/foundry-import/foundry-continuation-handoff.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "foundry-continuation-handoff.json",
+      "schema": "ao.atlas.foundry-continuation-handoff.v0.1",
+      "validator": "typed:foundry-continuation-handoff",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/foundry-import/foundry-import.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/foundry-import/tasks/mission-recommendation-month3-golden-path-9-task.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "mission-recommendation-month3-golden-path-9-task.json",
+      "schema": "ao.atlas.factory-task.v0.1",
+      "validator": "typed:factory-task",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/foundry_import.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "validator": "typed:foundry-import",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/implementation_evidence.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/node_gate.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/promoter_no_promotion.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "validator": "typed:promoter-no-promotion",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/public-safety-readback-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "validator": "typed:public-safety-readback-binding",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/recommendation-readback-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/recommendation-readback-before-public-safety-binding.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "validator": "typed:recommendation-readback",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/rollback_record.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/run-link-digest-check.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "run-link-digest-check.json",
+      "schema": "ao.atlas.run-link-digest-check.v0.1",
+      "validator": "typed:run-link-digest-check",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/run-link.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "run-link.json",
+      "schema": "ao.atlas.run-link.v0.1",
+      "validator": "typed:run-link",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/scoped-public-safety-scan.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "validator": "typed:scoped-public-safety-scan",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/sentinel_public_safety.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "validator": "typed:sentinel-public-safety",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/tests.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/verification.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "validator": "generic:schema-marker",
+      "status": "passed"
+    },
+    {
+      "path": "nodes/mission-recommendation-month3-golden-path-9/workgraph-after.json",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "filename": "workgraph-after.json",
+      "schema": "ao.atlas.workgraph.v0.1",
+      "validator": "typed:workgraph",
+      "status": "passed"
+    }
+  ]
+}
