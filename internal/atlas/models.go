@@ -1908,6 +1908,23 @@ type AtlasWorkspaceRootPreflightFixture struct {
 	RSIRemainsDenied            bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasBoundedExecutionPacketFixture struct {
+	Schema                      string   `json:"schema"`
+	Status                      string   `json:"status"`
+	RequiredEvidence            []string `json:"required_evidence"`
+	RequiredEvidenceCount       int      `json:"required_evidence_count"`
+	IsolatedWorktreeRequired    bool     `json:"isolated_worktree_required"`
+	ExactDigestApprovalRequired bool     `json:"exact_digest_approval_required"`
+	VerifiedDiffRequired        bool     `json:"verified_diff_required"`
+	ReviewedPREvidenceRequired  bool     `json:"reviewed_pr_evidence_required"`
+	RollbackReceiptRequired     bool     `json:"rollback_receipt_required"`
+	SchedulesWork               bool     `json:"schedules_work"`
+	ExecutesWork                bool     `json:"executes_work"`
+	ApprovesWork                bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance      bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied            bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
