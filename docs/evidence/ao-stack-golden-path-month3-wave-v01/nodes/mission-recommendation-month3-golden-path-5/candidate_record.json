@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-5",
+  "task_id": "mission-recommendation-month3-golden-path-5-task",
+  "status": "selected",
+  "source_recommendation": "month3-golden-path-5",
+  "source_task_digest": "sha256:bee5c4517788799da5a10cbac44706c2d26b5e133503a08084fb6bd686109acc",
+  "selected_work": [
+    "Bind policy identity, policy version, and policy digest into canonical AO2 event hashes.",
+    "Prove replay rejects a changed serialized policy binding.",
+    "Record AO2 PR #257, 95 passing CI checks, merge, sync, and branch cleanup."
+  ],
+  "source_digests": {
+    "canonical_input": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+    "ao2_merge_commit": "sha256:bbbf9313e3e1b05c16ec5f6d16e07e75b35c4c7d"
+  },
+  "write_scope": [
+    "ao2/crates/ao2-runtime/src/lib.rs",
+    "ao2/crates/ao2-runtime/tests/approval_replay.rs",
+    "ao2/crates/ao2-runtime/tests/provider_backed_run.rs",
+    "ao2/schemas/run-record.schema.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-5"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

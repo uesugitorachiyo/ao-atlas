@@ -1,0 +1,29 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-5",
+  "task_id": "mission-recommendation-month3-golden-path-5-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "cargo fmt --all -- --check",
+    "cargo clippy --workspace --all-targets -- -D warnings",
+    "cargo test --workspace --all-targets",
+    "git diff --check",
+    "gh pr checks 256: 95 checks passed",
+    "AO2 main HEAD and origin/main synchronized at bbbf9313e3e1b05c16ec5f6d16e07e75b35c4c7d",
+    "local and remote codex/month3-golden-path-5-ao2-replay-matrix branches deleted",
+    "scoped public-safety wording scan over Month 3 node evidence"
+  ],
+  "required_commands": [
+    "AO2 workspace tests and clippy",
+    "PR/CI/merge lifecycle",
+    "branch cleanup",
+    "Atlas evidence and JSON validation",
+    "scoped public-safety wording scan"
+  ],
+  "repair_notes": [
+    "Replay now binds policy and approval control state to an append-only event checkpoint.",
+    "No provider call, credential inspection, dependency update, release, deployment, or promotion was performed.",
+    "RSI remains denied."
+  ]
+}

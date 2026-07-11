@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-5",
+  "task_id": "mission-recommendation-month3-golden-path-5-task",
+  "status": "passed",
+  "red_test": {
+    "command": "cargo test -p ao2-runtime --test approval_replay replay_rejects_run_record -- --nocapture before the checkpoint change",
+    "status": "failed_as_expected",
+    "failure": "replay accepted a changed policy request digest and returned an Ok ReplaySummary before the integrity checkpoint was added."
+  },
+  "targeted_test": {
+    "command": "cargo fmt --all -- --check; cargo clippy -p ao2-runtime --test approval_replay -- -D warnings; cargo test -p ao2-runtime --test approval_replay; cargo test -p ao2-runtime --test provider_backed_run provider_backed_risky_run_uses_sandbox_patch_gate_for_implementer; cargo test -p ao2-runtime --test schema_and_examples",
+    "status": "passed",
+    "output": "The replay fixtures deny changed patch bytes, base commit, policy request digest, and reused approval identifiers."
+  },
+  "regression_test": {
+    "command": "cargo clippy --workspace --all-targets -- -D warnings; cargo test --workspace --all-targets",
+    "status": "passed",
+    "output": "AO2 workspace verification passed locally and 95 GitHub CI checks passed after the final merge candidate."
+  }
+}
