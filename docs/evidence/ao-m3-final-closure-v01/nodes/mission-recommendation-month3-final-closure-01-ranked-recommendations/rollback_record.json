@@ -6,7 +6,7 @@
   "rollback_scope": [
     "revert internal/atlas/mission_golden_path_readiness_matrix.go",
     "revert internal/atlas/mission_golden_path_readiness_matrix_test.go",
-    "revert node-specific evidence under docs/evidence/ao-stack-month3-final-closure-real-golden-path-wave-v01"
+    "revert node-specific evidence under docs/evidence/ao-m3-final-closure-v01"
   ],
   "rollback_requires_provider": false,
   "rollback_requires_release": false,

@@ -6,11 +6,11 @@
   "status": "ready_for_foundry_fixture_import",
   "source_artifacts": [
     {
-      "ref": "docs/evidence/ao-stack-month3-final-closure-real-golden-path-wave-v01/recommendation-workgraph.json",
+      "ref": "docs/evidence/ao-m3-final-closure-v01/recommendation-workgraph.json",
       "digest": "sha256:0f72afaf211267fc986c5bbf7b49f8029077903066339faaf1c4fcc186b74a58"
     },
     {
-      "ref": "docs/evidence/ao-stack-month3-final-closure-real-golden-path-wave-v01/stack-instance.json",
+      "ref": "docs/evidence/ao-m3-final-closure-v01/stack-instance.json",
       "digest": "sha256:b58c7801df17ffab74ccb34028736f20d22721e188448b83edf71a41041a8094"
     }
   ],

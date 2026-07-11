@@ -6,7 +6,7 @@
   "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
   "wave_digest": "sha256:e189d7d676b0372f0c313811a55966b2d61d33b206e6a2343b4320b275d21f47",
   "workgraph_digest": "sha256:14b25a5b85cb93dc97a166a03411b07ef7552e553f9f93e2e94547183502c740",
-  "evidence_root": "docs/evidence/ao-stack-month3-final-closure-real-golden-path-wave-v01",
+  "evidence_root": "docs/evidence/ao-m3-final-closure-v01",
   "supervisor": {
     "contract_version": "ao.atlas.long-run-supervisor.v0.2",
     "min_nodes": 20,
@@ -19,8 +19,8 @@
     "final_report_contract": "ao.atlas.month3-final-closure-report.v0.1"
   },
   "started_at": "2026-07-11T13:05:42Z",
-  "completed_at": "2026-07-11T13:11:43Z",
-  "elapsed_minutes": 14,
+  "completed_at": "2026-07-11T13:15:42Z",
+  "elapsed_minutes": 27,
   "min_minutes_met": false,
   "lease_time_status": "minimum_minutes_unmet",
   "total_nodes": 30,

@@ -15,8 +15,8 @@ You are AO Foundry. Continue from the AO Atlas first-phase handoff.
 Source artifacts:
 - Blueprint pack: not_provided
 - Atlas import: not_provided
-- Atlas workgraph: docs/evidence/ao-stack-month3-final-closure-real-golden-path-wave-v01/recommendation-workgraph.json
-- Foundry import: docs/evidence/ao-stack-month3-final-closure-real-golden-path-wave-v01/nodes/mission-recommendation-month3-final-closure-01-ranked-recommendations/foundry-import/foundry-import.json
+- Atlas workgraph: docs/evidence/ao-m3-final-closure-v01/recommendation-workgraph.json
+- Foundry import: docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-01-ranked-recommendations/foundry-import/foundry-import.json
 
 Current Atlas readback:
 - first safe node: mission-recommendation-month3-final-closure-01-ranked-recommendations
