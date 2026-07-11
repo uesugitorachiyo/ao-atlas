@@ -2263,6 +2263,23 @@ type AtlasLocalPlatformFixture struct {
 	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasNonAOReplayBindingFixture struct {
+	Schema                 string `json:"schema"`
+	Status                 string `json:"status"`
+	ReplayRepo            string `json:"replay_repo"`
+	TinyNonAORepo          bool   `json:"tiny_non_ao_repo"`
+	ReviewedPREvidence    bool   `json:"reviewed_pr_evidence"`
+	ObserverReadbackBound bool   `json:"observer_readback_bound"`
+	NoPromotionBoundary   bool   `json:"no_promotion_boundary"`
+	PromotionRequested    bool   `json:"promotion_requested"`
+	LiveProviderCalls      bool   `json:"live_provider_calls"`
+	SchedulesWork          bool   `json:"schedules_work"`
+	ExecutesWork           bool   `json:"executes_work"`
+	ApprovesWork           bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

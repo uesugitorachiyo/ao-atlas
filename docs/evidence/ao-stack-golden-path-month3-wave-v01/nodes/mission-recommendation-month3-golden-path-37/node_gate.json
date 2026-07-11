@@ -1,0 +1,25 @@
+{
+  "contract_version": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-37",
+  "task_id": "mission-recommendation-month3-golden-path-37-task",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "mutation_class": "low_risk_code",
+  "target_factory_repo": "ao-atlas",
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "source_workgraph_digest": "sha256:ffa34dc877762100334606d4de1b5050103a1ea41feaaf9f8160bae2b48d2f60",
+  "source_task_digest": "sha256:83c4ec311d7b90c62080b64fedc65dce0f5e96867ca5c360ef83a85d79060093",
+  "safety_boundaries": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "rsi_remains_denied": true
+}
