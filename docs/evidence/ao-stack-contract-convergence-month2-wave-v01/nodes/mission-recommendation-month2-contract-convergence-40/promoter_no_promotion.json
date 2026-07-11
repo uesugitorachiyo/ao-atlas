@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-40",
+  "task_id": "mission-recommendation-month2-contract-convergence-40-task",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "scope": "Final Month 2 Promoter/Command no-promotion and RSI-denial rollup only",
+  "summary": "All prior Promoter and Command readbacks agree no promotion and RSI remains denied; final response is gated on terminal zero-ready-node evidence.",
+  "promotion_granted": false
+}
