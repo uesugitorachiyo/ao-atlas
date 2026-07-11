@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-31",
+  "task_id": "mission-recommendation-month2-contract-convergence-31-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "Covenant hash behavior is audited through existing Go tests without changing policy or event implementation"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/run -run Test(ExecuteRecordsPolicyDecisionsInEvidence|ExecuteDoesNotCallAdapterWhenPolicyDenies|ExecuteDeniesRevokedApprovalTicket) -count=1",
+    "status": "passed",
+    "output": "Covenant policy decision evidence, policy denial, and revoked approval tests passed."
+  },
+  "integration_test": {
+    "command": "go test ./... -count=1",
+    "status": "passed",
+    "output": "Full AO Covenant Go suite passed across approval, bundle, contract, policy, run, schema, selfrun, and verification packages."
+  },
+  "status_test": {
+    "command": "source inspection of EventContentHash and emitPolicyDecision",
+    "status": "passed",
+    "output": "policy_decided events populate decision_id, decision, effect_type, resource, and approval_ticket_id, while eventHashPayload omits those fields."
+  },
+  "next_test": {
+    "command": "negative design assertion: mutate policy fields without changing hashed generic event fields",
+    "status": "passed",
+    "output": "The audit records the missing hash coverage and keeps compatibility/promotion denied."
+  },
+  "objective": "Coordinate ao-covenant Covenant policy hash includes policy fields test through a bounded Atlas compatibility evidence node with no promotion."
+}

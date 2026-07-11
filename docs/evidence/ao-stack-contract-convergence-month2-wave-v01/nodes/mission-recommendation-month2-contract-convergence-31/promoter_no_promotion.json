@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-31",
+  "task_id": "mission-recommendation-month2-contract-convergence-31-task",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "scope": "Covenant policy event hash audit only",
+  "summary": "Covenant policy fields are not fully included in the event content hash; no promotion or RSI claim is requested.",
+  "promotion_granted": false
+}

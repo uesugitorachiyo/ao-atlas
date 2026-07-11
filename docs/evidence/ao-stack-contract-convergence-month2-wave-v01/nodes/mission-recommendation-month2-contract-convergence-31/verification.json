@@ -1,0 +1,40 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-31",
+  "task_id": "mission-recommendation-month2-contract-convergence-31-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "Covenant targeted policy/hash tests",
+    "go test ./... -count=1 in ao-covenant",
+    "go vet ./... in ao-covenant",
+    "go test ./... -count=1 in ao-atlas",
+    "go vet ./... in ao-atlas",
+    "go build -o target/atlas-node31-verification ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "mission recommendations validate-evidence",
+    "mission recommendations run-link-digest-check",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "mission recommendations validate-evidence",
+    "mission recommendations run-link-digest-check",
+    "git diff --check",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "repair_notes": [
+    "Covenant source is read-only in this node; no policy or schema changes are included.",
+    "The event hash omission is recorded as a compatibility blocker rather than repaired under this bounded audit.",
+    "Atlas build output will be written below target and removed before the working-tree check.",
+    "Atlas full verification, Covenant source audit, and scoped Sentinel scan passed with unsafe_match_count=0."
+  ],
+  "rsi_remains_denied": true,
+  "objective": "Coordinate ao-covenant Covenant policy hash includes policy fields test through a bounded Atlas compatibility evidence node with no promotion."
+}
