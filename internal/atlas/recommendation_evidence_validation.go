@@ -756,6 +756,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:signed-assurance-dry-run-fixture", err
 		}
 		return "typed:signed-assurance-dry-run-fixture", ValidateAtlasSignedAssuranceDryRunFixture(value)
+	case AtlasPromoterNoActivationBoundaryFixtureContract:
+		value, err := LoadJSON[AtlasPromoterNoActivationBoundaryFixture](path)
+		if err != nil {
+			return "typed:promoter-no-activation-boundary-fixture", err
+		}
+		return "typed:promoter-no-activation-boundary-fixture", ValidateAtlasPromoterNoActivationBoundaryFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

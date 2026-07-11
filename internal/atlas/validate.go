@@ -125,6 +125,7 @@ const AtlasCanonicalJSONVectorSmokeChecksContract = "ao.atlas.canonical-json-vec
 const AtlasSentinelHostedCIWorkflowFixtureContract = "ao.atlas.sentinel-hosted-ci-workflow-fixture.v0.1"
 const AtlasSentinelSignalStateFixtureContract = "ao.atlas.sentinel-signal-state-fixture.v0.1"
 const AtlasSignedAssuranceDryRunFixtureContract = "ao.atlas.signed-assurance-dry-run-fixture.v0.1"
+const AtlasPromoterNoActivationBoundaryFixtureContract = "ao.atlas.promoter-no-activation-boundary-fixture.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"
