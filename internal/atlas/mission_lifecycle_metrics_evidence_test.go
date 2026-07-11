@@ -30,3 +30,26 @@ func TestMissionLifecycleMetricsEvidenceAcceptsEvidenceBasedCompletion(t *testin
 		t.Fatalf("unexpected lifecycle metrics validator: %q", validator)
 	}
 }
+
+func TestMonth3FinalClosureMissionRecoveryInvariantFixture(t *testing.T) {
+	path := filepath.Join(repoRoot(t), "docs", "evidence", "ao-m3-final-closure-v01", "nodes", "mission-recommendation-month3-final-closure-20-mission-recovery-invariant", "mission-recovery-invariant.json")
+	validator, err := validateRecommendationEvidenceTypedFile(path, MissionLifecycleMetricsEvidenceContract)
+	if err != nil {
+		t.Fatalf("final-closure Mission recovery invariant rejected: %v", err)
+	}
+	if validator != "typed:mission-lifecycle-metrics" {
+		t.Fatalf("unexpected lifecycle metrics validator: %q", validator)
+	}
+	fixture := mustLoadJSON[MissionLifecycleMetricsEvidence](t, path)
+	if fixture.CompletedNodes != 19 ||
+		fixture.EvidenceCompletedNodes != 19 ||
+		fixture.HandoffStepsCountAsCompletedNodes ||
+		fixture.CompletionBasis != "downstream_evidence_not_handoff_steps" ||
+		fixture.SafeToExecute ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.MutatesRepositories ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("final-closure Mission recovery invariant lost handoff boundary: %#v", fixture)
+	}
+}

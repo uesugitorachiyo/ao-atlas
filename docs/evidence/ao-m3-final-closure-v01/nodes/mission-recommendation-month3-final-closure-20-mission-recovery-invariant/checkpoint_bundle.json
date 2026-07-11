@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant",
+  "task_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant-task",
+  "status": "checkpoint_ready",
+  "source_workgraph": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/workgraph-after.json",
+  "source_workgraph_digest": "sha256:39a6e10ed98160ae64f78eb9f758ac7e51f091aad3b52500599a40159bf76752",
+  "expected_completed_nodes_after": 20,
+  "expected_ready_nodes_after": 10,
+  "expected_next_executable_node": "mission-recommendation-month3-final-closure-21-blueprint-auth-digest",
+  "final_response_allowed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

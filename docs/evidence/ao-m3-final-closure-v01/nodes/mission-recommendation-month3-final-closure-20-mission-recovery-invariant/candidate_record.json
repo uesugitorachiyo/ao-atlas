@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant",
+  "task_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant-task",
+  "status": "selected",
+  "objective": "Add Mission recovery invariant fixture for no handoff counted as completed work.",
+  "selected_candidate": "mission-recovery-invariant",
+  "selection_reason": "Node 20 is the next executable node after node 19 and binds Mission recovery accounting to downstream evidence instead of handoff counts.",
+  "source_recommendation": "month3-final-closure-20-mission-recovery-invariant",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "source_task_digest": "sha256:6e9ef11ce8d97fac7380451ac5efac08a98ce5e54658fdba41525bf31e9dd980",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

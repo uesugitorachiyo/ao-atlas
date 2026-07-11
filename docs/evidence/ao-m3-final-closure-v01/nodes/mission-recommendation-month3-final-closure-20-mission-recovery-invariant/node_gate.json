@@ -1,0 +1,25 @@
+{
+  "contract_version": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant",
+  "task_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant-task",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "mutation_class": "low_risk_code",
+  "target_factory_repo": "ao-atlas",
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "source_workgraph_digest": "sha256:39a6e10ed98160ae64f78eb9f758ac7e51f091aad3b52500599a40159bf76752",
+  "source_task_digest": "sha256:6e9ef11ce8d97fac7380451ac5efac08a98ce5e54658fdba41525bf31e9dd980",
+  "safety_boundaries": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "rsi_remains_denied": true
+}
