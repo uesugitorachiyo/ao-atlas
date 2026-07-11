@@ -1,0 +1,113 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-ao-stack-month3-final-closure-real-golden-path-v01-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-ao-stack-month3-final-closure-real-golden-path-v01",
+  "target_instance": "ao-atlas",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-m3-final-closure-v01/recommendation-workgraph.json",
+      "digest": "sha256:0f72afaf211267fc986c5bbf7b49f8029077903066339faaf1c4fcc186b74a58"
+    },
+    {
+      "ref": "docs/evidence/ao-m3-final-closure-v01/stack-instance.json",
+      "digest": "sha256:b58c7801df17ffab74ccb34028736f20d22721e188448b83edf71a41041a8094"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-month3-final-closure-01-ranked-recommendations",
+      "task_id": "mission-recommendation-month3-final-closure-01-ranked-recommendations-task",
+      "path": "tasks/mission-recommendation-month3-final-closure-01-ranked-recommendations-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+        "source_recommendation:month3-final-closure-01-ranked-recommendations",
+        "source_task_digest:sha256:df533d826c63a8492eca50f515f2abf1adb1d1bed5cb86bce9deb67babc5c7aa"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-month3-final-closure-01-ranked-recommendations-task",
+        "objective": "Replace generic golden-path follow-up labels with concrete ranked operator recommendations.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/month3-final-closure-01-ranked-recommendations",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+          "source_recommendation:month3-final-closure-01-ranked-recommendations",
+          "source_task_digest:sha256:df533d826c63a8492eca50f515f2abf1adb1d1bed5cb86bce9deb67babc5c7aa"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": null,
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:34f371a3cef0ac469eda8a56ef15e122dc42815a4ae5940d7ae094b4ff4d7ec8"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

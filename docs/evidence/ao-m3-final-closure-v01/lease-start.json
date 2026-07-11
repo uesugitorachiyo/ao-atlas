@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-lease-start.v0.1",
+  "status": "started",
+  "mission_id": "ao-stack-month3-final-closure-real-golden-path-v01",
+  "target_instance": "ao-atlas",
+  "evidence_root": "docs/evidence/ao-m3-final-closure-v01",
+  "started_at": "2026-07-11T13:05:42Z",
+  "min_minutes": 120,
+  "max_minutes": 180,
+  "continue_if_fast_target": 30,
+  "checkpoint_policy": "after_each_node_or_timed_interval",
+  "wave_digest": "sha256:e189d7d676b0372f0c313811a55966b2d61d33b206e6a2343b4320b275d21f47",
+  "workgraph_digest": "sha256:0f72afaf211267fc986c5bbf7b49f8029077903066339faaf1c4fcc186b74a58",
+  "final_response_allowed": false,
+  "final_response_reason": "lease start marker does not allow final response",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "claims_authority_advance": false
+}

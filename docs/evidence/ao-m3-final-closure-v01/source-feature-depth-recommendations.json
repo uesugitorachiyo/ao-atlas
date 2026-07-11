@@ -1,0 +1,319 @@
+{
+  "schema": "ao.mission.feature-depth-recommendations.v0.3",
+  "mission_id": "ao-stack-month3-final-closure-real-golden-path-v01",
+  "status": "ready",
+  "minimum_tasks": 30,
+  "recommendation_count": 30,
+  "source_evidence_root": "docs/evidence/ao-stack-golden-path-month3-wave-v01",
+  "source_readback_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/recommendation-readback-after.json",
+  "source_assertion_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/golden-path-readiness-matrix.json",
+  "tasks": [
+    {
+      "rank": 1,
+      "id": "month3-final-closure-01-ranked-recommendations",
+      "owner": "ao-atlas",
+      "theme": "ranked-recommendations",
+      "task": "Replace generic golden-path follow-up labels with concrete ranked operator recommendations.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/golden-path-readiness-matrix.json"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "month3-final-closure-02-aggregate-rollup",
+      "owner": "ao-atlas",
+      "theme": "aggregate-rollup",
+      "task": "Add aggregate Promoter Command public-safety closure rollup over all forty nodes.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/recommendation-readback-after.json"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "month3-final-closure-03-terminal-digest-binding",
+      "owner": "ao-atlas",
+      "theme": "digest-binding",
+      "task": "Bind terminal readback counts to final readiness matrix with digest evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/recommendation-readback-after.json"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "month3-final-closure-04-non-ao-dry-run-replay",
+      "owner": "ao-atlas",
+      "theme": "non-ao-replay",
+      "task": "Add non-AO repository dry-run replay binding with fixture-only execution evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-37/non-ao-replay-binding-fixture.json"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "month3-final-closure-05-real-run-acceptance",
+      "owner": "ao-atlas",
+      "theme": "real-run-acceptance",
+      "task": "Define real-run acceptance criteria for three external non-AO repositories.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/golden-path-readiness-matrix.json"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "month3-final-closure-06-control-plane-observer",
+      "owner": "ao-atlas",
+      "theme": "control-plane-observer",
+      "task": "Add control-plane observer readback adapter contract fixtures for mission timeline evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-29/command-readback-adapter-boundary-fixture.json"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "month3-final-closure-07-schema-owner-registry",
+      "owner": "ao-atlas",
+      "theme": "schema-owner-registry",
+      "task": "Draft Covenant-owned schema owner registry proposal with consumer compatibility checks.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-08/canonical-contract-registry-manifest.json"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "month3-final-closure-08-evidence-externalization",
+      "owner": "ao-atlas",
+      "theme": "evidence-externalization",
+      "task": "Add evidence externalization plan for large generated JSON artifacts and retained golden fixtures.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-32/content-addressed-evidence-manifest-fixture.json"
+      ]
+    },
+    {
+      "rank": 9,
+      "id": "month3-final-closure-09-cross-repo-ci-matrix",
+      "owner": "ao-atlas",
+      "theme": "ci-compatibility",
+      "task": "Add cross-repo CI compatibility matrix for Mission Atlas Foundry Covenant Command and AO2.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-16/sentinel-signal-state-fixture.json"
+      ]
+    },
+    {
+      "rank": 10,
+      "id": "month3-final-closure-10-operator-dashboard-readback",
+      "owner": "ao-atlas",
+      "theme": "operator-dashboard",
+      "task": "Add operator dashboard readback fixture for terminal golden-path status and blockers.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/recommendation-readback-after.json"
+      ]
+    },
+    {
+      "rank": 11,
+      "id": "month3-final-closure-11-restart-resume-soak",
+      "owner": "ao-atlas",
+      "theme": "restart-resume",
+      "task": "Add restart resume soak-test fixture for long-running node waves and checkpoint recovery.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/kill-restart-replay-fixture.json"
+      ]
+    },
+    {
+      "rank": 12,
+      "id": "month3-final-closure-12-provider-model-provenance",
+      "owner": "ao-atlas",
+      "theme": "model-provenance",
+      "task": "Add provider and model provenance fields to every model-backed run record fixture.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/golden-path-readiness-matrix.json"
+      ]
+    },
+    {
+      "rank": 13,
+      "id": "month3-final-closure-13-rollback-replay-negative",
+      "owner": "ao-atlas",
+      "theme": "rollback-replay",
+      "task": "Add rollback receipt replay negative cases for stale base commits and digest mismatches.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/rollback-terminal-readback-fixture.json"
+      ]
+    },
+    {
+      "rank": 14,
+      "id": "month3-final-closure-14-compaction-resume-generator",
+      "owner": "ao-atlas",
+      "theme": "compaction-resume",
+      "task": "Add compaction-resume prompt generator from the terminal golden-path readback.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/recommendation-readback-after.json"
+      ]
+    },
+    {
+      "rank": 15,
+      "id": "month3-final-closure-15-architecture-source-truth",
+      "owner": "ao-atlas",
+      "theme": "architecture-source-truth",
+      "task": "Add Architecture source-of-truth correction checklist for current authority statements.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/golden-path-readiness-matrix.json"
+      ]
+    },
+    {
+      "rank": 16,
+      "id": "month3-final-closure-16-no-promotion-rsi-matrix",
+      "owner": "ao-atlas",
+      "theme": "no-promotion-rsi",
+      "task": "Add no-promotion no-RSI assertion matrix across all terminal Month 3 artifacts.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/promoter_no_promotion.json",
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/command_readback.json"
+      ]
+    },
+    {
+      "rank": 17,
+      "id": "month3-final-closure-17-workspace-root-preflight",
+      "owner": "ao-atlas",
+      "theme": "workspace-root-preflight",
+      "task": "Add workspace-root preflight evidence for the real golden-path dry-run repository layout.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-19/workspace-root-preflight-fixture.json"
+      ]
+    },
+    {
+      "rank": 18,
+      "id": "month3-final-closure-18-command-thin-client",
+      "owner": "ao-atlas",
+      "theme": "command-thin-client",
+      "task": "Add Command thin-client boundary fixture that rejects duplicated domain authority.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-29/command-readback-adapter-boundary-fixture.json"
+      ]
+    },
+    {
+      "rank": 19,
+      "id": "month3-final-closure-19-foundry-safe-next-work",
+      "owner": "ao-atlas",
+      "theme": "foundry-safe-next-work",
+      "task": "Add Foundry safe-next-work selection fixture bound to terminal readiness evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-12/foundry-canonical-import-fixture.json"
+      ]
+    },
+    {
+      "rank": 20,
+      "id": "month3-final-closure-20-mission-recovery-invariant",
+      "owner": "ao-atlas",
+      "theme": "mission-recovery",
+      "task": "Add Mission recovery invariant fixture for no handoff counted as completed work.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/recommendation-readback-after.json"
+      ]
+    },
+    {
+      "rank": 21,
+      "id": "month3-final-closure-21-blueprint-auth-digest",
+      "owner": "ao-atlas",
+      "theme": "blueprint-digest",
+      "task": "Add Blueprint authorization digest preservation fixture for downstream Atlas imports.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-11/blueprint-canonical-preservation-fixture.json"
+      ]
+    },
+    {
+      "rank": 22,
+      "id": "month3-final-closure-22-ao2-approval-integrity",
+      "owner": "ao-atlas",
+      "theme": "ao2-approval-integrity",
+      "task": "Add AO2 approval integrity checklist binding proposed bytes and base commit.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/forge-goalrun-evidence-fixture.json"
+      ]
+    },
+    {
+      "rank": 23,
+      "id": "month3-final-closure-23-covenant-policy-replay",
+      "owner": "ao-atlas",
+      "theme": "covenant-policy-replay",
+      "task": "Add Covenant policy hash replay fixture for policy fields that affect acceptance.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-13/command-covenant-field-parity-fixture.json"
+      ]
+    },
+    {
+      "rank": 24,
+      "id": "month3-final-closure-24-sentinel-freshness-signal",
+      "owner": "ao-atlas",
+      "theme": "sentinel-freshness",
+      "task": "Add Sentinel freshness signal fixture using CI and evidence age instead of README wording.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-16/sentinel-signal-state-fixture.json"
+      ]
+    },
+    {
+      "rank": 25,
+      "id": "month3-final-closure-25-promoter-no-activation",
+      "owner": "ao-atlas",
+      "theme": "promoter-boundary",
+      "task": "Add Promoter no-activation boundary fixture requiring signed assurance before promotion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-18/promoter-no-activation-boundary-fixture.json"
+      ]
+    },
+    {
+      "rank": 26,
+      "id": "month3-final-closure-26-forge-goalrun-lifecycle",
+      "owner": "ao-atlas",
+      "theme": "forge-goalrun",
+      "task": "Add Forge GoalRun lifecycle fixture that stays bounded without provider execution.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/forge-goalrun-evidence-fixture.json"
+      ]
+    },
+    {
+      "rank": 27,
+      "id": "month3-final-closure-27-control-plane-index",
+      "owner": "ao-atlas",
+      "theme": "control-plane-index",
+      "task": "Add control-plane durable index migration fixture for mission event search.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-27/indexed-event-query-fixture.json"
+      ]
+    },
+    {
+      "rank": 28,
+      "id": "month3-final-closure-28-rollback-failure-drill",
+      "owner": "ao-atlas",
+      "theme": "rollback-drill",
+      "task": "Add rollback under failure drill plan with observer receipt and operator readback.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/rollback-terminal-readback-fixture.json"
+      ]
+    },
+    {
+      "rank": 29,
+      "id": "month3-final-closure-29-public-safety-claims",
+      "owner": "ao-atlas",
+      "theme": "public-safety-claims",
+      "task": "Add public-safety wording scan for authority claims in generated summaries.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/scoped-public-safety-scan.json"
+      ]
+    },
+    {
+      "rank": 30,
+      "id": "month3-final-closure-30-final-report",
+      "owner": "ao-atlas",
+      "theme": "final-report",
+      "task": "Add final real-golden-path readiness report with proven capabilities and blockers.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/golden-path-readiness-matrix.json",
+        "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/recommendation-readback-after.json"
+      ]
+    }
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

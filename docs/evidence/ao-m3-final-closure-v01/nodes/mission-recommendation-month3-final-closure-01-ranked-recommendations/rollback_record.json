@@ -1,0 +1,15 @@
+{
+  "contract_version": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-01-ranked-recommendations",
+  "task_id": "mission-recommendation-month3-final-closure-01-ranked-recommendations-task",
+  "status": "rollback_ready",
+  "rollback_scope": [
+    "revert internal/atlas/mission_golden_path_readiness_matrix.go",
+    "revert internal/atlas/mission_golden_path_readiness_matrix_test.go",
+    "revert node-specific evidence under docs/evidence/ao-m3-final-closure-v01"
+  ],
+  "rollback_requires_provider": false,
+  "rollback_requires_release": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
