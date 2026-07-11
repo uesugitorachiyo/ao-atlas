@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.policy-version-replay-rejection-input.v0.1",
+  "status": "recorded",
+  "cases": [
+    {
+      "id": "stale-policy-version-after-scope-change",
+      "ticket_sha256": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+      "ticket_policy_version": "covenant-policy-v2026-07-10",
+      "current_policy_version": "covenant-policy-v2026-07-11",
+      "expected_decision": "rejected",
+      "rejection_reason": "policy_version_replay: approval ticket was minted under an older Covenant policy version"
+    },
+    {
+      "id": "replayed-ticket-after-policy-tightening",
+      "ticket_sha256": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+      "ticket_policy_version": "covenant-policy-v2026-07-09",
+      "current_policy_version": "covenant-policy-v2026-07-11",
+      "expected_decision": "rejected",
+      "rejection_reason": "policy_version_replay: stale ticket cannot be replayed after policy tightening"
+    },
+    {
+      "id": "acceptance-policy-field-substitution",
+      "ticket_sha256": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+      "ticket_policy_version": "covenant-policy-v2026-07-08",
+      "current_policy_version": "covenant-policy-v2026-07-11",
+      "expected_decision": "rejected",
+      "rejection_reason": "policy_version_replay: acceptance-affecting policy fields must remain digest-bound"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
