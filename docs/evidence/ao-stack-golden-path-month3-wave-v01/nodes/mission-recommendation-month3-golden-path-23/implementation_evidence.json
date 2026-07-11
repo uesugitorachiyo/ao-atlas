@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-23",
+  "task_id": "mission-recommendation-month3-golden-path-23-task",
+  "status": "implemented",
+  "fixture": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-23/durable-state-migration-metadata.json",
+  "typed_validator": "typed:durable-state-migration-metadata",
+  "current_version": 1,
+  "minimum_supported_version": 1,
+  "unknown_version_handling": "fail_closed",
+  "migration_count": 1,
+  "rsi_remains_denied": true
+}

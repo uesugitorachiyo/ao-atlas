@@ -786,6 +786,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:execution-packet-regression-matrix", err
 		}
 		return "typed:execution-packet-regression-matrix", ValidateAtlasExecutionPacketRegressionMatrix(value)
+	case AtlasDurableStateMigrationMetadataContract:
+		value, err := LoadJSON[AtlasDurableStateMigrationMetadata](path)
+		if err != nil {
+			return "typed:durable-state-migration-metadata", err
+		}
+		return "typed:durable-state-migration-metadata", ValidateAtlasDurableStateMigrationMetadata(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

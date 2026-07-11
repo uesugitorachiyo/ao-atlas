@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-23",
+  "task_id": "mission-recommendation-month3-golden-path-23-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 22,
+  "ready_nodes_before": 18,
+  "expected_completed_nodes_after": 23,
+  "expected_ready_nodes_after": 17,
+  "expected_next_executable_node_after": "mission-recommendation-month3-golden-path-24",
+  "final_response_allowed": false,
+  "promotion_requested": false,
+  "rsi_remains_denied": true,
+  "implementation_repo": "ao-atlas"
+}

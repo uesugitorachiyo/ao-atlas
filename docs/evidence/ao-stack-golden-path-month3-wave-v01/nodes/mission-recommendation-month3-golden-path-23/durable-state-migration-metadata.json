@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.durable-state-migration-metadata.v0.1",
+  "status": "durable_state_migration_metadata_ready",
+  "current_version": 1,
+  "minimum_supported_version": 1,
+  "unknown_version_handling": "fail_closed",
+  "migrations": [
+    {
+      "version": 1,
+      "name": "initial_durable_state_metadata",
+      "description": "Records durable state schema version and fail-closed unknown-version handling.",
+      "reversible": true
+    }
+  ],
+  "migration_count": 1,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
