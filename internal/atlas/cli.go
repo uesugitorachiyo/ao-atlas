@@ -505,6 +505,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "durable-state-migration-metadata", run: runMissionRecommendationsDurableStateMigrationMetadata, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "exactly-once-resume-accounting-fixture", run: runMissionRecommendationsExactlyOnceResumeAccountingFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "replayable-state-packet-fixture", run: runMissionRecommendationsReplayableStatePacketFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "indexed-event-query-fixture", run: runMissionRecommendationsIndexedEventQueryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},

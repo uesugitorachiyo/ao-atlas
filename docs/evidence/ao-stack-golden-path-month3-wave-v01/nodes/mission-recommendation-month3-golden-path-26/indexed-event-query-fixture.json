@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.indexed-event-query-fixture.v0.1",
+  "status": "indexed_event_query_ready",
+  "event_types": [
+    "mission",
+    "policy",
+    "approval",
+    "rollback",
+    "readback"
+  ],
+  "event_type_count": 5,
+  "migration_required": true,
+  "query_index_required": true,
+  "query_fields": [
+    "mission_id",
+    "event_type",
+    "created_at",
+    "source_digest"
+  ],
+  "query_field_count": 4,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

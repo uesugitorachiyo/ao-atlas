@@ -804,6 +804,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:replayable-state-packet-fixture", err
 		}
 		return "typed:replayable-state-packet-fixture", ValidateAtlasReplayableStatePacketFixture(value)
+	case AtlasIndexedEventQueryFixtureContract:
+		value, err := LoadJSON[AtlasIndexedEventQueryFixture](path)
+		if err != nil {
+			return "typed:indexed-event-query-fixture", err
+		}
+		return "typed:indexed-event-query-fixture", ValidateAtlasIndexedEventQueryFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
