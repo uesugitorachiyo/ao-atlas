@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.exactly-once-resume-accounting-fixture.v0.1",
+  "status": "exactly_once_resume_accounting_ready",
+  "scenarios": [
+    {
+      "name": "restart",
+      "expected_completed_delta": 0,
+      "preserves_exactly_once": true
+    },
+    {
+      "name": "lease_expiry",
+      "expected_completed_delta": 0,
+      "preserves_exactly_once": true
+    },
+    {
+      "name": "duplicate_handoff",
+      "expected_completed_delta": 0,
+      "preserves_exactly_once": true
+    }
+  ],
+  "scenario_count": 3,
+  "exactly_once_node_accounting": true,
+  "duplicate_handoff_double_count_allowed": false,
+  "restart_preserves_accounting": true,
+  "lease_expiry_preserves_accounting": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

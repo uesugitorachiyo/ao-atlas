@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-24",
+  "task_id": "mission-recommendation-month3-golden-path-24-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "gate_status": "cleared",
+  "objective": "Add restart, lease expiry, duplicate handoff, and resume tests that preserve exactly-once node accounting.",
+  "source_task_digest": "sha256:315e221c6afd97e859d17f36a932fe80caa393a5bd63b672a6c11473ea249599",
+  "source_workgraph_digest": "sha256:809ab6fa1c56126a0aef53bf2b23f13001c5e0c922f34fb876ceb13243f0b7de",
+  "safety_boundaries": ["no provider calls", "no credential inspection", "no direct main mutation", "no release deploy publish upload tag", "no dependency updates", "no auth policy config widening", "no broad RSI claim"],
+  "rsi_remains_denied": true
+}

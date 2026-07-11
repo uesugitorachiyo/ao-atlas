@@ -131,6 +131,7 @@ const AtlasBoundedExecutionPacketFixtureContract = "ao.atlas.bounded-execution-p
 const AtlasForgeGoalRunEvidenceFixtureContract = "ao.atlas.forge-goalrun-evidence-fixture.v0.1"
 const AtlasExecutionPacketRegressionMatrixContract = "ao.atlas.execution-packet-regression-matrix.v0.1"
 const AtlasDurableStateMigrationMetadataContract = "ao.atlas.durable-state-migration-metadata.v0.1"
+const AtlasExactlyOnceResumeAccountingFixtureContract = "ao.atlas.exactly-once-resume-accounting-fixture.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"
