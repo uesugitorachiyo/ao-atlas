@@ -2374,6 +2374,48 @@ type AtlasMonth3FinalClosureRollup struct {
 	RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasMonth3FinalReadinessReport struct {
+	Schema                             string   `json:"schema"`
+	NodeID                             string   `json:"node_id"`
+	Status                             string   `json:"status"`
+	SourceReadbackPath                 string   `json:"source_readback_path"`
+	SourceReadbackDigest               string   `json:"source_readback_digest"`
+	ReadinessMatrixPath                string   `json:"readiness_matrix_path"`
+	ReadinessMatrixDigest              string   `json:"readiness_matrix_digest"`
+	ClosureRollupPath                  string   `json:"closure_rollup_path"`
+	ClosureRollupDigest                string   `json:"closure_rollup_digest"`
+	ClosureReadbackPath                string   `json:"closure_readback_path"`
+	ClosureReadbackDigest              string   `json:"closure_readback_digest"`
+	SourceCompletedNodes               int      `json:"source_completed_nodes"`
+	SourceReadyNodes                   int      `json:"source_ready_nodes"`
+	SourceBlockedNodes                 int      `json:"source_blocked_nodes"`
+	SourceFailedNodes                  int      `json:"source_failed_nodes"`
+	SourceFinalResponseAllowed         bool     `json:"source_final_response_allowed"`
+	ClosureCompletedNodesBeforeReport  int      `json:"closure_completed_nodes_before_report"`
+	ClosureReadyNodesBeforeReport      int      `json:"closure_ready_nodes_before_report"`
+	ClosureBlockedNodesBeforeReport    int      `json:"closure_blocked_nodes_before_report"`
+	ClosureFailedNodesBeforeReport     int      `json:"closure_failed_nodes_before_report"`
+	ClosureFinalResponseAllowed        bool     `json:"closure_final_response_allowed"`
+	ClosureNextExecutableNode          string   `json:"closure_next_executable_node"`
+	ProvenCapabilities                 []string `json:"proven_capabilities"`
+	ProvenCapabilityCount              int      `json:"proven_capability_count"`
+	UnresolvedBlockers                 []string `json:"unresolved_blockers"`
+	UnresolvedBlockerCount             int      `json:"unresolved_blocker_count"`
+	RecommendedNextActions             []string `json:"recommended_next_actions"`
+	RecommendedNextActionCount         int      `json:"recommended_next_action_count"`
+	AggregatePromotionStatus           string   `json:"aggregate_promotion_status"`
+	PromotionRequested                 bool     `json:"promotion_requested"`
+	PromotionGranted                   bool     `json:"promotion_granted"`
+	PromoterCommandSafetyAgreement     bool     `json:"promoter_command_safety_agreement"`
+	TerminalReadbackBound              bool     `json:"terminal_readback_bound"`
+	FinalClosureReadyForCompletionNode bool     `json:"final_closure_ready_for_completion_node"`
+	SchedulesWork                      bool     `json:"schedules_work"`
+	ExecutesWork                       bool     `json:"executes_work"`
+	ApprovesWork                       bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance             bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied                   bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasMonth3TerminalDigestBinding struct {
 	Schema                    string `json:"schema"`
 	NodeID                    string `json:"node_id"`

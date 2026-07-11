@@ -900,6 +900,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-final-closure-rollup", err
 		}
 		return "typed:month3-final-closure-rollup", ValidateAtlasMonth3FinalClosureRollup(value)
+	case AtlasMonth3FinalReadinessReportContract:
+		value, err := LoadJSON[AtlasMonth3FinalReadinessReport](path)
+		if err != nil {
+			return "typed:month3-final-readiness-report", err
+		}
+		return "typed:month3-final-readiness-report", ValidateAtlasMonth3FinalReadinessReport(value)
 	case AtlasMonth3TerminalDigestBindingContract:
 		value, err := LoadJSON[AtlasMonth3TerminalDigestBinding](path)
 		if err != nil {

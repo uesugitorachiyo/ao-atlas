@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-30-final-report",
+  "task_id": "mission-recommendation-month3-final-closure-30-final-report-task",
+  "status": "checkpoint_ready",
+  "source_workgraph": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-29-public-safety-claims/workgraph-after.json",
+  "expected_next_state": "completed_nodes=30 ready_nodes=0 final_response_allowed=true",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

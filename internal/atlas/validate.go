@@ -149,6 +149,7 @@ const AtlasKillRestartReplayFixtureContract = "ao.atlas.kill-restart-replay-fixt
 const AtlasRollbackTerminalReadbackFixtureContract = "ao.atlas.rollback-terminal-readback-fixture.v0.1"
 const AtlasGoldenPathReadinessMatrixContract = "ao.atlas.golden-path-readiness-matrix.v0.1"
 const AtlasMonth3FinalClosureRollupContract = "ao.atlas.month3-final-closure-rollup.v0.1"
+const AtlasMonth3FinalReadinessReportContract = "ao.atlas.month3-final-readiness-report.v0.1"
 const AtlasMonth3TerminalDigestBindingContract = "ao.atlas.month3-terminal-digest-binding.v0.1"
 const AtlasMonth3NonAODryRunReplayBindingContract = "ao.atlas.month3-non-ao-dry-run-replay.v0.1"
 const AtlasMonth3RealRunAcceptanceCriteriaContract = "ao.atlas.month3-real-run-acceptance-criteria.v0.1"

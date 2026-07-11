@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-30-final-report",
+  "status": "bound",
+  "source_readback_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-30-final-report/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:0c26cd1b07ad56f6b3d1508bf9fb1391554e1a31a89a8c1e29a6f20e1c356690",
+  "sentinel_evidence_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-30-final-report/sentinel_public_safety.json",
+  "sentinel_evidence_digest": "sha256:6aa06a49bb91405edfef71739cc5c4c32edf9535532e3b604f9fc4e14e634566",
+  "verification_summary_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-30-final-report/verification.json",
+  "verification_summary_digest": "sha256:aaefcaa4b656a2cd33f00af0e6f8b858959e0f88ea98b5da3a239af7278a2f15",
+  "bound_public_safety_scan_status": "passed",
+  "previous_public_safety_scan_status": "required_pending_verification",
+  "ready_nodes_after_binding": 0,
+  "final_response_allowed_after_binding": true,
+  "rsi_remains_denied": true
+}

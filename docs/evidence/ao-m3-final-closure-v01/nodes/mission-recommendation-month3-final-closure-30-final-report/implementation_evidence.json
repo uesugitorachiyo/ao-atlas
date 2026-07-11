@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-30-final-report",
+  "task_id": "mission-recommendation-month3-final-closure-30-final-report-task",
+  "status": "implemented",
+  "changed_files": [
+    "internal/atlas/mission_month3_final_readiness_report.go",
+    "internal/atlas/mission_month3_final_readiness_report_cli.go",
+    "internal/atlas/mission_month3_final_readiness_report_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-30-final-report/month3-final-readiness-report.json"
+  ],
+  "summary": "Bound final-closure node 30 to a typed operator handoff report over the completed golden-path matrix, final closure rollup, and pre-terminal closure readback.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
