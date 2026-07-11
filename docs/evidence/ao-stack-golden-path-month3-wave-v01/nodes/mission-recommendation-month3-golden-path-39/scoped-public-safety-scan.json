@@ -1,0 +1,37 @@
+{
+  "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-39",
+  "status": "passed",
+  "scanned_scopes": [
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39"
+  ],
+  "scanned_files": [
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/candidate_record.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/checkpoint_bundle.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/command_readback.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/foundry-import/foundry-continuation-handoff.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/foundry-import/foundry-continuation-prompt.md",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/foundry-import/foundry-import.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/foundry-import/tasks/mission-recommendation-month3-golden-path-39-task.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/foundry_import.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/implementation_evidence.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/node_gate.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/promoter_no_promotion.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/rollback-terminal-readback-fixture.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/rollback_record.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/sentinel_public_safety.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/tests.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-39/verification.json"
+  ],
+  "scanned_file_count": 16,
+  "changed_evidence_files": 15,
+  "changed_prompt_artifacts": 1,
+  "forbidden_patterns_redacted": true,
+  "unsafe_match_count": 0,
+  "public_safety_scan_passed": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

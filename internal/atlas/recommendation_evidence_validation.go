@@ -882,6 +882,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:kill-restart-replay-fixture", err
 		}
 		return "typed:kill-restart-replay-fixture", ValidateAtlasKillRestartReplayFixture(value)
+	case AtlasRollbackTerminalReadbackFixtureContract:
+		value, err := LoadJSON[AtlasRollbackTerminalReadbackFixture](path)
+		if err != nil {
+			return "typed:rollback-terminal-readback-fixture", err
+		}
+		return "typed:rollback-terminal-readback-fixture", ValidateAtlasRollbackTerminalReadbackFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
