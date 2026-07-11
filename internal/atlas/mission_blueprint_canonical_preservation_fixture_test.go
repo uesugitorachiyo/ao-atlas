@@ -58,3 +58,37 @@ func TestMonth3BlueprintCanonicalPreservationFixtureUsesTypedValidator(t *testin
 		t.Fatalf("expected typed blueprint canonical preservation validator, got %s", validator)
 	}
 }
+
+func TestMonth3FinalClosureBlueprintAuthDigestFixture(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-m3-final-closure-v01", "nodes", "mission-recommendation-month3-final-closure-21-blueprint-auth-digest")
+	recordedPath := filepath.Join(nodeDir, "blueprint-canonical-preservation-fixture.json")
+	outPath := filepath.Join(t.TempDir(), "blueprint-canonical-preservation-fixture.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "blueprint-canonical-preservation-fixture",
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("blueprint-canonical-preservation-fixture command failed: %s", out.String())
+	}
+
+	recorded := mustLoadJSON[AtlasBlueprintCanonicalPreservationFixture](t, recordedPath)
+	generated := mustLoadJSON[AtlasBlueprintCanonicalPreservationFixture](t, outPath)
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("final-closure Blueprint auth digest fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	if err := ValidateAtlasBlueprintCanonicalPreservationFixture(recorded); err != nil {
+		t.Fatalf("recorded final-closure Blueprint auth digest fixture invalid: %v", err)
+	}
+	if !recorded.DigestPreserved ||
+		!recorded.CanonicalBytesPreserved ||
+		recorded.SchedulesWork ||
+		recorded.ExecutesWork ||
+		recorded.ApprovesWork ||
+		recorded.ClaimsAuthorityAdvance ||
+		!recorded.RSIRemainsDenied {
+		t.Fatalf("final-closure Blueprint auth digest fixture lost preservation boundary: %#v", recorded)
+	}
+}

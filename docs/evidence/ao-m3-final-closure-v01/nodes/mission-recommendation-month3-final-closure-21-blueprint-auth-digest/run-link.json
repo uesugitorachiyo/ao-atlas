@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-month3-final-closure-21-blueprint-auth-digest-task",
+  "status": "completed",
+  "evidence": {
+    "blueprint_canonical_preservation_fixture": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/blueprint-canonical-preservation-fixture.json",
+    "candidate_record": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/command_readback.json",
+    "foundry_import": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/foundry-import/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/tests.json",
+    "verification": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/verification.json"
+  },
+  "digest": "sha256:2e6fca132d9064ee9d8b3e32e1a4bf39d7428e7da14b9dfed9799af18399eca3"
+}
