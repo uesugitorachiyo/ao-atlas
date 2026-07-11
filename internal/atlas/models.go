@@ -1889,6 +1889,25 @@ type AtlasPromoterNoActivationBoundaryFixture struct {
 	RSIRemainsDenied             bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasWorkspaceRootPreflightFixture struct {
+	Schema                      string `json:"schema"`
+	Status                      string `json:"status"`
+	RepositoryIdentity          string `json:"repository_identity"`
+	RepositoryIdentityValidated bool   `json:"repository_identity_validated"`
+	NonAORepository             bool   `json:"non_ao_repository"`
+	ObjectiveDigest             string `json:"objective_digest"`
+	ObjectiveDigestValidated    bool   `json:"objective_digest_validated"`
+	WorkspaceRoot               string `json:"workspace_root"`
+	WorktreeBoundaryValidated   bool   `json:"worktree_boundary_validated"`
+	SafeNextNode                string `json:"safe_next_node"`
+	SafeNextNodeSelected        bool   `json:"safe_next_node_selected"`
+	SchedulesWork               bool   `json:"schedules_work"`
+	ExecutesWork                bool   `json:"executes_work"`
+	ApprovesWork                bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance      bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied            bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

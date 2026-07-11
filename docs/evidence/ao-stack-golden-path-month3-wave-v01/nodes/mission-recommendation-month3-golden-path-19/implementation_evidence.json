@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-19",
+  "task_id": "mission-recommendation-month3-golden-path-19-task",
+  "status": "implemented",
+  "fixture": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-19/workspace-root-preflight-fixture.json",
+  "typed_validator": "typed:workspace-root-preflight-fixture",
+  "repository_identity_validated": true,
+  "objective_digest_validated": true,
+  "worktree_boundary_validated": true,
+  "safe_next_node_selected": true,
+  "rsi_remains_denied": true
+}

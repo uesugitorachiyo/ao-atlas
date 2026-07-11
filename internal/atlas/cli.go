@@ -498,6 +498,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "sentinel-signal-state-fixture", run: runMissionRecommendationsSentinelSignalStateFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "signed-assurance-dry-run-fixture", run: runMissionRecommendationsSignedAssuranceDryRunFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "promoter-no-activation-boundary-fixture", run: runMissionRecommendationsPromoterNoActivationBoundaryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "workspace-root-preflight-fixture", run: runMissionRecommendationsWorkspaceRootPreflightFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
