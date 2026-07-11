@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.non-ao-replay-binding-fixture.v0.1",
+  "status": "non_ao_replay_binding_ready",
+  "replay_repo": "tiny-non-ao-fixture-repo",
+  "tiny_non_ao_repo": true,
+  "reviewed_pr_evidence": true,
+  "observer_readback_bound": true,
+  "no_promotion_boundary": true,
+  "promotion_requested": false,
+  "live_provider_calls": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

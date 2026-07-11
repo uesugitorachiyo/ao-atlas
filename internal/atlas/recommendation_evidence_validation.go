@@ -870,6 +870,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:local-platform-fixture", err
 		}
 		return "typed:local-platform-fixture", ValidateAtlasLocalPlatformFixture(value)
+	case AtlasNonAOReplayBindingFixtureContract:
+		value, err := LoadJSON[AtlasNonAOReplayBindingFixture](path)
+		if err != nil {
+			return "typed:non-ao-replay-binding-fixture", err
+		}
+		return "typed:non-ao-replay-binding-fixture", ValidateAtlasNonAOReplayBindingFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
