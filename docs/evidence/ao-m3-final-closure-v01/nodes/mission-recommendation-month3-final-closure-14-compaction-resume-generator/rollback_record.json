@@ -1,0 +1,15 @@
+{
+  "contract_version": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-14-compaction-resume-generator",
+  "task_id": "mission-recommendation-month3-final-closure-14-compaction-resume-generator-task",
+  "status": "rollback_ready",
+  "rollback_scope": [
+    "revert internal/atlas/mission_compaction_resume_prompt.go label refinement",
+    "revert internal/atlas/mission_compaction_resume_prompt_test.go Month 3 regression",
+    "revert node-specific evidence under docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-14-compaction-resume-generator"
+  ],
+  "rollback_requires_provider": false,
+  "rollback_requires_release": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-14-compaction-resume-generator",
+  "task_id": "mission-recommendation-month3-final-closure-14-compaction-resume-generator-task",
+  "status": "checkpoint_ready",
+  "source_workgraph": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-13-rollback-replay-negative/workgraph-after.json",
+  "source_workgraph_digest": "sha256:f3322eca5b502702b78aa2b26f8271aaa1fa7cacf480c19a65a5cfa680d33cd6",
+  "expected_completed_nodes_after": 14,
+  "expected_ready_nodes_after": 16,
+  "expected_next_executable_node": "mission-recommendation-month3-final-closure-15-architecture-source-truth",
+  "final_response_allowed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
