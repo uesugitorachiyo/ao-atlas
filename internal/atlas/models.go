@@ -2335,6 +2335,45 @@ type AtlasGoldenPathReadinessMatrix struct {
 	RSIRemainsDenied          bool                            `json:"rsi_remains_denied"`
 }
 
+type AtlasMonth3FinalClosureRollup struct {
+	Schema                         string `json:"schema"`
+	NodeID                         string `json:"node_id"`
+	Status                         string `json:"status"`
+	SourceReadbackPath             string `json:"source_readback_path"`
+	SourceReadbackDigest           string `json:"source_readback_digest"`
+	ReadinessMatrixPath            string `json:"readiness_matrix_path"`
+	ReadinessMatrixDigest          string `json:"readiness_matrix_digest"`
+	PromoterPath                   string `json:"promoter_path"`
+	PromoterDigest                 string `json:"promoter_digest"`
+	CommandPath                    string `json:"command_path"`
+	CommandDigest                  string `json:"command_digest"`
+	PublicSafetyPath               string `json:"public_safety_path"`
+	PublicSafetyDigest             string `json:"public_safety_digest"`
+	SourceCompletedNodes           int    `json:"source_completed_nodes"`
+	SourceReadyNodes               int    `json:"source_ready_nodes"`
+	SourceBlockedNodes             int    `json:"source_blocked_nodes"`
+	SourceFailedNodes              int    `json:"source_failed_nodes"`
+	SourceFinalResponseAllowed     bool   `json:"source_final_response_allowed"`
+	MatrixRecommendationCount      int    `json:"matrix_recommendation_count"`
+	ProvenCapabilityCount          int    `json:"proven_capability_count"`
+	UnresolvedBlockerCount         int    `json:"unresolved_blocker_count"`
+	PromoterStatus                 string `json:"promoter_status"`
+	CommandStatus                  string `json:"command_status"`
+	PublicSafetyStatus             string `json:"public_safety_status"`
+	PublicSafetyScanPassed         bool   `json:"public_safety_scan_passed"`
+	AggregatePromotionStatus       string `json:"aggregate_promotion_status"`
+	PromotionRequested             bool   `json:"promotion_requested"`
+	PromotionGranted               bool   `json:"promotion_granted"`
+	TerminalReadbackBound          bool   `json:"terminal_readback_bound"`
+	MatrixBound                    bool   `json:"matrix_bound"`
+	PromoterCommandSafetyAgreement bool   `json:"promoter_command_safety_agreement"`
+	SchedulesWork                  bool   `json:"schedules_work"`
+	ExecutesWork                   bool   `json:"executes_work"`
+	ApprovesWork                   bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance         bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
