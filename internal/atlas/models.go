@@ -2106,6 +2106,29 @@ type AtlasCommandReadbackAdapterBoundaryFixture struct {
 	RSIRemainsDenied          bool                                         `json:"rsi_remains_denied"`
 }
 
+type AtlasCompactTimelineFilter struct {
+	Name              string `json:"name"`
+	RecordStatus      string `json:"record_status"`
+	DistinguishesFrom string `json:"distinguishes_from"`
+}
+
+type AtlasCompactTimelineFilterFixture struct {
+	Schema                        string                       `json:"schema"`
+	Status                        string                       `json:"status"`
+	Filters                       []AtlasCompactTimelineFilter `json:"filters"`
+	FilterCount                   int                          `json:"filter_count"`
+	StaleRecordsDistinguished     bool                         `json:"stale_records_distinguished"`
+	DuplicateRecordsDistinguished bool                         `json:"duplicate_records_distinguished"`
+	PendingRecordsDistinguished   bool                         `json:"pending_records_distinguished"`
+	DeniedRecordsDistinguished    bool                         `json:"denied_records_distinguished"`
+	CompletedRecordsDistinguished bool                         `json:"completed_records_distinguished"`
+	SchedulesWork                 bool                         `json:"schedules_work"`
+	ExecutesWork                  bool                         `json:"executes_work"`
+	ApprovesWork                  bool                         `json:"approves_work"`
+	ClaimsAuthorityAdvance        bool                         `json:"claims_authority_advance"`
+	RSIRemainsDenied              bool                         `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
