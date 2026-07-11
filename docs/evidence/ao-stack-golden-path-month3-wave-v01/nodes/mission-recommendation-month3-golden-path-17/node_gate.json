@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-17",
+  "task_id": "mission-recommendation-month3-golden-path-17-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "gate_status": "cleared",
+  "objective": "Add dry-run verification of signed assurance inputs, signer identity, evidence digest, and freshness before any promotion decision.",
+  "source_task_digest": "sha256:7e30f100772e26d9885c87efba18b114c60d2e3f1255cbdc97c4c158e97d12cc",
+  "source_workgraph_digest": "sha256:d2b8ffce7993917828a9c2ab945751a788eac367baebc521daf80a6862da1bb5",
+  "safety_boundaries": ["no provider calls", "no credential inspection", "no direct main mutation", "no release deploy publish upload tag", "no dependency updates", "no auth policy config widening", "no broad RSI claim"],
+  "rsi_remains_denied": true
+}
