@@ -930,6 +930,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-schema-owner-registry-proposal", err
 		}
 		return "typed:month3-schema-owner-registry-proposal", ValidateAtlasMonth3SchemaOwnerRegistryProposal(value)
+	case AtlasMonth3EvidenceExternalizationPlanContract:
+		value, err := LoadJSON[AtlasMonth3EvidenceExternalizationPlan](path)
+		if err != nil {
+			return "typed:month3-evidence-externalization-plan", err
+		}
+		return "typed:month3-evidence-externalization-plan", ValidateAtlasMonth3EvidenceExternalizationPlan(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
