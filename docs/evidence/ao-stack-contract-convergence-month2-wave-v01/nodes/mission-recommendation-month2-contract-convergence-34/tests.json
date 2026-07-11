@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-34",
+  "task_id": "mission-recommendation-month2-contract-convergence-34-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "Crucible CI and fixture adversarial behavior is audited through existing Go tests without changing probe or workflow code"
+  },
+  "targeted_test": {
+    "command": "go test ./... -count=1",
+    "status": "passed",
+    "output": "Crucible CLI and internal fixture validation suites passed."
+  },
+  "integration_test": {
+    "command": "go vet ./... && mkdir -p tmp/bin && go build -o tmp/bin/crucible ./cmd/crucible",
+    "status": "passed",
+    "output": "Crucible vet and build passed; generated tmp/bin/crucible was removed after verification."
+  },
+  "status_test": {
+    "command": "inspect .github/workflows/ci.yml",
+    "status": "passed",
+    "output": "Workflow covers pull_request and main push on ubuntu-latest, macos-latest, and windows-latest with go test, go vet, and go build; permissions are contents: read."
+  },
+  "next_test": {
+    "command": "source inspection of fixture probe, assessment, safety scan, and hardening gate paths",
+    "status": "passed",
+    "output": "Default commands are fixture-only and fail closed on live-provider subjects and unsafe paths; adversarial probes remain deterministic fixtures rather than live attacks."
+  },
+  "objective": "Coordinate ao-crucible Crucible hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion."
+}

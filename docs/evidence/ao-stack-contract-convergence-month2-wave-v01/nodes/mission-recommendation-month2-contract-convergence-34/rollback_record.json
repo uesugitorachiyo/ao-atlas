@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-34",
+  "task_id": "mission-recommendation-month2-contract-convergence-34-task",
+  "status": "rollback_available",
+  "rollback_scope": "Atlas evidence node only; no Crucible workflow, probe, provider, or dependency changes",
+  "rollback_command": "remove node-specific Atlas evidence directory and revert the node-only commit before merge",
+  "data_loss_risk": "none; CI/source audit and fixture test evidence only",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "rollback_steps": [
+    "remove this node evidence directory and revert the node-only evidence commit before merge"
+  ],
+  "data_migration_required": false,
+  "operator_data_migration": "none"
+}
