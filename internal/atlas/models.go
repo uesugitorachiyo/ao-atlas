@@ -2200,6 +2200,28 @@ type AtlasFoundryEvidenceSizeBoundaryFixture struct {
 	RSIRemainsDenied              bool                                        `json:"rsi_remains_denied"`
 }
 
+type AtlasRepeatedTaskResultLedgerAttempt struct {
+	Name         string `json:"name"`
+	ResultStatus string `json:"result_status"`
+	Replayable   bool   `json:"replayable"`
+	ProviderCall bool   `json:"provider_call"`
+}
+
+type AtlasRepeatedTaskResultLedgerFixture struct {
+	Schema                 string                                 `json:"schema"`
+	Status                 string                                 `json:"status"`
+	Attempts               []AtlasRepeatedTaskResultLedgerAttempt `json:"attempts"`
+	AttemptCount           int                                    `json:"attempt_count"`
+	DeterministicHarness   bool                                   `json:"deterministic_harness"`
+	ReplayableResultLedger bool                                   `json:"replayable_result_ledger"`
+	LiveProviderCalls      bool                                   `json:"live_provider_calls"`
+	SchedulesWork          bool                                   `json:"schedules_work"`
+	ExecutesWork           bool                                   `json:"executes_work"`
+	ApprovesWork           bool                                   `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                   `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                   `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

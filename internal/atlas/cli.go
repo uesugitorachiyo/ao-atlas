@@ -513,6 +513,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "authority-readiness-inventory-fixture", run: runMissionRecommendationsAuthorityReadinessInventoryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "content-addressed-evidence-manifest-fixture", run: runMissionRecommendationsContentAddressedEvidenceManifestFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-evidence-size-boundary-fixture", run: runMissionRecommendationsFoundryEvidenceSizeBoundaryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "repeated-task-result-ledger-fixture", run: runMissionRecommendationsRepeatedTaskResultLedgerFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},

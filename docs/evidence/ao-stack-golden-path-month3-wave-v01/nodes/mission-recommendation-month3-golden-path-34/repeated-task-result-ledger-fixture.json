@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.repeated-task-result-ledger-fixture.v0.1",
+  "status": "repeated_task_result_ledger_ready",
+  "attempts": [
+    {
+      "name": "task_attempt_1",
+      "result_status": "passed",
+      "replayable": true,
+      "provider_call": false
+    },
+    {
+      "name": "task_attempt_2",
+      "result_status": "passed",
+      "replayable": true,
+      "provider_call": false
+    },
+    {
+      "name": "task_attempt_3",
+      "result_status": "passed",
+      "replayable": true,
+      "provider_call": false
+    }
+  ],
+  "attempt_count": 3,
+  "deterministic_harness": true,
+  "replayable_result_ledger": true,
+  "live_provider_calls": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
