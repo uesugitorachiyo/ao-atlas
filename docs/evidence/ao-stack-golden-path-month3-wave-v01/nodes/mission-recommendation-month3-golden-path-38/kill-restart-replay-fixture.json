@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.kill-restart-replay-fixture.v0.1",
+  "status": "kill_restart_replay_ready",
+  "killed_run_replayed": true,
+  "restart_readback_bound": true,
+  "no_lost_evidence": true,
+  "duplicate_mutation_detected": false,
+  "false_completion_detected": false,
+  "live_provider_calls": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

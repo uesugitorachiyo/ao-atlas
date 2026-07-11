@@ -876,6 +876,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:non-ao-replay-binding-fixture", err
 		}
 		return "typed:non-ao-replay-binding-fixture", ValidateAtlasNonAOReplayBindingFixture(value)
+	case AtlasKillRestartReplayFixtureContract:
+		value, err := LoadJSON[AtlasKillRestartReplayFixture](path)
+		if err != nil {
+			return "typed:kill-restart-replay-fixture", err
+		}
+		return "typed:kill-restart-replay-fixture", ValidateAtlasKillRestartReplayFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
