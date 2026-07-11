@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-33",
+  "task_id": "mission-recommendation-month2-contract-convergence-33-task",
+  "status": "passed",
+  "scan_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01"
+  ],
+  "unsafe_public_claim_detected": false,
+  "promotion_claim_detected": false,
+  "rsi_claim_detected": false,
+  "rsi_remains_denied": true,
+  "scoped_scan": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-33/scoped-public-safety-scan.json",
+  "scope": "Arena hosted CI parity and fixture-evaluation boundary audit",
+  "public_safety_scan_passed": true,
+  "unsafe_match_count": 0
+}

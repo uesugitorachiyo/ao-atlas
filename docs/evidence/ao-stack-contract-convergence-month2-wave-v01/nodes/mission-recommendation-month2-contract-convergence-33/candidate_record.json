@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-33",
+  "task_id": "mission-recommendation-month2-contract-convergence-33-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-33",
+  "source_owner": "ao-arena",
+  "source_task_digest": "sha256:f866ae62d0d8ed73a87367332100847d698a3e0bfc8a8c0720eff86dce4bb54a",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Audit Arena hosted CI workflow parity across Ubuntu, macOS, and Windows.",
+    "Run Arena Go tests, vet, and build checks and inspect the workflow’s read-only permissions and native commands.",
+    "Record the independent limitation that Arena remains fixture-mode by default and comparison scores are deterministic fixture evidence, not real workload evaluation."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-33"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "8d926890b1df472729750bd2c2129e4b73fc9de9",
+  "objective": "Coordinate ao-arena Arena hosted CI workflow parity through a bounded Atlas compatibility evidence node with no promotion.",
+  "selection_reason": "single ready node selected from the post-node-32 workgraph; Arena CI parity and fixture boundary are audited read-only",
+  "mutates_repositories": false
+}
