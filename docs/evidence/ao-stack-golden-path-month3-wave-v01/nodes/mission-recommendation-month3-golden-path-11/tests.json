@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-11",
+  "task_id": "mission-recommendation-month3-golden-path-11-task",
+  "status": "passed",
+  "red_green": {
+    "red_command": "go test ./internal/atlas -run TestMonth3BlueprintCanonicalPreservationFixture -count=1",
+    "red_result": "failed before Blueprint canonical preservation command and typed validator existed",
+    "green_command": "go test ./internal/atlas -run TestMonth3BlueprintCanonicalPreservationFixture -count=1",
+    "green_result": "passed after implementation and recorded fixture generation"
+  },
+  "commands": [
+    {
+      "repo": "ao-atlas",
+      "command": "go test ./internal/atlas -run TestMonth3BlueprintCanonicalPreservationFixture -count=1",
+      "result": "passed"
+    },
+    {
+      "repo": "ao-atlas",
+      "command": "go test ./... -count=1",
+      "result": "passed"
+    }
+  ]
+}

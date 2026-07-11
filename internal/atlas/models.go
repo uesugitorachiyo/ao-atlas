@@ -1783,6 +1783,30 @@ type AtlasCanonicalJSONVector struct {
 	Consumers     []string `json:"consumers"`
 }
 
+type AtlasBlueprintCanonicalPreservationFixture struct {
+	Schema                           string                                    `json:"schema"`
+	Status                           string                                    `json:"status"`
+	WorkspaceRootRef                 string                                    `json:"workspace_root_ref"`
+	BlueprintPackDigest              string                                    `json:"blueprint_pack_digest"`
+	ImportRecordBlueprintPackDigest  string                                    `json:"import_record_blueprint_pack_digest"`
+	FoundrySourceBlueprintPackDigest string                                    `json:"foundry_source_blueprint_pack_digest"`
+	DigestPreserved                  bool                                      `json:"digest_preserved"`
+	CanonicalBytesPreserved          bool                                      `json:"canonical_bytes_preserved"`
+	CanonicalFileCount               int                                       `json:"canonical_file_count"`
+	CanonicalFiles                   []AtlasBlueprintCanonicalPreservationFile `json:"canonical_files"`
+	SchedulesWork                    bool                                      `json:"schedules_work"`
+	ExecutesWork                     bool                                      `json:"executes_work"`
+	ApprovesWork                     bool                                      `json:"approves_work"`
+	ClaimsAuthorityAdvance           bool                                      `json:"claims_authority_advance"`
+	RSIRemainsDenied                 bool                                      `json:"rsi_remains_denied"`
+}
+
+type AtlasBlueprintCanonicalPreservationFile struct {
+	Path      string `json:"path"`
+	Digest    string `json:"digest"`
+	SizeBytes int64  `json:"size_bytes"`
+}
+
 type AtlasPolicyTicketPublicSafetyScanInput struct {
 	Schema                 string   `json:"schema"`
 	Status                 string   `json:"status"`
