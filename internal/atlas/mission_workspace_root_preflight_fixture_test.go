@@ -57,6 +57,41 @@ func TestMonth3WorkspaceRootPreflightFixtureUsesTypedValidator(t *testing.T) {
 	}
 }
 
+func TestMonth3FinalClosureWorkspaceRootPreflightFixture(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-m3-final-closure-v01", "nodes", "mission-recommendation-month3-final-closure-17-workspace-root-preflight")
+	recordedPath := filepath.Join(nodeDir, "workspace-root-preflight-fixture.json")
+	outPath := filepath.Join(t.TempDir(), "workspace-root-preflight-fixture.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "workspace-root-preflight-fixture",
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("workspace-root-preflight-fixture command failed: %s", out.String())
+	}
+
+	recorded := mustLoadJSON[AtlasWorkspaceRootPreflightFixture](t, recordedPath)
+	generated := mustLoadJSON[AtlasWorkspaceRootPreflightFixture](t, outPath)
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("final-closure workspace-root preflight fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	if err := ValidateAtlasWorkspaceRootPreflightFixture(recorded); err != nil {
+		t.Fatalf("recorded final-closure workspace-root preflight fixture invalid: %v", err)
+	}
+	if recorded.RepositoryIdentity != "tiny-non-ao-repository" ||
+		!recorded.NonAORepository ||
+		!recorded.WorktreeBoundaryValidated ||
+		recorded.SchedulesWork ||
+		recorded.ExecutesWork ||
+		recorded.ApprovesWork ||
+		recorded.ClaimsAuthorityAdvance ||
+		!recorded.RSIRemainsDenied {
+		t.Fatalf("final-closure workspace preflight fixture lost dry-run boundary: %#v", recorded)
+	}
+}
+
 func TestMonth3WorkspaceRootPreflightFixtureRejectsMissingWorktreeBoundary(t *testing.T) {
 	fixture, err := BuildAtlasWorkspaceRootPreflightFixture()
 	if err != nil {
