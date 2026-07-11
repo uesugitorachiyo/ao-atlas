@@ -142,6 +142,7 @@ const AtlasAuthorityReadinessInventoryFixtureContract = "ao.atlas.authority-read
 const AtlasContentAddressedEvidenceManifestFixtureContract = "ao.atlas.content-addressed-evidence-manifest-fixture.v0.1"
 const AtlasFoundryEvidenceSizeBoundaryFixtureContract = "ao.atlas.foundry-evidence-size-boundary-fixture.v0.1"
 const AtlasRepeatedTaskResultLedgerFixtureContract = "ao.atlas.repeated-task-result-ledger-fixture.v0.1"
+const AtlasFailureInjectionFuzzingFixtureContract = "ao.atlas.failure-injection-fuzzing-fixture.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"

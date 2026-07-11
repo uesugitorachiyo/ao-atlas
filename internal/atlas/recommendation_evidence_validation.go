@@ -858,6 +858,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:repeated-task-result-ledger-fixture", err
 		}
 		return "typed:repeated-task-result-ledger-fixture", ValidateAtlasRepeatedTaskResultLedgerFixture(value)
+	case AtlasFailureInjectionFuzzingFixtureContract:
+		value, err := LoadJSON[AtlasFailureInjectionFuzzingFixture](path)
+		if err != nil {
+			return "typed:failure-injection-fuzzing-fixture", err
+		}
+		return "typed:failure-injection-fuzzing-fixture", ValidateAtlasFailureInjectionFuzzingFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

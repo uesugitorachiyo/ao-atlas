@@ -53,6 +53,7 @@ func TestMissionRecommendationCommandRegistryDrivesDeterministicDispatchHelp(t *
 		"content-addressed-evidence-manifest-fixture",
 		"foundry-evidence-size-boundary-fixture",
 		"repeated-task-result-ledger-fixture",
+		"failure-injection-fuzzing-fixture",
 		"blueprint-canonical-preservation-fixture",
 		"foundry-canonical-import-fixture",
 		"command-covenant-field-parity-fixture",
@@ -71,7 +72,7 @@ func TestMissionRecommendationCommandRegistryDrivesDeterministicDispatchHelp(t *
 	}
 	text := out.String()
 	if !strings.Contains(text, "mission recommendations requires import, export-next-wave, export-refactoring-wave") ||
-		!strings.Contains(text, "mission-dashboard-compact-filters, bounded-signer-contract-fixture, canonical-contract-registry-manifest, contract-compatibility-inventory, canonical-json-vectors, canonical-json-vector-smoke-checks, sentinel-hosted-ci-workflow-fixture, sentinel-signal-state-fixture, signed-assurance-dry-run-fixture, promoter-no-activation-boundary-fixture, workspace-root-preflight-fixture, bounded-execution-packet-fixture, forge-goalrun-evidence-fixture, execution-packet-regression-matrix, durable-state-migration-metadata, exactly-once-resume-accounting-fixture, replayable-state-packet-fixture, indexed-event-query-fixture, atomic-evidence-transition-fixture, local-backup-restore-fixture, command-readback-adapter-boundary-fixture, compact-timeline-filter-fixture, authority-readiness-inventory-fixture, content-addressed-evidence-manifest-fixture, foundry-evidence-size-boundary-fixture, repeated-task-result-ledger-fixture, blueprint-canonical-preservation-fixture, foundry-canonical-import-fixture, command-covenant-field-parity-fixture, complete-node, resume, or validate-evidence") {
+		!strings.Contains(text, "mission-dashboard-compact-filters, bounded-signer-contract-fixture, canonical-contract-registry-manifest, contract-compatibility-inventory, canonical-json-vectors, canonical-json-vector-smoke-checks, sentinel-hosted-ci-workflow-fixture, sentinel-signal-state-fixture, signed-assurance-dry-run-fixture, promoter-no-activation-boundary-fixture, workspace-root-preflight-fixture, bounded-execution-packet-fixture, forge-goalrun-evidence-fixture, execution-packet-regression-matrix, durable-state-migration-metadata, exactly-once-resume-accounting-fixture, replayable-state-packet-fixture, indexed-event-query-fixture, atomic-evidence-transition-fixture, local-backup-restore-fixture, command-readback-adapter-boundary-fixture, compact-timeline-filter-fixture, authority-readiness-inventory-fixture, content-addressed-evidence-manifest-fixture, foundry-evidence-size-boundary-fixture, repeated-task-result-ledger-fixture, failure-injection-fuzzing-fixture, blueprint-canonical-preservation-fixture, foundry-canonical-import-fixture, command-covenant-field-parity-fixture, complete-node, resume, or validate-evidence") {
 		t.Fatalf("unknown command did not render registry-backed help: %s", text)
 	}
 }
