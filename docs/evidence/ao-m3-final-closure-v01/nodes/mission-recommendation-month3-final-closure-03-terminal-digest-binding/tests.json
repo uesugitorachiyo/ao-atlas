@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.test-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-03-terminal-digest-binding",
+  "task_id": "mission-recommendation-month3-final-closure-03-terminal-digest-binding-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3TerminalDigestBindingMatchesReadbackAndMatrix -count=1 failed on missing AtlasMonth3TerminalDigestBinding type before implementation.",
+  "green_tests": [
+    "go test ./internal/atlas -run TestMonth3TerminalDigestBindingMatchesReadbackAndMatrix -count=1"
+  ],
+  "targeted_regression_passed": true
+}

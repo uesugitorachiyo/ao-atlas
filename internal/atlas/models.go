@@ -2374,6 +2374,34 @@ type AtlasMonth3FinalClosureRollup struct {
 	RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasMonth3TerminalDigestBinding struct {
+	Schema                    string `json:"schema"`
+	NodeID                    string `json:"node_id"`
+	Status                    string `json:"status"`
+	SourceReadbackPath        string `json:"source_readback_path"`
+	SourceReadbackDigest      string `json:"source_readback_digest"`
+	ReadinessMatrixPath       string `json:"readiness_matrix_path"`
+	ReadinessMatrixDigest     string `json:"readiness_matrix_digest"`
+	ReadbackCompletedNodes    int    `json:"readback_completed_nodes"`
+	MatrixCompletedNodes      int    `json:"matrix_completed_nodes"`
+	ReadbackReadyNodes        int    `json:"readback_ready_nodes"`
+	MatrixReadyNodes          int    `json:"matrix_ready_nodes"`
+	ReadbackBlockedNodes      int    `json:"readback_blocked_nodes"`
+	MatrixBlockedNodes        int    `json:"matrix_blocked_nodes"`
+	ReadbackFailedNodes       int    `json:"readback_failed_nodes"`
+	MatrixFailedNodes         int    `json:"matrix_failed_nodes"`
+	NodeCountsMatch           bool   `json:"node_counts_match"`
+	FinalResponseAllowed      bool   `json:"final_response_allowed"`
+	MatrixRecommendationCount int    `json:"matrix_recommendation_count"`
+	NoPromotionStatus         string `json:"no_promotion_status"`
+	PromotionRequested        bool   `json:"promotion_requested"`
+	SchedulesWork             bool   `json:"schedules_work"`
+	ExecutesWork              bool   `json:"executes_work"`
+	ApprovesWork              bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance    bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
