@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-25",
+  "task_id": "mission-recommendation-month3-golden-path-25-task",
+  "status": "rollback_available",
+  "rollback_scope": ["revert replayable state packet fixture command, typed validator, tests, generated fixture, and node evidence through a reviewed PR"],
+  "rollback_command": "Prepare a reviewed Atlas revert PR for the node 25 commit and regenerate the Month 3 readback; do not mutate main directly.",
+  "data_loss_risk": "none; the node adds deterministic planning-only fixtures and evidence",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

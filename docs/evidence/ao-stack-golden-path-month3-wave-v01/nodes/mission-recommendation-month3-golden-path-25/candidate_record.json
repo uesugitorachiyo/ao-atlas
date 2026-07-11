@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-25",
+  "task_id": "mission-recommendation-month3-golden-path-25-task",
+  "status": "selected",
+  "source_recommendation": "month3-golden-path-25",
+  "source_task_digest": "sha256:ac59903307eae80c349e853e3030a702d8916524459e49ddd9de81a4e0c5cbe6",
+  "selected_work": ["Add replayable golden-path state packet fixture.", "Bind handoff, active, completed, and denied states.", "Prevent handoff state from counting as completed work."],
+  "source_digests": {"canonical_input": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8", "source_workgraph": "sha256:9394357ec88717a3163bae83d57f4455b2bed12036e31f566ceb32f32afd10d8", "atlas_base_commit": "sha256:3cd561c960b398ae431be42153fdba44d49b1768", "replayable_state_packet_fixture": "sha256:97b059ab28cf7d643af8768a8b103b83ec6e3fad400e6fa8fcbac6d37a0c10a9"},
+  "write_scope": ["internal/atlas/mission_replayable_state_packet.go", "internal/atlas/mission_replayable_state_packet_cli.go", "internal/atlas/mission_replayable_state_packet_test.go", "internal/atlas/models.go", "internal/atlas/validate.go", "internal/atlas/recommendation_evidence_validation.go", "internal/atlas/cli.go", "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-25"],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
