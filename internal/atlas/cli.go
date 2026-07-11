@@ -508,6 +508,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "indexed-event-query-fixture", run: runMissionRecommendationsIndexedEventQueryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "atomic-evidence-transition-fixture", run: runMissionRecommendationsAtomicEvidenceTransitionFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "local-backup-restore-fixture", run: runMissionRecommendationsLocalBackupRestoreFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "command-readback-adapter-boundary-fixture", run: runMissionRecommendationsCommandReadbackAdapterBoundaryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},

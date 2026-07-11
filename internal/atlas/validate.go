@@ -136,6 +136,7 @@ const AtlasReplayableStatePacketFixtureContract = "ao.atlas.replayable-state-pac
 const AtlasIndexedEventQueryFixtureContract = "ao.atlas.indexed-event-query-fixture.v0.1"
 const AtlasAtomicEvidenceTransitionFixtureContract = "ao.atlas.atomic-evidence-transition-fixture.v0.1"
 const AtlasLocalBackupRestoreFixtureContract = "ao.atlas.local-backup-restore-fixture.v0.1"
+const AtlasCommandReadbackAdapterBoundaryFixtureContract = "ao.atlas.command-readback-adapter-boundary-fixture.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"
