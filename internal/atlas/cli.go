@@ -495,6 +495,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "canonical-json-vectors", run: runMissionRecommendationsCanonicalJSONVectors, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "canonical-json-vector-smoke-checks", run: runMissionRecommendationsCanonicalJSONVectorSmokeChecks, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "sentinel-hosted-ci-workflow-fixture", run: runMissionRecommendationsSentinelHostedCIWorkflowFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "sentinel-signal-state-fixture", run: runMissionRecommendationsSentinelSignalStateFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},

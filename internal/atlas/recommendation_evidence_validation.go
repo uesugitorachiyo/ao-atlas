@@ -744,6 +744,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:sentinel-hosted-ci-workflow-fixture", err
 		}
 		return "typed:sentinel-hosted-ci-workflow-fixture", ValidateAtlasSentinelHostedCIWorkflowFixture(value)
+	case AtlasSentinelSignalStateFixtureContract:
+		value, err := LoadJSON[AtlasSentinelSignalStateFixture](path)
+		if err != nil {
+			return "typed:sentinel-signal-state-fixture", err
+		}
+		return "typed:sentinel-signal-state-fixture", ValidateAtlasSentinelSignalStateFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
