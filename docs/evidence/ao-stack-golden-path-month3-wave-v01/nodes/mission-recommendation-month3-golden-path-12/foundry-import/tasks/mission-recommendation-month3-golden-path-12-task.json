@@ -1,0 +1,61 @@
+{
+  "contract_version": "ao.atlas.factory-task.v0.1",
+  "id": "mission-recommendation-month3-golden-path-12-task",
+  "objective": "Add a bounded Foundry import test that consumes Atlas canonical workgraph fields and rejects stale or ambiguous schema aliases.",
+  "target_factory_repo": "ao-atlas",
+  "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-12",
+  "mutation_class": "low_risk_code",
+  "acceptance_criteria": [
+    "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+    "Atlas final response remains denied while ready work or exact next actions remain"
+  ],
+  "non_goals": [
+    "do not execute Foundry work from Atlas",
+    "do not widen AO authority or claim broad RSI"
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "examples",
+    "docs/evidence"
+  ],
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "rollback_scope": [
+    "revert node-specific Atlas changes and generated evidence"
+  ],
+  "verification_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ],
+  "required_evidence": [
+    "source_digest:sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+    "source_recommendation:month3-golden-path-12",
+    "source_task_digest:sha256:616c925f446dc7dfb15563569b4e3a770ee4378bd3860b377338736cfd142f28"
+  ],
+  "safety_limits": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates without separate authorization",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "dependency_refs": [
+    "mission-recommendation-month3-golden-path-11"
+  ],
+  "context_pack_refs": []
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.foundry-canonical-import-fixture.v0.1",
+  "status": "canonical_import_ready",
+  "workgraph_id": "ao-atlas-recommendation-wave-mission-ao-stack-golden-path-month3-v01",
+  "target_instance": "ao-stack-golden-path-month3-v01",
+  "expected_node": "mission-recommendation-month3-golden-path-12",
+  "expected_task": "mission-recommendation-month3-golden-path-12-task",
+  "canonical_contract_field": "contract_version",
+  "accepted_canonical_import": true,
+  "canonical_workgraph_fields_consumed": true,
+  "rejected_alias_count": 3,
+  "rejected_aliases": [
+    {
+      "alias": "schema",
+      "status": "rejected",
+      "reason": "foundry import schema alias is not accepted; use contract_version"
+    },
+    {
+      "alias": "schema_version",
+      "status": "rejected",
+      "reason": "foundry import schema_version alias is not accepted; use contract_version"
+    },
+    {
+      "alias": "contractVersion",
+      "status": "rejected",
+      "reason": "foundry import contractVersion alias is not accepted; use contract_version"
+    }
+  ],
+  "task_hash": "sha256:d50e37314f78673eef592854078e6130c2c9a44cd66842e710a7feb1b9dac576",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
