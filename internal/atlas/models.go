@@ -2313,6 +2313,28 @@ type AtlasRollbackTerminalReadbackFixture struct {
 	RSIRemainsDenied        bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasGoldenPathRecommendation struct {
+	Rank string `json:"rank"`
+	Task string `json:"task"`
+}
+
+type AtlasGoldenPathReadinessMatrix struct {
+	Schema                    string                          `json:"schema"`
+	Status                    string                          `json:"status"`
+	CompletedNodes            int                             `json:"completed_nodes"`
+	ReadyNodes                int                             `json:"ready_nodes"`
+	BlockedNodes              int                             `json:"blocked_nodes"`
+	FailedNodes               int                             `json:"failed_nodes"`
+	ProvenCapabilities        []string                        `json:"proven_capabilities"`
+	UnresolvedBlockers        []string                        `json:"unresolved_blockers"`
+	NoPromotionStatus         string                          `json:"no_promotion_status"`
+	PromotionRequested        bool                            `json:"promotion_requested"`
+	RankedRecommendations     []AtlasGoldenPathRecommendation `json:"ranked_recommendations"`
+	RankedRecommendationCount int                             `json:"ranked_recommendation_count"`
+	ClaimsAuthorityAdvance    bool                            `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool                            `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
