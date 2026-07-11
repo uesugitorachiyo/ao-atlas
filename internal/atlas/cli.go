@@ -521,6 +521,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "rollback-terminal-readback-fixture", run: runMissionRecommendationsRollbackTerminalReadbackFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "golden-path-readiness-matrix", run: runMissionRecommendationsGoldenPathReadinessMatrix, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "month3-final-closure-rollup", run: runMissionRecommendationsMonth3FinalClosureRollup, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "month3-terminal-digest-binding", run: runMissionRecommendationsMonth3TerminalDigestBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
