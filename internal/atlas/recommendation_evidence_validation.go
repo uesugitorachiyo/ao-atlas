@@ -726,6 +726,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:contract-compatibility-inventory", err
 		}
 		return "typed:contract-compatibility-inventory", ValidateAtlasContractCompatibilityInventory(value)
+	case AtlasCanonicalJSONVectorsContract:
+		value, err := LoadJSON[AtlasCanonicalJSONVectors](path)
+		if err != nil {
+			return "typed:canonical-json-vectors", err
+		}
+		return "typed:canonical-json-vectors", ValidateAtlasCanonicalJSONVectors(value)
 	case AOMissionRefactoringRecommendationsContract:
 		validator, _ := recommendationControlPlaneTypedValidator(AOMissionRefactoringRecommendationsContract)
 		value, err := LoadJSON[AOMissionRefactoringRecommendations](path)

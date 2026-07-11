@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-10",
+  "task_id": "mission-recommendation-month3-golden-path-10-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "objective": "Create small cross-language canonical JSON vectors for mission, approval, policy, rollback, and readback records with digest fixtures.",
+  "mutation_class": "low_risk_code",
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "previous_node_readback": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-9/recommendation-readback-after.json",
+  "source_recommendation": "month3-golden-path-10",
+  "source_task_digest": "sha256:8409dcacde14d5fd18afb9175351b19eb76ba3a30689bc09a8560ae71e79b5dc",
+  "source_workgraph_digest": "sha256:81820b93e1c7660b8178e31c21dd1c53514413029efbed8d67330d406d5422f3",
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}

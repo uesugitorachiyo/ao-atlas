@@ -1760,6 +1760,29 @@ type AtlasContractCompatibilityEntry struct {
 	ConsumerTests []string `json:"consumer_tests"`
 }
 
+type AtlasCanonicalJSONVectors struct {
+	Schema                 string                     `json:"schema"`
+	Status                 string                     `json:"status"`
+	DigestAlgorithm        string                     `json:"digest_algorithm"`
+	VectorCount            int                        `json:"vector_count"`
+	LanguageCount          int                        `json:"language_count"`
+	Languages              []string                   `json:"languages"`
+	Vectors                []AtlasCanonicalJSONVector `json:"vectors"`
+	SchedulesWork          bool                       `json:"schedules_work"`
+	ExecutesWork           bool                       `json:"executes_work"`
+	ApprovesWork           bool                       `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                       `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                       `json:"rsi_remains_denied"`
+}
+
+type AtlasCanonicalJSONVector struct {
+	ID            string   `json:"id"`
+	RecordClass   string   `json:"record_class"`
+	CanonicalJSON string   `json:"canonical_json"`
+	Digest        string   `json:"digest"`
+	Consumers     []string `json:"consumers"`
+}
+
 type AtlasPolicyTicketPublicSafetyScanInput struct {
 	Schema                 string   `json:"schema"`
 	Status                 string   `json:"status"`

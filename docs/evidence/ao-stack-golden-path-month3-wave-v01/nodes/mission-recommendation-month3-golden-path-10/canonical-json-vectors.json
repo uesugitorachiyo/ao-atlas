@@ -1,0 +1,68 @@
+{
+  "schema": "ao.atlas.canonical-json-vectors.v0.1",
+  "status": "canonical_json_vectors_ready",
+  "digest_algorithm": "sha256.canonical-json.v1",
+  "vector_count": 5,
+  "language_count": 2,
+  "languages": [
+    "go",
+    "rust"
+  ],
+  "vectors": [
+    {
+      "id": "mission-record-minimal",
+      "record_class": "mission",
+      "canonical_json": "{\"id\":\"mission-1\",\"status\":\"active\"}",
+      "digest": "sha256:d0e1611079d26711d73586278cd2ae20dccd1c7cc51a949882b3ec4289a6f864",
+      "consumers": [
+        "go",
+        "rust"
+      ]
+    },
+    {
+      "id": "approval-record-minimal",
+      "record_class": "approval",
+      "canonical_json": "{\"approved\":false,\"ticket\":\"ticket-1\"}",
+      "digest": "sha256:071d5afc6dcf84aef6d6c259e0c889896faba5030f98f0e9691b8c0a971710ed",
+      "consumers": [
+        "go",
+        "rust"
+      ]
+    },
+    {
+      "id": "policy-record-minimal",
+      "record_class": "policy",
+      "canonical_json": "{\"policy_digest\":\"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"version\":\"v1\"}",
+      "digest": "sha256:4e4f8c4573afec661e6a7890124049de33e19737952eee7f78aef0712eafb73d",
+      "consumers": [
+        "go",
+        "rust"
+      ]
+    },
+    {
+      "id": "rollback-record-minimal",
+      "record_class": "rollback",
+      "canonical_json": "{\"rollback_available\":true,\"target\":\"change-1\"}",
+      "digest": "sha256:c97c5a3e29b53ab0dd8715a49102edb895aa97ef86c4deeade4c0918d85564ec",
+      "consumers": [
+        "go",
+        "rust"
+      ]
+    },
+    {
+      "id": "readback-record-minimal",
+      "record_class": "readback",
+      "canonical_json": "{\"completed_nodes\":1,\"final_response_allowed\":false}",
+      "digest": "sha256:a02672175f3437c830e30a992df450aa497f53975262b285ac4f8e731b355c77",
+      "consumers": [
+        "go",
+        "rust"
+      ]
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
