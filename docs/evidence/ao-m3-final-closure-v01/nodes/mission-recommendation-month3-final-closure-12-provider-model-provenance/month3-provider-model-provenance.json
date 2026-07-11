@@ -1,0 +1,56 @@
+{
+  "schema": "ao.atlas.month3-provider-model-provenance.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-12-provider-model-provenance",
+  "status": "provider_model_provenance_ready",
+  "source_readback_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-11-restart-resume-soak/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:14d53080a3d363f368cf1998efc4c11a7755e321c3d4c73a7979f56170206266",
+  "run_records": [
+    {
+      "id": "mission_supervisor_prompt",
+      "record_class": "operator_prompt",
+      "provider": "openai",
+      "model": "gpt-5.6-sol",
+      "model_class": "frontier_reasoning",
+      "reasoning_profile": "high",
+      "live_provider_call": false
+    },
+    {
+      "id": "atlas_planning_readback",
+      "record_class": "planning_readback",
+      "provider": "openai",
+      "model": "gpt-5.6-sol",
+      "model_class": "frontier_reasoning",
+      "reasoning_profile": "high",
+      "live_provider_call": false
+    },
+    {
+      "id": "foundry_bounded_handoff",
+      "record_class": "bounded_handoff",
+      "provider": "openai",
+      "model": "gpt-5.6-sol",
+      "model_class": "frontier_reasoning",
+      "reasoning_profile": "high",
+      "live_provider_call": false
+    },
+    {
+      "id": "command_operator_readback",
+      "record_class": "operator_readback",
+      "provider": "openai",
+      "model": "gpt-5.6-mini",
+      "model_class": "compact_reasoning",
+      "reasoning_profile": "standard",
+      "live_provider_call": false
+    }
+  ],
+  "run_record_count": 4,
+  "every_run_has_provider": true,
+  "every_run_has_model": true,
+  "every_run_has_model_class": true,
+  "live_provider_call_count": 0,
+  "final_response_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

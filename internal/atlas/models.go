@@ -2637,6 +2637,36 @@ type AtlasMonth3RestartResumeSoak struct {
 	RSIRemainsDenied           bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasMonth3ProviderModelProvenance struct {
+	Schema                 string                              `json:"schema"`
+	NodeID                 string                              `json:"node_id"`
+	Status                 string                              `json:"status"`
+	SourceReadbackPath     string                              `json:"source_readback_path"`
+	SourceReadbackDigest   string                              `json:"source_readback_digest"`
+	RunRecords             []AtlasMonth3ProviderModelRunRecord `json:"run_records"`
+	RunRecordCount         int                                 `json:"run_record_count"`
+	EveryRunHasProvider    bool                                `json:"every_run_has_provider"`
+	EveryRunHasModel       bool                                `json:"every_run_has_model"`
+	EveryRunHasModelClass  bool                                `json:"every_run_has_model_class"`
+	LiveProviderCallCount  int                                 `json:"live_provider_call_count"`
+	FinalResponseAllowed   bool                                `json:"final_response_allowed"`
+	SchedulesWork          bool                                `json:"schedules_work"`
+	ExecutesWork           bool                                `json:"executes_work"`
+	ApprovesWork           bool                                `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                `json:"rsi_remains_denied"`
+}
+
+type AtlasMonth3ProviderModelRunRecord struct {
+	ID               string `json:"id"`
+	RecordClass      string `json:"record_class"`
+	Provider         string `json:"provider"`
+	Model            string `json:"model"`
+	ModelClass       string `json:"model_class"`
+	ReasoningProfile string `json:"reasoning_profile"`
+	LiveProviderCall bool   `json:"live_provider_call"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
