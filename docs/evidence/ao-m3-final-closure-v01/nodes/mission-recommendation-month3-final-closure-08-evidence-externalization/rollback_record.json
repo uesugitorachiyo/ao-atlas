@@ -1,0 +1,16 @@
+{
+  "contract_version": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-08-evidence-externalization",
+  "task_id": "mission-recommendation-month3-final-closure-08-evidence-externalization-task",
+  "status": "rollback_ready",
+  "rollback_scope": [
+    "revert internal/atlas/mission_month3_evidence_externalization.go",
+    "revert internal/atlas/mission_month3_evidence_externalization_cli.go",
+    "revert internal/atlas/mission_month3_evidence_externalization_test.go",
+    "revert node-specific evidence under docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-08-evidence-externalization"
+  ],
+  "rollback_requires_provider": false,
+  "rollback_requires_release": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

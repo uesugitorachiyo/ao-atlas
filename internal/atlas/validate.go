@@ -154,6 +154,7 @@ const AtlasMonth3NonAODryRunReplayBindingContract = "ao.atlas.month3-non-ao-dry-
 const AtlasMonth3RealRunAcceptanceCriteriaContract = "ao.atlas.month3-real-run-acceptance-criteria.v0.1"
 const AtlasMonth3ControlPlaneObserverBindingContract = "ao.atlas.month3-control-plane-observer-binding.v0.1"
 const AtlasMonth3SchemaOwnerRegistryProposalContract = "ao.atlas.month3-schema-owner-registry-proposal.v0.1"
+const AtlasMonth3EvidenceExternalizationPlanContract = "ao.atlas.month3-evidence-externalization-plan.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"

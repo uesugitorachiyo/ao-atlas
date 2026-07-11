@@ -2520,6 +2520,27 @@ type AtlasMonth3SchemaOwnerRegistryContract struct {
 	ConsumerCompatibilityChecks []string `json:"consumer_compatibility_checks"`
 }
 
+type AtlasMonth3EvidenceExternalizationPlan struct {
+	Schema                          string   `json:"schema"`
+	NodeID                          string   `json:"node_id"`
+	Status                          string   `json:"status"`
+	ContentManifestPath             string   `json:"content_manifest_path"`
+	ContentManifestDigest           string   `json:"content_manifest_digest"`
+	ExternalizedEvidenceClasses     []string `json:"externalized_evidence_classes"`
+	RetainedFixtureClasses          []string `json:"retained_fixture_classes"`
+	ExternalizedClassCount          int      `json:"externalized_class_count"`
+	RetainedFixtureClassCount       int      `json:"retained_fixture_class_count"`
+	ContentManifestBound            bool     `json:"content_manifest_bound"`
+	BulkEvidenceExternalized        bool     `json:"bulk_evidence_externalized"`
+	SmallReplayableFixturesRetained bool     `json:"small_replayable_fixtures_retained"`
+	ContentAddressingRequired       bool     `json:"content_addressing_required"`
+	SchedulesWork                   bool     `json:"schedules_work"`
+	ExecutesWork                    bool     `json:"executes_work"`
+	ApprovesWork                    bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance          bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied                bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

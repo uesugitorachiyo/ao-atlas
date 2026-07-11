@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.month3-evidence-externalization-plan.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-08-evidence-externalization",
+  "status": "evidence_externalization_plan_ready",
+  "content_manifest_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-32/content-addressed-evidence-manifest-fixture.json",
+  "content_manifest_digest": "sha256:9d343df3c806dd8776e0eeab987d286c2cfb1c81674a4d9ce875f6b0ef6a6076",
+  "externalized_evidence_classes": [
+    "bulk_campaign_evidence",
+    "long_run_node_records",
+    "ci_run_ledgers"
+  ],
+  "retained_fixture_classes": [
+    "small_replayable_fixture",
+    "typed_contract_fixture",
+    "operator_readback_fixture"
+  ],
+  "externalized_class_count": 3,
+  "retained_fixture_class_count": 3,
+  "content_manifest_bound": true,
+  "bulk_evidence_externalized": true,
+  "small_replayable_fixtures_retained": true,
+  "content_addressing_required": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
