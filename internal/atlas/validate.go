@@ -151,6 +151,7 @@ const AtlasGoldenPathReadinessMatrixContract = "ao.atlas.golden-path-readiness-m
 const AtlasMonth3FinalClosureRollupContract = "ao.atlas.month3-final-closure-rollup.v0.1"
 const AtlasMonth3TerminalDigestBindingContract = "ao.atlas.month3-terminal-digest-binding.v0.1"
 const AtlasMonth3NonAODryRunReplayBindingContract = "ao.atlas.month3-non-ao-dry-run-replay.v0.1"
+const AtlasMonth3RealRunAcceptanceCriteriaContract = "ao.atlas.month3-real-run-acceptance-criteria.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"

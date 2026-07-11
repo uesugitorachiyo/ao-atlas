@@ -912,6 +912,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-non-ao-dry-run-replay", err
 		}
 		return "typed:month3-non-ao-dry-run-replay", ValidateAtlasMonth3NonAODryRunReplayBinding(value)
+	case AtlasMonth3RealRunAcceptanceCriteriaContract:
+		value, err := LoadJSON[AtlasMonth3RealRunAcceptanceCriteria](path)
+		if err != nil {
+			return "typed:month3-real-run-acceptance-criteria", err
+		}
+		return "typed:month3-real-run-acceptance-criteria", ValidateAtlasMonth3RealRunAcceptanceCriteria(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

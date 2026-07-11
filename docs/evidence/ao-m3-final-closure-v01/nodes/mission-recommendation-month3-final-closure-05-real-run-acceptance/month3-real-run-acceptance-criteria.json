@@ -1,0 +1,78 @@
+{
+  "schema": "ao.atlas.month3-real-run-acceptance-criteria.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-05-real-run-acceptance",
+  "status": "real_run_acceptance_ready",
+  "readiness_matrix_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-40/golden-path-readiness-matrix.json",
+  "readiness_matrix_digest": "sha256:bca67153ef41cd979e455b469961a25d866ab1abd330584100f21d8669ff6c76",
+  "non_ao_replay_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay/month3-non-ao-dry-run-replay.json",
+  "non_ao_replay_digest": "sha256:3d870f335bbe3d694e9904f30ae620cfc0bc57e8a18b97295b3ec9b0922b5bfd",
+  "external_repo_count": 3,
+  "criteria_per_repo": 7,
+  "external_repos": [
+    {
+      "id": "external-non-ao-cli-fixture",
+      "repo_class": "external_non_ao",
+      "allowed_change_classes": [
+        "documentation",
+        "test_fixture",
+        "single_file_low_risk_code"
+      ],
+      "requires_isolated_worktree": true,
+      "requires_exact_digest_approval": true,
+      "requires_reviewed_pr": true,
+      "requires_rollback_receipt": true,
+      "requires_observer_readback": true,
+      "requires_no_promotion_verdict": true,
+      "provider_execution_allowed": false
+    },
+    {
+      "id": "external-non-ao-library-fixture",
+      "repo_class": "external_non_ao",
+      "allowed_change_classes": [
+        "documentation",
+        "test_fixture",
+        "single_file_low_risk_code"
+      ],
+      "requires_isolated_worktree": true,
+      "requires_exact_digest_approval": true,
+      "requires_reviewed_pr": true,
+      "requires_rollback_receipt": true,
+      "requires_observer_readback": true,
+      "requires_no_promotion_verdict": true,
+      "provider_execution_allowed": false
+    },
+    {
+      "id": "external-non-ao-docs-fixture",
+      "repo_class": "external_non_ao",
+      "allowed_change_classes": [
+        "documentation",
+        "test_fixture",
+        "single_file_low_risk_code"
+      ],
+      "requires_isolated_worktree": true,
+      "requires_exact_digest_approval": true,
+      "requires_reviewed_pr": true,
+      "requires_rollback_receipt": true,
+      "requires_observer_readback": true,
+      "requires_no_promotion_verdict": true,
+      "provider_execution_allowed": false
+    }
+  ],
+  "acceptance_summary": [
+    "three external non-AO repositories must run from isolated worktrees",
+    "each accepted run requires exact digest approval before mutation",
+    "each accepted run requires reviewed PR evidence and rollback receipt",
+    "each accepted run requires observer readback and no-promotion verdict"
+  ],
+  "non_ao_replay_bound": true,
+  "requires_explicit_operator_approval": true,
+  "requires_reviewed_pr": true,
+  "requires_rollback_receipt": true,
+  "requires_observer_readback": true,
+  "promotion_requested": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

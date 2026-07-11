@@ -2427,6 +2427,44 @@ type AtlasMonth3NonAODryRunReplayBinding struct {
 	RSIRemainsDenied             bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasMonth3RealRunAcceptanceCriteria struct {
+	Schema                           string                            `json:"schema"`
+	NodeID                           string                            `json:"node_id"`
+	Status                           string                            `json:"status"`
+	ReadinessMatrixPath              string                            `json:"readiness_matrix_path"`
+	ReadinessMatrixDigest            string                            `json:"readiness_matrix_digest"`
+	NonAOReplayPath                  string                            `json:"non_ao_replay_path"`
+	NonAOReplayDigest                string                            `json:"non_ao_replay_digest"`
+	ExternalRepoCount                int                               `json:"external_repo_count"`
+	CriteriaPerRepo                  int                               `json:"criteria_per_repo"`
+	ExternalRepos                    []AtlasMonth3ExternalRepoCriteria `json:"external_repos"`
+	AcceptanceSummary                []string                          `json:"acceptance_summary"`
+	NonAOReplayBound                 bool                              `json:"non_ao_replay_bound"`
+	RequiresExplicitOperatorApproval bool                              `json:"requires_explicit_operator_approval"`
+	RequiresReviewedPR               bool                              `json:"requires_reviewed_pr"`
+	RequiresRollbackReceipt          bool                              `json:"requires_rollback_receipt"`
+	RequiresObserverReadback         bool                              `json:"requires_observer_readback"`
+	PromotionRequested               bool                              `json:"promotion_requested"`
+	SchedulesWork                    bool                              `json:"schedules_work"`
+	ExecutesWork                     bool                              `json:"executes_work"`
+	ApprovesWork                     bool                              `json:"approves_work"`
+	ClaimsAuthorityAdvance           bool                              `json:"claims_authority_advance"`
+	RSIRemainsDenied                 bool                              `json:"rsi_remains_denied"`
+}
+
+type AtlasMonth3ExternalRepoCriteria struct {
+	ID                          string   `json:"id"`
+	RepoClass                   string   `json:"repo_class"`
+	AllowedChangeClasses        []string `json:"allowed_change_classes"`
+	RequiresIsolatedWorktree    bool     `json:"requires_isolated_worktree"`
+	RequiresExactDigestApproval bool     `json:"requires_exact_digest_approval"`
+	RequiresReviewedPR          bool     `json:"requires_reviewed_pr"`
+	RequiresRollbackReceipt     bool     `json:"requires_rollback_receipt"`
+	RequiresObserverReadback    bool     `json:"requires_observer_readback"`
+	RequiresNoPromotionVerdict  bool     `json:"requires_no_promotion_verdict"`
+	ProviderExecutionAllowed    bool     `json:"provider_execution_allowed"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-05-real-run-acceptance",
+  "task_id": "mission-recommendation-month3-final-closure-05-real-run-acceptance-task",
+  "status": "passed",
+  "scan_scope": [
+    "internal/atlas/mission_month3_real_run_acceptance.go",
+    "internal/atlas/mission_month3_real_run_acceptance_cli.go",
+    "internal/atlas/mission_month3_real_run_acceptance_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-05-real-run-acceptance"
+  ],
+  "forbidden_claims_found": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
