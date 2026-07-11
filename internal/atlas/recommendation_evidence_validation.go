@@ -840,6 +840,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:authority-readiness-inventory-fixture", err
 		}
 		return "typed:authority-readiness-inventory-fixture", ValidateAtlasAuthorityReadinessInventoryFixture(value)
+	case AtlasContentAddressedEvidenceManifestFixtureContract:
+		value, err := LoadJSON[AtlasContentAddressedEvidenceManifestFixture](path)
+		if err != nil {
+			return "typed:content-addressed-evidence-manifest-fixture", err
+		}
+		return "typed:content-addressed-evidence-manifest-fixture", ValidateAtlasContentAddressedEvidenceManifestFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

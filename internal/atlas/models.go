@@ -2158,6 +2158,27 @@ type AtlasAuthorityReadinessInventoryFixture struct {
 	RSIRemainsDenied           bool                                      `json:"rsi_remains_denied"`
 }
 
+type AtlasContentAddressedEvidenceManifestEntry struct {
+	Name       string `json:"name"`
+	Boundary   string `json:"boundary"`
+	Addressing string `json:"addressing"`
+}
+
+type AtlasContentAddressedEvidenceManifestFixture struct {
+	Schema                          string                                       `json:"schema"`
+	Status                          string                                       `json:"status"`
+	ManifestEntries                 []AtlasContentAddressedEvidenceManifestEntry `json:"manifest_entries"`
+	ManifestEntryCount              int                                          `json:"manifest_entry_count"`
+	BulkEvidenceExternalized        bool                                         `json:"bulk_evidence_externalized"`
+	SmallReplayableFixturesRetained bool                                         `json:"small_replayable_fixtures_retained"`
+	ContentAddressingRequired       bool                                         `json:"content_addressing_required"`
+	SchedulesWork                   bool                                         `json:"schedules_work"`
+	ExecutesWork                    bool                                         `json:"executes_work"`
+	ApprovesWork                    bool                                         `json:"approves_work"`
+	ClaimsAuthorityAdvance          bool                                         `json:"claims_authority_advance"`
+	RSIRemainsDenied                bool                                         `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
