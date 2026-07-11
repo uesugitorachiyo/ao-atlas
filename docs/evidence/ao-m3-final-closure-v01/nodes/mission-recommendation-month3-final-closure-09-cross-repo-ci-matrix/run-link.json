@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/command_readback.json",
+    "foundry_import": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/foundry-import/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/implementation_evidence.json",
+    "month3_cross_repo_ci_matrix": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/month3-cross-repo-ci-matrix.json",
+    "node_gate": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/tests.json",
+    "verification": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/verification.json"
+  },
+  "digest": "sha256:bf206f5c74159bb83e5903b4dff0383abea07790e002b34b610a0d433d5b4175"
+}

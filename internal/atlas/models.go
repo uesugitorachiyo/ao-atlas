@@ -2541,6 +2541,40 @@ type AtlasMonth3EvidenceExternalizationPlan struct {
 	RSIRemainsDenied                bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasMonth3CrossRepoCIMatrix struct {
+	Schema                    string                        `json:"schema"`
+	NodeID                    string                        `json:"node_id"`
+	Status                    string                        `json:"status"`
+	SentinelSignalStatePath   string                        `json:"sentinel_signal_state_path"`
+	SentinelSignalStateDigest string                        `json:"sentinel_signal_state_digest"`
+	Repos                     []AtlasMonth3CrossRepoCIRepo  `json:"repos"`
+	RepoCount                 int                           `json:"repo_count"`
+	MatrixEntries             []AtlasMonth3CrossRepoCIEntry `json:"matrix_entries"`
+	MatrixEntryCount          int                           `json:"matrix_entry_count"`
+	SentinelSignalStateBound  bool                          `json:"sentinel_signal_state_bound"`
+	RequiresPassBeforeMerge   bool                          `json:"requires_pass_before_merge"`
+	BlocksOnFailure           bool                          `json:"blocks_on_failure"`
+	WaitsOnPending            bool                          `json:"waits_on_pending"`
+	SchedulesWork             bool                          `json:"schedules_work"`
+	ExecutesWork              bool                          `json:"executes_work"`
+	ApprovesWork              bool                          `json:"approves_work"`
+	ClaimsAuthorityAdvance    bool                          `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool                          `json:"rsi_remains_denied"`
+}
+
+type AtlasMonth3CrossRepoCIRepo struct {
+	Name         string `json:"name"`
+	Runtime      string `json:"runtime"`
+	RequiredGate string `json:"required_gate"`
+}
+
+type AtlasMonth3CrossRepoCIEntry struct {
+	Repo    string `json:"repo"`
+	Signal  string `json:"signal"`
+	State   string `json:"state"`
+	Verdict string `json:"verdict"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

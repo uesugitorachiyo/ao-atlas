@@ -1,0 +1,196 @@
+{
+  "schema": "ao.atlas.month3-cross-repo-ci-matrix.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix",
+  "status": "cross_repo_ci_matrix_ready",
+  "sentinel_signal_state_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-16/sentinel-signal-state-fixture.json",
+  "sentinel_signal_state_digest": "sha256:d88fb8333babb98c1f0e91b715e15af6ba756aa5e0f301c18ef7c3174477b54c",
+  "repos": [
+    {
+      "name": "ao-mission",
+      "runtime": "go",
+      "required_gate": "production-readiness"
+    },
+    {
+      "name": "ao-atlas",
+      "runtime": "go",
+      "required_gate": "production-readiness"
+    },
+    {
+      "name": "ao-foundry",
+      "runtime": "go",
+      "required_gate": "production-readiness"
+    },
+    {
+      "name": "ao-covenant",
+      "runtime": "go",
+      "required_gate": "production-readiness"
+    },
+    {
+      "name": "ao-command",
+      "runtime": "go",
+      "required_gate": "production-readiness"
+    },
+    {
+      "name": "ao2",
+      "runtime": "rust",
+      "required_gate": "workspace-ci"
+    }
+  ],
+  "repo_count": 6,
+  "matrix_entries": [
+    {
+      "repo": "ao-mission",
+      "signal": "ci",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-mission",
+      "signal": "runtime",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-mission",
+      "signal": "policy",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-mission",
+      "signal": "evidence_freshness",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-atlas",
+      "signal": "ci",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-atlas",
+      "signal": "runtime",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-atlas",
+      "signal": "policy",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-atlas",
+      "signal": "evidence_freshness",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-foundry",
+      "signal": "ci",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-foundry",
+      "signal": "runtime",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-foundry",
+      "signal": "policy",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-foundry",
+      "signal": "evidence_freshness",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-covenant",
+      "signal": "ci",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-covenant",
+      "signal": "runtime",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-covenant",
+      "signal": "policy",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-covenant",
+      "signal": "evidence_freshness",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-command",
+      "signal": "ci",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-command",
+      "signal": "runtime",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-command",
+      "signal": "policy",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao-command",
+      "signal": "evidence_freshness",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao2",
+      "signal": "ci",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao2",
+      "signal": "runtime",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao2",
+      "signal": "policy",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "repo": "ao2",
+      "signal": "evidence_freshness",
+      "state": "pass",
+      "verdict": "allow_continue"
+    }
+  ],
+  "matrix_entry_count": 24,
+  "sentinel_signal_state_bound": true,
+  "requires_pass_before_merge": true,
+  "blocks_on_failure": true,
+  "waits_on_pending": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

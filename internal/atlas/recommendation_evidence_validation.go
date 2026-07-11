@@ -936,6 +936,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-evidence-externalization-plan", err
 		}
 		return "typed:month3-evidence-externalization-plan", ValidateAtlasMonth3EvidenceExternalizationPlan(value)
+	case AtlasMonth3CrossRepoCIMatrixContract:
+		value, err := LoadJSON[AtlasMonth3CrossRepoCIMatrix](path)
+		if err != nil {
+			return "typed:month3-cross-repo-ci-matrix", err
+		}
+		return "typed:month3-cross-repo-ci-matrix", ValidateAtlasMonth3CrossRepoCIMatrix(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
