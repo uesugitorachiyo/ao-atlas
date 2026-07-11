@@ -2067,6 +2067,24 @@ type AtlasAtomicEvidenceTransitionFixture struct {
 	RSIRemainsDenied            bool                                    `json:"rsi_remains_denied"`
 }
 
+type AtlasLocalBackupRestoreFixture struct {
+	Schema                     string   `json:"schema"`
+	Status                     string   `json:"status"`
+	BackupTarget               string   `json:"backup_target"`
+	RestoreSource              string   `json:"restore_source"`
+	RestoredArtifacts          []string `json:"restored_artifacts"`
+	RestoredArtifactCount      int      `json:"restored_artifact_count"`
+	DigestVerificationRequired bool     `json:"digest_verification_required"`
+	ReadbackContinuityRequired bool     `json:"readback_continuity_required"`
+	ExternalStorageRequired    bool     `json:"external_storage_required"`
+	CredentialsRequired        bool     `json:"credentials_required"`
+	SchedulesWork              bool     `json:"schedules_work"`
+	ExecutesWork               bool     `json:"executes_work"`
+	ApprovesWork               bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance     bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied           bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

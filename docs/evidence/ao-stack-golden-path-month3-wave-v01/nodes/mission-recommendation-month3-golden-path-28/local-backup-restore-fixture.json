@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.local-backup-restore-fixture.v0.1",
+  "status": "local_backup_restore_ready",
+  "backup_target": "local_filesystem",
+  "restore_source": "local_filesystem",
+  "restored_artifacts": [
+    "mission_event_ledger",
+    "workgraph_checkpoint",
+    "recommendation_readback",
+    "run_link_digest"
+  ],
+  "restored_artifact_count": 4,
+  "digest_verification_required": true,
+  "readback_continuity_required": true,
+  "external_storage_required": false,
+  "credentials_required": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
