@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-36",
+  "task_id": "mission-recommendation-month2-contract-convergence-36-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-36",
+  "source_owner": "ao-promoter",
+  "source_task_digest": "sha256:ea9a2325d9e03e9477f21bf929346d08b78e706cc19aa8308a3979811bd6898e",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Inspect Promoter gate evaluation for structured assurance inputs, evidence digests, and signature/signer binding.",
+    "Run Promoter Go tests, vet, and build without changing the Promoter checkout.",
+    "Record the dry-run-only activation boundary and the missing cryptographic signed-assurance proof without requesting promotion."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-34"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "a2b3281711a1436aa46c34ca6c11b26d926ed57e",
+  "objective": "Audit AO Promoter signed assurance-result input boundaries and preserve its digest-checked, dry-run, no-activation semantics through a bounded Atlas compatibility evidence node with no promotion.",
+  "selection_reason": "single ready node selected from the post-node-35 workgraph; Promoter assurance-input and dry-run activation boundaries are audited read-only",
+  "mutates_repositories": false
+}

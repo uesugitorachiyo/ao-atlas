@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-36",
+  "task_id": "mission-recommendation-month2-contract-convergence-36-task",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "scope": "Promoter signed assurance-input and dry-run activation boundary audit only",
+  "summary": "Promoter digest checks and dry-run activation boundaries are verified, but signed assurance input and signer/key binding are not proven; no promotion or RSI claim is requested.",
+  "promotion_granted": false
+}

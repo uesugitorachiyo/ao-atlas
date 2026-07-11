@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-36",
+  "task_id": "mission-recommendation-month2-contract-convergence-36-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "The node records Promoter input and activation semantics without mutating the Promoter checkout."
+  },
+  "targeted_test": {
+    "command": "go test ./... -count=1 in ../ao-promoter",
+    "status": "passed",
+    "output": "Promoter CLI gate, evidence, mission-rollup, safety, and dry-run boundary tests passed."
+  },
+  "integration_test": {
+    "command": "go vet ./... && go build -o tmp/bin/promoter-node36 ./cmd/promoter",
+    "status": "passed",
+    "output": "Promoter vet and build passed; generated tmp/bin/promoter-node36 was removed."
+  },
+  "status_test": {
+    "command": "inspect Promoter gate and evidence-reference validation source",
+    "status": "passed",
+    "output": "Structured packet fields and referenced SHA-256 digests are validated; digest mismatch is denied."
+  },
+  "next_test": {
+    "command": "inspect signature, signer, key, revocation, and activation paths",
+    "status": "passed",
+    "output": "Documentation requires signed Covenant policy when applicable, but no cryptographic signature verification or signer/key binding path was found in the inspected CLI source; activation remains dry-run only."
+  },
+  "objective": "Audit AO Promoter signed assurance-result input boundaries and preserve its digest-checked, dry-run, no-activation semantics through a bounded Atlas compatibility evidence node with no promotion."
+}
