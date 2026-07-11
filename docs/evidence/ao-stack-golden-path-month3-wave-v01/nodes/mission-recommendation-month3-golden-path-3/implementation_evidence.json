@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-3",
+  "task_id": "mission-recommendation-month3-golden-path-3-task",
+  "status": "recorded",
+  "implementation_files": [
+    "ao2:crates/ao2-runtime/src/lib.rs",
+    "ao2:crates/ao2-cli/tests/cli_approval_replay.rs"
+  ],
+  "evidence_files": [
+    "ao2-pr-255-evidence.json",
+    "node_gate.json",
+    "tests.json",
+    "verification.json",
+    "sentinel_public_safety.json",
+    "promoter_no_promotion.json",
+    "command_readback.json",
+    "foundry_import.json"
+  ],
+  "summary": "AO2 now requires an explicit non-empty approver identity before the test-only sandbox auto-approval path can grant a ticket. The CLI regression proves the legacy flag alone leaves the sandbox approval pending. The change merged through PR #255.",
+  "source_contract": "ao.atlas.factory-task.v0.1",
+  "canonical_contract": "ao2.sandbox-patch-approval-subject.v1",
+  "source_input_digest": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+  "source_workgraph_digest": "sha256:f788ddbaffc45ed29ba2a994efef216391c4dd7a4ba8092128f9cee73b92f267",
+  "source_owner_preserved_in_objective": true,
+  "implementation_commit": "e6b5911d711e006beae2eb5d7853bbb3f63ebdec",
+  "implementation_pr": "https://github.com/uesugitorachiyo/ao2/pull/255",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
