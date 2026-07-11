@@ -1711,6 +1711,31 @@ type AtlasBoundedSignerVerification struct {
 	Required    bool   `json:"required"`
 }
 
+type AtlasCanonicalContractRegistryManifest struct {
+	Schema                 string                                `json:"schema"`
+	Status                 string                                `json:"status"`
+	ManifestPurpose        string                                `json:"manifest_purpose"`
+	ContractCount          int                                   `json:"contract_count"`
+	GateCriticalCount      int                                   `json:"gate_critical_count"`
+	ConsumerCount          int                                   `json:"consumer_count"`
+	Contracts              []AtlasCanonicalContractRegistryEntry `json:"contracts"`
+	SchedulesWork          bool                                  `json:"schedules_work"`
+	ExecutesWork           bool                                  `json:"executes_work"`
+	ApprovesWork           bool                                  `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                  `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                  `json:"rsi_remains_denied"`
+}
+
+type AtlasCanonicalContractRegistryEntry struct {
+	ID             string   `json:"id"`
+	Schema         string   `json:"schema"`
+	Owner          string   `json:"owner"`
+	LifecycleClass string   `json:"lifecycle_class"`
+	Digest         string   `json:"digest"`
+	GateCritical   bool     `json:"gate_critical"`
+	Consumers      []string `json:"consumers"`
+}
+
 type AtlasPolicyTicketPublicSafetyScanInput struct {
 	Schema                 string   `json:"schema"`
 	Status                 string   `json:"status"`
