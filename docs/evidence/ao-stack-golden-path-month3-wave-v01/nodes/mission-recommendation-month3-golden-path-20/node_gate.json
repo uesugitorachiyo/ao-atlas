@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-20",
+  "task_id": "mission-recommendation-month3-golden-path-20-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "gate_status": "cleared",
+  "objective": "Require isolated worktree, exact digest approval, verified diff, reviewed PR evidence, and rollback receipt in the bounded execution packet.",
+  "source_task_digest": "sha256:54b59f9c865c196db54276013fe17b5592b0d54900ad305542b73e8ecc6082fc",
+  "source_workgraph_digest": "sha256:c2f205f7864c0ab6582213cf0654f8575281d313fadc4cb9a2408016c8d86dc3",
+  "safety_boundaries": ["no provider calls", "no credential inspection", "no direct main mutation", "no release deploy publish upload tag", "no dependency updates", "no auth policy config widening", "no broad RSI claim"],
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-20",
+  "task_id": "mission-recommendation-month3-golden-path-20-task",
+  "status": "selected",
+  "source_recommendation": "month3-golden-path-20",
+  "source_task_digest": "sha256:54b59f9c865c196db54276013fe17b5592b0d54900ad305542b73e8ecc6082fc",
+  "selected_work": ["Add a bounded execution packet fixture.", "Require isolated worktree, exact digest approval, verified diff, reviewed PR evidence, and rollback receipt.", "Keep the packet planning-only without executing work."],
+  "source_digests": {"canonical_input": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8", "source_workgraph": "sha256:c2f205f7864c0ab6582213cf0654f8575281d313fadc4cb9a2408016c8d86dc3", "atlas_base_commit": "sha256:dca394ddf9a473405cbcaae0531cb5d4ee51faaa", "bounded_execution_packet_fixture": "sha256:8a97b3e7909ce83e365c4c977d5a1ffc41b8c932910e429cc753872dbcf426cb"},
+  "write_scope": ["internal/atlas/mission_bounded_execution_packet_fixture.go", "internal/atlas/mission_bounded_execution_packet_fixture_cli.go", "internal/atlas/mission_bounded_execution_packet_fixture_test.go", "internal/atlas/models.go", "internal/atlas/validate.go", "internal/atlas/recommendation_evidence_validation.go", "internal/atlas/cli.go", "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-20"],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

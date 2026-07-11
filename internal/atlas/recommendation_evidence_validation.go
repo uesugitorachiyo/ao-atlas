@@ -768,6 +768,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:workspace-root-preflight-fixture", err
 		}
 		return "typed:workspace-root-preflight-fixture", ValidateAtlasWorkspaceRootPreflightFixture(value)
+	case AtlasBoundedExecutionPacketFixtureContract:
+		value, err := LoadJSON[AtlasBoundedExecutionPacketFixture](path)
+		if err != nil {
+			return "typed:bounded-execution-packet-fixture", err
+		}
+		return "typed:bounded-execution-packet-fixture", ValidateAtlasBoundedExecutionPacketFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

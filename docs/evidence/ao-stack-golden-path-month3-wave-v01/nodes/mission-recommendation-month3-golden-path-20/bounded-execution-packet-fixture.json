@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.bounded-execution-packet-fixture.v0.1",
+  "status": "bounded_execution_packet_ready",
+  "required_evidence": [
+    "isolated_worktree",
+    "exact_digest_approval",
+    "verified_diff",
+    "reviewed_pr_evidence",
+    "rollback_receipt"
+  ],
+  "required_evidence_count": 5,
+  "isolated_worktree_required": true,
+  "exact_digest_approval_required": true,
+  "verified_diff_required": true,
+  "reviewed_pr_evidence_required": true,
+  "rollback_receipt_required": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
