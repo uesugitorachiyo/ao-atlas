@@ -1832,6 +1832,28 @@ type AtlasSentinelHostedCIWorkflowFixture struct {
 	RSIRemainsDenied             bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasSentinelSignalStateFixture struct {
+	Schema                 string                              `json:"schema"`
+	Status                 string                              `json:"status"`
+	Signals                []string                            `json:"signals"`
+	States                 []string                            `json:"states"`
+	SignalCount            int                                 `json:"signal_count"`
+	StateCount             int                                 `json:"state_count"`
+	Matrix                 []AtlasSentinelSignalStateMatrixRow `json:"matrix"`
+	MatrixCount            int                                 `json:"matrix_count"`
+	SchedulesWork          bool                                `json:"schedules_work"`
+	ExecutesWork           bool                                `json:"executes_work"`
+	ApprovesWork           bool                                `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                `json:"rsi_remains_denied"`
+}
+
+type AtlasSentinelSignalStateMatrixRow struct {
+	Signal  string `json:"signal"`
+	State   string `json:"state"`
+	Verdict string `json:"verdict"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

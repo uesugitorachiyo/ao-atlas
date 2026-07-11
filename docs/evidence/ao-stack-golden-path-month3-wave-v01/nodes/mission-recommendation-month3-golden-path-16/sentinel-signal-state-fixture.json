@@ -1,0 +1,106 @@
+{
+  "schema": "ao.atlas.sentinel-signal-state-fixture.v0.1",
+  "status": "signal_states_ready",
+  "signals": [
+    "ci",
+    "runtime",
+    "policy",
+    "evidence_freshness"
+  ],
+  "states": [
+    "stale",
+    "pending",
+    "pass",
+    "failure"
+  ],
+  "signal_count": 4,
+  "state_count": 4,
+  "matrix": [
+    {
+      "signal": "ci",
+      "state": "stale",
+      "verdict": "refresh_required"
+    },
+    {
+      "signal": "ci",
+      "state": "pending",
+      "verdict": "wait"
+    },
+    {
+      "signal": "ci",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "signal": "ci",
+      "state": "failure",
+      "verdict": "block"
+    },
+    {
+      "signal": "runtime",
+      "state": "stale",
+      "verdict": "refresh_required"
+    },
+    {
+      "signal": "runtime",
+      "state": "pending",
+      "verdict": "wait"
+    },
+    {
+      "signal": "runtime",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "signal": "runtime",
+      "state": "failure",
+      "verdict": "block"
+    },
+    {
+      "signal": "policy",
+      "state": "stale",
+      "verdict": "refresh_required"
+    },
+    {
+      "signal": "policy",
+      "state": "pending",
+      "verdict": "wait"
+    },
+    {
+      "signal": "policy",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "signal": "policy",
+      "state": "failure",
+      "verdict": "block"
+    },
+    {
+      "signal": "evidence_freshness",
+      "state": "stale",
+      "verdict": "refresh_required"
+    },
+    {
+      "signal": "evidence_freshness",
+      "state": "pending",
+      "verdict": "wait"
+    },
+    {
+      "signal": "evidence_freshness",
+      "state": "pass",
+      "verdict": "allow_continue"
+    },
+    {
+      "signal": "evidence_freshness",
+      "state": "failure",
+      "verdict": "block"
+    }
+  ],
+  "matrix_count": 16,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-16",
+  "task_id": "mission-recommendation-month3-golden-path-16-task",
+  "status": "selected",
+  "source_recommendation": "month3-golden-path-16",
+  "source_task_digest": "sha256:053f447b68ce03dd9d067545c1cbae8340b3400fbe8ae49753afeab1648e287a",
+  "selected_work": ["Add a Sentinel signal-state fixture.", "Cover CI, runtime, policy, and evidence-freshness signals.", "Distinguish stale, pending, pass, and failure states."],
+  "source_digests": {"canonical_input": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8", "source_workgraph": "sha256:e5de85c99dc54c8a0218c2259576f3e5c569b3bf3184d66246f14157eb4e8212", "atlas_base_commit": "sha256:21574f229195de94329d62163b044e8b31ecfd30", "sentinel_signal_state_fixture": "sha256:d88fb8333babb98c1f0e91b715e15af6ba756aa5e0f301c18ef7c3174477b54c"},
+  "write_scope": ["internal/atlas/mission_sentinel_signal_state_fixture.go", "internal/atlas/mission_sentinel_signal_state_fixture_cli.go", "internal/atlas/mission_sentinel_signal_state_fixture_test.go", "internal/atlas/models.go", "internal/atlas/validate.go", "internal/atlas/recommendation_evidence_validation.go", "internal/atlas/cli.go", "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-16"],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
