@@ -906,6 +906,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-terminal-digest-binding", err
 		}
 		return "typed:month3-terminal-digest-binding", ValidateAtlasMonth3TerminalDigestBinding(value)
+	case AtlasMonth3NonAODryRunReplayBindingContract:
+		value, err := LoadJSON[AtlasMonth3NonAODryRunReplayBinding](path)
+		if err != nil {
+			return "typed:month3-non-ao-dry-run-replay", err
+		}
+		return "typed:month3-non-ao-dry-run-replay", ValidateAtlasMonth3NonAODryRunReplayBinding(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

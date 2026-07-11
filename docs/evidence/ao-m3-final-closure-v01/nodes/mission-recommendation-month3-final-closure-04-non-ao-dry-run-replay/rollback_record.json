@@ -1,0 +1,16 @@
+{
+  "contract_version": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay",
+  "task_id": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay-task",
+  "status": "rollback_ready",
+  "rollback_scope": [
+    "revert internal/atlas/mission_month3_non_ao_dry_run_replay.go",
+    "revert internal/atlas/mission_month3_non_ao_dry_run_replay_cli.go",
+    "revert internal/atlas/mission_month3_non_ao_dry_run_replay_test.go",
+    "revert node-specific evidence under docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay"
+  ],
+  "rollback_requires_provider": false,
+  "rollback_requires_release": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
