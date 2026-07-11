@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-13",
+  "task_id": "mission-recommendation-month3-golden-path-13-task",
+  "status": "passed",
+  "scan_scope": ["internal/atlas/mission_command_covenant_field_parity_fixture.go", "internal/atlas/mission_command_covenant_field_parity_fixture_cli.go", "internal/atlas/mission_command_covenant_field_parity_fixture_test.go", "internal/atlas/models.go", "internal/atlas/validate.go", "internal/atlas/recommendation_evidence_validation.go", "internal/atlas/cli.go", "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-13"],
+  "unsafe_public_claim_detected": false,
+  "promotion_claim_detected": false,
+  "rsi_claim_detected": false,
+  "rsi_remains_denied": true,
+  "scoped_scan": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-13/scoped-public-safety-scan.json"
+}

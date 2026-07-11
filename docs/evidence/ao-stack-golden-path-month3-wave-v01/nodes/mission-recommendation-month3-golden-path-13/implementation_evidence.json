@@ -1,0 +1,10 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-13",
+  "task_id": "mission-recommendation-month3-golden-path-13-task",
+  "status": "implemented",
+  "implementation_repo": "ao-atlas",
+  "contract_artifacts": ["docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-13/command-covenant-field-parity-fixture.json"],
+  "regression_tests": ["internal/atlas/mission_command_covenant_field_parity_fixture_test.go::TestMonth3CommandCovenantFieldParityFixture", "internal/atlas/mission_command_covenant_field_parity_fixture_test.go::TestMonth3CommandCovenantFieldParityFixtureUsesTypedValidator"],
+  "summary": "Atlas now emits and validates a Command/Covenant field parity fixture proving Command readback accepts only the policy and approval fields Covenant validates."
+}
