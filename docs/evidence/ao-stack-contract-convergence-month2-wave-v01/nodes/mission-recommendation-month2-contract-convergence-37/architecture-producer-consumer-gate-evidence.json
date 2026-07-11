@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.architecture-producer-consumer-gate-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-37",
+  "task_id": "mission-recommendation-month2-contract-convergence-37-task",
+  "status": "pending_compatibility_gate",
+  "source_repo": "ao-architecture",
+  "source_commit": "7ca55c4dae9ad85799f83d7d684392e53aa448a0",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "compatibility_matrix_path": "stack/contract-compatibility-matrix.json",
+  "compatibility_matrix_status": "proposed",
+  "edge_count": 16,
+  "canonical_vector_count": 0,
+  "consumer_test_count": 0,
+  "compatibility_gate_complete": false,
+  "registry_owner": "ao-covenant",
+  "owner_registry_path": "stack/contract-owner-registry.json",
+  "owner_assignments_complete": true,
+  "conclusion": "Architecture has an authoritative proposed matrix and owner registry, but producer/consumer compatibility is not gate-complete because canonical vectors and consumer tests are both absent.",
+  "migration_started": false,
+  "promotion_claimed": false,
+  "rsi_remains_denied": true
+}
