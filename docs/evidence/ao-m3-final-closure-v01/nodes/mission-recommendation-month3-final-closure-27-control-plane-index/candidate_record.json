@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-27-control-plane-index",
+  "task_id": "mission-recommendation-month3-final-closure-27-control-plane-index-task",
+  "status": "selected",
+  "objective": "Add control-plane durable index migration fixture for mission event search.",
+  "selected_candidate": "indexed-event-query-fixture",
+  "selection_reason": "Node 27 is the next executable node after node 26 and binds control-plane durable event search index evidence.",
+  "source_recommendation": "month3-final-closure-27-control-plane-index",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "source_task_digest": "sha256:e13dfe207bec2747cf2929bdf4ed410d3c5ccec0e8cc3b550a28e0147bf308f8",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
