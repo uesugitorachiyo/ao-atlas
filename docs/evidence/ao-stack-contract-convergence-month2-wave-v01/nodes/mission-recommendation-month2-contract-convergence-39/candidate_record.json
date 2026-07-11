@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-39",
+  "task_id": "mission-recommendation-month2-contract-convergence-39-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-39",
+  "source_owner": "ao-atlas",
+  "source_task_digest": "sha256:dede409d11cbebdd7269bb57df2832f91116e0de680a1e84edbc35813c3c9cd4",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Validate the Month 2 root prompt lease and node-floor semantics.",
+    "Validate one-active-node, checkpoint, ready-work, exact-next-action, safety, and RSI denial language in generated prompts/readbacks.",
+    "Record the distinction between continuation-contract evidence and downstream implementation/promotion proof."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-34"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "f68cb4e56102c3921a3ac50203f409d717809981",
+  "objective": "Audit the AO Atlas Month 2 long-run workgraph prompt, lease, one-active-node continuation, checkpoint, and early-return denial contracts through a bounded evidence node with no promotion.",
+  "selection_reason": "single ready node selected from the post-node-38 workgraph; Atlas long-run continuation prompt and readback contracts are audited locally",
+  "mutates_repositories": false
+}

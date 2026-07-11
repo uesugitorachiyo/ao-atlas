@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-39",
+  "task_id": "mission-recommendation-month2-contract-convergence-39-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_contract_audit",
+    "reason": "The node validates existing prompt, lease, and readback semantics without changing Atlas implementation."
+  },
+  "targeted_test": {
+    "command": "go test ./... -count=1 in ao-atlas",
+    "status": "passed",
+    "output": "Atlas recommendation, workgraph, lease, continuation, evidence, and safety tests passed."
+  },
+  "integration_test": {
+    "command": "go vet ./... && go build -o target/atlas-node39-verification ./cmd/atlas",
+    "status": "passed",
+    "output": "Atlas vet and build passed; generated verification artifact was removed."
+  },
+  "status_test": {
+    "command": "inspect Month 2 next-recommended-prompt.md and lease-start.json",
+    "status": "passed",
+    "output": "Prompt enforces 120-180 minute lease, 30-node floor, 40-node fast target, checkpointing, one active node, no provider/direct-main/release surfaces, and refusal while ready work or exact next action remains."
+  },
+  "next_test": {
+    "command": "inspect node 39 Foundry continuation prompt and current workgraph-after.json",
+    "status": "passed",
+    "output": "Node-specific handoff records pre_node_execution, expected post-node counts, one active node, continuation-required behavior, and current 38 completed/2 ready/0 blocked state."
+  },
+  "objective": "Audit the AO Atlas Month 2 long-run workgraph prompt, lease, one-active-node continuation, checkpoint, and early-return denial contracts through a bounded evidence node with no promotion."
+}
