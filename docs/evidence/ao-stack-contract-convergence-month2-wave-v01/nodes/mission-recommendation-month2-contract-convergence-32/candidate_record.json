@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-32",
+  "task_id": "mission-recommendation-month2-contract-convergence-32-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-32",
+  "source_owner": "ao2-control-plane",
+  "source_task_digest": "sha256:5b28ea06982aa6f0dc638a0cd02a6bfba811cb075165a8b20d792485a0e27ef5",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Audit control-plane bundle atomic publication, orphan sweeping, retention candidate selection, and prune index rewrite behavior.",
+    "Run the complete control-plane workspace and GC/storage suites with a shell-local file-descriptor limit sufficient for burst tests.",
+    "Record the boundary between atomic individual writes and the remaining multi-step delete-then-index-rewrite recovery problem."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-32"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "6226dcc585d16871cd6ff9d7638628de465b6221",
+  "objective": "Coordinate ao2-control-plane Control plane transactional GC test through a bounded Atlas compatibility evidence node with no promotion.",
+  "selection_reason": "single ready node selected from the post-node-31 workgraph; control-plane GC and storage recovery are audited read-only",
+  "mutates_repositories": false
+}
