@@ -32,6 +32,7 @@ func TestMissionRecommendationCommandRegistryDrivesDeterministicDispatchHelp(t *
 		"canonical-contract-registry-manifest",
 		"contract-compatibility-inventory",
 		"canonical-json-vectors",
+		"blueprint-canonical-preservation-fixture",
 		"complete-node",
 		"resume",
 	} {
@@ -47,7 +48,7 @@ func TestMissionRecommendationCommandRegistryDrivesDeterministicDispatchHelp(t *
 	}
 	text := out.String()
 	if !strings.Contains(text, "mission recommendations requires import, export-next-wave, export-refactoring-wave") ||
-		!strings.Contains(text, "mission-dashboard-compact-filters, bounded-signer-contract-fixture, canonical-contract-registry-manifest, contract-compatibility-inventory, canonical-json-vectors, complete-node, resume, or validate-evidence") {
+		!strings.Contains(text, "mission-dashboard-compact-filters, bounded-signer-contract-fixture, canonical-contract-registry-manifest, contract-compatibility-inventory, canonical-json-vectors, blueprint-canonical-preservation-fixture, complete-node, resume, or validate-evidence") {
 		t.Fatalf("unknown command did not render registry-backed help: %s", text)
 	}
 }
