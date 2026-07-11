@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-34",
+  "task_id": "mission-recommendation-month2-contract-convergence-34-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 33,
+  "ready_nodes_before": 7,
+  "expected_completed_nodes_after": 34,
+  "expected_ready_nodes_after": 6,
+  "expected_next_executable_node_after": "mission-recommendation-month2-contract-convergence-35",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true,
+  "scope": "compact Atlas readback only",
+  "summary": "Crucible hosted CI parity is recorded while live adversarial evaluation and promotion remain denied; the Month 2 wave continues.",
+  "promotion_granted": false,
+  "ready_nodes_before_completion": 7
+}

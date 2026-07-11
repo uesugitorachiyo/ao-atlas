@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-34",
+  "task_id": "mission-recommendation-month2-contract-convergence-34-task",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "scope": "Crucible CI parity and fixture adversarial boundary audit only",
+  "summary": "Crucible CI parity and fixture adversarial validation are verified, but live attack/fuzz/chaos evaluation is absent; no promotion or RSI claim is requested.",
+  "promotion_granted": false
+}
