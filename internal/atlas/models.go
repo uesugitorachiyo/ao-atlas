@@ -2694,6 +2694,32 @@ type AtlasMonth3RollbackReplayCase struct {
 	Replayable    bool   `json:"replayable"`
 }
 
+type AtlasMonth3ArchitectureSourceTruthChecklist struct {
+	Schema                    string                                   `json:"schema"`
+	NodeID                    string                                   `json:"node_id"`
+	Status                    string                                   `json:"status"`
+	SourceReadbackPath        string                                   `json:"source_readback_path"`
+	SourceReadbackDigest      string                                   `json:"source_readback_digest"`
+	MissionID                 string                                   `json:"mission_id"`
+	CompletedNodes            int                                      `json:"completed_nodes"`
+	ReadyNodes                int                                      `json:"ready_nodes"`
+	CurrentAuthorityStatement string                                   `json:"current_authority_statement"`
+	TargetArchitectureFiles   []string                                 `json:"target_architecture_files"`
+	Checklist                 []AtlasMonth3ArchitectureSourceTruthItem `json:"checklist"`
+	CorrectionsRequired       bool                                     `json:"corrections_required"`
+	PromotionRequested        bool                                     `json:"promotion_requested"`
+	PromotionGranted          bool                                     `json:"promotion_granted"`
+	ClaimsAuthorityAdvance    bool                                     `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool                                     `json:"rsi_remains_denied"`
+}
+
+type AtlasMonth3ArchitectureSourceTruthItem struct {
+	Area           string `json:"area"`
+	Status         string `json:"status"`
+	RequiredAction string `json:"required_action"`
+	SourceOfTruth  string `json:"source_of_truth"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

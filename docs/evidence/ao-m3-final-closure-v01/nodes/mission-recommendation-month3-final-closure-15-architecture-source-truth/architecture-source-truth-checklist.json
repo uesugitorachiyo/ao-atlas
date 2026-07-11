@@ -1,0 +1,48 @@
+{
+  "schema": "ao.atlas.month3-architecture-source-truth-checklist.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-15-architecture-source-truth",
+  "status": "checklist_ready",
+  "source_readback_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-14-compaction-resume-generator/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:9e005fa119b99cbd143cbf4ceeb6369dfaa6ae65673ef9073bfa6e733f2d1884",
+  "mission_id": "ao-stack-month3-final-closure-real-golden-path-v01",
+  "completed_nodes": 14,
+  "ready_nodes": 16,
+  "current_authority_statement": "highest_proven_live_class=complex_repo_mutation; fully_unsupervised_complex_mutation=denied; RSI=denied",
+  "target_architecture_files": [
+    "ao-architecture/README.md",
+    "ao-architecture/overview/README.md",
+    "ao-architecture/overview/PRODUCTION-READINESS.md",
+    "ao-architecture/docs/superpowers/specs/"
+  ],
+  "checklist": [
+    {
+      "area": "authority_ladder",
+      "status": "correction_required",
+      "required_action": "Align Architecture authority statements to keep complex_repo_mutation as highest proven live class.",
+      "source_of_truth": "Month 3 terminal readback and Promoter no-promotion evidence"
+    },
+    {
+      "area": "fully_unsupervised_complex_mutation",
+      "status": "correction_required",
+      "required_action": "State fully_unsupervised_complex_mutation remains denied until final promotion evidence exists.",
+      "source_of_truth": "AO Mission and Atlas final-response denial gates"
+    },
+    {
+      "area": "readiness_inventory",
+      "status": "correction_required",
+      "required_action": "Include Mission and Blueprint in readiness inventory rather than documenting only partial stack coverage.",
+      "source_of_truth": "AO Architecture Month 1 roadmap disposition"
+    },
+    {
+      "area": "evidence_catalog",
+      "status": "correction_required",
+      "required_action": "Move historical campaign evidence into generated catalog links and keep current behavior as the README source of truth.",
+      "source_of_truth": "AO stack six-month consolidation roadmap"
+    }
+  ],
+  "corrections_required": true,
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

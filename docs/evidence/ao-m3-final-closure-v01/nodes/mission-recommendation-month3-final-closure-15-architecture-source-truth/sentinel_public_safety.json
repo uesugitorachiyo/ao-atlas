@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-15-architecture-source-truth",
+  "task_id": "mission-recommendation-month3-final-closure-15-architecture-source-truth-task",
+  "status": "passed",
+  "scan_scope": [
+    "internal/atlas/mission_month3_architecture_source_truth.go",
+    "internal/atlas/mission_month3_architecture_source_truth_cli.go",
+    "internal/atlas/mission_month3_architecture_source_truth_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-15-architecture-source-truth"
+  ],
+  "forbidden_claims_found": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "scan_command": "rg -n -i 'fully_unsupervised_complex_mutation is live-proven|rsi proven|promotion_claimed\\\" *: *true|claims_authority_advance\\\" *: *true|schedules_work\\\" *: *true|executes_work\\\" *: *true|approves_work\\\" *: *true|provider call|credential' internal/atlas/mission_month3_architecture_source_truth.go internal/atlas/mission_month3_architecture_source_truth_cli.go internal/atlas/mission_month3_architecture_source_truth_test.go docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-15-architecture-source-truth || true",
+  "scan_result": "passed_no_positive_authority_or_rsi_claims",
+  "notes": [
+    "Matches were limited to explicit safety prohibitions or false credential/provider status fields."
+  ]
+}
