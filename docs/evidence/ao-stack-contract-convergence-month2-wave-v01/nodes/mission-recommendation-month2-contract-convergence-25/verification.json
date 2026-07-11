@@ -1,0 +1,43 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-25",
+  "task_id": "mission-recommendation-month2-contract-convergence-25-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "go test ./... -count=1 in checked-out ao-mission",
+    "go test ./... -count=1 in detached ao-mission origin/main worktree",
+    "go test ./internal/mission -run TestReturnGateDoesNotCountHandoffStepsAsCompletedNodes -count=1 in detached ao-mission origin/main worktree",
+    "git status --short --branch in ao-mission",
+    "git rev-list --count HEAD..origin/main in ao-mission",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build -o target/atlas-node25-verification ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "go run ./cmd/atlas mission recommendations run-link-digest-check --node-id mission-recommendation-month2-contract-convergence-25 --run-link docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-25/run-link.json --evidence-root .",
+    "scoped public-safety scan over the complete wave root",
+    "scoped public-safety scan status=passed unsafe_match_count=0"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "go run ./cmd/atlas mission recommendations validate-evidence --evidence-root docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+    "go run ./cmd/atlas mission recommendations run-link-digest-check --node-id mission-recommendation-month2-contract-convergence-25 --run-link docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-25/run-link.json --evidence-root .",
+    "git diff --check",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "repair_notes": [
+    "The Mission checkout is intentionally left untouched because it has unrelated dirty files.",
+    "A detached origin/main worktree was used only for read-only verification and removed after testing.",
+    "The corrected metric remains separate from any authority or promotion claim.",
+    "Synchronize and recompute Mission metrics before using this evidence as current product readiness."
+  ],
+  "rsi_remains_denied": true,
+  "objective": "Coordinate ao-mission Mission metrics recompute after handoff correction through a bounded Atlas compatibility evidence node with no promotion."
+}

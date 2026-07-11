@@ -1,0 +1,65 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "mission_metrics_recompute_after_handoff_correction",
+  "node_id": "mission-recommendation-month2-contract-convergence-25",
+  "task_id": "mission-recommendation-month2-contract-convergence-25-task",
+  "status": "corrected_origin_main_verified_local_snapshot_stale",
+  "source_owner": "ao-mission",
+  "source_repository": "ao-mission",
+  "source_commit": "dc0c7931f309e9fcbb2063397377dd2ce48e358b",
+  "local_checkout_commit": "8055933d9eebdd12a01d9ccca6edcbbf9bc69c37",
+  "correction_commit": "d4dfd8de71cd04588bedade97d41727f1fd82b2d",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "lifecycle_metric_audit",
+  "source_files": [
+    {
+      "path": "internal/mission/supervisor.go",
+      "digest": "sha256:4f2ca922f243ae6057eb52151d915b40c5e5e0a6fc40e5ac124962f82d8354e4",
+      "role": "corrected completed-evidence-node calculation from origin/main"
+    },
+    {
+      "path": "internal/mission/mission_test.go",
+      "digest": "sha256:17dafe19182005049f913aa495328995c0fe390e61513f0673c2e5821b25749d",
+      "role": "handoff accounting regression test from origin/main"
+    },
+    {
+      "path": "internal/mission/imports.go",
+      "digest": "sha256:061ff3c926e0c549672cf3eea904a347653810bb442ddba9050da6a7921ea2df",
+      "role": "imported workgraph and readback count projection"
+    },
+    {
+      "path": "internal/mission/rollup.go",
+      "digest": "sha256:5f9b58c4cba75ab1f8c7ab119148fe3c035c2420a11ed17994fa5a42f216ac58",
+      "role": "Mission rollup metric projection"
+    }
+  ],
+  "observed_contract": {
+    "correction_ancestor_present_in_origin_main": true,
+    "origin_main_current_commit": "dc0c7931f309e9fcbb2063397377dd2ce48e358b",
+    "local_checkout_commit": "8055933d9eebdd12a01d9ccca6edcbbf9bc69c37",
+    "local_checkout_behind_origin_main_by": 5,
+    "local_checkout_dirty": true,
+    "local_completed_evidence_nodes_uses_handoff_steps": true,
+    "origin_completed_evidence_nodes_excludes_handoff_steps": true,
+    "regression_test_present_on_origin_main": true,
+    "detached_origin_main_full_tests_passed": true,
+    "detached_origin_main_handoff_regression_passed": true
+  },
+  "recomputed_metrics": {
+    "handoff_steps_in_completed_evidence_nodes": 0,
+    "completed_evidence_nodes_for_five_handoff_only_steps": 0,
+    "metric_source": "corrected origin/main",
+    "metric_status": "source_corrected_readback_ready"
+  },
+  "current_gate": "local_snapshot_refresh_required_before_citing_recomputed_metrics_as_current_main_product_evidence",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

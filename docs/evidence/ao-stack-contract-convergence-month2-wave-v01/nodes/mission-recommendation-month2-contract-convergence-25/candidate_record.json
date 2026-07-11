@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-25",
+  "task_id": "mission-recommendation-month2-contract-convergence-25-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-25",
+  "source_owner": "ao-mission",
+  "source_task_digest": "sha256:4c6c1229ca8245e04a487255bee5d8e925f2b1986a379c2f7b461bce03a02595",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Compare the dirty local Mission checkout with origin/main after the handoff-count correction.",
+    "Run the corrected origin/main Mission suite and the handoff-accounting regression in a detached read-only worktree.",
+    "Record the recomputed completed-evidence-node boundary and preserve the stale local snapshot warning without mutating Mission."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-25"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "dc0c7931f309e9fcbb2063397377dd2ce48e358b",
+  "objective": "Coordinate ao-mission Mission metrics recompute after handoff correction through a bounded Atlas compatibility evidence node with no promotion.",
+  "selection_reason": "single ready node selected from the post-node-24 workgraph; Mission metric correction is read-only audited",
+  "mutates_repositories": false
+}
