@@ -1,0 +1,115 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-mission-ao-stack-golden-path-month3-v01-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-mission-ao-stack-golden-path-month3-v01",
+  "target_instance": "ao-stack-golden-path-month3-v01",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-32/workgraph-after.json",
+      "digest": "sha256:e1f858a7b06319ae17e978c774f7e2d587b798e0b4c1e88c703078e3cf2bdba9"
+    },
+    {
+      "ref": "docs/evidence/ao-stack-golden-path-month3-wave-v01/stack-instance.json",
+      "digest": "sha256:a32275246f8d5a0563fb47eee76fb000ae730cd51c9053b0f33b05b26e26b294"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-month3-golden-path-33",
+      "task_id": "mission-recommendation-month3-golden-path-33-task",
+      "path": "tasks/mission-recommendation-month3-golden-path-33-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+        "source_recommendation:month3-golden-path-33",
+        "source_task_digest:sha256:89e500e85fb421d242517bc95f86524a4674a0206f839dc8eb4ffe441a17002e"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-month3-golden-path-33-task",
+        "objective": "Add Foundry-side evidence references and size checks that keep implementation state separate from generated campaign bulk.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-33",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+          "source_recommendation:month3-golden-path-33",
+          "source_task_digest:sha256:89e500e85fb421d242517bc95f86524a4674a0206f839dc8eb4ffe441a17002e"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-month3-golden-path-32"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:43e386ea0f82d2c8195098abdc5738449768474259f9367c96bbc42eb36e97d6"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

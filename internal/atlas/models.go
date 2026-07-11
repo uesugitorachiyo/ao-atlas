@@ -2179,6 +2179,27 @@ type AtlasContentAddressedEvidenceManifestFixture struct {
 	RSIRemainsDenied                bool                                         `json:"rsi_remains_denied"`
 }
 
+type AtlasFoundryEvidenceSizeBoundaryReference struct {
+	Name          string `json:"name"`
+	Boundary      string `json:"boundary"`
+	MaxBytesClass string `json:"max_bytes_class"`
+}
+
+type AtlasFoundryEvidenceSizeBoundaryFixture struct {
+	Schema                        string                                      `json:"schema"`
+	Status                        string                                      `json:"status"`
+	EvidenceReferences            []AtlasFoundryEvidenceSizeBoundaryReference `json:"evidence_references"`
+	EvidenceReferenceCount        int                                         `json:"evidence_reference_count"`
+	ImplementationStateSeparate   bool                                        `json:"implementation_state_separate"`
+	GeneratedCampaignBulkSeparate bool                                        `json:"generated_campaign_bulk_separate"`
+	SizeChecksRequired            bool                                        `json:"size_checks_required"`
+	SchedulesWork                 bool                                        `json:"schedules_work"`
+	ExecutesWork                  bool                                        `json:"executes_work"`
+	ApprovesWork                  bool                                        `json:"approves_work"`
+	ClaimsAuthorityAdvance        bool                                        `json:"claims_authority_advance"`
+	RSIRemainsDenied              bool                                        `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.foundry-evidence-size-boundary-fixture.v0.1",
+  "status": "foundry_evidence_size_boundary_ready",
+  "evidence_references": [
+    {
+      "name": "implementation_state",
+      "boundary": "repository_small_fixture",
+      "max_bytes_class": "small"
+    },
+    {
+      "name": "generated_campaign_bulk",
+      "boundary": "content_addressed_external",
+      "max_bytes_class": "bulk"
+    }
+  ],
+  "evidence_reference_count": 2,
+  "implementation_state_separate": true,
+  "generated_campaign_bulk_separate": true,
+  "size_checks_required": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
