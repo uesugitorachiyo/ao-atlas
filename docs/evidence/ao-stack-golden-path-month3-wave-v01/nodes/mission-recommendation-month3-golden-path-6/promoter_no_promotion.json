@@ -1,0 +1,14 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-6",
+  "task_id": "mission-recommendation-month3-golden-path-6-task",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_granted": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "highest_proven_live_class_changed": false,
+  "rsi_remains_denied": true,
+  "implementation_status": "merged_implementation_only",
+  "rationale": "Node 6 publishes canonical AO2 hash vectors and migration-boundary evidence only; it does not request or justify a promotion."
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.external-implementation-pr-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-6",
+  "repository": "ao2",
+  "pull_request": 258,
+  "pull_request_url": "https://github.com/uesugitorachiyo/ao2/pull/258",
+  "head_branch": "codex/month3-golden-path-6-event-hash-vectors",
+  "base_branch": "main",
+  "state": "merged",
+  "merged_at": "2026-07-11T05:41:08Z",
+  "merge_commit": "0d4f0dedd77e2356c18fd7f8155f78e06696d59b",
+  "ci": {
+    "status": "passed",
+    "checks_total": 95,
+    "checks_passed": 95,
+    "checks_failed": 0,
+    "checks_pending": 0
+  },
+  "sync": {
+    "main_head": "0d4f0dedd77e2356c18fd7f8155f78e06696d59b",
+    "origin_main_head": "0d4f0dedd77e2356c18fd7f8155f78e06696d59b",
+    "status": "clean_synced"
+  },
+  "branch_cleanup": {
+    "local_branch_present": false,
+    "remote_branch_present": false,
+    "status": "deleted"
+  },
+  "safety": {
+    "provider_calls": false,
+    "credentials_used": false,
+    "promotion_requested": false,
+    "rsi_remains_denied": true
+  }
+}

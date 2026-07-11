@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-6",
+  "task_id": "mission-recommendation-month3-golden-path-6-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "local_verification": [
+    "cargo test -p ao2-core --test core_types",
+    "cargo test --workspace --all-targets --quiet",
+    "cargo fmt --all -- --check",
+    "cargo clippy --workspace --all-targets",
+    "git diff --check"
+  ],
+  "remote_verification": [
+    "gh pr checks 258 --repo uesugitorachiyo/ao2 --json bucket"
+  ],
+  "remote_verification_result": "95 pass, 0 failed, 0 pending",
+  "ao2_sync": {
+    "main_head": "0d4f0dedd77e2356c18fd7f8155f78e06696d59b",
+    "origin_main_head": "0d4f0dedd77e2356c18fd7f8155f78e06696d59b",
+    "status": "clean_synced"
+  },
+  "atlas_verification_pending": true
+}

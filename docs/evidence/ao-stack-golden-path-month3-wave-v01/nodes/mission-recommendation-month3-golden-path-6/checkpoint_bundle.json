@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-6",
+  "status": "ready_for_completion_readback",
+  "source_workgraph": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-5/workgraph-after.json",
+  "source_workgraph_digest": "sha256:ffa4728403f038a30b561e2c69fc97a5bc939f798cd491ddd1eb4c4303731b00",
+  "expected_output_workgraph": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-6/workgraph-after.json",
+  "expected_next_node": "mission-recommendation-month3-golden-path-7",
+  "final_response_allowed": false,
+  "created_at": "2026-07-11T05:42:04Z"
+}

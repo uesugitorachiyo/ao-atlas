@@ -1,0 +1,23 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-6",
+  "task_id": "mission-recommendation-month3-golden-path-6-task",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "Revert AO2 PR #258 if the versioned hash vector fixture or migration-boundary documentation is later found incorrect.",
+    "Revert node-specific Atlas evidence under docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-6."
+  ],
+  "rollback_method": "revert_pr_and_remove_node_evidence",
+  "rollback_command": "Prepare a reviewed AO2 revert PR for merge commit 0d4f0dedd77e2356c18fd7f8155f78e06696d59b and regenerate the Atlas readback; do not mutate main directly.",
+  "data_loss_risk": "none; the change adds a fixture, documentation, and regression coverage for canonical hash vectors",
+  "requires_release_or_deploy": false,
+  "provider_state_touched": false,
+  "credentials_touched": false,
+  "data_migration_required": false,
+  "verified_safe_to_rollback": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

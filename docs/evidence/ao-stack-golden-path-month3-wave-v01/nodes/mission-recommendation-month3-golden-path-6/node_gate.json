@@ -1,0 +1,36 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-6",
+  "task_id": "mission-recommendation-month3-golden-path-6-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "objective": "Publish versioned canonical hash vectors for old and new event records and make the migration boundary explicit without weakening verification.",
+  "mutation_class": "low_risk_code",
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "previous_completed_node": "mission-recommendation-month3-golden-path-5",
+  "source_recommendation": "month3-golden-path-6",
+  "source_task_digest": "sha256:df2cfd1a14079510d9d82e191d8f4987cda2e409060a9925c7207770ee96ffb5",
+  "source_workgraph_digest": "sha256:ffa4728403f038a30b561e2c69fc97a5bc939f798cd491ddd1eb4c4303731b00",
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "checks": {
+    "single_active_node": true,
+    "direct_main_mutation": false,
+    "provider_calls": false,
+    "credential_use": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false
+  },
+  "rsi": "denied"
+}

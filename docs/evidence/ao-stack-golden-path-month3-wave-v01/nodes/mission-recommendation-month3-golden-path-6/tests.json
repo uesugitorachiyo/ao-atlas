@@ -1,0 +1,42 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-6",
+  "status": "passed",
+  "commands": [
+    {
+      "repo": "ao2",
+      "command": "cargo test -p ao2-core --test core_types",
+      "result": "passed"
+    },
+    {
+      "repo": "ao2",
+      "command": "cargo test --workspace --all-targets --quiet",
+      "result": "passed"
+    },
+    {
+      "repo": "ao2",
+      "command": "cargo fmt --all -- --check",
+      "result": "passed"
+    },
+    {
+      "repo": "ao2",
+      "command": "cargo clippy --workspace --all-targets",
+      "result": "passed"
+    },
+    {
+      "repo": "ao2",
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "ci": {
+    "provider": "github_actions",
+    "repository": "uesugitorachiyo/ao2",
+    "pull_request": 258,
+    "checks_total": 95,
+    "checks_passed": 95,
+    "checks_failed": 0,
+    "checks_pending": 0,
+    "status": "passed"
+  }
+}
