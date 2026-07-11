@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-21",
+  "task_id": "mission-recommendation-month3-golden-path-21-task",
+  "status": "implemented",
+  "fixture": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/forge-goalrun-evidence-fixture.json",
+  "typed_validator": "typed:forge-goalrun-evidence-fixture",
+  "required_evidence_count": 4,
+  "goalrun_start_required": true,
+  "stop_gate_required": true,
+  "rollback_record_required": true,
+  "terminal_receipt_required": true,
+  "provider_execution_allowed": false,
+  "rsi_remains_denied": true
+}

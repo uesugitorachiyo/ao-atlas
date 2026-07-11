@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.forge-goalrun-evidence-fixture.v0.1",
+  "status": "forge_goalrun_evidence_ready",
+  "required_evidence": [
+    "goalrun_start",
+    "stop_gate",
+    "rollback_record",
+    "terminal_receipt"
+  ],
+  "required_evidence_count": 4,
+  "goalrun_start_required": true,
+  "stop_gate_required": true,
+  "rollback_record_required": true,
+  "terminal_receipt_required": true,
+  "provider_execution_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
