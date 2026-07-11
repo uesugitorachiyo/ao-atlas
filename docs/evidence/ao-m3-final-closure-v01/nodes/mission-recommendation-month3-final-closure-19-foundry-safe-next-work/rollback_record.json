@@ -1,0 +1,16 @@
+{
+  "contract_version": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work",
+  "task_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work-task",
+  "status": "rollback_ready",
+  "rollback_scope": [
+    "revert internal/atlas/mission_month3_foundry_safe_next_work.go",
+    "revert internal/atlas/mission_month3_foundry_safe_next_work_cli.go",
+    "revert internal/atlas/mission_month3_foundry_safe_next_work_test.go",
+    "revert node-specific evidence under docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work"
+  ],
+  "rollback_requires_provider": false,
+  "rollback_requires_release": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

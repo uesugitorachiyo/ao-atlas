@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/command_readback.json",
+    "foundry_import": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/foundry-import/foundry-import.json",
+    "foundry_safe_next_work_fixture": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/foundry-safe-next-work-fixture.json",
+    "implementation_evidence": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/tests.json",
+    "verification": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/verification.json"
+  },
+  "digest": "sha256:e060f71e98eb693a3838646dc0102812ff0e81ad9d03e522634551a930ebb1d9"
+}

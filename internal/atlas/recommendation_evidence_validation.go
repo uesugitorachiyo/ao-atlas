@@ -978,6 +978,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-no-promotion-rsi-matrix", err
 		}
 		return "typed:month3-no-promotion-rsi-matrix", ValidateAtlasMonth3NoPromotionRSIMatrix(value)
+	case AtlasMonth3FoundrySafeNextWorkFixtureContract:
+		value, err := LoadJSON[AtlasMonth3FoundrySafeNextWorkFixture](path)
+		if err != nil {
+			return "typed:month3-foundry-safe-next-work", err
+		}
+		return "typed:month3-foundry-safe-next-work", ValidateAtlasMonth3FoundrySafeNextWorkFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
