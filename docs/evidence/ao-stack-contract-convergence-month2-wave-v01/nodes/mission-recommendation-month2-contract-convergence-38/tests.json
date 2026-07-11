@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-38",
+  "task_id": "mission-recommendation-month2-contract-convergence-38-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "The node records Mission golden-path and workspace-root gaps without mutating the existing dirty Mission checkout."
+  },
+  "targeted_test": {
+    "command": "go test ./... -count=1 in ../ao-mission",
+    "status": "passed",
+    "output": "Mission tests passed on the existing dirty, main-branch checkout."
+  },
+  "integration_test": {
+    "command": "go vet ./... && go build ./cmd/ao-mission",
+    "status": "passed",
+    "output": "Mission vet and build passed; generated binary was removed and pre-existing dirty state was preserved."
+  },
+  "status_test": {
+    "command": "inspect Mission CLI/readback and Atlas continuation source surfaces",
+    "status": "passed",
+    "output": "Mission exposes durable routing, event index/search, dashboard, doctor, replay, readiness, manifest, and Atlas continuation readbacks without execution authority."
+  },
+  "next_test": {
+    "command": "inspect roadmap handoff for workspace-root Foundry preflight and golden-path requirements",
+    "status": "passed",
+    "output": "The handoff requires an isolated Foundry worktree, repository-relative workspace-root integration test, exact digest approval, verified diff, and rollback receipt; those are downstream requirements, not Mission execution behavior."
+  },
+  "objective": "Audit AO Mission golden-path tiny-repository packet and workspace-root preflight readiness through a bounded Atlas compatibility evidence node without mutating the dirty Mission checkout or requesting execution."
+}
