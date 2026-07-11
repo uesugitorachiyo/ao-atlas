@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-19",
+  "task_id": "mission-recommendation-month3-golden-path-19-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "gate_status": "cleared",
+  "objective": "Implement a tiny non-AO workspace-root preflight that validates repository identity, objective digest, worktree boundary, and safe next-node selection.",
+  "source_task_digest": "sha256:bc51c2eaca586c80cd5a8e18b49a92feea454465ff84771564054885b66b8efb",
+  "source_workgraph_digest": "sha256:b6b1bae3c56c8a205eb77f4fb070a7863356d0866ad14e4d225abbef32faf89c",
+  "safety_boundaries": ["no provider calls", "no credential inspection", "no direct main mutation", "no release deploy publish upload tag", "no dependency updates", "no auth policy config widening", "no broad RSI claim"],
+  "rsi_remains_denied": true
+}

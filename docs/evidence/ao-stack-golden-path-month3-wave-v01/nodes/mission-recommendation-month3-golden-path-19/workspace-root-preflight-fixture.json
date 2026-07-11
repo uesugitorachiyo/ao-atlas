@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.workspace-root-preflight-fixture.v0.1",
+  "status": "preflight_ready",
+  "repository_identity": "tiny-non-ao-repository",
+  "repository_identity_validated": true,
+  "non_ao_repository": true,
+  "objective_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "objective_digest_validated": true,
+  "workspace_root": "fixtures/tiny-non-ao-repository",
+  "worktree_boundary_validated": true,
+  "safe_next_node": "bounded-diff-review",
+  "safe_next_node_selected": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
