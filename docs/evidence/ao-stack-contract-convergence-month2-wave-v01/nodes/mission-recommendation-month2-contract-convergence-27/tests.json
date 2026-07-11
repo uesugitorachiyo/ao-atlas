@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-27",
+  "task_id": "mission-recommendation-month2-contract-convergence-27-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "node records existing Atlas graph performance behavior without changing runtime code or adding a benchmark dependency"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/atlas -run TestLargeWorkgraphStressFixtureValidatesAndImportsReadyNodes -count=1",
+    "status": "passed",
+    "output": "Large workgraph stress fixture test passed; measured real time 0.55 seconds including test startup"
+  },
+  "integration_test": {
+    "command": "go run ./cmd/atlas workgraph validate --workgraph examples/valid/workgraph-large-stress.json repeated five times",
+    "status": "passed",
+    "output": "All five CLI validations returned status=valid; real times were 0.05, 0.04, 0.04, 0.04, and 0.04 seconds"
+  },
+  "status_test": {
+    "command": "go run ./cmd/atlas workgraph status --workgraph examples/valid/workgraph-large-stress.json --json",
+    "status": "passed",
+    "output": "ready=5 blocked=3 completed=4 and all authority flags false"
+  },
+  "next_test": {
+    "command": "go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph-large-stress.json --json",
+    "status": "passed",
+    "output": "Selected repo-scan-ready as the first executable ready node; measured real time 0.05 seconds"
+  },
+  "objective": "Coordinate ao-atlas Atlas graph performance baseline through a bounded Atlas compatibility evidence node with no promotion."
+}

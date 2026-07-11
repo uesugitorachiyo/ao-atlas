@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-27",
+  "task_id": "mission-recommendation-month2-contract-convergence-27-task",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "scope": "Atlas graph performance baseline only",
+  "summary": "The Atlas graph baseline is fixture-scale and has no production SLO or benchmark harness; no promotion or RSI claim is requested.",
+  "promotion_granted": false
+}

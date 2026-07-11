@@ -1,0 +1,73 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "atlas_graph_performance_baseline",
+  "node_id": "mission-recommendation-month2-contract-convergence-27",
+  "task_id": "mission-recommendation-month2-contract-convergence-27-task",
+  "status": "baseline_recorded_no_slo_contract",
+  "source_owner": "ao-atlas",
+  "source_repository": "ao-atlas",
+  "source_commit": "1883a74e4f3e6aa93ea6e9d4257858737ea544ba",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "performance_baseline_audit",
+  "source_files": [
+    {
+      "path": "internal/atlas/workgraph_state.go",
+      "digest": "sha256:65f9094fe14b1e1be14721bfd461edb5b19c456a332a5258af1b63bea1bd42c5",
+      "role": "workgraph validation, dependency state, and next-node selection"
+    },
+    {
+      "path": "internal/atlas/cli_workgraph.go",
+      "digest": "sha256:b4594b7605ba3ec550d18aa7c1c5fcff2e472439ca37882202ce954ca0c2dfba",
+      "role": "workgraph validate, status, and next CLI paths"
+    },
+    {
+      "path": "internal/atlas/atlas_test.go",
+      "digest": "sha256:30d44d3fee4649f75a0c18ef85a0dc82293086e212a97e09e36bb305f9b112c0",
+      "role": "large workgraph stress fixture test"
+    },
+    {
+      "path": "examples/valid/workgraph-large-stress.json",
+      "digest": "sha256:3371fcc357698de7e7101ed1c656425ffdf2e7e6ae28785a4dffe9e66fc762b7",
+      "role": "12-node scale fixture"
+    }
+  ],
+  "fixture": {
+    "path": "examples/valid/workgraph-large-stress.json",
+    "node_count": 12,
+    "dependency_edge_count": 10,
+    "status_counts": {
+      "ready": 5,
+      "blocked": 3,
+      "completed": 4
+    }
+  },
+  "measurements": {
+    "targeted_stress_test_real_seconds": 0.55,
+    "workgraph_validate_cli_runs": 5,
+    "workgraph_validate_cli_real_seconds": [
+      0.05,
+      0.04,
+      0.04,
+      0.04,
+      0.04
+    ],
+    "workgraph_validate_cli_median_seconds": 0.04,
+    "workgraph_status_cli_real_seconds": 0.04,
+    "workgraph_next_cli_real_seconds": 0.05
+  },
+  "benchmark_harness_present": false,
+  "performance_slo_present": false,
+  "production_scale_corpus_present": false,
+  "reproducible_commands_present": true,
+  "current_gate": "baseline_only_until_scale_corpus_benchmark_harness_and_slo_exist",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
