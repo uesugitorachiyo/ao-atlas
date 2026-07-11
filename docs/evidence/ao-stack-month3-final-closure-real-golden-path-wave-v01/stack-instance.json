@@ -1,0 +1,13 @@
+{
+  "contract_version": "ao.atlas.stack-instance.v0.1",
+  "id": "ao-atlas",
+  "state_root": ".atlas-local/ao-stack-month3-final-closure-real-golden-path-v01/state",
+  "toolchain_root": ".",
+  "roots": {
+    "mission": ".atlas-local/ao-stack-month3-final-closure-real-golden-path-v01/state/ao-atlas/mission",
+    "workgraph": ".atlas-local/ao-stack-month3-final-closure-real-golden-path-v01/state/ao-atlas/workgraph",
+    "context": ".atlas-local/ao-stack-month3-final-closure-real-golden-path-v01/state/ao-atlas/context",
+    "evidence": ".atlas-local/ao-stack-month3-final-closure-real-golden-path-v01/state/ao-atlas/evidence",
+    "worktree": ".atlas-local/ao-stack-month3-final-closure-real-golden-path-v01/state/ao-atlas/worktree"
+  }
+}

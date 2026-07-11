@@ -66,3 +66,34 @@ func TestMonth3GoldenPathReadinessMatrixRequiresFortyRecommendations(t *testing.
 		t.Fatalf("expected recommendation count rejection, got %v", err)
 	}
 }
+
+func TestMonth3GoldenPathReadinessMatrixUsesDomainSpecificRecommendations(t *testing.T) {
+	matrix, err := BuildAtlasGoldenPathReadinessMatrix()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, rec := range matrix.RankedRecommendations {
+		if strings.Contains(rec.Task, "golden-path-followup-") {
+			t.Fatalf("readiness matrix must not use placeholder recommendation labels: %#v", rec)
+		}
+		if len(strings.Fields(rec.Task)) < 6 {
+			t.Fatalf("readiness matrix recommendation must be actionable: %#v", rec)
+		}
+	}
+	for _, want := range []string{
+		"aggregate Promoter Command public-safety closure rollup",
+		"non-AO repository dry-run replay binding",
+		"provider and model provenance",
+	} {
+		found := false
+		for _, rec := range matrix.RankedRecommendations {
+			if strings.Contains(rec.Task, want) {
+				found = true
+				break
+			}
+		}
+		if !found {
+			t.Fatalf("readiness matrix missing domain recommendation containing %q: %#v", want, matrix.RankedRecommendations)
+		}
+	}
+}
