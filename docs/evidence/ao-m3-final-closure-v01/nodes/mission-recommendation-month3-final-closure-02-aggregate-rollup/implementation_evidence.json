@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-02-aggregate-rollup",
+  "task_id": "mission-recommendation-month3-final-closure-02-aggregate-rollup-task",
+  "status": "implemented",
+  "changed_files": [
+    "internal/atlas/mission_month3_final_closure_rollup.go",
+    "internal/atlas/mission_month3_final_closure_rollup_cli.go",
+    "internal/atlas/mission_month3_final_closure_rollup_test.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-02-aggregate-rollup/month3-final-closure-rollup.json"
+  ],
+  "summary": "Added typed final-closure rollup binding terminal readback, readiness matrix, Promoter, Command, and public-safety evidence for the completed 40-node Month 3 wave.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

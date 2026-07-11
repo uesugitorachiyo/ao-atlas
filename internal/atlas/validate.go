@@ -148,6 +148,7 @@ const AtlasNonAOReplayBindingFixtureContract = "ao.atlas.non-ao-replay-binding-f
 const AtlasKillRestartReplayFixtureContract = "ao.atlas.kill-restart-replay-fixture.v0.1"
 const AtlasRollbackTerminalReadbackFixtureContract = "ao.atlas.rollback-terminal-readback-fixture.v0.1"
 const AtlasGoldenPathReadinessMatrixContract = "ao.atlas.golden-path-readiness-matrix.v0.1"
+const AtlasMonth3FinalClosureRollupContract = "ao.atlas.month3-final-closure-rollup.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"

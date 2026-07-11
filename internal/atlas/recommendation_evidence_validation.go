@@ -894,6 +894,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:golden-path-readiness-matrix", err
 		}
 		return "typed:golden-path-readiness-matrix", ValidateAtlasGoldenPathReadinessMatrix(value)
+	case AtlasMonth3FinalClosureRollupContract:
+		value, err := LoadJSON[AtlasMonth3FinalClosureRollup](path)
+		if err != nil {
+			return "typed:month3-final-closure-rollup", err
+		}
+		return "typed:month3-final-closure-rollup", ValidateAtlasMonth3FinalClosureRollup(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
