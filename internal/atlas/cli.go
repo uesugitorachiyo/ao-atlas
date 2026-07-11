@@ -515,6 +515,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "foundry-evidence-size-boundary-fixture", run: runMissionRecommendationsFoundryEvidenceSizeBoundaryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "repeated-task-result-ledger-fixture", run: runMissionRecommendationsRepeatedTaskResultLedgerFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "failure-injection-fuzzing-fixture", run: runMissionRecommendationsFailureInjectionFuzzingFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "local-platform-fixture", run: runMissionRecommendationsLocalPlatformFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},

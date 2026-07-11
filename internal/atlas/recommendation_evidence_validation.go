@@ -864,6 +864,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:failure-injection-fuzzing-fixture", err
 		}
 		return "typed:failure-injection-fuzzing-fixture", ValidateAtlasFailureInjectionFuzzingFixture(value)
+	case AtlasLocalPlatformFixtureContract:
+		value, err := LoadJSON[AtlasLocalPlatformFixture](path)
+		if err != nil {
+			return "typed:local-platform-fixture", err
+		}
+		return "typed:local-platform-fixture", ValidateAtlasLocalPlatformFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

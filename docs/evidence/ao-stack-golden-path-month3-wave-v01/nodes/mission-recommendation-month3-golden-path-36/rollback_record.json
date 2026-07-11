@@ -1,0 +1,21 @@
+{
+  "contract_version": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-36",
+  "task_id": "mission-recommendation-month3-golden-path-36-task",
+  "status": "rollback_ready",
+  "rollback_scope": [
+    "internal/atlas/mission_local_platform_fixture.go",
+    "internal/atlas/mission_local_platform_fixture_cli.go",
+    "internal/atlas/mission_local_platform_fixture_test.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/mission_recommendation_command_registry_test.go",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-36"
+  ],
+  "rollback_action": "Revert the node 36 commit and remove node-specific evidence artifacts.",
+  "external_state_changed": false,
+  "credentials_touched": false,
+  "rsi_remains_denied": true
+}
