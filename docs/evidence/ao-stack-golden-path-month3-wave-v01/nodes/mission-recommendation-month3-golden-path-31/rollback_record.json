@@ -1,0 +1,10 @@
+{
+  "contract_version": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-31",
+  "task_id": "mission-recommendation-month3-golden-path-31-task",
+  "status": "rollback_ready",
+  "rollback_action": "Revert the node 31 commit and remove node-specific evidence artifacts.",
+  "external_state_changed": false,
+  "credentials_touched": false,
+  "rsi_remains_denied": true
+}

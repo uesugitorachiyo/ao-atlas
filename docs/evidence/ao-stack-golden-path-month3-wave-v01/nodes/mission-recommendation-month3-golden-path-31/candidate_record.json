@@ -1,0 +1,13 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-31",
+  "task_id": "mission-recommendation-month3-golden-path-31-task",
+  "status": "selected",
+  "objective": "Generate the current authority statement and readiness inventory from lockfile and contract-owner inputs instead of copied campaign prose.",
+  "selected_candidate": "authority-readiness-inventory-fixture",
+  "source_recommendation": "month3-golden-path-31",
+  "source_digest": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+  "source_task_digest": "sha256:52eea0eb24da8491ac04e09fecd8a5d1a74c9644969722fce9209c18f3a4a52c",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

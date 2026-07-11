@@ -510,6 +510,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "local-backup-restore-fixture", run: runMissionRecommendationsLocalBackupRestoreFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-readback-adapter-boundary-fixture", run: runMissionRecommendationsCommandReadbackAdapterBoundaryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "compact-timeline-filter-fixture", run: runMissionRecommendationsCompactTimelineFilterFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "authority-readiness-inventory-fixture", run: runMissionRecommendationsAuthorityReadinessInventoryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},

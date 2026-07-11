@@ -2129,6 +2129,35 @@ type AtlasCompactTimelineFilterFixture struct {
 	RSIRemainsDenied              bool                         `json:"rsi_remains_denied"`
 }
 
+type AtlasAuthorityReadinessInventoryInput struct {
+	Name     string `json:"name"`
+	Source   string `json:"source"`
+	Required bool   `json:"required"`
+}
+
+type AtlasAuthorityReadinessInventorySection struct {
+	Name         string `json:"name"`
+	Generated    bool   `json:"generated"`
+	SourceInput  string `json:"source_input"`
+	CurrentTruth bool   `json:"current_truth"`
+}
+
+type AtlasAuthorityReadinessInventoryFixture struct {
+	Schema                     string                                    `json:"schema"`
+	Status                     string                                    `json:"status"`
+	Inputs                     []AtlasAuthorityReadinessInventoryInput   `json:"inputs"`
+	InputCount                 int                                       `json:"input_count"`
+	Sections                   []AtlasAuthorityReadinessInventorySection `json:"sections"`
+	SectionCount               int                                       `json:"section_count"`
+	GeneratedFromInputs        bool                                      `json:"generated_from_inputs"`
+	CopiedCampaignProseAllowed bool                                      `json:"copied_campaign_prose_allowed"`
+	SchedulesWork              bool                                      `json:"schedules_work"`
+	ExecutesWork               bool                                      `json:"executes_work"`
+	ApprovesWork               bool                                      `json:"approves_work"`
+	ClaimsAuthorityAdvance     bool                                      `json:"claims_authority_advance"`
+	RSIRemainsDenied           bool                                      `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

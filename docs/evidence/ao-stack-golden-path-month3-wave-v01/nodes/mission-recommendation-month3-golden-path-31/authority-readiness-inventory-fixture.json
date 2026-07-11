@@ -1,0 +1,39 @@
+{
+  "schema": "ao.atlas.authority-readiness-inventory-fixture.v0.1",
+  "status": "authority_readiness_inventory_ready",
+  "inputs": [
+    {
+      "name": "stack_lockfile",
+      "source": "stack-lockfile",
+      "required": true
+    },
+    {
+      "name": "contract_owner_registry",
+      "source": "contract-owner-inputs",
+      "required": true
+    }
+  ],
+  "input_count": 2,
+  "sections": [
+    {
+      "name": "current_authority_statement",
+      "generated": true,
+      "source_input": "stack_lockfile",
+      "current_truth": true
+    },
+    {
+      "name": "readiness_inventory",
+      "generated": true,
+      "source_input": "contract_owner_registry",
+      "current_truth": true
+    }
+  ],
+  "section_count": 2,
+  "generated_from_inputs": true,
+  "copied_campaign_prose_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
