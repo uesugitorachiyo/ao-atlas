@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-18-command-thin-client",
+  "task_id": "mission-recommendation-month3-final-closure-18-command-thin-client-task",
+  "status": "selected",
+  "objective": "Add Command thin-client boundary fixture that rejects duplicated domain authority.",
+  "selected_candidate": "command-readback-adapter-boundary-fixture",
+  "selection_reason": "Node 18 is the next executable node after node 17 and binds Command to readback presentation without duplicated domain authority.",
+  "source_recommendation": "month3-final-closure-18-command-thin-client",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "source_task_digest": "sha256:4bb517e2c67def9f4fcdcce16c245e3dafded2fade2421548290532fa31cfe65",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

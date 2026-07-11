@@ -59,6 +59,39 @@ func TestMonth3CommandReadbackAdapterBoundaryFixtureUsesTypedValidator(t *testin
 	}
 }
 
+func TestMonth3FinalClosureCommandThinClientBoundaryFixture(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-m3-final-closure-v01", "nodes", "mission-recommendation-month3-final-closure-18-command-thin-client")
+	recordedPath := filepath.Join(nodeDir, "command-readback-adapter-boundary-fixture.json")
+	outPath := filepath.Join(t.TempDir(), "command-readback-adapter-boundary-fixture.json")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "command-readback-adapter-boundary-fixture",
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("command-readback-adapter-boundary-fixture command failed: %s", out.String())
+	}
+
+	recorded := mustLoadJSON[AtlasCommandReadbackAdapterBoundaryFixture](t, recordedPath)
+	generated := mustLoadJSON[AtlasCommandReadbackAdapterBoundaryFixture](t, outPath)
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("final-closure command thin-client boundary fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	if err := ValidateAtlasCommandReadbackAdapterBoundaryFixture(recorded); err != nil {
+		t.Fatalf("recorded final-closure command thin-client boundary fixture invalid: %v", err)
+	}
+	if !recorded.DelegatesDomainDecisions ||
+		recorded.DuplicatesDomainDecisions ||
+		recorded.ExecutesWork ||
+		recorded.ApprovesWork ||
+		recorded.ClaimsAuthorityAdvance ||
+		!recorded.RSIRemainsDenied {
+		t.Fatalf("final-closure command thin-client fixture lost authority boundary: %#v", recorded)
+	}
+}
+
 func TestMonth3CommandReadbackAdapterBoundaryFixtureRejectsDuplicatedDomainDecision(t *testing.T) {
 	fixture, err := BuildAtlasCommandReadbackAdapterBoundaryFixture()
 	if err != nil {
