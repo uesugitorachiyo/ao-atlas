@@ -816,6 +816,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:atomic-evidence-transition-fixture", err
 		}
 		return "typed:atomic-evidence-transition-fixture", ValidateAtlasAtomicEvidenceTransitionFixture(value)
+	case AtlasLocalBackupRestoreFixtureContract:
+		value, err := LoadJSON[AtlasLocalBackupRestoreFixture](path)
+		if err != nil {
+			return "typed:local-backup-restore-fixture", err
+		}
+		return "typed:local-backup-restore-fixture", ValidateAtlasLocalBackupRestoreFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
