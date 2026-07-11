@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.month3-rollback-replay-negative.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-13-rollback-replay-negative",
+  "status": "rollback_replay_negative_ready",
+  "source_readback_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-12-provider-model-provenance/recommendation-readback-after.json",
+  "source_readback_digest": "sha256:ff9e6c21fe67dbe16c62b7f02dcbffaf20c30e4e54ccc6c38454c61f32dc4b36",
+  "cases": [
+    {
+      "name": "stale_base_commit",
+      "replay_class": "stale_base_commit",
+      "expected_state": "rejected_before_rollback_replay",
+      "accepted": false,
+      "replayable": true
+    },
+    {
+      "name": "receipt_digest_mismatch",
+      "replay_class": "receipt_digest_mismatch",
+      "expected_state": "rejected_before_rollback_replay",
+      "accepted": false,
+      "replayable": true
+    }
+  ],
+  "case_count": 2,
+  "accepted_case_count": 0,
+  "stale_base_commit_rejected": true,
+  "receipt_digest_mismatch_rejected": true,
+  "final_response_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
