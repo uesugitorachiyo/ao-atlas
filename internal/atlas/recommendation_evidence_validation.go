@@ -846,6 +846,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:content-addressed-evidence-manifest-fixture", err
 		}
 		return "typed:content-addressed-evidence-manifest-fixture", ValidateAtlasContentAddressedEvidenceManifestFixture(value)
+	case AtlasFoundryEvidenceSizeBoundaryFixtureContract:
+		value, err := LoadJSON[AtlasFoundryEvidenceSizeBoundaryFixture](path)
+		if err != nil {
+			return "typed:foundry-evidence-size-boundary-fixture", err
+		}
+		return "typed:foundry-evidence-size-boundary-fixture", ValidateAtlasFoundryEvidenceSizeBoundaryFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

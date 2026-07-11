@@ -1,0 +1,17 @@
+{
+  "contract_version": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-33",
+  "task_id": "mission-recommendation-month3-golden-path-33-task",
+  "status": "implemented",
+  "implemented_artifacts": [
+    "internal/atlas/mission_foundry_evidence_size_boundary_fixture.go",
+    "internal/atlas/mission_foundry_evidence_size_boundary_fixture_cli.go",
+    "internal/atlas/mission_foundry_evidence_size_boundary_fixture_test.go",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-33/foundry-evidence-size-boundary-fixture.json"
+  ],
+  "fixture_digest": "sha256:ecd39d092c510a06782e22bfc9fe76d71bb38b8d06bf1db929fc6b14dfbc1e15",
+  "implementation_state_separate": true,
+  "generated_campaign_bulk_separate": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
