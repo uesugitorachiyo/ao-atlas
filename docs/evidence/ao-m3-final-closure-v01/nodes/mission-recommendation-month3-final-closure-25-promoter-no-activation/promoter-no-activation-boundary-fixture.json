@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.promoter-no-activation-boundary-fixture.v0.1",
+  "status": "no_promotion_boundary_ready",
+  "decision": "no_promotion",
+  "no_promotion_decision_supported": true,
+  "activation_execution_owned": false,
+  "release_execution_owned": false,
+  "allowed_outputs": [
+    "no_promotion",
+    "blocked",
+    "insufficient_evidence"
+  ],
+  "allowed_output_count": 3,
+  "forbidden_actions": [
+    "activate",
+    "release",
+    "deploy",
+    "publish",
+    "tag"
+  ],
+  "forbidden_action_count": 5,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
