@@ -1,0 +1,1514 @@
+{
+  "contract_version": "ao.atlas.recommendation-wave.v0.1",
+  "mission_id": "mission-ao-stack-golden-path-month3-v01",
+  "target_instance": "ao-stack-golden-path-month3-v01",
+  "status": "ready",
+  "source_digest": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+  "minimum_tasks": 30,
+  "total_tasks": 40,
+  "node_budget": 40,
+  "estimated_minutes": 150,
+  "supervisor": {
+    "contract_version": "ao.atlas.long-run-supervisor.v0.2",
+    "min_nodes": 30,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 40,
+    "return_only_when": "all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker",
+    "checkpoint_policy": "after_each_node_or_timed_interval",
+    "evidence_policy": "node_gate_candidate_rollback_tests_verification_public_safety_promoter_command",
+    "final_report_contract": "ao.atlas.long-run-final-report.v0.2"
+  },
+  "tasks": [
+    {
+      "id": "month3-golden-path-1",
+      "owner": "ao-atlas",
+      "task": "Bind every approval subject to the exact proposed bytes and base commit before any application path can proceed, and add a regression fixture proving altered bytes are rejected.",
+      "node_id": "mission-recommendation-month3-golden-path-1",
+      "task_id": "mission-recommendation-month3-golden-path-1-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c7396535d2d08a3cad74c633769d7fddbc7071a01d03ad45f9b02c14aac59f70",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-1",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-2",
+      "owner": "ao-atlas",
+      "task": "Require the approval record base commit to match the inspected worktree base commit and add a mismatch readback fixture without invoking a provider.",
+      "node_id": "mission-recommendation-month3-golden-path-2",
+      "task_id": "mission-recommendation-month3-golden-path-2-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:bbc74d1c0561cb34756cf278cce1caebe4d9760f415c62fd472893abcdae6596",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-2",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-3",
+      "owner": "ao-atlas",
+      "task": "Remove or permanently gate the hardcoded identity auto-approval path so an absent explicit approval fails closed, with a focused CLI regression test.",
+      "node_id": "mission-recommendation-month3-golden-path-3",
+      "task_id": "mission-recommendation-month3-golden-path-3-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:d8c66ecbaa0f6bb36b76b3553e02a265739c6df39989896a32302bc1b28ab693",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-3",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-4",
+      "owner": "ao-atlas",
+      "task": "Add replay fixtures covering changed bytes, changed base commit, changed policy digest, and reused approval identifiers; preserve denied outcomes.",
+      "node_id": "mission-recommendation-month3-golden-path-4",
+      "task_id": "mission-recommendation-month3-golden-path-4-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7970373275753ee54bfc740cd7254199e23b4e8352774f13ff71ea8620865f4d",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-4",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-5",
+      "owner": "ao-atlas",
+      "task": "Include policy identity, policy version, and policy digest fields in the canonical event hash and add tamper detection tests.",
+      "node_id": "mission-recommendation-month3-golden-path-5",
+      "task_id": "mission-recommendation-month3-golden-path-5-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:bee5c4517788799da5a10cbac44706c2d26b5e133503a08084fb6bd686109acc",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-5",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-6",
+      "owner": "ao-atlas",
+      "task": "Publish versioned canonical hash vectors for old and new event records and make the migration boundary explicit without weakening verification.",
+      "node_id": "mission-recommendation-month3-golden-path-6",
+      "task_id": "mission-recommendation-month3-golden-path-6-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:df2cfd1a14079510d9d82e191d8f4987cda2e409060a9925c7207770ee96ffb5",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-6",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-7",
+      "owner": "ao-atlas",
+      "task": "Define and test the bounded signer, key-rotation, and revocation contract required by the golden path; do not add live key management or widen policy.",
+      "node_id": "mission-recommendation-month3-golden-path-7",
+      "task_id": "mission-recommendation-month3-golden-path-7-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f94122da18938c44b195814f85df60efed165dbb75675a9a4ec81ac1f1147b8c",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-7",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-8",
+      "owner": "ao-atlas",
+      "task": "Implement the first canonical registry manifest with owner, lifecycle class, digest, and consumer metadata for gate-critical contracts.",
+      "node_id": "mission-recommendation-month3-golden-path-8",
+      "task_id": "mission-recommendation-month3-golden-path-8-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:58e237b2b94a27dd3f376e733c1bf2dd4c98ffca63d7a6efc21c74572afb05c9",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-8",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-9",
+      "owner": "ao-atlas",
+      "task": "Add a source-checked compatibility inventory that fails when a gate-critical contract has no declared owner or consumer test.",
+      "node_id": "mission-recommendation-month3-golden-path-9",
+      "task_id": "mission-recommendation-month3-golden-path-9-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:a5b7c2bdba7fd5d773e18bd5887e5345ae24f414dfd25f6f34129c9e75cee104",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-9",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-10",
+      "owner": "ao-atlas",
+      "task": "Create small cross-language canonical JSON vectors for mission, approval, policy, rollback, and readback records with digest fixtures.",
+      "node_id": "mission-recommendation-month3-golden-path-10",
+      "task_id": "mission-recommendation-month3-golden-path-10-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8409dcacde14d5fd18afb9175351b19eb76ba3a30689bc09a8560ae71e79b5dc",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-10",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-11",
+      "owner": "ao-atlas",
+      "task": "Add a workspace-root integration fixture proving Blueprint canonical bytes and digest survive Atlas compilation unchanged.",
+      "node_id": "mission-recommendation-month3-golden-path-11",
+      "task_id": "mission-recommendation-month3-golden-path-11-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:038a96f228d13b3bb7124473a0baf115a5c380ecea36e2f7d727eef2560bd2f5",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-11",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-12",
+      "owner": "ao-atlas",
+      "task": "Add a bounded Foundry import test that consumes Atlas canonical workgraph fields and rejects stale or ambiguous schema aliases.",
+      "node_id": "mission-recommendation-month3-golden-path-12",
+      "task_id": "mission-recommendation-month3-golden-path-12-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:616c925f446dc7dfb15563569b4e3a770ee4378bd3860b377338736cfd142f28",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-12",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-13",
+      "owner": "ao-atlas",
+      "task": "Add a producer-consumer test proving Command readback accepts only the same policy and approval fields Covenant validates.",
+      "node_id": "mission-recommendation-month3-golden-path-13",
+      "task_id": "mission-recommendation-month3-golden-path-13-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:5686f6cbbf83f0af1139ae1007129705ebac7a43dec63638ae997799ba7e94e8",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-13",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-14",
+      "owner": "ao-atlas",
+      "task": "Add dependency-free Go and Rust smoke checks over the canonical vectors so field loss is detected before integration runs.",
+      "node_id": "mission-recommendation-month3-golden-path-14",
+      "task_id": "mission-recommendation-month3-golden-path-14-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:5a9475cfbcbb760c2f63909e4bd16b3f7fe5ead9fe389b1b371e57da87d17881",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-14",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-15",
+      "owner": "ao-atlas",
+      "task": "Add a least-privilege hosted CI workflow for Sentinel with read-only permissions and deterministic fixture verification.",
+      "node_id": "mission-recommendation-month3-golden-path-15",
+      "task_id": "mission-recommendation-month3-golden-path-15-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7bca2deb1063c7e66fe201dbff5fec34d81ccc760affc1a61dcbd2fb19908476",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-15",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-16",
+      "owner": "ao-atlas",
+      "task": "Make Sentinel consume recorded CI, runtime, policy, and evidence-freshness signals and distinguish stale, pending, pass, and failure states.",
+      "node_id": "mission-recommendation-month3-golden-path-16",
+      "task_id": "mission-recommendation-month3-golden-path-16-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:053f447b68ce03dd9d067545c1cbae8340b3400fbe8ae49753afeab1648e287a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-16",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-17",
+      "owner": "ao-atlas",
+      "task": "Add dry-run verification of signed assurance inputs, signer identity, evidence digest, and freshness before any promotion decision.",
+      "node_id": "mission-recommendation-month3-golden-path-17",
+      "task_id": "mission-recommendation-month3-golden-path-17-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7e30f100772e26d9885c87efba18b114c60d2e3f1255cbdc97c4c158e97d12cc",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-17",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-18",
+      "owner": "ao-atlas",
+      "task": "Add tests proving Promoter can produce no-promotion decisions without owning activation or release execution paths.",
+      "node_id": "mission-recommendation-month3-golden-path-18",
+      "task_id": "mission-recommendation-month3-golden-path-18-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:231a00d7c67436a393d2e6079992c2868e77bc561031aba0948a1effefb7afe7",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-18",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-19",
+      "owner": "ao-atlas",
+      "task": "Implement a tiny non-AO workspace-root preflight that validates repository identity, objective digest, worktree boundary, and safe next-node selection.",
+      "node_id": "mission-recommendation-month3-golden-path-19",
+      "task_id": "mission-recommendation-month3-golden-path-19-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:bc51c2eaca586c80cd5a8e18b49a92feea454465ff84771564054885b66b8efb",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-19",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-20",
+      "owner": "ao-atlas",
+      "task": "Require isolated worktree, exact digest approval, verified diff, reviewed PR evidence, and rollback receipt in the bounded execution packet.",
+      "node_id": "mission-recommendation-month3-golden-path-20",
+      "task_id": "mission-recommendation-month3-golden-path-20-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:54b59f9c865c196db54276013fe17b5592b0d54900ad305542b73e8ecc6082fc",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-20",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-21",
+      "owner": "ao-atlas",
+      "task": "Narrow Forge evidence around GoalRun start, stop gate, rollback, and terminal receipt without allowing provider execution.",
+      "node_id": "mission-recommendation-month3-golden-path-21",
+      "task_id": "mission-recommendation-month3-golden-path-21-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:ae9aba37f40f43d0486dd55d3375bd5ae7c332f07018b04c2eed4dc7b6ceed30",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-21",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-22",
+      "owner": "ao-atlas",
+      "task": "Add a regression matrix proving default and malformed execution packets cannot invoke a provider or silently claim a changed result.",
+      "node_id": "mission-recommendation-month3-golden-path-22",
+      "task_id": "mission-recommendation-month3-golden-path-22-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:3bff891b4bbf1bf6dca9ea4dacaee453e35cd5b4b7f2152dd0e4c40b54844e03",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-22",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-23",
+      "owner": "ao-atlas",
+      "task": "Add versioned durable-state migration metadata and fail-closed handling for unknown migration versions.",
+      "node_id": "mission-recommendation-month3-golden-path-23",
+      "task_id": "mission-recommendation-month3-golden-path-23-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:da4d1db7f8f57005f669616025cf65cdef8a8ca86bfe021bb60ad5a0e0fea6f3",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-23",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-24",
+      "owner": "ao-atlas",
+      "task": "Add restart, lease expiry, duplicate handoff, and resume tests that preserve exactly-once node accounting.",
+      "node_id": "mission-recommendation-month3-golden-path-24",
+      "task_id": "mission-recommendation-month3-golden-path-24-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:315e221c6afd97e859d17f36a932fe80caa393a5bd63b672a6c11473ea249599",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-24",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-25",
+      "owner": "ao-atlas",
+      "task": "Bind handoff, active, completed, and denied states to a replayable golden-path packet and prevent handoffs from counting as completed work.",
+      "node_id": "mission-recommendation-month3-golden-path-25",
+      "task_id": "mission-recommendation-month3-golden-path-25-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:ac59903307eae80c349e853e3030a702d8916524459e49ddd9de81a4e0c5cbe6",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-25",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-26",
+      "owner": "ao-atlas",
+      "task": "Add an indexed event migration and query fixture for mission, policy, approval, rollback, and readback events.",
+      "node_id": "mission-recommendation-month3-golden-path-26",
+      "task_id": "mission-recommendation-month3-golden-path-26-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8a00f6b476d13deffc33fe8743d05835b2b4c249168b5954443ea303c9afb633",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-26",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-27",
+      "owner": "ao-atlas",
+      "task": "Add deterministic crash, lease expiry, restart, and duplicate-ingest tests with atomic evidence state transitions.",
+      "node_id": "mission-recommendation-month3-golden-path-27",
+      "task_id": "mission-recommendation-month3-golden-path-27-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:012e2aa80d5d38f8ccbf1c0c0ba779eb6b74b6f661944fe298cb2a1dcc33fb43",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-27",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-28",
+      "owner": "ao-atlas",
+      "task": "Add a local backup and restore fixture that verifies event digests and readback continuity without external storage or credentials.",
+      "node_id": "mission-recommendation-month3-golden-path-28",
+      "task_id": "mission-recommendation-month3-golden-path-28-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7aa8dca99bee16b068e80af391e789602b63ab8d1da2f03ab521b696500e4deb",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-28",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-29",
+      "owner": "ao-atlas",
+      "task": "Move the bounded Command surface toward Mission and control-plane readback adapters and test that it does not duplicate domain decisions.",
+      "node_id": "mission-recommendation-month3-golden-path-29",
+      "task_id": "mission-recommendation-month3-golden-path-29-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:306d0a264fcb51c0c458f627613bad75b3df5c14378646a34d59654337b8e54d",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-29",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-30",
+      "owner": "ao-atlas",
+      "task": "Add compact timeline filters that distinguish stale, duplicate, pending, denied, and completed evidence records.",
+      "node_id": "mission-recommendation-month3-golden-path-30",
+      "task_id": "mission-recommendation-month3-golden-path-30-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b809b2298fe0e0604f091a0ffcba394c9709b07e32d2f434638a752b247a55ee",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-30",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-31",
+      "owner": "ao-atlas",
+      "task": "Generate the current authority statement and readiness inventory from lockfile and contract-owner inputs instead of copied campaign prose.",
+      "node_id": "mission-recommendation-month3-golden-path-31",
+      "task_id": "mission-recommendation-month3-golden-path-31-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:52eea0eb24da8491ac04e09fecd8a5d1a74c9644969722fce9209c18f3a4a52c",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-31",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-32",
+      "owner": "ao-atlas",
+      "task": "Add a content-addressed manifest boundary for bulk evidence while retaining small replayable fixtures in the repository.",
+      "node_id": "mission-recommendation-month3-golden-path-32",
+      "task_id": "mission-recommendation-month3-golden-path-32-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:62be4ee21294724b4c5cd7aa7838302b9ecec837a0fbd08880af33955c6fa5d5",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-32",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-33",
+      "owner": "ao-atlas",
+      "task": "Add Foundry-side evidence references and size checks that keep implementation state separate from generated campaign bulk.",
+      "node_id": "mission-recommendation-month3-golden-path-33",
+      "task_id": "mission-recommendation-month3-golden-path-33-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:89e500e85fb421d242517bc95f86524a4674a0206f839dc8eb4ffe441a17002e",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-33",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-34",
+      "owner": "ao-atlas",
+      "task": "Replace one-shot fixture confidence with a deterministic repeated-task harness design and replayable result ledger, without live provider calls.",
+      "node_id": "mission-recommendation-month3-golden-path-34",
+      "task_id": "mission-recommendation-month3-golden-path-34-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7d6fb75d96d9d3391da094d51d801eed2804ab191f199fb8c5e612929375dba5",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-34",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-35",
+      "owner": "ao-atlas",
+      "task": "Add controlled failure-injection and fuzzing fixtures for malformed gates, lost leases, stale evidence, and rollback receipts.",
+      "node_id": "mission-recommendation-month3-golden-path-35",
+      "task_id": "mission-recommendation-month3-golden-path-35-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f6d12765fcd66d320286c86fcf6237e9d75763ad56df28792498423d3e482604",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-35",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-36",
+      "owner": "ao-atlas",
+      "task": "Add deterministic install, path, line-ending, and rollback fixtures for the supported local platforms without invoking providers.",
+      "node_id": "mission-recommendation-month3-golden-path-36",
+      "task_id": "mission-recommendation-month3-golden-path-36-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:09cbce65de07ae4a8b45279c3ef51886bc07552e238e2931d410aac67d217c0c",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-36",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-37",
+      "owner": "ao-atlas",
+      "task": "Bind a tiny non-AO repository replay to reviewed PR evidence and observer readback, preserving the no-promotion boundary.",
+      "node_id": "mission-recommendation-month3-golden-path-37",
+      "task_id": "mission-recommendation-month3-golden-path-37-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:83c4ec311d7b90c62080b64fedc65dce0f5e96867ca5c360ef83a85d79060093",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-37",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-38",
+      "owner": "ao-atlas",
+      "task": "Replay a killed and restarted bounded run and prove no lost evidence, duplicate mutation, or false completion.",
+      "node_id": "mission-recommendation-month3-golden-path-38",
+      "task_id": "mission-recommendation-month3-golden-path-38-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:41a86b7111f841905921deae2711d2662b8f45d78bf209bbc1063e866d29dbd2",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-38",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-39",
+      "owner": "ao-atlas",
+      "task": "Replay a bounded rollback receipt and verify Command, Sentinel, Promoter, and control-plane readbacks agree on the terminal state.",
+      "node_id": "mission-recommendation-month3-golden-path-39",
+      "task_id": "mission-recommendation-month3-golden-path-39-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:433e269ac022ab5de89a14daecb8f971e34dec211027562756f8952377080e38",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-39",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month3-golden-path-40",
+      "owner": "ao-atlas",
+      "task": "Produce the final golden-path readiness matrix with exact proven capabilities, unresolved blockers, no-promotion status, RSI denial, and at least 40 ranked next recommendations.",
+      "node_id": "mission-recommendation-month3-golden-path-40",
+      "task_id": "mission-recommendation-month3-golden-path-40-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:4eb61f30b3f14762737ccf0a85708d24bdd56e8590f630f812731c24866dbde1",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month3-golden-path-40",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    }
+  ],
+  "next_recommended_prompt": "You are AO Atlas, coordinating AO Foundry, AO Promoter, AO Command, and AO Architecture for a long-run Atlas-owned correction wave.\n\nDo not ask the operator for permission. Do not stop after one repo, one PR, one CI pass, one Foundry import, one route decision, one evidence artifact, or one short batch. Continue until the workgraph is completed with evidence, at least the lease minimum is met, or a true hard blocker remains after all safe repair, repack, and support work has been attempted.\n\nCurrent state:\n- Mission: mission-ao-stack-golden-path-month3-v01.\n- Target instance: ao-stack-golden-path-month3-v01.\n- Generated Atlas-owned nodes: 40.\n- Lease minimum: 30 nodes, 120 to 180 minutes.\n- Continue-if-fast target: 40 nodes.\n- Final response allowed: false, because ready nodes or exact next actions remain.\n- Source digest: sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8.\n\nProblem:\n- Recent AO Atlas/Mission recommendation prompts returned after short batches instead of sustaining 2-3 hour workgraphs.\n- Double the previous short batch when explicitly requested, and otherwise use the v0.2 2-3 hour supervisor default.\n- This continuation must behave like a long-run supervisor: Atlas owns sequencing, Foundry owns bounded implementation nodes, and Blueprint is used only for genuinely new requirements or authorization.\n\nGoal:\n- Target 2-3 hours and complete a durable AO Atlas long-run wave for mission-ao-stack-golden-path-month3-v01.\n- Execute at least 30 bounded Atlas nodes from the generated workgraph.\n- Complete at least 30 bounded implementation/evidence nodes before final response unless a true hard blocker remains.\n- If the first 30 nodes finish quickly and no blocker remains, continue through the 40-node continue-if-fast target.\n\nReturn only after all generated nodes complete, at least 30 bounded Atlas nodes complete, or a true hard blocker remains after safe repair attempts.\n\nMinimum work budget:\n- min_nodes: 30\n- min_minutes: 120\n- max_minutes: 180\n- max_iterations: 40\n- return_only_when: all_generated_nodes_done_or_30_nodes_done_or_true_hard_blocker\n- checkpoint_policy: after_each_node_or_timed_interval\n\nStop gates:\n- Target duration: 120 to 180 minutes.\n- Node floor stop gate: complete at least 30 nodes before final response unless a true hard blocker remains.\n- Lease floor stop gate: do not return before min_minutes=120 unless a true hard blocker remains.\n- Continue-if-fast stop gate: if 30 nodes finish quickly and no blocker remains, continue through 40 nodes.\n- Ready-work stop gate: if ready_nodes \u003e 0 or exact_next_action is non-empty, do not produce a final response.\n- Checkpoint stop gate: record a checkpoint after each node or timed interval before evaluating final response.\n\nSafety boundaries:\n- Keep exactly one executable mutation node active at a time.\n- No provider calls.\n- No credential or token inspection.\n- No direct main mutation.\n- No release, deploy, publish, upload, or tag.\n- No dependency updates unless separately authorized.\n- No auth, policy, or config widening.\n- No hidden instruction mutation.\n- No broad RSI claim.\n- RSI remains denied.\n- Use existing repo auth only for normal PR, CI, and merge if available without exposing credentials.\n\nRequired work:\nmonth3-golden-path-1. Bind every approval subject to the exact proposed bytes and base commit before any application path can proceed, and add a regression fixture proving altered bytes are rejected.\nmonth3-golden-path-2. Require the approval record base commit to match the inspected worktree base commit and add a mismatch readback fixture without invoking a provider.\nmonth3-golden-path-3. Remove or permanently gate the hardcoded identity auto-approval path so an absent explicit approval fails closed, with a focused CLI regression test.\nmonth3-golden-path-4. Add replay fixtures covering changed bytes, changed base commit, changed policy digest, and reused approval identifiers; preserve denied outcomes.\nmonth3-golden-path-5. Include policy identity, policy version, and policy digest fields in the canonical event hash and add tamper detection tests.\nmonth3-golden-path-6. Publish versioned canonical hash vectors for old and new event records and make the migration boundary explicit without weakening verification.\nmonth3-golden-path-7. Define and test the bounded signer, key-rotation, and revocation contract required by the golden path; do not add live key management or widen policy.\nmonth3-golden-path-8. Implement the first canonical registry manifest with owner, lifecycle class, digest, and consumer metadata for gate-critical contracts.\nmonth3-golden-path-9. Add a source-checked compatibility inventory that fails when a gate-critical contract has no declared owner or consumer test.\nmonth3-golden-path-10. Create small cross-language canonical JSON vectors for mission, approval, policy, rollback, and readback records with digest fixtures.\nmonth3-golden-path-11. Add a workspace-root integration fixture proving Blueprint canonical bytes and digest survive Atlas compilation unchanged.\nmonth3-golden-path-12. Add a bounded Foundry import test that consumes Atlas canonical workgraph fields and rejects stale or ambiguous schema aliases.\nmonth3-golden-path-13. Add a producer-consumer test proving Command readback accepts only the same policy and approval fields Covenant validates.\nmonth3-golden-path-14. Add dependency-free Go and Rust smoke checks over the canonical vectors so field loss is detected before integration runs.\nmonth3-golden-path-15. Add a least-privilege hosted CI workflow for Sentinel with read-only permissions and deterministic fixture verification.\nmonth3-golden-path-16. Make Sentinel consume recorded CI, runtime, policy, and evidence-freshness signals and distinguish stale, pending, pass, and failure states.\nmonth3-golden-path-17. Add dry-run verification of signed assurance inputs, signer identity, evidence digest, and freshness before any promotion decision.\nmonth3-golden-path-18. Add tests proving Promoter can produce no-promotion decisions without owning activation or release execution paths.\nmonth3-golden-path-19. Implement a tiny non-AO workspace-root preflight that validates repository identity, objective digest, worktree boundary, and safe next-node selection.\nmonth3-golden-path-20. Require isolated worktree, exact digest approval, verified diff, reviewed PR evidence, and rollback receipt in the bounded execution packet.\nmonth3-golden-path-21. Narrow Forge evidence around GoalRun start, stop gate, rollback, and terminal receipt without allowing provider execution.\nmonth3-golden-path-22. Add a regression matrix proving default and malformed execution packets cannot invoke a provider or silently claim a changed result.\nmonth3-golden-path-23. Add versioned durable-state migration metadata and fail-closed handling for unknown migration versions.\nmonth3-golden-path-24. Add restart, lease expiry, duplicate handoff, and resume tests that preserve exactly-once node accounting.\nmonth3-golden-path-25. Bind handoff, active, completed, and denied states to a replayable golden-path packet and prevent handoffs from counting as completed work.\nmonth3-golden-path-26. Add an indexed event migration and query fixture for mission, policy, approval, rollback, and readback events.\nmonth3-golden-path-27. Add deterministic crash, lease expiry, restart, and duplicate-ingest tests with atomic evidence state transitions.\nmonth3-golden-path-28. Add a local backup and restore fixture that verifies event digests and readback continuity without external storage or credentials.\nmonth3-golden-path-29. Move the bounded Command surface toward Mission and control-plane readback adapters and test that it does not duplicate domain decisions.\nmonth3-golden-path-30. Add compact timeline filters that distinguish stale, duplicate, pending, denied, and completed evidence records.\nmonth3-golden-path-31. Generate the current authority statement and readiness inventory from lockfile and contract-owner inputs instead of copied campaign prose.\nmonth3-golden-path-32. Add a content-addressed manifest boundary for bulk evidence while retaining small replayable fixtures in the repository.\nmonth3-golden-path-33. Add Foundry-side evidence references and size checks that keep implementation state separate from generated campaign bulk.\nmonth3-golden-path-34. Replace one-shot fixture confidence with a deterministic repeated-task harness design and replayable result ledger, without live provider calls.\nmonth3-golden-path-35. Add controlled failure-injection and fuzzing fixtures for malformed gates, lost leases, stale evidence, and rollback receipts.\nmonth3-golden-path-36. Add deterministic install, path, line-ending, and rollback fixtures for the supported local platforms without invoking providers.\nmonth3-golden-path-37. Bind a tiny non-AO repository replay to reviewed PR evidence and observer readback, preserving the no-promotion boundary.\nmonth3-golden-path-38. Replay a killed and restarted bounded run and prove no lost evidence, duplicate mutation, or false completion.\nmonth3-golden-path-39. Replay a bounded rollback receipt and verify Command, Sentinel, Promoter, and control-plane readbacks agree on the terminal state.\nmonth3-golden-path-40. Produce the final golden-path readiness matrix with exact proven capabilities, unresolved blockers, no-promotion status, RSI denial, and at least 40 ranked next recommendations.\n\nPer-node requirements:\n- Generate or validate node gate, candidate record, rollback record, implementation evidence, tests, verification command output, Sentinel/public-safety wording evidence where applicable, Promoter/no-promotion or promotion-readiness evidence where applicable, and Command/readback evidence where applicable.\n- Emit a Foundry import for exactly one active node at a time, execute the node, verify locally, record run-link evidence, complete the node in Atlas, evaluate the next stop gate, and continue.\n\nRegression tests:\n- Prove the recommendation wave defaults to at least 30 nodes and 120 minutes.\n- Prove the continue-if-fast target generates 40 bounded Atlas-owned tasks.\n- Prove mixed-owner default waves are rejected with exact readback.\n- Prove final response remains denied while ready nodes or exact next actions remain.\n\nVerification:\n- go test ./... -count=1\n- go vet ./...\n- go build ./cmd/atlas\n- scripts/production-readiness.sh\n- scripts/atlas-foundry-roundtrip-smoke.sh\n- Public-safety wording scan over changed docs and readbacks.\n\nFinal response only after completion or true hard blocker:\n- Include `early_return_risk_status` in continuation prompts and treat any blocked risk status as final-response denial evidence.\n- If ready_nodes \u003e 0 or exact_next_action is non-empty, do not produce a final response.\n- If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.\n- completed nodes / total nodes\n- list of node statuses\n- merged PRs by repo or local commits if remote lifecycle is blocked\n- evidence roots\n- final AO Atlas long-run supervisor status\n- Foundry rollup\n- Command readback\n- Feature Depth Recommendations, at least 40 tasks\n- verification results\n- clean/synced repo status\n- exact next action\n",
+  "final_response_allowed": false,
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "promoter_readback_status": "required_not_bound",
+  "command_readback_status": "required_not_bound",
+  "public_safety_scan_status": "required_pending_verification",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

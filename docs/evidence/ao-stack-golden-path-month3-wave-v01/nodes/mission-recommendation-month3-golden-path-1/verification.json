@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-1",
+  "task_id": "mission-recommendation-month3-golden-path-1-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "cargo fmt --all -- --check",
+    "cargo test -p ao2-adapters --test sandbox_adapter",
+    "cargo test -p ao2-runtime --test provider_backed_run approved_sandbox_patch_rejects_target_head_drift_before_resume_apply",
+    "cargo test --workspace --all-targets",
+    "cargo check --workspace",
+    "git diff --check",
+    "gh pr checks 253: 95 checks passed",
+    "gh pr merge 253 --squash --delete-branch",
+    "AO2 main HEAD and origin/main synchronized at d57192a7d63a2d6cfbe66c08d4cbda516af46c78",
+    "local and remote codex/month3-golden-path-1-ao2-approval branches deleted",
+    "scoped public-safety wording scan over Month 3 node evidence"
+  ],
+  "required_commands": [
+    "AO2 native workspace tests and check",
+    "PR/CI/merge lifecycle",
+    "branch cleanup",
+    "Atlas evidence and JSON validation",
+    "scoped public-safety wording scan"
+  ],
+  "repair_notes": [
+    "The apply boundary now compares the full approved subject before checking the digest and before writes.",
+    "No provider call, credential inspection, dependency update, release, deployment, or promotion was performed.",
+    "RSI remains denied."
+  ]
+}

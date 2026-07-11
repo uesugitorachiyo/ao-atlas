@@ -1,0 +1,1360 @@
+{
+  "schema": "ao.mission.feature-depth-recommendations.v0.3",
+  "mission_id": "mission-ao-stack-golden-path-month3-v01",
+  "status": "ready",
+  "minimum_tasks": 30,
+  "recommendation_count": 40,
+  "source_evidence_root": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01",
+  "source_assertion_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+  "source_contract_schema": "ao.atlas.contract-convergence-evidence.v0.1",
+  "source_owner_set": [
+    "ao-architecture",
+    "ao-arena",
+    "ao-atlas",
+    "ao-blueprint",
+    "ao-command",
+    "ao-covenant",
+    "ao-crucible",
+    "ao-forge",
+    "ao-foundry",
+    "ao-mission",
+    "ao-promoter",
+    "ao-sentinel",
+    "ao2",
+    "ao2-control-plane"
+  ],
+  "source_readback_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+  "source_recommendations_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json",
+  "source_assertion_digest": "month2-terminal-readback-boundary",
+  "source_readback_digest": "month2-terminal-readback-boundary",
+  "source_recommendations_digest": "month2-terminal-readback-boundary",
+  "one_executable_node_active": true,
+  "initial_executable_node": "mission-recommendation-month3-golden-path-1",
+  "safe_to_execute": false,
+  "approves_work": false,
+  "executes_work": false,
+  "mutates_repositories": false,
+  "schedules_work": false,
+  "tasks": [
+    {
+      "rank": 1,
+      "id": "month3-golden-path-1",
+      "owner": "ao-atlas",
+      "theme": "ao2-approval-bytes",
+      "task": "Bind every approval subject to the exact proposed bytes and base commit before any application path can proceed, and add a regression fixture proving altered bytes are rejected.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-1",
+      "source_owner": "ao2",
+      "source_title": "AO2 exact proposed-bytes approval subject",
+      "source_theme": "approval-integrity",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "month3-golden-path-2",
+      "owner": "ao-atlas",
+      "theme": "ao2-approval-base-commit",
+      "task": "Require the approval record base commit to match the inspected worktree base commit and add a mismatch readback fixture without invoking a provider.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-2",
+      "source_owner": "ao2",
+      "source_title": "AO2 base-commit binding gate",
+      "source_theme": "approval-integrity",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "month3-golden-path-3",
+      "owner": "ao-atlas",
+      "theme": "ao2-auto-approval",
+      "task": "Remove or permanently gate the hardcoded identity auto-approval path so an absent explicit approval fails closed, with a focused CLI regression test.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-3",
+      "source_owner": "ao2",
+      "source_title": "AO2 hardcoded auto-approval removal",
+      "source_theme": "approval-integrity",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "month3-golden-path-4",
+      "owner": "ao-atlas",
+      "theme": "ao2-approval-replay",
+      "task": "Add replay fixtures covering changed bytes, changed base commit, changed policy digest, and reused approval identifiers; preserve denied outcomes.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-4",
+      "source_owner": "ao2",
+      "source_title": "AO2 approval replay and tamper matrix",
+      "source_theme": "approval-integrity",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "month3-golden-path-5",
+      "owner": "ao-atlas",
+      "theme": "covenant-event-hash",
+      "task": "Include policy identity, policy version, and policy digest fields in the canonical event hash and add tamper detection tests.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-5",
+      "source_owner": "ao-covenant",
+      "source_title": "Covenant policy fields in event hashes",
+      "source_theme": "policy-integrity",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "month3-golden-path-6",
+      "owner": "ao-atlas",
+      "theme": "covenant-hash-compatibility",
+      "task": "Publish versioned canonical hash vectors for old and new event records and make the migration boundary explicit without weakening verification.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-6",
+      "source_owner": "ao-covenant",
+      "source_title": "Covenant hash compatibility vectors",
+      "source_theme": "policy-integrity",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "month3-golden-path-7",
+      "owner": "ao-atlas",
+      "theme": "covenant-trust-boundary",
+      "task": "Define and test the bounded signer, key-rotation, and revocation contract required by the golden path; do not add live key management or widen policy.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-7",
+      "source_owner": "ao-covenant",
+      "source_title": "Covenant signer and revocation contract",
+      "source_theme": "trust-contract",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "month3-golden-path-8",
+      "owner": "ao-atlas",
+      "theme": "covenant-schema-registry",
+      "task": "Implement the first canonical registry manifest with owner, lifecycle class, digest, and consumer metadata for gate-critical contracts.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-8",
+      "source_owner": "ao-covenant",
+      "source_title": "Covenant canonical schema registry",
+      "source_theme": "schema-registry",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 9,
+      "id": "month3-golden-path-9",
+      "owner": "ao-atlas",
+      "theme": "architecture-owner-gate",
+      "task": "Add a source-checked compatibility inventory that fails when a gate-critical contract has no declared owner or consumer test.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-9",
+      "source_owner": "ao-architecture",
+      "source_title": "Architecture contract-owner consumer gate",
+      "source_theme": "schema-registry",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 10,
+      "id": "month3-golden-path-10",
+      "owner": "ao-atlas",
+      "theme": "canonical-json-vectors",
+      "task": "Create small cross-language canonical JSON vectors for mission, approval, policy, rollback, and readback records with digest fixtures.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-10",
+      "source_owner": "ao-architecture",
+      "source_title": "Canonical JSON vector seed",
+      "source_theme": "contract-vectors",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 11,
+      "id": "month3-golden-path-11",
+      "owner": "ao-atlas",
+      "theme": "blueprint-atlas-contract",
+      "task": "Add a workspace-root integration fixture proving Blueprint canonical bytes and digest survive Atlas compilation unchanged.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-11",
+      "source_owner": "ao-blueprint",
+      "source_title": "Blueprint to Atlas producer-consumer test",
+      "source_theme": "producer-consumer",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 12,
+      "id": "month3-golden-path-12",
+      "owner": "ao-atlas",
+      "theme": "atlas-foundry-contract",
+      "task": "Add a bounded Foundry import test that consumes Atlas canonical workgraph fields and rejects stale or ambiguous schema aliases.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-12",
+      "source_owner": "ao-foundry",
+      "source_title": "Atlas to Foundry import compatibility",
+      "source_theme": "producer-consumer",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 13,
+      "id": "month3-golden-path-13",
+      "owner": "ao-atlas",
+      "theme": "command-covenant-contract",
+      "task": "Add a producer-consumer test proving Command readback accepts only the same policy and approval fields Covenant validates.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-13",
+      "source_owner": "ao-command",
+      "source_title": "Command to Covenant ticket parity",
+      "source_theme": "producer-consumer",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 14,
+      "id": "month3-golden-path-14",
+      "owner": "ao-atlas",
+      "theme": "generated-types-smoke",
+      "task": "Add dependency-free Go and Rust smoke checks over the canonical vectors so field loss is detected before integration runs.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-14",
+      "source_owner": "ao-architecture",
+      "source_title": "Generated type smoke coverage",
+      "source_theme": "contract-vectors",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 15,
+      "id": "month3-golden-path-15",
+      "owner": "ao-atlas",
+      "theme": "sentinel-hosted-ci",
+      "task": "Add a least-privilege hosted CI workflow for Sentinel with read-only permissions and deterministic fixture verification.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-15",
+      "source_owner": "ao-sentinel",
+      "source_title": "Sentinel hosted CI workflow",
+      "source_theme": "assurance-ci",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 16,
+      "id": "month3-golden-path-16",
+      "owner": "ao-atlas",
+      "theme": "sentinel-signal-freshness",
+      "task": "Make Sentinel consume recorded CI, runtime, policy, and evidence-freshness signals and distinguish stale, pending, pass, and failure states.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-16",
+      "source_owner": "ao-sentinel",
+      "source_title": "Sentinel CI and freshness signals",
+      "source_theme": "assurance-signals",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 17,
+      "id": "month3-golden-path-17",
+      "owner": "ao-atlas",
+      "theme": "promoter-signed-assurance",
+      "task": "Add dry-run verification of signed assurance inputs, signer identity, evidence digest, and freshness before any promotion decision.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-17",
+      "source_owner": "ao-promoter",
+      "source_title": "Promoter signed-assurance verification",
+      "source_theme": "promotion-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 18,
+      "id": "month3-golden-path-18",
+      "owner": "ao-atlas",
+      "theme": "promoter-activation-boundary",
+      "task": "Add tests proving Promoter can produce no-promotion decisions without owning activation or release execution paths.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-18",
+      "source_owner": "ao-promoter",
+      "source_title": "Promoter activation separation",
+      "source_theme": "promotion-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 19,
+      "id": "month3-golden-path-19",
+      "owner": "ao-atlas",
+      "theme": "foundry-workspace-preflight",
+      "task": "Implement a tiny non-AO workspace-root preflight that validates repository identity, objective digest, worktree boundary, and safe next-node selection.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-19",
+      "source_owner": "ao-foundry",
+      "source_title": "Foundry workspace-root golden-path preflight",
+      "source_theme": "golden-path",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 20,
+      "id": "month3-golden-path-20",
+      "owner": "ao-atlas",
+      "theme": "foundry-diff-rollback-gate",
+      "task": "Require isolated worktree, exact digest approval, verified diff, reviewed PR evidence, and rollback receipt in the bounded execution packet.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-20",
+      "source_owner": "ao-foundry",
+      "source_title": "Foundry diff and rollback gate",
+      "source_theme": "golden-path",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 21,
+      "id": "month3-golden-path-21",
+      "owner": "ao-atlas",
+      "theme": "forge-goalrun-boundary",
+      "task": "Narrow Forge evidence around GoalRun start, stop gate, rollback, and terminal receipt without allowing provider execution.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-21",
+      "source_owner": "ao-forge",
+      "source_title": "Forge GoalRun lifecycle boundary",
+      "source_theme": "orchestration-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 22,
+      "id": "month3-golden-path-22",
+      "owner": "ao-atlas",
+      "theme": "forge-no-provider",
+      "task": "Add a regression matrix proving default and malformed execution packets cannot invoke a provider or silently claim a changed result.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-22",
+      "source_owner": "ao-forge",
+      "source_title": "Forge no-provider regression",
+      "source_theme": "orchestration-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 23,
+      "id": "month3-golden-path-23",
+      "owner": "ao-atlas",
+      "theme": "mission-migrations",
+      "task": "Add versioned durable-state migration metadata and fail-closed handling for unknown migration versions.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-23",
+      "source_owner": "ao-mission",
+      "source_title": "Mission durable migration model",
+      "source_theme": "durable-state",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 24,
+      "id": "month3-golden-path-24",
+      "owner": "ao-atlas",
+      "theme": "mission-restart-resume",
+      "task": "Add restart, lease expiry, duplicate handoff, and resume tests that preserve exactly-once node accounting.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-24",
+      "source_owner": "ao-mission",
+      "source_title": "Mission restart and lease invariants",
+      "source_theme": "durable-state",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 25,
+      "id": "month3-golden-path-25",
+      "owner": "ao-atlas",
+      "theme": "mission-handoff-accounting",
+      "task": "Bind handoff, active, completed, and denied states to a replayable golden-path packet and prevent handoffs from counting as completed work.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-25",
+      "source_owner": "ao-mission",
+      "source_title": "Mission golden-path handoff accounting",
+      "source_theme": "golden-path",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 26,
+      "id": "month3-golden-path-26",
+      "owner": "ao-atlas",
+      "theme": "control-plane-event-index",
+      "task": "Add an indexed event migration and query fixture for mission, policy, approval, rollback, and readback events.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-26",
+      "source_owner": "ao2-control-plane",
+      "source_title": "Control-plane durable event index",
+      "source_theme": "observer-durability",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 27,
+      "id": "month3-golden-path-27",
+      "owner": "ao-atlas",
+      "theme": "control-plane-crash-recovery",
+      "task": "Add deterministic crash, lease expiry, restart, and duplicate-ingest tests with atomic evidence state transitions.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-27",
+      "source_owner": "ao2-control-plane",
+      "source_title": "Control-plane lease and crash recovery",
+      "source_theme": "observer-durability",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 28,
+      "id": "month3-golden-path-28",
+      "owner": "ao-atlas",
+      "theme": "control-plane-backup-restore",
+      "task": "Add a local backup and restore fixture that verifies event digests and readback continuity without external storage or credentials.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-28",
+      "source_owner": "ao2-control-plane",
+      "source_title": "Control-plane backup and restore drill",
+      "source_theme": "observer-durability",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 29,
+      "id": "month3-golden-path-29",
+      "owner": "ao-atlas",
+      "theme": "command-thin-client",
+      "task": "Move the bounded Command surface toward Mission and control-plane readback adapters and test that it does not duplicate domain decisions.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-29",
+      "source_owner": "ao-command",
+      "source_title": "Command thin readback client",
+      "source_theme": "operator-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 30,
+      "id": "month3-golden-path-30",
+      "owner": "ao-atlas",
+      "theme": "command-stale-detection",
+      "task": "Add compact timeline filters that distinguish stale, duplicate, pending, denied, and completed evidence records.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-30",
+      "source_owner": "ao-command",
+      "source_title": "Command stale and duplicate detection",
+      "source_theme": "operator-boundary",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 31,
+      "id": "month3-golden-path-31",
+      "owner": "ao-atlas",
+      "theme": "architecture-source-status",
+      "task": "Generate the current authority statement and readiness inventory from lockfile and contract-owner inputs instead of copied campaign prose.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-31",
+      "source_owner": "ao-architecture",
+      "source_title": "Architecture source-generated status",
+      "source_theme": "source-of-truth",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 32,
+      "id": "month3-golden-path-32",
+      "owner": "ao-atlas",
+      "theme": "atlas-evidence-externalization",
+      "task": "Add a content-addressed manifest boundary for bulk evidence while retaining small replayable fixtures in the repository.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-32",
+      "source_owner": "ao-atlas",
+      "source_title": "Atlas evidence externalization manifest",
+      "source_theme": "evidence-externalization",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 33,
+      "id": "month3-golden-path-33",
+      "owner": "ao-atlas",
+      "theme": "foundry-evidence-externalization",
+      "task": "Add Foundry-side evidence references and size checks that keep implementation state separate from generated campaign bulk.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-33",
+      "source_owner": "ao-foundry",
+      "source_title": "Foundry evidence externalization manifest",
+      "source_theme": "evidence-externalization",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 34,
+      "id": "month3-golden-path-34",
+      "owner": "ao-atlas",
+      "theme": "arena-repeated-harness",
+      "task": "Replace one-shot fixture confidence with a deterministic repeated-task harness design and replayable result ledger, without live provider calls.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-34",
+      "source_owner": "ao-arena",
+      "source_title": "Arena independent repeated-task harness",
+      "source_theme": "assurance-workloads",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 35,
+      "id": "month3-golden-path-35",
+      "owner": "ao-atlas",
+      "theme": "crucible-failure-harness",
+      "task": "Add controlled failure-injection and fuzzing fixtures for malformed gates, lost leases, stale evidence, and rollback receipts.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-35",
+      "source_owner": "ao-crucible",
+      "source_title": "Crucible failure-injection harness",
+      "source_theme": "assurance-workloads",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 36,
+      "id": "month3-golden-path-36",
+      "owner": "ao-atlas",
+      "theme": "golden-path-cross-platform",
+      "task": "Add deterministic install, path, line-ending, and rollback fixtures for the supported local platforms without invoking providers.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-36",
+      "source_owner": "ao-architecture",
+      "source_title": "Cross-platform golden-path replay",
+      "source_theme": "golden-path",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 37,
+      "id": "month3-golden-path-37",
+      "owner": "ao-atlas",
+      "theme": "golden-path-review-readback",
+      "task": "Bind a tiny non-AO repository replay to reviewed PR evidence and observer readback, preserving the no-promotion boundary.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-37",
+      "source_owner": "ao-foundry",
+      "source_title": "Tiny repository reviewed-PR replay",
+      "source_theme": "golden-path",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 38,
+      "id": "month3-golden-path-38",
+      "owner": "ao-atlas",
+      "theme": "golden-path-kill-restart",
+      "task": "Replay a killed and restarted bounded run and prove no lost evidence, duplicate mutation, or false completion.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-38",
+      "source_owner": "ao-mission",
+      "source_title": "Golden-path kill and restart replay",
+      "source_theme": "golden-path",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 39,
+      "id": "month3-golden-path-39",
+      "owner": "ao-atlas",
+      "theme": "golden-path-rollback",
+      "task": "Replay a bounded rollback receipt and verify Command, Sentinel, Promoter, and control-plane readbacks agree on the terminal state.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-39",
+      "source_owner": "ao2-control-plane",
+      "source_title": "Golden-path rollback receipt replay",
+      "source_theme": "golden-path",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    },
+    {
+      "rank": 40,
+      "id": "month3-golden-path-40",
+      "owner": "ao-atlas",
+      "theme": "beta-readiness-rollup",
+      "task": "Produce the final golden-path readiness matrix with exact proven capabilities, unresolved blockers, no-promotion status, RSI denial, and at least 40 ranked next recommendations.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-readback.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-workgraph.json",
+        "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/recommendation-wave.json"
+      ],
+      "source_recommendation_id": "month3-golden-path-40",
+      "source_owner": "ao-atlas",
+      "source_title": "Month 3 beta readiness rollup",
+      "source_theme": "readiness-rollup",
+      "source_mutation_class": "low_risk_code",
+      "requires_blueprint_authorization": false,
+      "source_safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no release deploy publish upload tag",
+        "no dependency updates",
+        "no auth policy config widening",
+        "no hidden instruction mutation",
+        "no broad RSI claim"
+      ],
+      "source_exit_evidence": [
+        "bounded implementation or regression evidence is present",
+        "targeted and native verification is recorded",
+        "run-link digest and branch cleanup are recorded",
+        "no promotion requested and RSI remains denied"
+      ]
+    }
+  ]
+}

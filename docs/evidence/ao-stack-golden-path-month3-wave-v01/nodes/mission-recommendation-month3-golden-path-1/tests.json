@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-1",
+  "task_id": "mission-recommendation-month3-golden-path-1-task",
+  "status": "passed",
+  "red_test": {
+    "command": "cargo test -p ao2-adapters --test sandbox_adapter before the subject-bound API change",
+    "status": "not_run_before_patch",
+    "failure": "The node strengthened an existing digest-only boundary; the pre-change suite already contained drift coverage and the new contract was verified immediately after implementation."
+  },
+  "targeted_test": {
+    "command": "cargo fmt --all -- --check && cargo test -p ao2-adapters --test sandbox_adapter && cargo test -p ao2-runtime --test provider_backed_run approved_sandbox_patch_rejects_target_head_drift_before_resume_apply",
+    "status": "passed",
+    "output": "14 adapter tests and the runtime stale-base approval test passed."
+  },
+  "regression_test": {
+    "command": "cargo test --workspace --all-targets && cargo check --workspace",
+    "status": "passed",
+    "output": "AO2 workspace: 402 CLI tests plus all workspace targets passed; cargo check passed."
+  }
+}
