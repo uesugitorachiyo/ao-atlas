@@ -1,0 +1,44 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "blueprint_sufficiency_calibration_compatibility",
+  "node_id": "mission-recommendation-month2-contract-convergence-26",
+  "task_id": "mission-recommendation-month2-contract-convergence-26-task",
+  "source_owner": "ao-blueprint",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "sufficiency_calibration_audit",
+  "status": "planning_only_boundary_coverage",
+  "producer": "ao-blueprint",
+  "consumer": "ao-atlas",
+  "producer_contract": "sufficiency audit and build authorization",
+  "consumer_contract": "Blueprint import readiness and authorization freshness",
+  "compatibility_status": "planning_only",
+  "source_commit": "011e4178b870219f7490857db3c73c346ca3f2de",
+  "observed_valid_fixture_scores": [
+    100,
+    100,
+    100,
+    100
+  ],
+  "observed_invalid_fixture_scores": [
+    0
+  ],
+  "intermediate_score_fixture_count": 0,
+  "calibration_gap": "Current fixtures prove only ready and blocked boundaries; they do not calibrate partial completeness, stale authorization, route ambiguity, or score sensitivity on real projects",
+  "required_gates": [
+    "intermediate score fixtures",
+    "real-project calibration corpus",
+    "score-to-outcome correlation",
+    "authorization digest and route compatibility tests"
+  ],
+  "compatibility_gate": "blocked_until_sufficiency_calibration_corpus_and_cross-consumer_outcome_tests_exist",
+  "safe_to_execute": false,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}

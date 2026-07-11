@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-26",
+  "task_id": "mission-recommendation-month2-contract-convergence-26-task",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "scope": "Blueprint sufficiency calibration audit only",
+  "summary": "Blueprint boundary fixtures pass their existing readiness gate, but there is no intermediate calibration corpus or real-project outcome correlation; no promotion or RSI claim is requested.",
+  "promotion_granted": false
+}
