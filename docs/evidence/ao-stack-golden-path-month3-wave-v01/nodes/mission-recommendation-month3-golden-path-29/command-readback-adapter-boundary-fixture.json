@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.command-readback-adapter-boundary-fixture.v0.1",
+  "status": "command_readback_adapter_boundary_ready",
+  "adapters": [
+    {
+      "name": "mission_lifecycle_readback",
+      "delegates_decision_to": "ao-mission",
+      "domain_decision_read_only": true
+    },
+    {
+      "name": "control_plane_observer_readback",
+      "delegates_decision_to": "ao2-control-plane",
+      "domain_decision_read_only": true
+    }
+  ],
+  "adapter_count": 2,
+  "delegates_domain_decisions": true,
+  "duplicates_domain_decisions": false,
+  "presentation_only": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

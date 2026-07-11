@@ -2085,6 +2085,27 @@ type AtlasLocalBackupRestoreFixture struct {
 	RSIRemainsDenied           bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasCommandReadbackAdapterBoundaryAdapter struct {
+	Name                   string `json:"name"`
+	DelegatesDecisionTo    string `json:"delegates_decision_to"`
+	DomainDecisionReadOnly bool   `json:"domain_decision_read_only"`
+}
+
+type AtlasCommandReadbackAdapterBoundaryFixture struct {
+	Schema                    string                                       `json:"schema"`
+	Status                    string                                       `json:"status"`
+	Adapters                  []AtlasCommandReadbackAdapterBoundaryAdapter `json:"adapters"`
+	AdapterCount              int                                          `json:"adapter_count"`
+	DelegatesDomainDecisions  bool                                         `json:"delegates_domain_decisions"`
+	DuplicatesDomainDecisions bool                                         `json:"duplicates_domain_decisions"`
+	PresentationOnly          bool                                         `json:"presentation_only"`
+	SchedulesWork             bool                                         `json:"schedules_work"`
+	ExecutesWork              bool                                         `json:"executes_work"`
+	ApprovesWork              bool                                         `json:"approves_work"`
+	ClaimsAuthorityAdvance    bool                                         `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool                                         `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

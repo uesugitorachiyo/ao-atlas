@@ -822,6 +822,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:local-backup-restore-fixture", err
 		}
 		return "typed:local-backup-restore-fixture", ValidateAtlasLocalBackupRestoreFixture(value)
+	case AtlasCommandReadbackAdapterBoundaryFixtureContract:
+		value, err := LoadJSON[AtlasCommandReadbackAdapterBoundaryFixture](path)
+		if err != nil {
+			return "typed:command-readback-adapter-boundary-fixture", err
+		}
+		return "typed:command-readback-adapter-boundary-fixture", ValidateAtlasCommandReadbackAdapterBoundaryFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

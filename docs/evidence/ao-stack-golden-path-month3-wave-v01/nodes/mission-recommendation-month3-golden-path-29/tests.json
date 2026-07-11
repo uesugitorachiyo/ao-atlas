@@ -1,0 +1,11 @@
+{
+  "contract_version": "ao.atlas.tests.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-29",
+  "task_id": "mission-recommendation-month3-golden-path-29-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3CommandReadbackAdapterBoundaryFixture -count=1 failed on missing BuildAtlasCommandReadbackAdapterBoundaryFixture and ValidateAtlasCommandReadbackAdapterBoundaryFixture",
+  "green_test": "go test ./internal/atlas -run TestMonth3CommandReadbackAdapterBoundaryFixture -count=1",
+  "targeted_regression_passed": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
