@@ -1,0 +1,9 @@
+{
+  "claims_authority_advance": false,
+  "node_id": "mission-recommendation-soak-month4-20-checkpoint-replay",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "status": "no_promotion_requested",
+  "task_id": "mission-recommendation-soak-month4-20-checkpoint-replay-task"
+}

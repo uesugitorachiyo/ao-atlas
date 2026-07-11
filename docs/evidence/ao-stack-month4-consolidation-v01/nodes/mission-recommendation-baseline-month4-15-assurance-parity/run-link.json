@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-15-assurance-parity-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/verification.json"
+  },
+  "digest": "sha256:7a8a4f0d4df1e5290c82453948e439665e5979366003f9d1ef5de19bc7ae6031"
+}

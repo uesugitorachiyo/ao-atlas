@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-23-clean-state-audit-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/verification.json"
+  },
+  "digest": "sha256:b885182d4f9a4b58412bd90b30721c9ac796fe98506719bc2ab9d4713e609191"
+}

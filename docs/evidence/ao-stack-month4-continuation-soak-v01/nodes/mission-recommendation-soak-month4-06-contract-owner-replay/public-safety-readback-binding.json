@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-06-contract-owner-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 18,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:3be2fafd4644423454e45a9e0d66ba9fc471eef1f161007bbdc5212e496e9247",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:d52aeafd4203e2f07a1426cdeb0aec51c73c2218f6acd08e8152a16d5f78d5a8",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:d7e2d46eec9b381f1e60e71a94843aff51f2013177cfc4f5ea179ea01d57aa13",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/verification.json"
+}

@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-additional-month4-06-rollback-journal-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-additional-month4-06-rollback-journal/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-additional-month4-06-rollback-journal/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-additional-month4-06-rollback-journal/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-additional-month4-06-rollback-journal/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-additional-month4-06-rollback-journal/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-additional-month4-06-rollback-journal/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-additional-month4-06-rollback-journal/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-additional-month4-06-rollback-journal/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-additional-month4-06-rollback-journal/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-additional-month4-06-rollback-journal/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-additional-month4-06-rollback-journal/tests.json",
+    "verification": "nodes/mission-recommendation-additional-month4-06-rollback-journal/verification.json"
+  },
+  "digest": "sha256:6b0d9b3f51388a073e268a056c9668fbbd7e167e4879a61ea9996379860c234c"
+}

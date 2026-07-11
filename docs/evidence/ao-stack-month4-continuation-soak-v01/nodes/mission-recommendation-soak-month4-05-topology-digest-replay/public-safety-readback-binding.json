@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-05-topology-digest-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 19,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:a7b18707d8d2107e5c395bb8fd472590804862a7112453387f5a696381c38917",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-05-topology-digest-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:b33ed7dedb9ce58140b2247e04cd9a4d375092d83cd480d9a1f3498669f076c4",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-05-topology-digest-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:51ec518a0a16fa3558cdc1784b57193234703947586584876a7a27ca938f5030",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-05-topology-digest-replay/verification.json"
+}

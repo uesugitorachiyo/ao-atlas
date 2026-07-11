@@ -1,0 +1,14 @@
+{
+  "node_id": "mission-recommendation-soak-month4-14-assurance-parity-replay",
+  "promotion_claim_detected": false,
+  "rsi_claim_detected": false,
+  "rsi_remains_denied": true,
+  "scan_scope": [
+    "docs/evidence/ao-stack-month4-consolidation-v01",
+    "docs/evidence/ao-stack-month4-continuation-soak-v01"
+  ],
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "status": "passed",
+  "task_id": "mission-recommendation-soak-month4-14-assurance-parity-replay-task",
+  "unsafe_public_claim_detected": false
+}

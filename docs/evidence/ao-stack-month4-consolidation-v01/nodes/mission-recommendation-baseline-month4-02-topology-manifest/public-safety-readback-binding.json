@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-02-topology-manifest",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 34,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:0eb4c9232b0ff49392eed31bfe8bb91d89a5ffb236185e446f392f48d6df0b0c",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-02-topology-manifest/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:0ee05dac01d203f22998d373db5ae91409c461555f5cb644edbedc96b670445b",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-02-topology-manifest/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:8d94810c9816f0efc01abe1655e8853a0dd5d7dc70172c547d4ab2dbd162f020",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-02-topology-manifest/verification.json"
+}

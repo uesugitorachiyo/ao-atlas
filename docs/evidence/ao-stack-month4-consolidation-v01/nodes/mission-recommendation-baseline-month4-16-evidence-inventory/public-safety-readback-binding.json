@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-16-evidence-inventory",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 20,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:33f90bd10aaea8af775d8b825196965135ee88a043832d1f50e9d8b30b00ab38",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:8cc942e46084ce5478fb972ccc510a01fa510f1e2846907a0daf9abb317df7c8",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:b44b0bf74e2b7ab009cfbf367bf550d1def75d322929bad00571b398e2f958b6",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/verification.json"
+}

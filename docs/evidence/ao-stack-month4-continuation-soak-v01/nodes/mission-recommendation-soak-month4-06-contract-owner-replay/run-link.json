@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-06-contract-owner-replay-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-06-contract-owner-replay/verification.json"
+  },
+  "digest": "sha256:4a0154bbf23420ee584d96c959c713ba5dc273ab311fc5ef5b015441b3da4d6b"
+}

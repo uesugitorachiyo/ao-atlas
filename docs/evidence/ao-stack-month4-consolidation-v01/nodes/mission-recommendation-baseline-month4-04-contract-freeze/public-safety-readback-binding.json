@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-04-contract-freeze",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 32,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:6f07307d121110a4f0b8839c5e46727e94a9f7264bdfcb073c0e66b2ad00c662",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:49896f3c671a032a74e68981480839da38a492ebe183d5b38b572ed4198be9d5",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:5864cae3df6c5be7a59987fdd63af358746cdf26468dd97082f599677c2519db",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/verification.json"
+}

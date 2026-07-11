@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 13,
+  "expected_completed_nodes_after": 14,
+  "expected_next_executable_node_after": "mission-recommendation-baseline-month4-15-assurance-parity",
+  "expected_ready_nodes_after": 22,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-baseline-month4-14-sentinel-ci-entry",
+  "ready_nodes_before": 23,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-baseline-month4-14-sentinel-ci-entry-task"
+}

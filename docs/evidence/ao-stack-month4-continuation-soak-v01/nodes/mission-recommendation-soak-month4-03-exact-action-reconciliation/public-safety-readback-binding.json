@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-03-exact-action-reconciliation",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 21,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:791fe589096f9892d84bf537597890f7314cec1d8b7482071968344102a38fb4",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:061125332cea83b36300b347e479f643e5747aa8a18933e7e091260c4c7c260e",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:5e547781afa17b336b3a382b51c5e0121a342738a10836a4df5810a55f2b9373",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/verification.json"
+}

@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-07-wrapper-parity-replay-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/verification.json"
+  },
+  "digest": "sha256:fab8fd95a489e4b735bd944d240c9a1afc718a1b7509449afcbe836df4180527"
+}

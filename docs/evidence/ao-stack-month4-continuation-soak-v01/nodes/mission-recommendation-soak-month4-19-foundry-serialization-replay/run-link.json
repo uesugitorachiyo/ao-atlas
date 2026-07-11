@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-19-foundry-serialization-replay-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/verification.json"
+  },
+  "digest": "sha256:c483723ecf06f413ca14ed4c96d6e7c0c3314202219f6b9280eb253bf9eab68a"
+}

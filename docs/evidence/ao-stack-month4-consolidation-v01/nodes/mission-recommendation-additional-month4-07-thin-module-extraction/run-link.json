@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-additional-month4-07-thin-module-extraction-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/tests.json",
+    "verification": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/verification.json"
+  },
+  "digest": "sha256:4ec7284e42fd6ea759e2336f40d6c1f91a05613c750c72ba545d6cf5fd55fb5e"
+}

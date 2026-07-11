@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-11-restore-plan-replay-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/verification.json"
+  },
+  "digest": "sha256:ecd0bc256bc749279a7d755ff81327af3960b8298bd02340c16bf337b65ddfad"
+}

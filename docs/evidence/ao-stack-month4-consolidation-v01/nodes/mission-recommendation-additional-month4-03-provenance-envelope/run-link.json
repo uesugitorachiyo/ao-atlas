@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-additional-month4-03-provenance-envelope-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/tests.json",
+    "verification": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/verification.json"
+  },
+  "digest": "sha256:6d06f52003ff41a192d64e82a4d5feb8592d38cf7c72841c55a360f58e1e6282"
+}

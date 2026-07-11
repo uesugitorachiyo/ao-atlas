@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-24-readback-dashboard",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 12,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:2cb295c02ee5a13703d109e69b9962b04879299e0cbf3ef83530e0c9e9c91515",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-24-readback-dashboard/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:9943c486849ea2a4c014f13ec2a8fc55cc2f4330c7fee7f19528cc35da86971b",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-24-readback-dashboard/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:752725930f545c5101d3bad3c6f2f686eb35f2e3d602a8619ceb0bc004f393ef",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-24-readback-dashboard/verification.json"
+}

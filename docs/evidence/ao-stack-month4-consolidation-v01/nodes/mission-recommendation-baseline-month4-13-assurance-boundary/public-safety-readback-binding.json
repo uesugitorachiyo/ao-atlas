@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-13-assurance-boundary",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 23,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:4d9d16ffc3264612e56e252ea4af1d79534040d2bae864db1f12855959f0711e",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:c687eb98d9d30378a6530fdc1719281f3a4f362853798e5b5492e4e36c41f043",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:eed44a875ef8c1995f37df47558f9297fe3c40c5b963b1c192911791fdc07a69",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/verification.json"
+}

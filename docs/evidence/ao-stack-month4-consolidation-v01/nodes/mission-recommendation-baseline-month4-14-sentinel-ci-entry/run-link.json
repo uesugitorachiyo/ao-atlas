@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-14-sentinel-ci-entry-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/verification.json"
+  },
+  "digest": "sha256:019524c0fac0550260afe67f00fff6e4b64e7438ff6b10131edbf4da28fc1dec"
+}

@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-20-checkpoint-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 4,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:d6deb091d0c70e5cf0b41de8c93563b464a66c6238a65ce89fbeb5b864eb4fe6",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-20-checkpoint-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:4e239f9a31f2adad352ba286f83de9bd5f4dac7e25654cc02f7b9d66d64a6d4e",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-20-checkpoint-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:1c990acf9557f7bfd4cc3a6d76cd5bae60a3b0c75bcf09db3d269b01d93fba13",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-20-checkpoint-replay/verification.json"
+}

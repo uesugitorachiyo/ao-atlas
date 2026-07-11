@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-15-assurance-parity",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 21,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:ff93941fdf4c0a21c25b14ed6093a38ec4bcb541141018bfae7b2d22bda16e94",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:d205b935a3c3c242d7600890eb3ac1a1c427261a693732424831c9db2bf16849",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:6dd55810cf7cc6acfa634cd6864ec6c42cc4234646574e5c5ec3f780a649a2f4",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-15-assurance-parity/verification.json"
+}

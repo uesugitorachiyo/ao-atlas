@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-28-public-claim-boundary",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 8,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:6fbab2f26084e56343a90f641776d4e8e431ac14f41bbb521264bbab40c6a826",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:e90636c487d73c640e53c43db57235840fc92da90abe201124a5ad5afec5505b",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:35f6626d83d1fded79fcdfd86b61970358ca591297aa478ac3641353b372e962",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/verification.json"
+}

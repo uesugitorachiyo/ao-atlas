@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-04-contract-freeze-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-04-contract-freeze/verification.json"
+  },
+  "digest": "sha256:bfe0523e3ac434996699014b842b3463f6575008fa0b09d9899c07d04283a0b2"
+}

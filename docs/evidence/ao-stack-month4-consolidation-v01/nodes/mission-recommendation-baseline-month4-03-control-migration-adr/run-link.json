@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-03-control-migration-adr-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/verification.json"
+  },
+  "digest": "sha256:8c2f923814b8b52eb3bcbd4a50402205989e629e14de4a9f034bb7ed38065d22"
+}

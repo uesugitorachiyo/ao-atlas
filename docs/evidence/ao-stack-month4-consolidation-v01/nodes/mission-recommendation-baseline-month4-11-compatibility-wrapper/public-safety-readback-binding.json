@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-11-compatibility-wrapper",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 25,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:fbb2c9a98ff694f532ef622ec17ebf0ba9e3987743399729d86ca73c1e6b6a30",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-11-compatibility-wrapper/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:19f580c19cb514c0be7fc4ad4553284407cdd72703a8953897270c89eec982a9",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-11-compatibility-wrapper/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:41470aac9683f30aa6d610c12b002fb897301ddfd263dcf68906838240fb56ed",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-11-compatibility-wrapper/verification.json"
+}

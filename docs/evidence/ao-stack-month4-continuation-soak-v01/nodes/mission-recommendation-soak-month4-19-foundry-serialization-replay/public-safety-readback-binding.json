@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-19-foundry-serialization-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 5,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:e15a25cb6d9eaae2b8ca587907a81f232e17f4520d25a5359e6c94ab6b73dff1",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:ce8d09f48f796da1d2bae8a0a2a844e83561328c1f4dd7107358ff1b729d60ce",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:282d3b48129a736c1e1a5a4055f4585e55d1026e42d9cb053852a81b827f1d70",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-19-foundry-serialization-replay/verification.json"
+}

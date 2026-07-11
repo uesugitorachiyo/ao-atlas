@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-14-sentinel-ci-entry",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 22,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:113c157a3ea2f6acc799c5e1b8a91b8af02227e3921f7df1796c537c18292e70",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:0d1b5bb7cdbe71ea7ade99b45b441bc6f5e37ebe47c941b9cf15a69cd0e4fa24",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:f41ee7a54373487549225303823b7855e5f53fbdb927310b2f54e739fb456886",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-14-sentinel-ci-entry/verification.json"
+}

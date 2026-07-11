@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-18-evidence-restore",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 18,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:c3e57f80663416a26ef180209ddae23bdfa9047c11c298b3e74be6620d21720c",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-18-evidence-restore/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:8e7e5a7bce61f42b486564b2966025a94373674adb2fc46a5aa94d40f210ff3f",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-18-evidence-restore/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:c71c093221d9ef377f2dc0e9135efd4893ee10be3c6250c9aeefdf3ec437179a",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-18-evidence-restore/verification.json"
+}

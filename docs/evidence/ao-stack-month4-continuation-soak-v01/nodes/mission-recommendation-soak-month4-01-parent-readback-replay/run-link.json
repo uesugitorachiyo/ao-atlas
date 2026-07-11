@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-01-parent-readback-replay-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-01-parent-readback-replay/verification.json"
+  },
+  "digest": "sha256:c08d09364af27a3f46107ac9f27886e80be0f9aeae062907e0b4ce85a83cddfb"
+}

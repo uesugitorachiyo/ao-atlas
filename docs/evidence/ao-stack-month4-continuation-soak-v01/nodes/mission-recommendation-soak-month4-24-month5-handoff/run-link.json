@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-24-month5-handoff-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-24-month5-handoff/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-24-month5-handoff/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-24-month5-handoff/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-24-month5-handoff/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-24-month5-handoff/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-24-month5-handoff/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-24-month5-handoff/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-24-month5-handoff/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-24-month5-handoff/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-24-month5-handoff/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-24-month5-handoff/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-24-month5-handoff/verification.json"
+  },
+  "digest": "sha256:94abad1a4653d73e19c94c8d93ecfb36f81bd007d9ed55eea0dd5a254592d344"
+}

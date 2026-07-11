@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-20-install-docs-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-20-install-docs/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-20-install-docs/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-20-install-docs/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-20-install-docs/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-20-install-docs/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-20-install-docs/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-20-install-docs/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-20-install-docs/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-20-install-docs/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-20-install-docs/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-20-install-docs/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-20-install-docs/verification.json"
+  },
+  "digest": "sha256:569975d3e14fa127f70de827a6f4688794b3d9b40fa75441e87f523634582ec4"
+}

@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-29-next-wave-export-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-29-next-wave-export/verification.json"
+  },
+  "digest": "sha256:f0ddba3bda1a5ca20eced15b3162632ff8f7b5b29bfd065e6e1d189506c28f08"
+}

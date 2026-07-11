@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 12,
+  "expected_completed_nodes_after": 13,
+  "expected_next_executable_node_after": "mission-recommendation-soak-month4-14-assurance-parity-replay",
+  "expected_ready_nodes_after": 11,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-soak-month4-13-assurance-ci-replay",
+  "ready_nodes_before": 12,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-soak-month4-13-assurance-ci-replay-task"
+}

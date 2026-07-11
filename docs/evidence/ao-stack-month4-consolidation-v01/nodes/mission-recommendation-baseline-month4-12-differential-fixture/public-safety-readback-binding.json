@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-12-differential-fixture",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 24,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:0fd3f3b12d2e251831448db26e1b29f8719dace567885136c810041fa94a7b4e",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-12-differential-fixture/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:15240a07135d9bec584347b97a34be9d5009ec3bcb7c4e52ed68915be45c626a",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-12-differential-fixture/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:1bf50079c0c76612b703f36036dd4adb01fba32a673b2c226852c5f98a6d4826",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-12-differential-fixture/verification.json"
+}

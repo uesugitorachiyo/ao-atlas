@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-02-resume-gate-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 22,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:60f7d00008294c16561de2b49f26acc80e5118e2b85378fe2355e041b3c295c3",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-02-resume-gate-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:b0dd1e42f0743aef5ba1afad2738854f6942d9da03a35c982d69b1386b008de7",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-02-resume-gate-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:a744b683df8c37db241e41b087a83373ef09d71dfc3f96900853fc6dbd5e68a5",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-02-resume-gate-replay/verification.json"
+}

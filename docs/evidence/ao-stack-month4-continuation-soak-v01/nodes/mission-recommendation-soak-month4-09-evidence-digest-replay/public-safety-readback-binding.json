@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-09-evidence-digest-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 15,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:a8c73f7b9fccb00def2844fa50fd209f1dea8e55b9384cf6e9b481d2c853c666",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-09-evidence-digest-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:74fe49f8a31649c0ac3a8e82ca145fed77bdd7b09e0ef3bad3bfa835a99b25e2",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-09-evidence-digest-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:f17aef553913e4545fee87df62bd7081d1570e1a1ef47e19a0ef4d8893e50064",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-09-evidence-digest-replay/verification.json"
+}

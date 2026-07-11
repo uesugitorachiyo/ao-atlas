@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-16-rsi-continuity-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 8,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:154bc5460461884e31df83bc8f675f6a3a1e419148d1628f81d6638cc509bc6a",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-16-rsi-continuity-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:2ac207d0a55ee3bb6751eeac9026a4405c5370e04b78f5ddc0e2a419e04d4fa6",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-16-rsi-continuity-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:cfeb5c1807d235240e33d79dc9cd9347d9fb7ba817c8683785603e0a17e63290",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-16-rsi-continuity-replay/verification.json"
+}

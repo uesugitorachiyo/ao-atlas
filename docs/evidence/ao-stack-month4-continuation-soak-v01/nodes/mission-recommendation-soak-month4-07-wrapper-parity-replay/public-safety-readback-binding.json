@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-07-wrapper-parity-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 17,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:be7069e02757ea59847569196415a4fc08b51eb2ac41af81d01642152c886aac",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:859951b6e86b6ce074c140a78456dbab58dc9ce858c39d687764f817563a9180",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:9ea33a4ae2c78a3341568c8b263575679bf001d7833c6f7ca10245e5adf09538",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-07-wrapper-parity-replay/verification.json"
+}

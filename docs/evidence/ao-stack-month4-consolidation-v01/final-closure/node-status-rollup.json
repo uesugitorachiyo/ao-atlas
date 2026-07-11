@@ -1,0 +1,248 @@
+{
+  "schema": "ao.atlas.month4-node-status-rollup.v0.1",
+  "status": "completed",
+  "baseline_nodes": [
+    {
+      "id": "mission-recommendation-baseline-month4-01-entry-gate-reconciliation",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-02-topology-manifest",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-03-control-migration-adr",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-04-contract-freeze",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-05-mission-interface",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-06-blueprint-interface",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-07-atlas-interface",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-08-foundry-interface",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-09-forge-interface",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-10-command-interface",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-11-compatibility-wrapper",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-12-differential-fixture",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-13-assurance-boundary",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-14-sentinel-ci-entry",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-15-assurance-parity",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-16-evidence-inventory",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-17-evidence-catalog",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-18-evidence-restore",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-19-architecture-status",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-20-install-docs",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-21-cross-repo-matrix",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-22-rollback-closure",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-23-clean-state-audit",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-24-readback-dashboard",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-25-schema-validation",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-26-no-promotion-assertion",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-27-foundry-sequencing",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-28-public-claim-boundary",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-baseline-month4-29-next-wave-export",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-additional-month4-01-rsi-continuity",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-additional-month4-02-differential-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-additional-month4-03-provenance-envelope",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-additional-month4-04-evidence-growth",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-additional-month4-05-sentinel-hosted-ci",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-additional-month4-06-rollback-journal",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-additional-month4-07-thin-module-extraction",
+      "status": "completed"
+    }
+  ],
+  "continuation_soak_nodes": [
+    {
+      "id": "mission-recommendation-soak-month4-01-parent-readback-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-02-resume-gate-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-03-exact-action-reconciliation",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-04-dirty-state-isolation",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-05-topology-digest-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-06-contract-owner-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-07-wrapper-parity-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-08-rollback-journal-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-09-evidence-digest-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-10-evidence-growth-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-11-restore-plan-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-12-schema-validation-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-13-assurance-ci-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-14-assurance-parity-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-15-no-promotion-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-16-rsi-continuity-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-17-command-timeline-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-18-public-claim-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-19-foundry-serialization-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-20-checkpoint-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-21-provenance-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-22-migration-stop-rule",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-23-operator-summary-replay",
+      "status": "completed"
+    },
+    {
+      "id": "mission-recommendation-soak-month4-24-month5-handoff",
+      "status": "completed"
+    }
+  ]
+}

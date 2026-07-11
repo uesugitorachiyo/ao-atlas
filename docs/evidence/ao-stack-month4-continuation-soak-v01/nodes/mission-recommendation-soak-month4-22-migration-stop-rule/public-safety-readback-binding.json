@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-22-migration-stop-rule",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 2,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:bb09af9e9c8dd758eccd392b4bfe45f8e5d6af55e83d9c3ea77a0af2012d4ff6",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:54fdd4c4f153e9caf0bad8ebcbb8f1c1fe482a3fe0eaeea6e7ed18bc4da16a09",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:080a124be429ab53061c83d1ded1538440d5edb3f6a620f4d08dfadb1ef7cec6",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/verification.json"
+}

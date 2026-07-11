@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-04-dirty-state-isolation-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/verification.json"
+  },
+  "digest": "sha256:d47fab2251197f642e799dbe93df0578bacbc6ea607155fa4c0057242ef31746"
+}

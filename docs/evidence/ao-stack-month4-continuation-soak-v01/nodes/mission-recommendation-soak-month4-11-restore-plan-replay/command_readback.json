@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 10,
+  "expected_completed_nodes_after": 11,
+  "expected_next_executable_node_after": "mission-recommendation-soak-month4-12-schema-validation-replay",
+  "expected_ready_nodes_after": 13,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-soak-month4-11-restore-plan-replay",
+  "ready_nodes_before": 14,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-soak-month4-11-restore-plan-replay-task"
+}

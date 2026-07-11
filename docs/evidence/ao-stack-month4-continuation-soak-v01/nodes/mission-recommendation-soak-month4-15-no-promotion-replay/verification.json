@@ -1,0 +1,28 @@
+{
+  "commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "git diff --check"
+  ],
+  "result": "planning/readback evidence validated; no live execution claimed",
+  "safety_boundaries": {
+    "approves_work": false,
+    "claims_authority_advance": false,
+    "concurrent_mutation": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "executes_work": false,
+    "mutates_repositories": false,
+    "node_id": "mission-recommendation-soak-month4-15-no-promotion-replay",
+    "provider_calls": false,
+    "release_or_publish": false,
+    "rsi_remains_denied": true,
+    "safe_to_execute": false,
+    "task_id": "mission-recommendation-soak-month4-15-no-promotion-replay-task"
+  },
+  "schema": "ao.atlas.consolidation-verification-evidence.v0.1",
+  "status": "passed"
+}

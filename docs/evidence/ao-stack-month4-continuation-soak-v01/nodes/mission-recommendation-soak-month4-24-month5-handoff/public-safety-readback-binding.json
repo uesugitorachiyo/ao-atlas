@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-24-month5-handoff",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 0,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:b5b7f98ced5184f9261fe8e0b54945e8c434dd8928e39108cfb04a6404a70041",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-24-month5-handoff/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:78a17340677327b0b341c0219596e413d95fba17d99ebd4c950603bb573807b5",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-24-month5-handoff/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:5cb8b39fa208e2ecd482ba32622475e39fd32265efcf8910f8409e9d0578c215",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-24-month5-handoff/verification.json"
+}

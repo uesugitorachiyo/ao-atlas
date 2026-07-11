@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-27-foundry-sequencing-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/verification.json"
+  },
+  "digest": "sha256:fad4cd2445cc2b637872fdc093f80ad86519ab9558d78003d79e9bb2fa8397a5"
+}

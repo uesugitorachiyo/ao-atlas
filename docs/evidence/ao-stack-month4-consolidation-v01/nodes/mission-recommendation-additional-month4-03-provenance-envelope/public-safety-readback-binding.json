@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-additional-month4-03-provenance-envelope",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 4,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:79a6f2015c924ba711c619ca8518a502a17754eff79bf578efed5f81f68539d7",
+  "sentinel_evidence_path": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:77271242c924112c42d6c1aa8e38c5727a7b5122c5cf42724b5d7bba8efa7db2",
+  "source_readback_path": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:b53d22e8cc7ff1f01212dc5df34dc853edac463b77e94569784b3ead484bc673",
+  "verification_summary_path": "nodes/mission-recommendation-additional-month4-03-provenance-envelope/verification.json"
+}

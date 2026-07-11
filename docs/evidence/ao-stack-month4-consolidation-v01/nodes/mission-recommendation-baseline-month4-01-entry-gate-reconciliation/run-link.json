@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-01-entry-gate-reconciliation-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/verification.json"
+  },
+  "digest": "sha256:ff3e782826e3623a0d7daaab907e4657862a17b0a0ec3a94526444e0c869c719"
+}
