@@ -1,0 +1,9 @@
+{
+  "claims_authority_advance": false,
+  "node_id": "mission-recommendation-baseline-month4-28-public-claim-boundary",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "status": "no_promotion_requested",
+  "task_id": "mission-recommendation-baseline-month4-28-public-claim-boundary-task"
+}

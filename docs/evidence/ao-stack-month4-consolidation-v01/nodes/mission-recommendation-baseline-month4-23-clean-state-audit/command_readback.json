@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 22,
+  "expected_completed_nodes_after": 23,
+  "expected_next_executable_node_after": "mission-recommendation-baseline-month4-24-readback-dashboard",
+  "expected_ready_nodes_after": 13,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-baseline-month4-23-clean-state-audit",
+  "ready_nodes_before": 14,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-baseline-month4-23-clean-state-audit-task"
+}

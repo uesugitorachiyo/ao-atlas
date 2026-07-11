@@ -1,0 +1,111 @@
+{
+  "approves_work": false,
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "executes_work": false,
+  "id": "ao-stack-month4-foundry-import-mission-recommendation-soak-month4-03-exact-action-reconciliation",
+  "schedules_work": false,
+  "source_artifacts": [
+    {
+      "digest": "sha256:a609ea57856094eb8246ab2e2ce4e2e8aa78b995fa1f302ab9dec1d95c2ba5ce",
+      "ref": "recommendation-workgraph.json"
+    }
+  ],
+  "status": "ready_for_foundry_fixture_import",
+  "target_instance": "ao-stack-month4-consolidation-v01",
+  "tasks": [
+    {
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "mutation_class": "low_risk_code",
+      "node_id": "mission-recommendation-soak-month4-03-exact-action-reconciliation",
+      "path": "tasks/mission-recommendation-soak-month4-03-exact-action-reconciliation-task.json",
+      "required_evidence": [
+        "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+        "source_recommendation:soak-month4-03-exact-action-reconciliation",
+        "source_task_digest:sha256:2556583a8d01c6612ff3b70eb515841447fe643384a317a5f517eef3e826b15e"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-03-exact-action-reconciliation-task",
+        "objective": "Verify exact next action reconciliation remains explicit across Mission Atlas and Foundry readbacks.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-03-exact-action-reconciliation",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-03-exact-action-reconciliation",
+          "source_task_digest:sha256:2556583a8d01c6612ff3b70eb515841447fe643384a317a5f517eef3e826b15e"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-02-resume-gate-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:29a1aebeec59fb83a5f462befb35fde36457412ec1517d23e5c9a45afe5ed5fc",
+      "task_id": "mission-recommendation-soak-month4-03-exact-action-reconciliation-task",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ]
+    }
+  ],
+  "workgraph_id": "ao-stack-month4-consolidation-v01"
+}

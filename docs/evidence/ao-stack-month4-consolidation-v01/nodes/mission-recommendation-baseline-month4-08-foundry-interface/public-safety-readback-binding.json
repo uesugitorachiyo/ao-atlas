@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-08-foundry-interface",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 28,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:ab4e484e07563ed5ef26a5274fc0abb1b0190d91e38ef0b4f2dce3a5d703db42",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-08-foundry-interface/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:3b531d6a1c6442f326c9fb1a884527f5f200d16ee5fe35daf2a8919944123afd",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-08-foundry-interface/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:72a40dc6e2c334636dd03c5d1f656285f71f8df831df45322fef5622e13b6bf1",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-08-foundry-interface/verification.json"
+}

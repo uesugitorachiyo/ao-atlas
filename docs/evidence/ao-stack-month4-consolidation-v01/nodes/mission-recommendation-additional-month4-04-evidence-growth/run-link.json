@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-additional-month4-04-evidence-growth-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-additional-month4-04-evidence-growth/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-additional-month4-04-evidence-growth/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-additional-month4-04-evidence-growth/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-additional-month4-04-evidence-growth/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-additional-month4-04-evidence-growth/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-additional-month4-04-evidence-growth/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-additional-month4-04-evidence-growth/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-additional-month4-04-evidence-growth/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-additional-month4-04-evidence-growth/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-additional-month4-04-evidence-growth/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-additional-month4-04-evidence-growth/tests.json",
+    "verification": "nodes/mission-recommendation-additional-month4-04-evidence-growth/verification.json"
+  },
+  "digest": "sha256:9286639c5db9bc56b69fc89310ad21bcb9dfc758bc9313f30498de5a7a346805"
+}

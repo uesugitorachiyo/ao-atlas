@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-01-entry-gate-reconciliation",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 35,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:4cae2bd552dd450e289f83ab04f3d65200f8aecec115965a62fcdaf62709a95a",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:f572d462ae27c4d7cf3148aa34fc1de82be69bfdedddcb2a7586d466077ea4aa",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:c8af67fa3c51a35804bb14e4928868c65f06ba0ca81a8fb390d02da587bd9665",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-01-entry-gate-reconciliation/verification.json"
+}

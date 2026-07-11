@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 13,
+  "expected_completed_nodes_after": 14,
+  "expected_next_executable_node_after": "mission-recommendation-soak-month4-15-no-promotion-replay",
+  "expected_ready_nodes_after": 10,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-soak-month4-14-assurance-parity-replay",
+  "ready_nodes_before": 11,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-soak-month4-14-assurance-parity-replay-task"
+}

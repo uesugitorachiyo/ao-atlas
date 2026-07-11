@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-additional-month4-01-rsi-continuity-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/tests.json",
+    "verification": "nodes/mission-recommendation-additional-month4-01-rsi-continuity/verification.json"
+  },
+  "digest": "sha256:b8bc4ba66d25139e0db1b0cd63630c98465cb0367f2d4cacb99e7c369e8fda10"
+}

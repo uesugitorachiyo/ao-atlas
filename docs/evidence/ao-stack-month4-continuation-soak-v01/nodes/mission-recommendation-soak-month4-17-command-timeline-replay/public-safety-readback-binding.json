@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-17-command-timeline-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 7,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:a7bf9a38e433734a7253a10823b84870c1f1f8eca1e7d94edde1f98fdabee5e5",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-17-command-timeline-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:08701f747395640dd7fa1f747675e6629392bfe70db25aab9d6a33d9a6d5054a",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-17-command-timeline-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:3c7e8088240e1223bd4e93e85d852b353bce9f047aa8f50c52118e4c8d9af1b4",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-17-command-timeline-replay/verification.json"
+}

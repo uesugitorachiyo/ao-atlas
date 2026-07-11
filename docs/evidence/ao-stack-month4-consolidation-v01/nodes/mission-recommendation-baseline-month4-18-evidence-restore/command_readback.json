@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 17,
+  "expected_completed_nodes_after": 18,
+  "expected_next_executable_node_after": "mission-recommendation-baseline-month4-19-architecture-status",
+  "expected_ready_nodes_after": 18,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-baseline-month4-18-evidence-restore",
+  "ready_nodes_before": 19,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-baseline-month4-18-evidence-restore-task"
+}

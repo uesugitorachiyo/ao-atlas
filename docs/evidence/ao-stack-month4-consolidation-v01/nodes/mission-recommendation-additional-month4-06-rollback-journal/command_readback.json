@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 34,
+  "expected_completed_nodes_after": 35,
+  "expected_next_executable_node_after": "mission-recommendation-additional-month4-07-thin-module-extraction",
+  "expected_ready_nodes_after": 1,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-additional-month4-06-rollback-journal",
+  "ready_nodes_before": 2,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-additional-month4-06-rollback-journal-task"
+}

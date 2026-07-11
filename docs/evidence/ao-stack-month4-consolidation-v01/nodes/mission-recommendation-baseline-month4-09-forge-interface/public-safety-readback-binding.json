@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-09-forge-interface",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 27,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:fa2c95260f2bb961b49ad95eac783d50a72769cb04cade970b3efd930ac864f6",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-09-forge-interface/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:a75325f73113f701def7a25b25e93445d43709ae772e823f19766e7ca95efbeb",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-09-forge-interface/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:c30f34930e8a1edf05e8591e32ecdaa915c5542f13a2393d8f848cd4c0dd29d7",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-09-forge-interface/verification.json"
+}

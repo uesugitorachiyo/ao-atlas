@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-additional-month4-04-evidence-growth",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 3,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:78bc3a4e0b6906c594802e04368b1906ad655395f01feee3b69fb2ce9a9088a5",
+  "sentinel_evidence_path": "nodes/mission-recommendation-additional-month4-04-evidence-growth/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:f6b6dbe4fd05d982cd0fbfcf5ada8678b28f75f7142d9a54faeb67115fbdbfdf",
+  "source_readback_path": "nodes/mission-recommendation-additional-month4-04-evidence-growth/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:1c88ce3665e53b5dca6cd8c1c8b537cda161406abb672967459693beb65acbde",
+  "verification_summary_path": "nodes/mission-recommendation-additional-month4-04-evidence-growth/verification.json"
+}

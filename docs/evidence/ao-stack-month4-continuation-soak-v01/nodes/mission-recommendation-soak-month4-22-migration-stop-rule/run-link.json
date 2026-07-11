@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-22-migration-stop-rule-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-22-migration-stop-rule/verification.json"
+  },
+  "digest": "sha256:7488b5c3215e2eb0fc0a7d7a25b33a8c2174b4614062c91b9006a9523d20650b"
+}

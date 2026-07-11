@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-13-assurance-boundary-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-13-assurance-boundary/verification.json"
+  },
+  "digest": "sha256:35fedfd17cfe31f6612cda21a5a3ac14111efa6babda9d926df8b13c224edd4b"
+}

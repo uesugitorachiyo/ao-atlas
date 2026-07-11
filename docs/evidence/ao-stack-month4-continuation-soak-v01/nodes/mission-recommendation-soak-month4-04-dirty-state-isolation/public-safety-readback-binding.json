@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-04-dirty-state-isolation",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 20,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:34fdf96fbff70e328a06b9059a8818ba8cc403c00208e746bf4819a1df61cfb2",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:2697eb4639358e39d35652fb42b10e774735e1d990c2e18acdb81ff51c3410b7",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:722a8e263362e2d7782d75019e13253cf0514e62cce9266d267b7ae5c93c0b58",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-04-dirty-state-isolation/verification.json"
+}

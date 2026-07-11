@@ -1,0 +1,111 @@
+{
+  "approves_work": false,
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "executes_work": false,
+  "id": "ao-stack-month4-foundry-import-mission-recommendation-baseline-month4-27-foundry-sequencing",
+  "schedules_work": false,
+  "source_artifacts": [
+    {
+      "digest": "sha256:62091c26186bd0a6ce3c869762b186457e04898e16b1771d1047278a9b7b7d15",
+      "ref": "recommendation-workgraph.json"
+    }
+  ],
+  "status": "ready_for_foundry_fixture_import",
+  "target_instance": "ao-stack-month4-consolidation-v01",
+  "tasks": [
+    {
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "mutation_class": "low_risk_code",
+      "node_id": "mission-recommendation-baseline-month4-27-foundry-sequencing",
+      "path": "tasks/mission-recommendation-baseline-month4-27-foundry-sequencing-task.json",
+      "required_evidence": [
+        "source_digest:sha256:190a0eb910846b6966196556b909926ffd3e9b7507c35cef58a02cfe60bd2ac0",
+        "source_recommendation:baseline-month4-27-foundry-sequencing",
+        "source_task_digest:sha256:706ea6ca6683efb98e253e30f8d6609b6aa835f6806f6213de6e88ccbc6bc9ba"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-baseline-month4-27-foundry-sequencing-task",
+        "objective": "Bind exactly one safe Atlas node to Foundry sequencing and prevent concurrent migration mutations.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/baseline-month4-27-foundry-sequencing",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:190a0eb910846b6966196556b909926ffd3e9b7507c35cef58a02cfe60bd2ac0",
+          "source_recommendation:baseline-month4-27-foundry-sequencing",
+          "source_task_digest:sha256:706ea6ca6683efb98e253e30f8d6609b6aa835f6806f6213de6e88ccbc6bc9ba"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-baseline-month4-26-no-promotion-assertion"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:eb4870671db61fe6d314e4525a5eacc93c3b494fff749f2d109485efd2ff56d5",
+      "task_id": "mission-recommendation-baseline-month4-27-foundry-sequencing-task",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ]
+    }
+  ],
+  "workgraph_id": "ao-stack-month4-consolidation-v01"
+}

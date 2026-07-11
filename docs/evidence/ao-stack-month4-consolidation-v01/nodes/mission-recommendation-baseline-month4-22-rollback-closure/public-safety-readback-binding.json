@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-22-rollback-closure",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 14,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:ccf9e8b13a97b094bff7f8823012ea8300a1b1f6b7c4863dd28ee701ecb39afd",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-22-rollback-closure/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:cc00a71dc52ed98a32f2f990f1101c4a4c2b795a6b6b5e1a71b0498ee9e68037",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-22-rollback-closure/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:bb3ddca5666bf4c9e3424246e83d95fdba008f888668f84f2e05f75494e99d67",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-22-rollback-closure/verification.json"
+}

@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-18-public-claim-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 6,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:087f8567d1b03e664c7679e8f40fe9d93c8e7971f18c926d517510f207fb5439",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-18-public-claim-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:ce5120371f47d8c65d99ee5e3a9b6c7dd99f57f97e87d572beb54b6fffd7fb83",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-18-public-claim-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:6ebe82aef4bb8e88825327bd8357f20d3a88953ebd7d3df125c56ad6c25d07bf",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-18-public-claim-replay/verification.json"
+}

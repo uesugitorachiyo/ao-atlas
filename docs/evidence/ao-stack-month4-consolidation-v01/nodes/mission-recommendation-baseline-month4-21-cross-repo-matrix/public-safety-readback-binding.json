@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-21-cross-repo-matrix",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 15,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:1197a039636010378dafde2c48f80af7a76941e4f6141e1553bac5eba3ed2855",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:90629bd33e51977d7142a7acc1d9fd03d4be576f4fd3f2743c8fb31eafd6ae94",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:5c3fa6c7a25d777764b10151c7093f545644f7b839099c0de241045fbd55af78",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/verification.json"
+}

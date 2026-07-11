@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-27-foundry-sequencing",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 9,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:0f646fe18355fe8853446c388b48bcf7b78bb3c9d0faa132baf2f0b72aeea322",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:d946379a50b658b8af44fce334fbacf1890eccdb9906fd724d977d14e1154e79",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:19158815798313455b26cc15bdfe3697ba1dd5378fd146ec2a49b93c44c613c6",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-27-foundry-sequencing/verification.json"
+}

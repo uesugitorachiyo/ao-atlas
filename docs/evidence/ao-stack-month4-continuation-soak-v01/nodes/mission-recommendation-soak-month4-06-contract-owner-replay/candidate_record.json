@@ -1,0 +1,23 @@
+{
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "candidate": "mission-recommendation-soak-month4-06-contract-owner-replay",
+  "mutation_class": "planning_only",
+  "owner": "ao-atlas",
+  "safety_boundaries": {
+    "approves_work": false,
+    "claims_authority_advance": false,
+    "concurrent_mutation": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "executes_work": false,
+    "mutates_repositories": false,
+    "node_id": "mission-recommendation-soak-month4-06-contract-owner-replay",
+    "provider_calls": false,
+    "release_or_publish": false,
+    "rsi_remains_denied": true,
+    "safe_to_execute": false,
+    "task_id": "mission-recommendation-soak-month4-06-contract-owner-replay-task"
+  },
+  "schema": "ao.atlas.consolidation-candidate-record.v0.1",
+  "status": "selected_readback_only"
+}

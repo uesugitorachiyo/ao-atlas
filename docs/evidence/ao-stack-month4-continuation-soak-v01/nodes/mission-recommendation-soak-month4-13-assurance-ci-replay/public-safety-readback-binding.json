@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-13-assurance-ci-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 11,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:e5102220e998e8b9d9306ab8f81b3f2642049247108001afe75c90b721c453d3",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-13-assurance-ci-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:3cd98fb68f4b8dbfc1ca6719795038f0ba64ac91fa21fa1f66517d0fb6d41f22",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-13-assurance-ci-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:28ca78d0b520489260fdb21e05edfaa7cb742e9a9e448152048b17fb46f5f050",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-13-assurance-ci-replay/verification.json"
+}

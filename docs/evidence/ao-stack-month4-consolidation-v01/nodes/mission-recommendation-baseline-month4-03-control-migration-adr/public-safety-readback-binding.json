@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-03-control-migration-adr",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 33,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:fa9575c45124d5c2a43a683306ad2864376848d0b8d82e0d0a0b59ced1cc19e2",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:c69307f3c6a96b1213e3a2086c57df639c5845ee8c282cfdc0902e00a0f6f0f3",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:74712cf31251bdb77457fdf1da16d516d7888b6d0c994a823b5c6ba3caefe2cb",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-03-control-migration-adr/verification.json"
+}

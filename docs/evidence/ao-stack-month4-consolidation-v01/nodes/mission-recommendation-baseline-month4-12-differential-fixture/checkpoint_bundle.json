@@ -1,0 +1,22 @@
+{
+  "completed_nodes_before": 11,
+  "exact_next_action": "mission-recommendation-baseline-month4-13-assurance-boundary",
+  "ready_nodes_remaining": 24,
+  "safety_boundaries": {
+    "approves_work": false,
+    "claims_authority_advance": false,
+    "concurrent_mutation": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "executes_work": false,
+    "mutates_repositories": false,
+    "node_id": "mission-recommendation-baseline-month4-12-differential-fixture",
+    "provider_calls": false,
+    "release_or_publish": false,
+    "rsi_remains_denied": true,
+    "safe_to_execute": false,
+    "task_id": "mission-recommendation-baseline-month4-12-differential-fixture-task"
+  },
+  "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1",
+  "status": "fresh"
+}

@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 8,
+  "expected_completed_nodes_after": 9,
+  "expected_next_executable_node_after": "mission-recommendation-soak-month4-10-evidence-growth-replay",
+  "expected_ready_nodes_after": 15,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-soak-month4-09-evidence-digest-replay",
+  "ready_nodes_before": 16,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-soak-month4-09-evidence-digest-replay-task"
+}

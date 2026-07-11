@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-14-assurance-parity-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 10,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:12c36a19ecc96b27478009a6743ceff0e4bf16618cf7b033cf0d2a03e182f4fb",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:c8eb70fceaf3759083c7042b67ef9b87728f46914a1bc97a40009bc6398ada30",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:50c949f2729d8b84bf52dbbab6a414754e68e4dfd2c13bdc40b0296f6d5325d7",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/verification.json"
+}

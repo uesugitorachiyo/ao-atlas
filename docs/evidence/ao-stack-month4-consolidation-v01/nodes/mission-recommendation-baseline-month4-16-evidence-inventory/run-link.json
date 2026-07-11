@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-16-evidence-inventory-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-16-evidence-inventory/verification.json"
+  },
+  "digest": "sha256:e86f31a3f3e752a69d1722b1478fb68220e04999b6938597a87c93f9423d9a90"
+}

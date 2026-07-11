@@ -1,0 +1,1683 @@
+{
+  "contract_version": "ao.atlas.workgraph.v0.1",
+  "id": "ao-atlas-recommendation-wave-mission-ao-stack-month4-continuation-soak-v01",
+  "target_instance": "ao-stack-month4-continuation-soak-v01",
+  "nodes": [
+    {
+      "id": "mission-recommendation-soak-month4-01-parent-readback-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-01-parent-readback-replay-task",
+        "objective": "Replay the parent Mission and foreign Atlas readback boundary after the merged continuity fix.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-01-parent-readback-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-01-parent-readback-replay",
+          "source_task_digest:sha256:cbca28a76349c7044f0256114a7d2877278a3f62407efb3bcbf27d023aa5f12b"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": null,
+        "context_pack_refs": []
+      },
+      "dependencies": [],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-soak-month4-02-resume-gate-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-02-resume-gate-replay-task",
+        "objective": "Replay Mission resume transitions and verify stale terminal gates become continuation-denied.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-02-resume-gate-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-02-resume-gate-replay",
+          "source_task_digest:sha256:8e1959341d06e08eb8b410b02aedfeb1663a7014d46557ae4b992986ce42adf9"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-01-parent-readback-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-01-parent-readback-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-03-exact-action-reconciliation",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-03-exact-action-reconciliation-task",
+        "objective": "Verify exact next action reconciliation remains explicit across Mission Atlas and Foundry readbacks.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-03-exact-action-reconciliation",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-03-exact-action-reconciliation",
+          "source_task_digest:sha256:2556583a8d01c6612ff3b70eb515841447fe643384a317a5f517eef3e826b15e"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-02-resume-gate-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-02-resume-gate-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-04-dirty-state-isolation",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-04-dirty-state-isolation-task",
+        "objective": "Record isolated worktree behavior when the operator checkout contains unrelated dirty changes.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-04-dirty-state-isolation",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-04-dirty-state-isolation",
+          "source_task_digest:sha256:ff7d22eac4e81b32f7c5bbdb3f88e140bbe19a9ecbb0d4c3869eb4d7840b65d7"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-03-exact-action-reconciliation"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-03-exact-action-reconciliation"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-05-topology-digest-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-05-topology-digest-replay-task",
+        "objective": "Replay the Month 4 topology manifest digest and detect changed repository head inputs.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-05-topology-digest-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-05-topology-digest-replay",
+          "source_task_digest:sha256:71d0cc64847816eda3ed7e3a107b63c0f22e73ebdcf22a58099ab58a8148e654"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-04-dirty-state-isolation"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-04-dirty-state-isolation"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-06-contract-owner-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-06-contract-owner-replay-task",
+        "objective": "Replay contract owner inventory checks and preserve unknown-version fail-closed outcomes.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-06-contract-owner-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-06-contract-owner-replay",
+          "source_task_digest:sha256:778852b4d2e5ab438c7f413b67d3f96b76fac64f9143e7133071707c0c834134"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-05-topology-digest-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-05-topology-digest-replay"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-soak-month4-07-wrapper-parity-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-07-wrapper-parity-replay-task",
+        "objective": "Replay compatibility wrapper fixtures and compare exit status canonical JSON and denial fields.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-07-wrapper-parity-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-07-wrapper-parity-replay",
+          "source_task_digest:sha256:312b5e5326c5d5c306daa4e23f20140fef3c9b184eb4f5e724b2e58e453bd3db"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-06-contract-owner-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-06-contract-owner-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-08-rollback-journal-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-08-rollback-journal-replay-task",
+        "objective": "Replay one bounded rollback journal and verify source and target heads remain recorded.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-08-rollback-journal-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-08-rollback-journal-replay",
+          "source_task_digest:sha256:5cb5bb2a038e2c966e70d471efd6a4b97b3e66cf4665f89755c3ec76a77888ba"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-07-wrapper-parity-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-07-wrapper-parity-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-09-evidence-digest-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-09-evidence-digest-replay-task",
+        "objective": "Recompute retained evidence digests and detect retrieval mismatch without deleting artifacts.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-09-evidence-digest-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-09-evidence-digest-replay",
+          "source_task_digest:sha256:8dfddd3975e99ae34fe620c67cf541a17cde50ff04f9c216984c73228cc25e52"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-08-rollback-journal-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-08-rollback-journal-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-10-evidence-growth-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-10-evidence-growth-replay-task",
+        "objective": "Recompute report-only evidence growth deltas and classify compact versus externalizable artifacts.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-10-evidence-growth-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-10-evidence-growth-replay",
+          "source_task_digest:sha256:679d510c12ff10dad36d6aa4e400dfea4ae744ac864982d0b71d4e4b9e29b077"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-09-evidence-digest-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-09-evidence-digest-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-11-restore-plan-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-11-restore-plan-replay-task",
+        "objective": "Replay clean-directory evidence restore planning and preserve backup failure stop rules.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-11-restore-plan-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-11-restore-plan-replay",
+          "source_task_digest:sha256:c3cb46f04f08fe5d422f6195a106ede9e4f44d39038bc6d6983fe2bc3c7b7e2c"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-10-evidence-growth-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-10-evidence-growth-replay"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-soak-month4-12-schema-validation-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-12-schema-validation-replay-task",
+        "objective": "Run strict schema validation over both Month 4 waves and record missing evidence explicitly.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-12-schema-validation-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-12-schema-validation-replay",
+          "source_task_digest:sha256:0717943540211132fab6d35e7833ef0ba5b16c3fb11b6158b69ed4ad2fe31ec8"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-11-restore-plan-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-11-restore-plan-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-13-assurance-ci-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-13-assurance-ci-replay-task",
+        "objective": "Replay assurance CI readiness inputs and keep Sentinel hosted evidence separate from promotion.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-13-assurance-ci-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-13-assurance-ci-replay",
+          "source_task_digest:sha256:fdd442af80101e947c15db22f485dad6aa29b2e56eb32cc5dc7c6e56cf930d68"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-12-schema-validation-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-12-schema-validation-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-14-assurance-parity-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-14-assurance-parity-replay-task",
+        "objective": "Replay independent evaluator monitor and promoter verdict fixtures through the assurance boundary.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-14-assurance-parity-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-14-assurance-parity-replay",
+          "source_task_digest:sha256:a9fd3a51a70e32ef3d318d24c52923ebf40fa3b47db3c2d62c3a5c9b02dfbd0b"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-13-assurance-ci-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-13-assurance-ci-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-15-no-promotion-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-15-no-promotion-replay-task",
+        "objective": "Replay no-promotion and no-activation assertions across all completed Month 4 nodes.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-15-no-promotion-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-15-no-promotion-replay",
+          "source_task_digest:sha256:3f17b94bc229fc058142bca62f8f06e0e6e6dea65763c9857de5d5366cbf3129"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-14-assurance-parity-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-14-assurance-parity-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-16-rsi-continuity-replay",
+      "status": "completed",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-16-rsi-continuity-replay-task",
+        "objective": "Replay bounded RSI continuity assertions and verify unrestricted RSI remains denied.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-16-rsi-continuity-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-16-rsi-continuity-replay",
+          "source_task_digest:sha256:aa2cd8cee217e825bb9bbf07fc8b76cc66d121f6a8f86b0242d55f8cbac32165"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-15-no-promotion-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-15-no-promotion-replay"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-soak-month4-17-command-timeline-replay",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-17-command-timeline-replay-task",
+        "objective": "Replay compact Command timeline filters for completed ready blocked failed and stale states.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-17-command-timeline-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-17-command-timeline-replay",
+          "source_task_digest:sha256:642afb5cc0649de22c2b4bd6cd4f5b1adb2a722c5895146d573195a3e6ca247b"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-16-rsi-continuity-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-16-rsi-continuity-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-18-public-claim-replay",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-18-public-claim-replay-task",
+        "objective": "Replay public-safety wording scans and reject claims that turn fixtures into live execution.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-18-public-claim-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-18-public-claim-replay",
+          "source_task_digest:sha256:549ab36a2ee3bd21b2904064d65d77dba5b3ba4e3a16a52326d5edb23276034e"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-17-command-timeline-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-17-command-timeline-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-19-foundry-serialization-replay",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-19-foundry-serialization-replay-task",
+        "objective": "Replay one-ready-node Foundry serialization and reject concurrent mutation scheduling.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-19-foundry-serialization-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-19-foundry-serialization-replay",
+          "source_task_digest:sha256:4288eb84c26c0fe788f81d0d433f0658414171cdf3045efd9dc62558c6abb9ff"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-18-public-claim-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-18-public-claim-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-20-checkpoint-replay",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-20-checkpoint-replay-task",
+        "objective": "Replay checkpoint selection after interruption and preserve the exact next node continuation.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-20-checkpoint-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-20-checkpoint-replay",
+          "source_task_digest:sha256:5fcf53a3806b662f2224f85f78da8e229ebb52cb65c2ffbded969a02da43cd92"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-19-foundry-serialization-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-19-foundry-serialization-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-21-provenance-replay",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-21-provenance-replay-task",
+        "objective": "Replay deterministic provenance envelope fields without invoking a model or provider.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-21-provenance-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-21-provenance-replay",
+          "source_task_digest:sha256:b2a7f0b32b735dcc23c9f34571552bbb47a2eb14c29e4223ca411b633fd82324"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-20-checkpoint-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-20-checkpoint-replay"
+      ],
+      "blockers": [],
+      "stitch_task": true
+    },
+    {
+      "id": "mission-recommendation-soak-month4-22-migration-stop-rule",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-22-migration-stop-rule-task",
+        "objective": "Replay two failed parity attempts and verify the per-slice migration stop rule engages.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-22-migration-stop-rule",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-22-migration-stop-rule",
+          "source_task_digest:sha256:d702f8798524919eee70503897ab705c8eb59313894761e35263a9f9cba0258f"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-21-provenance-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-21-provenance-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-23-operator-summary-replay",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-23-operator-summary-replay-task",
+        "objective": "Generate an operator summary from terminal validated evidence and preserve unresolved blockers.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-23-operator-summary-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-23-operator-summary-replay",
+          "source_task_digest:sha256:a7a313bb81808ed6bc39169be0ccd0e6f318a9e9d5fcadf3d928e5aa051fc74f"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-22-migration-stop-rule"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-22-migration-stop-rule"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    },
+    {
+      "id": "mission-recommendation-soak-month4-24-month5-handoff",
+      "status": "ready",
+      "factory_task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-24-month5-handoff-task",
+        "objective": "Generate the Month 5 beta-hardening handoff with at least forty ranked next recommendations.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-24-month5-handoff",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-24-month5-handoff",
+          "source_task_digest:sha256:2e95bf3b8668c6592cf8eb2ff9ce89db6ce88713d2766968e78d8d337edaa6e9"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-23-operator-summary-replay"
+        ],
+        "context_pack_refs": []
+      },
+      "dependencies": [
+        "mission-recommendation-soak-month4-23-operator-summary-replay"
+      ],
+      "blockers": [],
+      "stitch_task": false
+    }
+  ]
+}

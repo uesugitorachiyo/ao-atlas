@@ -1,0 +1,21 @@
+{
+  "rollback_exercised": false,
+  "rollback_scope": "remove this node's readback-only planning artifacts",
+  "safety_boundaries": {
+    "approves_work": false,
+    "claims_authority_advance": false,
+    "concurrent_mutation": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "executes_work": false,
+    "mutates_repositories": false,
+    "node_id": "mission-recommendation-baseline-month4-19-architecture-status",
+    "provider_calls": false,
+    "release_or_publish": false,
+    "rsi_remains_denied": true,
+    "safe_to_execute": false,
+    "task_id": "mission-recommendation-baseline-month4-19-architecture-status-task"
+  },
+  "schema": "ao.atlas.consolidation-rollback-record.v0.1",
+  "status": "rollback_ready"
+}

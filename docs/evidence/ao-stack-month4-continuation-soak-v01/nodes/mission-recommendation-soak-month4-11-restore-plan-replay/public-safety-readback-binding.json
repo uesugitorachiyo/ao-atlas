@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-soak-month4-11-restore-plan-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 13,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:667aafee54e15725c57e4a5f9625820fd9a1bced6fd71f4e176a19c01948009b",
+  "sentinel_evidence_path": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:9f2e65a9edcde8044db7cb98878621101826b9c5c579dec3ee288af464a3eb91",
+  "source_readback_path": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:2869bafb92372c329776da4e93d13f3a32240f90f5fb9d10011b34f32a284251",
+  "verification_summary_path": "nodes/mission-recommendation-soak-month4-11-restore-plan-replay/verification.json"
+}

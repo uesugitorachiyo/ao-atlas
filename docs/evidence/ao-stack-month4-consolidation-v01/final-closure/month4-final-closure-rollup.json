@@ -1,0 +1,60 @@
+{
+  "schema": "ao.atlas.month4-final-closure-rollup.v0.1",
+  "status": "completed",
+  "baseline": {
+    "wave": "baseline_month4",
+    "total_nodes": 36,
+    "completed_nodes": 36,
+    "ready_nodes": 0,
+    "blocked_nodes": 0,
+    "failed_nodes": 0,
+    "final_response_allowed": true,
+    "public_safety_scan_status": "passed",
+    "promoter_readback_status": "no_promotion_recorded",
+    "command_readback_status": "compact_timeline_recorded",
+    "elapsed_minutes": 120,
+    "min_minutes_met": true,
+    "readback_path": "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+    "workgraph_path": "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/workgraph-after-node-36.json"
+  },
+  "continuation_soak": {
+    "wave": "continuation_soak",
+    "total_nodes": 24,
+    "completed_nodes": 24,
+    "ready_nodes": 0,
+    "blocked_nodes": 0,
+    "failed_nodes": 0,
+    "final_response_allowed": true,
+    "public_safety_scan_status": "passed",
+    "promoter_readback_status": "no_promotion_recorded",
+    "command_readback_status": "compact_timeline_recorded",
+    "elapsed_minutes": 120,
+    "min_minutes_met": true,
+    "readback_path": "docs/evidence/ao-stack-month4-continuation-soak-v01/final-closure/recommendation-readback-after-node-24.json",
+    "workgraph_path": "docs/evidence/ao-stack-month4-continuation-soak-v01/final-closure/workgraph-after-node-24.json"
+  },
+  "baseline_additional_node_count": 7,
+  "strict_schema_validation": {
+    "baseline": {
+      "status": "passed",
+      "json_files": 612,
+      "failed_files": 0
+    },
+    "continuation_soak": {
+      "status": "passed",
+      "json_files": 408,
+      "failed_files": 0
+    }
+  },
+  "safety": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}

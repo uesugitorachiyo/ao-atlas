@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-03-exact-action-reconciliation-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-03-exact-action-reconciliation/verification.json"
+  },
+  "digest": "sha256:29046d796fdd67451bb93e15e7da688f63bf3441cd739f53e35b9e73ebfbd937"
+}

@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-additional-month4-07-thin-module-extraction",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 0,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:46d7947362456d770a80ab8103d1f1726d33205fbc0ef47ac2471398e1e0257c",
+  "sentinel_evidence_path": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:67ffc33714a078db041150bea2824d77f1d0e6e7b5df1db2044ba0bd5ddb4e0b",
+  "source_readback_path": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:9254407761948414d69449cfd34b8e6c78af0647a5114def979c804b802bb42f",
+  "verification_summary_path": "nodes/mission-recommendation-additional-month4-07-thin-module-extraction/verification.json"
+}

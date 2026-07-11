@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 0,
+  "expected_completed_nodes_after": 1,
+  "expected_next_executable_node_after": "mission-recommendation-soak-month4-02-resume-gate-replay",
+  "expected_ready_nodes_after": 23,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-soak-month4-01-parent-readback-replay",
+  "ready_nodes_before": 24,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-soak-month4-01-parent-readback-replay-task"
+}

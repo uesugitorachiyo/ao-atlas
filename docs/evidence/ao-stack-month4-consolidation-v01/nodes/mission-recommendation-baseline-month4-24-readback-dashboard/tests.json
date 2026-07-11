@@ -1,0 +1,25 @@
+{
+  "commands": [
+    "go test ./internal/atlas -count=1",
+    "typed evidence validation"
+  ],
+  "mode": "readback_only",
+  "provider_free": true,
+  "safety_boundaries": {
+    "approves_work": false,
+    "claims_authority_advance": false,
+    "concurrent_mutation": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "executes_work": false,
+    "mutates_repositories": false,
+    "node_id": "mission-recommendation-baseline-month4-24-readback-dashboard",
+    "provider_calls": false,
+    "release_or_publish": false,
+    "rsi_remains_denied": true,
+    "safe_to_execute": false,
+    "task_id": "mission-recommendation-baseline-month4-24-readback-dashboard-task"
+  },
+  "schema": "ao.atlas.consolidation-test-evidence.v0.1",
+  "status": "passed"
+}

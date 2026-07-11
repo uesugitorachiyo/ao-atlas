@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-19-architecture-status",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 17,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:53fb69bfcb65b2b7435f506b93334de57db2eb4736015e405b7ce64fd8a2fa1e",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-19-architecture-status/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:aeaf41f9293eb481d1373fb570797cb03908531c58b1b9159ad479b00c393306",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-19-architecture-status/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:e34296b9013afc5a2752e86e91fadecf5eba56892a1a148f7aca024fce4f4024",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-19-architecture-status/verification.json"
+}

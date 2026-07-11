@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-14-assurance-parity-replay-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-14-assurance-parity-replay/verification.json"
+  },
+  "digest": "sha256:c4f55c64502821004213aeae6c09403e2cf6cd57ebc452a630fcbd3112eba1a3"
+}

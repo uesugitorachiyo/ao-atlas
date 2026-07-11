@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-28-public-claim-boundary-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-28-public-claim-boundary/verification.json"
+  },
+  "digest": "sha256:19bc559f9e7dfff500605f68b56ebc826c85d33f60351e5e9e28f6b82a509bed"
+}

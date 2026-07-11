@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-07-atlas-interface-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-07-atlas-interface/verification.json"
+  },
+  "digest": "sha256:88f969900da2dfb4e2bd7db0568ba1e9343ca2672455fff0e358df53e8103830"
+}

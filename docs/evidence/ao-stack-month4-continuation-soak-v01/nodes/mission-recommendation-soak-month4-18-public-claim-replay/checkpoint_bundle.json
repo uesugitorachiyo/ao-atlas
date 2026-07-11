@@ -1,0 +1,22 @@
+{
+  "completed_nodes_before": 17,
+  "exact_next_action": "mission-recommendation-soak-month4-19-foundry-serialization-replay",
+  "ready_nodes_remaining": 6,
+  "safety_boundaries": {
+    "approves_work": false,
+    "claims_authority_advance": false,
+    "concurrent_mutation": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "executes_work": false,
+    "mutates_repositories": false,
+    "node_id": "mission-recommendation-soak-month4-18-public-claim-replay",
+    "provider_calls": false,
+    "release_or_publish": false,
+    "rsi_remains_denied": true,
+    "safe_to_execute": false,
+    "task_id": "mission-recommendation-soak-month4-18-public-claim-replay-task"
+  },
+  "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1",
+  "status": "fresh"
+}

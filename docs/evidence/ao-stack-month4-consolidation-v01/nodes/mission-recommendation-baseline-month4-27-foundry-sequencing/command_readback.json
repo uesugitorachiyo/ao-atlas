@@ -1,0 +1,13 @@
+{
+  "completed_nodes_before": 26,
+  "expected_completed_nodes_after": 27,
+  "expected_next_executable_node_after": "mission-recommendation-baseline-month4-28-public-claim-boundary",
+  "expected_ready_nodes_after": 9,
+  "final_response_allowed": false,
+  "node_id": "mission-recommendation-baseline-month4-27-foundry-sequencing",
+  "ready_nodes_before": 10,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "task_id": "mission-recommendation-baseline-month4-27-foundry-sequencing-task"
+}

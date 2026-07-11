@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-23-clean-state-audit",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 13,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:deb7995a1b669b18feda518e402c03962c8048028b602b3af514b22ef6b77e35",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:64efa7d7e6af9f976b0234871be4e02b76f08bb4a4be48bd1353c2681b5f9325",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:008aeef63602ad9aa42cae209c3b86c633298993191233ef80df7bcac658c62b",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-23-clean-state-audit/verification.json"
+}

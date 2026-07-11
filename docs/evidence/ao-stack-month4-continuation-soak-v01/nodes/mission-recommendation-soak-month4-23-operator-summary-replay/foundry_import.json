@@ -1,0 +1,111 @@
+{
+  "approves_work": false,
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "executes_work": false,
+  "id": "ao-stack-month4-foundry-import-mission-recommendation-soak-month4-23-operator-summary-replay",
+  "schedules_work": false,
+  "source_artifacts": [
+    {
+      "digest": "sha256:a609ea57856094eb8246ab2e2ce4e2e8aa78b995fa1f302ab9dec1d95c2ba5ce",
+      "ref": "recommendation-workgraph.json"
+    }
+  ],
+  "status": "ready_for_foundry_fixture_import",
+  "target_instance": "ao-stack-month4-consolidation-v01",
+  "tasks": [
+    {
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "mutation_class": "low_risk_code",
+      "node_id": "mission-recommendation-soak-month4-23-operator-summary-replay",
+      "path": "tasks/mission-recommendation-soak-month4-23-operator-summary-replay-task.json",
+      "required_evidence": [
+        "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+        "source_recommendation:soak-month4-23-operator-summary-replay",
+        "source_task_digest:sha256:a7a313bb81808ed6bc39169be0ccd0e6f318a9e9d5fcadf3d928e5aa051fc74f"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-soak-month4-23-operator-summary-replay-task",
+        "objective": "Generate an operator summary from terminal validated evidence and preserve unresolved blockers.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/soak-month4-23-operator-summary-replay",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:60a8bc1ad41f43c34f21bd2db9a2e058707addf869ad893c83c52b27af65d5ef",
+          "source_recommendation:soak-month4-23-operator-summary-replay",
+          "source_task_digest:sha256:a7a313bb81808ed6bc39169be0ccd0e6f318a9e9d5fcadf3d928e5aa051fc74f"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-soak-month4-22-migration-stop-rule"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:c9951d6d5aa75789cafc4171decd602cb7e7c9c72ed431c4af9abf6ef77ad660",
+      "task_id": "mission-recommendation-soak-month4-23-operator-summary-replay-task",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ]
+    }
+  ],
+  "workgraph_id": "ao-stack-month4-consolidation-v01"
+}

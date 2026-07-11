@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-baseline-month4-20-install-docs",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 16,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:7775765265714f8b5b0a6132624af7fa69c087aefa0ee54e4506354792b02b83",
+  "sentinel_evidence_path": "nodes/mission-recommendation-baseline-month4-20-install-docs/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:5892d3694a7336e306a58e4bb8648fe00ca2097bf19af9bfe1ffba6c22920f96",
+  "source_readback_path": "nodes/mission-recommendation-baseline-month4-20-install-docs/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:afadb6f16a888f10352f15acd5226346910211a179508820eb5fcf142d1b6c44",
+  "verification_summary_path": "nodes/mission-recommendation-baseline-month4-20-install-docs/verification.json"
+}

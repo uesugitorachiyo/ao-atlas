@@ -1,0 +1,16 @@
+{
+  "bound_public_safety_scan_status": "passed",
+  "final_response_allowed_after_binding": false,
+  "node_id": "mission-recommendation-additional-month4-02-differential-replay",
+  "previous_public_safety_scan_status": "pending",
+  "ready_nodes_after_binding": 5,
+  "rsi_remains_denied": true,
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "sentinel_evidence_digest": "sha256:b95ce53b05390fb4a5bce99f08bdca4ea0a1af4b5fc7abbe0dd662ace08ee721",
+  "sentinel_evidence_path": "nodes/mission-recommendation-additional-month4-02-differential-replay/sentinel_public_safety.json",
+  "source_readback_digest": "sha256:8acd6252eaef24effbe259785acf9d24559120e9b349cc031302e759109f95eb",
+  "source_readback_path": "nodes/mission-recommendation-additional-month4-02-differential-replay/recommendation-readback-after.json",
+  "status": "bound",
+  "verification_summary_digest": "sha256:a334071c593dde013ff49020450e6c55541bc07a1277c610a7e754e671d6e8bb",
+  "verification_summary_path": "nodes/mission-recommendation-additional-month4-02-differential-replay/verification.json"
+}

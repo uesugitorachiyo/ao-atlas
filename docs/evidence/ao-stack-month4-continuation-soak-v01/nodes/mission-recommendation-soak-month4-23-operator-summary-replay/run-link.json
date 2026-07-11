@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-soak-month4-23-operator-summary-replay-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/tests.json",
+    "verification": "nodes/mission-recommendation-soak-month4-23-operator-summary-replay/verification.json"
+  },
+  "digest": "sha256:e1e96ca5d6ca030725734a23c12ef212fc824cea52a99eba239d80cd76a1d628"
+}

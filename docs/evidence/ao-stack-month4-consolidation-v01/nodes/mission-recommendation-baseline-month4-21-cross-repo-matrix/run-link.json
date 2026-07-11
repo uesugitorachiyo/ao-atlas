@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-baseline-month4-21-cross-repo-matrix-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/foundry_import.json",
+    "implementation_evidence": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/promoter_no_promotion.json",
+    "public_safety_readback_binding": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/public-safety-readback-binding.json",
+    "rollback_record": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/tests.json",
+    "verification": "nodes/mission-recommendation-baseline-month4-21-cross-repo-matrix/verification.json"
+  },
+  "digest": "sha256:7ae7c7ab56c8eca5432f46a2eb62f772f9df41eb663ec34024cc7b954b05412b"
+}
