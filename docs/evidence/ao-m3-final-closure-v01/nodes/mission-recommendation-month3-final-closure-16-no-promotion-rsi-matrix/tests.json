@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.test-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix",
+  "task_id": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3NoPromotionRSIMatrixCoversCompletedArtifacts -count=1 failed first on missing typed model, then on missing recorded fixture.",
+  "green_tests": [
+    "go test ./internal/atlas -run TestMonth3NoPromotionRSIMatrixCoversCompletedArtifacts -count=1"
+  ],
+  "targeted_regression_passed": true
+}

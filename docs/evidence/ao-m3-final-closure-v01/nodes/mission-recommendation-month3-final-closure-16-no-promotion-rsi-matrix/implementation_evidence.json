@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix",
+  "task_id": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix-task",
+  "status": "implemented",
+  "changed_files": [
+    "internal/atlas/mission_month3_no_promotion_rsi_matrix.go",
+    "internal/atlas/mission_month3_no_promotion_rsi_matrix_cli.go",
+    "internal/atlas/mission_month3_no_promotion_rsi_matrix_test.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix/no-promotion-rsi-matrix.json"
+  ],
+  "summary": "Added typed no-promotion/no-RSI assertion matrix covering completed Month 3 node evidence.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

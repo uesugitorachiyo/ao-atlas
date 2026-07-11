@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix",
+  "task_id": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix-task",
+  "status": "selected",
+  "objective": "Add no-promotion no-RSI assertion matrix across all terminal Month 3 artifacts.",
+  "selected_candidate": "month3-no-promotion-rsi-matrix",
+  "selection_reason": "Node 16 is the next executable node after node 15 and asserts no-promotion/no-RSI invariants across completed Month 3 artifacts.",
+  "source_recommendation": "month3-final-closure-16-no-promotion-rsi-matrix",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "source_task_digest": "sha256:3cbeab29d0f2c56b0f1a497f7623dd7b2da51da844782837a444e4819004199a",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
