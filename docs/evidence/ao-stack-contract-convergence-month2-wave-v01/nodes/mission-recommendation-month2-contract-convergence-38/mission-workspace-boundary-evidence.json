@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.mission-workspace-boundary-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-38",
+  "task_id": "mission-recommendation-month2-contract-convergence-38-task",
+  "status": "handoff_only_gap_recorded",
+  "source_repo": "ao-mission",
+  "source_commit": "8055933d9eebdd12a01d9ccca6edcbbf9bc69c37",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "mission_owns": [
+    "durable mission state",
+    "routing",
+    "continuation ledger",
+    "readback imports",
+    "operator-facing lifecycle evidence"
+  ],
+  "downstream_required": [
+    "isolated Foundry worktree",
+    "workspace-root integration preflight",
+    "exact digest approval",
+    "verified diff",
+    "rollback receipt"
+  ],
+  "path_validation_weakened": false,
+  "workspace_root_test_added": false,
+  "provider_calls": false,
+  "direct_main_mutation": false,
+  "release_or_publish": false,
+  "limitation": "The roadmap handoff names a workspace-root Foundry integration test, but Mission does not execute or authorize that path; it remains an explicit downstream implementation requirement.",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-38",
+  "task_id": "mission-recommendation-month2-contract-convergence-38-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-38",
+  "source_owner": "ao-mission",
+  "source_task_digest": "sha256:9a3d4d1a1ad5a7a486fc33fff97649a97ab93ab6b3605acbb35585c15b62867b",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Inspect Mission routing, continuation, event/readback, doctor, replay, dashboard, and Atlas-prompt surfaces.",
+    "Run Mission tests, vet, and build while preserving its existing dirty checkout.",
+    "Record that a complete tiny-repository golden path and workspace-root Foundry preflight are downstream gaps, with no provider execution or authority advance."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-34"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "8055933d9eebdd12a01d9ccca6edcbbf9bc69c37",
+  "objective": "Audit AO Mission golden-path tiny-repository packet and workspace-root preflight readiness through a bounded Atlas compatibility evidence node without mutating the dirty Mission checkout or requesting execution.",
+  "selection_reason": "single ready node selected from the post-node-37 workgraph; Mission golden-path and workspace-root boundary are audited read-only",
+  "mutates_repositories": false
+}
