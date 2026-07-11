@@ -1,0 +1,43 @@
+{
+  "schema": "ao.atlas.command-covenant-field-parity-fixture.v0.1",
+  "status": "field_parity_verified",
+  "policy_fields": [
+    "policy_id",
+    "policy_version",
+    "policy_digest",
+    "decision"
+  ],
+  "approval_fields": [
+    "approval_id",
+    "subject_digest",
+    "base_commit",
+    "approved_by"
+  ],
+  "command_readback_policy_fields": [
+    "policy_id",
+    "policy_version",
+    "policy_digest",
+    "decision"
+  ],
+  "command_readback_approval_fields": [
+    "approval_id",
+    "subject_digest",
+    "base_commit",
+    "approved_by"
+  ],
+  "policy_field_count": 4,
+  "approval_field_count": 4,
+  "command_accepts_only_covenant_fields": true,
+  "covenant_validates_same_fields": true,
+  "rejected_extra_fields": [
+    "policy_override",
+    "approval_substitute",
+    "unbound_ticket_digest"
+  ],
+  "rejected_extra_field_count": 3,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

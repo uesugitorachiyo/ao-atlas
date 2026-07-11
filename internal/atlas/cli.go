@@ -495,6 +495,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "canonical-json-vectors", run: runMissionRecommendationsCanonicalJSONVectors, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "complete-node", run: runMissionRecommendationsCompleteNode, commandClass: missionRecommendationCommandClassMutationCapable},
 		{name: "resume", run: runMissionRecommendationsResume, commandClass: missionRecommendationCommandClassMutationCapable},
 		{name: "validate-evidence", run: runMissionRecommendationsValidateEvidence, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},

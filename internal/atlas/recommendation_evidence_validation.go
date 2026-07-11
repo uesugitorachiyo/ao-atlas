@@ -744,6 +744,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:foundry-canonical-import-fixture", err
 		}
 		return "typed:foundry-canonical-import-fixture", ValidateAtlasFoundryCanonicalImportFixture(value)
+	case AtlasCommandCovenantFieldParityFixtureContract:
+		value, err := LoadJSON[AtlasCommandCovenantFieldParityFixture](path)
+		if err != nil {
+			return "typed:command-covenant-field-parity-fixture", err
+		}
+		return "typed:command-covenant-field-parity-fixture", ValidateAtlasCommandCovenantFieldParityFixture(value)
 	case AOMissionRefactoringRecommendationsContract:
 		validator, _ := recommendationControlPlaneTypedValidator(AOMissionRefactoringRecommendationsContract)
 		value, err := LoadJSON[AOMissionRefactoringRecommendations](path)

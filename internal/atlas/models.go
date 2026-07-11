@@ -1833,6 +1833,26 @@ type AtlasFoundryRejectedSchemaAlias struct {
 	Reason string `json:"reason"`
 }
 
+type AtlasCommandCovenantFieldParityFixture struct {
+	Schema                           string   `json:"schema"`
+	Status                           string   `json:"status"`
+	PolicyFields                     []string `json:"policy_fields"`
+	ApprovalFields                   []string `json:"approval_fields"`
+	CommandReadbackPolicyFields      []string `json:"command_readback_policy_fields"`
+	CommandReadbackApprovalFields    []string `json:"command_readback_approval_fields"`
+	PolicyFieldCount                 int      `json:"policy_field_count"`
+	ApprovalFieldCount               int      `json:"approval_field_count"`
+	CommandAcceptsOnlyCovenantFields bool     `json:"command_accepts_only_covenant_fields"`
+	CovenantValidatesSameFields      bool     `json:"covenant_validates_same_fields"`
+	RejectedExtraFields              []string `json:"rejected_extra_fields"`
+	RejectedExtraFieldCount          int      `json:"rejected_extra_field_count"`
+	SchedulesWork                    bool     `json:"schedules_work"`
+	ExecutesWork                     bool     `json:"executes_work"`
+	ApprovesWork                     bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance           bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied                 bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasPolicyTicketPublicSafetyScanInput struct {
 	Schema                 string   `json:"schema"`
 	Status                 string   `json:"status"`
