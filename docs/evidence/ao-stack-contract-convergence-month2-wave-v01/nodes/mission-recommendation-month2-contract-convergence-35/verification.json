@@ -1,0 +1,43 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-35",
+  "task_id": "mission-recommendation-month2-contract-convergence-35-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "go test ./... -count=1 in ao-sentinel",
+    "go vet ./... in ao-sentinel",
+    "go build -o tmp/bin/sentinel-node35 ./cmd/sentinel with artifact cleanup",
+    "inspect Sentinel hosted workflow directory",
+    "inspect Sentinel monitor/watch/safety/hold source boundaries",
+    "go test ./... -count=1 in ao-atlas",
+    "go vet ./... in ao-atlas",
+    "go build -o target/atlas-node35-verification ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "mission recommendations validate-evidence",
+    "mission recommendations run-link-digest-check",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "mission recommendations validate-evidence",
+    "mission recommendations run-link-digest-check",
+    "git diff --check",
+    "scoped public-safety scan over the complete wave root"
+  ],
+  "repair_notes": [
+    "Sentinel checkout is read-only for this node; no workflow or monitoring implementation is added.",
+    "No hosted workflow was found in the checked-out Sentinel head; record this as a compatibility gap rather than claiming parity.",
+    "Sentinel fixture/dry-run behavior does not prove continuous hosted monitoring, live provider coverage, or promotion activation.",
+    "Atlas verification and the final scoped Sentinel scan must pass before closure."
+  ],
+  "rsi_remains_denied": true,
+  "objective": "Audit ao-sentinel hosted CI workflow parity and preserve its structural and fixture-only monitoring boundary through a bounded Atlas compatibility evidence node with no promotion.",
+  "source_commit": "dcb4759682d2492877729ef6084c3356389b514e"
+}

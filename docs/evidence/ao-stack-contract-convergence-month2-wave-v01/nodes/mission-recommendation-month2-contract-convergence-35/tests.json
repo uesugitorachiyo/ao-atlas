@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-35",
+  "task_id": "mission-recommendation-month2-contract-convergence-35-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "The node records the current Sentinel workflow state without mutating the Sentinel checkout."
+  },
+  "targeted_test": {
+    "command": "go test ./... -count=1 in ../ao-sentinel",
+    "status": "passed",
+    "output": "Sentinel CLI and internal safety/monitoring fixture tests passed."
+  },
+  "integration_test": {
+    "command": "go vet ./... && go build -o tmp/bin/sentinel-node35 ./cmd/sentinel",
+    "status": "passed",
+    "output": "Sentinel vet and build passed; temporary artifact was removed."
+  },
+  "status_test": {
+    "command": "inspect ../ao-sentinel/.github/workflows",
+    "status": "passed",
+    "output": "No hosted CI workflow directory is present in the checked-out Sentinel head; parity is not proven."
+  },
+  "next_test": {
+    "command": "source inspection of Sentinel monitor, watch, safety, hold, and README boundaries",
+    "status": "passed",
+    "output": "Sentinel is local, deterministic, fixture-backed, and dry-run only; live providers, resident monitoring, sibling mutation, and promotion activation remain outside the current surface."
+  },
+  "objective": "Audit ao-sentinel hosted CI workflow parity and preserve its structural and fixture-only monitoring boundary through a bounded Atlas compatibility evidence node with no promotion."
+}

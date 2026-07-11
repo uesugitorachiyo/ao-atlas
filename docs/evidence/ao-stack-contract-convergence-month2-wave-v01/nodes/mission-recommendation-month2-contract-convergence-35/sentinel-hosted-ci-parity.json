@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.sentinel-hosted-ci-parity.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-35",
+  "task_id": "mission-recommendation-month2-contract-convergence-35-task",
+  "status": "audited",
+  "source_repo": "ao-sentinel",
+  "source_commit": "dcb4759682d2492877729ef6084c3356389b514e",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "hosted_ci_workflow_present": false,
+  "workflow_files": "none",
+  "workflow_parity_status": "missing_in_checked_out_head",
+  "native_validation": {
+    "tests": "passed",
+    "vet": "passed",
+    "build": "passed"
+  },
+  "conclusion": "Sentinel has no hosted CI workflow in the checked-out head; hosted CI parity is not proven and should remain a next implementation task.",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true,
+  "source_task_digest": "sha256:9c000a8610e3bab95182ec771823a82bda0f5cbae8caaf3a84e9fc8d75a6494b"
+}
