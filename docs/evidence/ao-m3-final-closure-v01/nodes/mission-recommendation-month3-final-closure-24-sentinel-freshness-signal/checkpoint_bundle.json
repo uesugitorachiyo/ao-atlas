@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal",
+  "task_id": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal-task",
+  "status": "checkpoint_ready",
+  "source_workgraph": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-23-covenant-policy-replay/workgraph-after.json",
+  "source_workgraph_digest": "sha256:af2cc426485edb548442eac0c5851d2cfb49ef7a2290d7ac0e19a0da505e6cc0",
+  "expected_completed_nodes_after": 24,
+  "expected_ready_nodes_after": 6,
+  "expected_next_executable_node": "mission-recommendation-month3-final-closure-25-promoter-no-activation",
+  "final_response_allowed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

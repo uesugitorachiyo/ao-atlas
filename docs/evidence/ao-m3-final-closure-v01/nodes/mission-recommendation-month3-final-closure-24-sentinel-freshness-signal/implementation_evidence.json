@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal",
+  "task_id": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal-task",
+  "status": "implemented",
+  "changed_files": [
+    "internal/atlas/mission_month3_sentinel_freshness_signal_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-24-sentinel-freshness-signal/sentinel-signal-state-fixture.json"
+  ],
+  "summary": "Bound final-closure node 24 to typed Sentinel signal-state evidence covering CI, runtime, policy, and evidence freshness states.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

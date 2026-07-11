@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.test-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal",
+  "task_id": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3FinalClosureSentinelFreshnessSignalFixture -count=1 failed first on missing final-closure Sentinel signal-state fixture evidence.",
+  "green_tests": [
+    "go test ./internal/atlas -run TestMonth3FinalClosureSentinelFreshnessSignalFixture -count=1"
+  ],
+  "targeted_regression_passed": true
+}
