@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.recommendation-lease-start.v0.1",
+  "status": "started",
+  "mission_id": "mission-ao-stack-golden-path-month3-v01",
+  "target_instance": "ao-stack-golden-path-month3-v01",
+  "evidence_root": "docs/evidence/ao-stack-golden-path-month3-wave-v01",
+  "started_at": "2026-07-11T02:03:47Z",
+  "min_minutes": 120,
+  "max_minutes": 180,
+  "continue_if_fast_target": 40,
+  "checkpoint_policy": "after_each_node_or_timed_interval",
+  "wave_digest": "sha256:a5764a462c42835e0b92c27b8fb540220af5f836be56ae4174228ecd468057e2",
+  "workgraph_digest": "sha256:72fcb526215b5eef2f5560306255ba11220c791aec834cfebfb2becf68e3c47a",
+  "final_response_allowed": false,
+  "final_response_reason": "lease start marker does not allow final response",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "calls_providers": false,
+  "claims_authority_advance": false
+}

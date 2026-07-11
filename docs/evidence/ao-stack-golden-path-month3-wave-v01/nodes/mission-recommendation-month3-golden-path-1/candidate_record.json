@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-1",
+  "task_id": "mission-recommendation-month3-golden-path-1-task",
+  "status": "selected",
+  "source_recommendation": "month3-golden-path-1",
+  "source_task_digest": "sha256:c7396535d2d08a3cad74c633769d7fddbc7071a01d03ad45f9b02c14aac59f70",
+  "selected_work": [
+    "Strengthen ao2-adapters apply_sandbox_patch so the caller-supplied approved subject is compared before filesystem writes.",
+    "Propagate the subject binding through AO2 runtime and CLI callers.",
+    "Record AO2 PR #253, 95 passing CI checks, merge, sync, and branch cleanup as implementation evidence."
+  ],
+  "source_digests": {
+    "canonical_input": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+    "ao2_merge_commit": "sha256:d57192a7d63a2d6cfbe66c08d4cbda516af46c78"
+  },
+  "write_scope": [
+    "ao2/crates/ao2-adapters/src/lib.rs",
+    "ao2/crates/ao2-runtime/src/lib.rs",
+    "ao2/crates/ao2-cli/src/main.rs",
+    "ao2/crates/ao2-adapters/tests/sandbox_adapter.rs",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-1"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

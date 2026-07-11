@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-1",
+  "task_id": "mission-recommendation-month3-golden-path-1-task",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "revert AO2 merge commit d57192a7d63a2d6cfbe66c08d4cbda516af46c78 through a reviewed PR",
+    "remove node-specific Atlas evidence if the node is reopened",
+    "preserve the prior AO2 approval digest contract and do not apply any provider change"
+  ],
+  "rollback_command": "Prepare a reviewed AO2 revert PR for the node merge and regenerate the Atlas readback; do not mutate main directly.",
+  "data_loss_risk": "none; the change is a fail-closed approval guard and all evidence is digest-addressed",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
