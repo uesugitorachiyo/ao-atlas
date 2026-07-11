@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.sentinel-monitoring-boundary.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-35",
+  "task_id": "mission-recommendation-month2-contract-convergence-35-task",
+  "status": "bounded",
+  "source_repo": "ao-sentinel",
+  "source_commit": "dcb4759682d2492877729ef6084c3356389b514e",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "resident_monitor": false,
+  "live_provider_calls": false,
+  "live_external_monitoring": false,
+  "fixture_and_dry_run_only": true,
+  "structural_public_safety_scan": true,
+  "default_actions": [
+    "target validate",
+    "baseline validate",
+    "safety scan",
+    "regression fixture",
+    "monitor evaluate",
+    "watch dry-run",
+    "hold emit"
+  ],
+  "limitation": "The current Sentinel surface is local, deterministic, fixture-backed, and dry-run only; it does not establish continuous hosted monitoring or promotion activation.",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-35",
+  "task_id": "mission-recommendation-month2-contract-convergence-35-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 34,
+  "ready_nodes_before": 6,
+  "expected_completed_nodes_after": 35,
+  "expected_ready_nodes_after": 5,
+  "expected_next_executable_node_after": "mission-recommendation-month2-contract-convergence-36",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true,
+  "scope": "compact Atlas readback only",
+  "summary": "Sentinel hosted CI parity is not proven because no workflow is present in the checked-out head; structural fixture-only monitoring remains bounded and the Month 2 wave continues.",
+  "promotion_granted": false,
+  "ready_nodes_before_completion": 7
+}

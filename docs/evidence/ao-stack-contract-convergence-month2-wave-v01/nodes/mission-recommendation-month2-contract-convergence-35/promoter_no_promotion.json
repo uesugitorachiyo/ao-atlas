@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-35",
+  "task_id": "mission-recommendation-month2-contract-convergence-35-task",
+  "status": "no_promotion_requested",
+  "promotion_requested": false,
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "scope": "Sentinel hosted CI parity and structural fixture-only monitoring boundary audit only",
+  "summary": "Sentinel native validation passes, but no hosted workflow is present in the checked-out head and its monitor remains fixture/dry-run oriented; no promotion or RSI claim is requested.",
+  "promotion_granted": false
+}

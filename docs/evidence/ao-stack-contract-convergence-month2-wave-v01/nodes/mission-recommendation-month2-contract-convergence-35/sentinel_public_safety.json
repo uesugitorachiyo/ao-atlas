@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-35",
+  "task_id": "mission-recommendation-month2-contract-convergence-35-task",
+  "status": "passed",
+  "scan_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01"
+  ],
+  "unsafe_public_claim_detected": false,
+  "promotion_claim_detected": false,
+  "rsi_claim_detected": false,
+  "rsi_remains_denied": true,
+  "scoped_scan": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-35/scoped-public-safety-scan.json",
+  "scope": "Sentinel hosted CI parity and structural fixture-only monitoring boundary audit",
+  "public_safety_scan_passed": true,
+  "unsafe_match_count": 0
+}
