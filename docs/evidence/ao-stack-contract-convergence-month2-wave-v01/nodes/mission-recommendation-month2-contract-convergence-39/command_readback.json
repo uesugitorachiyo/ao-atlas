@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-39",
+  "task_id": "mission-recommendation-month2-contract-convergence-39-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 38,
+  "ready_nodes_before": 2,
+  "expected_completed_nodes_after": 39,
+  "expected_ready_nodes_after": 1,
+  "expected_next_executable_node_after": "mission-recommendation-month2-contract-convergence-40",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true,
+  "scope": "compact Atlas readback only",
+  "summary": "Atlas long-run continuation contracts are bound, but one ready node remains and final response stays denied.",
+  "promotion_granted": false,
+  "ready_nodes_before_completion": 7
+}
