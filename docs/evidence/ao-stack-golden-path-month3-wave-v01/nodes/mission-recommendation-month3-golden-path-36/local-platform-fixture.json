@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.local-platform-fixture.v0.1",
+  "status": "local_platform_fixture_ready",
+  "platforms": [
+    "darwin",
+    "linux",
+    "windows"
+  ],
+  "platform_count": 3,
+  "path_modes": [
+    "posix",
+    "windows"
+  ],
+  "line_ending_modes": [
+    "lf",
+    "crlf"
+  ],
+  "line_ending_mode_count": 2,
+  "deterministic_install": true,
+  "path_normalization_checked": true,
+  "rollback_receipt_required": true,
+  "live_provider_calls": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

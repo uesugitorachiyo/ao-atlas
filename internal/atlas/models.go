@@ -2244,6 +2244,25 @@ type AtlasFailureInjectionFuzzingFixture struct {
 	RSIRemainsDenied       bool                               `json:"rsi_remains_denied"`
 }
 
+type AtlasLocalPlatformFixture struct {
+	Schema                   string   `json:"schema"`
+	Status                   string   `json:"status"`
+	Platforms                []string `json:"platforms"`
+	PlatformCount            int      `json:"platform_count"`
+	PathModes                []string `json:"path_modes"`
+	LineEndingModes          []string `json:"line_ending_modes"`
+	LineEndingModeCount      int      `json:"line_ending_mode_count"`
+	DeterministicInstall     bool     `json:"deterministic_install"`
+	PathNormalizationChecked bool     `json:"path_normalization_checked"`
+	RollbackReceiptRequired  bool     `json:"rollback_receipt_required"`
+	LiveProviderCalls        bool     `json:"live_provider_calls"`
+	SchedulesWork            bool     `json:"schedules_work"`
+	ExecutesWork             bool     `json:"executes_work"`
+	ApprovesWork             bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

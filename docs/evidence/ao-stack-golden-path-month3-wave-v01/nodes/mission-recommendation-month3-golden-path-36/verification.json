@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-36",
+  "task_id": "mission-recommendation-month3-golden-path-36-task",
+  "status": "passed",
+  "commands": [
+    "go test ./internal/atlas -run TestMonth3LocalPlatformFixture -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "scoped public-safety wording scan"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "scoped public-safety wording scan"
+  ],
+  "targeted_regression_passed": true,
+  "full_verification_passed": true,
+  "public_safety_scan_passed": true,
+  "repair_notes": [
+    "Full Atlas verification passed locally.",
+    "No provider call, credential inspection, dependency update, release, deployment, or promotion was performed.",
+    "RSI remains denied."
+  ],
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
