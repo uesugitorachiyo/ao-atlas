@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-27",
+  "task_id": "mission-recommendation-month2-contract-convergence-27-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 26,
+  "ready_nodes_before": 14,
+  "expected_completed_nodes_after": 27,
+  "expected_ready_nodes_after": 13,
+  "expected_next_executable_node_after": "mission-recommendation-month2-contract-convergence-28",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true,
+  "scope": "compact Atlas readback only",
+  "summary": "Atlas readback records a reproducible fixture-scale graph baseline while keeping production performance claims and promotion denied.",
+  "promotion_granted": false,
+  "ready_nodes_before_completion": 14
+}
