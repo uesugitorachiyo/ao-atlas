@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-14",
+  "task_id": "mission-recommendation-month3-golden-path-14-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "gate_status": "cleared",
+  "objective": "Add dependency-free Go and Rust smoke checks over the canonical vectors so field loss is detected before integration runs.",
+  "source_task_digest": "sha256:5a9475cfbcbb760c2f63909e4bd16b3f7fe5ead9fe389b1b371e57da87d17881",
+  "source_workgraph_digest": "sha256:f5cc570c5dd3f2f455a78c38035aaa3e20384d4521b33079bc5c8b18ab41f211",
+  "safety_limits": ["no provider calls", "no credential inspection", "no direct main mutation", "no release deploy publish upload tag", "no dependency updates", "no auth policy config widening", "no broad RSI claim"],
+  "rsi_remains_denied": true
+}

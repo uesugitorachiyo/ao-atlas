@@ -1,0 +1,152 @@
+{
+  "schema": "ao.atlas.canonical-json-vector-smoke-checks.v0.1",
+  "status": "smoke_checks_ready",
+  "source_schema": "ao.atlas.canonical-json-vectors.v0.1",
+  "digest_algorithm": "sha256.canonical-json.v1",
+  "vector_count": 5,
+  "language_count": 2,
+  "smoke_check_count": 10,
+  "languages": [
+    "go",
+    "rust"
+  ],
+  "go_dependency_free": true,
+  "rust_dependency_free": true,
+  "checks": [
+    {
+      "language": "go",
+      "vector_id": "mission-record-minimal",
+      "record_class": "mission",
+      "expected_digest": "sha256:d0e1611079d26711d73586278cd2ae20dccd1c7cc51a949882b3ec4289a6f864",
+      "field_count": 2,
+      "field_names": [
+        "id",
+        "status"
+      ],
+      "command": "go test dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    },
+    {
+      "language": "rust",
+      "vector_id": "mission-record-minimal",
+      "record_class": "mission",
+      "expected_digest": "sha256:d0e1611079d26711d73586278cd2ae20dccd1c7cc51a949882b3ec4289a6f864",
+      "field_count": 2,
+      "field_names": [
+        "id",
+        "status"
+      ],
+      "command": "rustc dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    },
+    {
+      "language": "go",
+      "vector_id": "approval-record-minimal",
+      "record_class": "approval",
+      "expected_digest": "sha256:071d5afc6dcf84aef6d6c259e0c889896faba5030f98f0e9691b8c0a971710ed",
+      "field_count": 2,
+      "field_names": [
+        "approved",
+        "ticket"
+      ],
+      "command": "go test dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    },
+    {
+      "language": "rust",
+      "vector_id": "approval-record-minimal",
+      "record_class": "approval",
+      "expected_digest": "sha256:071d5afc6dcf84aef6d6c259e0c889896faba5030f98f0e9691b8c0a971710ed",
+      "field_count": 2,
+      "field_names": [
+        "approved",
+        "ticket"
+      ],
+      "command": "rustc dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    },
+    {
+      "language": "go",
+      "vector_id": "policy-record-minimal",
+      "record_class": "policy",
+      "expected_digest": "sha256:4e4f8c4573afec661e6a7890124049de33e19737952eee7f78aef0712eafb73d",
+      "field_count": 2,
+      "field_names": [
+        "policy_digest",
+        "version"
+      ],
+      "command": "go test dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    },
+    {
+      "language": "rust",
+      "vector_id": "policy-record-minimal",
+      "record_class": "policy",
+      "expected_digest": "sha256:4e4f8c4573afec661e6a7890124049de33e19737952eee7f78aef0712eafb73d",
+      "field_count": 2,
+      "field_names": [
+        "policy_digest",
+        "version"
+      ],
+      "command": "rustc dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    },
+    {
+      "language": "go",
+      "vector_id": "rollback-record-minimal",
+      "record_class": "rollback",
+      "expected_digest": "sha256:c97c5a3e29b53ab0dd8715a49102edb895aa97ef86c4deeade4c0918d85564ec",
+      "field_count": 2,
+      "field_names": [
+        "rollback_available",
+        "target"
+      ],
+      "command": "go test dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    },
+    {
+      "language": "rust",
+      "vector_id": "rollback-record-minimal",
+      "record_class": "rollback",
+      "expected_digest": "sha256:c97c5a3e29b53ab0dd8715a49102edb895aa97ef86c4deeade4c0918d85564ec",
+      "field_count": 2,
+      "field_names": [
+        "rollback_available",
+        "target"
+      ],
+      "command": "rustc dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    },
+    {
+      "language": "go",
+      "vector_id": "readback-record-minimal",
+      "record_class": "readback",
+      "expected_digest": "sha256:a02672175f3437c830e30a992df450aa497f53975262b285ac4f8e731b355c77",
+      "field_count": 2,
+      "field_names": [
+        "completed_nodes",
+        "final_response_allowed"
+      ],
+      "command": "go test dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    },
+    {
+      "language": "rust",
+      "vector_id": "readback-record-minimal",
+      "record_class": "readback",
+      "expected_digest": "sha256:a02672175f3437c830e30a992df450aa497f53975262b285ac4f8e731b355c77",
+      "field_count": 2,
+      "field_names": [
+        "completed_nodes",
+        "final_response_allowed"
+      ],
+      "command": "rustc dependency-free sha256 over canonical_json bytes",
+      "dependency_free": true
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1783,6 +1783,36 @@ type AtlasCanonicalJSONVector struct {
 	Consumers     []string `json:"consumers"`
 }
 
+type AtlasCanonicalJSONVectorSmokeChecks struct {
+	Schema                 string                               `json:"schema"`
+	Status                 string                               `json:"status"`
+	SourceSchema           string                               `json:"source_schema"`
+	DigestAlgorithm        string                               `json:"digest_algorithm"`
+	VectorCount            int                                  `json:"vector_count"`
+	LanguageCount          int                                  `json:"language_count"`
+	SmokeCheckCount        int                                  `json:"smoke_check_count"`
+	Languages              []string                             `json:"languages"`
+	GoDependencyFree       bool                                 `json:"go_dependency_free"`
+	RustDependencyFree     bool                                 `json:"rust_dependency_free"`
+	Checks                 []AtlasCanonicalJSONVectorSmokeCheck `json:"checks"`
+	SchedulesWork          bool                                 `json:"schedules_work"`
+	ExecutesWork           bool                                 `json:"executes_work"`
+	ApprovesWork           bool                                 `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                                 `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                                 `json:"rsi_remains_denied"`
+}
+
+type AtlasCanonicalJSONVectorSmokeCheck struct {
+	Language       string   `json:"language"`
+	VectorID       string   `json:"vector_id"`
+	RecordClass    string   `json:"record_class"`
+	ExpectedDigest string   `json:"expected_digest"`
+	FieldCount     int      `json:"field_count"`
+	FieldNames     []string `json:"field_names"`
+	Command        string   `json:"command"`
+	DependencyFree bool     `json:"dependency_free"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
