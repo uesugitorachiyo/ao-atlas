@@ -17,6 +17,7 @@
     "blueprint_canonical_preservation_fixture": "sha256:f5fac0b9a0ded5e23e53a868336345f0b9bc098a0eafb42ed804f9298a6b59e0"
   },
   "write_scope": [
+    ".gitattributes",
     "internal/atlas/mission_blueprint_canonical_preservation_fixture.go",
     "internal/atlas/mission_blueprint_canonical_preservation_fixture_cli.go",
     "internal/atlas/mission_blueprint_canonical_preservation_fixture_test.go",

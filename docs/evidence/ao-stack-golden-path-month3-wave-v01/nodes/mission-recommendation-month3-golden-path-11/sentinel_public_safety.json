@@ -4,6 +4,7 @@
   "task_id": "mission-recommendation-month3-golden-path-11-task",
   "status": "passed",
   "scan_scope": [
+    ".gitattributes",
     "internal/atlas/mission_blueprint_canonical_preservation_fixture.go",
     "internal/atlas/mission_blueprint_canonical_preservation_fixture_cli.go",
     "internal/atlas/mission_blueprint_canonical_preservation_fixture_test.go",
