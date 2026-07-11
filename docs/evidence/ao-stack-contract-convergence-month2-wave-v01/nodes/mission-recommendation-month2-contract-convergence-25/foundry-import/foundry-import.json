@@ -1,0 +1,115 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-mission-56bed010dd085a0f-month2-contract-convergence-v01-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-mission-56bed010dd085a0f-month2-contract-convergence-v01",
+  "target_instance": "ao-stack-contract-convergence-month2-20260710",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-24/workgraph-after.json",
+      "digest": "sha256:4474da4d809b43bd2aee996c4585d223b02ecbbaa3a8f28ca202d8b381885a40"
+    },
+    {
+      "ref": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-25/stack-instance.json",
+      "digest": "sha256:e3f11acb7ee2eba5d0ba3820cf9c14e7b74891734fdab0e3244ac4833c41f0e5"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-month2-contract-convergence-25",
+      "task_id": "mission-recommendation-month2-contract-convergence-25-task",
+      "path": "tasks/mission-recommendation-month2-contract-convergence-25-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+        "source_recommendation:month2-contract-convergence-25",
+        "source_task_digest:sha256:4c6c1229ca8245e04a487255bee5d8e925f2b1986a379c2f7b461bce03a02595"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-month2-contract-convergence-25-task",
+        "objective": "Coordinate ao-mission Mission metrics recompute after handoff correction through a bounded Atlas compatibility evidence node with no promotion.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/month2-contract-convergence-25",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+          "source_recommendation:month2-contract-convergence-25",
+          "source_task_digest:sha256:4c6c1229ca8245e04a487255bee5d8e925f2b1986a379c2f7b461bce03a02595"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-month2-contract-convergence-24"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:47a186157889d7450e4f47eb10baf100779d0581e9ac5e8260f70b8f33c5edbc"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
