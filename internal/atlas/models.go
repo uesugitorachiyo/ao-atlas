@@ -2296,6 +2296,23 @@ type AtlasKillRestartReplayFixture struct {
 	RSIRemainsDenied          bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasRollbackTerminalReadbackFixture struct {
+	Schema                  string   `json:"schema"`
+	Status                  string   `json:"status"`
+	TerminalState           string   `json:"terminal_state"`
+	Readbacks               []string `json:"readbacks"`
+	ReadbackAgreementCount  int      `json:"readback_agreement_count"`
+	RollbackReceiptReplayed bool     `json:"rollback_receipt_replayed"`
+	ReadbacksAgree          bool     `json:"readbacks_agree"`
+	PromotionRequested      bool     `json:"promotion_requested"`
+	LiveProviderCalls       bool     `json:"live_provider_calls"`
+	SchedulesWork           bool     `json:"schedules_work"`
+	ExecutesWork            bool     `json:"executes_work"`
+	ApprovesWork            bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance  bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied        bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

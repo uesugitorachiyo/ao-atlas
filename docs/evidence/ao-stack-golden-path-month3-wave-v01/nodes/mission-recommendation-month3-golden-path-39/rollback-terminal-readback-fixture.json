@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.rollback-terminal-readback-fixture.v0.1",
+  "status": "rollback_terminal_readbacks_agree",
+  "terminal_state": "rolled_back",
+  "readbacks": [
+    "command",
+    "sentinel",
+    "promoter",
+    "control_plane"
+  ],
+  "readback_agreement_count": 4,
+  "rollback_receipt_replayed": true,
+  "readbacks_agree": true,
+  "promotion_requested": false,
+  "live_provider_calls": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
