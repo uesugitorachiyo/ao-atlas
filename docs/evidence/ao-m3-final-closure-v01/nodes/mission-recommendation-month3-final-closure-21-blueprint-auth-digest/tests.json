@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.test-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-21-blueprint-auth-digest",
+  "task_id": "mission-recommendation-month3-final-closure-21-blueprint-auth-digest-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3FinalClosureBlueprintAuthDigestFixture -count=1 failed first on missing final-closure Blueprint auth digest fixture.",
+  "green_tests": [
+    "go test ./internal/atlas -run TestMonth3FinalClosureBlueprintAuthDigestFixture -count=1"
+  ],
+  "targeted_regression_passed": true
+}
