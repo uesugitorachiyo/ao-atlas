@@ -942,6 +942,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-cross-repo-ci-matrix", err
 		}
 		return "typed:month3-cross-repo-ci-matrix", ValidateAtlasMonth3CrossRepoCIMatrix(value)
+	case AtlasMonth3OperatorDashboardReadbackContract:
+		value, err := LoadJSON[AtlasMonth3OperatorDashboardReadback](path)
+		if err != nil {
+			return "typed:month3-operator-dashboard-readback", err
+		}
+		return "typed:month3-operator-dashboard-readback", ValidateAtlasMonth3OperatorDashboardReadback(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

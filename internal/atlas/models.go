@@ -2575,6 +2575,37 @@ type AtlasMonth3CrossRepoCIEntry struct {
 	Verdict string `json:"verdict"`
 }
 
+type AtlasMonth3OperatorDashboardReadback struct {
+	Schema                   string   `json:"schema"`
+	NodeID                   string   `json:"node_id"`
+	Status                   string   `json:"status"`
+	SourceReadbackPath       string   `json:"source_readback_path"`
+	SourceReadbackDigest     string   `json:"source_readback_digest"`
+	CIMatrixPath             string   `json:"ci_matrix_path"`
+	CIMatrixDigest           string   `json:"ci_matrix_digest"`
+	TerminalGoldenPathStatus string   `json:"terminal_golden_path_status"`
+	CompletedNodes           int      `json:"completed_nodes"`
+	ReadyNodes               int      `json:"ready_nodes"`
+	BlockedNodes             int      `json:"blocked_nodes"`
+	FailedNodes              int      `json:"failed_nodes"`
+	FirstExecutableNode      string   `json:"first_executable_node"`
+	ExactNextAction          string   `json:"exact_next_action"`
+	ReturnGateStatus         string   `json:"return_gate_status"`
+	Blockers                 []string `json:"blockers"`
+	BlockerCount             int      `json:"blocker_count"`
+	ReadyWorkVisible         bool     `json:"ready_work_visible"`
+	CIMatrixBound            bool     `json:"ci_matrix_bound"`
+	RequiresPassBeforeMerge  bool     `json:"requires_pass_before_merge"`
+	WaitsOnPending           bool     `json:"waits_on_pending"`
+	BlocksOnFailure          bool     `json:"blocks_on_failure"`
+	FinalResponseAllowed     bool     `json:"final_response_allowed"`
+	SchedulesWork            bool     `json:"schedules_work"`
+	ExecutesWork             bool     `json:"executes_work"`
+	ApprovesWork             bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
