@@ -2029,6 +2029,22 @@ type AtlasReplayableStatePacketFixture struct {
 	RSIRemainsDenied         bool                              `json:"rsi_remains_denied"`
 }
 
+type AtlasIndexedEventQueryFixture struct {
+	Schema                 string   `json:"schema"`
+	Status                 string   `json:"status"`
+	EventTypes             []string `json:"event_types"`
+	EventTypeCount         int      `json:"event_type_count"`
+	MigrationRequired      bool     `json:"migration_required"`
+	QueryIndexRequired     bool     `json:"query_index_required"`
+	QueryFields            []string `json:"query_fields"`
+	QueryFieldCount        int      `json:"query_field_count"`
+	SchedulesWork          bool     `json:"schedules_work"`
+	ExecutesWork           bool     `json:"executes_work"`
+	ApprovesWork           bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
