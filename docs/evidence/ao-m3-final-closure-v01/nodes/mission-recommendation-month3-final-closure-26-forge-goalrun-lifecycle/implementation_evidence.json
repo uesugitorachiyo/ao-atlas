@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle",
+  "task_id": "mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle-task",
+  "status": "implemented",
+  "changed_files": [
+    "internal/atlas/mission_month3_forge_goalrun_lifecycle_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle/forge-goalrun-evidence-fixture.json"
+  ],
+  "summary": "Bound final-closure node 26 to typed Forge GoalRun lifecycle evidence that forbids provider execution.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.test-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle",
+  "task_id": "mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3FinalClosureForgeGoalRunLifecycleFixture -count=1 failed first on missing final-closure Forge GoalRun fixture evidence.",
+  "green_tests": [
+    "go test ./internal/atlas -run TestMonth3FinalClosureForgeGoalRunLifecycleFixture -count=1"
+  ],
+  "targeted_regression_passed": true
+}
