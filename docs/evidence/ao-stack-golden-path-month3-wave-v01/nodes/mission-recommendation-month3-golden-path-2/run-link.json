@@ -1,0 +1,21 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-month3-golden-path-2-task",
+  "status": "completed",
+  "evidence": {
+    "ao2_pr_merge": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/ao2-pr-254-evidence.json",
+    "candidate_record": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/command_readback.json",
+    "foundry_import": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/foundry_import.json",
+    "implementation_evidence": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/promoter_no_promotion.json",
+    "public_safety_readback_binding": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/public-safety-readback-binding.json",
+    "rollback_record": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/tests.json",
+    "verification": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/verification.json"
+  },
+  "digest": "sha256:185ba06edc6a68ea13f96826ad56fed5a1798cc16fa826f4d9b16529e92fb71c"
+}
