@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.sentinel-public-safety.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-11-restart-resume-soak",
+  "task_id": "mission-recommendation-month3-final-closure-11-restart-resume-soak-task",
+  "status": "passed",
+  "scan_scope": [
+    "internal/atlas/mission_month3_restart_resume_soak.go",
+    "internal/atlas/mission_month3_restart_resume_soak_cli.go",
+    "internal/atlas/mission_month3_restart_resume_soak_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-11-restart-resume-soak"
+  ],
+  "forbidden_claims_found": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -2606,6 +2606,37 @@ type AtlasMonth3OperatorDashboardReadback struct {
 	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasMonth3RestartResumeSoak struct {
+	Schema                     string   `json:"schema"`
+	NodeID                     string   `json:"node_id"`
+	Status                     string   `json:"status"`
+	ExactlyOncePath            string   `json:"exactly_once_path"`
+	ExactlyOnceDigest          string   `json:"exactly_once_digest"`
+	KillRestartPath            string   `json:"kill_restart_path"`
+	KillRestartDigest          string   `json:"kill_restart_digest"`
+	SourceReadbackPath         string   `json:"source_readback_path"`
+	SourceReadbackDigest       string   `json:"source_readback_digest"`
+	DashboardReadbackPath      string   `json:"dashboard_readback_path"`
+	DashboardReadbackDigest    string   `json:"dashboard_readback_digest"`
+	Scenarios                  []string `json:"scenarios"`
+	ScenarioCount              int      `json:"scenario_count"`
+	ExactlyOnceAccountingBound bool     `json:"exactly_once_accounting_bound"`
+	KillRestartReplayBound     bool     `json:"kill_restart_replay_bound"`
+	CheckpointRecoveryBound    bool     `json:"checkpoint_recovery_bound"`
+	NoLostEvidence             bool     `json:"no_lost_evidence"`
+	DuplicateMutationDetected  bool     `json:"duplicate_mutation_detected"`
+	FalseCompletionDetected    bool     `json:"false_completion_detected"`
+	CompletedNodes             int      `json:"completed_nodes"`
+	ReadyNodes                 int      `json:"ready_nodes"`
+	NextExecutableNode         string   `json:"next_executable_node"`
+	FinalResponseAllowed       bool     `json:"final_response_allowed"`
+	SchedulesWork              bool     `json:"schedules_work"`
+	ExecutesWork               bool     `json:"executes_work"`
+	ApprovesWork               bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance     bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied           bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
