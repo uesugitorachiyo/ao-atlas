@@ -2266,12 +2266,12 @@ type AtlasLocalPlatformFixture struct {
 type AtlasNonAOReplayBindingFixture struct {
 	Schema                 string `json:"schema"`
 	Status                 string `json:"status"`
-	ReplayRepo            string `json:"replay_repo"`
+	ReplayRepo             string `json:"replay_repo"`
 	TinyNonAORepo          bool   `json:"tiny_non_ao_repo"`
-	ReviewedPREvidence    bool   `json:"reviewed_pr_evidence"`
-	ObserverReadbackBound bool   `json:"observer_readback_bound"`
-	NoPromotionBoundary   bool   `json:"no_promotion_boundary"`
-	PromotionRequested    bool   `json:"promotion_requested"`
+	ReviewedPREvidence     bool   `json:"reviewed_pr_evidence"`
+	ObserverReadbackBound  bool   `json:"observer_readback_bound"`
+	NoPromotionBoundary    bool   `json:"no_promotion_boundary"`
+	PromotionRequested     bool   `json:"promotion_requested"`
 	LiveProviderCalls      bool   `json:"live_provider_calls"`
 	SchedulesWork          bool   `json:"schedules_work"`
 	ExecutesWork           bool   `json:"executes_work"`
@@ -2400,6 +2400,31 @@ type AtlasMonth3TerminalDigestBinding struct {
 	ApprovesWork              bool   `json:"approves_work"`
 	ClaimsAuthorityAdvance    bool   `json:"claims_authority_advance"`
 	RSIRemainsDenied          bool   `json:"rsi_remains_denied"`
+}
+
+type AtlasMonth3NonAODryRunReplayBinding struct {
+	Schema                       string `json:"schema"`
+	NodeID                       string `json:"node_id"`
+	Status                       string `json:"status"`
+	SourceFixturePath            string `json:"source_fixture_path"`
+	SourceFixtureDigest          string `json:"source_fixture_digest"`
+	TerminalBindingPath          string `json:"terminal_binding_path"`
+	TerminalBindingDigest        string `json:"terminal_binding_digest"`
+	ReplayRepo                   string `json:"replay_repo"`
+	TinyNonAORepo                bool   `json:"tiny_non_ao_repo"`
+	ReviewedPREvidence           bool   `json:"reviewed_pr_evidence"`
+	ObserverReadbackBound        bool   `json:"observer_readback_bound"`
+	NoPromotionBoundary          bool   `json:"no_promotion_boundary"`
+	FixtureOnlyExecutionEvidence bool   `json:"fixture_only_execution_evidence"`
+	TerminalDigestBindingBound   bool   `json:"terminal_digest_binding_bound"`
+	TerminalFinalResponseAllowed bool   `json:"terminal_final_response_allowed"`
+	PromotionRequested           bool   `json:"promotion_requested"`
+	LiveProviderCalls            bool   `json:"live_provider_calls"`
+	SchedulesWork                bool   `json:"schedules_work"`
+	ExecutesWork                 bool   `json:"executes_work"`
+	ApprovesWork                 bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance       bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied             bool   `json:"rsi_remains_denied"`
 }
 
 type AtlasBlueprintCanonicalPreservationFixture struct {

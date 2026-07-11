@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay",
+  "task_id": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay-task",
+  "status": "selected",
+  "objective": "Add non-AO repository dry-run replay binding with fixture-only execution evidence.",
+  "selected_candidate": "month3-non-ao-dry-run-replay",
+  "selection_reason": "Node 4 is the next executable node after node 3 and binds the non-AO replay fixture to terminal digest evidence without executing provider work.",
+  "source_recommendation": "month3-final-closure-04-non-ao-dry-run-replay",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "source_task_digest": "sha256:a0e46a335277d6638b9553459f6287a645cbe9fdce3c43acf09dad20b776a686",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

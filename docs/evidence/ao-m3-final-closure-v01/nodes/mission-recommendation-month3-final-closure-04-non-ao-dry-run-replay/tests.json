@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.test-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay",
+  "task_id": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3NonAODryRunReplayBindingConsumesFixtureAndTerminalBinding -count=1 failed on missing AtlasMonth3NonAODryRunReplayBinding type, then on the missing recorded fixture.",
+  "green_tests": [
+    "go test ./internal/atlas -run TestMonth3NonAODryRunReplayBindingConsumesFixtureAndTerminalBinding -count=1"
+  ],
+  "targeted_regression_passed": true
+}
