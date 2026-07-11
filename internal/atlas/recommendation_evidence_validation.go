@@ -738,6 +738,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:canonical-json-vector-smoke-checks", err
 		}
 		return "typed:canonical-json-vector-smoke-checks", ValidateAtlasCanonicalJSONVectorSmokeChecks(value)
+	case AtlasSentinelHostedCIWorkflowFixtureContract:
+		value, err := LoadJSON[AtlasSentinelHostedCIWorkflowFixture](path)
+		if err != nil {
+			return "typed:sentinel-hosted-ci-workflow-fixture", err
+		}
+		return "typed:sentinel-hosted-ci-workflow-fixture", ValidateAtlasSentinelHostedCIWorkflowFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-15",
+  "task_id": "mission-recommendation-month3-golden-path-15-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "gate_status": "cleared",
+  "objective": "Add a least-privilege hosted CI workflow for Sentinel with read-only permissions and deterministic fixture verification.",
+  "source_task_digest": "sha256:7bca2deb1063c7e66fe201dbff5fec34d81ccc760affc1a61dcbd2fb19908476",
+  "source_workgraph_digest": "sha256:2154b00de17af4a829a66f8899bae2a7da4775a9a9917bda76829be8165dab04",
+  "safety_boundaries": ["no provider calls", "no credential inspection", "no direct main mutation", "no release deploy publish upload tag", "no dependency updates", "no auth policy config widening", "no broad RSI claim"],
+  "rsi_remains_denied": true
+}
