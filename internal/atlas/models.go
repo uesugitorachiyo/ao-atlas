@@ -1813,6 +1813,25 @@ type AtlasCanonicalJSONVectorSmokeCheck struct {
 	DependencyFree bool     `json:"dependency_free"`
 }
 
+type AtlasSentinelHostedCIWorkflowFixture struct {
+	Schema                       string   `json:"schema"`
+	Status                       string   `json:"status"`
+	WorkflowName                 string   `json:"workflow_name"`
+	WorkflowPath                 string   `json:"workflow_path"`
+	Permissions                  string   `json:"permissions"`
+	PermissionsReadOnly          bool     `json:"permissions_read_only"`
+	DeterministicFixtureCommands []string `json:"deterministic_fixture_commands"`
+	CommandCount                 int      `json:"command_count"`
+	UsesProviderCredentials      bool     `json:"uses_provider_credentials"`
+	UsesSecrets                  bool     `json:"uses_secrets"`
+	TriggersRelease              bool     `json:"triggers_release"`
+	SchedulesWork                bool     `json:"schedules_work"`
+	ExecutesWork                 bool     `json:"executes_work"`
+	ApprovesWork                 bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance       bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied             bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

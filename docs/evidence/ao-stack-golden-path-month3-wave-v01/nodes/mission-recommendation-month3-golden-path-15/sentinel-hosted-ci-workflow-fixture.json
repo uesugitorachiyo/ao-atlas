@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.sentinel-hosted-ci-workflow-fixture.v0.1",
+  "status": "least_privilege_workflow_ready",
+  "workflow_name": "sentinel-fixture-verification",
+  "workflow_path": ".github/workflows/sentinel-fixture-verification.yml",
+  "permissions": "contents:read",
+  "permissions_read_only": true,
+  "deterministic_fixture_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go run ./cmd/sentinel fixture verify"
+  ],
+  "command_count": 3,
+  "uses_provider_credentials": false,
+  "uses_secrets": false,
+  "triggers_release": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
