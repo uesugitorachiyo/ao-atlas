@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-3",
+  "task_id": "mission-recommendation-month3-golden-path-3-task",
+  "status": "selected",
+  "source_recommendation": "month3-golden-path-3",
+  "source_task_digest": "sha256:d8c66ecbaa0f6bb36b76b3553e02a265739c6df39989896a32302bc1b28ab693",
+  "selected_work": [
+    "Require the sandbox auto-approval opt-in to include a non-empty explicit approver identity.",
+    "Prove through the AO2 CLI that the legacy flag without that identity leaves the sandbox ticket pending.",
+    "Record AO2 PR #255, 95 passing CI checks, merge, sync, and branch cleanup as implementation evidence."
+  ],
+  "source_digests": {
+    "canonical_input": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+    "ao2_merge_commit": "sha256:e6b5911d711e006beae2eb5d7853bbb3f63ebdec"
+  },
+  "write_scope": [
+    "ao2/crates/ao2-runtime/src/lib.rs",
+    "ao2/crates/ao2-cli/tests/cli_approval_replay.rs",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-3"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

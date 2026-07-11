@@ -1,0 +1,34 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-3",
+  "task_id": "mission-recommendation-month3-golden-path-3-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "cargo fmt --all -- --check",
+    "cargo test -p ao2-cli --test cli_approval_replay cli_provider_run_requires_explicit_auto_approval_identity -- --exact",
+    "cargo test -p ao2-runtime --test provider_backed_run -- --nocapture",
+    "cargo test --workspace --all-targets",
+    "cargo check --workspace",
+    "cargo clippy --workspace --all-targets -- -D warnings",
+    "git diff --check",
+    "gh pr checks 255: 95 checks passed",
+    "gh pr merge 255 --squash --delete-branch",
+    "AO2 main HEAD and origin/main synchronized at e6b5911d711e006beae2eb5d7853bbb3f63ebdec",
+    "local and remote codex/month3-golden-path-3-ao2-auto-approval branches deleted",
+    "scoped public-safety wording scan over Month 3 node evidence"
+  ],
+  "required_commands": [
+    "AO2 native workspace tests, check, and clippy",
+    "PR/CI/merge lifecycle",
+    "branch cleanup",
+    "Atlas evidence and JSON validation",
+    "scoped public-safety wording scan"
+  ],
+  "repair_notes": [
+    "The hardcoded sandbox auto-approval identity was removed; the opt-in now requires a non-empty explicit identity.",
+    "The CLI flag without that identity remains WaitingForApproval with a pending sandbox ticket.",
+    "No provider call, credential inspection, dependency update, release, deployment, or promotion was performed.",
+    "RSI remains denied."
+  ]
+}
