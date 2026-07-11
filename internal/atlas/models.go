@@ -2222,6 +2222,28 @@ type AtlasRepeatedTaskResultLedgerFixture struct {
 	RSIRemainsDenied       bool                                   `json:"rsi_remains_denied"`
 }
 
+type AtlasFailureInjectionFuzzingCase struct {
+	Name          string `json:"name"`
+	FailureClass  string `json:"failure_class"`
+	ExpectedState string `json:"expected_state"`
+	Replayable    bool   `json:"replayable"`
+}
+
+type AtlasFailureInjectionFuzzingFixture struct {
+	Schema                 string                             `json:"schema"`
+	Status                 string                             `json:"status"`
+	Cases                  []AtlasFailureInjectionFuzzingCase `json:"cases"`
+	CaseCount              int                                `json:"case_count"`
+	DeterministicFuzzing   bool                               `json:"deterministic_fuzzing"`
+	ReplayableCases        bool                               `json:"replayable_cases"`
+	LiveProviderCalls      bool                               `json:"live_provider_calls"`
+	SchedulesWork          bool                               `json:"schedules_work"`
+	ExecutesWork           bool                               `json:"executes_work"`
+	ApprovesWork           bool                               `json:"approves_work"`
+	ClaimsAuthorityAdvance bool                               `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                               `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
