@@ -1,0 +1,11 @@
+{
+  "contract_version": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-31",
+  "task_id": "mission-recommendation-month3-golden-path-31-task",
+  "status": "implemented",
+  "fixture_digest": "sha256:76e5d75e32be3fbaccd958b152259e894c76855e38d851b38ef8c64a4ebb78d6",
+  "generated_from_inputs": true,
+  "copied_campaign_prose_allowed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

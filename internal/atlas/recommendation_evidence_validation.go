@@ -834,6 +834,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:compact-timeline-filter-fixture", err
 		}
 		return "typed:compact-timeline-filter-fixture", ValidateAtlasCompactTimelineFilterFixture(value)
+	case AtlasAuthorityReadinessInventoryFixtureContract:
+		value, err := LoadJSON[AtlasAuthorityReadinessInventoryFixture](path)
+		if err != nil {
+			return "typed:authority-readiness-inventory-fixture", err
+		}
+		return "typed:authority-readiness-inventory-fixture", ValidateAtlasAuthorityReadinessInventoryFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
