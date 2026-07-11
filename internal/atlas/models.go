@@ -2465,6 +2465,31 @@ type AtlasMonth3ExternalRepoCriteria struct {
 	ProviderExecutionAllowed    bool     `json:"provider_execution_allowed"`
 }
 
+type AtlasMonth3ControlPlaneObserverBinding struct {
+	Schema                         string `json:"schema"`
+	NodeID                         string `json:"node_id"`
+	Status                         string `json:"status"`
+	AdapterFixturePath             string `json:"adapter_fixture_path"`
+	AdapterFixtureDigest           string `json:"adapter_fixture_digest"`
+	SourceReadbackPath             string `json:"source_readback_path"`
+	SourceReadbackDigest           string `json:"source_readback_digest"`
+	AdapterDelegatesToControlPlane bool   `json:"adapter_delegates_to_control_plane"`
+	MissionTimelineReadbackBound   bool   `json:"mission_timeline_readback_bound"`
+	ObserverReadOnly               bool   `json:"observer_read_only"`
+	DuplicatesDomainDecisions      bool   `json:"duplicates_domain_decisions"`
+	CompletedNodes                 int    `json:"completed_nodes"`
+	ReadyNodes                     int    `json:"ready_nodes"`
+	BlockedNodes                   int    `json:"blocked_nodes"`
+	FailedNodes                    int    `json:"failed_nodes"`
+	NextExecutableNode             string `json:"next_executable_node"`
+	FinalResponseAllowed           bool   `json:"final_response_allowed"`
+	SchedulesWork                  bool   `json:"schedules_work"`
+	ExecutesWork                   bool   `json:"executes_work"`
+	ApprovesWork                   bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance         bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
