@@ -1736,6 +1736,30 @@ type AtlasCanonicalContractRegistryEntry struct {
 	Consumers      []string `json:"consumers"`
 }
 
+type AtlasContractCompatibilityInventory struct {
+	Schema                   string                            `json:"schema"`
+	Status                   string                            `json:"status"`
+	ContractCount            int                               `json:"contract_count"`
+	GateCriticalCount        int                               `json:"gate_critical_count"`
+	ConsumerTestCount        int                               `json:"consumer_test_count"`
+	MissingOwnerCount        int                               `json:"missing_owner_count"`
+	MissingConsumerTestCount int                               `json:"missing_consumer_test_count"`
+	Contracts                []AtlasContractCompatibilityEntry `json:"contracts"`
+	SchedulesWork            bool                              `json:"schedules_work"`
+	ExecutesWork             bool                              `json:"executes_work"`
+	ApprovesWork             bool                              `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool                              `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool                              `json:"rsi_remains_denied"`
+}
+
+type AtlasContractCompatibilityEntry struct {
+	ID            string   `json:"id"`
+	SchemaName    string   `json:"schema_name"`
+	Owner         string   `json:"owner"`
+	GateCritical  bool     `json:"gate_critical"`
+	ConsumerTests []string `json:"consumer_tests"`
+}
+
 type AtlasPolicyTicketPublicSafetyScanInput struct {
 	Schema                 string   `json:"schema"`
 	Status                 string   `json:"status"`

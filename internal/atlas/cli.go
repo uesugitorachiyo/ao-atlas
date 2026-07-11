@@ -491,6 +491,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "mission-dashboard-compact-filters", run: runMissionRecommendationsMissionDashboardCompactFilters, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "bounded-signer-contract-fixture", run: runMissionRecommendationsBoundedSignerContractFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "canonical-contract-registry-manifest", run: runMissionRecommendationsCanonicalContractRegistryManifest, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "contract-compatibility-inventory", run: runMissionRecommendationsContractCompatibilityInventory, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "complete-node", run: runMissionRecommendationsCompleteNode, commandClass: missionRecommendationCommandClassMutationCapable},
 		{name: "resume", run: runMissionRecommendationsResume, commandClass: missionRecommendationCommandClassMutationCapable},
 		{name: "validate-evidence", run: runMissionRecommendationsValidateEvidence, commandClass: missionRecommendationCommandClassPlanningOnly, recordsRunLedger: true},
