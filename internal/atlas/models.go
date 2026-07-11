@@ -1871,6 +1871,24 @@ type AtlasSignedAssuranceDryRunFixture struct {
 	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasPromoterNoActivationBoundaryFixture struct {
+	Schema                       string   `json:"schema"`
+	Status                       string   `json:"status"`
+	Decision                     string   `json:"decision"`
+	NoPromotionDecisionSupported bool     `json:"no_promotion_decision_supported"`
+	ActivationExecutionOwned     bool     `json:"activation_execution_owned"`
+	ReleaseExecutionOwned        bool     `json:"release_execution_owned"`
+	AllowedOutputs               []string `json:"allowed_outputs"`
+	AllowedOutputCount           int      `json:"allowed_output_count"`
+	ForbiddenActions             []string `json:"forbidden_actions"`
+	ForbiddenActionCount         int      `json:"forbidden_action_count"`
+	SchedulesWork                bool     `json:"schedules_work"`
+	ExecutesWork                 bool     `json:"executes_work"`
+	ApprovesWork                 bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance       bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied             bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
