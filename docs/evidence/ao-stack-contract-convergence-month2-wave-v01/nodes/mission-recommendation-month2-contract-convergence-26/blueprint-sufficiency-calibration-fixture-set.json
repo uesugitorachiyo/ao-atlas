@@ -1,0 +1,95 @@
+{
+  "schema": "ao.atlas.consolidation-implementation-evidence.v0.1",
+  "kind": "blueprint_sufficiency_calibration_fixture_set",
+  "node_id": "mission-recommendation-month2-contract-convergence-26",
+  "task_id": "mission-recommendation-month2-contract-convergence-26-task",
+  "status": "boundary_fixtures_only",
+  "source_owner": "ao-blueprint",
+  "source_repository": "ao-blueprint",
+  "source_commit": "011e4178b870219f7490857db3c73c346ca3f2de",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "evidence_class": "sufficiency_calibration_audit",
+  "source_files": [
+    {
+      "path": "internal/blueprint/blueprint.go",
+      "digest": "sha256:65f97e030e853fbecd309872ebdf1e9600b0162b8ea40495e7a392301cdd17d3",
+      "role": "sufficiency scoring and authorization implementation"
+    },
+    {
+      "path": "internal/blueprint/blueprint_test.go",
+      "digest": "sha256:b652993d3964575c7dcfed251a67045d750a5b8a618fefa33298d62aef257bc4",
+      "role": "Blueprint package readiness and blocking tests"
+    },
+    {
+      "path": "internal/cli/cli_test.go",
+      "digest": "sha256:21d562233682c87acf79c699039224a280a00315670e1a253e9c7bb8cc59d030",
+      "role": "Blueprint CLI audit and authorization tests"
+    },
+    {
+      "path": "examples/blueprints/valid/ao-blueprint-self/sufficiency-audit.json",
+      "digest": "sha256:f81b83acad881e0e03548f56da896ce393f451e9417a8e4ae83224eb6bff9e11",
+      "role": "valid score-100 fixture"
+    },
+    {
+      "path": "examples/blueprints/invalid/missing-approval/sufficiency-audit.json",
+      "digest": "sha256:8b8085df0087ef1a4dbf36cb2d8fa97e984ab5886eeb583279f429a57663df48",
+      "role": "blocked approval fixture"
+    },
+    {
+      "path": "docs/sdd/AO-BLUEPRINT-READINESS.md",
+      "digest": "sha256:4aadcf35a69cce8ac2e0b96fcca7aa4c37461d3e79020f6055a1eea85d3e96f7",
+      "role": "documented score and authorization gate"
+    }
+  ],
+  "fixture_set": {
+    "valid_fixture_count": 4,
+    "invalid_fixture_count": 1,
+    "valid_scores": [
+      100,
+      100,
+      100,
+      100
+    ],
+    "invalid_scores": [
+      0
+    ],
+    "valid_statuses": [
+      "ready",
+      "ready",
+      "ready",
+      "ready"
+    ],
+    "invalid_statuses": [
+      "blocked"
+    ],
+    "valid_blocker_counts": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "invalid_blocker_counts": [
+      15
+    ],
+    "intermediate_score_fixture_count": 0,
+    "calibration_status": "boundary_only"
+  },
+  "route_observations": {
+    "atlas_routes": 2,
+    "foundry_routes": 2,
+    "blocked_routes": 1,
+    "authorization_requires_score_100": true,
+    "authorization_requires_user_approval": true
+  },
+  "current_gate": "blocked_until_intermediate_sufficiency_cases_and_real_project_calibration_exist",
+  "safe_to_execute": true,
+  "planning_only": true,
+  "no_promotion_requested": true,
+  "promotion_granted": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
