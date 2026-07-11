@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-29-public-safety-claims",
+  "task_id": "mission-recommendation-month3-final-closure-29-public-safety-claims-task",
+  "status": "selected",
+  "objective": "Add public-safety wording scan for authority claims in generated summaries.",
+  "selected_candidate": "authority-promotion-negative-fixtures",
+  "selection_reason": "Node 29 is the next executable node after node 28 and binds generated-summary claim scanning to redacted negative authority fixtures.",
+  "source_recommendation": "month3-final-closure-29-public-safety-claims",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "source_task_digest": "sha256:7dd6573819cd7799e0e4bf029260d3361e36a918f08f16a467c27ca9596d5fa5",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.test-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-29-public-safety-claims",
+  "task_id": "mission-recommendation-month3-final-closure-29-public-safety-claims-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3FinalClosurePublicSafetyClaimsNegativeFixtures -count=1 failed first on missing final-closure authority promotion negative fixture evidence.",
+  "green_tests": [
+    "go test ./internal/atlas -run TestMonth3FinalClosurePublicSafetyClaimsNegativeFixtures -count=1"
+  ],
+  "targeted_regression_passed": true
+}
