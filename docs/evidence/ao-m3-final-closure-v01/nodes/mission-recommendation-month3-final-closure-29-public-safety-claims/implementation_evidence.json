@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-29-public-safety-claims",
+  "task_id": "mission-recommendation-month3-final-closure-29-public-safety-claims-task",
+  "status": "implemented",
+  "changed_files": [
+    "internal/atlas/mission_month3_public_safety_claims_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-29-public-safety-claims/authority-promotion-negative-fixtures.json"
+  ],
+  "summary": "Bound final-closure node 29 to typed redacted negative fixtures for unsafe authority wording scans.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

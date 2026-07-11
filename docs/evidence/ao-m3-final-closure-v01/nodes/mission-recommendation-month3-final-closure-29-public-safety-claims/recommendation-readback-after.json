@@ -1,0 +1,1162 @@
+{
+  "contract_version": "ao.atlas.recommendation-readback.v0.1",
+  "mission_id": "ao-stack-month3-final-closure-real-golden-path-v01",
+  "target_instance": "ao-atlas",
+  "status": "in_progress",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "wave_digest": "sha256:e189d7d676b0372f0c313811a55966b2d61d33b206e6a2343b4320b275d21f47",
+  "workgraph_digest": "sha256:55ea28a67526916801ecfeae560636681fcdf903e050983e014c38006fcdc000",
+  "evidence_root": "docs/evidence/ao-m3-final-closure-v01",
+  "supervisor": {
+    "contract_version": "ao.atlas.long-run-supervisor.v0.2",
+    "min_nodes": 20,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 30,
+    "return_only_when": "completed_nodes_at_least_20_and_no_ready_nodes",
+    "checkpoint_policy": "after_each_node_or_timed_interval",
+    "evidence_policy": "node_gate_candidate_rollback_tests_verification_public_safety_promoter_command",
+    "final_report_contract": "ao.atlas.month3-final-closure-report.v0.1"
+  },
+  "started_at": "2026-07-11T13:05:42Z",
+  "completed_at": "2026-07-11T19:10:00Z",
+  "elapsed_minutes": 365,
+  "min_minutes_met": true,
+  "lease_time_status": "minimum_minutes_met",
+  "total_nodes": 30,
+  "minimum_nodes": 20,
+  "completed_nodes": 29,
+  "ready_nodes": 1,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "executable_ready_nodes": 1,
+  "first_executable_node": "mission-recommendation-month3-final-closure-30-final-report",
+  "lease_health_status": "minimum_met_continue_if_fast",
+  "checkpoint_freshness_status": "fresh_checkpoint_required_after_each_node_or_timed_interval",
+  "stale_route_decision_status": "fresh_atlas_supervises_foundry_owns_one_active_node",
+  "early_return_risk_status": "blocked_final_response_ready_nodes_remain",
+  "foundry_rollup_status": "in_progress_node_run_links_recorded",
+  "foundry_terminal_status_readback": {
+    "blocked": "terminal_blocker_requires_repair_or_checkpoint_resume",
+    "completed": "terminal_success_can_close_when_all_nodes_and_readbacks_are_complete",
+    "denied": "terminal_denial_requires_exact_missing_evidence_readback",
+    "promoted": "terminal_success_can_close_when_promoter_and_command_agree"
+  },
+  "foundry_terminal_status_examples": [
+    {
+      "source_status": "completed",
+      "normalized_status": "completed",
+      "terminal": true,
+      "can_close_mission": true,
+      "required_readback": "Foundry rollup reports completed, all node evidence exists, and no ready nodes remain."
+    },
+    {
+      "source_status": "promoted",
+      "normalized_status": "completed",
+      "terminal": true,
+      "can_close_mission": true,
+      "required_readback": "Promoter and Command agree promotion is terminal, RSI remains denied, and no ready nodes remain."
+    },
+    {
+      "source_status": "denied",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "required_readback": "Denial readback includes exact missing evidence, no ready repair node remains, and no authority advance is claimed."
+    },
+    {
+      "source_status": "blocked",
+      "normalized_status": "blocked",
+      "terminal": true,
+      "can_close_mission": false,
+      "required_readback": "Blocker readback names the exact repair or resume action before final response can close."
+    }
+  ],
+  "foundry_denied_terminal_examples": [
+    {
+      "denial_reason": "missing_node_evidence",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "requires_exact_missing_evidence": true,
+      "required_readback": "Denied rollup names the missing node id, missing evidence key, and expected evidence path.",
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    },
+    {
+      "denial_reason": "missing_stop_gate_evidence",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "requires_exact_missing_evidence": true,
+      "required_readback": "Denied rollup names the uncleared stop gate and the exact artifact needed before promotion can be reconsidered.",
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    },
+    {
+      "denial_reason": "forbidden_surface_or_rsi_claim",
+      "normalized_status": "denied",
+      "terminal": true,
+      "can_close_mission": true,
+      "requires_exact_missing_evidence": true,
+      "required_readback": "Denied rollup records the forbidden surface or RSI claim, refuses promotion, and keeps RSI denied.",
+      "rsi_remains_denied": true,
+      "authority_advance_claimed": false
+    }
+  ],
+  "promoter_readback_status": "required_not_bound",
+  "promoter_no_promotion_status": "in_progress_no_promotion_recorded",
+  "promoter_no_promotion_placeholders": [
+    {
+      "slot": "promotion_claim",
+      "source": "recommendation_readback",
+      "status": "pending_promoter_no_promotion",
+      "summary": "Bind promotion_claimed=false and the no-promotion summary before closure.",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "rsi_boundary",
+      "source": "recommendation_readback",
+      "status": "pending_promoter_no_promotion",
+      "summary": "Bind rsi_remains_denied=true and next_denied_class=RSI before closure.",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "authority_advance",
+      "source": "recommendation_readback",
+      "status": "pending_promoter_no_promotion",
+      "summary": "Bind claims_authority_advance=false plus no scheduling, execution, or approval authority.",
+      "required_before_final_response": true
+    }
+  ],
+  "command_readback_status": "required_not_bound",
+  "command_timeline_status": "in_progress_compact_timeline_recorded",
+  "command_timeline_placeholders": [
+    {
+      "slot": "checkpoint",
+      "source": "recommendation_readback",
+      "status": "pending_command_timeline",
+      "summary": "Bind completed_nodes, ready_nodes, checkpoint_count, and elapsed_minutes into the compact Command timeline.",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "exact_next_action",
+      "source": "recommendation_readback",
+      "status": "pending_command_timeline",
+      "summary": "Bind exact_next_action and first_executable_node into the compact Command timeline.",
+      "required_before_final_response": true
+    },
+    {
+      "slot": "return_gate",
+      "source": "recommendation_readback",
+      "status": "pending_command_timeline",
+      "summary": "Bind return_gate_status and final_response_allowed into the compact Command timeline.",
+      "required_before_final_response": true
+    }
+  ],
+  "public_safety_scan_status": "required_pending_verification",
+  "schema_health_status": "required_pending_schema_registry_health",
+  "return_gate_status": "blocked_ready_nodes_remain",
+  "checkpoint_count": 29,
+  "final_response_allowed": false,
+  "final_response_denial_gate": "deny_ready_nodes_or_exact_next_action_remain",
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-month3-final-closure-30-final-report and execute exactly one active node.",
+  "continuation_contract": {
+    "contract_version": "ao.atlas.continuation-contract.v0.1",
+    "status": "continuation_required",
+    "ready_nodes": 1,
+    "exact_next_action": "Emit Foundry import for mission-recommendation-month3-final-closure-30-final-report and execute exactly one active node.",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "final_response_allowed": false,
+    "refuses_final_response": true,
+    "reason": "ready_nodes_or_exact_next_action_remain",
+    "source": "recommendation_readback"
+  },
+  "exact_next_action_readback": {
+    "status": "continuation_required",
+    "action": "Emit Foundry import for mission-recommendation-month3-final-closure-30-final-report and execute exactly one active node.",
+    "next_executable_node": "mission-recommendation-month3-final-closure-30-final-report",
+    "return_gate_status": "blocked_ready_nodes_remain",
+    "final_response_allowed": false,
+    "source": "recommendation_readback"
+  },
+  "node_evidence": [
+    {
+      "node_id": "mission-recommendation-month3-final-closure-01-ranked-recommendations",
+      "task_id": "mission-recommendation-month3-final-closure-01-ranked-recommendations-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-02-aggregate-rollup",
+      "task_id": "mission-recommendation-month3-final-closure-02-aggregate-rollup-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-03-terminal-digest-binding",
+      "task_id": "mission-recommendation-month3-final-closure-03-terminal-digest-binding-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay",
+      "task_id": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-05-real-run-acceptance",
+      "task_id": "mission-recommendation-month3-final-closure-05-real-run-acceptance-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-06-control-plane-observer",
+      "task_id": "mission-recommendation-month3-final-closure-06-control-plane-observer-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry",
+      "task_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-08-evidence-externalization",
+      "task_id": "mission-recommendation-month3-final-closure-08-evidence-externalization-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix",
+      "task_id": "mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-10-operator-dashboard-readback",
+      "task_id": "mission-recommendation-month3-final-closure-10-operator-dashboard-readback-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-11-restart-resume-soak",
+      "task_id": "mission-recommendation-month3-final-closure-11-restart-resume-soak-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-12-provider-model-provenance",
+      "task_id": "mission-recommendation-month3-final-closure-12-provider-model-provenance-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-13-rollback-replay-negative",
+      "task_id": "mission-recommendation-month3-final-closure-13-rollback-replay-negative-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-14-compaction-resume-generator",
+      "task_id": "mission-recommendation-month3-final-closure-14-compaction-resume-generator-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-15-architecture-source-truth",
+      "task_id": "mission-recommendation-month3-final-closure-15-architecture-source-truth-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix",
+      "task_id": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-17-workspace-root-preflight",
+      "task_id": "mission-recommendation-month3-final-closure-17-workspace-root-preflight-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-18-command-thin-client",
+      "task_id": "mission-recommendation-month3-final-closure-18-command-thin-client-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work",
+      "task_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant",
+      "task_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-21-blueprint-auth-digest",
+      "task_id": "mission-recommendation-month3-final-closure-21-blueprint-auth-digest-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-22-ao2-approval-integrity",
+      "task_id": "mission-recommendation-month3-final-closure-22-ao2-approval-integrity-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-23-covenant-policy-replay",
+      "task_id": "mission-recommendation-month3-final-closure-23-covenant-policy-replay-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal",
+      "task_id": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-25-promoter-no-activation",
+      "task_id": "mission-recommendation-month3-final-closure-25-promoter-no-activation-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle",
+      "task_id": "mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-27-control-plane-index",
+      "task_id": "mission-recommendation-month3-final-closure-27-control-plane-index-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-28-rollback-failure-drill",
+      "task_id": "mission-recommendation-month3-final-closure-28-rollback-failure-drill-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-29-public-safety-claims",
+      "task_id": "mission-recommendation-month3-final-closure-29-public-safety-claims-task",
+      "status": "completed",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    },
+    {
+      "node_id": "mission-recommendation-month3-final-closure-30-final-report",
+      "task_id": "mission-recommendation-month3-final-closure-30-final-report-task",
+      "status": "ready",
+      "node_gate": "recorded",
+      "candidate_record": "recorded",
+      "rollback_record": "recorded",
+      "implementation_evidence": "recorded",
+      "tests": "recorded",
+      "verification": "recorded",
+      "public_safety_wording": "recorded",
+      "promoter_readback": "recorded",
+      "command_readback": "recorded",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ]
+    }
+  ],
+  "feature_depth_recommendations": [
+    "month3-final-closure-01-ranked-recommendations: Replace generic golden-path follow-up labels with concrete ranked operator recommendations.",
+    "month3-final-closure-02-aggregate-rollup: Add aggregate Promoter Command public-safety closure rollup over all forty nodes.",
+    "month3-final-closure-03-terminal-digest-binding: Bind terminal readback counts to final readiness matrix with digest evidence.",
+    "month3-final-closure-04-non-ao-dry-run-replay: Add non-AO repository dry-run replay binding with fixture-only execution evidence.",
+    "month3-final-closure-05-real-run-acceptance: Define real-run acceptance criteria for three external non-AO repositories.",
+    "month3-final-closure-06-control-plane-observer: Add control-plane observer readback adapter contract fixtures for mission timeline evidence.",
+    "month3-final-closure-07-schema-owner-registry: Draft Covenant-owned schema owner registry proposal with consumer compatibility checks.",
+    "month3-final-closure-08-evidence-externalization: Add evidence externalization plan for large generated JSON artifacts and retained golden fixtures.",
+    "month3-final-closure-09-cross-repo-ci-matrix: Add cross-repo CI compatibility matrix for Mission Atlas Foundry Covenant Command and AO2.",
+    "month3-final-closure-10-operator-dashboard-readback: Add operator dashboard readback fixture for terminal golden-path status and blockers.",
+    "month3-final-closure-11-restart-resume-soak: Add restart resume soak-test fixture for long-running node waves and checkpoint recovery.",
+    "month3-final-closure-12-provider-model-provenance: Add provider and model provenance fields to every model-backed run record fixture.",
+    "month3-final-closure-13-rollback-replay-negative: Add rollback receipt replay negative cases for stale base commits and digest mismatches.",
+    "month3-final-closure-14-compaction-resume-generator: Add compaction-resume prompt generator from the terminal golden-path readback.",
+    "month3-final-closure-15-architecture-source-truth: Add Architecture source-of-truth correction checklist for current authority statements.",
+    "month3-final-closure-16-no-promotion-rsi-matrix: Add no-promotion no-RSI assertion matrix across all terminal Month 3 artifacts.",
+    "month3-final-closure-17-workspace-root-preflight: Add workspace-root preflight evidence for the real golden-path dry-run repository layout.",
+    "month3-final-closure-18-command-thin-client: Add Command thin-client boundary fixture that rejects duplicated domain authority.",
+    "month3-final-closure-19-foundry-safe-next-work: Add Foundry safe-next-work selection fixture bound to terminal readiness evidence.",
+    "month3-final-closure-20-mission-recovery-invariant: Add Mission recovery invariant fixture for no handoff counted as completed work.",
+    "month3-final-closure-21-blueprint-auth-digest: Add Blueprint authorization digest preservation fixture for downstream Atlas imports.",
+    "month3-final-closure-22-ao2-approval-integrity: Add AO2 approval integrity checklist binding proposed bytes and base commit.",
+    "month3-final-closure-23-covenant-policy-replay: Add Covenant policy hash replay fixture for policy fields that affect acceptance.",
+    "month3-final-closure-24-sentinel-freshness-signal: Add Sentinel freshness signal fixture using CI and evidence age instead of README wording.",
+    "month3-final-closure-25-promoter-no-activation: Add Promoter no-activation boundary fixture requiring signed assurance before promotion.",
+    "month3-final-closure-26-forge-goalrun-lifecycle: Add Forge GoalRun lifecycle fixture that stays bounded without provider execution.",
+    "month3-final-closure-27-control-plane-index: Add control-plane durable index migration fixture for mission event search.",
+    "month3-final-closure-28-rollback-failure-drill: Add rollback under failure drill plan with observer receipt and operator readback.",
+    "month3-final-closure-29-public-safety-claims: Add public-safety wording scan for authority claims in generated summaries.",
+    "month3-final-closure-30-final-report: Add final real-golden-path readiness report with proven capabilities and blockers."
+  ],
+  "safety_boundaries": {
+    "auth_policy_config_widening": false,
+    "broad_rsi_claim": false,
+    "credential_inspection": false,
+    "dependency_updates": false,
+    "direct_main_mutation": false,
+    "hidden_instruction_mutation": false,
+    "provider_calls": false,
+    "release_deploy_publish_upload_tag": false,
+    "rsi_remains_denied": true
+  },
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
