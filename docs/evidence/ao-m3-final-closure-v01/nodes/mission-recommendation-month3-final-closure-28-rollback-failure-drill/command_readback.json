@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-28-rollback-failure-drill",
+  "task_id": "mission-recommendation-month3-final-closure-28-rollback-failure-drill-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 27,
+  "ready_nodes_before": 3,
+  "expected_completed_nodes_after": 28,
+  "expected_ready_nodes_after": 2,
+  "expected_next_executable_node_after": "mission-recommendation-month3-final-closure-29-public-safety-claims",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true
+}
