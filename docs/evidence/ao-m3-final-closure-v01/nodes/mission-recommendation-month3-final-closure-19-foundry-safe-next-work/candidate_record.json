@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work",
+  "task_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work-task",
+  "status": "selected",
+  "objective": "Add Foundry safe-next-work selection fixture bound to terminal readiness evidence.",
+  "selected_candidate": "month3-foundry-safe-next-work",
+  "selection_reason": "Node 19 is the next executable node after node 18 and binds Foundry safe-next-work selection to terminal readiness evidence without executing work.",
+  "source_recommendation": "month3-final-closure-19-foundry-safe-next-work",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "source_task_digest": "sha256:36d13c01adb567f9412ca50ff9727f5867f56003bfccaf2fb59987c71fc69946",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

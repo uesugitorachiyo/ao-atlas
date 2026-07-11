@@ -2763,6 +2763,37 @@ type AtlasMonth3NoPromotionRSIMatrixEntry struct {
 	RSIDenialInvariantHolds    bool   `json:"rsi_denial_invariant_holds"`
 }
 
+type AtlasMonth3FoundrySafeNextWorkFixture struct {
+	Schema                          string   `json:"schema"`
+	NodeID                          string   `json:"node_id"`
+	Status                          string   `json:"status"`
+	SourceReadbackPath              string   `json:"source_readback_path"`
+	SourceReadbackDigest            string   `json:"source_readback_digest"`
+	SourceWorkgraphPath             string   `json:"source_workgraph_path"`
+	SourceWorkgraphDigest           string   `json:"source_workgraph_digest"`
+	CompletedNodesBefore            int      `json:"completed_nodes_before"`
+	ReadyNodesBefore                int      `json:"ready_nodes_before"`
+	BlockedNodesBefore              int      `json:"blocked_nodes_before"`
+	FailedNodesBefore               int      `json:"failed_nodes_before"`
+	SelectedNode                    string   `json:"selected_node"`
+	SelectedTaskID                  string   `json:"selected_task_id"`
+	SelectedMutationClass           string   `json:"selected_mutation_class"`
+	SelectedAuthorityBoundary       string   `json:"selected_authority_boundary"`
+	SelectedWriteScope              []string `json:"selected_write_scope"`
+	RequiredGateCount               int      `json:"required_gate_count"`
+	RequiredEvidenceCount           int      `json:"required_evidence_count"`
+	SingleActiveTask                bool     `json:"single_active_task"`
+	TerminalReadinessBound          bool     `json:"terminal_readiness_bound"`
+	FinalResponseAllowedBefore      bool     `json:"final_response_allowed_before"`
+	ExactNextActionBefore           string   `json:"exact_next_action_before"`
+	ExpectedNextNodeAfterCompletion string   `json:"expected_next_node_after_completion"`
+	SchedulesWork                   bool     `json:"schedules_work"`
+	ExecutesWork                    bool     `json:"executes_work"`
+	ApprovesWork                    bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance          bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied                bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

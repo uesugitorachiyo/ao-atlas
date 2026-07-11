@@ -1,0 +1,25 @@
+{
+  "contract_version": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work",
+  "task_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work-task",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "mutation_class": "low_risk_code",
+  "target_factory_repo": "ao-atlas",
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "source_workgraph_digest": "sha256:830042d61ce97a34cd1af2109f608df1f6d251e951b4ffe953c0e2ef92ce6582",
+  "source_task_digest": "sha256:36d13c01adb567f9412ca50ff9727f5867f56003bfccaf2fb59987c71fc69946",
+  "safety_boundaries": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "rsi_remains_denied": true
+}

@@ -534,6 +534,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "month3-rollback-replay-negative", run: runMissionRecommendationsMonth3RollbackReplayNegative, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "month3-architecture-source-truth", run: runMissionRecommendationsMonth3ArchitectureSourceTruth, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "month3-no-promotion-rsi-matrix", run: runMissionRecommendationsMonth3NoPromotionRSIMatrix, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "month3-foundry-safe-next-work", run: runMissionRecommendationsMonth3FoundrySafeNextWork, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
