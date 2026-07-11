@@ -1,0 +1,39 @@
+{
+  "schema": "ao.atlas.atomic-evidence-transition-fixture.v0.1",
+  "status": "atomic_evidence_transition_ready",
+  "scenarios": [
+    {
+      "name": "crash",
+      "atomic_transition": true,
+      "deterministic_replay": true,
+      "duplicate_ingest_idempotent": true
+    },
+    {
+      "name": "lease_expiry",
+      "atomic_transition": true,
+      "deterministic_replay": true,
+      "duplicate_ingest_idempotent": true
+    },
+    {
+      "name": "restart",
+      "atomic_transition": true,
+      "deterministic_replay": true,
+      "duplicate_ingest_idempotent": true
+    },
+    {
+      "name": "duplicate_ingest",
+      "atomic_transition": true,
+      "deterministic_replay": true,
+      "duplicate_ingest_idempotent": true
+    }
+  ],
+  "scenario_count": 4,
+  "atomic_transitions_required": true,
+  "deterministic_replay_required": true,
+  "duplicate_ingest_idempotent": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

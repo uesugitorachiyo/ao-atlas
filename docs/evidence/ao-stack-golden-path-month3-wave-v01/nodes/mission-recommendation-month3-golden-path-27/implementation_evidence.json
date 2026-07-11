@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-27",
+  "task_id": "mission-recommendation-month3-golden-path-27-task",
+  "status": "implemented",
+  "fixture": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-27/atomic-evidence-transition-fixture.json",
+  "typed_validator": "typed:atomic-evidence-transition-fixture",
+  "scenario_count": 4,
+  "atomic_transitions_required": true,
+  "deterministic_replay_required": true,
+  "duplicate_ingest_idempotent": true,
+  "rsi_remains_denied": true
+}

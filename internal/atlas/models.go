@@ -2045,6 +2045,28 @@ type AtlasIndexedEventQueryFixture struct {
 	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasAtomicEvidenceTransitionScenario struct {
+	Name                      string `json:"name"`
+	AtomicTransition          bool   `json:"atomic_transition"`
+	DeterministicReplay       bool   `json:"deterministic_replay"`
+	DuplicateIngestIdempotent bool   `json:"duplicate_ingest_idempotent"`
+}
+
+type AtlasAtomicEvidenceTransitionFixture struct {
+	Schema                      string                                  `json:"schema"`
+	Status                      string                                  `json:"status"`
+	Scenarios                   []AtlasAtomicEvidenceTransitionScenario `json:"scenarios"`
+	ScenarioCount               int                                     `json:"scenario_count"`
+	AtomicTransitionsRequired   bool                                    `json:"atomic_transitions_required"`
+	DeterministicReplayRequired bool                                    `json:"deterministic_replay_required"`
+	DuplicateIngestIdempotent   bool                                    `json:"duplicate_ingest_idempotent"`
+	SchedulesWork               bool                                    `json:"schedules_work"`
+	ExecutesWork                bool                                    `json:"executes_work"`
+	ApprovesWork                bool                                    `json:"approves_work"`
+	ClaimsAuthorityAdvance      bool                                    `json:"claims_authority_advance"`
+	RSIRemainsDenied            bool                                    `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
