@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-06-control-plane-observer",
+  "task_id": "mission-recommendation-month3-final-closure-06-control-plane-observer-task",
+  "status": "implemented",
+  "changed_files": [
+    "internal/atlas/mission_month3_control_plane_observer.go",
+    "internal/atlas/mission_month3_control_plane_observer_cli.go",
+    "internal/atlas/mission_month3_control_plane_observer_test.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/cli.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-06-control-plane-observer/month3-control-plane-observer-binding.json"
+  ],
+  "summary": "Added typed control-plane observer binding between the Command adapter boundary fixture and Month 3 mission timeline readback.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

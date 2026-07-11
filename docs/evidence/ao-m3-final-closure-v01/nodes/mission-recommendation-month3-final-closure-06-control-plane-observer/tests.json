@@ -1,0 +1,11 @@
+{
+  "schema": "ao.atlas.test-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-06-control-plane-observer",
+  "task_id": "mission-recommendation-month3-final-closure-06-control-plane-observer-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3ControlPlaneObserverBindingConnectsAdapterToMissionTimeline -count=1 failed on missing AtlasMonth3ControlPlaneObserverBinding type, then on missing recorded fixture.",
+  "green_tests": [
+    "go test ./internal/atlas -run TestMonth3ControlPlaneObserverBindingConnectsAdapterToMissionTimeline -count=1"
+  ],
+  "targeted_regression_passed": true
+}
