@@ -1,0 +1,12 @@
+{
+  "schema": "ao.atlas.checkpoint-bundle.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-2",
+  "task_id": "mission-recommendation-month3-golden-path-2-task",
+  "status": "checkpoint_recorded",
+  "checkpoint_from": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-1/recommendation-readback-after.json",
+  "checkpoint_after": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-2/recommendation-readback-after.json",
+  "active_node": "mission-recommendation-month3-golden-path-2",
+  "expected_next_node": "mission-recommendation-month3-golden-path-3",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true
+}

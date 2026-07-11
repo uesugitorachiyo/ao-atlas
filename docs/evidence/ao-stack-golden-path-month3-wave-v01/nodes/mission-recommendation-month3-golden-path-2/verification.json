@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-2",
+  "task_id": "mission-recommendation-month3-golden-path-2-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "cargo fmt --all -- --check",
+    "cargo test -p ao2-adapters --test sandbox_adapter apply_rejects_approval_subject_with_stale_base_commit_before_any_write",
+    "cargo test -p ao2-adapters --test sandbox_adapter",
+    "cargo test --workspace --all-targets",
+    "cargo check --workspace",
+    "git diff --check",
+    "gh pr checks 254: 95 checks passed",
+    "gh pr merge 254 --squash --delete-branch",
+    "AO2 main HEAD and origin/main synchronized at 2fb697d2888beca6ca46ffe25f5c969854a3e357",
+    "local and remote codex/month3-golden-path-2-ao2-base-commit branches deleted",
+    "scoped public-safety wording scan over Month 3 node evidence"
+  ],
+  "required_commands": [
+    "AO2 native workspace tests and check",
+    "PR/CI/merge lifecycle",
+    "branch cleanup",
+    "Atlas evidence and JSON validation",
+    "scoped public-safety wording scan"
+  ],
+  "repair_notes": [
+    "The stale base-commit subject is rejected before filesystem writes.",
+    "No provider call, credential inspection, dependency update, release, deployment, or promotion was performed.",
+    "RSI remains denied."
+  ]
+}
