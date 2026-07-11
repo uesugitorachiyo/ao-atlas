@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-27",
+  "task_id": "mission-recommendation-month3-golden-path-27-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "gate_status": "cleared",
+  "objective": "Add deterministic crash, lease expiry, restart, and duplicate-ingest tests with atomic evidence state transitions.",
+  "source_task_digest": "sha256:012e2aa80d5d38f8ccbf1c0c0ba779eb6b74b6f661944fe298cb2a1dcc33fb43",
+  "source_workgraph_digest": "sha256:c8e9486b5fd398260e327de6206c4436027f184780f46a4d043e35eb603c4d93",
+  "safety_boundaries": ["no provider calls", "no credential inspection", "no direct main mutation", "no release deploy publish upload tag", "no dependency updates", "no auth policy config widening", "no broad RSI claim"],
+  "rsi_remains_denied": true
+}

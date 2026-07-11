@@ -810,6 +810,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:indexed-event-query-fixture", err
 		}
 		return "typed:indexed-event-query-fixture", ValidateAtlasIndexedEventQueryFixture(value)
+	case AtlasAtomicEvidenceTransitionFixtureContract:
+		value, err := LoadJSON[AtlasAtomicEvidenceTransitionFixture](path)
+		if err != nil {
+			return "typed:atomic-evidence-transition-fixture", err
+		}
+		return "typed:atomic-evidence-transition-fixture", ValidateAtlasAtomicEvidenceTransitionFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
