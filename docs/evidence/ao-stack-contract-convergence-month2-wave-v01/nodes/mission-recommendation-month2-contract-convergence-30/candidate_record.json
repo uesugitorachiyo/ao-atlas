@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-30",
+  "task_id": "mission-recommendation-month2-contract-convergence-30-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-30",
+  "source_owner": "ao2",
+  "source_task_digest": "sha256:43bc7c33dd12d937eb5f24e6dca5f723742381a0671ebb2fa8532f97730c4544",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Audit the AO2 sandbox approval subject and action digest for proposed bytes, operation metadata, repository identity, and base commit binding.",
+    "Run the provider-free adapter/runtime approval replay tests in offline mode.",
+    "Record the remaining hardening gap: environment-controlled auto-approval uses a fixed identity and approval application remains outside this planning-only node."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "541e766b5da00b65fa2c2e34b1d7ff0dc363eef6",
+  "objective": "Coordinate ao2 AO2 approval byte and base commit binding design test through a bounded Atlas compatibility evidence node with no promotion.",
+  "selection_reason": "single ready node selected from the post-node-29 workgraph; AO2 approval integrity is audited read-only",
+  "mutates_repositories": false
+}
