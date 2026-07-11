@@ -1925,6 +1925,23 @@ type AtlasBoundedExecutionPacketFixture struct {
 	RSIRemainsDenied            bool     `json:"rsi_remains_denied"`
 }
 
+type AtlasForgeGoalRunEvidenceFixture struct {
+	Schema                   string   `json:"schema"`
+	Status                   string   `json:"status"`
+	RequiredEvidence         []string `json:"required_evidence"`
+	RequiredEvidenceCount    int      `json:"required_evidence_count"`
+	GoalRunStartRequired     bool     `json:"goalrun_start_required"`
+	StopGateRequired         bool     `json:"stop_gate_required"`
+	RollbackRecordRequired   bool     `json:"rollback_record_required"`
+	TerminalReceiptRequired  bool     `json:"terminal_receipt_required"`
+	ProviderExecutionAllowed bool     `json:"provider_execution_allowed"`
+	SchedulesWork            bool     `json:"schedules_work"`
+	ExecutesWork             bool     `json:"executes_work"`
+	ApprovesWork             bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

@@ -1,0 +1,22 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-month3-golden-path-21-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/command_readback.json",
+    "forge_goalrun_evidence_fixture": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/forge-goalrun-evidence-fixture.json",
+    "foundry_import": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/foundry_import.json",
+    "implementation_evidence": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/promoter_no_promotion.json",
+    "public_safety_readback_binding": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/public-safety-readback-binding.json",
+    "rollback_record": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/rollback_record.json",
+    "scoped_public_safety_scan": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/scoped-public-safety-scan.json",
+    "sentinel_public_safety": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/tests.json",
+    "verification": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-21/verification.json"
+  },
+  "digest": "sha256:6b6dd85d0258b27e36fa90fc01e9f801790154715982d12bce2933f2152cfc97"
+}
