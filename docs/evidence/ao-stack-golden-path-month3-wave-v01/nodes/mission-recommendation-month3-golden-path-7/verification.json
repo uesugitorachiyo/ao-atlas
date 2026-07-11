@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.verification-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-7",
+  "task_id": "mission-recommendation-month3-golden-path-7-task",
+  "status": "passed",
+  "public_safety_scan_passed": true,
+  "commands": [
+    "go test ./internal/atlas -run TestMonth3BoundedSignerContractFixture -count=1",
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "go run ./cmd/atlas mission recommendations scoped-public-safety-scan --node-id mission-recommendation-month3-golden-path-7 --scope docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-7 --scope internal/atlas/mission_bounded_signer_contract_fixture.go --scope internal/atlas/mission_bounded_signer_contract_fixture_cli.go --scope internal/atlas/mission_bounded_signer_contract_fixture_test.go --scope internal/atlas/models.go --scope internal/atlas/validate.go --scope internal/atlas/recommendation_evidence_validation.go --scope internal/atlas/cli.go --out docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-7/scoped-public-safety-scan.json"
+  ],
+  "required_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/atlas-foundry-roundtrip-smoke.sh",
+    "scripts/production-readiness.sh",
+    "git diff --check",
+    "scoped public-safety wording scan"
+  ],
+  "repair_notes": [
+    "Full verification and scoped public-safety scan passed before node completion.",
+    "No provider call, credential inspection, dependency update, release, deployment, or promotion was performed.",
+    "RSI remains denied."
+  ]
+}

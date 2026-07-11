@@ -708,6 +708,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:mission-dashboard-compact-filters", err
 		}
 		return "typed:mission-dashboard-compact-filters", ValidateAtlasMissionDashboardCompactFilters(value)
+	case AtlasBoundedSignerContractFixtureContract:
+		value, err := LoadJSON[AtlasBoundedSignerContractFixture](path)
+		if err != nil {
+			return "typed:bounded-signer-contract-fixture", err
+		}
+		return "typed:bounded-signer-contract-fixture", ValidateAtlasBoundedSignerContractFixture(value)
 	case AOMissionRefactoringRecommendationsContract:
 		validator, _ := recommendationControlPlaneTypedValidator(AOMissionRefactoringRecommendationsContract)
 		value, err := LoadJSON[AOMissionRefactoringRecommendations](path)

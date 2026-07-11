@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-7",
+  "task_id": "mission-recommendation-month3-golden-path-7-task",
+  "status": "implemented",
+  "implementation_repo": "ao-atlas",
+  "contract_artifacts": [
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-7/bounded-signer-contract-fixture.json"
+  ],
+  "regression_tests": [
+    "internal/atlas/mission_bounded_signer_contract_fixture_test.go::TestMonth3BoundedSignerContractFixtureRecordsRotationAndRevocationWithoutAuthorityEffects",
+    "internal/atlas/mission_bounded_signer_contract_fixture_test.go::TestMonth3BoundedSignerContractFixtureUsesTypedValidator"
+  ],
+  "summary": "Atlas now emits and validates a planning-only bounded signer contract fixture for golden-path signed assurance inputs, including rotation overlap, revocation denial, digest/base-commit bindings, and explicit no-live-key-management/no-policy-widening boundaries."
+}
