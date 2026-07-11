@@ -2009,6 +2009,26 @@ type AtlasExactlyOnceResumeAccountingFixture struct {
 	RSIRemainsDenied                   bool                                       `json:"rsi_remains_denied"`
 }
 
+type AtlasReplayableStatePacketState struct {
+	Name              string `json:"name"`
+	CountsAsCompleted bool   `json:"counts_as_completed"`
+	Replayable        bool   `json:"replayable"`
+}
+
+type AtlasReplayableStatePacketFixture struct {
+	Schema                   string                            `json:"schema"`
+	Status                   string                            `json:"status"`
+	States                   []AtlasReplayableStatePacketState `json:"states"`
+	StateCount               int                               `json:"state_count"`
+	Replayable               bool                              `json:"replayable"`
+	HandoffCountsAsCompleted bool                              `json:"handoff_counts_as_completed"`
+	SchedulesWork            bool                              `json:"schedules_work"`
+	ExecutesWork             bool                              `json:"executes_work"`
+	ApprovesWork             bool                              `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool                              `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool                              `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

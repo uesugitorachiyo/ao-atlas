@@ -798,6 +798,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:exactly-once-resume-accounting-fixture", err
 		}
 		return "typed:exactly-once-resume-accounting-fixture", ValidateAtlasExactlyOnceResumeAccountingFixture(value)
+	case AtlasReplayableStatePacketFixtureContract:
+		value, err := LoadJSON[AtlasReplayableStatePacketFixture](path)
+		if err != nil {
+			return "typed:replayable-state-packet-fixture", err
+		}
+		return "typed:replayable-state-packet-fixture", ValidateAtlasReplayableStatePacketFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

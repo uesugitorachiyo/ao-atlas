@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-25",
+  "task_id": "mission-recommendation-month3-golden-path-25-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "gate_status": "cleared",
+  "objective": "Bind handoff, active, completed, and denied states to a replayable golden-path packet and prevent handoffs from counting as completed work.",
+  "source_task_digest": "sha256:ac59903307eae80c349e853e3030a702d8916524459e49ddd9de81a4e0c5cbe6",
+  "source_workgraph_digest": "sha256:9394357ec88717a3163bae83d57f4455b2bed12036e31f566ceb32f32afd10d8",
+  "safety_boundaries": ["no provider calls", "no credential inspection", "no direct main mutation", "no release deploy publish upload tag", "no dependency updates", "no auth policy config widening", "no broad RSI claim"],
+  "rsi_remains_denied": true
+}
