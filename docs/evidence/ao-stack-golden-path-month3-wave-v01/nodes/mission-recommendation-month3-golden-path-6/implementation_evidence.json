@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-6",
+  "task_id": "mission-recommendation-month3-golden-path-6-task",
+  "status": "implemented",
+  "implementation_repo": "ao2",
+  "implementation_pr": 258,
+  "implementation_pr_url": "https://github.com/uesugitorachiyo/ao2/pull/258",
+  "merge_commit": "0d4f0dedd77e2356c18fd7f8155f78e06696d59b",
+  "contract_artifacts": [
+    "ao2/tests/fixtures/event-hash-vectors.json",
+    "ao2/docs/contracts/AO2-CANONICAL-V1.md"
+  ],
+  "regression_tests": [
+    "ao2/crates/ao2-core/tests/core_types.rs::event_hash_vectors_preserve_legacy_and_policy_bound_migration_contracts"
+  ],
+  "summary": "AO2 now publishes a versioned fixture containing legacy payload-only and policy-bound event hash vectors, with a regression test proving both digests and contract documentation spelling out the migration boundary."
+}
