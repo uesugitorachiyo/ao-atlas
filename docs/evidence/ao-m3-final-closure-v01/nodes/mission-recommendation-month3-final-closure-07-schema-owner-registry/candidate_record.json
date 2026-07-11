@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry",
+  "task_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry-task",
+  "status": "selected",
+  "objective": "Draft Covenant-owned schema owner registry proposal with consumer compatibility checks.",
+  "selected_candidate": "month3-schema-owner-registry",
+  "selection_reason": "Node 7 is the next executable node after node 6 and records Covenant-owned registry proposal evidence without changing policy or ownership authority.",
+  "source_recommendation": "month3-final-closure-07-schema-owner-registry",
+  "source_digest": "sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+  "source_task_digest": "sha256:81a8eb6ac87782ef91beb6e81dceb5e18a00ec8ef645c1951d12e00c59ab69ed",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

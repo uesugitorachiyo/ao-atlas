@@ -1,0 +1,25 @@
+{
+  "contract_version": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry",
+  "task_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry-task",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "mutation_class": "low_risk_code",
+  "target_factory_repo": "ao-atlas",
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "source_workgraph_digest": "sha256:c062c731e0c6a8ccb2c58708d701c117e3617fc038df417f6c01914fcc09875c",
+  "source_task_digest": "sha256:81a8eb6ac87782ef91beb6e81dceb5e18a00ec8ef645c1951d12e00c59ab69ed",
+  "safety_boundaries": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "rsi_remains_denied": true
+}

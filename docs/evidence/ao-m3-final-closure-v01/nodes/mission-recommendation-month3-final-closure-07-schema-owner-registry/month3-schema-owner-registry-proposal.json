@@ -1,0 +1,69 @@
+{
+  "schema": "ao.atlas.month3-schema-owner-registry-proposal.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry",
+  "status": "schema_owner_registry_proposal_ready",
+  "registry_manifest_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-8/canonical-contract-registry-manifest.json",
+  "registry_manifest_digest": "sha256:aae537d52dcebbb5926056fd71728b9282c7aab725e9a41ee38b956aeafdcf65",
+  "registry_authority_owner": "ao-covenant",
+  "contract_count": 4,
+  "consumer_compatibility_check_count": 9,
+  "contracts": [
+    {
+      "id": "blueprint-build-authorization",
+      "schema_name": "ao.blueprint.build-authorization.v0.1",
+      "registry_owner": "ao-covenant",
+      "producer_owner": "ao-blueprint",
+      "lifecycle_class": "stable",
+      "gate_critical": true,
+      "consumer_compatibility_checks": [
+        "ao-atlas consumes ao.blueprint.build-authorization.v0.1",
+        "ao-foundry consumes ao.blueprint.build-authorization.v0.1"
+      ]
+    },
+    {
+      "id": "ao2-event-hash-vectors",
+      "schema_name": "ao2.event-hash-vectors.v1",
+      "registry_owner": "ao-covenant",
+      "producer_owner": "ao2",
+      "lifecycle_class": "stable",
+      "gate_critical": true,
+      "consumer_compatibility_checks": [
+        "ao-covenant consumes ao2.event-hash-vectors.v1",
+        "ao-command consumes ao2.event-hash-vectors.v1"
+      ]
+    },
+    {
+      "id": "bounded-signer-contract",
+      "schema_name": "ao.atlas.bounded-signer-contract-fixture.v0.1",
+      "registry_owner": "ao-covenant",
+      "producer_owner": "ao-covenant",
+      "lifecycle_class": "experimental",
+      "gate_critical": true,
+      "consumer_compatibility_checks": [
+        "ao-promoter consumes ao.atlas.bounded-signer-contract-fixture.v0.1",
+        "ao-sentinel consumes ao.atlas.bounded-signer-contract-fixture.v0.1"
+      ]
+    },
+    {
+      "id": "foundry-import",
+      "schema_name": "ao.atlas.foundry-import.v0.1",
+      "registry_owner": "ao-covenant",
+      "producer_owner": "ao-atlas",
+      "lifecycle_class": "stable",
+      "gate_critical": true,
+      "consumer_compatibility_checks": [
+        "ao-foundry consumes ao.atlas.foundry-import.v0.1",
+        "ao-mission consumes ao.atlas.foundry-import.v0.1",
+        "ao-command consumes ao.atlas.foundry-import.v0.1"
+      ]
+    }
+  ],
+  "covenant_owns_registry": true,
+  "producers_retain_contract_implementation": true,
+  "consumer_compatibility_required": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
