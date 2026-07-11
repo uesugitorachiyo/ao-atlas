@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-31",
+  "task_id": "mission-recommendation-month2-contract-convergence-31-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 30,
+  "ready_nodes_before": 10,
+  "expected_completed_nodes_after": 31,
+  "expected_ready_nodes_after": 9,
+  "expected_next_executable_node_after": "mission-recommendation-month2-contract-convergence-32",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true,
+  "scope": "compact Atlas readback only",
+  "summary": "Covenant event hash policy-field coverage remains incomplete and non-promotable while the Month 2 wave continues.",
+  "promotion_granted": false,
+  "ready_nodes_before_completion": 10
+}
