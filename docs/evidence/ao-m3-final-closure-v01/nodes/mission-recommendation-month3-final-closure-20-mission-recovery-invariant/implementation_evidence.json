@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant",
+  "task_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant-task",
+  "status": "implemented",
+  "changed_files": [
+    "internal/atlas/mission_lifecycle_metrics_evidence_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-20-mission-recovery-invariant/mission-recovery-invariant.json"
+  ],
+  "summary": "Bound final-closure node 20 to Mission lifecycle metrics evidence proving handoff steps are not counted as completed work.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

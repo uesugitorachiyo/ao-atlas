@@ -1,0 +1,22 @@
+{
+  "schema": "ao.mission.lifecycle-metrics.v0.1",
+  "mission_id": "ao-stack-month3-final-closure-real-golden-path-v01",
+  "status": "audited",
+  "handoff_steps": 20,
+  "evidence_completed_nodes": 19,
+  "completed_nodes": 19,
+  "total_nodes": 30,
+  "ready_nodes": 11,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "completion_basis": "downstream_evidence_not_handoff_steps",
+  "handoff_steps_count_as_completed_nodes": false,
+  "final_response_allowed": false,
+  "return_gate_status": "blocked_ready_nodes_remain",
+  "exact_next_action": "Emit Foundry import for mission-recommendation-month3-final-closure-20-mission-recovery-invariant and execute exactly one active node.",
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false,
+  "rsi_remains_denied": true
+}
