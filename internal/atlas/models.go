@@ -2720,6 +2720,49 @@ type AtlasMonth3ArchitectureSourceTruthItem struct {
 	SourceOfTruth  string `json:"source_of_truth"`
 }
 
+type AtlasMonth3NoPromotionRSIMatrix struct {
+	Schema                          string                                 `json:"schema"`
+	NodeID                          string                                 `json:"node_id"`
+	Status                          string                                 `json:"status"`
+	SourceReadbackPath              string                                 `json:"source_readback_path"`
+	SourceReadbackDigest            string                                 `json:"source_readback_digest"`
+	SourceWorkgraphPath             string                                 `json:"source_workgraph_path"`
+	SourceWorkgraphDigest           string                                 `json:"source_workgraph_digest"`
+	EvidenceRoot                    string                                 `json:"evidence_root"`
+	CompletedNodes                  int                                    `json:"completed_nodes"`
+	PromoterNoPromotionFiles        int                                    `json:"promoter_no_promotion_files"`
+	CommandReadbackFiles            int                                    `json:"command_readback_files"`
+	SentinelPublicSafetyFiles       int                                    `json:"sentinel_public_safety_files"`
+	PromotionRequestedFalseCount    int                                    `json:"promotion_requested_false_count"`
+	PromotionGrantedFalseCount      int                                    `json:"promotion_granted_false_count"`
+	SentinelRSIDeniedCount          int                                    `json:"sentinel_rsi_denied_count"`
+	AllowedPromoterStatuses         []string                               `json:"allowed_promoter_statuses"`
+	AllowedCommandStatusPrefixes    []string                               `json:"allowed_command_status_prefixes"`
+	Entries                         []AtlasMonth3NoPromotionRSIMatrixEntry `json:"entries"`
+	NoPromotionInvariantHolds       bool                                   `json:"no_promotion_invariant_holds"`
+	RSIDenialInvariantHolds         bool                                   `json:"rsi_denial_invariant_holds"`
+	ExpectedNextNodeAfterCompletion string                                 `json:"expected_next_node_after_completion"`
+	PromotionRequested              bool                                   `json:"promotion_requested"`
+	PromotionGranted                bool                                   `json:"promotion_granted"`
+	ClaimsAuthorityAdvance          bool                                   `json:"claims_authority_advance"`
+	RSIRemainsDenied                bool                                   `json:"rsi_remains_denied"`
+}
+
+type AtlasMonth3NoPromotionRSIMatrixEntry struct {
+	NodeID                     string `json:"node_id"`
+	PromoterPath               string `json:"promoter_path"`
+	PromoterStatus             string `json:"promoter_status"`
+	PromotionClaimed           bool   `json:"promotion_claimed"`
+	CommandReadbackPath        string `json:"command_readback_path"`
+	CommandReadbackStatus      string `json:"command_readback_status"`
+	SentinelPublicSafetyPath   string `json:"sentinel_public_safety_path"`
+	SentinelPublicSafetyStatus string `json:"sentinel_public_safety_status"`
+	SentinelRSIRemainsDenied   bool   `json:"sentinel_rsi_remains_denied"`
+	ClaimsAuthorityAdvance     bool   `json:"claims_authority_advance"`
+	NoPromotionInvariantHolds  bool   `json:"no_promotion_invariant_holds"`
+	RSIDenialInvariantHolds    bool   `json:"rsi_denial_invariant_holds"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
