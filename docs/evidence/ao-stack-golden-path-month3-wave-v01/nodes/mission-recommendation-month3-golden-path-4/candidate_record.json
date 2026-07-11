@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-4",
+  "task_id": "mission-recommendation-month3-golden-path-4-task",
+  "status": "selected",
+  "source_recommendation": "month3-golden-path-4",
+  "source_task_digest": "sha256:7970373275753ee54bfc740cd7254199e23b4e8352774f13ff71ea8620865f4d",
+  "selected_work": [
+    "Bind replay to an append-only integrity checkpoint for policy decisions and approval tickets.",
+    "Prove replay denies changed patch bytes, changed base commit, changed policy request digest, and substituted approval identifiers.",
+    "Record AO2 PR #256, 95 passing CI checks, merge, sync, and branch cleanup as implementation evidence."
+  ],
+  "source_digests": {
+    "canonical_input": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+    "ao2_merge_commit": "sha256:ac00ee6187f1d37f68228ed770224bd0134e7111"
+  },
+  "write_scope": [
+    "ao2/crates/ao2-runtime/src/lib.rs",
+    "ao2/crates/ao2-runtime/tests/approval_replay.rs",
+    "ao2/crates/ao2-runtime/tests/provider_backed_run.rs",
+    "ao2/schemas/run-record.schema.json",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-4"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
