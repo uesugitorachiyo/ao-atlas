@@ -521,6 +521,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "rollback-terminal-readback-fixture", run: runMissionRecommendationsRollbackTerminalReadbackFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "golden-path-readiness-matrix", run: runMissionRecommendationsGoldenPathReadinessMatrix, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "month3-final-closure-rollup", run: runMissionRecommendationsMonth3FinalClosureRollup, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "month3-final-readiness-report", run: runMissionRecommendationsMonth3FinalReadinessReport, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "month3-terminal-digest-binding", run: runMissionRecommendationsMonth3TerminalDigestBinding, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "month3-non-ao-dry-run-replay", run: runMissionRecommendationsMonth3NonAODryRunReplay, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "month3-real-run-acceptance", run: runMissionRecommendationsMonth3RealRunAcceptance, commandClass: missionRecommendationCommandClassPlanningOnly},

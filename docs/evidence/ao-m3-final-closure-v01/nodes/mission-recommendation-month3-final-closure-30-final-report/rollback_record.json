@@ -1,0 +1,15 @@
+{
+  "contract_version": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-30-final-report",
+  "task_id": "mission-recommendation-month3-final-closure-30-final-report-task",
+  "status": "rollback_ready",
+  "rollback_scope": [
+    "internal/atlas/mission_month3_final_readiness_report.go",
+    "internal/atlas/mission_month3_final_readiness_report_cli.go",
+    "internal/atlas/mission_month3_final_readiness_report_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-30-final-report"
+  ],
+  "rollback_command": "git revert <merge_commit_for_node_30>",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
