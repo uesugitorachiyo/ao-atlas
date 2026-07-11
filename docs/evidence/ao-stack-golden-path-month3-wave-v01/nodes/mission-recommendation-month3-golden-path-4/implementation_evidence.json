@@ -1,0 +1,35 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-4",
+  "task_id": "mission-recommendation-month3-golden-path-4-task",
+  "status": "recorded",
+  "implementation_files": [
+    "ao2:crates/ao2-runtime/src/lib.rs",
+    "ao2:crates/ao2-runtime/tests/approval_replay.rs",
+    "ao2:crates/ao2-runtime/tests/provider_backed_run.rs",
+    "ao2:schemas/run-record.schema.json"
+  ],
+  "evidence_files": [
+    "ao2-pr-256-evidence.json",
+    "node_gate.json",
+    "tests.json",
+    "verification.json",
+    "sentinel_public_safety.json",
+    "promoter_no_promotion.json",
+    "command_readback.json",
+    "foundry_import.json"
+  ],
+  "summary": "AO2 replay now cross-checks policy decisions and approval tickets against a recorded event checkpoint. Regression fixtures deny changed patch bytes, base commit, policy request digest, and substituted approval identifiers. The change merged through PR #256.",
+  "source_contract": "ao.atlas.factory-task.v0.1",
+  "canonical_contract": "ao2.run-record-replay-integrity.v1",
+  "source_input_digest": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+  "source_workgraph_digest": "sha256:26fb57780748d47ffdad0ffe3c3401cb24c97e7e34fc258754e8bfd8621596a6",
+  "source_owner_preserved_in_objective": true,
+  "implementation_commit": "ac00ee6187f1d37f68228ed770224bd0134e7111",
+  "implementation_pr": "https://github.com/uesugitorachiyo/ao2/pull/256",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
