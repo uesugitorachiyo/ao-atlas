@@ -525,6 +525,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "month3-non-ao-dry-run-replay", run: runMissionRecommendationsMonth3NonAODryRunReplay, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "month3-real-run-acceptance", run: runMissionRecommendationsMonth3RealRunAcceptance, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "month3-control-plane-observer", run: runMissionRecommendationsMonth3ControlPlaneObserver, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "month3-schema-owner-registry", run: runMissionRecommendationsMonth3SchemaOwnerRegistry, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},

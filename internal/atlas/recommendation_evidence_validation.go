@@ -924,6 +924,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-control-plane-observer-binding", err
 		}
 		return "typed:month3-control-plane-observer-binding", ValidateAtlasMonth3ControlPlaneObserverBinding(value)
+	case AtlasMonth3SchemaOwnerRegistryProposalContract:
+		value, err := LoadJSON[AtlasMonth3SchemaOwnerRegistryProposal](path)
+		if err != nil {
+			return "typed:month3-schema-owner-registry-proposal", err
+		}
+		return "typed:month3-schema-owner-registry-proposal", ValidateAtlasMonth3SchemaOwnerRegistryProposal(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

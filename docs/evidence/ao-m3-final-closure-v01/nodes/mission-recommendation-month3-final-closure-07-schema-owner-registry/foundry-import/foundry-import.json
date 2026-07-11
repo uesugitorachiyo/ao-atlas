@@ -1,0 +1,115 @@
+{
+  "contract_version": "ao.atlas.foundry-import.v0.1",
+  "id": "ao-atlas-recommendation-wave-ao-stack-month3-final-closure-real-golden-path-v01-foundry-import",
+  "workgraph_id": "ao-atlas-recommendation-wave-ao-stack-month3-final-closure-real-golden-path-v01",
+  "target_instance": "ao-atlas",
+  "status": "ready_for_foundry_fixture_import",
+  "source_artifacts": [
+    {
+      "ref": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-06-control-plane-observer/workgraph-after.json",
+      "digest": "sha256:c062c731e0c6a8ccb2c58708d701c117e3617fc038df417f6c01914fcc09875c"
+    },
+    {
+      "ref": "docs/evidence/ao-m3-final-closure-v01/stack-instance.json",
+      "digest": "sha256:b58c7801df17ffab74ccb34028736f20d22721e188448b83edf71a41041a8094"
+    }
+  ],
+  "tasks": [
+    {
+      "node_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry",
+      "task_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry-task",
+      "path": "tasks/mission-recommendation-month3-final-closure-07-schema-owner-registry-task.json",
+      "mutation_class": "low_risk_code",
+      "write_scope": [
+        "internal/atlas",
+        "schemas",
+        "examples",
+        "docs/evidence"
+      ],
+      "rollback_scope": [
+        "revert node-specific Atlas changes and generated evidence"
+      ],
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "required_evidence": [
+        "source_digest:sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+        "source_recommendation:month3-final-closure-07-schema-owner-registry",
+        "source_task_digest:sha256:81a8eb6ac87782ef91beb6e81dceb5e18a00ec8ef645c1951d12e00c59ab69ed"
+      ],
+      "authority_boundary": "atlas_recommendation_planning_only",
+      "task": {
+        "contract_version": "ao.atlas.factory-task.v0.1",
+        "id": "mission-recommendation-month3-final-closure-07-schema-owner-registry-task",
+        "objective": "Draft Covenant-owned schema owner registry proposal with consumer compatibility checks.",
+        "target_factory_repo": "ao-atlas",
+        "factory_folder": "factory/ao-atlas-recommendations/month3-final-closure-07-schema-owner-registry",
+        "mutation_class": "low_risk_code",
+        "acceptance_criteria": [
+          "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+          "Atlas final response remains denied while ready work or exact next actions remain"
+        ],
+        "non_goals": [
+          "do not execute Foundry work from Atlas",
+          "do not widen AO authority or claim broad RSI"
+        ],
+        "write_scope": [
+          "internal/atlas",
+          "schemas",
+          "examples",
+          "docs/evidence"
+        ],
+        "required_gates": [
+          "node_gate",
+          "candidate_record",
+          "rollback_record",
+          "tests",
+          "verification",
+          "sentinel_public_safety",
+          "promoter_no_promotion",
+          "command_readback"
+        ],
+        "rollback_scope": [
+          "revert node-specific Atlas changes and generated evidence"
+        ],
+        "verification_commands": [
+          "go test ./... -count=1",
+          "go vet ./...",
+          "go build ./cmd/atlas",
+          "scripts/production-readiness.sh",
+          "scripts/atlas-foundry-roundtrip-smoke.sh"
+        ],
+        "required_evidence": [
+          "source_digest:sha256:3f0411456e0daa9192365401534d1fb5855fbc0b08a5a39f5aed98707680d0ba",
+          "source_recommendation:month3-final-closure-07-schema-owner-registry",
+          "source_task_digest:sha256:81a8eb6ac87782ef91beb6e81dceb5e18a00ec8ef645c1951d12e00c59ab69ed"
+        ],
+        "safety_limits": [
+          "no provider calls",
+          "no credential inspection",
+          "no direct main mutation",
+          "no release deploy publish upload tag",
+          "no dependency updates without separate authorization",
+          "no auth policy config widening",
+          "no broad RSI claim"
+        ],
+        "authority_boundary": "atlas_recommendation_planning_only",
+        "dependency_refs": [
+          "mission-recommendation-month3-final-closure-06-control-plane-observer"
+        ],
+        "context_pack_refs": []
+      },
+      "task_digest": "sha256:23ec0a4e82e0bf66f8ce612bf5456a87dc3a23d3b43e8e4a57f058e754477244"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}

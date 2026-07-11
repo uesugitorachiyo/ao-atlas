@@ -2490,6 +2490,36 @@ type AtlasMonth3ControlPlaneObserverBinding struct {
 	RSIRemainsDenied               bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasMonth3SchemaOwnerRegistryProposal struct {
+	Schema                                string                                   `json:"schema"`
+	NodeID                                string                                   `json:"node_id"`
+	Status                                string                                   `json:"status"`
+	RegistryManifestPath                  string                                   `json:"registry_manifest_path"`
+	RegistryManifestDigest                string                                   `json:"registry_manifest_digest"`
+	RegistryAuthorityOwner                string                                   `json:"registry_authority_owner"`
+	ContractCount                         int                                      `json:"contract_count"`
+	ConsumerCompatibilityCheckCount       int                                      `json:"consumer_compatibility_check_count"`
+	Contracts                             []AtlasMonth3SchemaOwnerRegistryContract `json:"contracts"`
+	CovenantOwnsRegistry                  bool                                     `json:"covenant_owns_registry"`
+	ProducersRetainContractImplementation bool                                     `json:"producers_retain_contract_implementation"`
+	ConsumerCompatibilityRequired         bool                                     `json:"consumer_compatibility_required"`
+	SchedulesWork                         bool                                     `json:"schedules_work"`
+	ExecutesWork                          bool                                     `json:"executes_work"`
+	ApprovesWork                          bool                                     `json:"approves_work"`
+	ClaimsAuthorityAdvance                bool                                     `json:"claims_authority_advance"`
+	RSIRemainsDenied                      bool                                     `json:"rsi_remains_denied"`
+}
+
+type AtlasMonth3SchemaOwnerRegistryContract struct {
+	ID                          string   `json:"id"`
+	SchemaName                  string   `json:"schema_name"`
+	RegistryOwner               string   `json:"registry_owner"`
+	ProducerOwner               string   `json:"producer_owner"`
+	LifecycleClass              string   `json:"lifecycle_class"`
+	GateCritical                bool     `json:"gate_critical"`
+	ConsumerCompatibilityChecks []string `json:"consumer_compatibility_checks"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
