@@ -2667,6 +2667,33 @@ type AtlasMonth3ProviderModelRunRecord struct {
 	LiveProviderCall bool   `json:"live_provider_call"`
 }
 
+type AtlasMonth3RollbackReplayNegative struct {
+	Schema                        string                          `json:"schema"`
+	NodeID                        string                          `json:"node_id"`
+	Status                        string                          `json:"status"`
+	SourceReadbackPath            string                          `json:"source_readback_path"`
+	SourceReadbackDigest          string                          `json:"source_readback_digest"`
+	Cases                         []AtlasMonth3RollbackReplayCase `json:"cases"`
+	CaseCount                     int                             `json:"case_count"`
+	AcceptedCaseCount             int                             `json:"accepted_case_count"`
+	StaleBaseCommitRejected       bool                            `json:"stale_base_commit_rejected"`
+	ReceiptDigestMismatchRejected bool                            `json:"receipt_digest_mismatch_rejected"`
+	FinalResponseAllowed          bool                            `json:"final_response_allowed"`
+	SchedulesWork                 bool                            `json:"schedules_work"`
+	ExecutesWork                  bool                            `json:"executes_work"`
+	ApprovesWork                  bool                            `json:"approves_work"`
+	ClaimsAuthorityAdvance        bool                            `json:"claims_authority_advance"`
+	RSIRemainsDenied              bool                            `json:"rsi_remains_denied"`
+}
+
+type AtlasMonth3RollbackReplayCase struct {
+	Name          string `json:"name"`
+	ReplayClass   string `json:"replay_class"`
+	ExpectedState string `json:"expected_state"`
+	Accepted      bool   `json:"accepted"`
+	Replayable    bool   `json:"replayable"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

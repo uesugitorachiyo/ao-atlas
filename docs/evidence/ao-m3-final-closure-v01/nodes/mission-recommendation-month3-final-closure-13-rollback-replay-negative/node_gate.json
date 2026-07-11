@@ -1,0 +1,25 @@
+{
+  "contract_version": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-13-rollback-replay-negative",
+  "task_id": "mission-recommendation-month3-final-closure-13-rollback-replay-negative-task",
+  "status": "safe_to_execute",
+  "safe_to_execute": true,
+  "mutation_class": "low_risk_code",
+  "target_factory_repo": "ao-atlas",
+  "write_scope": [
+    "internal/atlas",
+    "docs/evidence"
+  ],
+  "source_workgraph_digest": "sha256:f149aa858deb2f2c22d96da7d529af504afdc122fd6be1f0dfc80d93e7b6213b",
+  "source_task_digest": "sha256:6f2649ca3f7ffee79cb709555901b1342906d225e5d423fc23e105156e212b20",
+  "safety_boundaries": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "rsi_remains_denied": true
+}
