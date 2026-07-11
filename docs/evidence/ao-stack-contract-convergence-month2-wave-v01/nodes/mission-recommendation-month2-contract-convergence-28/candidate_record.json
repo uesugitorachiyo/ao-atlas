@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-28",
+  "task_id": "mission-recommendation-month2-contract-convergence-28-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-28",
+  "source_owner": "ao-foundry",
+  "source_task_digest": "sha256:0117689cdcf3c369b560e120ece7acc901789d4ad55b8b5a48731459c2fe5005",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Audit Foundry safe-next-work scheduling as an Atlas consumer without invoking execution.",
+    "Verify exactly one ready node and exactly one matching imported task are required before the scheduler reports a next action.",
+    "Record the negative authority boundary: scheduling/readback may be prepared, but Foundry does not execute, approve, mutate, call providers, open PRs, or merge from this path."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-28"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "a610f10b09591416509c712313cd9021a2cb7da7",
+  "objective": "Coordinate ao-foundry Foundry safe-next-work authority boundary test through a bounded Atlas compatibility evidence node with no promotion.",
+  "selection_reason": "single ready node selected from the post-node-27 workgraph; Foundry authority-boundary behavior is read-only audited",
+  "mutates_repositories": false
+}

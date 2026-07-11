@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-28",
+  "task_id": "mission-recommendation-month2-contract-convergence-28-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "Foundry authority-boundary behavior already has focused regression coverage; this node records the compatibility result without changing Foundry runtime code"
+  },
+  "targeted_test": {
+    "command": "go test ./internal/cli -run Test(PulseAtlasSchedulerInputSelectsOnlyAtlasNextReadyNode|PulseAtlasSchedulerInputBlocksImportMissingSelectedNode|AtlasImportValidateRejectsExecutionAuthority|NextRefusesUnsafeTaskSafety|PulseClosurePacketBindsLoopEvidenceWithoutAuthorityExpansion) -count=1 -v",
+    "status": "passed",
+    "output": "All five Foundry scheduler/import authority-boundary regression tests passed."
+  },
+  "integration_test": {
+    "command": "go test ./... -count=1",
+    "status": "passed",
+    "output": "Full AO Foundry Go suite passed; internal/cli completed successfully."
+  },
+  "status_test": {
+    "command": "go vet ./...",
+    "status": "passed",
+    "output": "Full AO Foundry vet passed."
+  },
+  "next_test": {
+    "command": "inspect buildPulseAtlasSchedulerInput and atlas import validation paths",
+    "status": "passed",
+    "output": "Exactly one selected ready node and one matching imported task are required; unsafe execution authority is rejected and all execution/provider/PR/merge flags remain false."
+  },
+  "objective": "Coordinate ao-foundry Foundry safe-next-work authority boundary test through a bounded Atlas compatibility evidence node with no promotion."
+}
