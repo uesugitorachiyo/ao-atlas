@@ -828,6 +828,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:command-readback-adapter-boundary-fixture", err
 		}
 		return "typed:command-readback-adapter-boundary-fixture", ValidateAtlasCommandReadbackAdapterBoundaryFixture(value)
+	case AtlasCompactTimelineFilterFixtureContract:
+		value, err := LoadJSON[AtlasCompactTimelineFilterFixture](path)
+		if err != nil {
+			return "typed:compact-timeline-filter-fixture", err
+		}
+		return "typed:compact-timeline-filter-fixture", ValidateAtlasCompactTimelineFilterFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

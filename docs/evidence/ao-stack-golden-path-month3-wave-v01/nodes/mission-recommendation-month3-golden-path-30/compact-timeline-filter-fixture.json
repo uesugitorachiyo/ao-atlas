@@ -1,0 +1,42 @@
+{
+  "schema": "ao.atlas.compact-timeline-filter-fixture.v0.1",
+  "status": "compact_timeline_filter_ready",
+  "filters": [
+    {
+      "name": "stale",
+      "record_status": "stale",
+      "distinguishes_from": "pending"
+    },
+    {
+      "name": "duplicate",
+      "record_status": "duplicate",
+      "distinguishes_from": "completed"
+    },
+    {
+      "name": "pending",
+      "record_status": "pending",
+      "distinguishes_from": "completed"
+    },
+    {
+      "name": "denied",
+      "record_status": "denied",
+      "distinguishes_from": "completed"
+    },
+    {
+      "name": "completed",
+      "record_status": "completed",
+      "distinguishes_from": "pending"
+    }
+  ],
+  "filter_count": 5,
+  "stale_records_distinguished": true,
+  "duplicate_records_distinguished": true,
+  "pending_records_distinguished": true,
+  "denied_records_distinguished": true,
+  "completed_records_distinguished": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
