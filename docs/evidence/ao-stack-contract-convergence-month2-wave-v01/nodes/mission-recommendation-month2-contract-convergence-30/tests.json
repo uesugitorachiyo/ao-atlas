@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-30",
+  "task_id": "mission-recommendation-month2-contract-convergence-30-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_source_audit",
+    "reason": "AO2 source and offline tests are audited without changing runtime code or invoking providers"
+  },
+  "targeted_test": {
+    "command": "cargo test -p ao2-adapters --offline && cargo test -p ao2-runtime --offline",
+    "status": "passed",
+    "output": "AO2 adapter and runtime offline suites passed, including approval subject digest, content/base repository binding, tamper rejection, exact approval replay, and provider-free scripted paths."
+  },
+  "integration_test": {
+    "command": "cargo test -p ao2-runtime --offline",
+    "status": "passed",
+    "output": "Runtime approval replay, provider-backed fixture, pulse, risky-PR, schema, and provider-free tests passed offline."
+  },
+  "status_test": {
+    "command": "source inspection of SandboxPatchApprovalSubject and auto-approval branch",
+    "status": "passed",
+    "output": "Approval subject includes base_commit and complete operation bytes; runtime still has AO2_AUTO_APPROVE_SANDBOX_PATCH with approver human:local-user-auto-approve."
+  },
+  "next_test": {
+    "command": "negative design assertion: auto approval and absent explicit approval-subject transfer remain non-promotable",
+    "status": "passed",
+    "output": "The audit keeps safe_to_execute false for live AO2 approval hardening and does not claim provider execution or promotion."
+  },
+  "objective": "Coordinate ao2 AO2 approval byte and base commit binding design test through a bounded Atlas compatibility evidence node with no promotion."
+}

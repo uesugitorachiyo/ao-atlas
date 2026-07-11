@@ -1,0 +1,101 @@
+{
+  "schema": "ao.atlas.run-link-digest-check.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-30",
+  "status": "run_link_digest_verified",
+  "source_run_link_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/run-link.json",
+  "source_run_link_file_digest": "sha256:7d81ec046d76c05eca06b57e18a8b21487b25e0741c8dbb80362d26289e1321d",
+  "task_id": "mission-recommendation-month2-contract-convergence-30-task",
+  "run_link_status": "completed",
+  "recorded_digest": "sha256:232901a6b38e2fec7a46716e0cb7f9ab33a71102b1d728ea4fb9e8cc9fbf0560",
+  "recomputed_digest": "sha256:232901a6b38e2fec7a46716e0cb7f9ab33a71102b1d728ea4fb9e8cc9fbf0560",
+  "digest_matches": true,
+  "evidence_root": ".",
+  "evidence_count": 13,
+  "schema_bound_evidence_count": 13,
+  "missing_evidence": [],
+  "evidence_entries": [
+    {
+      "key": "candidate_record",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "checkpoint_bundle",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "command_readback",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "foundry_import",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/foundry-import/foundry-import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "implementation_evidence",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "node_gate",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "promoter_no_promotion",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "public_safety_readback_before_binding",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/recommendation-readback-before-public-safety-binding.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "public_safety_readback_binding",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "rollback_record",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "sentinel_public_safety",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "tests",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/tests.json",
+      "schema": "ao.atlas.tests-evidence.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "verification",
+      "path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "status": "schema_bound"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
