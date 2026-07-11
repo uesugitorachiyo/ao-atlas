@@ -792,6 +792,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:durable-state-migration-metadata", err
 		}
 		return "typed:durable-state-migration-metadata", ValidateAtlasDurableStateMigrationMetadata(value)
+	case AtlasExactlyOnceResumeAccountingFixtureContract:
+		value, err := LoadJSON[AtlasExactlyOnceResumeAccountingFixture](path)
+		if err != nil {
+			return "typed:exactly-once-resume-accounting-fixture", err
+		}
+		return "typed:exactly-once-resume-accounting-fixture", ValidateAtlasExactlyOnceResumeAccountingFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

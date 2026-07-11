@@ -1952,17 +1952,17 @@ type AtlasExecutionPacketRegressionCase struct {
 }
 
 type AtlasExecutionPacketRegressionMatrix struct {
-	Schema                     string                                `json:"schema"`
-	Status                     string                                `json:"status"`
+	Schema                     string                               `json:"schema"`
+	Status                     string                               `json:"status"`
 	Cases                      []AtlasExecutionPacketRegressionCase `json:"cases"`
-	CaseCount                  int                                   `json:"case_count"`
-	ProviderInvocationAllowed  bool                                  `json:"provider_invocation_allowed"`
-	SilentChangedResultAllowed bool                                  `json:"silent_changed_result_allowed"`
-	SchedulesWork              bool                                  `json:"schedules_work"`
-	ExecutesWork               bool                                  `json:"executes_work"`
-	ApprovesWork               bool                                  `json:"approves_work"`
-	ClaimsAuthorityAdvance     bool                                  `json:"claims_authority_advance"`
-	RSIRemainsDenied           bool                                  `json:"rsi_remains_denied"`
+	CaseCount                  int                                  `json:"case_count"`
+	ProviderInvocationAllowed  bool                                 `json:"provider_invocation_allowed"`
+	SilentChangedResultAllowed bool                                 `json:"silent_changed_result_allowed"`
+	SchedulesWork              bool                                 `json:"schedules_work"`
+	ExecutesWork               bool                                 `json:"executes_work"`
+	ApprovesWork               bool                                 `json:"approves_work"`
+	ClaimsAuthorityAdvance     bool                                 `json:"claims_authority_advance"`
+	RSIRemainsDenied           bool                                 `json:"rsi_remains_denied"`
 }
 
 type AtlasDurableStateMigrationStep struct {
@@ -1973,18 +1973,40 @@ type AtlasDurableStateMigrationStep struct {
 }
 
 type AtlasDurableStateMigrationMetadata struct {
-	Schema                  string                            `json:"schema"`
-	Status                  string                            `json:"status"`
-	CurrentVersion          int                               `json:"current_version"`
-	MinimumSupportedVersion int                               `json:"minimum_supported_version"`
-	UnknownVersionHandling  string                            `json:"unknown_version_handling"`
+	Schema                  string                           `json:"schema"`
+	Status                  string                           `json:"status"`
+	CurrentVersion          int                              `json:"current_version"`
+	MinimumSupportedVersion int                              `json:"minimum_supported_version"`
+	UnknownVersionHandling  string                           `json:"unknown_version_handling"`
 	Migrations              []AtlasDurableStateMigrationStep `json:"migrations"`
-	MigrationCount          int                               `json:"migration_count"`
-	SchedulesWork           bool                              `json:"schedules_work"`
-	ExecutesWork            bool                              `json:"executes_work"`
-	ApprovesWork            bool                              `json:"approves_work"`
-	ClaimsAuthorityAdvance  bool                              `json:"claims_authority_advance"`
-	RSIRemainsDenied        bool                              `json:"rsi_remains_denied"`
+	MigrationCount          int                              `json:"migration_count"`
+	SchedulesWork           bool                             `json:"schedules_work"`
+	ExecutesWork            bool                             `json:"executes_work"`
+	ApprovesWork            bool                             `json:"approves_work"`
+	ClaimsAuthorityAdvance  bool                             `json:"claims_authority_advance"`
+	RSIRemainsDenied        bool                             `json:"rsi_remains_denied"`
+}
+
+type AtlasExactlyOnceResumeAccountingScenario struct {
+	Name                   string `json:"name"`
+	ExpectedCompletedDelta int    `json:"expected_completed_delta"`
+	PreservesExactlyOnce   bool   `json:"preserves_exactly_once"`
+}
+
+type AtlasExactlyOnceResumeAccountingFixture struct {
+	Schema                             string                                     `json:"schema"`
+	Status                             string                                     `json:"status"`
+	Scenarios                          []AtlasExactlyOnceResumeAccountingScenario `json:"scenarios"`
+	ScenarioCount                      int                                        `json:"scenario_count"`
+	ExactlyOnceNodeAccounting          bool                                       `json:"exactly_once_node_accounting"`
+	DuplicateHandoffDoubleCountAllowed bool                                       `json:"duplicate_handoff_double_count_allowed"`
+	RestartPreservesAccounting         bool                                       `json:"restart_preserves_accounting"`
+	LeaseExpiryPreservesAccounting     bool                                       `json:"lease_expiry_preserves_accounting"`
+	SchedulesWork                      bool                                       `json:"schedules_work"`
+	ExecutesWork                       bool                                       `json:"executes_work"`
+	ApprovesWork                       bool                                       `json:"approves_work"`
+	ClaimsAuthorityAdvance             bool                                       `json:"claims_authority_advance"`
+	RSIRemainsDenied                   bool                                       `json:"rsi_remains_denied"`
 }
 
 type AtlasBlueprintCanonicalPreservationFixture struct {

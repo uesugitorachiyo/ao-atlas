@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-24",
+  "task_id": "mission-recommendation-month3-golden-path-24-task",
+  "status": "selected",
+  "source_recommendation": "month3-golden-path-24",
+  "source_task_digest": "sha256:315e221c6afd97e859d17f36a932fe80caa393a5bd63b672a6c11473ea249599",
+  "selected_work": ["Add exactly-once resume accounting fixture.", "Cover restart, lease expiry, and duplicate handoff scenarios.", "Reject duplicate handoff double counting."],
+  "source_digests": {"canonical_input": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8", "source_workgraph": "sha256:809ab6fa1c56126a0aef53bf2b23f13001c5e0c922f34fb876ceb13243f0b7de", "atlas_base_commit": "sha256:dfbcc81caa7903bf4fc2424c232e7e0df86c0c9f", "exactly_once_resume_accounting_fixture": "sha256:fafd900738f1a8a84d872454ccb0c35797254c52eb7e68a1a92d0997f034e443"},
+  "write_scope": ["internal/atlas/mission_exactly_once_resume_accounting.go", "internal/atlas/mission_exactly_once_resume_accounting_cli.go", "internal/atlas/mission_exactly_once_resume_accounting_test.go", "internal/atlas/models.go", "internal/atlas/validate.go", "internal/atlas/recommendation_evidence_validation.go", "internal/atlas/cli.go", "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-24"],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
