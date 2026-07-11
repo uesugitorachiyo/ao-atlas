@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.promoter-activation-boundary.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-36",
+  "task_id": "mission-recommendation-month2-contract-convergence-36-task",
+  "status": "bounded",
+  "source_repo": "ao-promoter",
+  "source_commit": "a2b3281711a1436aa46c34ca6c11b26d926ed57e",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "gate_evaluation": true,
+  "activation_plan_generation": true,
+  "activation_plan_dry_run_only": true,
+  "apply_requires_explicit_dry_run": true,
+  "live_state_mutation": false,
+  "active_stack_write": false,
+  "provider_calls": false,
+  "release_deploy_publish_upload_tag": false,
+  "limitation": "Promotion and activation commands produce deterministic plans/readbacks and refuse live application in v0.1; a dry-run verdict is not a signed production promotion decision.",
+  "promotion_claimed": false,
+  "rsi_remains_denied": true
+}
