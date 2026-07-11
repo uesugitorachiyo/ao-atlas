@@ -1,0 +1,25 @@
+{
+  "schema": "ao.atlas.content-addressed-evidence-manifest-fixture.v0.1",
+  "status": "content_addressed_evidence_manifest_ready",
+  "manifest_entries": [
+    {
+      "name": "bulk_campaign_evidence",
+      "boundary": "external_content_addressed_manifest",
+      "addressing": "sha256"
+    },
+    {
+      "name": "small_replayable_fixture",
+      "boundary": "repository_fixture",
+      "addressing": "git"
+    }
+  ],
+  "manifest_entry_count": 2,
+  "bulk_evidence_externalized": true,
+  "small_replayable_fixtures_retained": true,
+  "content_addressing_required": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

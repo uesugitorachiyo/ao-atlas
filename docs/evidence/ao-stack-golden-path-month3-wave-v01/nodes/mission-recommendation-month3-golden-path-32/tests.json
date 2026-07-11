@@ -1,0 +1,11 @@
+{
+  "contract_version": "ao.atlas.tests.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-32",
+  "task_id": "mission-recommendation-month3-golden-path-32-task",
+  "status": "passed",
+  "red_test": "go test ./internal/atlas -run TestMonth3ContentAddressedEvidenceManifestFixture -count=1 failed on missing BuildAtlasContentAddressedEvidenceManifestFixture and ValidateAtlasContentAddressedEvidenceManifestFixture",
+  "green_test": "go test ./internal/atlas -run TestMonth3ContentAddressedEvidenceManifestFixture -count=1",
+  "targeted_regression_passed": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
