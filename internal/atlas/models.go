@@ -1965,6 +1965,28 @@ type AtlasExecutionPacketRegressionMatrix struct {
 	RSIRemainsDenied           bool                                  `json:"rsi_remains_denied"`
 }
 
+type AtlasDurableStateMigrationStep struct {
+	Version     int    `json:"version"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Reversible  bool   `json:"reversible"`
+}
+
+type AtlasDurableStateMigrationMetadata struct {
+	Schema                  string                            `json:"schema"`
+	Status                  string                            `json:"status"`
+	CurrentVersion          int                               `json:"current_version"`
+	MinimumSupportedVersion int                               `json:"minimum_supported_version"`
+	UnknownVersionHandling  string                            `json:"unknown_version_handling"`
+	Migrations              []AtlasDurableStateMigrationStep `json:"migrations"`
+	MigrationCount          int                               `json:"migration_count"`
+	SchedulesWork           bool                              `json:"schedules_work"`
+	ExecutesWork            bool                              `json:"executes_work"`
+	ApprovesWork            bool                              `json:"approves_work"`
+	ClaimsAuthorityAdvance  bool                              `json:"claims_authority_advance"`
+	RSIRemainsDenied        bool                              `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
