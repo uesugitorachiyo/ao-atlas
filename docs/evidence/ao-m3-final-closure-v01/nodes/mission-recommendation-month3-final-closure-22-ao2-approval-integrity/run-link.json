@@ -1,0 +1,20 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-month3-final-closure-22-ao2-approval-integrity-task",
+  "status": "completed",
+  "evidence": {
+    "ao2_approval_integrity_checklist": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/ao2-approval-integrity-checklist.json",
+    "candidate_record": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/candidate_record.json",
+    "checkpoint_bundle": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/checkpoint_bundle.json",
+    "command_readback": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/command_readback.json",
+    "foundry_import": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/foundry-import/foundry-import.json",
+    "implementation_evidence": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/implementation_evidence.json",
+    "node_gate": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/node_gate.json",
+    "promoter_no_promotion": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/promoter_no_promotion.json",
+    "rollback_record": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/rollback_record.json",
+    "sentinel_public_safety": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/sentinel_public_safety.json",
+    "tests": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/tests.json",
+    "verification": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/verification.json"
+  },
+  "digest": "sha256:047618ffeb759af1c7468acdf418bd3e64911af5d1055270452cece3d432a520"
+}

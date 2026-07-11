@@ -1,0 +1,19 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-22-ao2-approval-integrity",
+  "task_id": "mission-recommendation-month3-final-closure-22-ao2-approval-integrity-task",
+  "status": "implemented",
+  "changed_files": [
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/ao2-approval-integrity-checklist.json"
+  ],
+  "summary": "AO2 approval integrity checklist requires proposed bytes digest and base commit binding before approval or application.",
+  "proposed_bytes_digest_required": true,
+  "base_commit_required": true,
+  "approval_identity_hardcoded": false,
+  "auto_approval_allowed": false,
+  "provider_execution_allowed": false,
+  "application_transaction_required": true,
+  "rollback_receipt_required": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
