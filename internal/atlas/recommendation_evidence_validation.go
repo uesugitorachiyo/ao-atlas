@@ -750,6 +750,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:sentinel-signal-state-fixture", err
 		}
 		return "typed:sentinel-signal-state-fixture", ValidateAtlasSentinelSignalStateFixture(value)
+	case AtlasSignedAssuranceDryRunFixtureContract:
+		value, err := LoadJSON[AtlasSignedAssuranceDryRunFixture](path)
+		if err != nil {
+			return "typed:signed-assurance-dry-run-fixture", err
+		}
+		return "typed:signed-assurance-dry-run-fixture", ValidateAtlasSignedAssuranceDryRunFixture(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {

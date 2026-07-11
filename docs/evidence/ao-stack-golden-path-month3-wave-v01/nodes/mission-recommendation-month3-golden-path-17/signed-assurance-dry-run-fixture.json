@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.signed-assurance-dry-run-fixture.v0.1",
+  "status": "dry_run_verification_ready",
+  "required_checks": [
+    "signer_identity",
+    "evidence_digest",
+    "freshness"
+  ],
+  "required_check_count": 3,
+  "signer_identity_required": true,
+  "evidence_digest_required": true,
+  "freshness_required": true,
+  "promotion_decision_enabled": false,
+  "dry_run_only": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

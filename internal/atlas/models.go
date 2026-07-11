@@ -1854,6 +1854,23 @@ type AtlasSentinelSignalStateMatrixRow struct {
 	Verdict string `json:"verdict"`
 }
 
+type AtlasSignedAssuranceDryRunFixture struct {
+	Schema                   string   `json:"schema"`
+	Status                   string   `json:"status"`
+	RequiredChecks           []string `json:"required_checks"`
+	RequiredCheckCount       int      `json:"required_check_count"`
+	SignerIdentityRequired   bool     `json:"signer_identity_required"`
+	EvidenceDigestRequired   bool     `json:"evidence_digest_required"`
+	FreshnessRequired        bool     `json:"freshness_required"`
+	PromotionDecisionEnabled bool     `json:"promotion_decision_enabled"`
+	DryRunOnly               bool     `json:"dry_run_only"`
+	SchedulesWork            bool     `json:"schedules_work"`
+	ExecutesWork             bool     `json:"executes_work"`
+	ApprovesWork             bool     `json:"approves_work"`
+	ClaimsAuthorityAdvance   bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`
