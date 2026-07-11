@@ -1,0 +1,29 @@
+{
+  "schema": "ao.atlas.external-implementation-pr-evidence.v0.1",
+  "repository": "ao2",
+  "pr_number": 257,
+  "pr_url": "https://github.com/uesugitorachiyo/ao2/pull/257",
+  "commit": "bbbf9313e3e1b05c16ec5f6d16e07e75b35c4c7d",
+  "ci": {
+    "status": "passed",
+    "checks": 95
+  },
+  "merge": {
+    "status": "merged",
+    "method": "squash"
+  },
+  "sync": {
+    "main_head": "bbbf9313e3e1b05c16ec5f6d16e07e75b35c4c7d",
+    "origin_main_head": "bbbf9313e3e1b05c16ec5f6d16e07e75b35c4c7d",
+    "status": "clean_synced"
+  },
+  "branch_cleanup": {
+    "local": false,
+    "remote": false,
+    "status": "deleted"
+  },
+  "provider_calls": false,
+  "credentials_used": false,
+  "promotion_requested": false,
+  "rsi_remains_denied": true
+}

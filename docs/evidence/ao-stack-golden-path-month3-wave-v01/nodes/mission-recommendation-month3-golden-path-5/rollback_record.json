@@ -1,0 +1,18 @@
+{
+  "schema": "ao.atlas.rollback-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-5",
+  "task_id": "mission-recommendation-month3-golden-path-5-task",
+  "status": "rollback_available",
+  "rollback_scope": [
+    "revert AO2 merge commit bbbf9313e3e1b05c16ec5f6d16e07e75b35c4c7d through a reviewed PR",
+    "remove node-specific Atlas evidence if the node is reopened",
+    "preserve explicit approval and provider-free defaults"
+  ],
+  "rollback_command": "Prepare a reviewed AO2 revert PR for the node merge and regenerate the Atlas readback; do not mutate main directly.",
+  "data_loss_risk": "none; replay verification becomes stricter and all evidence is digest-addressed",
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
