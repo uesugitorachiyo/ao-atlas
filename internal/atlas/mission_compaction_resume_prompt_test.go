@@ -135,6 +135,72 @@ func TestFeatureDepthWaveV02CompactionResumePromptPreservesLeaseAndActiveNode(t 
 	}
 }
 
+func TestMonth3FinalClosureCompactionResumePromptPreservesNode14Continuation(t *testing.T) {
+	root := repoRoot(t)
+	waveRoot := filepath.Join(root, "docs", "evidence", "ao-m3-final-closure-v01")
+	nodeDir := filepath.Join(waveRoot, "nodes", "mission-recommendation-month3-final-closure-14-compaction-resume-generator")
+	sourceReadback := filepath.Join(waveRoot, "nodes", "mission-recommendation-month3-final-closure-13-rollback-replay-negative", "recommendation-readback-after.json")
+	sourceWorkgraph := filepath.Join(waveRoot, "nodes", "mission-recommendation-month3-final-closure-13-rollback-replay-negative", "workgraph-after.json")
+	checkpointReadback := filepath.Join(waveRoot, "nodes", "mission-recommendation-month3-final-closure-13-rollback-replay-negative", "checkpoint-readback-after.json")
+	recordedPath := filepath.Join(nodeDir, "compaction-resume-prompt.json")
+	recordedPromptPath := filepath.Join(nodeDir, "compaction-resume-prompt.md")
+	outDir := t.TempDir()
+	outFixture := filepath.Join(outDir, "compaction-resume-prompt.json")
+	outPrompt := filepath.Join(outDir, "compaction-resume-prompt.md")
+
+	var out bytes.Buffer
+	code := Run([]string{
+		"mission", "recommendations", "compaction-resume-prompt",
+		"--source-readback", sourceReadback,
+		"--workgraph", sourceWorkgraph,
+		"--lease-start", filepath.Join(waveRoot, "lease-start.json"),
+		"--checkpoint-readback", checkpointReadback,
+		"--evidence-root", filepath.ToSlash(filepath.Join("docs", "evidence", "ao-m3-final-closure-v01")),
+		"--node-id", "mission-recommendation-month3-final-closure-14-compaction-resume-generator",
+		"--expected-next-node-after-completion", "mission-recommendation-month3-final-closure-15-architecture-source-truth",
+		"--prompt-out", outPrompt,
+		"--fixture-out", outFixture,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("compaction-resume-prompt command failed: %s", out.String())
+	}
+	if !strings.Contains(out.String(), "status=generated") ||
+		!strings.Contains(out.String(), "first_executable_node=mission-recommendation-month3-final-closure-14-compaction-resume-generator") ||
+		!strings.Contains(out.String(), "final_response_allowed=false") {
+		t.Fatalf("compaction-resume-prompt output missing Month 3 resume state: %s", out.String())
+	}
+	recorded := mustLoadJSON[map[string]any](t, recordedPath)
+	generated := mustLoadJSON[map[string]any](t, outFixture)
+	generated["prompt_path"] = recorded["prompt_path"]
+	if digestValue(generated) != digestValue(recorded) {
+		t.Fatalf("Month 3 compaction resume prompt fixture changed\nwant %s\ngot  %s", digestValue(recorded), digestValue(generated))
+	}
+	promptBytes, err := os.ReadFile(recordedPromptPath)
+	if err != nil {
+		t.Fatalf("read recorded prompt: %v", err)
+	}
+	prompt := string(promptBytes)
+	for _, want := range []string{
+		"You are AO Atlas, resuming the AO Atlas final-closure consolidation wave after context compaction.",
+		"Current readback: `docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-13-rollback-replay-negative/recommendation-readback-after.json`",
+		"Checkpoint readback: `docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-13-rollback-replay-negative/checkpoint-readback-after.json`",
+		"Completed nodes: 13 / 30",
+		"Ready nodes: 17",
+		"Next executable node: `mission-recommendation-month3-final-closure-14-compaction-resume-generator`",
+		"Final response allowed: `false`",
+		"Emit Foundry import for mission-recommendation-month3-final-closure-14-compaction-resume-generator and execute exactly one active node.",
+		"Do not produce a final response while ready nodes or exact next action remain.",
+		"RSI remains denied.",
+	} {
+		if !strings.Contains(prompt, want) {
+			t.Fatalf("Month 3 compaction resume prompt missing %q:\n%s", want, prompt)
+		}
+	}
+	if strings.Contains(prompt, "mission-recommendation-month3-final-closure-13-rollback-replay-negative and execute") {
+		t.Fatalf("compaction resume prompt must not restart completed node 13:\n%s", prompt)
+	}
+}
+
 func TestFeatureDepthWaveCompactionResumePromptUsesTypedValidator(t *testing.T) {
 	root := repoRoot(t)
 	path := filepath.Join(root, "docs", "evidence", "ao-atlas-feature-depth-wave-v01", "nodes", "mission-recommendation-feature-depth-next-wave-17", "compaction-resume-prompt.json")

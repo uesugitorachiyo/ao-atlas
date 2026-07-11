@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-final-closure-14-compaction-resume-generator",
+  "task_id": "mission-recommendation-month3-final-closure-14-compaction-resume-generator-task",
+  "status": "implemented",
+  "changed_files": [
+    "internal/atlas/mission_compaction_resume_prompt.go",
+    "internal/atlas/mission_compaction_resume_prompt_test.go",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-14-compaction-resume-generator/compaction-resume-prompt.json",
+    "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-14-compaction-resume-generator/compaction-resume-prompt.md"
+  ],
+  "summary": "Added Month 3 compaction-resume prompt fixture bound to the node 13 terminal readback and preserved node 14 continuation state.",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
