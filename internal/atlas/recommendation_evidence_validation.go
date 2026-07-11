@@ -948,6 +948,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-operator-dashboard-readback", err
 		}
 		return "typed:month3-operator-dashboard-readback", ValidateAtlasMonth3OperatorDashboardReadback(value)
+	case AtlasMonth3RestartResumeSoakContract:
+		value, err := LoadJSON[AtlasMonth3RestartResumeSoak](path)
+		if err != nil {
+			return "typed:month3-restart-resume-soak", err
+		}
+		return "typed:month3-restart-resume-soak", ValidateAtlasMonth3RestartResumeSoak(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
