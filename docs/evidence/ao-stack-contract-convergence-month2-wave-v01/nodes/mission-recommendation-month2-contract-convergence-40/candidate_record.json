@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-40",
+  "task_id": "mission-recommendation-month2-contract-convergence-40-task",
+  "status": "selected",
+  "source_recommendation": "month2-contract-convergence-40",
+  "source_owner": "ao-promoter",
+  "source_task_digest": "sha256:330e98d0613c1b458d8ac96ca35393ab8b5607f61d6e2b974497709fdfb1b394",
+  "source_digest": "sha256:6b1b908b7d4dd9150513faa30b69f4d90692c9f03f3992e8eab46bbb38ca1857",
+  "selected_work": [
+    "Aggregate all 39 prior Promoter no-promotion readbacks and verify none claim promotion.",
+    "Aggregate all 39 prior Command readbacks and verify agreement with no promotion and RSI denial.",
+    "Complete the final Atlas node only after final public-safety binding, terminal readback, and zero-ready-node conditions are satisfied."
+  ],
+  "write_scope": [
+    "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-34"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "source_commit": "bdb4a164810bfcc2af791a46c5ecbb1b35a8bc59",
+  "objective": "Produce the final AO Promoter/Command no-promotion and RSI-denial rollup for the complete Month 2 contract-convergence wave through a bounded Atlas evidence node.",
+  "selection_reason": "single final ready node selected from the post-node-39 workgraph; final Promoter/Command no-promotion closure is bounded and readback-only",
+  "mutates_repositories": false
+}

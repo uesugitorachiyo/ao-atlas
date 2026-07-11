@@ -1,0 +1,17 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-40",
+  "task_id": "mission-recommendation-month2-contract-convergence-40-task",
+  "status": "readback_agrees_no_promotion",
+  "completed_nodes_before": 39,
+  "ready_nodes_before": 1,
+  "expected_completed_nodes_after": 40,
+  "expected_ready_nodes_after": 0,
+  "expected_next_executable_node_after": "none",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true,
+  "scope": "compact Atlas readback only",
+  "summary": "Per-node Command closure remains a no-promotion readback artifact; the separate final Command rollup records terminal final_response_allowed=true after all 40 nodes complete.",
+  "promotion_granted": false,
+  "ready_nodes_before_completion": 1
+}

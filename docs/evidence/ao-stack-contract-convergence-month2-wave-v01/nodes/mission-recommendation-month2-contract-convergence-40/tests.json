@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.tests-evidence.v0.1",
+  "node_id": "mission-recommendation-month2-contract-convergence-40",
+  "task_id": "mission-recommendation-month2-contract-convergence-40-task",
+  "status": "passed",
+  "red_test": {
+    "status": "not_applicable_rollup_node",
+    "reason": "Final aggregation consumes existing readbacks and does not mutate downstream repositories."
+  },
+  "targeted_test": {
+    "command": "aggregate 39 prior promoter_no_promotion.json and command_readback.json files",
+    "status": "passed",
+    "output": "39 prior Promoter readbacks are no_promotion_requested with zero promotion_claimed; 39 prior Command readbacks agree no promotion and keep RSI denied."
+  },
+  "integration_test": {
+    "command": "go test ./... -count=1 && go vet ./... && go build -o target/atlas-node40-verification ./cmd/atlas",
+    "status": "passed",
+    "output": "Atlas full verification passed; generated verification artifact was removed."
+  },
+  "status_test": {
+    "command": "validate final no-promotion and Command rollup inputs",
+    "status": "passed",
+    "output": "All prior aggregate inputs agree no promotion, claims_authority_advance=false, and rsi_remains_denied=true."
+  },
+  "next_test": {
+    "command": "final wave readback, evidence validation, and public-safety scan after complete-node",
+    "status": "passed",
+    "output": "Final node completed with 40 nodes, zero ready/blocked/failed nodes, terminal Command agreement, final public-safety binding, and final_response_allowed=true."
+  },
+  "objective": "Produce the final AO Promoter/Command no-promotion and RSI-denial rollup for the complete Month 2 contract-convergence wave through a bounded Atlas evidence node."
+}
