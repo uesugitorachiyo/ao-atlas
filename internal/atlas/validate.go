@@ -145,6 +145,7 @@ const AtlasRepeatedTaskResultLedgerFixtureContract = "ao.atlas.repeated-task-res
 const AtlasFailureInjectionFuzzingFixtureContract = "ao.atlas.failure-injection-fuzzing-fixture.v0.1"
 const AtlasLocalPlatformFixtureContract = "ao.atlas.local-platform-fixture.v0.1"
 const AtlasNonAOReplayBindingFixtureContract = "ao.atlas.non-ao-replay-binding-fixture.v0.1"
+const AtlasKillRestartReplayFixtureContract = "ao.atlas.kill-restart-replay-fixture.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"

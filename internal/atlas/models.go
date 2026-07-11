@@ -2280,6 +2280,22 @@ type AtlasNonAOReplayBindingFixture struct {
 	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasKillRestartReplayFixture struct {
+	Schema                    string `json:"schema"`
+	Status                    string `json:"status"`
+	KilledRunReplayed         bool   `json:"killed_run_replayed"`
+	RestartReadbackBound      bool   `json:"restart_readback_bound"`
+	NoLostEvidence            bool   `json:"no_lost_evidence"`
+	DuplicateMutationDetected bool   `json:"duplicate_mutation_detected"`
+	FalseCompletionDetected   bool   `json:"false_completion_detected"`
+	LiveProviderCalls         bool   `json:"live_provider_calls"`
+	SchedulesWork             bool   `json:"schedules_work"`
+	ExecutesWork              bool   `json:"executes_work"`
+	ApprovesWork              bool   `json:"approves_work"`
+	ClaimsAuthorityAdvance    bool   `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasBlueprintCanonicalPreservationFixture struct {
 	Schema                           string                                    `json:"schema"`
 	Status                           string                                    `json:"status"`

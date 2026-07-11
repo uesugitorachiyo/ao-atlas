@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-38",
+  "task_id": "mission-recommendation-month3-golden-path-38-task",
+  "status": "selected",
+  "objective": "Replay a killed and restarted bounded run and prove no lost evidence, duplicate mutation, or false completion.",
+  "selected_candidate": "kill-restart-replay-fixture",
+  "selection_reason": "Node 38 is the next ready executable node after node 37 completion readback.",
+  "source_recommendation": "month3-golden-path-38",
+  "source_digest": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+  "source_task_digest": "sha256:41a86b7111f841905921deae2711d2662b8f45d78bf209bbc1063e866d29dbd2",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

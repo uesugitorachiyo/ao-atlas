@@ -1,0 +1,107 @@
+{
+  "schema": "ao.atlas.run-link-digest-check.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-38",
+  "status": "run_link_digest_verified",
+  "source_run_link_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/run-link.json",
+  "source_run_link_file_digest": "sha256:d0bef9a549cb2737d91e01827cc1681fda098479f4a94f755d9d482b975aacc5",
+  "task_id": "mission-recommendation-month3-golden-path-38-task",
+  "run_link_status": "completed",
+  "recorded_digest": "sha256:627e2094c5ecd100fdde572a07ae701b5043f96db861c05f8fab6e5c5fa48f17",
+  "recomputed_digest": "sha256:627e2094c5ecd100fdde572a07ae701b5043f96db861c05f8fab6e5c5fa48f17",
+  "digest_matches": true,
+  "evidence_root": ".",
+  "evidence_count": 14,
+  "schema_bound_evidence_count": 14,
+  "missing_evidence": [],
+  "evidence_entries": [
+    {
+      "key": "candidate_record",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/candidate_record.json",
+      "schema": "ao.atlas.candidate-record.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "checkpoint_bundle",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/checkpoint_bundle.json",
+      "schema": "ao.atlas.checkpoint-bundle.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "command_readback",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/command_readback.json",
+      "schema": "ao.atlas.command-readback.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "foundry_import",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/foundry_import.json",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "implementation_evidence",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/implementation_evidence.json",
+      "schema": "ao.atlas.implementation-evidence.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "kill_restart_replay_fixture",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/kill-restart-replay-fixture.json",
+      "schema": "ao.atlas.kill-restart-replay-fixture.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "node_gate",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/node_gate.json",
+      "schema": "ao.atlas.node-gate.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "promoter_no_promotion",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/promoter_no_promotion.json",
+      "schema": "ao.atlas.promoter-no-promotion.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "public_safety_readback_binding",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/public-safety-readback-binding.json",
+      "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "rollback_record",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/rollback_record.json",
+      "schema": "ao.atlas.rollback-record.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "scoped_public_safety_scan",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/scoped-public-safety-scan.json",
+      "schema": "ao.atlas.scoped-public-safety-scan.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "sentinel_public_safety",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/sentinel_public_safety.json",
+      "schema": "ao.atlas.sentinel-public-safety.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "tests",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/tests.json",
+      "schema": "ao.atlas.tests.v0.1",
+      "status": "schema_bound"
+    },
+    {
+      "key": "verification",
+      "path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-38/verification.json",
+      "schema": "ao.atlas.verification-evidence.v0.1",
+      "status": "schema_bound"
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
