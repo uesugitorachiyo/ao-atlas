@@ -1,0 +1,15 @@
+{
+  "schema": "ao.atlas.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-8",
+  "task_id": "mission-recommendation-month3-golden-path-8-task",
+  "status": "implemented",
+  "implementation_repo": "ao-atlas",
+  "contract_artifacts": [
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-8/canonical-contract-registry-manifest.json"
+  ],
+  "regression_tests": [
+    "internal/atlas/mission_canonical_contract_registry_manifest_test.go::TestMonth3CanonicalContractRegistryManifestRecordsOwnersLifecycleDigestsAndConsumers",
+    "internal/atlas/mission_canonical_contract_registry_manifest_test.go::TestMonth3CanonicalContractRegistryManifestUsesTypedValidator"
+  ],
+  "summary": "Atlas now emits and validates a planning-only canonical contract registry manifest for gate-critical contracts with owner, lifecycle class, digest, and consumer metadata."
+}

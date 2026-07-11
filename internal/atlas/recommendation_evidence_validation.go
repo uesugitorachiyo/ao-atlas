@@ -714,6 +714,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:bounded-signer-contract-fixture", err
 		}
 		return "typed:bounded-signer-contract-fixture", ValidateAtlasBoundedSignerContractFixture(value)
+	case AtlasCanonicalContractRegistryManifestContract:
+		value, err := LoadJSON[AtlasCanonicalContractRegistryManifest](path)
+		if err != nil {
+			return "typed:canonical-contract-registry-manifest", err
+		}
+		return "typed:canonical-contract-registry-manifest", ValidateAtlasCanonicalContractRegistryManifest(value)
 	case AOMissionRefactoringRecommendationsContract:
 		validator, _ := recommendationControlPlaneTypedValidator(AOMissionRefactoringRecommendationsContract)
 		value, err := LoadJSON[AOMissionRefactoringRecommendations](path)

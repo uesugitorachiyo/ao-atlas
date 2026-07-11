@@ -1,0 +1,64 @@
+{
+  "schema": "ao.atlas.canonical-contract-registry-manifest.v0.1",
+  "status": "canonical_contract_registry_ready",
+  "manifest_purpose": "gate_critical_contract_owner_lifecycle_digest_consumer_index",
+  "contract_count": 4,
+  "gate_critical_count": 4,
+  "consumer_count": 9,
+  "contracts": [
+    {
+      "id": "blueprint-build-authorization",
+      "schema": "ao.blueprint.build-authorization.v0.1",
+      "owner": "ao-blueprint",
+      "lifecycle_class": "stable",
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "gate_critical": true,
+      "consumers": [
+        "ao-atlas",
+        "ao-foundry"
+      ]
+    },
+    {
+      "id": "ao2-event-hash-vectors",
+      "schema": "ao2.event-hash-vectors.v1",
+      "owner": "ao2",
+      "lifecycle_class": "stable",
+      "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "gate_critical": true,
+      "consumers": [
+        "ao-covenant",
+        "ao-command"
+      ]
+    },
+    {
+      "id": "bounded-signer-contract",
+      "schema": "ao.atlas.bounded-signer-contract-fixture.v0.1",
+      "owner": "ao-covenant",
+      "lifecycle_class": "experimental",
+      "digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "gate_critical": true,
+      "consumers": [
+        "ao-promoter",
+        "ao-sentinel"
+      ]
+    },
+    {
+      "id": "foundry-import",
+      "schema": "ao.atlas.foundry-import.v0.1",
+      "owner": "ao-atlas",
+      "lifecycle_class": "stable",
+      "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "gate_critical": true,
+      "consumers": [
+        "ao-foundry",
+        "ao-mission",
+        "ao-command"
+      ]
+    }
+  ],
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
