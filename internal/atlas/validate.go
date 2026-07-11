@@ -122,6 +122,7 @@ const AtlasCanonicalContractRegistryManifestContract = "ao.atlas.canonical-contr
 const AtlasContractCompatibilityInventoryContract = "ao.atlas.contract-compatibility-inventory.v0.1"
 const AtlasCanonicalJSONVectorsContract = "ao.atlas.canonical-json-vectors.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
+const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AOMissionRefactoringRecommendationsContract = "ao.mission.refactoring-recommendations.v0.1"
 const AtlasRecommendationNextTrackDecisionContract = "ao.atlas.recommendation-next-track-decision.v0.1"
 const AtlasConsumedRecommendationLedgerContract = "ao.atlas.consumed-recommendation-ledger.v0.1"

@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.public-safety-readback-binding.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-12",
+  "status": "bound",
+  "source_readback_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-12/recommendation-readback-before-public-safety-binding.json",
+  "source_readback_digest": "sha256:27132bf9aed7a0a8dacb06ad8fd688008fce4231d9f0b6345fdc1ba638a973a8",
+  "sentinel_evidence_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-12/sentinel_public_safety.json",
+  "sentinel_evidence_digest": "sha256:555c895a2a23b234c9a38764a36a2d2c2a3c09a9fe16940d9a18f9fb6d924179",
+  "verification_summary_path": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-12/verification.json",
+  "verification_summary_digest": "sha256:2b64f0e56268a9db69e2de0d79a30ea8af0ee16201d15885703400fbf017b0ed",
+  "bound_public_safety_scan_status": "passed",
+  "previous_public_safety_scan_status": "required_pending_verification",
+  "ready_nodes_after_binding": 29,
+  "final_response_allowed_after_binding": false,
+  "rsi_remains_denied": true
+}

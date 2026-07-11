@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.node-gate.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-12",
+  "task_id": "mission-recommendation-month3-golden-path-12-task",
+  "status": "cleared",
+  "safe_to_execute": true,
+  "objective": "Add a bounded Foundry import test that consumes Atlas canonical workgraph fields and rejects stale or ambiguous schema aliases.",
+  "mutation_class": "low_risk_code",
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "previous_node_readback": "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-11/recommendation-readback-after.json",
+  "source_recommendation": "month3-golden-path-12",
+  "source_task_digest": "sha256:616c925f446dc7dfb15563569b4e3a770ee4378bd3860b377338736cfd142f28",
+  "source_workgraph_digest": "sha256:ac2cda8ba976f6d360ad8c35f12936a7c408faa120ce034b934ff9528a8b44fe",
+  "required_gates": ["node_gate", "candidate_record", "rollback_record", "tests", "verification", "sentinel_public_safety", "promoter_no_promotion", "command_readback"],
+  "safety_boundaries": {
+    "provider_calls": false,
+    "credential_inspection": false,
+    "direct_main_mutation": false,
+    "release_deploy_publish_upload_tag": false,
+    "dependency_updates": false,
+    "auth_policy_config_widening": false,
+    "hidden_instruction_mutation": false,
+    "broad_rsi_claim": false,
+    "rsi_remains_denied": true
+  }
+}

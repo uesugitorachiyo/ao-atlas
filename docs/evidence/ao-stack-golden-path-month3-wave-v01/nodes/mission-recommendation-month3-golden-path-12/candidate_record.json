@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-12",
+  "task_id": "mission-recommendation-month3-golden-path-12-task",
+  "status": "selected",
+  "source_recommendation": "month3-golden-path-12",
+  "source_task_digest": "sha256:616c925f446dc7dfb15563569b4e3a770ee4378bd3860b377338736cfd142f28",
+  "selected_work": [
+    "Add a raw Foundry import envelope validator that rejects schema aliases.",
+    "Generate a fixture proving Atlas workgraph_id, target_instance, node_id, task_id, and task_hash are consumed from the canonical workgraph.",
+    "Record rejected schema, schema_version, and contractVersion alias cases."
+  ],
+  "source_digests": {
+    "canonical_input": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+    "source_workgraph": "sha256:ac2cda8ba976f6d360ad8c35f12936a7c408faa120ce034b934ff9528a8b44fe",
+    "atlas_base_commit": "sha256:8fa58eb84dda700211c0ca39fd75029659a508f5",
+    "foundry_canonical_import_fixture": "sha256:c0dfac481aa3c321f259f26e048a6352981c367ddfbce5f771baa98e2027b7e5"
+  },
+  "write_scope": [
+    "internal/atlas/mission_foundry_canonical_import_fixture.go",
+    "internal/atlas/mission_foundry_canonical_import_fixture_cli.go",
+    "internal/atlas/mission_foundry_canonical_import_fixture_test.go",
+    "internal/atlas/models.go",
+    "internal/atlas/validate.go",
+    "internal/atlas/recommendation_evidence_validation.go",
+    "internal/atlas/cli.go",
+    "docs/evidence/ao-stack-golden-path-month3-wave-v01/nodes/mission-recommendation-month3-golden-path-12"
+  ],
+  "safe_to_execute": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
