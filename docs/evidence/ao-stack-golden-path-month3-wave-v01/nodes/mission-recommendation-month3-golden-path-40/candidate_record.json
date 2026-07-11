@@ -1,0 +1,14 @@
+{
+  "contract_version": "ao.atlas.candidate-record.v0.1",
+  "node_id": "mission-recommendation-month3-golden-path-40",
+  "task_id": "mission-recommendation-month3-golden-path-40-task",
+  "status": "selected",
+  "objective": "Produce the final golden-path readiness matrix with exact proven capabilities, unresolved blockers, no-promotion status, RSI denial, and at least 40 ranked next recommendations.",
+  "selected_candidate": "golden-path-readiness-matrix",
+  "selection_reason": "Node 40 is the final ready executable node after node 39 completion readback.",
+  "source_recommendation": "month3-golden-path-40",
+  "source_digest": "sha256:bca0d16ccf7214bd7f6b1904a5a91124d3bc85b5290ef48cf6cd2396990d71b8",
+  "source_task_digest": "sha256:4eb61f30b3f14762737ccf0a85708d24bdd56e8590f630f812731c24866dbde1",
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

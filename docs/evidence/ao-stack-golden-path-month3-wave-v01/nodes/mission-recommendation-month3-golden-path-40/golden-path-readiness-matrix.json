@@ -1,0 +1,184 @@
+{
+  "schema": "ao.atlas.golden-path-readiness-matrix.v0.1",
+  "status": "golden_path_readiness_matrix_ready",
+  "completed_nodes": 40,
+  "ready_nodes": 0,
+  "blocked_nodes": 0,
+  "failed_nodes": 0,
+  "proven_capabilities": [
+    "bounded_fixture_replay",
+    "readback_binding",
+    "run_link_digest_verification",
+    "no_promotion_rollup"
+  ],
+  "unresolved_blockers": [
+    "real provider-backed golden path remains outside this fixture-only wave"
+  ],
+  "no_promotion_status": "no_promotion_requested",
+  "promotion_requested": false,
+  "ranked_recommendations": [
+    {
+      "rank": "01",
+      "task": "golden-path-followup-01"
+    },
+    {
+      "rank": "02",
+      "task": "golden-path-followup-02"
+    },
+    {
+      "rank": "03",
+      "task": "golden-path-followup-03"
+    },
+    {
+      "rank": "04",
+      "task": "golden-path-followup-04"
+    },
+    {
+      "rank": "05",
+      "task": "golden-path-followup-05"
+    },
+    {
+      "rank": "06",
+      "task": "golden-path-followup-06"
+    },
+    {
+      "rank": "07",
+      "task": "golden-path-followup-07"
+    },
+    {
+      "rank": "08",
+      "task": "golden-path-followup-08"
+    },
+    {
+      "rank": "09",
+      "task": "golden-path-followup-09"
+    },
+    {
+      "rank": "10",
+      "task": "golden-path-followup-10"
+    },
+    {
+      "rank": "11",
+      "task": "golden-path-followup-11"
+    },
+    {
+      "rank": "12",
+      "task": "golden-path-followup-12"
+    },
+    {
+      "rank": "13",
+      "task": "golden-path-followup-13"
+    },
+    {
+      "rank": "14",
+      "task": "golden-path-followup-14"
+    },
+    {
+      "rank": "15",
+      "task": "golden-path-followup-15"
+    },
+    {
+      "rank": "16",
+      "task": "golden-path-followup-16"
+    },
+    {
+      "rank": "17",
+      "task": "golden-path-followup-17"
+    },
+    {
+      "rank": "18",
+      "task": "golden-path-followup-18"
+    },
+    {
+      "rank": "19",
+      "task": "golden-path-followup-19"
+    },
+    {
+      "rank": "20",
+      "task": "golden-path-followup-20"
+    },
+    {
+      "rank": "21",
+      "task": "golden-path-followup-21"
+    },
+    {
+      "rank": "22",
+      "task": "golden-path-followup-22"
+    },
+    {
+      "rank": "23",
+      "task": "golden-path-followup-23"
+    },
+    {
+      "rank": "24",
+      "task": "golden-path-followup-24"
+    },
+    {
+      "rank": "25",
+      "task": "golden-path-followup-25"
+    },
+    {
+      "rank": "26",
+      "task": "golden-path-followup-26"
+    },
+    {
+      "rank": "27",
+      "task": "golden-path-followup-27"
+    },
+    {
+      "rank": "28",
+      "task": "golden-path-followup-28"
+    },
+    {
+      "rank": "29",
+      "task": "golden-path-followup-29"
+    },
+    {
+      "rank": "30",
+      "task": "golden-path-followup-30"
+    },
+    {
+      "rank": "31",
+      "task": "golden-path-followup-31"
+    },
+    {
+      "rank": "32",
+      "task": "golden-path-followup-32"
+    },
+    {
+      "rank": "33",
+      "task": "golden-path-followup-33"
+    },
+    {
+      "rank": "34",
+      "task": "golden-path-followup-34"
+    },
+    {
+      "rank": "35",
+      "task": "golden-path-followup-35"
+    },
+    {
+      "rank": "36",
+      "task": "golden-path-followup-36"
+    },
+    {
+      "rank": "37",
+      "task": "golden-path-followup-37"
+    },
+    {
+      "rank": "38",
+      "task": "golden-path-followup-38"
+    },
+    {
+      "rank": "39",
+      "task": "golden-path-followup-39"
+    },
+    {
+      "rank": "40",
+      "task": "golden-path-followup-40"
+    }
+  ],
+  "ranked_recommendation_count": 40,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

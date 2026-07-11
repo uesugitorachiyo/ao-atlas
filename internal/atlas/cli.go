@@ -519,6 +519,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "non-ao-replay-binding-fixture", run: runMissionRecommendationsNonAOReplayBindingFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "kill-restart-replay-fixture", run: runMissionRecommendationsKillRestartReplayFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "rollback-terminal-readback-fixture", run: runMissionRecommendationsRollbackTerminalReadbackFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "golden-path-readiness-matrix", run: runMissionRecommendationsGoldenPathReadinessMatrix, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "blueprint-canonical-preservation-fixture", run: runMissionRecommendationsBlueprintCanonicalPreservationFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-canonical-import-fixture", run: runMissionRecommendationsFoundryCanonicalImportFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "command-covenant-field-parity-fixture", run: runMissionRecommendationsCommandCovenantFieldParityFixture, commandClass: missionRecommendationCommandClassPlanningOnly},

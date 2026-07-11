@@ -888,6 +888,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:rollback-terminal-readback-fixture", err
 		}
 		return "typed:rollback-terminal-readback-fixture", ValidateAtlasRollbackTerminalReadbackFixture(value)
+	case AtlasGoldenPathReadinessMatrixContract:
+		value, err := LoadJSON[AtlasGoldenPathReadinessMatrix](path)
+		if err != nil {
+			return "typed:golden-path-readiness-matrix", err
+		}
+		return "typed:golden-path-readiness-matrix", ValidateAtlasGoldenPathReadinessMatrix(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
