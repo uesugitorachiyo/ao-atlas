@@ -1,0 +1,30 @@
+{
+  "objective": "Add stack lockfile and authority manifest fixtures for beta operations baseline.",
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "safety_boundaries": {
+    "approves_work": false,
+    "claims_authority_advance": false,
+    "concurrent_mutation": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "executes_work": false,
+    "mutates_repositories": false,
+    "node_id": "mission-recommendation-month5-beta-operations-01",
+    "provider_calls": false,
+    "release_or_publish": false,
+    "rsi_remains_denied": true,
+    "safe_to_execute": false,
+    "task_id": "mission-recommendation-month5-beta-operations-01-task"
+  },
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "status": "cleared_readback_only"
+}

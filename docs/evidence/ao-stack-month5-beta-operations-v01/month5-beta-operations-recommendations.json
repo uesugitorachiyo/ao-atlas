@@ -1,0 +1,457 @@
+{
+  "schema": "ao.mission.feature-depth-recommendations.v0.3",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "ready",
+  "minimum_tasks": 40,
+  "recommendation_count": 40,
+  "source_evidence_root": "docs/evidence/ao-stack-month4-consolidation-v01",
+  "source_readback_path": "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+  "source_assertion_path": "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json",
+  "tasks": [
+    {
+      "rank": 1,
+      "id": "month5-beta-operations-01",
+      "owner": "ao-atlas",
+      "theme": "stack-lockfile-authority",
+      "task": "Add stack lockfile and authority manifest fixtures for beta operations baseline.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 2,
+      "id": "month5-beta-operations-02",
+      "owner": "ao-atlas",
+      "theme": "architecture-source-truth",
+      "task": "Bind architecture source truth readback to current repository behavior inventory.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 3,
+      "id": "month5-beta-operations-03",
+      "owner": "ao-atlas",
+      "theme": "schema-registry-authority",
+      "task": "Add Covenant schema registry handoff fixture with producer consumer ownership rows.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 4,
+      "id": "month5-beta-operations-04",
+      "owner": "ao-atlas",
+      "theme": "contract-compatibility",
+      "task": "Create producer consumer compatibility ledger for Mission Blueprint Atlas handoff contracts.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 5,
+      "id": "month5-beta-operations-05",
+      "owner": "ao-atlas",
+      "theme": "blueprint-canonical-bytes",
+      "task": "Add Blueprint canonical bytes digest preservation fixture for downstream imports.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 6,
+      "id": "month5-beta-operations-06",
+      "owner": "ao-atlas",
+      "theme": "atlas-compatibility-matrix",
+      "task": "Generate Atlas compatibility matrix rows for current stack contracts.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 7,
+      "id": "month5-beta-operations-07",
+      "owner": "ao-atlas",
+      "theme": "foundry-safe-scheduling",
+      "task": "Bind Foundry safe next work scheduling readiness to Atlas node imports.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 8,
+      "id": "month5-beta-operations-08",
+      "owner": "ao-atlas",
+      "theme": "forge-goalrun-lifecycle",
+      "task": "Add Forge GoalRun evidence fixture for dry run lifecycle boundaries.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 9,
+      "id": "month5-beta-operations-09",
+      "owner": "ao-atlas",
+      "theme": "command-thin-client",
+      "task": "Record Command thin client boundary fixture against Mission readback ownership.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 10,
+      "id": "month5-beta-operations-10",
+      "owner": "ao-atlas",
+      "theme": "ao2-approval-integrity",
+      "task": "Add AO2 exact approval bytes fixture requiring base commit and patch digest.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 11,
+      "id": "month5-beta-operations-11",
+      "owner": "ao-atlas",
+      "theme": "ao2-approval-integrity",
+      "task": "Add AO2 auto approval denial fixture for hardcoded identity paths.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 12,
+      "id": "month5-beta-operations-12",
+      "owner": "ao-atlas",
+      "theme": "covenant-policy-hash",
+      "task": "Add Covenant policy hash fixture binding policy fields into ticket evidence.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 13,
+      "id": "month5-beta-operations-13",
+      "owner": "ao-atlas",
+      "theme": "control-plane-transactional-state",
+      "task": "Add control plane transactional evidence transition fixture with rollback readback.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 14,
+      "id": "month5-beta-operations-14",
+      "owner": "ao-atlas",
+      "theme": "control-plane-transactional-state",
+      "task": "Add control plane migration metadata fixture for durable beta storage.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 15,
+      "id": "month5-beta-operations-15",
+      "owner": "ao-atlas",
+      "theme": "control-plane-transactional-state",
+      "task": "Add local backup restore drill fixture for beta operations evidence state.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 16,
+      "id": "month5-beta-operations-16",
+      "owner": "ao-atlas",
+      "theme": "mission-restart-recovery",
+      "task": "Add Mission restart replay fixture preserving exactly once node accounting.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 17,
+      "id": "month5-beta-operations-17",
+      "owner": "ao-atlas",
+      "theme": "mission-restart-recovery",
+      "task": "Add Mission kill restart replay fixture for interrupted Month 5 nodes.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 18,
+      "id": "month5-beta-operations-18",
+      "owner": "ao-atlas",
+      "theme": "golden-path-dry-run",
+      "task": "Add golden path dry run readiness matrix without provider execution.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 19,
+      "id": "month5-beta-operations-19",
+      "owner": "ao-atlas",
+      "theme": "golden-path-dry-run",
+      "task": "Add clean room non AO replay fixture for external repository preparation.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 20,
+      "id": "month5-beta-operations-20",
+      "owner": "ao-atlas",
+      "theme": "assurance-hosted-ci",
+      "task": "Add Arena hosted CI workflow fixture with readiness readback binding.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 21,
+      "id": "month5-beta-operations-21",
+      "owner": "ao-atlas",
+      "theme": "assurance-hosted-ci",
+      "task": "Add Crucible hosted CI workflow fixture with failure injection readback.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 22,
+      "id": "month5-beta-operations-22",
+      "owner": "ao-atlas",
+      "theme": "assurance-hosted-ci",
+      "task": "Add Sentinel hosted CI workflow fixture with native signal readback.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 23,
+      "id": "month5-beta-operations-23",
+      "owner": "ao-atlas",
+      "theme": "assurance-hosted-ci",
+      "task": "Add Promoter hosted CI workflow fixture with no activation boundary.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 24,
+      "id": "month5-beta-operations-24",
+      "owner": "ao-atlas",
+      "theme": "sentinel-native-signals",
+      "task": "Bind Sentinel native signal state fixture to Promoter input readiness.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 25,
+      "id": "month5-beta-operations-25",
+      "owner": "ao-atlas",
+      "theme": "promoter-no-activation",
+      "task": "Add Promoter no activation boundary fixture for beta operations rollups.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 26,
+      "id": "month5-beta-operations-26",
+      "owner": "ao-atlas",
+      "theme": "operator-command-surface",
+      "task": "Add Command compact timeline and approval inbox fixture for beta operations.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 27,
+      "id": "month5-beta-operations-27",
+      "owner": "ao-atlas",
+      "theme": "model-provenance",
+      "task": "Add deterministic run provenance fixture with explicit provider and model fields.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 28,
+      "id": "month5-beta-operations-28",
+      "owner": "ao-atlas",
+      "theme": "module-extraction-preflight",
+      "task": "Add AO2 module extraction preflight fixture with no behavior change boundary.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 29,
+      "id": "month5-beta-operations-29",
+      "owner": "ao-atlas",
+      "theme": "module-extraction-preflight",
+      "task": "Add Foundry module extraction preflight fixture with CLI parity checks.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 30,
+      "id": "month5-beta-operations-30",
+      "owner": "ao-atlas",
+      "theme": "module-extraction-preflight",
+      "task": "Add Forge module extraction preflight fixture with GoalRun parity checks.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 31,
+      "id": "month5-beta-operations-31",
+      "owner": "ao-atlas",
+      "theme": "module-extraction-preflight",
+      "task": "Add Command module extraction preflight fixture with readback parity checks.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 32,
+      "id": "month5-beta-operations-32",
+      "owner": "ao-atlas",
+      "theme": "evidence-delta-guard",
+      "task": "Add evidence growth delta guard fixture with warning threshold readback.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 33,
+      "id": "month5-beta-operations-33",
+      "owner": "ao-atlas",
+      "theme": "cross-platform-fixtures",
+      "task": "Add cross platform local fixture matrix for beta operations commands.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 34,
+      "id": "month5-beta-operations-34",
+      "owner": "ao-atlas",
+      "theme": "failure-injection-matrix",
+      "task": "Add beta failure injection matrix fixture for rollback terminal readbacks.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 35,
+      "id": "month5-beta-operations-35",
+      "owner": "ao-atlas",
+      "theme": "soak-readiness",
+      "task": "Add beta operations soak readiness fixture with restart and recovery metrics.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 36,
+      "id": "month5-beta-operations-36",
+      "owner": "ao-atlas",
+      "theme": "pilot-runbook-preparation",
+      "task": "Add three user pilot runbook fixture with stop before live pilot gate.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 37,
+      "id": "month5-beta-operations-37",
+      "owner": "ao-atlas",
+      "theme": "real-run-ledger",
+      "task": "Add real run ledger fixture separating dry run evidence from pilot execution.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 38,
+      "id": "month5-beta-operations-38",
+      "owner": "ao-atlas",
+      "theme": "release-bom-preparation",
+      "task": "Add beta release BOM draft fixture without publishing or tagging.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 39,
+      "id": "month5-beta-operations-39",
+      "owner": "ao-atlas",
+      "theme": "public-wording-guard",
+      "task": "Add public wording guard fixture for beta claims and RSI denial.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    },
+    {
+      "rank": 40,
+      "id": "month5-beta-operations-40",
+      "owner": "ao-atlas",
+      "theme": "terminal-rollup-handoff",
+      "task": "Add Month 5 terminal rollup and Month 6 handoff recommendation fixture.",
+      "evidence_refs": [
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+        "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/month4-final-closure-rollup.json"
+      ]
+    }
+  ],
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "mutates_repositories": false
+}
