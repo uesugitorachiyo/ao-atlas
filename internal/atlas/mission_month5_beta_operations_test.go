@@ -543,6 +543,28 @@ type month5PilotRunbookFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5RealRunLedgerFixture struct {
+	Schema                     string   `json:"schema"`
+	NodeID                     string   `json:"node_id"`
+	MissionID                  string   `json:"mission_id"`
+	Status                     string   `json:"status"`
+	LedgerMode                 string   `json:"ledger_mode"`
+	DryRunEvidenceCount        int      `json:"dry_run_evidence_count"`
+	RealRunEvidenceCount       int      `json:"real_run_evidence_count"`
+	PilotExecutionCount        int      `json:"pilot_execution_count"`
+	EvidenceClasses            []string `json:"evidence_classes"`
+	RealRunRequiredFields      []string `json:"real_run_required_fields"`
+	SeparatedDryRunFromRealRun bool     `json:"separated_dry_run_from_real_run"`
+	AllowsPlanningAsRealRun    bool     `json:"allows_planning_as_real_run"`
+	LiveExecutionAllowed       bool     `json:"live_execution_allowed"`
+	ProviderCallsAllowed       bool     `json:"provider_calls_allowed"`
+	CredentialUseAllowed       bool     `json:"credential_use_allowed"`
+	NoPromotionRequested       bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance     bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied           bool     `json:"rsi_remains_denied"`
+	SafeToExecute              bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1978,5 +2000,42 @@ func TestMonth5ThreeUserPilotRunbookFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("pilot runbook changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5RealRunLedgerFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-37", "real-run-ledger.json")
+	fixture := mustLoadJSON[month5RealRunLedgerFixture](t, fixturePath)
+	if fixture.Schema != "ao.atlas.month5.real-run-ledger.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-37" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "real_run_ledger_bound_dry_run_only" ||
+		fixture.LedgerMode != "separate_dry_run_from_real_run" {
+		t.Fatalf("unexpected real run ledger fixture header: %#v", fixture)
+	}
+	for _, required := range []string{"dry_run", "pilot_execution", "real_run", "rollback_receipt"} {
+		if !containsValue(fixture.EvidenceClasses, required) {
+			t.Fatalf("real run ledger missing evidence class %s: %#v", required, fixture.EvidenceClasses)
+		}
+	}
+	for _, required := range []string{"repository", "base_commit", "approved_diff_digest", "operator_approval_ref", "provider_model", "rollback_receipt"} {
+		if !containsValue(fixture.RealRunRequiredFields, required) {
+			t.Fatalf("real run ledger missing required field %s: %#v", required, fixture.RealRunRequiredFields)
+		}
+	}
+	if fixture.DryRunEvidenceCount < 36 ||
+		fixture.RealRunEvidenceCount != 0 ||
+		fixture.PilotExecutionCount != 0 ||
+		!fixture.SeparatedDryRunFromRealRun ||
+		fixture.AllowsPlanningAsRealRun ||
+		fixture.LiveExecutionAllowed ||
+		fixture.ProviderCallsAllowed ||
+		fixture.CredentialUseAllowed ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("real run ledger changed safety posture: %#v", fixture)
 	}
 }

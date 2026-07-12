@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.month5.real-run-ledger.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-37",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "real_run_ledger_bound_dry_run_only",
+  "ledger_mode": "separate_dry_run_from_real_run",
+  "dry_run_evidence_count": 36,
+  "real_run_evidence_count": 0,
+  "pilot_execution_count": 0,
+  "evidence_classes": [
+    "dry_run",
+    "pilot_execution",
+    "real_run",
+    "rollback_receipt"
+  ],
+  "real_run_required_fields": [
+    "repository",
+    "base_commit",
+    "approved_diff_digest",
+    "operator_approval_ref",
+    "provider_model",
+    "rollback_receipt"
+  ],
+  "separated_dry_run_from_real_run": true,
+  "allows_planning_as_real_run": false,
+  "live_execution_allowed": false,
+  "provider_calls_allowed": false,
+  "credential_use_allowed": false,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
