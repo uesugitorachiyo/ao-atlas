@@ -185,6 +185,26 @@ type month5CommandThinClientBoundaryFixture struct {
 	PromotionDecisionAllowed bool     `json:"promotion_decision_allowed"`
 }
 
+type month5AO2ExactApprovalBytesFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	BaseCommit             string   `json:"base_commit"`
+	ProposedBytesDigest    string   `json:"proposed_bytes_digest"`
+	PatchDigest            string   `json:"patch_digest"`
+	ApprovalTicketDigest   string   `json:"approval_ticket_digest"`
+	RequiredBindings       []string `json:"required_bindings"`
+	RejectedApprovalModes  []string `json:"rejected_approval_modes"`
+	NoAutoApproval         bool     `json:"no_auto_approval"`
+	NoProviderCalls        bool     `json:"no_provider_calls"`
+	NoMutationApplication  bool     `json:"no_mutation_application"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -598,5 +618,47 @@ func TestMonth5CommandThinClientBoundaryFixture(t *testing.T) {
 		fixture.PolicyOverrideAllowed ||
 		fixture.PromotionDecisionAllowed {
 		t.Fatalf("Command thin-client fixture changed authority posture: %#v", fixture)
+	}
+}
+
+func TestMonth5AO2ExactApprovalBytesFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-10", "ao2-exact-approval-bytes.json")
+	fixture := mustLoadJSON[month5AO2ExactApprovalBytesFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.ao2-exact-approval-bytes.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-10" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "approval_bytes_bound" ||
+		fixture.BaseCommit == "" {
+		t.Fatalf("unexpected AO2 approval fixture header: %#v", fixture)
+	}
+	for name, digest := range map[string]string{
+		"proposed_bytes_digest":  fixture.ProposedBytesDigest,
+		"patch_digest":           fixture.PatchDigest,
+		"approval_ticket_digest": fixture.ApprovalTicketDigest,
+	} {
+		if !digestPattern.MatchString(digest) {
+			t.Fatalf("%s must be sha256-bound: %s", name, digest)
+		}
+	}
+	for _, required := range []string{"base_commit", "proposed_bytes_digest", "patch_digest", "approval_ticket_digest", "operator_identity"} {
+		if !containsValue(fixture.RequiredBindings, required) {
+			t.Fatalf("AO2 approval fixture missing binding %s: %#v", required, fixture.RequiredBindings)
+		}
+	}
+	for _, rejected := range []string{"hardcoded_identity_auto_approval", "patchless_approval", "base_commit_omitted", "digest_substitution"} {
+		if !containsValue(fixture.RejectedApprovalModes, rejected) {
+			t.Fatalf("AO2 approval fixture missing rejected mode %s: %#v", rejected, fixture.RejectedApprovalModes)
+		}
+	}
+	if !fixture.NoAutoApproval ||
+		!fixture.NoProviderCalls ||
+		!fixture.NoMutationApplication ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("AO2 approval fixture changed safety posture: %#v", fixture)
 	}
 }

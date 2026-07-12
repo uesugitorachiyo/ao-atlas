@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.command-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "node_id": "mission-recommendation-month5-beta-operations-10",
+  "task_id": "mission-recommendation-month5-beta-operations-10-task",
+  "completed_nodes_before": 9,
+  "expected_completed_nodes_after": 10,
+  "ready_nodes_before": 31,
+  "expected_ready_nodes_after": 30,
+  "expected_next_executable_node_after": "mission-recommendation-month5-beta-operations-11",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true
+}
