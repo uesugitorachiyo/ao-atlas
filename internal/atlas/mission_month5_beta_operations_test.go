@@ -257,6 +257,25 @@ type month5ControlPlaneTransactionalEvidenceFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5ControlPlaneMigrationMetadataFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	MigrationID            string   `json:"migration_id"`
+	FromVersion            string   `json:"from_version"`
+	ToVersion              string   `json:"to_version"`
+	MetadataChecksum       string   `json:"metadata_checksum"`
+	RequiredMetadata       []string `json:"required_metadata"`
+	ReplayChecks           []string `json:"replay_checks"`
+	NoDestructiveMigration bool     `json:"no_destructive_migration"`
+	RollbackPlanBound      bool     `json:"rollback_plan_bound"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -824,5 +843,42 @@ func TestMonth5ControlPlaneTransactionalEvidenceFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("control-plane transactional fixture changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5ControlPlaneMigrationMetadataFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-14", "control-plane-migration-metadata.json")
+	fixture := mustLoadJSON[month5ControlPlaneMigrationMetadataFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.control-plane-migration-metadata.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-14" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "durable_beta_storage_metadata_bound" ||
+		fixture.MigrationID == "" ||
+		fixture.FromVersion == "" ||
+		fixture.ToVersion == "" {
+		t.Fatalf("unexpected control-plane migration metadata header: %#v", fixture)
+	}
+	if !digestPattern.MatchString(fixture.MetadataChecksum) {
+		t.Fatalf("migration metadata checksum must be sha256-bound: %s", fixture.MetadataChecksum)
+	}
+	for _, required := range []string{"migration_id", "applied_at", "from_version", "to_version", "checksum", "rollback_plan"} {
+		if !containsValue(fixture.RequiredMetadata, required) {
+			t.Fatalf("control-plane migration fixture missing metadata %s: %#v", required, fixture.RequiredMetadata)
+		}
+	}
+	for _, required := range []string{"forward_replay", "rollback_replay", "idempotent_reapply", "pre_migration_backup_readback"} {
+		if !containsValue(fixture.ReplayChecks, required) {
+			t.Fatalf("control-plane migration fixture missing replay check %s: %#v", required, fixture.ReplayChecks)
+		}
+	}
+	if !fixture.NoDestructiveMigration ||
+		!fixture.RollbackPlanBound ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("control-plane migration metadata fixture changed safety posture: %#v", fixture)
 	}
 }
