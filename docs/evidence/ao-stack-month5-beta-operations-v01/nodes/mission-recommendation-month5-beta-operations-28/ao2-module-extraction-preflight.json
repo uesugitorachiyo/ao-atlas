@@ -1,0 +1,33 @@
+{
+  "schema": "ao.atlas.month5.module-extraction-preflight.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-28",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "module_extraction_preflight_bound",
+  "repository": "ao2",
+  "target_module": "ao2-cli",
+  "preflight_checks": [
+    "current_cli_surface_inventory",
+    "golden_cli_smoke_snapshot",
+    "rollback_plan",
+    "diff_only_module_boundary"
+  ],
+  "forbidden_changes": [
+    "behavior_change",
+    "dependency_update",
+    "provider_call",
+    "release_or_tag"
+  ],
+  "rollback_artifacts": [
+    "pre_extraction_snapshot",
+    "module_boundary_manifest",
+    "revert_plan"
+  ],
+  "fixture_only": true,
+  "no_behavior_change": true,
+  "no_dependency_update": true,
+  "no_provider_calls": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
