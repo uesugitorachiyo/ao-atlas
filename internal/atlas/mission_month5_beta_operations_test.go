@@ -435,6 +435,21 @@ type month5PromoterHostedCINoActivationBinding struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5SentinelPromoterInputReadinessBinding struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	FixtureRef             string   `json:"fixture_ref"`
+	PromoterInputs         []string `json:"promoter_inputs"`
+	RequiredVerdicts       []string `json:"required_verdicts"`
+	FixtureOnly            bool     `json:"fixture_only"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1371,5 +1386,52 @@ func TestMonth5PromoterHostedCIWorkflowFixture(t *testing.T) {
 		!binding.RSIRemainsDenied ||
 		binding.SafeToExecute {
 		t.Fatalf("Promoter hosted CI binding changed safety posture: %#v", binding)
+	}
+}
+
+func TestMonth5SentinelSignalStatePromoterInputReadinessFixture(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-24")
+	fixturePath := filepath.Join(nodeDir, "sentinel-signal-state-fixture.json")
+	fixture := mustLoadJSON[AtlasSentinelSignalStateFixture](t, fixturePath)
+	if err := ValidateAtlasSentinelSignalStateFixture(fixture); err != nil {
+		t.Fatalf("Sentinel signal state fixture is invalid: %v", err)
+	}
+	if fixture.SignalCount != 4 ||
+		fixture.StateCount != 4 ||
+		fixture.MatrixCount != 16 ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("Sentinel signal state fixture changed safety posture: %#v", fixture)
+	}
+
+	bindingPath := filepath.Join(nodeDir, "sentinel-promoter-input-readiness-binding.json")
+	binding := mustLoadJSON[month5SentinelPromoterInputReadinessBinding](t, bindingPath)
+	if binding.Schema != "ao.atlas.month5.sentinel-promoter-input-readiness-binding.v0.1" ||
+		binding.NodeID != "mission-recommendation-month5-beta-operations-24" ||
+		binding.MissionID != "mission-4d91b0a9e4ab273e" ||
+		binding.Status != "promoter_input_readiness_bound" ||
+		binding.FixtureRef != "sentinel-signal-state-fixture.json" {
+		t.Fatalf("unexpected Sentinel/Promoter input readiness binding header: %#v", binding)
+	}
+	for _, required := range []string{"ci", "runtime", "policy", "evidence_freshness"} {
+		if !containsValue(binding.PromoterInputs, required) {
+			t.Fatalf("Sentinel/Promoter binding missing input %s: %#v", required, binding.PromoterInputs)
+		}
+	}
+	for _, required := range []string{"allow_continue", "wait", "refresh_required", "block"} {
+		if !containsValue(binding.RequiredVerdicts, required) {
+			t.Fatalf("Sentinel/Promoter binding missing verdict %s: %#v", required, binding.RequiredVerdicts)
+		}
+	}
+	if !binding.FixtureOnly ||
+		!binding.NoPromotionRequested ||
+		binding.ClaimsAuthorityAdvance ||
+		!binding.RSIRemainsDenied ||
+		binding.SafeToExecute {
+		t.Fatalf("Sentinel/Promoter input readiness binding changed safety posture: %#v", binding)
 	}
 }
