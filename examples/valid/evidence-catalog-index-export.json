@@ -1,0 +1,40 @@
+{
+  "schema": "ao.atlas.evidence-catalog-index-export.v0.1",
+  "status": "evidence_catalog_index_export_ready",
+  "wave": "ao-stack-month6-recommendations",
+  "index_entries": [
+    {
+      "name": "final_closure_consolidation_wave",
+      "evidence_root": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01",
+      "artifact_class": "bulk_campaign_output",
+      "digest_mode": "directory_digest_required_before_externalization",
+      "index_only": true
+    },
+    {
+      "name": "long_run_hardening_wave",
+      "evidence_root": "docs/evidence/ao-atlas-long-run-hardening-wave-v01",
+      "artifact_class": "bulk_campaign_output",
+      "digest_mode": "directory_digest_required_before_externalization",
+      "index_only": true
+    },
+    {
+      "name": "month5_beta_operations",
+      "evidence_root": "docs/evidence/ao-stack-month5-beta-operations-v01",
+      "artifact_class": "bulk_campaign_output",
+      "digest_mode": "directory_digest_required_before_externalization",
+      "index_only": true
+    }
+  ],
+  "index_entry_count": 3,
+  "bulk_campaign_artifacts_cataloged": true,
+  "source_artifacts_retained": true,
+  "uploads_artifacts": false,
+  "deletes_source_artifacts": false,
+  "content_addressed_export_required": true,
+  "small_replayable_fixtures_retained": true,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
