@@ -35,6 +35,22 @@ type month5AuthorityBoundary struct {
 	Constraint string `json:"constraint"`
 }
 
+type month5ArchitectureSourceTruthFixture struct {
+	Schema                       string                    `json:"schema"`
+	NodeID                       string                    `json:"node_id"`
+	MissionID                    string                    `json:"mission_id"`
+	Status                       string                    `json:"status"`
+	ArchitectureReadinessSource  string                    `json:"architecture_readiness_source"`
+	RepositoryBehaviorSource     string                    `json:"repository_behavior_source"`
+	IncludedRepositories         []string                  `json:"included_repositories"`
+	CurrentAuthorityStatements   []month5AuthorityBoundary `json:"current_authority_statements"`
+	OutdatedDocumentationSignals []string                  `json:"outdated_documentation_signals"`
+	NoPromotionRequested         bool                      `json:"no_promotion_requested"`
+	RSIRemainsDenied             bool                      `json:"rsi_remains_denied"`
+	ClaimsAuthorityAdvance       bool                      `json:"claims_authority_advance"`
+	SafeToExecute                bool                      `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -142,5 +158,52 @@ func TestMonth5StackLockfileAuthorityManifestFixture(t *testing.T) {
 		fixture.ExecutesWork ||
 		fixture.ApprovesWork {
 		t.Fatalf("authority manifest changed promotion or execution boundaries: %#v", fixture)
+	}
+}
+
+func TestMonth5ArchitectureSourceTruthReadbackFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-02", "architecture-source-truth-readback.json")
+	fixture := mustLoadJSON[month5ArchitectureSourceTruthFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.architecture-source-truth-readback.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-02" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "current_behavior_inventory_bound" {
+		t.Fatalf("unexpected architecture source-truth header: %#v", fixture)
+	}
+	if fixture.ArchitectureReadinessSource == "" || fixture.RepositoryBehaviorSource == "" {
+		t.Fatalf("architecture readback must bind both documentation and behavior sources: %#v", fixture)
+	}
+	if !containsValue(fixture.IncludedRepositories, "ao-mission") ||
+		!containsValue(fixture.IncludedRepositories, "ao-blueprint") ||
+		!containsValue(fixture.IncludedRepositories, "ao-atlas") ||
+		len(fixture.IncludedRepositories) != 14 {
+		t.Fatalf("architecture source-truth inventory must include all active repositories: %#v", fixture.IncludedRepositories)
+	}
+	foundMissionBoundary := false
+	foundBlueprintBoundary := false
+	foundRSIBoundary := false
+	for _, statement := range fixture.CurrentAuthorityStatements {
+		switch statement.Owner {
+		case "ao-mission":
+			foundMissionBoundary = true
+		case "ao-blueprint":
+			foundBlueprintBoundary = true
+		case "rsi":
+			foundRSIBoundary = true
+		}
+	}
+	if !foundMissionBoundary || !foundBlueprintBoundary || !foundRSIBoundary {
+		t.Fatalf("source-truth readback must preserve Mission, Blueprint, and RSI boundaries: %#v", fixture.CurrentAuthorityStatements)
+	}
+	if len(fixture.OutdatedDocumentationSignals) < 2 {
+		t.Fatalf("expected concrete stale documentation signals: %#v", fixture.OutdatedDocumentationSignals)
+	}
+	if !fixture.NoPromotionRequested ||
+		!fixture.RSIRemainsDenied ||
+		fixture.ClaimsAuthorityAdvance ||
+		fixture.SafeToExecute {
+		t.Fatalf("source-truth readback changed safety posture: %#v", fixture)
 	}
 }
