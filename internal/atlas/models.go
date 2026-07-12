@@ -2555,6 +2555,56 @@ type AtlasMonth6GoldenPathDryRunRehearsal struct {
 	MutatesRepository       bool   `json:"mutates_repository"`
 }
 
+type AtlasMonth6KillRestartGoldenPathRehearsal struct {
+	Schema                    string                                         `json:"schema"`
+	NodeID                    string                                         `json:"node_id"`
+	Status                    string                                         `json:"status"`
+	SourceRecommendationRank  int                                            `json:"source_recommendation_rank"`
+	SourceRecommendationTask  string                                         `json:"source_recommendation_task"`
+	SafetyGate                string                                         `json:"safety_gate"`
+	SourceRehearsalRef        string                                         `json:"source_rehearsal_ref"`
+	InterruptionMarker        string                                         `json:"interruption_marker"`
+	RestartResumeMarker       string                                         `json:"restart_resume_marker"`
+	RehearsalCount            int                                            `json:"rehearsal_count"`
+	Rehearsals                []AtlasMonth6KillRestartGoldenPathRehearsalRow `json:"rehearsals"`
+	FixtureOnly               bool                                           `json:"fixture_only"`
+	DryRunOnly                bool                                           `json:"dry_run_only"`
+	KilledRunReplayed         bool                                           `json:"killed_run_replayed"`
+	RestartReadbackBound      bool                                           `json:"restart_readback_bound"`
+	NoLostEvidence            bool                                           `json:"no_lost_evidence"`
+	DuplicateMutationDetected bool                                           `json:"duplicate_mutation_detected"`
+	FalseCompletionDetected   bool                                           `json:"false_completion_detected"`
+	NoPromotionRequested      bool                                           `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance    bool                                           `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool                                           `json:"rsi_remains_denied"`
+	SafeToExecute             bool                                           `json:"safe_to_execute"`
+	ExecutesWork              bool                                           `json:"executes_work"`
+	ApprovesWork              bool                                           `json:"approves_work"`
+	MutatesRepositories       bool                                           `json:"mutates_repositories"`
+	ProviderCallsAllowed      bool                                           `json:"provider_calls_allowed"`
+	CredentialUseAllowed      bool                                           `json:"credential_use_allowed"`
+	LiveMutationAllowed       bool                                           `json:"live_mutation_allowed"`
+	ReleaseOrPublishAllowed   bool                                           `json:"release_or_publish_allowed"`
+	ApprovalGranted           bool                                           `json:"approval_granted"`
+}
+
+type AtlasMonth6KillRestartGoldenPathRehearsalRow struct {
+	ID                         string `json:"id"`
+	KilledAfterCheckpoint      bool   `json:"killed_after_checkpoint"`
+	RestartReadbackRef         string `json:"restart_readback_ref"`
+	RollbackReceiptRef         string `json:"rollback_receipt_ref"`
+	CommandReadbackRef         string `json:"command_readback_ref"`
+	EventIndexRebuilt          bool   `json:"event_index_rebuilt"`
+	ResumeSelectedSameNextNode bool   `json:"resume_selected_same_next_node"`
+	NoLostEvidence             bool   `json:"no_lost_evidence"`
+	DuplicateMutationDetected  bool   `json:"duplicate_mutation_detected"`
+	FalseCompletionDetected    bool   `json:"false_completion_detected"`
+	ProviderCallsAllowed       bool   `json:"provider_calls_allowed"`
+	SafeToExecute              bool   `json:"safe_to_execute"`
+	ExecutesWork               bool   `json:"executes_work"`
+	MutatesRepository          bool   `json:"mutates_repository"`
+}
+
 type AtlasMonth6OperatorEvidenceDashboardPacket struct {
 	Schema                               string                                    `json:"schema"`
 	NodeID                               string                                    `json:"node_id"`

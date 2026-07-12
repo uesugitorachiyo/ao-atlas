@@ -1002,6 +1002,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month6-operator-evidence-dashboard-packet", err
 		}
 		return "typed:month6-operator-evidence-dashboard-packet", ValidateAtlasMonth6OperatorEvidenceDashboardPacket(value)
+	case AtlasMonth6KillRestartGoldenPathRehearsalContract:
+		value, err := LoadJSON[AtlasMonth6KillRestartGoldenPathRehearsal](path)
+		if err != nil {
+			return "typed:month6-kill-restart-golden-path-rehearsal", err
+		}
+		return "typed:month6-kill-restart-golden-path-rehearsal", ValidateAtlasMonth6KillRestartGoldenPathRehearsal(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
