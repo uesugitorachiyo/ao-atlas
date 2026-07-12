@@ -1,0 +1,19 @@
+{
+  "contract_version": "ao.atlas.run-link.v0.1",
+  "task_id": "mission-recommendation-month5-beta-operations-25-task",
+  "status": "completed",
+  "evidence": {
+    "candidate_record": "nodes/mission-recommendation-month5-beta-operations-25/candidate_record.json",
+    "checkpoint_bundle": "nodes/mission-recommendation-month5-beta-operations-25/checkpoint_bundle.json",
+    "command_readback": "nodes/mission-recommendation-month5-beta-operations-25/command_readback.json",
+    "foundry_import": "nodes/mission-recommendation-month5-beta-operations-25/foundry-import.json",
+    "implementation_evidence": "nodes/mission-recommendation-month5-beta-operations-25/implementation_evidence.json",
+    "node_gate": "nodes/mission-recommendation-month5-beta-operations-25/node_gate.json",
+    "promoter_no_promotion": "nodes/mission-recommendation-month5-beta-operations-25/promoter_no_promotion.json",
+    "rollback_record": "nodes/mission-recommendation-month5-beta-operations-25/rollback_record.json",
+    "sentinel_public_safety": "nodes/mission-recommendation-month5-beta-operations-25/sentinel_public_safety.json",
+    "tests": "nodes/mission-recommendation-month5-beta-operations-25/tests.json",
+    "verification": "nodes/mission-recommendation-month5-beta-operations-25/verification.json"
+  },
+  "digest": "sha256:9f9fc8f82dd2568a0bf9b36334a3fe3daf3ef582f46b1c4b4d24cb48c1cd2009"
+}

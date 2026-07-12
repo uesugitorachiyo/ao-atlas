@@ -450,6 +450,22 @@ type month5SentinelPromoterInputReadinessBinding struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5PromoterBetaRollupNoActivationBinding struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	FixtureRef             string   `json:"fixture_ref"`
+	RollupInputs           []string `json:"rollup_inputs"`
+	AllowedDecisions       []string `json:"allowed_decisions"`
+	ForbiddenActions       []string `json:"forbidden_actions"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ActivationAllowed      bool     `json:"activation_allowed"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1433,5 +1449,57 @@ func TestMonth5SentinelSignalStatePromoterInputReadinessFixture(t *testing.T) {
 		!binding.RSIRemainsDenied ||
 		binding.SafeToExecute {
 		t.Fatalf("Sentinel/Promoter input readiness binding changed safety posture: %#v", binding)
+	}
+}
+
+func TestMonth5PromoterNoActivationBoundaryRollupFixture(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-25")
+	fixturePath := filepath.Join(nodeDir, "promoter-no-activation-boundary-fixture.json")
+	fixture := mustLoadJSON[AtlasPromoterNoActivationBoundaryFixture](t, fixturePath)
+	if err := ValidateAtlasPromoterNoActivationBoundaryFixture(fixture); err != nil {
+		t.Fatalf("Promoter no-activation rollup fixture is invalid: %v", err)
+	}
+	if fixture.Decision != "no_promotion" ||
+		fixture.ActivationExecutionOwned ||
+		fixture.ReleaseExecutionOwned ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("Promoter no-activation rollup fixture changed safety posture: %#v", fixture)
+	}
+
+	bindingPath := filepath.Join(nodeDir, "promoter-beta-rollup-no-activation-binding.json")
+	binding := mustLoadJSON[month5PromoterBetaRollupNoActivationBinding](t, bindingPath)
+	if binding.Schema != "ao.atlas.month5.promoter-beta-rollup-no-activation-binding.v0.1" ||
+		binding.NodeID != "mission-recommendation-month5-beta-operations-25" ||
+		binding.MissionID != "mission-4d91b0a9e4ab273e" ||
+		binding.Status != "beta_rollup_no_activation_bound" ||
+		binding.FixtureRef != "promoter-no-activation-boundary-fixture.json" {
+		t.Fatalf("unexpected Promoter beta rollup no-activation binding header: %#v", binding)
+	}
+	for _, required := range []string{"sentinel_signal_state", "command_readback", "foundry_rollup", "public_safety_scan"} {
+		if !containsValue(binding.RollupInputs, required) {
+			t.Fatalf("Promoter beta rollup binding missing input %s: %#v", required, binding.RollupInputs)
+		}
+	}
+	for _, required := range []string{"no_promotion", "blocked", "insufficient_evidence"} {
+		if !containsValue(binding.AllowedDecisions, required) {
+			t.Fatalf("Promoter beta rollup binding missing decision %s: %#v", required, binding.AllowedDecisions)
+		}
+	}
+	for _, forbidden := range []string{"activate", "release", "deploy", "publish", "tag"} {
+		if !containsValue(binding.ForbiddenActions, forbidden) {
+			t.Fatalf("Promoter beta rollup binding missing forbidden action %s: %#v", forbidden, binding.ForbiddenActions)
+		}
+	}
+	if !binding.NoPromotionRequested ||
+		binding.ActivationAllowed ||
+		binding.ClaimsAuthorityAdvance ||
+		!binding.RSIRemainsDenied ||
+		binding.SafeToExecute {
+		t.Fatalf("Promoter beta rollup binding changed safety posture: %#v", binding)
 	}
 }
