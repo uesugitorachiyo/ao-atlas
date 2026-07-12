@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.month5.implementation-evidence.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-11",
+  "task_id": "mission-recommendation-month5-beta-operations-11-task",
+  "status": "implemented",
+  "artifacts": [
+    "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-11/ao2-auto-approval-denial.json",
+    "internal/atlas/mission_month5_beta_operations_test.go"
+  ],
+  "summary": "AO2 auto-approval denial evidence records hardcoded identity and digestless approval paths as rejected.",
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

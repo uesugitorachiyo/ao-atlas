@@ -205,6 +205,24 @@ type month5AO2ExactApprovalBytesFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5AO2AutoApprovalDenialFixture struct {
+	Schema                   string   `json:"schema"`
+	NodeID                   string   `json:"node_id"`
+	MissionID                string   `json:"mission_id"`
+	Status                   string   `json:"status"`
+	DeniedPaths              []string `json:"denied_paths"`
+	RequiredOperatorControls []string `json:"required_operator_controls"`
+	DenialReasons            []string `json:"denial_reasons"`
+	AutoApprovalAllowed      bool     `json:"auto_approval_allowed"`
+	HardcodedIdentityAllowed bool     `json:"hardcoded_identity_allowed"`
+	NoProviderCalls          bool     `json:"no_provider_calls"`
+	NoMutationApplication    bool     `json:"no_mutation_application"`
+	NoPromotionRequested     bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance   bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
+	SafeToExecute            bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -660,5 +678,41 @@ func TestMonth5AO2ExactApprovalBytesFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("AO2 approval fixture changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5AO2AutoApprovalDenialFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-11", "ao2-auto-approval-denial.json")
+	fixture := mustLoadJSON[month5AO2AutoApprovalDenialFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.ao2-auto-approval-denial.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-11" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "hardcoded_identity_paths_denied" {
+		t.Fatalf("unexpected AO2 auto-approval denial header: %#v", fixture)
+	}
+	for _, denied := range []string{"hardcoded_identity_auto_approval", "operator_identity_substitution", "approval_without_digest_binding"} {
+		if !containsValue(fixture.DeniedPaths, denied) {
+			t.Fatalf("AO2 denial fixture missing denied path %s: %#v", denied, fixture.DeniedPaths)
+		}
+	}
+	for _, required := range []string{"explicit_operator_approval", "exact_digest_match", "base_commit_match", "rollback_receipt_before_apply"} {
+		if !containsValue(fixture.RequiredOperatorControls, required) {
+			t.Fatalf("AO2 denial fixture missing operator control %s: %#v", required, fixture.RequiredOperatorControls)
+		}
+	}
+	if len(fixture.DenialReasons) < 3 {
+		t.Fatalf("AO2 denial fixture must include concrete denial reasons: %#v", fixture.DenialReasons)
+	}
+	if fixture.AutoApprovalAllowed ||
+		fixture.HardcodedIdentityAllowed ||
+		!fixture.NoProviderCalls ||
+		!fixture.NoMutationApplication ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("AO2 auto-approval denial changed safety posture: %#v", fixture)
 	}
 }

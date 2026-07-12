@@ -1,0 +1,21 @@
+{
+  "schema": "ao.atlas.consolidation-rollback-record.v0.1",
+  "status": "rollback_ready",
+  "rollback_scope": "remove this node's AO2 auto-approval denial fixture and closure artifacts",
+  "rollback_exercised": false,
+  "safety_boundaries": {
+    "node_id": "mission-recommendation-month5-beta-operations-11",
+    "task_id": "mission-recommendation-month5-beta-operations-11-task",
+    "safe_to_execute": false,
+    "mutates_repositories": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "release_or_publish": false,
+    "concurrent_mutation": false,
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  }
+}

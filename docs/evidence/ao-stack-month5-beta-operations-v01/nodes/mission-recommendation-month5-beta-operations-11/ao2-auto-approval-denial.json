@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.month5.ao2-auto-approval-denial.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-11",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "hardcoded_identity_paths_denied",
+  "denied_paths": [
+    "hardcoded_identity_auto_approval",
+    "operator_identity_substitution",
+    "approval_without_digest_binding"
+  ],
+  "required_operator_controls": [
+    "explicit_operator_approval",
+    "exact_digest_match",
+    "base_commit_match",
+    "rollback_receipt_before_apply"
+  ],
+  "denial_reasons": [
+    "approval identity must be supplied by an explicit operator action",
+    "approved bytes must match the exact proposed patch digest",
+    "base commit must match the reviewed repository state"
+  ],
+  "auto_approval_allowed": false,
+  "hardcoded_identity_allowed": false,
+  "no_provider_calls": true,
+  "no_mutation_application": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
