@@ -1,0 +1,22 @@
+{
+  "schema": "ao.atlas.consolidation-checkpoint-bundle.v0.1",
+  "status": "fresh",
+  "completed_nodes_before": 14,
+  "ready_nodes_remaining": 25,
+  "exact_next_action": "mission-recommendation-month5-beta-operations-16",
+  "safety_boundaries": {
+    "node_id": "mission-recommendation-month5-beta-operations-15",
+    "task_id": "mission-recommendation-month5-beta-operations-15-task",
+    "safe_to_execute": false,
+    "mutates_repositories": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "release_or_publish": false,
+    "concurrent_mutation": false,
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.month5.local-backup-restore-drill.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-15",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "backup_restore_drill_bound",
+  "backup_manifest_digest": "sha256:7f8c3a42a618bd70c4bb07b1efc107963852cf8b9c4fe7db98bbbf0f3c6aa0ae",
+  "restore_target": "isolated_local_readback_copy",
+  "required_artifacts": [
+    "mission_ledger",
+    "atlas_workgraph",
+    "run_links",
+    "checkpoint_readbacks"
+  ],
+  "restore_verification": [
+    "manifest_digest_match",
+    "restored_readback_matches_source",
+    "rollback_receipt_present",
+    "no_source_state_mutation"
+  ],
+  "no_destructive_restore": true,
+  "drill_is_fixture_only": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}

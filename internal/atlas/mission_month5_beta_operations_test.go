@@ -276,6 +276,23 @@ type month5ControlPlaneMigrationMetadataFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5LocalBackupRestoreDrillFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	BackupManifestDigest   string   `json:"backup_manifest_digest"`
+	RestoreTarget          string   `json:"restore_target"`
+	RequiredArtifacts      []string `json:"required_artifacts"`
+	RestoreVerification    []string `json:"restore_verification"`
+	NoDestructiveRestore   bool     `json:"no_destructive_restore"`
+	DrillIsFixtureOnly     bool     `json:"drill_is_fixture_only"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -880,5 +897,40 @@ func TestMonth5ControlPlaneMigrationMetadataFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("control-plane migration metadata fixture changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5LocalBackupRestoreDrillFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-15", "local-backup-restore-drill.json")
+	fixture := mustLoadJSON[month5LocalBackupRestoreDrillFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.local-backup-restore-drill.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-15" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "backup_restore_drill_bound" ||
+		fixture.RestoreTarget != "isolated_local_readback_copy" {
+		t.Fatalf("unexpected local backup restore drill header: %#v", fixture)
+	}
+	if !digestPattern.MatchString(fixture.BackupManifestDigest) {
+		t.Fatalf("backup manifest digest must be sha256-bound: %s", fixture.BackupManifestDigest)
+	}
+	for _, required := range []string{"mission_ledger", "atlas_workgraph", "run_links", "checkpoint_readbacks"} {
+		if !containsValue(fixture.RequiredArtifacts, required) {
+			t.Fatalf("backup restore drill missing artifact %s: %#v", required, fixture.RequiredArtifacts)
+		}
+	}
+	for _, required := range []string{"manifest_digest_match", "restored_readback_matches_source", "rollback_receipt_present", "no_source_state_mutation"} {
+		if !containsValue(fixture.RestoreVerification, required) {
+			t.Fatalf("backup restore drill missing verification %s: %#v", required, fixture.RestoreVerification)
+		}
+	}
+	if !fixture.NoDestructiveRestore ||
+		!fixture.DrillIsFixtureOnly ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("local backup restore drill changed safety posture: %#v", fixture)
 	}
 }
