@@ -1,0 +1,293 @@
+{
+  "schema": "ao.atlas.month6.handoff-recommendations.v0.1",
+  "source_mission_id": "mission-4d91b0a9e4ab273e",
+  "source_wave": "ao-stack-month5-beta-operations-v01",
+  "status": "month6_recommendations_ready",
+  "recommendations": [
+    {
+      "rank": 1,
+      "task": "Build durable mission timeline query index",
+      "category": "beta_operability",
+      "scope": "ao-mission",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 2,
+      "task": "Add approval inbox list/detail readbacks",
+      "category": "evidence_ui",
+      "scope": "ao-command",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 3,
+      "task": "Run three dry-run golden path rehearsals on non-AO sample repos",
+      "category": "golden_path",
+      "scope": "ao-stack",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 4,
+      "task": "Publish Covenant-owned contract ownership matrix fixture",
+      "category": "contract_registry",
+      "scope": "ao-covenant",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 5,
+      "task": "Add control-plane evidence migration dry-run report",
+      "category": "beta_operability",
+      "scope": "ao2-control-plane",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 6,
+      "task": "Generate operator evidence verification dashboard packet",
+      "category": "evidence_ui",
+      "scope": "ao-atlas",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 7,
+      "task": "Add mission restart recovery proof over indexed timeline",
+      "category": "golden_path",
+      "scope": "ao-mission",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 8,
+      "task": "Bind Blueprint canonical bytes into registry compatibility checks",
+      "category": "contract_registry",
+      "scope": "ao-blueprint",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 9,
+      "task": "Add scoped credential policy checklist without credential inspection",
+      "category": "beta_operability",
+      "scope": "ao-covenant",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 10,
+      "task": "Create beta rollback drill runbook fixture",
+      "category": "evidence_ui",
+      "scope": "ao-foundry",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 11,
+      "task": "Add Forge GoalRun lease expiry replay fixture",
+      "category": "golden_path",
+      "scope": "ao-forge",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 12,
+      "task": "Create schema deprecation ledger with owner acknowledgements",
+      "category": "contract_registry",
+      "scope": "ao-stack",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 13,
+      "task": "Add Mission event compaction resume prompt generator",
+      "category": "beta_operability",
+      "scope": "ao-mission",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 14,
+      "task": "Render terminal rollup card for operator handoff",
+      "category": "evidence_ui",
+      "scope": "ao-command",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 15,
+      "task": "Run kill-restart golden path rehearsal without provider execution",
+      "category": "golden_path",
+      "scope": "ao-stack",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 16,
+      "task": "Add generated Go/Rust canonical JSON vector examples",
+      "category": "contract_registry",
+      "scope": "ao-covenant",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 17,
+      "task": "Add beta install preflight matrix for macOS Linux Windows",
+      "category": "beta_operability",
+      "scope": "ao-stack",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 18,
+      "task": "Create evidence freshness warning panel fixture",
+      "category": "evidence_ui",
+      "scope": "ao-sentinel",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 19,
+      "task": "Add explicit rollback receipt replay for sample repo dry run",
+      "category": "golden_path",
+      "scope": "ao2",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 20,
+      "task": "Classify copied schemas as stable experimental or deprecated",
+      "category": "contract_registry",
+      "scope": "ao-stack",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 21,
+      "task": "Add Mission SQLite migration dry-run fixture",
+      "category": "beta_operability",
+      "scope": "ao-mission",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 22,
+      "task": "Create operator-facing no-promotion rollup summary",
+      "category": "evidence_ui",
+      "scope": "ao-promoter",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 23,
+      "task": "Add Foundry safe-next-work resume rehearsal",
+      "category": "golden_path",
+      "scope": "ao-foundry",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 24,
+      "task": "Add registry compatibility CI handoff prompt",
+      "category": "contract_registry",
+      "scope": "ao-covenant",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 25,
+      "task": "Create backup restore acceptance checklist fixture",
+      "category": "beta_operability",
+      "scope": "ao2-control-plane",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 26,
+      "task": "Add mission risk wording diff viewer fixture",
+      "category": "evidence_ui",
+      "scope": "ao-sentinel",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 27,
+      "task": "Run non-AO repo diff approval packet rehearsal",
+      "category": "golden_path",
+      "scope": "ao2",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 28,
+      "task": "Add producer consumer contract digest comparison fixture",
+      "category": "contract_registry",
+      "scope": "ao-stack",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 29,
+      "task": "Add beta incident stop-rule readback",
+      "category": "beta_operability",
+      "scope": "ao-mission",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 30,
+      "task": "Create compact timeline filters for pilot readiness",
+      "category": "evidence_ui",
+      "scope": "ao-command",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 31,
+      "task": "Add Command to control-plane client boundary dry run",
+      "category": "golden_path",
+      "scope": "ao-command",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 32,
+      "task": "Add no-new-schema-without-owner guard",
+      "category": "contract_registry",
+      "scope": "ao-stack",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 33,
+      "task": "Generate pilot feedback capture packet without live execution",
+      "category": "beta_operability",
+      "scope": "ao-mission",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 34,
+      "task": "Add evidence catalog index export for bulky campaign artifacts",
+      "category": "evidence_ui",
+      "scope": "ao-atlas",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 35,
+      "task": "Run restart resume rehearsal across Mission Atlas Foundry",
+      "category": "golden_path",
+      "scope": "ao-stack",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 36,
+      "task": "Add compatibility matrix stale-owner warning",
+      "category": "contract_registry",
+      "scope": "ao-covenant",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 37,
+      "task": "Create beta operations SLO draft fixture",
+      "category": "beta_operability",
+      "scope": "ao-architecture",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 38,
+      "task": "Add public beta wording lint profile",
+      "category": "evidence_ui",
+      "scope": "ao-sentinel",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 39,
+      "task": "Add explicit opt-in approval rehearsal packet",
+      "category": "golden_path",
+      "scope": "ao2",
+      "safety_gate": "planning_only_no_provider_no_release"
+    },
+    {
+      "rank": 40,
+      "task": "Generate Month 6 launch readiness workgraph",
+      "category": "contract_registry",
+      "scope": "ao-atlas",
+      "safety_gate": "planning_only_no_provider_no_release"
+    }
+  ],
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "recommendation_count": 40
+}
