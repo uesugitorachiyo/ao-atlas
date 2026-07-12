@@ -1,0 +1,27 @@
+{
+  "schema": "ao.atlas.month5.promoter-hosted-ci-no-activation-binding.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-23",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "hosted_ci_no_activation_fixture_bound",
+  "repository": "ao-promoter",
+  "fixture_ref": "promoter-no-activation-boundary-fixture.json",
+  "workflow_path": ".github/workflows/production-readiness.yml",
+  "required_jobs": [
+    "go_test",
+    "go_vet",
+    "no_activation_fixture_validation",
+    "public_safety_scan"
+  ],
+  "trigger_modes": [
+    "pull_request",
+    "push_main",
+    "workflow_dispatch"
+  ],
+  "fixture_only": true,
+  "no_workflow_mutation": true,
+  "activation_allowed": false,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
