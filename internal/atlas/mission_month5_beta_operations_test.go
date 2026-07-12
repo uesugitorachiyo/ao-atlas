@@ -565,6 +565,28 @@ type month5RealRunLedgerFixture struct {
 	SafeToExecute              bool     `json:"safe_to_execute"`
 }
 
+type month5BetaReleaseBOMDraftFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	BOMMode                string   `json:"bom_mode"`
+	ComponentCount         int      `json:"component_count"`
+	ComponentGroups        []string `json:"component_groups"`
+	RequiredFields         []string `json:"required_fields"`
+	DraftOnly              bool     `json:"draft_only"`
+	Published              bool     `json:"published"`
+	Tagged                 bool     `json:"tagged"`
+	ReleaseCreated         bool     `json:"release_created"`
+	UploadPerformed        bool     `json:"upload_performed"`
+	ProviderCallsAllowed   bool     `json:"provider_calls_allowed"`
+	CredentialUseAllowed   bool     `json:"credential_use_allowed"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -2037,5 +2059,42 @@ func TestMonth5RealRunLedgerFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("real run ledger changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5BetaReleaseBOMDraftFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-38", "beta-release-bom-draft.json")
+	fixture := mustLoadJSON[month5BetaReleaseBOMDraftFixture](t, fixturePath)
+	if fixture.Schema != "ao.atlas.month5.beta-release-bom-draft.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-38" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "beta_release_bom_draft_bound" ||
+		fixture.BOMMode != "draft_without_publish_or_tag" {
+		t.Fatalf("unexpected beta release BOM draft header: %#v", fixture)
+	}
+	for _, required := range []string{"control", "runtime", "policy", "observer", "assurance"} {
+		if !containsValue(fixture.ComponentGroups, required) {
+			t.Fatalf("beta release BOM missing component group %s: %#v", required, fixture.ComponentGroups)
+		}
+	}
+	for _, required := range []string{"repository", "commit", "version", "contract_profile", "verification_ref", "rollback_ref"} {
+		if !containsValue(fixture.RequiredFields, required) {
+			t.Fatalf("beta release BOM missing required field %s: %#v", required, fixture.RequiredFields)
+		}
+	}
+	if fixture.ComponentCount < 5 ||
+		!fixture.DraftOnly ||
+		fixture.Published ||
+		fixture.Tagged ||
+		fixture.ReleaseCreated ||
+		fixture.UploadPerformed ||
+		fixture.ProviderCallsAllowed ||
+		fixture.CredentialUseAllowed ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("beta release BOM draft changed safety posture: %#v", fixture)
 	}
 }

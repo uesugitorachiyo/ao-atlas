@@ -1,0 +1,34 @@
+{
+  "schema": "ao.atlas.month5.beta-release-bom-draft.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-38",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "beta_release_bom_draft_bound",
+  "bom_mode": "draft_without_publish_or_tag",
+  "component_count": 5,
+  "component_groups": [
+    "control",
+    "runtime",
+    "policy",
+    "observer",
+    "assurance"
+  ],
+  "required_fields": [
+    "repository",
+    "commit",
+    "version",
+    "contract_profile",
+    "verification_ref",
+    "rollback_ref"
+  ],
+  "draft_only": true,
+  "published": false,
+  "tagged": false,
+  "release_created": false,
+  "upload_performed": false,
+  "provider_calls_allowed": false,
+  "credential_use_allowed": false,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
