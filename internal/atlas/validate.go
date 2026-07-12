@@ -169,6 +169,7 @@ const AtlasMonth3FoundrySafeNextWorkFixtureContract = "ao.atlas.month3-foundry-s
 const AtlasMonth6GoldenPathDryRunRehearsalsContract = "ao.atlas.month6-golden-path-dry-run-rehearsals.v0.1"
 const AtlasMonth6OperatorEvidenceDashboardPacketContract = "ao.atlas.month6-operator-evidence-dashboard-packet.v0.1"
 const AtlasMonth6KillRestartGoldenPathRehearsalContract = "ao.atlas.month6-kill-restart-golden-path-rehearsal.v0.1"
+const AtlasMonth6LaunchReadinessWorkgraphContract = "ao.atlas.month6-launch-readiness-workgraph.v0.1"
 const AtlasBlueprintCanonicalPreservationFixtureContract = "ao.atlas.blueprint-canonical-preservation-fixture.v0.1"
 const AtlasFoundryCanonicalImportFixtureContract = "ao.atlas.foundry-canonical-import-fixture.v0.1"
 const AtlasCommandCovenantFieldParityFixtureContract = "ao.atlas.command-covenant-field-parity-fixture.v0.1"

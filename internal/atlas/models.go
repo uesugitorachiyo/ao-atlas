@@ -2702,6 +2702,62 @@ type AtlasMonth6OperatorEvidenceDashboardRow struct {
 	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
 }
 
+type AtlasMonth6LaunchReadinessWorkgraph struct {
+	Schema                        string                           `json:"schema"`
+	NodeID                        string                           `json:"node_id"`
+	Status                        string                           `json:"status"`
+	SourceRecommendationRank      int                              `json:"source_recommendation_rank"`
+	SourceRecommendationTask      string                           `json:"source_recommendation_task"`
+	SafetyGate                    string                           `json:"safety_gate"`
+	CompletedRecommendationCount  int                              `json:"completed_recommendation_count"`
+	ReadyNodes                    int                              `json:"ready_nodes"`
+	BlockedNodes                  int                              `json:"blocked_nodes"`
+	FailedNodes                   int                              `json:"failed_nodes"`
+	FinalResponseAllowed          bool                             `json:"final_response_allowed"`
+	CompletedRecommendationsBound map[int]bool                     `json:"completed_recommendations_bound"`
+	Nodes                         []AtlasMonth6LaunchReadinessNode `json:"nodes"`
+	AllRecommendationsCompleted   bool                             `json:"all_recommendations_completed"`
+	AllNodesHavePRCIMergeEvidence bool                             `json:"all_nodes_have_pr_ci_merge_evidence"`
+	AllNodesHaveEvidencePath      bool                             `json:"all_nodes_have_evidence_path"`
+	AllNodesHaveOperatorReadback  bool                             `json:"all_nodes_have_operator_readback"`
+	AllNodesHavePublicSafety      bool                             `json:"all_nodes_have_public_safety"`
+	FixtureOnly                   bool                             `json:"fixture_only"`
+	NoPromotionRequested          bool                             `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance        bool                             `json:"claims_authority_advance"`
+	RSIRemainsDenied              bool                             `json:"rsi_remains_denied"`
+	SafeToExecute                 bool                             `json:"safe_to_execute"`
+	ExecutesWork                  bool                             `json:"executes_work"`
+	ApprovesWork                  bool                             `json:"approves_work"`
+	MutatesRepositories           bool                             `json:"mutates_repositories"`
+	ProviderCallsAllowed          bool                             `json:"provider_calls_allowed"`
+	CredentialUseAllowed          bool                             `json:"credential_use_allowed"`
+	LiveMutationAllowed           bool                             `json:"live_mutation_allowed"`
+	ReleaseOrPublishAllowed       bool                             `json:"release_or_publish_allowed"`
+	ApprovalGranted               bool                             `json:"approval_granted"`
+}
+
+type AtlasMonth6LaunchReadinessNode struct {
+	Rank                   int    `json:"rank"`
+	NodeID                 string `json:"node_id"`
+	Repository             string `json:"repository"`
+	Task                   string `json:"task"`
+	Category               string `json:"category"`
+	Status                 string `json:"status"`
+	PR                     string `json:"pr"`
+	MergeCommit            string `json:"merge_commit"`
+	CIStatus               string `json:"ci_status"`
+	MergeStatus            string `json:"merge_status"`
+	EvidencePath           string `json:"evidence_path"`
+	EvidenceStatus         string `json:"evidence_status"`
+	OperatorReadbackStatus string `json:"operator_readback_status"`
+	PublicSafetyStatus     string `json:"public_safety_status"`
+	PromotionStatus        string `json:"promotion_status"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+	SafeToExecute          bool   `json:"safe_to_execute"`
+	ExecutesWork           bool   `json:"executes_work"`
+	MutatesRepository      bool   `json:"mutates_repository"`
+}
+
 type AtlasMonth3ControlPlaneObserverBinding struct {
 	Schema                         string `json:"schema"`
 	NodeID                         string `json:"node_id"`
