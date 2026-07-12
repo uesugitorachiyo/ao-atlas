@@ -2227,6 +2227,33 @@ type AtlasEvidenceCatalogIndexExport struct {
 	RSIRemainsDenied                bool                             `json:"rsi_remains_denied"`
 }
 
+type AtlasStackRestartResumeComponent struct {
+	Repo           string `json:"repo"`
+	Role           string `json:"role"`
+	ResumeSignal   string `json:"resume_signal"`
+	ReplayRequired bool   `json:"replay_required"`
+	ReadyForResume bool   `json:"ready_for_resume"`
+}
+
+type AtlasStackRestartResumeRehearsal struct {
+	Schema                    string                             `json:"schema"`
+	Status                    string                             `json:"status"`
+	Wave                      string                             `json:"wave"`
+	Components                []AtlasStackRestartResumeComponent `json:"components"`
+	ComponentCount            int                                `json:"component_count"`
+	MissionCheckpointBound    bool                               `json:"mission_checkpoint_bound"`
+	AtlasWorkgraphBound       bool                               `json:"atlas_workgraph_bound"`
+	FoundrySafeNextWorkBound  bool                               `json:"foundry_safe_next_work_bound"`
+	NoLostEvidence            bool                               `json:"no_lost_evidence"`
+	SingleActiveNodePreserved bool                               `json:"single_active_node_preserved"`
+	FinalResponseAllowed      bool                               `json:"final_response_allowed"`
+	SchedulesWork             bool                               `json:"schedules_work"`
+	ExecutesWork              bool                               `json:"executes_work"`
+	ApprovesWork              bool                               `json:"approves_work"`
+	ClaimsAuthorityAdvance    bool                               `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool                               `json:"rsi_remains_denied"`
+}
+
 type AtlasRepeatedTaskResultLedgerAttempt struct {
 	Name         string `json:"name"`
 	ResultStatus string `json:"result_status"`
