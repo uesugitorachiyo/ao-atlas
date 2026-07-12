@@ -990,6 +990,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month3-foundry-safe-next-work", err
 		}
 		return "typed:month3-foundry-safe-next-work", ValidateAtlasMonth3FoundrySafeNextWorkFixture(value)
+	case AtlasMonth6GoldenPathDryRunRehearsalsContract:
+		value, err := LoadJSON[AtlasMonth6GoldenPathDryRunRehearsals](path)
+		if err != nil {
+			return "typed:month6-golden-path-dry-run-rehearsals", err
+		}
+		return "typed:month6-golden-path-dry-run-rehearsals", ValidateAtlasMonth6GoldenPathDryRunRehearsals(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
