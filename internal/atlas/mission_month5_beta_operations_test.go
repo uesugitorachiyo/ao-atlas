@@ -483,6 +483,26 @@ type month5CommandTimelineApprovalInboxBinding struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5ModuleExtractionPreflightFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	Repository             string   `json:"repository"`
+	TargetModule           string   `json:"target_module"`
+	PreflightChecks        []string `json:"preflight_checks"`
+	ForbiddenChanges       []string `json:"forbidden_changes"`
+	RollbackArtifacts      []string `json:"rollback_artifacts"`
+	FixtureOnly            bool     `json:"fixture_only"`
+	NoBehaviorChange       bool     `json:"no_behavior_change"`
+	NoDependencyUpdate     bool     `json:"no_dependency_update"`
+	NoProviderCalls        bool     `json:"no_provider_calls"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1596,5 +1616,45 @@ func TestMonth5DeterministicRunProvenanceProviderModelFixture(t *testing.T) {
 		if record.Provider == "" || record.Model == "" || record.ModelClass == "" || record.LiveProviderCall {
 			t.Fatalf("run record missing provenance or records a live provider call: %#v", record)
 		}
+	}
+}
+
+func TestMonth5AO2ModuleExtractionPreflightFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-28", "ao2-module-extraction-preflight.json")
+	fixture := mustLoadJSON[month5ModuleExtractionPreflightFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.module-extraction-preflight.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-28" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "module_extraction_preflight_bound" ||
+		fixture.Repository != "ao2" ||
+		fixture.TargetModule != "ao2-cli" {
+		t.Fatalf("unexpected AO2 module extraction preflight header: %#v", fixture)
+	}
+	for _, required := range []string{"current_cli_surface_inventory", "golden_cli_smoke_snapshot", "rollback_plan", "diff_only_module_boundary"} {
+		if !containsValue(fixture.PreflightChecks, required) {
+			t.Fatalf("AO2 module extraction preflight missing check %s: %#v", required, fixture.PreflightChecks)
+		}
+	}
+	for _, forbidden := range []string{"behavior_change", "dependency_update", "provider_call", "release_or_tag"} {
+		if !containsValue(fixture.ForbiddenChanges, forbidden) {
+			t.Fatalf("AO2 module extraction preflight missing forbidden change %s: %#v", forbidden, fixture.ForbiddenChanges)
+		}
+	}
+	for _, required := range []string{"pre_extraction_snapshot", "module_boundary_manifest", "revert_plan"} {
+		if !containsValue(fixture.RollbackArtifacts, required) {
+			t.Fatalf("AO2 module extraction preflight missing rollback artifact %s: %#v", required, fixture.RollbackArtifacts)
+		}
+	}
+	if !fixture.FixtureOnly ||
+		!fixture.NoBehaviorChange ||
+		!fixture.NoDependencyUpdate ||
+		!fixture.NoProviderCalls ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("AO2 module extraction preflight changed safety posture: %#v", fixture)
 	}
 }
