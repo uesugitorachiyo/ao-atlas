@@ -382,6 +382,24 @@ type month5ArenaHostedCIWorkflowFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5CrucibleHostedCIWorkflowFixture struct {
+	Schema                    string   `json:"schema"`
+	NodeID                    string   `json:"node_id"`
+	MissionID                 string   `json:"mission_id"`
+	Status                    string   `json:"status"`
+	Repository                string   `json:"repository"`
+	WorkflowPath              string   `json:"workflow_path"`
+	RequiredJobs              []string `json:"required_jobs"`
+	TriggerModes              []string `json:"trigger_modes"`
+	FailureInjectionReadbacks []string `json:"failure_injection_readbacks"`
+	FixtureOnly               bool     `json:"fixture_only"`
+	NoWorkflowMutation        bool     `json:"no_workflow_mutation"`
+	NoPromotionRequested      bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance    bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied          bool     `json:"rsi_remains_denied"`
+	SafeToExecute             bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1186,5 +1204,43 @@ func TestMonth5ArenaHostedCIWorkflowFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("Arena hosted CI workflow changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5CrucibleHostedCIWorkflowFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-21", "crucible-hosted-ci-workflow.json")
+	fixture := mustLoadJSON[month5CrucibleHostedCIWorkflowFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.crucible-hosted-ci-workflow.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-21" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "hosted_ci_failure_injection_fixture_bound" ||
+		fixture.Repository != "ao-crucible" ||
+		fixture.WorkflowPath != ".github/workflows/production-readiness.yml" {
+		t.Fatalf("unexpected Crucible hosted CI workflow header: %#v", fixture)
+	}
+	for _, required := range []string{"go_test", "go_vet", "fixture_validation", "failure_injection_fixture_validation", "public_safety_scan"} {
+		if !containsValue(fixture.RequiredJobs, required) {
+			t.Fatalf("Crucible hosted CI workflow missing job %s: %#v", required, fixture.RequiredJobs)
+		}
+	}
+	for _, required := range []string{"pull_request", "push_main", "workflow_dispatch"} {
+		if !containsValue(fixture.TriggerModes, required) {
+			t.Fatalf("Crucible hosted CI workflow missing trigger %s: %#v", required, fixture.TriggerModes)
+		}
+	}
+	for _, required := range []string{"adversarial_probe_fixture", "failure_injection_replay", "crash_only_recovery_readback"} {
+		if !containsValue(fixture.FailureInjectionReadbacks, required) {
+			t.Fatalf("Crucible hosted CI workflow missing failure readback %s: %#v", required, fixture.FailureInjectionReadbacks)
+		}
+	}
+	if !fixture.FixtureOnly ||
+		!fixture.NoWorkflowMutation ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("Crucible hosted CI workflow changed safety posture: %#v", fixture)
 	}
 }
