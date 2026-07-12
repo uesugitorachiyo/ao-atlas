@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.month5.covenant-policy-hash-binding.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-12",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "policy_fields_bound",
+  "policy_hash": "sha256:367a6f24580bf4f68806653255e33a58bdd9819e86e878fe0e570fe09a439478",
+  "ticket_digest": "sha256:f047bb0fe7f84b6a07fc24588da2b9053aa868d53b24317341149568fe601fde",
+  "bound_policy_fields": [
+    "policy_id",
+    "policy_version",
+    "decision",
+    "constraints",
+    "scope",
+    "expires_at"
+  ],
+  "rejected_omissions": [
+    "policyless_ticket_digest",
+    "constraints_omitted",
+    "decision_omitted",
+    "command_accepts_covenant_reject"
+  ],
+  "covenant_authority": "policy_and_contract_authority",
+  "command_compatibility": "must_reject_ticket_covenant_rejects",
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
