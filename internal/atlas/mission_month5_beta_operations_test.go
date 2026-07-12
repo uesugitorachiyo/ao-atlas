@@ -133,6 +133,22 @@ type month5AtlasCompatibilityRow struct {
 	Check          string   `json:"check"`
 }
 
+type month5FoundrySafeNextWorkFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	SourceWorkgraph        string   `json:"source_workgraph"`
+	FoundryImport          string   `json:"foundry_import"`
+	FirstExecutableNode    string   `json:"first_executable_node"`
+	ExactlyOneActiveNode   bool     `json:"exactly_one_active_node"`
+	ReadinessChecks        []string `json:"readiness_checks"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -445,5 +461,34 @@ func TestMonth5AtlasCompatibilityMatrixFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("Atlas compatibility matrix changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5FoundrySafeNextWorkReadinessFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-07", "foundry-safe-next-work-readiness.json")
+	fixture := mustLoadJSON[month5FoundrySafeNextWorkFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.foundry-safe-next-work-readiness.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-07" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "safe_next_work_bound" {
+		t.Fatalf("unexpected Foundry safe-next-work fixture header: %#v", fixture)
+	}
+	if fixture.SourceWorkgraph == "" || fixture.FoundryImport == "" ||
+		fixture.FirstExecutableNode != "mission-recommendation-month5-beta-operations-07" ||
+		!fixture.ExactlyOneActiveNode {
+		t.Fatalf("Foundry readiness must bind source workgraph, import, and exactly one active node: %#v", fixture)
+	}
+	for _, required := range []string{"workgraph_first_executable_matches_import", "no_concurrent_mutation", "run_link_required_before_advance", "final_response_denied_while_ready_nodes_remain"} {
+		if !containsValue(fixture.ReadinessChecks, required) {
+			t.Fatalf("Foundry readiness missing check %s: %#v", required, fixture.ReadinessChecks)
+		}
+	}
+	if !fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("Foundry readiness changed safety posture: %#v", fixture)
 	}
 }
