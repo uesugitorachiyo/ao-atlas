@@ -111,6 +111,28 @@ type month5BlueprintCanonicalBytesFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5AtlasCompatibilityMatrixFixture struct {
+	Schema                 string                       `json:"schema"`
+	NodeID                 string                       `json:"node_id"`
+	MissionID              string                       `json:"mission_id"`
+	Status                 string                       `json:"status"`
+	MatrixRows             []month5AtlasCompatibilityRow `json:"matrix_rows"`
+	CompatibilityFloorMet  bool                         `json:"compatibility_floor_met"`
+	NoPromotionRequested   bool                         `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool                         `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                         `json:"rsi_remains_denied"`
+	SafeToExecute          bool                         `json:"safe_to_execute"`
+}
+
+type month5AtlasCompatibilityRow struct {
+	Contract       string   `json:"contract"`
+	Owner          string   `json:"owner"`
+	Producer       string   `json:"producer"`
+	Consumers      []string `json:"consumers"`
+	AtlasArtifact  string   `json:"atlas_artifact"`
+	Check          string   `json:"check"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -383,5 +405,45 @@ func TestMonth5BlueprintCanonicalBytesPreservationFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("canonical bytes fixture changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5AtlasCompatibilityMatrixFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-06", "atlas-compatibility-matrix.json")
+	fixture := mustLoadJSON[month5AtlasCompatibilityMatrixFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.compatibility-matrix.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-06" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "matrix_rows_ready" ||
+		!fixture.CompatibilityFloorMet {
+		t.Fatalf("unexpected Atlas compatibility matrix header: %#v", fixture)
+	}
+	if len(fixture.MatrixRows) < 10 {
+		t.Fatalf("expected at least ten Atlas compatibility matrix rows: %#v", fixture.MatrixRows)
+	}
+	rows := map[string]month5AtlasCompatibilityRow{}
+	for _, row := range fixture.MatrixRows {
+		rows[row.Contract] = row
+		if row.Owner == "" || row.Producer == "" || len(row.Consumers) == 0 || row.AtlasArtifact == "" || row.Check == "" {
+			t.Fatalf("compatibility matrix row must be complete: %#v", row)
+		}
+	}
+	for _, required := range []string{"recommendation-wave", "recommendation-workgraph", "recommendation-readback", "workgraph-readiness-packet", "foundry-import", "run-link"} {
+		if _, ok := rows[required]; !ok {
+			t.Fatalf("missing Atlas compatibility matrix row for %s", required)
+		}
+	}
+	if rows["recommendation-workgraph"].Check != "workgraph validate" ||
+		rows["foundry-import"].Check != "foundry import replay" ||
+		rows["run-link"].Check != "run-link validate" {
+		t.Fatalf("matrix executable checks drifted: %#v %#v %#v", rows["recommendation-workgraph"], rows["foundry-import"], rows["run-link"])
+	}
+	if !fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("Atlas compatibility matrix changed safety posture: %#v", fixture)
 	}
 }
