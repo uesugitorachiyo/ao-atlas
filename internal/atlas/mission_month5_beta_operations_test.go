@@ -51,6 +51,29 @@ type month5ArchitectureSourceTruthFixture struct {
 	SafeToExecute                bool                      `json:"safe_to_execute"`
 }
 
+type month5SchemaRegistryHandoffFixture struct {
+	Schema                 string                    `json:"schema"`
+	NodeID                 string                    `json:"node_id"`
+	MissionID              string                    `json:"mission_id"`
+	Status                 string                    `json:"status"`
+	RegistryOwner          string                    `json:"registry_owner"`
+	ProducerConsumerRows   []month5ContractOwnerRow  `json:"producer_consumer_rows"`
+	RequiredCompatibility  []string                  `json:"required_compatibility_checks"`
+	AuthorityBoundaries    []month5AuthorityBoundary `json:"authority_boundaries"`
+	NoPromotionRequested   bool                      `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool                      `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                      `json:"rsi_remains_denied"`
+	SafeToExecute          bool                      `json:"safe_to_execute"`
+}
+
+type month5ContractOwnerRow struct {
+	Contract string   `json:"contract"`
+	Owner    string   `json:"owner"`
+	Producer string   `json:"producer"`
+	Consumers []string `json:"consumers"`
+	Status   string   `json:"status"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -205,5 +228,48 @@ func TestMonth5ArchitectureSourceTruthReadbackFixture(t *testing.T) {
 		fixture.ClaimsAuthorityAdvance ||
 		fixture.SafeToExecute {
 		t.Fatalf("source-truth readback changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5CovenantSchemaRegistryHandoffFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-03", "covenant-schema-registry-handoff.json")
+	fixture := mustLoadJSON[month5SchemaRegistryHandoffFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.covenant-schema-registry-handoff.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-03" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "registry_handoff_ready" ||
+		fixture.RegistryOwner != "ao-covenant" {
+		t.Fatalf("unexpected Covenant schema registry handoff header: %#v", fixture)
+	}
+	if len(fixture.ProducerConsumerRows) < 8 {
+		t.Fatalf("expected at least eight producer/consumer contract rows: %#v", fixture.ProducerConsumerRows)
+	}
+	rows := map[string]month5ContractOwnerRow{}
+	for _, row := range fixture.ProducerConsumerRows {
+		rows[row.Contract] = row
+		if row.Owner == "" || row.Producer == "" || len(row.Consumers) == 0 || row.Status == "" {
+			t.Fatalf("contract row must include owner, producer, consumers, and status: %#v", row)
+		}
+	}
+	for _, required := range []string{"covenant.approval-ticket", "mission.blueprint-pack", "atlas.workgraph", "foundry.run-link", "ao2.approval-digest"} {
+		if _, ok := rows[required]; !ok {
+			t.Fatalf("missing schema registry row for %s", required)
+		}
+	}
+	if rows["covenant.approval-ticket"].Owner != "ao-covenant" ||
+		rows["ao2.approval-digest"].Owner != "ao-covenant" {
+		t.Fatalf("Covenant must own gate-critical approval contracts: %#v %#v", rows["covenant.approval-ticket"], rows["ao2.approval-digest"])
+	}
+	if !containsValue(fixture.RequiredCompatibility, "producer_consumer_fixture_roundtrip") ||
+		!containsValue(fixture.RequiredCompatibility, "canonical_json_digest_vectors") {
+		t.Fatalf("handoff must require executable compatibility checks: %#v", fixture.RequiredCompatibility)
+	}
+	if !fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("schema registry handoff changed safety posture: %#v", fixture)
 	}
 }
