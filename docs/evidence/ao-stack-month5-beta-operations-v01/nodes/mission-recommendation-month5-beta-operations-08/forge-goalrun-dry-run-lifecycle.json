@@ -1,0 +1,16 @@
+{
+  "schema": "ao.atlas.month5.forge-goalrun-dry-run-lifecycle.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-08",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "dry_run_lifecycle_bound",
+  "goal_run_id": "month5-beta-operations-goalrun-08",
+  "mode": "fixture_only_no_execution",
+  "lifecycle_states": ["created", "planned", "policy_checked", "readback_recorded", "closed_without_execution"],
+  "boundary_checks": ["no_provider_calls", "no_mutation_application", "no_release_or_deploy", "rollback_receipt_required_before_live_use"],
+  "no_provider_calls": true,
+  "no_mutation_application": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}

@@ -149,6 +149,23 @@ type month5FoundrySafeNextWorkFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5ForgeGoalRunFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	GoalRunID              string   `json:"goal_run_id"`
+	Mode                   string   `json:"mode"`
+	LifecycleStates        []string `json:"lifecycle_states"`
+	BoundaryChecks         []string `json:"boundary_checks"`
+	NoProviderCalls        bool     `json:"no_provider_calls"`
+	NoMutationApplication  bool     `json:"no_mutation_application"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -490,5 +507,38 @@ func TestMonth5FoundrySafeNextWorkReadinessFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("Foundry readiness changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5ForgeGoalRunDryRunLifecycleFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-08", "forge-goalrun-dry-run-lifecycle.json")
+	fixture := mustLoadJSON[month5ForgeGoalRunFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.forge-goalrun-dry-run-lifecycle.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-08" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "dry_run_lifecycle_bound" ||
+		fixture.Mode != "fixture_only_no_execution" ||
+		fixture.GoalRunID == "" {
+		t.Fatalf("unexpected Forge GoalRun fixture header: %#v", fixture)
+	}
+	for _, required := range []string{"created", "planned", "policy_checked", "readback_recorded", "closed_without_execution"} {
+		if !containsValue(fixture.LifecycleStates, required) {
+			t.Fatalf("GoalRun lifecycle missing state %s: %#v", required, fixture.LifecycleStates)
+		}
+	}
+	for _, required := range []string{"no_provider_calls", "no_mutation_application", "no_release_or_deploy", "rollback_receipt_required_before_live_use"} {
+		if !containsValue(fixture.BoundaryChecks, required) {
+			t.Fatalf("GoalRun boundary missing check %s: %#v", required, fixture.BoundaryChecks)
+		}
+	}
+	if !fixture.NoProviderCalls ||
+		!fixture.NoMutationApplication ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("Forge GoalRun fixture changed safety posture: %#v", fixture)
 	}
 }
