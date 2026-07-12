@@ -1835,3 +1835,26 @@ func TestMonth5EvidenceGrowthDeltaGuardFixture(t *testing.T) {
 		t.Fatalf("evidence growth guard changed safety posture: %#v", fixture)
 	}
 }
+
+func TestMonth5CrossPlatformLocalFixtureMatrix(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-33", "local-platform-fixture.json")
+	fixture := mustLoadJSON[AtlasLocalPlatformFixture](t, fixturePath)
+	if err := ValidateAtlasLocalPlatformFixture(fixture); err != nil {
+		t.Fatalf("local platform fixture is invalid: %v", err)
+	}
+	if fixture.Status != "local_platform_fixture_ready" ||
+		fixture.PlatformCount != 3 ||
+		fixture.LineEndingModeCount != 2 ||
+		!fixture.DeterministicInstall ||
+		!fixture.PathNormalizationChecked ||
+		!fixture.RollbackReceiptRequired ||
+		fixture.LiveProviderCalls ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("local platform fixture changed safety posture: %#v", fixture)
+	}
+}
