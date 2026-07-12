@@ -1,0 +1,61 @@
+{
+  "contract_version": "ao.atlas.factory-task.v0.1",
+  "id": "mission-recommendation-month5-beta-operations-23-task",
+  "objective": "Add Promoter hosted CI workflow fixture with no activation boundary.",
+  "target_factory_repo": "ao-atlas",
+  "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-23",
+  "mutation_class": "low_risk_code",
+  "acceptance_criteria": [
+    "node gate, candidate record, rollback record, tests, verification, and readback evidence are recorded",
+    "Atlas final response remains denied while ready work or exact next actions remain"
+  ],
+  "non_goals": [
+    "do not execute Foundry work from Atlas",
+    "do not widen AO authority or claim broad RSI"
+  ],
+  "write_scope": [
+    "internal/atlas",
+    "schemas",
+    "examples",
+    "docs/evidence"
+  ],
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "rollback_scope": [
+    "revert node-specific Atlas changes and generated evidence"
+  ],
+  "verification_commands": [
+    "go test ./... -count=1",
+    "go vet ./...",
+    "go build ./cmd/atlas",
+    "scripts/production-readiness.sh",
+    "scripts/atlas-foundry-roundtrip-smoke.sh"
+  ],
+  "required_evidence": [
+    "source_digest:sha256:5c00edb93ce51a77036bfa865aa433fc3781c1cc9f9d588b4a0f14639e9067fb",
+    "source_recommendation:month5-beta-operations-23",
+    "source_task_digest:sha256:37b09fc3c6015fffcdd59fe6fd2f27321b97986eb445830f109be9d13d802de5"
+  ],
+  "safety_limits": [
+    "no provider calls",
+    "no credential inspection",
+    "no direct main mutation",
+    "no release deploy publish upload tag",
+    "no dependency updates without separate authorization",
+    "no auth policy config widening",
+    "no broad RSI claim"
+  ],
+  "authority_boundary": "atlas_recommendation_planning_only",
+  "dependency_refs": [
+    "mission-recommendation-month5-beta-operations-22"
+  ],
+  "context_pack_refs": []
+}

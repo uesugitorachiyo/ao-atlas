@@ -416,6 +416,25 @@ type month5SentinelHostedCINativeSignalBinding struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5PromoterHostedCINoActivationBinding struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	Repository             string   `json:"repository"`
+	FixtureRef             string   `json:"fixture_ref"`
+	WorkflowPath           string   `json:"workflow_path"`
+	RequiredJobs           []string `json:"required_jobs"`
+	TriggerModes           []string `json:"trigger_modes"`
+	FixtureOnly            bool     `json:"fixture_only"`
+	NoWorkflowMutation     bool     `json:"no_workflow_mutation"`
+	ActivationAllowed      bool     `json:"activation_allowed"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1301,5 +1320,56 @@ func TestMonth5SentinelHostedCIWorkflowFixture(t *testing.T) {
 		!binding.RSIRemainsDenied ||
 		binding.SafeToExecute {
 		t.Fatalf("Sentinel hosted CI binding changed safety posture: %#v", binding)
+	}
+}
+
+func TestMonth5PromoterHostedCIWorkflowFixture(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-23")
+	fixturePath := filepath.Join(nodeDir, "promoter-no-activation-boundary-fixture.json")
+	fixture := mustLoadJSON[AtlasPromoterNoActivationBoundaryFixture](t, fixturePath)
+	if err := ValidateAtlasPromoterNoActivationBoundaryFixture(fixture); err != nil {
+		t.Fatalf("Promoter no-activation fixture is invalid: %v", err)
+	}
+	if fixture.Decision != "no_promotion" ||
+		fixture.ActivationExecutionOwned ||
+		fixture.ReleaseExecutionOwned ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("Promoter no-activation fixture changed safety posture: %#v", fixture)
+	}
+
+	bindingPath := filepath.Join(nodeDir, "promoter-hosted-ci-no-activation-binding.json")
+	binding := mustLoadJSON[month5PromoterHostedCINoActivationBinding](t, bindingPath)
+	if binding.Schema != "ao.atlas.month5.promoter-hosted-ci-no-activation-binding.v0.1" ||
+		binding.NodeID != "mission-recommendation-month5-beta-operations-23" ||
+		binding.MissionID != "mission-4d91b0a9e4ab273e" ||
+		binding.Status != "hosted_ci_no_activation_fixture_bound" ||
+		binding.Repository != "ao-promoter" ||
+		binding.FixtureRef != "promoter-no-activation-boundary-fixture.json" ||
+		binding.WorkflowPath != ".github/workflows/production-readiness.yml" {
+		t.Fatalf("unexpected Promoter hosted CI binding header: %#v", binding)
+	}
+	for _, required := range []string{"go_test", "go_vet", "no_activation_fixture_validation", "public_safety_scan"} {
+		if !containsValue(binding.RequiredJobs, required) {
+			t.Fatalf("Promoter hosted CI binding missing job %s: %#v", required, binding.RequiredJobs)
+		}
+	}
+	for _, required := range []string{"pull_request", "push_main", "workflow_dispatch"} {
+		if !containsValue(binding.TriggerModes, required) {
+			t.Fatalf("Promoter hosted CI binding missing trigger %s: %#v", required, binding.TriggerModes)
+		}
+	}
+	if !binding.FixtureOnly ||
+		!binding.NoWorkflowMutation ||
+		binding.ActivationAllowed ||
+		!binding.NoPromotionRequested ||
+		binding.ClaimsAuthorityAdvance ||
+		!binding.RSIRemainsDenied ||
+		binding.SafeToExecute {
+		t.Fatalf("Promoter hosted CI binding changed safety posture: %#v", binding)
 	}
 }
