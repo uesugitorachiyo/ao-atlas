@@ -1738,3 +1738,43 @@ func TestMonth5ForgeModuleExtractionPreflightFixture(t *testing.T) {
 		t.Fatalf("Forge module extraction preflight changed safety posture: %#v", fixture)
 	}
 }
+
+func TestMonth5CommandModuleExtractionPreflightFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-31", "command-module-extraction-preflight.json")
+	fixture := mustLoadJSON[month5ModuleExtractionPreflightFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.module-extraction-preflight.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-31" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "module_extraction_preflight_bound" ||
+		fixture.Repository != "ao-command" ||
+		fixture.TargetModule != "command-readback-client" {
+		t.Fatalf("unexpected Command module extraction preflight header: %#v", fixture)
+	}
+	for _, required := range []string{"current_readback_surface_inventory", "mission_control_plane_adapter_snapshot", "rollback_plan", "diff_only_module_boundary"} {
+		if !containsValue(fixture.PreflightChecks, required) {
+			t.Fatalf("Command module extraction preflight missing check %s: %#v", required, fixture.PreflightChecks)
+		}
+	}
+	for _, forbidden := range []string{"behavior_change", "dependency_update", "provider_call", "release_or_tag"} {
+		if !containsValue(fixture.ForbiddenChanges, forbidden) {
+			t.Fatalf("Command module extraction preflight missing forbidden change %s: %#v", forbidden, fixture.ForbiddenChanges)
+		}
+	}
+	for _, required := range []string{"pre_extraction_snapshot", "module_boundary_manifest", "revert_plan"} {
+		if !containsValue(fixture.RollbackArtifacts, required) {
+			t.Fatalf("Command module extraction preflight missing rollback artifact %s: %#v", required, fixture.RollbackArtifacts)
+		}
+	}
+	if !fixture.FixtureOnly ||
+		!fixture.NoBehaviorChange ||
+		!fixture.NoDependencyUpdate ||
+		!fixture.NoProviderCalls ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("Command module extraction preflight changed safety posture: %#v", fixture)
+	}
+}
