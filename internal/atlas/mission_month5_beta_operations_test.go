@@ -310,6 +310,23 @@ type month5MissionRestartReplayFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5MissionKillRestartReplayFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	InterruptedNode        string   `json:"interrupted_node"`
+	ResumeCheckpoint       string   `json:"resume_checkpoint"`
+	InterruptionMarkers    []string `json:"interruption_markers"`
+	ResumeAssertions       []string `json:"resume_assertions"`
+	PartialNodePromoted    bool     `json:"partial_node_promoted"`
+	DuplicateRunLink       bool     `json:"duplicate_run_link"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -982,5 +999,38 @@ func TestMonth5MissionRestartReplayFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("Mission restart replay changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5MissionKillRestartReplayFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-17", "mission-kill-restart-replay.json")
+	fixture := mustLoadJSON[month5MissionKillRestartReplayFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.mission-kill-restart-replay.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-17" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "interrupted_node_resume_bound" ||
+		fixture.InterruptedNode == "" ||
+		fixture.ResumeCheckpoint == "" {
+		t.Fatalf("unexpected Mission kill restart replay header: %#v", fixture)
+	}
+	for _, required := range []string{"process_exit_before_run_link", "dirty_node_evidence_detected", "resume_from_last_completed_checkpoint"} {
+		if !containsValue(fixture.InterruptionMarkers, required) {
+			t.Fatalf("Mission kill restart replay missing marker %s: %#v", required, fixture.InterruptionMarkers)
+		}
+	}
+	for _, required := range []string{"partial_node_not_completed", "same_node_reselected", "run_link_required_before_advance", "final_response_remains_denied"} {
+		if !containsValue(fixture.ResumeAssertions, required) {
+			t.Fatalf("Mission kill restart replay missing assertion %s: %#v", required, fixture.ResumeAssertions)
+		}
+	}
+	if fixture.PartialNodePromoted ||
+		fixture.DuplicateRunLink ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("Mission kill restart replay changed safety posture: %#v", fixture)
 	}
 }
