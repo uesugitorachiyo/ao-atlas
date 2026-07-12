@@ -1,0 +1,32 @@
+{
+  "schema": "ao.atlas.month5.blueprint-canonical-bytes-fixture.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-05",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "canonical_bytes_preserved",
+  "canonical_bytes_ref": "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-05/blueprint-canonical-pack.bytes",
+  "canonical_bytes_digest": "sha256:09b5b9d337a350c8fca426ad409d6028427b75ff4ca059f4d57c6c5de8a6e0c8",
+  "preserved_fields": [
+    "schema",
+    "requirements",
+    "authorization_scope",
+    "operator_prompt_digest",
+    "canonical_bytes_digest",
+    "source_mission_id",
+    "safe_execute"
+  ],
+  "downstream_consumers": [
+    "ao-mission",
+    "ao-atlas",
+    "ao-foundry"
+  ],
+  "rejected_transforms": [
+    "schema_alias_rewrite",
+    "field_renaming_without_digest_change",
+    "authorization_scope_expansion",
+    "operator_prompt_reformat_without_digest_recompute"
+  ],
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
