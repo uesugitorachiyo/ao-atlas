@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.month5.control-plane-migration-metadata.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-14",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "durable_beta_storage_metadata_bound",
+  "migration_id": "ao2-control-plane-beta-storage-v0.1",
+  "from_version": "fixture-local-v0",
+  "to_version": "beta-durable-v1",
+  "metadata_checksum": "sha256:d1457eebd0cd44345e80f8bb7e1c5d3ebfde68f47dd23b3fbc0acaaa05dd3a66",
+  "required_metadata": [
+    "migration_id",
+    "applied_at",
+    "from_version",
+    "to_version",
+    "checksum",
+    "rollback_plan"
+  ],
+  "replay_checks": [
+    "forward_replay",
+    "rollback_replay",
+    "idempotent_reapply",
+    "pre_migration_backup_readback"
+  ],
+  "no_destructive_migration": true,
+  "rollback_plan_bound": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
