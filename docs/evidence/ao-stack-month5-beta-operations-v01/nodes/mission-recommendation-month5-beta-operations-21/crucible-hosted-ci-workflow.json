@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.month5.crucible-hosted-ci-workflow.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-21",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "hosted_ci_failure_injection_fixture_bound",
+  "repository": "ao-crucible",
+  "workflow_path": ".github/workflows/production-readiness.yml",
+  "required_jobs": [
+    "go_test",
+    "go_vet",
+    "fixture_validation",
+    "failure_injection_fixture_validation",
+    "public_safety_scan"
+  ],
+  "trigger_modes": [
+    "pull_request",
+    "push_main",
+    "workflow_dispatch"
+  ],
+  "failure_injection_readbacks": [
+    "adversarial_probe_fixture",
+    "failure_injection_replay",
+    "crash_only_recovery_readback"
+  ],
+  "fixture_only": true,
+  "no_workflow_mutation": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}

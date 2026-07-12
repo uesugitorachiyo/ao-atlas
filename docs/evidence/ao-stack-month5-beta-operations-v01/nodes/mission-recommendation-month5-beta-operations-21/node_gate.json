@@ -1,0 +1,30 @@
+{
+  "schema": "ao.atlas.consolidation-node-gate.v0.1",
+  "status": "cleared_readback_only",
+  "objective": "Add Crucible hosted CI workflow fixture with failure injection readback.",
+  "required_gates": [
+    "node_gate",
+    "candidate_record",
+    "rollback_record",
+    "tests",
+    "verification",
+    "sentinel_public_safety",
+    "promoter_no_promotion",
+    "command_readback"
+  ],
+  "safety_boundaries": {
+    "node_id": "mission-recommendation-month5-beta-operations-21",
+    "task_id": "mission-recommendation-month5-beta-operations-21-task",
+    "safe_to_execute": false,
+    "mutates_repositories": false,
+    "executes_work": false,
+    "approves_work": false,
+    "provider_calls": false,
+    "credential_use": false,
+    "direct_main_mutation": false,
+    "release_or_publish": false,
+    "concurrent_mutation": false,
+    "claims_authority_advance": false,
+    "rsi_remains_denied": true
+  }
+}
