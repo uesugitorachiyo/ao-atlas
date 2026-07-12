@@ -400,6 +400,22 @@ type month5CrucibleHostedCIWorkflowFixture struct {
 	SafeToExecute             bool     `json:"safe_to_execute"`
 }
 
+type month5SentinelHostedCINativeSignalBinding struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	Repository             string   `json:"repository"`
+	FixtureRef             string   `json:"fixture_ref"`
+	NativeSignalReadbacks  []string `json:"native_signal_readbacks"`
+	FixtureOnly            bool     `json:"fixture_only"`
+	NoWorkflowMutation     bool     `json:"no_workflow_mutation"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1242,5 +1258,48 @@ func TestMonth5CrucibleHostedCIWorkflowFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("Crucible hosted CI workflow changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5SentinelHostedCIWorkflowFixture(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-22")
+	fixturePath := filepath.Join(nodeDir, "sentinel-hosted-ci-workflow-fixture.json")
+	fixture := mustLoadJSON[AtlasSentinelHostedCIWorkflowFixture](t, fixturePath)
+	if err := ValidateAtlasSentinelHostedCIWorkflowFixture(fixture); err != nil {
+		t.Fatalf("Sentinel hosted CI fixture is invalid: %v", err)
+	}
+	if fixture.WorkflowPath != ".github/workflows/sentinel-fixture-verification.yml" ||
+		fixture.Permissions != "contents:read" ||
+		fixture.UsesProviderCredentials ||
+		fixture.UsesSecrets ||
+		fixture.TriggersRelease ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("Sentinel hosted CI fixture changed safety posture: %#v", fixture)
+	}
+
+	bindingPath := filepath.Join(nodeDir, "sentinel-native-signal-readback-binding.json")
+	binding := mustLoadJSON[month5SentinelHostedCINativeSignalBinding](t, bindingPath)
+	if binding.Schema != "ao.atlas.month5.sentinel-hosted-ci-native-signal-binding.v0.1" ||
+		binding.NodeID != "mission-recommendation-month5-beta-operations-22" ||
+		binding.MissionID != "mission-4d91b0a9e4ab273e" ||
+		binding.Status != "hosted_ci_native_signal_fixture_bound" ||
+		binding.Repository != "ao-sentinel" ||
+		binding.FixtureRef != "sentinel-hosted-ci-workflow-fixture.json" {
+		t.Fatalf("unexpected Sentinel hosted CI binding header: %#v", binding)
+	}
+	for _, required := range []string{"ci_signal", "public_safety_signal", "evidence_freshness_signal", "policy_signal"} {
+		if !containsValue(binding.NativeSignalReadbacks, required) {
+			t.Fatalf("Sentinel hosted CI binding missing signal %s: %#v", required, binding.NativeSignalReadbacks)
+		}
+	}
+	if !binding.FixtureOnly ||
+		!binding.NoWorkflowMutation ||
+		!binding.NoPromotionRequested ||
+		binding.ClaimsAuthorityAdvance ||
+		!binding.RSIRemainsDenied ||
+		binding.SafeToExecute {
+		t.Fatalf("Sentinel hosted CI binding changed safety posture: %#v", binding)
 	}
 }
