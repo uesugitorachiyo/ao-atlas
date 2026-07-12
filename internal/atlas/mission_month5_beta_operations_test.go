@@ -327,6 +327,27 @@ type month5MissionKillRestartReplayFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5GoldenPathDryRunReadinessFixture struct {
+	Schema                 string                       `json:"schema"`
+	NodeID                 string                       `json:"node_id"`
+	MissionID              string                       `json:"mission_id"`
+	Status                 string                       `json:"status"`
+	MatrixRows             []month5GoldenPathReadinessRow `json:"matrix_rows"`
+	DryRunOnly             bool                         `json:"dry_run_only"`
+	NoProviderExecution    bool                         `json:"no_provider_execution"`
+	NoPromotionRequested   bool                         `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool                         `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                         `json:"rsi_remains_denied"`
+	SafeToExecute          bool                         `json:"safe_to_execute"`
+}
+
+type month5GoldenPathReadinessRow struct {
+	Component string `json:"component"`
+	Handoff   string `json:"handoff"`
+	Check     string `json:"check"`
+	Status    string `json:"status"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1032,5 +1053,38 @@ func TestMonth5MissionKillRestartReplayFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("Mission kill restart replay changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5GoldenPathDryRunReadinessFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-18", "golden-path-dry-run-readiness.json")
+	fixture := mustLoadJSON[month5GoldenPathDryRunReadinessFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.golden-path-dry-run-readiness.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-18" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "dry_run_readiness_matrix_bound" {
+		t.Fatalf("unexpected golden path readiness header: %#v", fixture)
+	}
+	rows := map[string]month5GoldenPathReadinessRow{}
+	for _, row := range fixture.MatrixRows {
+		rows[row.Component] = row
+		if row.Handoff == "" || row.Check == "" || row.Status != "ready_for_dry_run" {
+			t.Fatalf("golden path row must include handoff, check, and ready status: %#v", row)
+		}
+	}
+	for _, required := range []string{"ao-mission", "ao-blueprint", "ao-atlas", "ao-foundry", "ao-forge", "ao-covenant", "ao2", "ao2-control-plane", "ao-command"} {
+		if _, ok := rows[required]; !ok {
+			t.Fatalf("golden path readiness missing component %s", required)
+		}
+	}
+	if !fixture.DryRunOnly ||
+		!fixture.NoProviderExecution ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("golden path readiness changed safety posture: %#v", fixture)
 	}
 }
