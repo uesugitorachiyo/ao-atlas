@@ -1,0 +1,142 @@
+{
+  "schema": "ao.atlas.month5.stack-lockfile-authority-manifest.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-01",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "ready_for_beta_operations_preflight",
+  "stack_lockfile_version": "ao-stack-month5-beta-operations-v0.1",
+  "generated_from_readback": "docs/evidence/ao-stack-month4-consolidation-v01/final-closure/recommendation-readback-after-node-36.json",
+  "repositories": [
+    {
+      "name": "ao-mission",
+      "role": "operator-facing mission state and continuation lifecycle",
+      "authority": "mission_state_authority",
+      "source_of_truth": "mission ledger, routing state, checkpoints, and final-response gates"
+    },
+    {
+      "name": "ao-blueprint",
+      "role": "requirements and authorization packet preparation",
+      "authority": "requirements_authorization_authority",
+      "source_of_truth": "operator-approved requirements, canonical prompt bytes, and authorization scope"
+    },
+    {
+      "name": "ao-atlas",
+      "role": "workgraph compilation, context packs, readbacks, and continuation prompts",
+      "authority": "workgraph_context_authority",
+      "source_of_truth": "workgraph, recommendation wave, readback, and evidence indexes"
+    },
+    {
+      "name": "ao-foundry",
+      "role": "bounded implementation import, run-link evidence, and safe-next-work readiness",
+      "authority": "implementation_readiness_authority",
+      "source_of_truth": "Foundry imports, run links, readiness rollups, and node closure evidence"
+    },
+    {
+      "name": "ao-forge",
+      "role": "GoalRun orchestration and per-run scheduling fixtures",
+      "authority": "goalrun_orchestration_authority",
+      "source_of_truth": "GoalRun records, replay packets, and dry-run orchestration evidence"
+    },
+    {
+      "name": "ao-covenant",
+      "role": "policy kernel, schema registry, approval tickets, and trust verification",
+      "authority": "policy_and_contract_authority",
+      "source_of_truth": "policy evaluations, ticket schemas, contract registry, and approval evidence"
+    },
+    {
+      "name": "ao2",
+      "role": "execution runtime, provider adapters, sandboxing, and approval application",
+      "authority": "execution_runtime_authority",
+      "source_of_truth": "runtime options, provider provenance, approvals, diffs, and rollback receipts"
+    },
+    {
+      "name": "ao2-control-plane",
+      "role": "observer service, durable event storage, and evidence service",
+      "authority": "observer_storage_authority",
+      "source_of_truth": "control-plane event indexes, migrations, telemetry, and state recovery evidence"
+    },
+    {
+      "name": "ao-command",
+      "role": "operator readback and compact status presentation",
+      "authority": "operator_readback_authority",
+      "source_of_truth": "Mission and control-plane client readbacks without duplicating domain truth"
+    },
+    {
+      "name": "ao-arena",
+      "role": "benchmark package for assurance runs",
+      "authority": "benchmark_assurance_authority",
+      "source_of_truth": "paired benchmark tasks, repeated run results, and score evidence"
+    },
+    {
+      "name": "ao-crucible",
+      "role": "adversarial and failure-injection assurance package",
+      "authority": "adversarial_assurance_authority",
+      "source_of_truth": "failure-injection fixtures, adversarial probes, and replayable attack evidence"
+    },
+    {
+      "name": "ao-sentinel",
+      "role": "public-safety, CI, runtime, policy, and evidence freshness scanning",
+      "authority": "sentinel_verdict_authority",
+      "source_of_truth": "native Sentinel verdicts and scoped public-safety scan evidence"
+    },
+    {
+      "name": "ao-promoter",
+      "role": "promotion and no-promotion decision evaluation",
+      "authority": "promotion_decision_authority",
+      "source_of_truth": "signed assurance inputs, no-activation verdicts, and promotion rollups"
+    },
+    {
+      "name": "ao-architecture",
+      "role": "generated architecture status, ADRs, compatibility tables, and roadmap inventory",
+      "authority": "architecture_documentation_authority",
+      "source_of_truth": "generated status, ADRs, and links to current evidence catalogs"
+    }
+  ],
+  "authority_boundaries": [
+    {
+      "owner": "ao-mission",
+      "boundary": "Mission owns durable state and final-response gates.",
+      "constraint": "Atlas readbacks cannot silently close the parent mission without Mission reconciliation."
+    },
+    {
+      "owner": "ao-blueprint",
+      "boundary": "Blueprint owns requirements and new authorization.",
+      "constraint": "Atlas may continue ready governed work but must route new scope through Blueprint."
+    },
+    {
+      "owner": "ao-atlas",
+      "boundary": "Atlas owns workgraph and context compilation.",
+      "constraint": "Atlas must not execute provider work or claim authority promotion from planning evidence."
+    },
+    {
+      "owner": "ao-foundry",
+      "boundary": "Foundry owns bounded implementation imports and run-link closure.",
+      "constraint": "Foundry evidence is node evidence, not mission completion by itself."
+    },
+    {
+      "owner": "ao-covenant",
+      "boundary": "Covenant owns policy and schema authority.",
+      "constraint": "Command or Atlas fixtures cannot override Covenant rejection or approval semantics."
+    },
+    {
+      "owner": "ao2",
+      "boundary": "AO2 owns runtime execution and approval application.",
+      "constraint": "Month 5 preparation must stop before provider execution or mutation application."
+    },
+    {
+      "owner": "ao2-control-plane",
+      "boundary": "Control plane owns observed event storage and evidence service state.",
+      "constraint": "Atlas may reference observer evidence but cannot widen credentials or deploy services."
+    },
+    {
+      "owner": "ao-promoter",
+      "boundary": "Promoter owns promotion decision wording.",
+      "constraint": "This wave requests no promotion and preserves RSI denial."
+    }
+  ],
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "executes_work": false,
+  "approves_work": false
+}

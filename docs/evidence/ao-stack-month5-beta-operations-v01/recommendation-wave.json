@@ -1,0 +1,1514 @@
+{
+  "contract_version": "ao.atlas.recommendation-wave.v0.1",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "target_instance": "ao-stack-month5-beta-operations-v01",
+  "status": "ready",
+  "source_digest": "sha256:5c00edb93ce51a77036bfa865aa433fc3781c1cc9f9d588b4a0f14639e9067fb",
+  "minimum_tasks": 40,
+  "total_tasks": 40,
+  "node_budget": 40,
+  "estimated_minutes": 150,
+  "supervisor": {
+    "contract_version": "ao.atlas.long-run-supervisor.v0.2",
+    "min_nodes": 40,
+    "min_minutes": 120,
+    "max_minutes": 180,
+    "continue_if_fast_target": 40,
+    "return_only_when": "all_40_month5_beta_operations_nodes_complete_or_true_hard_blocker",
+    "checkpoint_policy": "after_each_node_or_timed_interval",
+    "evidence_policy": "implementation_or_contract_fixture_plus_tests_verification_public_safety_promoter_command",
+    "final_report_contract": "ao.atlas.month5-beta-operations-final-report.v0.1"
+  },
+  "tasks": [
+    {
+      "id": "month5-beta-operations-01",
+      "owner": "ao-atlas",
+      "task": "Add stack lockfile and authority manifest fixtures for beta operations baseline.",
+      "node_id": "mission-recommendation-month5-beta-operations-01",
+      "task_id": "mission-recommendation-month5-beta-operations-01-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:3b906360c471fa72dd6403c8e85289161d864b47a4cd99fd9f492229a8b9862e",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-01",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-02",
+      "owner": "ao-atlas",
+      "task": "Bind architecture source truth readback to current repository behavior inventory.",
+      "node_id": "mission-recommendation-month5-beta-operations-02",
+      "task_id": "mission-recommendation-month5-beta-operations-02-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:e5bb0bf43199f63cb131028095eb9fccff20929ca79d5d40ebc5820419708ad8",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-02",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-03",
+      "owner": "ao-atlas",
+      "task": "Add Covenant schema registry handoff fixture with producer consumer ownership rows.",
+      "node_id": "mission-recommendation-month5-beta-operations-03",
+      "task_id": "mission-recommendation-month5-beta-operations-03-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:03d64bfe4f854b4f122bea3432836437be1e93fbbbcf87acf740e79486b81cf9",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-03",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-04",
+      "owner": "ao-atlas",
+      "task": "Create producer consumer compatibility ledger for Mission Blueprint Atlas handoff contracts.",
+      "node_id": "mission-recommendation-month5-beta-operations-04",
+      "task_id": "mission-recommendation-month5-beta-operations-04-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:6749a65c44525aa714660dbd7b75b649bacc1d78c2aebde80cf0d1e5905f23c3",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-04",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-05",
+      "owner": "ao-atlas",
+      "task": "Add Blueprint canonical bytes digest preservation fixture for downstream imports.",
+      "node_id": "mission-recommendation-month5-beta-operations-05",
+      "task_id": "mission-recommendation-month5-beta-operations-05-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:97b048eacc406b9c7988bf44181d970ca621110e8f26946ff126a445549a2a33",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-05",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-06",
+      "owner": "ao-atlas",
+      "task": "Generate Atlas compatibility matrix rows for current stack contracts.",
+      "node_id": "mission-recommendation-month5-beta-operations-06",
+      "task_id": "mission-recommendation-month5-beta-operations-06-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:5f4c43af19a228d30efa19deffc2bb6e401a542df4d7b9c88e964ffedc231d57",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-06",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-07",
+      "owner": "ao-atlas",
+      "task": "Bind Foundry safe next work scheduling readiness to Atlas node imports.",
+      "node_id": "mission-recommendation-month5-beta-operations-07",
+      "task_id": "mission-recommendation-month5-beta-operations-07-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:e1a60190326b097498b6de7bf73688da9d8c371465959fddbf7d65306102c4ec",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-07",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-08",
+      "owner": "ao-atlas",
+      "task": "Add Forge GoalRun evidence fixture for dry run lifecycle boundaries.",
+      "node_id": "mission-recommendation-month5-beta-operations-08",
+      "task_id": "mission-recommendation-month5-beta-operations-08-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:222f5a9c1fb4a9aa7d274081d3d476b267f5ffb98f53ac84ab077c1748fd47d1",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-08",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-09",
+      "owner": "ao-atlas",
+      "task": "Record Command thin client boundary fixture against Mission readback ownership.",
+      "node_id": "mission-recommendation-month5-beta-operations-09",
+      "task_id": "mission-recommendation-month5-beta-operations-09-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:7e56a90e6c30685391dd205625a626468701803448811770e3ad870c4e61a39f",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-09",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-10",
+      "owner": "ao-atlas",
+      "task": "Add AO2 exact approval bytes fixture requiring base commit and patch digest.",
+      "node_id": "mission-recommendation-month5-beta-operations-10",
+      "task_id": "mission-recommendation-month5-beta-operations-10-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f6b57eb7063f15565754f58adb571e2868e43738e46c451c15db9263cecfc9e5",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-10",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-11",
+      "owner": "ao-atlas",
+      "task": "Add AO2 auto approval denial fixture for hardcoded identity paths.",
+      "node_id": "mission-recommendation-month5-beta-operations-11",
+      "task_id": "mission-recommendation-month5-beta-operations-11-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:94b0af0d53fc88c9dceead884b5f4d9cc267b047f292863bc14e027d5d10225b",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-11",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-12",
+      "owner": "ao-atlas",
+      "task": "Add Covenant policy hash fixture binding policy fields into ticket evidence.",
+      "node_id": "mission-recommendation-month5-beta-operations-12",
+      "task_id": "mission-recommendation-month5-beta-operations-12-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8acc4a11f19a3ca436cbdaca0c4f836b5015ed8f3debf271852fd033deeb8ae9",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-12",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-13",
+      "owner": "ao-atlas",
+      "task": "Add control plane transactional evidence transition fixture with rollback readback.",
+      "node_id": "mission-recommendation-month5-beta-operations-13",
+      "task_id": "mission-recommendation-month5-beta-operations-13-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8e4a19894cd4f7edde9139d14c84d6dd9283898da2c71369572f4002d7a83600",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-13",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-14",
+      "owner": "ao-atlas",
+      "task": "Add control plane migration metadata fixture for durable beta storage.",
+      "node_id": "mission-recommendation-month5-beta-operations-14",
+      "task_id": "mission-recommendation-month5-beta-operations-14-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:bb7a313efcc6c32b7d460b92708bb0b9fe25b680c817c9c5e806d3ee5cc90874",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-14",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-15",
+      "owner": "ao-atlas",
+      "task": "Add local backup restore drill fixture for beta operations evidence state.",
+      "node_id": "mission-recommendation-month5-beta-operations-15",
+      "task_id": "mission-recommendation-month5-beta-operations-15-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:19cf7d8bd2945e55dc16e8c15d43b1a96b9911cc37957a0878a9b9f5222113be",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-15",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-16",
+      "owner": "ao-atlas",
+      "task": "Add Mission restart replay fixture preserving exactly once node accounting.",
+      "node_id": "mission-recommendation-month5-beta-operations-16",
+      "task_id": "mission-recommendation-month5-beta-operations-16-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:b3981b2781c046098a248301d870d9cf1f529e4b11e573b1e50583e0d897bf1f",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-16",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-17",
+      "owner": "ao-atlas",
+      "task": "Add Mission kill restart replay fixture for interrupted Month 5 nodes.",
+      "node_id": "mission-recommendation-month5-beta-operations-17",
+      "task_id": "mission-recommendation-month5-beta-operations-17-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8fcb26471658df5a1558986cf098d3161e5ad5cd12d36004e935755c88609a79",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-17",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-18",
+      "owner": "ao-atlas",
+      "task": "Add golden path dry run readiness matrix without provider execution.",
+      "node_id": "mission-recommendation-month5-beta-operations-18",
+      "task_id": "mission-recommendation-month5-beta-operations-18-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:94b72c57f457864f940aac735c4a27bee9a5ff4c38f00c8bc27998a7f49beef7",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-18",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-19",
+      "owner": "ao-atlas",
+      "task": "Add clean room non AO replay fixture for external repository preparation.",
+      "node_id": "mission-recommendation-month5-beta-operations-19",
+      "task_id": "mission-recommendation-month5-beta-operations-19-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:011c3e8308f2bbb80137b069d1244a67f08bde7ca2c1c3bebd1e7f17a80bda95",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-19",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-20",
+      "owner": "ao-atlas",
+      "task": "Add Arena hosted CI workflow fixture with readiness readback binding.",
+      "node_id": "mission-recommendation-month5-beta-operations-20",
+      "task_id": "mission-recommendation-month5-beta-operations-20-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c9e8b958108d8e7302b009eefc93e91689eaf844ff4f93f0ef01ce739e08f514",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-20",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-21",
+      "owner": "ao-atlas",
+      "task": "Add Crucible hosted CI workflow fixture with failure injection readback.",
+      "node_id": "mission-recommendation-month5-beta-operations-21",
+      "task_id": "mission-recommendation-month5-beta-operations-21-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:752c633eea0f4d54167f42dab0e6d7e475d63f4976541483417fbdcee4b3a2bb",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-21",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-22",
+      "owner": "ao-atlas",
+      "task": "Add Sentinel hosted CI workflow fixture with native signal readback.",
+      "node_id": "mission-recommendation-month5-beta-operations-22",
+      "task_id": "mission-recommendation-month5-beta-operations-22-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:c2432c97f0ebf84904b74ecf33dce0f49c1a7002178e9119f5434bed9fbbf0e8",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-22",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-23",
+      "owner": "ao-atlas",
+      "task": "Add Promoter hosted CI workflow fixture with no activation boundary.",
+      "node_id": "mission-recommendation-month5-beta-operations-23",
+      "task_id": "mission-recommendation-month5-beta-operations-23-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:37b09fc3c6015fffcdd59fe6fd2f27321b97986eb445830f109be9d13d802de5",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-23",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-24",
+      "owner": "ao-atlas",
+      "task": "Bind Sentinel native signal state fixture to Promoter input readiness.",
+      "node_id": "mission-recommendation-month5-beta-operations-24",
+      "task_id": "mission-recommendation-month5-beta-operations-24-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:4ab69fdf86bc11fa89a8f7e81f55142cc958664103b6176ce807751c4eaf352f",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-24",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-25",
+      "owner": "ao-atlas",
+      "task": "Add Promoter no activation boundary fixture for beta operations rollups.",
+      "node_id": "mission-recommendation-month5-beta-operations-25",
+      "task_id": "mission-recommendation-month5-beta-operations-25-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:ce4ea514e0bcb0848885be6b90d35784a714f6dee6dda8403f25b9ae2a655100",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-25",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-26",
+      "owner": "ao-atlas",
+      "task": "Add Command compact timeline and approval inbox fixture for beta operations.",
+      "node_id": "mission-recommendation-month5-beta-operations-26",
+      "task_id": "mission-recommendation-month5-beta-operations-26-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:8a0c1a507e47b9dafa28ae9bd9682461b064519be8297174f33e8c6f7f879c77",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-26",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-27",
+      "owner": "ao-atlas",
+      "task": "Add deterministic run provenance fixture with explicit provider and model fields.",
+      "node_id": "mission-recommendation-month5-beta-operations-27",
+      "task_id": "mission-recommendation-month5-beta-operations-27-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:96e5e940f510d7c97245693d0a95ed5b440357a0a4698a318a78cd237d1a897f",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-27",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-28",
+      "owner": "ao-atlas",
+      "task": "Add AO2 module extraction preflight fixture with no behavior change boundary.",
+      "node_id": "mission-recommendation-month5-beta-operations-28",
+      "task_id": "mission-recommendation-month5-beta-operations-28-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:5ec817437f4bb01c2380a3cda33052d6d95b6123fffc34d828e24a2d39ab7fd6",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-28",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-29",
+      "owner": "ao-atlas",
+      "task": "Add Foundry module extraction preflight fixture with CLI parity checks.",
+      "node_id": "mission-recommendation-month5-beta-operations-29",
+      "task_id": "mission-recommendation-month5-beta-operations-29-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:71142093582472e036808d1f3e9a23d4a6acceed9a3e0a659487f94a599c2268",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-29",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-30",
+      "owner": "ao-atlas",
+      "task": "Add Forge module extraction preflight fixture with GoalRun parity checks.",
+      "node_id": "mission-recommendation-month5-beta-operations-30",
+      "task_id": "mission-recommendation-month5-beta-operations-30-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:28fb94fecc5228865939895ab81746c137ee72f2355fc7982c9f5b55e517db36",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-30",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-31",
+      "owner": "ao-atlas",
+      "task": "Add Command module extraction preflight fixture with readback parity checks.",
+      "node_id": "mission-recommendation-month5-beta-operations-31",
+      "task_id": "mission-recommendation-month5-beta-operations-31-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:78b7975a8b5ec51f9dbd44dc2d17c1bc9922a65f7fd9013082fc31411885514d",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-31",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-32",
+      "owner": "ao-atlas",
+      "task": "Add evidence growth delta guard fixture with warning threshold readback.",
+      "node_id": "mission-recommendation-month5-beta-operations-32",
+      "task_id": "mission-recommendation-month5-beta-operations-32-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:fa5224a1b466c4f7e53f2848997db28e57c1cbbcb379ddb854ae08d15d43d018",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-32",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-33",
+      "owner": "ao-atlas",
+      "task": "Add cross platform local fixture matrix for beta operations commands.",
+      "node_id": "mission-recommendation-month5-beta-operations-33",
+      "task_id": "mission-recommendation-month5-beta-operations-33-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:6b2fecd47b7a8e2bf282f0e81f96a75da20dbd82e1fb1fba1d097c6fd7944662",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-33",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-34",
+      "owner": "ao-atlas",
+      "task": "Add beta failure injection matrix fixture for rollback terminal readbacks.",
+      "node_id": "mission-recommendation-month5-beta-operations-34",
+      "task_id": "mission-recommendation-month5-beta-operations-34-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:73e5f698b599e9aecfce3fd3264161e870081cb176d761e8d73fe8745080525a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-34",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-35",
+      "owner": "ao-atlas",
+      "task": "Add beta operations soak readiness fixture with restart and recovery metrics.",
+      "node_id": "mission-recommendation-month5-beta-operations-35",
+      "task_id": "mission-recommendation-month5-beta-operations-35-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:5e57eaf0b9bcdc33ccfdd2c29347e59cfc111137594eac496baddbbd50c1eddb",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-35",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-36",
+      "owner": "ao-atlas",
+      "task": "Add three user pilot runbook fixture with stop before live pilot gate.",
+      "node_id": "mission-recommendation-month5-beta-operations-36",
+      "task_id": "mission-recommendation-month5-beta-operations-36-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:f5a8340ad7bac2be5b6c505254b8a9a02574d82d087e576712d165737afc4189",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-36",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-37",
+      "owner": "ao-atlas",
+      "task": "Add real run ledger fixture separating dry run evidence from pilot execution.",
+      "node_id": "mission-recommendation-month5-beta-operations-37",
+      "task_id": "mission-recommendation-month5-beta-operations-37-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:44e0f45d45bedc27eb8dcc6b3eea288701dbd6cc9c80144ac9dfd4de40814958",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-37",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-38",
+      "owner": "ao-atlas",
+      "task": "Add beta release BOM draft fixture without publishing or tagging.",
+      "node_id": "mission-recommendation-month5-beta-operations-38",
+      "task_id": "mission-recommendation-month5-beta-operations-38-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:21510b865361abb675f81fff5c3d8fe8f4530b831e70efbb87c2bd8804c8d4f0",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-38",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-39",
+      "owner": "ao-atlas",
+      "task": "Add public wording guard fixture for beta claims and RSI denial.",
+      "node_id": "mission-recommendation-month5-beta-operations-39",
+      "task_id": "mission-recommendation-month5-beta-operations-39-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:1ee42f161eb813b03832089fababaff79068059d3e9ca3f6f130765d6903a659",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-39",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    },
+    {
+      "id": "month5-beta-operations-40",
+      "owner": "ao-atlas",
+      "task": "Add Month 5 terminal rollup and Month 6 handoff recommendation fixture.",
+      "node_id": "mission-recommendation-month5-beta-operations-40",
+      "task_id": "mission-recommendation-month5-beta-operations-40-task",
+      "mutation_class": "low_risk_code",
+      "source_task_digest": "sha256:4071a2114baac0301498b6122e0ce792ddd1f08e0e54777c9d4b4cd9397b3a7a",
+      "target_factory_repo": "ao-atlas",
+      "factory_folder": "factory/ao-atlas-recommendations/month5-beta-operations-40",
+      "required_gates": [
+        "node_gate",
+        "candidate_record",
+        "rollback_record",
+        "tests",
+        "verification",
+        "sentinel_public_safety",
+        "promoter_no_promotion",
+        "command_readback"
+      ],
+      "verification_commands": [
+        "go test ./... -count=1",
+        "go vet ./...",
+        "go build ./cmd/atlas",
+        "scripts/production-readiness.sh",
+        "scripts/atlas-foundry-roundtrip-smoke.sh"
+      ],
+      "safety_limits": [
+        "no provider calls",
+        "no credential inspection",
+        "no direct main mutation",
+        "no release deploy publish upload tag",
+        "no dependency updates without separate authorization",
+        "no auth policy config widening",
+        "no broad RSI claim"
+      ]
+    }
+  ],
+  "next_recommended_prompt": "You are AO Atlas, coordinating AO Foundry, AO Promoter, AO Command, and AO Architecture for a long-run Atlas-owned correction wave.\n\nDo not ask the operator for permission. Do not stop after one repo, one PR, one CI pass, one Foundry import, one route decision, one evidence artifact, or one short batch. Continue until the workgraph is completed with evidence, at least the lease minimum is met, or a true hard blocker remains after all safe repair, repack, and support work has been attempted.\n\nCurrent state:\n- Mission: mission-4d91b0a9e4ab273e.\n- Target instance: ao-stack-month5-beta-operations-v01.\n- Generated Atlas-owned nodes: 40.\n- Lease minimum: 40 nodes, 120 to 180 minutes.\n- Continue-if-fast target: 40 nodes.\n- Final response allowed: false, because ready nodes or exact next actions remain.\n- Source digest: sha256:5c00edb93ce51a77036bfa865aa433fc3781c1cc9f9d588b4a0f14639e9067fb.\n\nProblem:\n- Recent AO Atlas/Mission recommendation prompts returned after short batches instead of sustaining 2-3 hour workgraphs.\n- Double the previous short batch when explicitly requested, and otherwise use the v0.2 2-3 hour supervisor default.\n- This continuation must behave like a long-run supervisor: Atlas owns sequencing, Foundry owns bounded implementation nodes, and Blueprint is used only for genuinely new requirements or authorization.\n\nGoal:\n- Target 2-3 hours and complete a durable AO Atlas long-run wave for mission-4d91b0a9e4ab273e.\n- Execute at least 40 bounded Atlas nodes from the generated workgraph.\n- Complete at least 40 bounded implementation/evidence nodes before final response unless a true hard blocker remains.\n- If the first 40 nodes finish quickly and no blocker remains, continue through the 40-node continue-if-fast target.\n\nReturn only after all generated nodes complete, at least 40 bounded Atlas nodes complete, or a true hard blocker remains after safe repair attempts.\n\nMinimum work budget:\n- min_nodes: 40\n- min_minutes: 120\n- max_minutes: 180\n- max_iterations: 40\n- return_only_when: all_40_month5_beta_operations_nodes_complete_or_true_hard_blocker\n- checkpoint_policy: after_each_node_or_timed_interval\n\nStop gates:\n- Target duration: 120 to 180 minutes.\n- Node floor stop gate: complete at least 40 nodes before final response unless a true hard blocker remains.\n- Lease floor stop gate: do not return before min_minutes=120 unless a true hard blocker remains.\n- Continue-if-fast stop gate: if 40 nodes finish quickly and no blocker remains, continue through 40 nodes.\n- Ready-work stop gate: if ready_nodes \u003e 0 or exact_next_action is non-empty, do not produce a final response.\n- Checkpoint stop gate: record a checkpoint after each node or timed interval before evaluating final response.\n\nSafety boundaries:\n- Keep exactly one executable mutation node active at a time.\n- No provider calls.\n- No credential or token inspection.\n- No direct main mutation.\n- No release, deploy, publish, upload, or tag.\n- No dependency updates unless separately authorized.\n- No auth, policy, or config widening.\n- No hidden instruction mutation.\n- No broad RSI claim.\n- RSI remains denied.\n- Use existing repo auth only for normal PR, CI, and merge if available without exposing credentials.\n\nRequired work:\nmonth5-beta-operations-01. Add stack lockfile and authority manifest fixtures for beta operations baseline.\nmonth5-beta-operations-02. Bind architecture source truth readback to current repository behavior inventory.\nmonth5-beta-operations-03. Add Covenant schema registry handoff fixture with producer consumer ownership rows.\nmonth5-beta-operations-04. Create producer consumer compatibility ledger for Mission Blueprint Atlas handoff contracts.\nmonth5-beta-operations-05. Add Blueprint canonical bytes digest preservation fixture for downstream imports.\nmonth5-beta-operations-06. Generate Atlas compatibility matrix rows for current stack contracts.\nmonth5-beta-operations-07. Bind Foundry safe next work scheduling readiness to Atlas node imports.\nmonth5-beta-operations-08. Add Forge GoalRun evidence fixture for dry run lifecycle boundaries.\nmonth5-beta-operations-09. Record Command thin client boundary fixture against Mission readback ownership.\nmonth5-beta-operations-10. Add AO2 exact approval bytes fixture requiring base commit and patch digest.\nmonth5-beta-operations-11. Add AO2 auto approval denial fixture for hardcoded identity paths.\nmonth5-beta-operations-12. Add Covenant policy hash fixture binding policy fields into ticket evidence.\nmonth5-beta-operations-13. Add control plane transactional evidence transition fixture with rollback readback.\nmonth5-beta-operations-14. Add control plane migration metadata fixture for durable beta storage.\nmonth5-beta-operations-15. Add local backup restore drill fixture for beta operations evidence state.\nmonth5-beta-operations-16. Add Mission restart replay fixture preserving exactly once node accounting.\nmonth5-beta-operations-17. Add Mission kill restart replay fixture for interrupted Month 5 nodes.\nmonth5-beta-operations-18. Add golden path dry run readiness matrix without provider execution.\nmonth5-beta-operations-19. Add clean room non AO replay fixture for external repository preparation.\nmonth5-beta-operations-20. Add Arena hosted CI workflow fixture with readiness readback binding.\nmonth5-beta-operations-21. Add Crucible hosted CI workflow fixture with failure injection readback.\nmonth5-beta-operations-22. Add Sentinel hosted CI workflow fixture with native signal readback.\nmonth5-beta-operations-23. Add Promoter hosted CI workflow fixture with no activation boundary.\nmonth5-beta-operations-24. Bind Sentinel native signal state fixture to Promoter input readiness.\nmonth5-beta-operations-25. Add Promoter no activation boundary fixture for beta operations rollups.\nmonth5-beta-operations-26. Add Command compact timeline and approval inbox fixture for beta operations.\nmonth5-beta-operations-27. Add deterministic run provenance fixture with explicit provider and model fields.\nmonth5-beta-operations-28. Add AO2 module extraction preflight fixture with no behavior change boundary.\nmonth5-beta-operations-29. Add Foundry module extraction preflight fixture with CLI parity checks.\nmonth5-beta-operations-30. Add Forge module extraction preflight fixture with GoalRun parity checks.\nmonth5-beta-operations-31. Add Command module extraction preflight fixture with readback parity checks.\nmonth5-beta-operations-32. Add evidence growth delta guard fixture with warning threshold readback.\nmonth5-beta-operations-33. Add cross platform local fixture matrix for beta operations commands.\nmonth5-beta-operations-34. Add beta failure injection matrix fixture for rollback terminal readbacks.\nmonth5-beta-operations-35. Add beta operations soak readiness fixture with restart and recovery metrics.\nmonth5-beta-operations-36. Add three user pilot runbook fixture with stop before live pilot gate.\nmonth5-beta-operations-37. Add real run ledger fixture separating dry run evidence from pilot execution.\nmonth5-beta-operations-38. Add beta release BOM draft fixture without publishing or tagging.\nmonth5-beta-operations-39. Add public wording guard fixture for beta claims and RSI denial.\nmonth5-beta-operations-40. Add Month 5 terminal rollup and Month 6 handoff recommendation fixture.\n\nPer-node requirements:\n- Generate or validate node gate, candidate record, rollback record, implementation evidence, tests, verification command output, Sentinel/public-safety wording evidence where applicable, Promoter/no-promotion or promotion-readiness evidence where applicable, and Command/readback evidence where applicable.\n- Emit a Foundry import for exactly one active node at a time, execute the node, verify locally, record run-link evidence, complete the node in Atlas, evaluate the next stop gate, and continue.\n\nRegression tests:\n- Prove the recommendation wave defaults to at least 30 nodes and 120 minutes.\n- Prove the continue-if-fast target generates 40 bounded Atlas-owned tasks.\n- Prove mixed-owner default waves are rejected with exact readback.\n- Prove final response remains denied while ready nodes or exact next actions remain.\n\nVerification:\n- go test ./... -count=1\n- go vet ./...\n- go build ./cmd/atlas\n- scripts/production-readiness.sh\n- scripts/atlas-foundry-roundtrip-smoke.sh\n- Public-safety wording scan over changed docs and readbacks.\n\nFinal response only after completion or true hard blocker:\n- Include `early_return_risk_status` in continuation prompts and treat any blocked risk status as final-response denial evidence.\n- If ready_nodes \u003e 0 or exact_next_action is non-empty, do not produce a final response.\n- If a node becomes blocked or failed, record the exact blocked node id, missing evidence or stop gate, safe repair or repack action, and resume from the latest checkpoint after repair.\n- completed nodes / total nodes\n- list of node statuses\n- merged PRs by repo or local commits if remote lifecycle is blocked\n- evidence roots\n- final AO Atlas long-run supervisor status\n- Foundry rollup\n- Command readback\n- Feature Depth Recommendations, at least 40 tasks\n- verification results\n- clean/synced repo status\n- exact next action\n",
+  "final_response_allowed": false,
+  "final_response_reason": "ready nodes or exact next actions remain",
+  "promoter_readback_status": "required_not_bound",
+  "command_readback_status": "required_not_bound",
+  "public_safety_scan_status": "required_pending_verification",
+  "safe_to_execute": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false
+}
