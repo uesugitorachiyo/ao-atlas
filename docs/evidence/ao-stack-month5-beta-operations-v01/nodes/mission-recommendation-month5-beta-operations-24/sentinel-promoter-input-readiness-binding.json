@@ -1,0 +1,24 @@
+{
+  "schema": "ao.atlas.month5.sentinel-promoter-input-readiness-binding.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-24",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "promoter_input_readiness_bound",
+  "fixture_ref": "sentinel-signal-state-fixture.json",
+  "promoter_inputs": [
+    "ci",
+    "runtime",
+    "policy",
+    "evidence_freshness"
+  ],
+  "required_verdicts": [
+    "allow_continue",
+    "wait",
+    "refresh_required",
+    "block"
+  ],
+  "fixture_only": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
