@@ -1,0 +1,10 @@
+{
+  "schema": "ao.command.compact-readback.v0.1",
+  "status": "readback_agrees_no_promotion",
+  "node_id": "mission-recommendation-month5-beta-operations-33",
+  "completed_nodes_after": 33,
+  "ready_nodes_after": 7,
+  "next_executable_node": "mission-recommendation-month5-beta-operations-34",
+  "final_response_allowed": false,
+  "rsi_remains_denied": true
+}
