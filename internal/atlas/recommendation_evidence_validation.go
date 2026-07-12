@@ -852,6 +852,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:foundry-evidence-size-boundary-fixture", err
 		}
 		return "typed:foundry-evidence-size-boundary-fixture", ValidateAtlasFoundryEvidenceSizeBoundaryFixture(value)
+	case AtlasEvidenceCatalogIndexExportContract:
+		value, err := LoadJSON[AtlasEvidenceCatalogIndexExport](path)
+		if err != nil {
+			return "typed:evidence-catalog-index-export", err
+		}
+		return "typed:evidence-catalog-index-export", ValidateAtlasEvidenceCatalogIndexExport(value)
 	case AtlasRepeatedTaskResultLedgerFixtureContract:
 		value, err := LoadJSON[AtlasRepeatedTaskResultLedgerFixture](path)
 		if err != nil {

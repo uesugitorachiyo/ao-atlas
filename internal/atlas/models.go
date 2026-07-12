@@ -2200,6 +2200,33 @@ type AtlasFoundryEvidenceSizeBoundaryFixture struct {
 	RSIRemainsDenied              bool                                        `json:"rsi_remains_denied"`
 }
 
+type AtlasEvidenceCatalogIndexEntry struct {
+	Name          string `json:"name"`
+	EvidenceRoot  string `json:"evidence_root"`
+	ArtifactClass string `json:"artifact_class"`
+	DigestMode    string `json:"digest_mode"`
+	IndexOnly     bool   `json:"index_only"`
+}
+
+type AtlasEvidenceCatalogIndexExport struct {
+	Schema                          string                           `json:"schema"`
+	Status                          string                           `json:"status"`
+	Wave                            string                           `json:"wave"`
+	IndexEntries                    []AtlasEvidenceCatalogIndexEntry `json:"index_entries"`
+	IndexEntryCount                 int                              `json:"index_entry_count"`
+	BulkCampaignArtifactsCataloged  bool                             `json:"bulk_campaign_artifacts_cataloged"`
+	SourceArtifactsRetained         bool                             `json:"source_artifacts_retained"`
+	UploadsArtifacts                bool                             `json:"uploads_artifacts"`
+	DeletesSourceArtifacts          bool                             `json:"deletes_source_artifacts"`
+	ContentAddressedExportRequired  bool                             `json:"content_addressed_export_required"`
+	SmallReplayableFixturesRetained bool                             `json:"small_replayable_fixtures_retained"`
+	SchedulesWork                   bool                             `json:"schedules_work"`
+	ExecutesWork                    bool                             `json:"executes_work"`
+	ApprovesWork                    bool                             `json:"approves_work"`
+	ClaimsAuthorityAdvance          bool                             `json:"claims_authority_advance"`
+	RSIRemainsDenied                bool                             `json:"rsi_remains_denied"`
+}
+
 type AtlasRepeatedTaskResultLedgerAttempt struct {
 	Name         string `json:"name"`
 	ResultStatus string `json:"result_status"`
