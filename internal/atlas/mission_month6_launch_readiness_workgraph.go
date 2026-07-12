@@ -123,7 +123,7 @@ func validateAtlasMonth6LaunchReadinessNode(errs *[]string, prefix string, node 
 	if !strings.HasPrefix(node.PR, "https://github.com/uesugitorachiyo/") {
 		*errs = append(*errs, prefix+".pr must be a GitHub PR URL under uesugitorachiyo")
 	}
-	if !lowerHex40(node.MergeCommit) {
+	if !lowerHex40(node.MergeCommit) || node.MergeCommit == "0000000000000000000000000000000000000000" {
 		*errs = append(*errs, prefix+".merge_commit must be 40 lowercase hex characters")
 	}
 	if node.CIStatus != "passed" {

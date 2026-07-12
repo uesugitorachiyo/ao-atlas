@@ -84,6 +84,14 @@ func TestMonth6LaunchReadinessWorkgraphRejectsReadyNodes(t *testing.T) {
 	}
 }
 
+func TestMonth6LaunchReadinessWorkgraphRejectsZeroMergeCommit(t *testing.T) {
+	fixture := validMonth6LaunchReadinessWorkgraphForTest()
+	fixture.Nodes[0].MergeCommit = "0000000000000000000000000000000000000000"
+	if err := ValidateAtlasMonth6LaunchReadinessWorkgraph(fixture); err == nil {
+		t.Fatal("expected all-zero merge commit to be rejected")
+	}
+}
+
 func validMonth6LaunchReadinessWorkgraphForTest() AtlasMonth6LaunchReadinessWorkgraph {
 	nodes := make([]AtlasMonth6LaunchReadinessNode, 0, 40)
 	bound := make(map[int]bool, 40)
@@ -139,7 +147,7 @@ func validMonth6LaunchReadinessNodeForTest(rank int) AtlasMonth6LaunchReadinessN
 		Category:               "contract_registry",
 		Status:                 "completed",
 		PR:                     "https://github.com/uesugitorachiyo/" + repo + "/pull/1",
-		MergeCommit:            "0000000000000000000000000000000000000000",
+		MergeCommit:            "1111111111111111111111111111111111111111",
 		CIStatus:               "passed",
 		MergeStatus:            "merged",
 		EvidencePath:           "docs/evidence/ao-stack-month6-beta-launch-v01/nodes/month6-recommendation-40-launch-readiness-workgraph/launch-readiness-workgraph.json",
