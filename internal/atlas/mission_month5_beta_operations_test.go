@@ -524,6 +524,25 @@ type month5EvidenceGrowthDeltaGuardFixture struct {
 	SafeToExecute           bool     `json:"safe_to_execute"`
 }
 
+type month5PilotRunbookFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	PilotUserCount         int      `json:"pilot_user_count"`
+	RunbookSections        []string `json:"runbook_sections"`
+	StopGates              []string `json:"stop_gates"`
+	LivePilotAllowed       bool     `json:"live_pilot_allowed"`
+	RequiresOperatorReview bool     `json:"requires_operator_review"`
+	DryRunOnly             bool     `json:"dry_run_only"`
+	ProviderCallsAllowed   bool     `json:"provider_calls_allowed"`
+	CredentialUseAllowed   bool     `json:"credential_use_allowed"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1925,5 +1944,39 @@ func TestMonth5BetaOperationsSoakReadinessFixture(t *testing.T) {
 		fixture.ClaimsAuthorityAdvance ||
 		!fixture.RSIRemainsDenied {
 		t.Fatalf("restart resume soak fixture changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5ThreeUserPilotRunbookFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-36", "three-user-pilot-runbook.json")
+	fixture := mustLoadJSON[month5PilotRunbookFixture](t, fixturePath)
+	if fixture.Schema != "ao.atlas.month5.three-user-pilot-runbook.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-36" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "pilot_runbook_prepared_stop_before_live_gate" ||
+		fixture.PilotUserCount != 3 {
+		t.Fatalf("unexpected pilot runbook fixture header: %#v", fixture)
+	}
+	for _, required := range []string{"install_preflight", "dry_run_mission", "evidence_review", "rollback_drill", "feedback_capture"} {
+		if !containsValue(fixture.RunbookSections, required) {
+			t.Fatalf("pilot runbook missing section %s: %#v", required, fixture.RunbookSections)
+		}
+	}
+	for _, required := range []string{"operator_review_required", "live_pilot_authorization_required", "credential_scope_review_required"} {
+		if !containsValue(fixture.StopGates, required) {
+			t.Fatalf("pilot runbook missing stop gate %s: %#v", required, fixture.StopGates)
+		}
+	}
+	if fixture.LivePilotAllowed ||
+		!fixture.RequiresOperatorReview ||
+		!fixture.DryRunOnly ||
+		fixture.ProviderCallsAllowed ||
+		fixture.CredentialUseAllowed ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("pilot runbook changed safety posture: %#v", fixture)
 	}
 }

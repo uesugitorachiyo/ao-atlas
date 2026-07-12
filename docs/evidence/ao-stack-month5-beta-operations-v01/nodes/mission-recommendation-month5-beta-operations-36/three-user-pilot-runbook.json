@@ -1,0 +1,28 @@
+{
+  "schema": "ao.atlas.month5.three-user-pilot-runbook.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-36",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "pilot_runbook_prepared_stop_before_live_gate",
+  "pilot_user_count": 3,
+  "runbook_sections": [
+    "install_preflight",
+    "dry_run_mission",
+    "evidence_review",
+    "rollback_drill",
+    "feedback_capture"
+  ],
+  "stop_gates": [
+    "operator_review_required",
+    "live_pilot_authorization_required",
+    "credential_scope_review_required"
+  ],
+  "live_pilot_allowed": false,
+  "requires_operator_review": true,
+  "dry_run_only": true,
+  "provider_calls_allowed": false,
+  "credential_use_allowed": false,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
