@@ -1,0 +1,93 @@
+{
+  "schema": "ao.atlas.month5.covenant-schema-registry-handoff.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-03",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "registry_handoff_ready",
+  "registry_owner": "ao-covenant",
+  "producer_consumer_rows": [
+    {
+      "contract": "mission.blueprint-pack",
+      "owner": "ao-blueprint",
+      "producer": "ao-blueprint",
+      "consumers": ["ao-mission", "ao-atlas", "ao-foundry"],
+      "status": "stable_candidate"
+    },
+    {
+      "contract": "atlas.workgraph",
+      "owner": "ao-atlas",
+      "producer": "ao-atlas",
+      "consumers": ["ao-foundry", "ao-command", "ao-promoter"],
+      "status": "stable_candidate"
+    },
+    {
+      "contract": "foundry.run-link",
+      "owner": "ao-foundry",
+      "producer": "ao-foundry",
+      "consumers": ["ao-atlas", "ao-mission", "ao-command"],
+      "status": "stable_candidate"
+    },
+    {
+      "contract": "covenant.approval-ticket",
+      "owner": "ao-covenant",
+      "producer": "ao-covenant",
+      "consumers": ["ao-command", "ao-forge", "ao2", "ao-promoter"],
+      "status": "gate_critical"
+    },
+    {
+      "contract": "ao2.approval-digest",
+      "owner": "ao-covenant",
+      "producer": "ao2",
+      "consumers": ["ao-covenant", "ao-command", "ao2-control-plane"],
+      "status": "gate_critical"
+    },
+    {
+      "contract": "control-plane.event-record",
+      "owner": "ao2-control-plane",
+      "producer": "ao2-control-plane",
+      "consumers": ["ao-command", "ao-sentinel", "ao-promoter"],
+      "status": "stable_candidate"
+    },
+    {
+      "contract": "sentinel.native-verdict",
+      "owner": "ao-sentinel",
+      "producer": "ao-sentinel",
+      "consumers": ["ao-promoter", "ao-command", "ao-architecture"],
+      "status": "experimental"
+    },
+    {
+      "contract": "promoter.no-activation-verdict",
+      "owner": "ao-promoter",
+      "producer": "ao-promoter",
+      "consumers": ["ao-command", "ao-mission", "ao-architecture"],
+      "status": "stable_candidate"
+    }
+  ],
+  "required_compatibility_checks": [
+    "producer_consumer_fixture_roundtrip",
+    "canonical_json_digest_vectors",
+    "owner_contract_schema_registry_lookup",
+    "consumer_rejection_fixture_for_unknown_fields",
+    "policy_hash_binding_for_gate_critical_contracts"
+  ],
+  "authority_boundaries": [
+    {
+      "owner": "ao-covenant",
+      "boundary": "Covenant is the registry owner for gate-critical approval and policy contracts.",
+      "constraint": "Command, Atlas, Foundry, Forge, and AO2 may consume Covenant contracts but cannot redefine acceptance."
+    },
+    {
+      "owner": "ao-atlas",
+      "boundary": "Atlas may publish compatibility rows and readbacks for planning.",
+      "constraint": "Atlas rows do not grant policy authority or execute approvals."
+    },
+    {
+      "owner": "ao-promoter",
+      "boundary": "Promoter consumes registry evidence for no-promotion decisions.",
+      "constraint": "This fixture requests no promotion and no activation."
+    }
+  ],
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
