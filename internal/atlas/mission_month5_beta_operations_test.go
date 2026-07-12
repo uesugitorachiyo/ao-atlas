@@ -293,6 +293,23 @@ type month5LocalBackupRestoreDrillFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5MissionRestartReplayFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	SourceCheckpoint       string   `json:"source_checkpoint"`
+	ReplayInputs           []string `json:"replay_inputs"`
+	ExpectedReadbacks      []string `json:"expected_readbacks"`
+	ExactlyOnceAccounting  bool     `json:"exactly_once_accounting"`
+	DuplicateNodeCompletion bool     `json:"duplicate_node_completion"`
+	FinalResponseAllowed   bool     `json:"final_response_allowed"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -932,5 +949,38 @@ func TestMonth5LocalBackupRestoreDrillFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("local backup restore drill changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5MissionRestartReplayFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-16", "mission-restart-replay.json")
+	fixture := mustLoadJSON[month5MissionRestartReplayFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.mission-restart-replay.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-16" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "restart_replay_bound" ||
+		fixture.SourceCheckpoint == "" {
+		t.Fatalf("unexpected Mission restart replay header: %#v", fixture)
+	}
+	for _, required := range []string{"mission_ledger", "recommendation_workgraph", "run_links", "checkpoint_readback"} {
+		if !containsValue(fixture.ReplayInputs, required) {
+			t.Fatalf("Mission restart replay missing input %s: %#v", required, fixture.ReplayInputs)
+		}
+	}
+	for _, required := range []string{"completed_nodes_unchanged", "ready_nodes_unchanged", "exact_next_action_preserved", "final_response_remains_denied"} {
+		if !containsValue(fixture.ExpectedReadbacks, required) {
+			t.Fatalf("Mission restart replay missing readback %s: %#v", required, fixture.ExpectedReadbacks)
+		}
+	}
+	if !fixture.ExactlyOnceAccounting ||
+		fixture.DuplicateNodeCompletion ||
+		fixture.FinalResponseAllowed ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("Mission restart replay changed safety posture: %#v", fixture)
 	}
 }
