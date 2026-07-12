@@ -223,6 +223,23 @@ type month5AO2AutoApprovalDenialFixture struct {
 	SafeToExecute            bool     `json:"safe_to_execute"`
 }
 
+type month5CovenantPolicyHashFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	PolicyHash             string   `json:"policy_hash"`
+	TicketDigest           string   `json:"ticket_digest"`
+	BoundPolicyFields      []string `json:"bound_policy_fields"`
+	RejectedOmissions      []string `json:"rejected_omissions"`
+	CovenantAuthority       string   `json:"covenant_authority"`
+	CommandCompatibility    string   `json:"command_compatibility"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -714,5 +731,44 @@ func TestMonth5AO2AutoApprovalDenialFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("AO2 auto-approval denial changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5CovenantPolicyHashFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-12", "covenant-policy-hash-binding.json")
+	fixture := mustLoadJSON[month5CovenantPolicyHashFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.covenant-policy-hash-binding.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-12" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "policy_fields_bound" ||
+		fixture.CovenantAuthority != "policy_and_contract_authority" ||
+		fixture.CommandCompatibility != "must_reject_ticket_covenant_rejects" {
+		t.Fatalf("unexpected Covenant policy hash fixture header: %#v", fixture)
+	}
+	for name, digest := range map[string]string{
+		"policy_hash":   fixture.PolicyHash,
+		"ticket_digest": fixture.TicketDigest,
+	} {
+		if !digestPattern.MatchString(digest) {
+			t.Fatalf("%s must be sha256-bound: %s", name, digest)
+		}
+	}
+	for _, required := range []string{"policy_id", "policy_version", "decision", "constraints", "scope", "expires_at"} {
+		if !containsValue(fixture.BoundPolicyFields, required) {
+			t.Fatalf("Covenant policy hash missing bound field %s: %#v", required, fixture.BoundPolicyFields)
+		}
+	}
+	for _, rejected := range []string{"policyless_ticket_digest", "constraints_omitted", "decision_omitted", "command_accepts_covenant_reject"} {
+		if !containsValue(fixture.RejectedOmissions, rejected) {
+			t.Fatalf("Covenant policy hash missing rejected omission %s: %#v", rejected, fixture.RejectedOmissions)
+		}
+	}
+	if !fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("Covenant policy hash fixture changed safety posture: %#v", fixture)
 	}
 }
