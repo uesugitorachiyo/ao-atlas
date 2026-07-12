@@ -587,6 +587,25 @@ type month5BetaReleaseBOMDraftFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5PublicWordingGuardFixture struct {
+	Schema                   string   `json:"schema"`
+	NodeID                   string   `json:"node_id"`
+	MissionID                string   `json:"mission_id"`
+	Status                   string   `json:"status"`
+	ScanMode                 string   `json:"scan_mode"`
+	ScannedScopes            []string `json:"scanned_scopes"`
+	ForbiddenClaims          []string `json:"forbidden_claims"`
+	RequiredQualifiers       []string `json:"required_qualifiers"`
+	ScanPassed               bool     `json:"scan_passed"`
+	BetaClaimsQualified      bool     `json:"beta_claims_qualified"`
+	PromotionClaimsDenied    bool     `json:"promotion_claims_denied"`
+	RSIDenialPresent         bool     `json:"rsi_denial_present"`
+	NoPromotionRequested     bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance   bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
+	SafeToExecute            bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -2096,5 +2115,43 @@ func TestMonth5BetaReleaseBOMDraftFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("beta release BOM draft changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5PublicWordingGuardFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-39", "public-wording-guard.json")
+	fixture := mustLoadJSON[month5PublicWordingGuardFixture](t, fixturePath)
+	if fixture.Schema != "ao.atlas.month5.public-wording-guard.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-39" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "public_wording_guard_passed" ||
+		fixture.ScanMode != "fixture_public_claim_scan" {
+		t.Fatalf("unexpected public wording guard header: %#v", fixture)
+	}
+	for _, required := range []string{"docs/evidence/ao-stack-month5-beta-operations-v01", "internal/atlas/mission_month5_beta_operations_test.go"} {
+		if !containsValue(fixture.ScannedScopes, required) {
+			t.Fatalf("public wording guard missing scanned scope %s: %#v", required, fixture.ScannedScopes)
+		}
+	}
+	for _, forbidden := range []string{"unrestricted_rsi_proof_claim", "live_rsi_proof_claim", "production_autonomous_factory_claim", "beta_release_published_claim"} {
+		if !containsValue(fixture.ForbiddenClaims, forbidden) {
+			t.Fatalf("public wording guard missing forbidden claim %s: %#v", forbidden, fixture.ForbiddenClaims)
+		}
+	}
+	for _, required := range []string{"draft", "dry-run", "no-promotion", "RSI remains denied"} {
+		if !containsValue(fixture.RequiredQualifiers, required) {
+			t.Fatalf("public wording guard missing required qualifier %s: %#v", required, fixture.RequiredQualifiers)
+		}
+	}
+	if !fixture.ScanPassed ||
+		!fixture.BetaClaimsQualified ||
+		!fixture.PromotionClaimsDenied ||
+		!fixture.RSIDenialPresent ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("public wording guard changed safety posture: %#v", fixture)
 	}
 }
