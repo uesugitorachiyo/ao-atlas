@@ -1,0 +1,13 @@
+{
+  "schema": "ao.atlas.month5.implementation-evidence.v0.1",
+  "status": "implemented",
+  "node_id": "mission-recommendation-month5-beta-operations-40",
+  "summary": "Terminal rollup fixture closes the 40-node Month 5 wave and provides a 40-task Month 6 handoff without promotion or release side effects.",
+  "files_changed": [
+    "internal/atlas/mission_month5_beta_operations_test.go",
+    "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-40"
+  ],
+  "source_recommendation": "month5-beta-operations-40",
+  "source_digest": "sha256:5c00edb93ce51a77036bfa865aa433fc3781c1cc9f9d588b4a0f14639e9067fb",
+  "source_task_digest": "sha256:4071a2114baac0301498b6122e0ce792ddd1f08e0e54777c9d4b4cd9397b3a7a"
+}

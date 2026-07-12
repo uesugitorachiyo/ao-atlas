@@ -606,6 +606,49 @@ type month5PublicWordingGuardFixture struct {
 	SafeToExecute            bool     `json:"safe_to_execute"`
 }
 
+type month5TerminalRollupFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	CompletedNodes         int      `json:"completed_nodes"`
+	TotalNodes             int      `json:"total_nodes"`
+	ReadyNodes             int      `json:"ready_nodes"`
+	BlockedNodes           int      `json:"blocked_nodes"`
+	FailedNodes            int      `json:"failed_nodes"`
+	FinalResponseAllowed   bool     `json:"final_response_allowed"`
+	FinalReadbackRef       string   `json:"final_readback_ref"`
+	TerminalArtifacts      []string `json:"terminal_artifacts"`
+	Month6HandoffRef       string   `json:"month6_handoff_ref"`
+	PromoterStatus         string   `json:"promoter_status"`
+	CommandStatus          string   `json:"command_status"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
+type month6HandoffRecommendationFixture struct {
+	Schema                 string                         `json:"schema"`
+	SourceMissionID        string                         `json:"source_mission_id"`
+	SourceWave             string                         `json:"source_wave"`
+	Status                 string                         `json:"status"`
+	RecommendationCount    int                            `json:"recommendation_count"`
+	Recommendations        []month6HandoffRecommendation `json:"recommendations"`
+	NoPromotionRequested   bool                           `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool                           `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                           `json:"rsi_remains_denied"`
+	SafeToExecute          bool                           `json:"safe_to_execute"`
+}
+
+type month6HandoffRecommendation struct {
+	Rank       int    `json:"rank"`
+	Task       string `json:"task"`
+	Category   string `json:"category"`
+	Scope      string `json:"scope"`
+	SafetyGate string `json:"safety_gate"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -2153,5 +2196,62 @@ func TestMonth5PublicWordingGuardFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("public wording guard changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5TerminalRollupAndMonth6HandoffFixtures(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-40")
+	rollup := mustLoadJSON[month5TerminalRollupFixture](t, filepath.Join(nodeDir, "month5-terminal-rollup.json"))
+	handoff := mustLoadJSON[month6HandoffRecommendationFixture](t, filepath.Join(nodeDir, "month6-handoff-recommendations.json"))
+
+	if rollup.Schema != "ao.atlas.month5.terminal-rollup.v0.1" ||
+		rollup.NodeID != "mission-recommendation-month5-beta-operations-40" ||
+		rollup.MissionID != "mission-4d91b0a9e4ab273e" ||
+		rollup.Status != "month5_terminal_rollup_ready" {
+		t.Fatalf("unexpected terminal rollup header: %#v", rollup)
+	}
+	for _, required := range []string{"recommendation-readback-after.json", "execution-readback-after.json", "checkpoint-readback-after.json", "month6-handoff-recommendations.json"} {
+		if !containsValue(rollup.TerminalArtifacts, required) {
+			t.Fatalf("terminal rollup missing artifact %s: %#v", required, rollup.TerminalArtifacts)
+		}
+	}
+	if rollup.CompletedNodes != 40 ||
+		rollup.TotalNodes != 40 ||
+		rollup.ReadyNodes != 0 ||
+		rollup.BlockedNodes != 0 ||
+		rollup.FailedNodes != 0 ||
+		!rollup.FinalResponseAllowed ||
+		rollup.PromoterStatus != "no_promotion_requested" ||
+		rollup.CommandStatus != "readback_agrees_no_promotion" ||
+		!rollup.NoPromotionRequested ||
+		rollup.ClaimsAuthorityAdvance ||
+		!rollup.RSIRemainsDenied ||
+		rollup.SafeToExecute {
+		t.Fatalf("terminal rollup changed safety posture: %#v", rollup)
+	}
+
+	if handoff.Schema != "ao.atlas.month6.handoff-recommendations.v0.1" ||
+		handoff.SourceMissionID != "mission-4d91b0a9e4ab273e" ||
+		handoff.SourceWave != "ao-stack-month5-beta-operations-v01" ||
+		handoff.Status != "month6_recommendations_ready" ||
+		handoff.RecommendationCount != len(handoff.Recommendations) ||
+		handoff.RecommendationCount < 40 {
+		t.Fatalf("unexpected Month 6 handoff header: %#v", handoff)
+	}
+	for _, requiredCategory := range []string{"beta_operability", "evidence_ui", "golden_path", "contract_registry"} {
+		found := false
+		for _, recommendation := range handoff.Recommendations {
+			found = found || recommendation.Category == requiredCategory
+		}
+		if !found {
+			t.Fatalf("Month 6 handoff missing category %s: %#v", requiredCategory, handoff.Recommendations)
+		}
+	}
+	if !handoff.NoPromotionRequested ||
+		handoff.ClaimsAuthorityAdvance ||
+		!handoff.RSIRemainsDenied ||
+		handoff.SafeToExecute {
+		t.Fatalf("Month 6 handoff changed safety posture: %#v", handoff)
 	}
 }
