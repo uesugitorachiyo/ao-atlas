@@ -880,7 +880,7 @@
       "category": "contract_registry",
       "status": "completed",
       "pr": "https://github.com/uesugitorachiyo/ao-atlas/pull/726",
-      "merge_commit": "0000000000000000000000000000000000000000",
+      "merge_commit": "45d58734cae402267964ed7188ffad1a9bd27002",
       "ci_status": "passed",
       "merge_status": "merged",
       "evidence_path": "docs/evidence/ao-stack-month6-beta-launch-v01/nodes/month6-recommendation-40-launch-readiness-workgraph/launch-readiness-workgraph.json",
