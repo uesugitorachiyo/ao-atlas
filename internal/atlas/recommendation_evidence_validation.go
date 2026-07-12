@@ -858,6 +858,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:evidence-catalog-index-export", err
 		}
 		return "typed:evidence-catalog-index-export", ValidateAtlasEvidenceCatalogIndexExport(value)
+	case AtlasStackRestartResumeRehearsalContract:
+		value, err := LoadJSON[AtlasStackRestartResumeRehearsal](path)
+		if err != nil {
+			return "typed:stack-restart-resume-rehearsal", err
+		}
+		return "typed:stack-restart-resume-rehearsal", ValidateAtlasStackRestartResumeRehearsal(value)
 	case AtlasRepeatedTaskResultLedgerFixtureContract:
 		value, err := LoadJSON[AtlasRepeatedTaskResultLedgerFixture](path)
 		if err != nil {

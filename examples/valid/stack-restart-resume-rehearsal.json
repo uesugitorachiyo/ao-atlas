@@ -1,0 +1,40 @@
+{
+  "schema": "ao.atlas.stack-restart-resume-rehearsal.v0.1",
+  "status": "restart_resume_rehearsal_ready",
+  "wave": "ao-stack-month6-recommendations",
+  "components": [
+    {
+      "repo": "ao-mission",
+      "role": "mission_ledger_recovery",
+      "resume_signal": "checkpoint_fresh",
+      "replay_required": true,
+      "ready_for_resume": true
+    },
+    {
+      "repo": "ao-atlas",
+      "role": "workgraph_next_node_recovery",
+      "resume_signal": "exact_next_action_present",
+      "replay_required": true,
+      "ready_for_resume": true
+    },
+    {
+      "repo": "ao-foundry",
+      "role": "safe_next_work_recovery",
+      "resume_signal": "single_active_node_bound",
+      "replay_required": true,
+      "ready_for_resume": true
+    }
+  ],
+  "component_count": 3,
+  "mission_checkpoint_bound": true,
+  "atlas_workgraph_bound": true,
+  "foundry_safe_next_work_bound": true,
+  "no_lost_evidence": true,
+  "single_active_node_preserved": true,
+  "final_response_allowed": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}

@@ -514,6 +514,7 @@ func missionRecommendationCommandRegistry() []missionRecommendationCommand {
 		{name: "content-addressed-evidence-manifest-fixture", run: runMissionRecommendationsContentAddressedEvidenceManifestFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "foundry-evidence-size-boundary-fixture", run: runMissionRecommendationsFoundryEvidenceSizeBoundaryFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "evidence-catalog-index-export", run: runMissionRecommendationsEvidenceCatalogIndexExport, commandClass: missionRecommendationCommandClassPlanningOnly},
+		{name: "stack-restart-resume-rehearsal", run: runMissionRecommendationsStackRestartResumeRehearsal, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "repeated-task-result-ledger-fixture", run: runMissionRecommendationsRepeatedTaskResultLedgerFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "failure-injection-fuzzing-fixture", run: runMissionRecommendationsFailureInjectionFuzzingFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
 		{name: "local-platform-fixture", run: runMissionRecommendationsLocalPlatformFixture, commandClass: missionRecommendationCommandClassPlanningOnly},
