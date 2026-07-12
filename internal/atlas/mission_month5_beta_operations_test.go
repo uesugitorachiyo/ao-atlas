@@ -95,6 +95,22 @@ type month5CompatibilityLedgerRow struct {
 	Status          string   `json:"status"`
 }
 
+type month5BlueprintCanonicalBytesFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	CanonicalBytesRef      string   `json:"canonical_bytes_ref"`
+	CanonicalBytesDigest   string   `json:"canonical_bytes_digest"`
+	PreservedFields        []string `json:"preserved_fields"`
+	DownstreamConsumers    []string `json:"downstream_consumers"`
+	RejectedTransforms     []string `json:"rejected_transforms"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -331,5 +347,41 @@ func TestMonth5MissionBlueprintAtlasCompatibilityLedgerFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("compatibility ledger changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5BlueprintCanonicalBytesPreservationFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-05", "blueprint-canonical-bytes-fixture.json")
+	fixture := mustLoadJSON[month5BlueprintCanonicalBytesFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.blueprint-canonical-bytes-fixture.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-05" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "canonical_bytes_preserved" {
+		t.Fatalf("unexpected Blueprint canonical bytes fixture header: %#v", fixture)
+	}
+	if fixture.CanonicalBytesRef == "" || !digestPattern.MatchString(fixture.CanonicalBytesDigest) {
+		t.Fatalf("canonical bytes fixture must bind a portable ref and sha256 digest: %#v", fixture)
+	}
+	for _, required := range []string{"schema", "requirements", "authorization_scope", "operator_prompt_digest", "canonical_bytes_digest"} {
+		if !containsValue(fixture.PreservedFields, required) {
+			t.Fatalf("canonical bytes fixture missing preserved field %s: %#v", required, fixture.PreservedFields)
+		}
+	}
+	for _, consumer := range []string{"ao-mission", "ao-atlas", "ao-foundry"} {
+		if !containsValue(fixture.DownstreamConsumers, consumer) {
+			t.Fatalf("canonical bytes fixture missing consumer %s: %#v", consumer, fixture.DownstreamConsumers)
+		}
+	}
+	if !containsValue(fixture.RejectedTransforms, "schema_alias_rewrite") ||
+		!containsValue(fixture.RejectedTransforms, "field_renaming_without_digest_change") {
+		t.Fatalf("canonical bytes fixture must reject lossy transforms: %#v", fixture.RejectedTransforms)
+	}
+	if !fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("canonical bytes fixture changed safety posture: %#v", fixture)
 	}
 }
