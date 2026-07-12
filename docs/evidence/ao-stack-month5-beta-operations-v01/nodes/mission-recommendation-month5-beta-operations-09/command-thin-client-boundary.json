@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.month5.command-thin-client-boundary.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-09",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "mission_readback_ownership_bound",
+  "command_role": "thin_client_presentation_only",
+  "source_readback": "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-08/recommendation-readback-after.json",
+  "owned_by_mission": [
+    "durable_state",
+    "routing_state",
+    "final_response_gate",
+    "exact_next_action"
+  ],
+  "command_allowed": [
+    "compact_timeline",
+    "status_projection",
+    "approval_inbox_projection"
+  ],
+  "command_forbidden": [
+    "mission_state_mutation",
+    "policy_override",
+    "promotion_decision"
+  ],
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false,
+  "mission_state_mutation": false,
+  "policy_override_allowed": false,
+  "promotion_decision_allowed": false
+}

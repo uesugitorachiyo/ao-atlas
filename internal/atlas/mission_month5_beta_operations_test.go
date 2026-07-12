@@ -166,6 +166,25 @@ type month5ForgeGoalRunFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5CommandThinClientBoundaryFixture struct {
+	Schema                   string   `json:"schema"`
+	NodeID                   string   `json:"node_id"`
+	MissionID                string   `json:"mission_id"`
+	Status                   string   `json:"status"`
+	CommandRole              string   `json:"command_role"`
+	SourceReadback           string   `json:"source_readback"`
+	OwnedByMission           []string `json:"owned_by_mission"`
+	CommandAllowed           []string `json:"command_allowed"`
+	CommandForbidden         []string `json:"command_forbidden"`
+	NoPromotionRequested     bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance   bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
+	SafeToExecute            bool     `json:"safe_to_execute"`
+	MissionStateMutation     bool     `json:"mission_state_mutation"`
+	PolicyOverrideAllowed    bool     `json:"policy_override_allowed"`
+	PromotionDecisionAllowed bool     `json:"promotion_decision_allowed"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -540,5 +559,44 @@ func TestMonth5ForgeGoalRunDryRunLifecycleFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("Forge GoalRun fixture changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5CommandThinClientBoundaryFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-09", "command-thin-client-boundary.json")
+	fixture := mustLoadJSON[month5CommandThinClientBoundaryFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.command-thin-client-boundary.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-09" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "mission_readback_ownership_bound" ||
+		fixture.CommandRole != "thin_client_presentation_only" ||
+		fixture.SourceReadback == "" {
+		t.Fatalf("unexpected Command thin-client fixture header: %#v", fixture)
+	}
+	for _, required := range []string{"durable_state", "routing_state", "final_response_gate", "exact_next_action"} {
+		if !containsValue(fixture.OwnedByMission, required) {
+			t.Fatalf("Command boundary missing Mission-owned field %s: %#v", required, fixture.OwnedByMission)
+		}
+	}
+	for _, required := range []string{"compact_timeline", "status_projection", "approval_inbox_projection"} {
+		if !containsValue(fixture.CommandAllowed, required) {
+			t.Fatalf("Command boundary missing allowed projection %s: %#v", required, fixture.CommandAllowed)
+		}
+	}
+	for _, forbidden := range []string{"mission_state_mutation", "policy_override", "promotion_decision"} {
+		if !containsValue(fixture.CommandForbidden, forbidden) {
+			t.Fatalf("Command boundary missing forbidden authority %s: %#v", forbidden, fixture.CommandForbidden)
+		}
+	}
+	if !fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute ||
+		fixture.MissionStateMutation ||
+		fixture.PolicyOverrideAllowed ||
+		fixture.PromotionDecisionAllowed {
+		t.Fatalf("Command thin-client fixture changed authority posture: %#v", fixture)
 	}
 }
