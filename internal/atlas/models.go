@@ -2507,6 +2507,54 @@ type AtlasMonth3ExternalRepoCriteria struct {
 	ProviderExecutionAllowed    bool     `json:"provider_execution_allowed"`
 }
 
+type AtlasMonth6GoldenPathDryRunRehearsals struct {
+	Schema                   string                                 `json:"schema"`
+	NodeID                   string                                 `json:"node_id"`
+	Status                   string                                 `json:"status"`
+	SourceRecommendationRank int                                    `json:"source_recommendation_rank"`
+	SourceRecommendationTask string                                 `json:"source_recommendation_task"`
+	SafetyGate               string                                 `json:"safety_gate"`
+	RehearsalCount           int                                    `json:"rehearsal_count"`
+	Rehearsals               []AtlasMonth6GoldenPathDryRunRehearsal `json:"rehearsals"`
+	FixtureOnly              bool                                   `json:"fixture_only"`
+	DryRunOnly               bool                                   `json:"dry_run_only"`
+	NoPromotionRequested     bool                                   `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance   bool                                   `json:"claims_authority_advance"`
+	RSIRemainsDenied         bool                                   `json:"rsi_remains_denied"`
+	SafeToExecute            bool                                   `json:"safe_to_execute"`
+	ExecutesWork             bool                                   `json:"executes_work"`
+	ApprovesWork             bool                                   `json:"approves_work"`
+	MutatesRepositories      bool                                   `json:"mutates_repositories"`
+	ProviderCallsAllowed     bool                                   `json:"provider_calls_allowed"`
+	CredentialUseAllowed     bool                                   `json:"credential_use_allowed"`
+	LiveMutationAllowed      bool                                   `json:"live_mutation_allowed"`
+	ReleaseOrPublishAllowed  bool                                   `json:"release_or_publish_allowed"`
+	ApprovalGranted          bool                                   `json:"approval_granted"`
+}
+
+type AtlasMonth6GoldenPathDryRunRehearsal struct {
+	ID                      string `json:"id"`
+	Repository              string `json:"repository"`
+	RepoClass               string `json:"repo_class"`
+	ObjectiveDigest         string `json:"objective_digest"`
+	BaseCommit              string `json:"base_commit"`
+	DiffDigestPlaceholder   string `json:"diff_digest_placeholder"`
+	RollbackReceiptRef      string `json:"rollback_receipt_ref"`
+	CommandReadbackRef      string `json:"command_readback_ref"`
+	SentinelPublicSafetyRef string `json:"sentinel_public_safety_ref"`
+	PromoterNoPromotionRef  string `json:"promoter_no_promotion_ref"`
+	FixtureOnly             bool   `json:"fixture_only"`
+	DryRunOnly              bool   `json:"dry_run_only"`
+	ProviderCallsAllowed    bool   `json:"provider_calls_allowed"`
+	CredentialUseAllowed    bool   `json:"credential_use_allowed"`
+	LiveMutationAllowed     bool   `json:"live_mutation_allowed"`
+	ReleaseOrPublishAllowed bool   `json:"release_or_publish_allowed"`
+	ApprovalGranted         bool   `json:"approval_granted"`
+	SafeToExecute           bool   `json:"safe_to_execute"`
+	ExecutesWork            bool   `json:"executes_work"`
+	MutatesRepository       bool   `json:"mutates_repository"`
+}
+
 type AtlasMonth3ControlPlaneObserverBinding struct {
 	Schema                         string `json:"schema"`
 	NodeID                         string `json:"node_id"`
