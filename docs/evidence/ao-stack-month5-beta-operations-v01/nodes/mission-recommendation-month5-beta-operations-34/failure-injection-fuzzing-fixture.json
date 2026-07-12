@@ -1,0 +1,39 @@
+{
+  "schema": "ao.atlas.failure-injection-fuzzing-fixture.v0.1",
+  "status": "failure_injection_fuzzing_ready",
+  "cases": [
+    {
+      "name": "malformed_gate",
+      "failure_class": "malformed_gate",
+      "expected_state": "rejected_before_execution",
+      "replayable": true
+    },
+    {
+      "name": "lost_lease",
+      "failure_class": "lost_lease",
+      "expected_state": "resume_requires_fresh_lease",
+      "replayable": true
+    },
+    {
+      "name": "stale_evidence",
+      "failure_class": "stale_evidence",
+      "expected_state": "readback_marks_evidence_stale",
+      "replayable": true
+    },
+    {
+      "name": "rollback_receipt",
+      "failure_class": "rollback_receipt",
+      "expected_state": "rollback_receipt_required",
+      "replayable": true
+    }
+  ],
+  "case_count": 4,
+  "deterministic_fuzzing": true,
+  "replayable_cases": true,
+  "live_provider_calls": false,
+  "schedules_work": false,
+  "executes_work": false,
+  "approves_work": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
