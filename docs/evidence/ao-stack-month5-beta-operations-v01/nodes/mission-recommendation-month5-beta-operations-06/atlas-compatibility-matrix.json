@@ -1,0 +1,93 @@
+{
+  "schema": "ao.atlas.month5.compatibility-matrix.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-06",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "matrix_rows_ready",
+  "matrix_rows": [
+    {
+      "contract": "recommendation-wave",
+      "owner": "ao-atlas",
+      "producer": "ao-atlas",
+      "consumers": ["ao-mission", "ao-foundry", "ao-command"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/recommendation-wave.json",
+      "check": "ValidateAtlasRecommendationWave"
+    },
+    {
+      "contract": "recommendation-workgraph",
+      "owner": "ao-atlas",
+      "producer": "ao-atlas",
+      "consumers": ["ao-foundry", "ao-command", "ao-promoter"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/recommendation-workgraph.json",
+      "check": "workgraph validate"
+    },
+    {
+      "contract": "recommendation-readback",
+      "owner": "ao-atlas",
+      "producer": "ao-atlas",
+      "consumers": ["ao-mission", "ao-command", "ao-promoter"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-05/recommendation-readback-after.json",
+      "check": "mission recommendations readback"
+    },
+    {
+      "contract": "workgraph-readiness-packet",
+      "owner": "ao-atlas",
+      "producer": "ao-atlas",
+      "consumers": ["ao-foundry", "ao-command"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/workgraph-readiness-packet.json",
+      "check": "readiness packet digest agreement"
+    },
+    {
+      "contract": "foundry-import",
+      "owner": "ao-atlas",
+      "producer": "ao-atlas",
+      "consumers": ["ao-foundry"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-06/foundry-import.json",
+      "check": "foundry import replay"
+    },
+    {
+      "contract": "run-link",
+      "owner": "ao-foundry",
+      "producer": "ao-foundry",
+      "consumers": ["ao-atlas", "ao-mission", "ao-command"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-05/run-link.json",
+      "check": "run-link validate"
+    },
+    {
+      "contract": "checkpoint-readback",
+      "owner": "ao-atlas",
+      "producer": "ao-atlas",
+      "consumers": ["ao-mission", "ao-command"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-05/checkpoint-readback-after.json",
+      "check": "checkpoint freshness agreement"
+    },
+    {
+      "contract": "execution-readback",
+      "owner": "ao-atlas",
+      "producer": "ao-atlas",
+      "consumers": ["ao-command", "ao-promoter"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-05/execution-readback-after.json",
+      "check": "continuation reason agreement"
+    },
+    {
+      "contract": "sentinel-public-safety",
+      "owner": "ao-sentinel",
+      "producer": "ao-sentinel",
+      "consumers": ["ao-atlas", "ao-promoter"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-05/sentinel_public_safety.json",
+      "check": "public-safety scan"
+    },
+    {
+      "contract": "promoter-no-promotion",
+      "owner": "ao-promoter",
+      "producer": "ao-promoter",
+      "consumers": ["ao-atlas", "ao-command"],
+      "atlas_artifact": "docs/evidence/ao-stack-month5-beta-operations-v01/nodes/mission-recommendation-month5-beta-operations-05/promoter_no_promotion.json",
+      "check": "no-promotion readback"
+    }
+  ],
+  "compatibility_floor_met": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
