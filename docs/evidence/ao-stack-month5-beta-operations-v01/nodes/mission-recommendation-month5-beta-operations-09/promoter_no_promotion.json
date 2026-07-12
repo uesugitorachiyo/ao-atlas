@@ -1,0 +1,9 @@
+{
+  "schema": "ao.atlas.promoter-no-promotion.v0.1",
+  "status": "no_promotion_requested",
+  "node_id": "mission-recommendation-month5-beta-operations-09",
+  "task_id": "mission-recommendation-month5-beta-operations-09-task",
+  "promotion_claimed": false,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true
+}
