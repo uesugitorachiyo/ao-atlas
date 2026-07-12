@@ -1858,3 +1858,46 @@ func TestMonth5CrossPlatformLocalFixtureMatrix(t *testing.T) {
 		t.Fatalf("local platform fixture changed safety posture: %#v", fixture)
 	}
 }
+
+func TestMonth5BetaFailureInjectionMatrixFixture(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-34")
+	failureFixture := mustLoadJSON[AtlasFailureInjectionFuzzingFixture](t, filepath.Join(nodeDir, "failure-injection-fuzzing-fixture.json"))
+	rollbackFixture := mustLoadJSON[AtlasRollbackTerminalReadbackFixture](t, filepath.Join(nodeDir, "rollback-terminal-readback-fixture.json"))
+
+	if err := ValidateAtlasFailureInjectionFuzzingFixture(failureFixture); err != nil {
+		t.Fatalf("failure injection fixture is invalid: %v", err)
+	}
+	if err := ValidateAtlasRollbackTerminalReadbackFixture(rollbackFixture); err != nil {
+		t.Fatalf("rollback terminal fixture is invalid: %v", err)
+	}
+	for _, required := range []string{"malformed_gate", "lost_lease", "stale_evidence", "rollback_receipt"} {
+		found := false
+		for _, item := range failureFixture.Cases {
+			found = found || item.FailureClass == required
+		}
+		if !found {
+			t.Fatalf("failure injection matrix missing case %s: %#v", required, failureFixture.Cases)
+		}
+	}
+	if failureFixture.CaseCount != 4 ||
+		!failureFixture.DeterministicFuzzing ||
+		!failureFixture.ReplayableCases ||
+		failureFixture.LiveProviderCalls ||
+		failureFixture.ExecutesWork ||
+		failureFixture.ClaimsAuthorityAdvance ||
+		!failureFixture.RSIRemainsDenied {
+		t.Fatalf("failure injection fixture changed safety posture: %#v", failureFixture)
+	}
+	if rollbackFixture.TerminalState != "rolled_back" ||
+		rollbackFixture.ReadbackAgreementCount != 4 ||
+		!rollbackFixture.RollbackReceiptReplayed ||
+		!rollbackFixture.ReadbacksAgree ||
+		rollbackFixture.PromotionRequested ||
+		rollbackFixture.LiveProviderCalls ||
+		rollbackFixture.ExecutesWork ||
+		rollbackFixture.ClaimsAuthorityAdvance ||
+		!rollbackFixture.RSIRemainsDenied {
+		t.Fatalf("rollback terminal fixture changed safety posture: %#v", rollbackFixture)
+	}
+}
