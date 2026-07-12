@@ -348,6 +348,23 @@ type month5GoldenPathReadinessRow struct {
 	Status    string `json:"status"`
 }
 
+type month5CleanRoomNonAOReplayFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	TargetRepoClass        string   `json:"target_repo_class"`
+	IsolatedWorktree       bool     `json:"isolated_worktree"`
+	ReplayInputs           []string `json:"replay_inputs"`
+	ExternalRepoBoundaries []string `json:"external_repo_boundaries"`
+	NoExternalMutation     bool     `json:"no_external_mutation"`
+	NoProviderExecution    bool     `json:"no_provider_execution"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1086,5 +1103,38 @@ func TestMonth5GoldenPathDryRunReadinessFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("golden path readiness changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5CleanRoomNonAOReplayFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-19", "clean-room-non-ao-replay.json")
+	fixture := mustLoadJSON[month5CleanRoomNonAOReplayFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.clean-room-non-ao-replay.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-19" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "external_repository_preflight_bound" ||
+		fixture.TargetRepoClass != "non_ao_clean_room" ||
+		!fixture.IsolatedWorktree {
+		t.Fatalf("unexpected clean-room replay header: %#v", fixture)
+	}
+	for _, required := range []string{"objective_packet", "dry_run_workgraph", "rollback_plan", "operator_review_gate"} {
+		if !containsValue(fixture.ReplayInputs, required) {
+			t.Fatalf("clean-room replay missing input %s: %#v", required, fixture.ReplayInputs)
+		}
+	}
+	for _, required := range []string{"no_repo_write_without_approval", "no_credentials", "no_provider_calls", "no_release_or_publish"} {
+		if !containsValue(fixture.ExternalRepoBoundaries, required) {
+			t.Fatalf("clean-room replay missing boundary %s: %#v", required, fixture.ExternalRepoBoundaries)
+		}
+	}
+	if !fixture.NoExternalMutation ||
+		!fixture.NoProviderExecution ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("clean-room replay changed safety posture: %#v", fixture)
 	}
 }

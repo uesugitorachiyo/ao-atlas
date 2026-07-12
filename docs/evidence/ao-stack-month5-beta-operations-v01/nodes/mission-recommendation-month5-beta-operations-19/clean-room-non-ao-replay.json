@@ -1,0 +1,26 @@
+{
+  "schema": "ao.atlas.month5.clean-room-non-ao-replay.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-19",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "external_repository_preflight_bound",
+  "target_repo_class": "non_ao_clean_room",
+  "isolated_worktree": true,
+  "replay_inputs": [
+    "objective_packet",
+    "dry_run_workgraph",
+    "rollback_plan",
+    "operator_review_gate"
+  ],
+  "external_repo_boundaries": [
+    "no_repo_write_without_approval",
+    "no_credentials",
+    "no_provider_calls",
+    "no_release_or_publish"
+  ],
+  "no_external_mutation": true,
+  "no_provider_execution": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
