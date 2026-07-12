@@ -1,0 +1,20 @@
+{
+  "schema": "ao.atlas.month5.sentinel-hosted-ci-native-signal-binding.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-22",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "hosted_ci_native_signal_fixture_bound",
+  "repository": "ao-sentinel",
+  "fixture_ref": "sentinel-hosted-ci-workflow-fixture.json",
+  "native_signal_readbacks": [
+    "ci_signal",
+    "public_safety_signal",
+    "evidence_freshness_signal",
+    "policy_signal"
+  ],
+  "fixture_only": true,
+  "no_workflow_mutation": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
