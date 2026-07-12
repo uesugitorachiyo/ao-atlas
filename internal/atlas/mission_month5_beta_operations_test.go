@@ -1569,3 +1569,32 @@ func TestMonth5CommandTimelineApprovalInboxFixture(t *testing.T) {
 		t.Fatalf("Command timeline approval inbox binding changed safety posture: %#v", binding)
 	}
 }
+
+func TestMonth5DeterministicRunProvenanceProviderModelFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-27", "deterministic-run-provenance.json")
+	fixture := mustLoadJSON[AtlasMonth3ProviderModelProvenance](t, fixturePath)
+	if err := ValidateAtlasMonth3ProviderModelProvenance(fixture); err != nil {
+		t.Fatalf("provider/model provenance fixture is invalid: %v", err)
+	}
+	if fixture.NodeID != "mission-recommendation-month5-beta-operations-27" ||
+		fixture.Status != "provider_model_provenance_ready" ||
+		fixture.RunRecordCount != 4 ||
+		!fixture.EveryRunHasProvider ||
+		!fixture.EveryRunHasModel ||
+		!fixture.EveryRunHasModelClass ||
+		fixture.LiveProviderCallCount != 0 ||
+		fixture.FinalResponseAllowed ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("provider/model provenance fixture changed safety posture: %#v", fixture)
+	}
+	for _, record := range fixture.RunRecords {
+		if record.Provider == "" || record.Model == "" || record.ModelClass == "" || record.LiveProviderCall {
+			t.Fatalf("run record missing provenance or records a live provider call: %#v", record)
+		}
+	}
+}
