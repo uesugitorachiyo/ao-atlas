@@ -1901,3 +1901,29 @@ func TestMonth5BetaFailureInjectionMatrixFixture(t *testing.T) {
 		t.Fatalf("rollback terminal fixture changed safety posture: %#v", rollbackFixture)
 	}
 }
+
+func TestMonth5BetaOperationsSoakReadinessFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-35", "month3-restart-resume-soak.json")
+	fixture := mustLoadJSON[AtlasMonth3RestartResumeSoak](t, fixturePath)
+	if err := ValidateAtlasMonth3RestartResumeSoak(fixture); err != nil {
+		t.Fatalf("restart resume soak fixture is invalid: %v", err)
+	}
+	if fixture.NodeID != "mission-recommendation-month5-beta-operations-35" ||
+		fixture.Status != "restart_resume_soak_ready" ||
+		fixture.ScenarioCount != 4 ||
+		!fixture.ExactlyOnceAccountingBound ||
+		!fixture.KillRestartReplayBound ||
+		!fixture.CheckpointRecoveryBound ||
+		!fixture.NoLostEvidence ||
+		fixture.DuplicateMutationDetected ||
+		fixture.FalseCompletionDetected ||
+		fixture.FinalResponseAllowed ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("restart resume soak fixture changed safety posture: %#v", fixture)
+	}
+}
