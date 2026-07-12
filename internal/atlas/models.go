@@ -2555,6 +2555,49 @@ type AtlasMonth6GoldenPathDryRunRehearsal struct {
 	MutatesRepository       bool   `json:"mutates_repository"`
 }
 
+type AtlasMonth6OperatorEvidenceDashboardPacket struct {
+	Schema                               string                                    `json:"schema"`
+	NodeID                               string                                    `json:"node_id"`
+	Status                               string                                    `json:"status"`
+	SourceRecommendationRank             int                                       `json:"source_recommendation_rank"`
+	SourceRecommendationTask             string                                    `json:"source_recommendation_task"`
+	SafetyGate                           string                                    `json:"safety_gate"`
+	DashboardScope                       string                                    `json:"dashboard_scope"`
+	CompletedRecommendationCount         int                                       `json:"completed_recommendation_count"`
+	CompletedRecommendationsBound        map[int]bool                              `json:"completed_recommendations_bound"`
+	CompletedRecommendations             []AtlasMonth6OperatorEvidenceDashboardRow `json:"completed_recommendations"`
+	DashboardRowCount                    int                                       `json:"dashboard_row_count"`
+	DashboardRows                        []AtlasMonth6OperatorEvidenceDashboardRow `json:"dashboard_rows"`
+	AllCompletedRecommendationsBound     bool                                      `json:"all_completed_recommendations_bound"`
+	AllDashboardRowsHaveMergeEvidence    bool                                      `json:"all_dashboard_rows_have_merge_evidence"`
+	AllDashboardRowsHaveEvidencePath     bool                                      `json:"all_dashboard_rows_have_evidence_path"`
+	AllDashboardRowsHaveOperatorReadback bool                                      `json:"all_dashboard_rows_have_operator_readback"`
+	FixtureOnly                          bool                                      `json:"fixture_only"`
+	ProviderCallsAllowed                 bool                                      `json:"provider_calls_allowed"`
+	CredentialUseAllowed                 bool                                      `json:"credential_use_allowed"`
+	ReleaseOrPublishAllowed              bool                                      `json:"release_or_publish_allowed"`
+	PromotionRequested                   bool                                      `json:"promotion_requested"`
+	ClaimsAuthorityAdvance               bool                                      `json:"claims_authority_advance"`
+	RSIRemainsDenied                     bool                                      `json:"rsi_remains_denied"`
+	SafeToExecute                        bool                                      `json:"safe_to_execute"`
+}
+
+type AtlasMonth6OperatorEvidenceDashboardRow struct {
+	Rank                   int    `json:"rank"`
+	Repository             string `json:"repository"`
+	Task                   string `json:"task"`
+	Category               string `json:"category"`
+	PR                     string `json:"pr"`
+	MergeCommit            string `json:"merge_commit"`
+	CIStatus               string `json:"ci_status"`
+	EvidencePath           string `json:"evidence_path"`
+	EvidenceStatus         string `json:"evidence_status"`
+	OperatorReadbackStatus string `json:"operator_readback_status"`
+	PublicSafetyStatus     string `json:"public_safety_status"`
+	PromotionStatus        string `json:"promotion_status"`
+	RSIRemainsDenied       bool   `json:"rsi_remains_denied"`
+}
+
 type AtlasMonth3ControlPlaneObserverBinding struct {
 	Schema                         string `json:"schema"`
 	NodeID                         string `json:"node_id"`

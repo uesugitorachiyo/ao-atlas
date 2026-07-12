@@ -996,6 +996,12 @@ func validateRecommendationEvidenceTypedFile(path, schema string) (string, error
 			return "typed:month6-golden-path-dry-run-rehearsals", err
 		}
 		return "typed:month6-golden-path-dry-run-rehearsals", ValidateAtlasMonth6GoldenPathDryRunRehearsals(value)
+	case AtlasMonth6OperatorEvidenceDashboardPacketContract:
+		value, err := LoadJSON[AtlasMonth6OperatorEvidenceDashboardPacket](path)
+		if err != nil {
+			return "typed:month6-operator-evidence-dashboard-packet", err
+		}
+		return "typed:month6-operator-evidence-dashboard-packet", ValidateAtlasMonth6OperatorEvidenceDashboardPacket(value)
 	case AtlasBlueprintCanonicalPreservationFixtureContract:
 		value, err := LoadJSON[AtlasBlueprintCanonicalPreservationFixture](path)
 		if err != nil {
