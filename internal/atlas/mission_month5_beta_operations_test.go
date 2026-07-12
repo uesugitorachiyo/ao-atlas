@@ -503,6 +503,27 @@ type month5ModuleExtractionPreflightFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5EvidenceGrowthDeltaGuardFixture struct {
+	Schema                  string   `json:"schema"`
+	NodeID                  string   `json:"node_id"`
+	MissionID               string   `json:"mission_id"`
+	Status                  string   `json:"status"`
+	MeasuredPaths           []string `json:"measured_paths"`
+	BaselineTrackedJSON     int64    `json:"baseline_tracked_json_bytes"`
+	CurrentTrackedJSON      int64    `json:"current_tracked_json_bytes"`
+	DeltaBytes              int64    `json:"delta_bytes"`
+	WarningThresholdBytes   int64    `json:"warning_threshold_bytes"`
+	ThresholdStatus         string   `json:"threshold_status"`
+	ReadbackMode            string   `json:"readback_mode"`
+	WarnOnly                bool     `json:"warn_only"`
+	NoDeletion              bool     `json:"no_deletion"`
+	NoExternalStorageWrite  bool     `json:"no_external_storage_write"`
+	NoPromotionRequested    bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance  bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied        bool     `json:"rsi_remains_denied"`
+	SafeToExecute           bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1776,5 +1797,41 @@ func TestMonth5CommandModuleExtractionPreflightFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("Command module extraction preflight changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5EvidenceGrowthDeltaGuardFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-32", "evidence-growth-delta-guard.json")
+	fixture := mustLoadJSON[month5EvidenceGrowthDeltaGuardFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.evidence-growth-delta-guard.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-32" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "warning_threshold_readback_bound" ||
+		fixture.ReadbackMode != "warning_only" ||
+		fixture.ThresholdStatus != "within_warning_threshold" {
+		t.Fatalf("unexpected evidence growth guard header: %#v", fixture)
+	}
+	for _, required := range []string{"docs/evidence/ao-stack-month5-beta-operations-v01", "internal/atlas/mission_month5_beta_operations_test.go"} {
+		if !containsValue(fixture.MeasuredPaths, required) {
+			t.Fatalf("evidence growth guard missing measured path %s: %#v", required, fixture.MeasuredPaths)
+		}
+	}
+	if fixture.BaselineTrackedJSON <= 0 ||
+		fixture.CurrentTrackedJSON < fixture.BaselineTrackedJSON ||
+		fixture.DeltaBytes != fixture.CurrentTrackedJSON-fixture.BaselineTrackedJSON ||
+		fixture.WarningThresholdBytes <= 0 ||
+		fixture.DeltaBytes > fixture.WarningThresholdBytes {
+		t.Fatalf("evidence growth guard has invalid delta accounting: %#v", fixture)
+	}
+	if !fixture.WarnOnly ||
+		!fixture.NoDeletion ||
+		!fixture.NoExternalStorageWrite ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("evidence growth guard changed safety posture: %#v", fixture)
 	}
 }
