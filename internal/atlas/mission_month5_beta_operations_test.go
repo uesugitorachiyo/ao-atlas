@@ -240,6 +240,23 @@ type month5CovenantPolicyHashFixture struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5ControlPlaneTransactionalEvidenceFixture struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	StorageAuthority       string   `json:"storage_authority"`
+	RequiredAtomicSteps    []string `json:"required_atomic_steps"`
+	RollbackReadback       []string `json:"rollback_readback"`
+	RejectedStates         []string `json:"rejected_states"`
+	ContentAddressedStore  bool     `json:"content_addressed_store"`
+	IndexCommitAtomic      bool     `json:"index_commit_atomic"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -770,5 +787,42 @@ func TestMonth5CovenantPolicyHashFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("Covenant policy hash fixture changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5ControlPlaneTransactionalEvidenceFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-13", "control-plane-transactional-evidence.json")
+	fixture := mustLoadJSON[month5ControlPlaneTransactionalEvidenceFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.control-plane-transactional-evidence.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-13" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "transactional_transition_bound" ||
+		fixture.StorageAuthority != "ao2-control-plane" {
+		t.Fatalf("unexpected control-plane transactional fixture header: %#v", fixture)
+	}
+	for _, required := range []string{"prepare_transition", "write_content_addressed_blob", "update_index", "commit_manifest", "emit_readback"} {
+		if !containsValue(fixture.RequiredAtomicSteps, required) {
+			t.Fatalf("control-plane fixture missing atomic step %s: %#v", required, fixture.RequiredAtomicSteps)
+		}
+	}
+	for _, required := range []string{"rollback_receipt", "previous_index_digest", "post_rollback_readback"} {
+		if !containsValue(fixture.RollbackReadback, required) {
+			t.Fatalf("control-plane fixture missing rollback readback %s: %#v", required, fixture.RollbackReadback)
+		}
+	}
+	for _, rejected := range []string{"partial_write_visible", "unsigned_acceptance", "gc_race", "index_without_blob"} {
+		if !containsValue(fixture.RejectedStates, rejected) {
+			t.Fatalf("control-plane fixture missing rejected state %s: %#v", rejected, fixture.RejectedStates)
+		}
+	}
+	if !fixture.ContentAddressedStore ||
+		!fixture.IndexCommitAtomic ||
+		!fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("control-plane transactional fixture changed safety posture: %#v", fixture)
 	}
 }

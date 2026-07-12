@@ -1,0 +1,31 @@
+{
+  "schema": "ao.atlas.month5.control-plane-transactional-evidence.v0.1",
+  "node_id": "mission-recommendation-month5-beta-operations-13",
+  "mission_id": "mission-4d91b0a9e4ab273e",
+  "status": "transactional_transition_bound",
+  "storage_authority": "ao2-control-plane",
+  "required_atomic_steps": [
+    "prepare_transition",
+    "write_content_addressed_blob",
+    "update_index",
+    "commit_manifest",
+    "emit_readback"
+  ],
+  "rollback_readback": [
+    "rollback_receipt",
+    "previous_index_digest",
+    "post_rollback_readback"
+  ],
+  "rejected_states": [
+    "partial_write_visible",
+    "unsigned_acceptance",
+    "gc_race",
+    "index_without_blob"
+  ],
+  "content_addressed_store": true,
+  "index_commit_atomic": true,
+  "no_promotion_requested": true,
+  "claims_authority_advance": false,
+  "rsi_remains_denied": true,
+  "safe_to_execute": false
+}
