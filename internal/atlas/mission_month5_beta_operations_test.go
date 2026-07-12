@@ -466,6 +466,23 @@ type month5PromoterBetaRollupNoActivationBinding struct {
 	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
+type month5CommandTimelineApprovalInboxBinding struct {
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	TimelineFixtureRef     string   `json:"timeline_fixture_ref"`
+	TimelineSegments       []string `json:"timeline_segments"`
+	ApprovalInboxStates    []string `json:"approval_inbox_states"`
+	DisplayOnly            bool     `json:"display_only"`
+	ApprovesWork           bool     `json:"approves_work"`
+	MutatesMissionState    bool     `json:"mutates_mission_state"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -1501,5 +1518,54 @@ func TestMonth5PromoterNoActivationBoundaryRollupFixture(t *testing.T) {
 		!binding.RSIRemainsDenied ||
 		binding.SafeToExecute {
 		t.Fatalf("Promoter beta rollup binding changed safety posture: %#v", binding)
+	}
+}
+
+func TestMonth5CommandTimelineApprovalInboxFixture(t *testing.T) {
+	root := repoRoot(t)
+	nodeDir := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-26")
+	fixturePath := filepath.Join(nodeDir, "compact-timeline-filter-fixture.json")
+	fixture := mustLoadJSON[AtlasCompactTimelineFilterFixture](t, fixturePath)
+	if err := ValidateAtlasCompactTimelineFilterFixture(fixture); err != nil {
+		t.Fatalf("compact timeline fixture is invalid: %v", err)
+	}
+	if fixture.FilterCount != 5 ||
+		!fixture.StaleRecordsDistinguished ||
+		!fixture.DuplicateRecordsDistinguished ||
+		fixture.SchedulesWork ||
+		fixture.ExecutesWork ||
+		fixture.ApprovesWork ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied {
+		t.Fatalf("compact timeline fixture changed safety posture: %#v", fixture)
+	}
+
+	bindingPath := filepath.Join(nodeDir, "command-timeline-approval-inbox-binding.json")
+	binding := mustLoadJSON[month5CommandTimelineApprovalInboxBinding](t, bindingPath)
+	if binding.Schema != "ao.atlas.month5.command-timeline-approval-inbox-binding.v0.1" ||
+		binding.NodeID != "mission-recommendation-month5-beta-operations-26" ||
+		binding.MissionID != "mission-4d91b0a9e4ab273e" ||
+		binding.Status != "compact_timeline_approval_inbox_bound" ||
+		binding.TimelineFixtureRef != "compact-timeline-filter-fixture.json" {
+		t.Fatalf("unexpected Command timeline approval inbox binding header: %#v", binding)
+	}
+	for _, required := range []string{"checkpoint", "exact_next_action", "return_gate", "lease_health", "node_counts"} {
+		if !containsValue(binding.TimelineSegments, required) {
+			t.Fatalf("Command timeline binding missing segment %s: %#v", required, binding.TimelineSegments)
+		}
+	}
+	for _, required := range []string{"pending_review", "approved_elsewhere", "blocked", "not_requested"} {
+		if !containsValue(binding.ApprovalInboxStates, required) {
+			t.Fatalf("Command timeline binding missing inbox state %s: %#v", required, binding.ApprovalInboxStates)
+		}
+	}
+	if !binding.DisplayOnly ||
+		binding.ApprovesWork ||
+		binding.MutatesMissionState ||
+		!binding.NoPromotionRequested ||
+		binding.ClaimsAuthorityAdvance ||
+		!binding.RSIRemainsDenied ||
+		binding.SafeToExecute {
+		t.Fatalf("Command timeline approval inbox binding changed safety posture: %#v", binding)
 	}
 }
