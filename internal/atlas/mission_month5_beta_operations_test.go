@@ -74,6 +74,27 @@ type month5ContractOwnerRow struct {
 	Status   string   `json:"status"`
 }
 
+type month5CompatibilityLedgerFixture struct {
+	Schema                 string                        `json:"schema"`
+	NodeID                 string                        `json:"node_id"`
+	MissionID              string                        `json:"mission_id"`
+	Status                 string                        `json:"status"`
+	CompatibilityRows      []month5CompatibilityLedgerRow `json:"compatibility_rows"`
+	NoPromotionRequested   bool                          `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool                          `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                          `json:"rsi_remains_denied"`
+	SafeToExecute          bool                          `json:"safe_to_execute"`
+}
+
+type month5CompatibilityLedgerRow struct {
+	Contract        string   `json:"contract"`
+	Producer        string   `json:"producer"`
+	Consumers       []string `json:"consumers"`
+	RequiredFixture string   `json:"required_fixture"`
+	DigestBinding   string   `json:"digest_binding"`
+	Status          string   `json:"status"`
+}
+
 func TestMonth5BetaOperationsRecommendationsImportAsLongRunWave(t *testing.T) {
 	root := repoRoot(t)
 	recommendationsPath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "month5-beta-operations-recommendations.json")
@@ -271,5 +292,44 @@ func TestMonth5CovenantSchemaRegistryHandoffFixture(t *testing.T) {
 		!fixture.RSIRemainsDenied ||
 		fixture.SafeToExecute {
 		t.Fatalf("schema registry handoff changed safety posture: %#v", fixture)
+	}
+}
+
+func TestMonth5MissionBlueprintAtlasCompatibilityLedgerFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "docs", "evidence", "ao-stack-month5-beta-operations-v01", "nodes", "mission-recommendation-month5-beta-operations-04", "mission-blueprint-atlas-compatibility-ledger.json")
+	fixture := mustLoadJSON[month5CompatibilityLedgerFixture](t, fixturePath)
+
+	if fixture.Schema != "ao.atlas.month5.mission-blueprint-atlas-compatibility-ledger.v0.1" ||
+		fixture.NodeID != "mission-recommendation-month5-beta-operations-04" ||
+		fixture.MissionID != "mission-4d91b0a9e4ab273e" ||
+		fixture.Status != "compatibility_rows_ready" {
+		t.Fatalf("unexpected compatibility ledger header: %#v", fixture)
+	}
+	if len(fixture.CompatibilityRows) < 6 {
+		t.Fatalf("expected at least six compatibility rows: %#v", fixture.CompatibilityRows)
+	}
+	rows := map[string]month5CompatibilityLedgerRow{}
+	for _, row := range fixture.CompatibilityRows {
+		rows[row.Contract] = row
+		if row.Producer == "" || len(row.Consumers) == 0 || row.RequiredFixture == "" || row.DigestBinding == "" || row.Status == "" {
+			t.Fatalf("compatibility row must include producer, consumers, fixture, digest binding, and status: %#v", row)
+		}
+	}
+	for _, required := range []string{"mission.intake", "blueprint.canonical-pack", "atlas.workgraph", "atlas.context-pack", "atlas.readback", "foundry.import"} {
+		if _, ok := rows[required]; !ok {
+			t.Fatalf("missing compatibility row for %s", required)
+		}
+	}
+	if rows["blueprint.canonical-pack"].DigestBinding != "canonical_bytes_sha256" ||
+		rows["atlas.workgraph"].DigestBinding != "workgraph_sha256" ||
+		rows["atlas.readback"].DigestBinding != "readback_sha256" {
+		t.Fatalf("digest bindings drifted: blueprint=%#v workgraph=%#v readback=%#v", rows["blueprint.canonical-pack"], rows["atlas.workgraph"], rows["atlas.readback"])
+	}
+	if !fixture.NoPromotionRequested ||
+		fixture.ClaimsAuthorityAdvance ||
+		!fixture.RSIRemainsDenied ||
+		fixture.SafeToExecute {
+		t.Fatalf("compatibility ledger changed safety posture: %#v", fixture)
 	}
 }
