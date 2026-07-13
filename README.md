@@ -1,39 +1,5 @@
 # AO Atlas
 
-## Role
-
-AO Atlas owns authorized workgraph compilation, bounded context packs, and
-Foundry handoff material. It consumes approved Mission or Blueprint inputs and
-does not create authorization. See [AO Architecture](https://github.com/uesugitorachiyo/ao-architecture)
-and the [canonical AO Atlas component page](https://github.com/uesugitorachiyo/ao-architecture/blob/main/components/ao-atlas.md).
-
-## Maturity
-
-Late alpha. Workgraph and context compilation are `implemented` and
-`executable-tested`; restart and long-run handoffs are `clean-room-rehearsed`.
-
-## Install
-
-```sh
-go build -o bin/atlas ./cmd/atlas
-```
-
-## Quickstart
-
-```sh
-bin/atlas --help
-```
-
-## Safety
-
-Atlas compiles bounded work. It does not approve policy, execute nodes, call
-providers, use credentials, mutate sibling repositories, or publish releases.
-
-## External Beta
-
-External beta has not launched. No promotion is requested. RSI remains denied.
-Month 6 launch-readiness evidence is preflight evidence, not launch authority.
-
 AO Atlas is a local-first stack-instance and workgraph compiler for the AO
 stack. It turns oversized objectives into bounded factory tasks, context packs,
 and Foundry handoff material without duplicating whole AO source trees.
