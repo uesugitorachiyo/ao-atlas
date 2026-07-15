@@ -1,0 +1,54 @@
+{
+  "schema_version": "ao.compatibility.blueprint-authorization-to-atlas-context-vector.v1",
+  "vector_id": "ao-blueprint-requirements-authorization-to-ao-atlas-context-pack-workgraph-v1",
+  "edge": "ao-blueprint.requirements_authorization -> ao-atlas.context_pack_workgraph",
+  "producer": {
+    "repository": "ao-blueprint",
+    "source_pack": "examples/blueprints/valid/ao-mission-provenance-workgraph-nodes",
+    "authorization": "examples/blueprints/valid/ao-mission-provenance-workgraph-nodes/build-authorization.json",
+    "requirements": "examples/blueprints/valid/ao-mission-provenance-workgraph-nodes/requirements.json"
+  },
+  "consumer": {
+    "repository": "ao-atlas",
+    "expected_command": "atlas blueprint import"
+  },
+  "requirements_authorization": {
+    "authorization_schema": "ao.blueprint.build-authorization.v0.1",
+    "requirements_schema": "ao.blueprint.requirements.v0.1",
+    "project_id": "ao-mission-provenance-workgraph-nodes",
+    "status": "ready",
+    "score": 100,
+    "approved_by_user": true,
+    "blocking_assumptions": [],
+    "next_allowed_action": "ao-atlas",
+    "required_requirement_ids": ["REQ-001", "REQ-002", "REQ-003", "REQ-004", "REQ-005"]
+  },
+  "expected_atlas": {
+    "import_contract": "ao.atlas.blueprint-import.v0.1",
+    "import_status": "ready",
+    "ready_for_foundry": true,
+    "workgraph_contract": "ao.atlas.workgraph.v0.1",
+    "context_pack_contract": "ao.atlas.context-pack.v0.1",
+    "candidate_selection_required": true,
+    "next_safe_route": "ao-foundry"
+  },
+  "compatibility": {
+    "matrix_status": "proposed",
+    "tested_edge_count_before_vector": 4,
+    "full_stack_compatibility_complete": false
+  },
+  "boundaries": {
+    "release_or_publish": false,
+    "creates_tag": false,
+    "uploads_assets": false,
+    "deploys": false,
+    "contacts_external_users": false,
+    "provider_pilot": false,
+    "promotion_requested": false,
+    "promotion_granted": false,
+    "rsi_remains_denied": true,
+    "executes_work": false,
+    "approves_work": false,
+    "mutates_repositories": false
+  }
+}
