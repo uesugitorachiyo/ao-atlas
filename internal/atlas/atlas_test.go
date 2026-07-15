@@ -492,6 +492,137 @@ func TestBlueprintAuthorizationCompatibilityVectorConsumesIntoContextPackWorkgra
 	}
 }
 
+func TestAtlasWorkgraphToFoundrySafeNextWorkCompatibilityVector(t *testing.T) {
+	vectorPath := filepath.Join("..", "..", "examples", "valid", "atlas-workgraph-to-foundry-safe-next-work-compatibility-vector.json")
+	vectorBody, err := os.ReadFile(vectorPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var vector struct {
+		SchemaVersion string `json:"schema_version"`
+		Edge          string `json:"edge"`
+		Producer      struct {
+			Repository  string `json:"repository"`
+			Workgraph   string `json:"workgraph"`
+			ContextPack string `json:"context_pack"`
+		} `json:"producer"`
+		Consumer struct {
+			Repository      string `json:"repository"`
+			ExpectedCommand string `json:"expected_command"`
+		} `json:"consumer"`
+		AtlasWorkgraph struct {
+			ContractVersion    string `json:"contract_version"`
+			WorkgraphID        string `json:"workgraph_id"`
+			TargetInstance     string `json:"target_instance"`
+			ReadyNodeID        string `json:"ready_node_id"`
+			ReadyTaskID        string `json:"ready_task_id"`
+			ReadyContextPack   string `json:"ready_context_pack"`
+			CompletedNodeCount int    `json:"completed_node_count"`
+			ReadyNodeCount     int    `json:"ready_node_count"`
+		} `json:"atlas_workgraph"`
+		AtlasContextPack struct {
+			ContractVersion string `json:"contract_version"`
+			ContextPackID   string `json:"context_pack_id"`
+			TaskID          string `json:"task_id"`
+			BudgetBytes     int    `json:"budget_bytes"`
+		} `json:"atlas_context_pack"`
+		ExpectedFoundry struct {
+			SchedulerInputSchema        string `json:"scheduler_input_schema"`
+			Status                      string `json:"status"`
+			AllowedNextAction           string `json:"allowed_next_action"`
+			AtlasCompileOnly            bool   `json:"atlas_compile_only"`
+			SelectedNodeID              string `json:"selected_node_id"`
+			SelectedTaskID              string `json:"selected_task_id"`
+			SafeNodeFoundryImportStatus string `json:"safe_node_foundry_import_status"`
+			ImportedTaskCount           int    `json:"imported_task_count"`
+			RejectsUnselectedReadyNodes bool   `json:"rejects_unselected_ready_nodes"`
+		} `json:"expected_foundry"`
+		Boundaries struct {
+			ReleaseOrPublish      bool `json:"release_or_publish"`
+			CreatesTag            bool `json:"creates_tag"`
+			UploadsAssets         bool `json:"uploads_assets"`
+			Deploys               bool `json:"deploys"`
+			ContactsExternalUsers bool `json:"contacts_external_users"`
+			ProviderPilot         bool `json:"provider_pilot"`
+			PromotionGranted      bool `json:"promotion_granted"`
+			RSIRemainsDenied      bool `json:"rsi_remains_denied"`
+			SchedulesWork         bool `json:"schedules_work"`
+			ExecutesWork          bool `json:"executes_work"`
+			ApprovesWork          bool `json:"approves_work"`
+			MutatesRepositories   bool `json:"mutates_repositories"`
+		} `json:"boundaries"`
+	}
+	if err := json.Unmarshal(vectorBody, &vector); err != nil {
+		t.Fatal(err)
+	}
+	if vector.SchemaVersion != "ao.compatibility.atlas-workgraph-to-foundry-safe-next-work-vector.v1" ||
+		vector.Edge != "ao-atlas.workgraph_context_pack -> ao-foundry.safe_next_work_schedule" ||
+		vector.Producer.Repository != "ao-atlas" ||
+		vector.Consumer.Repository != "ao-foundry" ||
+		vector.Consumer.ExpectedCommand != "foundry pulse atlas-scheduler-input" {
+		t.Fatalf("bad Atlas to Foundry vector identity: %+v", vector)
+	}
+	if vector.Boundaries.ReleaseOrPublish ||
+		vector.Boundaries.CreatesTag ||
+		vector.Boundaries.UploadsAssets ||
+		vector.Boundaries.Deploys ||
+		vector.Boundaries.ContactsExternalUsers ||
+		vector.Boundaries.ProviderPilot ||
+		vector.Boundaries.PromotionGranted ||
+		vector.Boundaries.SchedulesWork ||
+		vector.Boundaries.ExecutesWork ||
+		vector.Boundaries.ApprovesWork ||
+		vector.Boundaries.MutatesRepositories ||
+		!vector.Boundaries.RSIRemainsDenied {
+		t.Fatalf("Atlas to Foundry vector widened authority: %+v", vector.Boundaries)
+	}
+	workgraph := mustLoadJSON[Workgraph](t, filepath.Join("..", "..", filepath.FromSlash(vector.Producer.Workgraph)))
+	contextPack := mustLoadJSON[ContextPack](t, filepath.Join("..", "..", filepath.FromSlash(vector.Producer.ContextPack)))
+	foundryImport := mustLoadJSON[FoundryImport](t, filepath.Join("..", "..", "examples", "valid", "foundry-import.json"))
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+	next, ok := NextReadyNode(workgraph)
+	if !ok {
+		t.Fatal("expected a next ready node")
+	}
+	if vector.AtlasWorkgraph.ContractVersion != WorkgraphContract ||
+		vector.AtlasWorkgraph.WorkgraphID != workgraph.ID ||
+		vector.AtlasWorkgraph.TargetInstance != workgraph.TargetInstance ||
+		vector.AtlasWorkgraph.ReadyNodeID != next.ID ||
+		vector.AtlasWorkgraph.ReadyTaskID != next.FactoryTask.ID ||
+		vector.AtlasWorkgraph.CompletedNodeCount != state.NodeCounts["completed"] ||
+		vector.AtlasWorkgraph.ReadyNodeCount != state.NodeCounts["ready"] ||
+		!containsValue(next.FactoryTask.ContextPackRefs, vector.AtlasWorkgraph.ReadyContextPack) {
+		t.Fatalf("Atlas workgraph vector does not match fixture: vector=%+v state=%+v next=%+v", vector.AtlasWorkgraph, state, next)
+	}
+	if vector.AtlasContextPack.ContractVersion != ContextPackContract ||
+		vector.AtlasContextPack.ContextPackID != contextPack.ID ||
+		vector.AtlasContextPack.TaskID != contextPack.TaskID ||
+		vector.AtlasContextPack.TaskID != vector.AtlasWorkgraph.ReadyTaskID ||
+		vector.AtlasContextPack.BudgetBytes != contextPack.BudgetBytes {
+		t.Fatalf("Atlas context pack vector does not match fixture: vector=%+v context=%+v", vector.AtlasContextPack, contextPack)
+	}
+	if foundryImport.WorkgraphID != workgraph.ID ||
+		len(foundryImport.Tasks) != vector.ExpectedFoundry.ImportedTaskCount ||
+		foundryImport.Tasks[0].NodeID != vector.ExpectedFoundry.SelectedNodeID ||
+		foundryImport.Tasks[0].TaskID != vector.ExpectedFoundry.SelectedTaskID ||
+		foundryImport.SchedulesWork ||
+		foundryImport.ExecutesWork ||
+		foundryImport.ApprovesWork {
+		t.Fatalf("Foundry import fixture does not match vector: import=%+v expected=%+v", foundryImport, vector.ExpectedFoundry)
+	}
+	if vector.ExpectedFoundry.SchedulerInputSchema != "ao.foundry.pulse-atlas-scheduler-input.v0.1" ||
+		vector.ExpectedFoundry.Status != "ready" ||
+		vector.ExpectedFoundry.AllowedNextAction != "start_next_slice" ||
+		!vector.ExpectedFoundry.AtlasCompileOnly ||
+		vector.ExpectedFoundry.SafeNodeFoundryImportStatus != "ready" ||
+		!vector.ExpectedFoundry.RejectsUnselectedReadyNodes {
+		t.Fatalf("bad expected Foundry safe-next-work contract: %+v", vector.ExpectedFoundry)
+	}
+}
+
 func TestBlueprintImportAcceptsExternalCandidateRules(t *testing.T) {
 	dir := t.TempDir()
 	sourcePack := filepath.Join("..", "..", "examples", "valid", "blueprint-import-low-risk-code", "blueprint-pack")
