@@ -62,6 +62,30 @@ func TestProductionReadinessOpsWorkflowRunsAtlasReadinessGate(t *testing.T) {
 	}
 }
 
+func TestProductionReadinessWorkflowsUseNativeWindowsEntryPoint(t *testing.T) {
+	root := repoRoot(t)
+	for _, workflowName := range []string{"ci.yml", "production-readiness-ops.yml"} {
+		workflowPath := filepath.Join(root, ".github", "workflows", workflowName)
+		content, err := os.ReadFile(workflowPath)
+		if err != nil {
+			t.Fatalf("read workflow %s: %v", workflowName, err)
+		}
+		workflow := string(content)
+		for _, want := range []string{
+			"if: matrix.os != 'windows-latest'",
+			"shell: bash",
+			"scripts/production-readiness.sh",
+			"if: matrix.os == 'windows-latest'",
+			"shell: pwsh",
+			"scripts/production-readiness.ps1",
+		} {
+			if !strings.Contains(workflow, want) {
+				t.Fatalf("%s missing native Windows readiness workflow marker %q", workflowName, want)
+			}
+		}
+	}
+}
+
 func TestProductionReadinessExercisesAOMissionRecoveryProvenance(t *testing.T) {
 	root := repoRoot(t)
 	scriptPath := filepath.Join(root, "scripts", "production-readiness.sh")
