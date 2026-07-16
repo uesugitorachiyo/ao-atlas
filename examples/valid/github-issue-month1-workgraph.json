@@ -1,0 +1,102 @@
+{
+  "schema": "ao.atlas.github-issue-to-draft-pr-month1-workgraph.v0.1",
+  "status": "ready",
+  "month": 1,
+  "objective": "define contracts, threat model, deterministic issue intake, and denied-action readbacks",
+  "nodes": [
+    {
+      "id": "month1-architecture-contracts",
+      "owner_repo": "ao-architecture",
+      "status": "ready",
+      "required": true,
+      "output": "stack/github-issue-workflow-contracts.json"
+    },
+    {
+      "id": "month1-ao2-url-intake",
+      "owner_repo": "ao2",
+      "status": "ready",
+      "required": true,
+      "output": "ao2 issue intake --json"
+    },
+    {
+      "id": "month1-covenant-policy",
+      "owner_repo": "ao-covenant",
+      "status": "ready",
+      "required": true,
+      "output": "examples/operator/github-issue-action-policy.json"
+    },
+    {
+      "id": "month1-control-plane-observation",
+      "owner_repo": "ao2-control-plane",
+      "status": "ready",
+      "required": true,
+      "output": "tests/fixtures/github-issue-intake-observation-v0.1.json"
+    },
+    {
+      "id": "month1-command-readback",
+      "owner_repo": "ao-command",
+      "status": "ready",
+      "required": true,
+      "output": "examples/operator/github-issue-month1-readback.json"
+    },
+    {
+      "id": "month1-sentinel-wording",
+      "owner_repo": "ao-sentinel",
+      "status": "ready",
+      "required": true,
+      "output": "examples/safety/valid/github-issue-workflow-wording.md"
+    },
+    {
+      "id": "month1-promoter-no-promotion",
+      "owner_repo": "ao-promoter",
+      "status": "ready",
+      "required": true,
+      "output": "examples/evidence/valid/github-issue-workflow-no-promotion.json"
+    },
+    {
+      "id": "month1-blueprint-bounded-claim",
+      "owner_repo": "ao-blueprint",
+      "status": "ready",
+      "required": true,
+      "output": "examples/blueprints/valid/github-issue-bounded-claim/build-authorization.json"
+    },
+    {
+      "id": "month1-mission-supervision",
+      "owner_repo": "ao-mission",
+      "status": "ready",
+      "required": true,
+      "output": "docs/roadmap/github-issue-to-draft-pr-month1-closure.md"
+    },
+    {
+      "id": "month1-closure-reconcile",
+      "owner_repo": "ao-mission",
+      "status": "locked",
+      "required": true,
+      "dependencies": [
+        "month1-architecture-contracts",
+        "month1-ao2-url-intake",
+        "month1-covenant-policy",
+        "month1-control-plane-observation",
+        "month1-command-readback",
+        "month1-sentinel-wording",
+        "month1-promoter-no-promotion",
+        "month1-blueprint-bounded-claim",
+        "month1-mission-supervision"
+      ],
+      "output": "month1-closure-report.md"
+    }
+  ],
+  "stage_locks": {
+    "month2_locked_until_month1_closure": true,
+    "feature_generated_pr_merge_node_exists": false
+  },
+  "boundaries": {
+    "github_issue_write_authorized": false,
+    "feature_generated_pr_auto_merge_authorized": false,
+    "feature_generated_pr_ready_for_review_authorized": false,
+    "external_maintainer_contact_authorized": false,
+    "public_security_disclosure_authorized": false,
+    "release_authorized": false,
+    "rsi_authorized": false
+  }
+}
