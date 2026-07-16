@@ -158,6 +158,90 @@ func TestDedicatedModuleAssertionHelperLivesInAtlasTest(t *testing.T) {
 	}
 }
 
+func TestAdoptionMonth3EvidenceMaintenanceWorkgraphFixture(t *testing.T) {
+	root := repoRoot(t)
+	fixturePath := filepath.Join(root, "examples", "valid", "adoption-month3-evidence-maintenance-workgraph.json")
+	var fixture struct {
+		SchemaVersion string `json:"schema_version"`
+		Status        string `json:"status"`
+		Baseline      struct {
+			CompatibilityGateState  string `json:"compatibility_gate_state"`
+			CompatibilityGateActive bool   `json:"compatibility_gate_active"`
+			RSIRemainsDenied        bool   `json:"rsi_remains_denied"`
+		} `json:"baseline"`
+		Nodes      []map[string]any `json:"nodes"`
+		Boundaries map[string]bool  `json:"boundaries"`
+	}
+	body, err := os.ReadFile(fixturePath)
+	if err != nil {
+		t.Fatalf("read Month 3 maintenance workgraph fixture: %v", err)
+	}
+	if err := json.Unmarshal(body, &fixture); err != nil {
+		t.Fatalf("parse Month 3 maintenance workgraph fixture: %v", err)
+	}
+	if fixture.SchemaVersion != "ao.atlas.adoption-month3-evidence-maintenance-workgraph.v0.1" ||
+		fixture.Status != "ready_for_replay" {
+		t.Fatalf("bad Month 3 maintenance workgraph header: %#v", fixture)
+	}
+	if fixture.Baseline.CompatibilityGateState != "ready" ||
+		fixture.Baseline.CompatibilityGateActive ||
+		!fixture.Baseline.RSIRemainsDenied {
+		t.Fatalf("baseline must keep gate ready, not active, and RSI denied: %#v", fixture.Baseline)
+	}
+	if len(fixture.Nodes) != 7 {
+		t.Fatalf("expected 7 maintenance workgraph nodes, got %d", len(fixture.Nodes))
+	}
+	requiredIDs := []string{
+		"architecture-maintenance-report",
+		"atlas-maintenance-workgraph",
+		"command-maintenance-readback",
+		"sentinel-maintenance-wording",
+		"promoter-maintenance-verdict",
+		"cross-repo-readback",
+		"mission-month3-closure",
+	}
+	seen := map[string]bool{}
+	for _, node := range fixture.Nodes {
+		id, _ := node["id"].(string)
+		owner, _ := node["owner_repo"].(string)
+		objective, _ := node["objective"].(string)
+		if id == "" || owner == "" || objective == "" {
+			t.Fatalf("maintenance node requires id, owner_repo, and objective: %#v", node)
+		}
+		seen[id] = true
+		for _, boolField := range []string{
+			"release_authorized",
+			"provider_pilot_authorized",
+			"external_beta_launch_authorized",
+			"promotion_authorized",
+			"rsi_authorized",
+		} {
+			if value, ok := node[boolField].(bool); !ok || value {
+				t.Fatalf("node %s must set %s=false", id, boolField)
+			}
+		}
+	}
+	for _, id := range requiredIDs {
+		if !seen[id] {
+			t.Fatalf("maintenance workgraph missing node %s", id)
+		}
+	}
+	for _, field := range []string{
+		"release_authorized",
+		"tag_authorized",
+		"upload_authorized",
+		"deployment_authorized",
+		"provider_pilot_authorized",
+		"external_beta_launch_authorized",
+		"promotion_authorized",
+		"rsi_authorized",
+	} {
+		if fixture.Boundaries[field] {
+			t.Fatalf("boundary %s must remain false", field)
+		}
+	}
+}
+
 func TestWorkgraphCLILivesInDedicatedModule(t *testing.T) {
 	assertDedicatedModuleContains(t, "cli_workgraph.go", "Workgraph CLI", []string{
 		"func runWorkgraph(",

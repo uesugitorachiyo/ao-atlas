@@ -1,0 +1,117 @@
+{
+  "schema_version": "ao.atlas.adoption-month3-evidence-maintenance-workgraph.v0.1",
+  "status": "ready_for_replay",
+  "cycle": "adoption-evidence",
+  "month": 3,
+  "objective": "Replay evidence maintenance checks for the current public pair, compatibility matrix, operator readback, wording boundaries, and no-promotion verdict.",
+  "baseline": {
+    "ao2_version": "v0.5.1",
+    "control_plane_version": "v0.1.15",
+    "compatibility_edges_total": 16,
+    "compatibility_edges_tested": 16,
+    "canonical_vector_count": 16,
+    "consumer_test_count": 16,
+    "compatibility_gate_state": "ready",
+    "compatibility_gate_active": false,
+    "rsi_remains_denied": true
+  },
+  "nodes": [
+    {
+      "id": "architecture-maintenance-report",
+      "owner_repo": "ao-architecture",
+      "objective": "Validate evidence maintenance report, current-release metadata, matrix drift, vectors, consumer tests, and gate state.",
+      "evidence_output": "stack/evidence-maintenance-report.json",
+      "verification_command": "python3 scripts/verify_evidence_maintenance.py",
+      "release_authorized": false,
+      "provider_pilot_authorized": false,
+      "external_beta_launch_authorized": false,
+      "promotion_authorized": false,
+      "rsi_authorized": false
+    },
+    {
+      "id": "atlas-maintenance-workgraph",
+      "owner_repo": "ao-atlas",
+      "objective": "Validate this reusable evidence maintenance workgraph and readback.",
+      "evidence_output": "examples/valid/adoption-month3-evidence-maintenance-workgraph.json",
+      "verification_command": "go test ./internal/atlas -run TestAdoptionMonth3EvidenceMaintenanceWorkgraphFixture -count=1",
+      "release_authorized": false,
+      "provider_pilot_authorized": false,
+      "external_beta_launch_authorized": false,
+      "promotion_authorized": false,
+      "rsi_authorized": false
+    },
+    {
+      "id": "command-maintenance-readback",
+      "owner_repo": "ao-command",
+      "objective": "Present fresh, stale, blocked, and denied maintenance states to the operator.",
+      "evidence_output": "examples/operator/adoption-month3-evidence-maintenance-readback.json",
+      "verification_command": "go test ./internal/cli -run TestAdoptionMonth3EvidenceMaintenanceReadback -count=1",
+      "release_authorized": false,
+      "provider_pilot_authorized": false,
+      "external_beta_launch_authorized": false,
+      "promotion_authorized": false,
+      "rsi_authorized": false
+    },
+    {
+      "id": "sentinel-maintenance-wording",
+      "owner_repo": "ao-sentinel",
+      "objective": "Reject maintenance wording that overclaims gate activation, release, external beta, promotion, provider pilots, or RSI.",
+      "evidence_output": "examples/safety/valid/adoption-month3-evidence-maintenance-wording-lint-profile.json",
+      "verification_command": "go test ./internal/cli -run TestAdoptionMonth3EvidenceMaintenanceWordingProfile -count=1",
+      "release_authorized": false,
+      "provider_pilot_authorized": false,
+      "external_beta_launch_authorized": false,
+      "promotion_authorized": false,
+      "rsi_authorized": false
+    },
+    {
+      "id": "promoter-maintenance-verdict",
+      "owner_repo": "ao-promoter",
+      "objective": "Record that fresh maintenance evidence does not request promotion, grant promotion, launch external beta, activate the gate, or authorize RSI.",
+      "evidence_output": "examples/evidence/valid/adoption-month3-evidence-maintenance-no-promotion.json",
+      "verification_command": "go test ./internal/cli -run TestAdoptionMonth3EvidenceMaintenanceNoPromotionFixture -count=1",
+      "release_authorized": false,
+      "provider_pilot_authorized": false,
+      "external_beta_launch_authorized": false,
+      "promotion_authorized": false,
+      "rsi_authorized": false
+    },
+    {
+      "id": "cross-repo-readback",
+      "owner_repo": "ao-mission",
+      "objective": "Run cross-repo readback after implementation PRs merge.",
+      "evidence_output": "maintenance-report.md",
+      "verification_command": "run Architecture, Atlas, Command, Sentinel, Promoter, and public metadata checks",
+      "release_authorized": false,
+      "provider_pilot_authorized": false,
+      "external_beta_launch_authorized": false,
+      "promotion_authorized": false,
+      "rsi_authorized": false
+    },
+    {
+      "id": "mission-month3-closure",
+      "owner_repo": "ao-mission",
+      "objective": "Record Month 3 closure and Month 4 recommendation.",
+      "evidence_output": "docs/roadmap/adoption-month3-evidence-maintenance-closure.md",
+      "verification_command": "go test ./...",
+      "release_authorized": false,
+      "provider_pilot_authorized": false,
+      "external_beta_launch_authorized": false,
+      "promotion_authorized": false,
+      "rsi_authorized": false
+    }
+  ],
+  "boundaries": {
+    "release_authorized": false,
+    "tag_authorized": false,
+    "upload_authorized": false,
+    "deployment_authorized": false,
+    "provider_pilot_authorized": false,
+    "external_user_contact_authorized": false,
+    "external_beta_launch_authorized": false,
+    "promotion_authorized": false,
+    "rsi_authorized": false,
+    "credential_inspection_authorized": false
+  },
+  "next_action": "Run the maintenance workgraph, merge green implementation PRs, then close Month 3 in AO Mission."
+}
