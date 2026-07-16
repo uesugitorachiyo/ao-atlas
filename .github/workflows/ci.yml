@@ -18,6 +18,10 @@ jobs:
           go-version-file: go.mod
           cache: false
       - name: Production readiness
+        if: matrix.os != 'windows-latest'
         shell: bash
         run: scripts/production-readiness.sh
-
+      - name: Production readiness
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: scripts/production-readiness.ps1
