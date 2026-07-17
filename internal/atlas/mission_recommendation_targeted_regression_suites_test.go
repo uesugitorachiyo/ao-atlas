@@ -5,13 +5,23 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 )
 
+func recommendationTargetedRegressionCommand(root, suite string) (*exec.Cmd, string) {
+	if runtime.GOOS == "windows" {
+		script := filepath.Join(root, "scripts", "recommendation-targeted-regressions.ps1")
+		return exec.Command("powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", script, suite), script
+	}
+	script := filepath.Join(root, "scripts", "recommendation-targeted-regressions.sh")
+	return exec.Command("bash", script, suite), script
+}
+
 func TestRecommendationTargetedRegressionSuitesListAndRunFocusedBoundaries(t *testing.T) {
 	root := repoRoot(t)
-	script := filepath.Join(root, "scripts", "recommendation-targeted-regressions.sh")
+	list, script := recommendationTargetedRegressionCommand(root, "list")
 	body, err := os.ReadFile(script)
 	if err != nil {
 		t.Fatal(err)
@@ -26,7 +36,6 @@ func TestRecommendationTargetedRegressionSuitesListAndRunFocusedBoundaries(t *te
 		}
 	}
 
-	list := exec.Command("bash", script, "list")
 	list.Dir = root
 	var listOut bytes.Buffer
 	list.Stdout = &listOut
@@ -40,7 +49,7 @@ func TestRecommendationTargetedRegressionSuitesListAndRunFocusedBoundaries(t *te
 		}
 	}
 
-	cmd := exec.Command("bash", script, "validator-boundaries")
+	cmd, _ := recommendationTargetedRegressionCommand(root, "validator-boundaries")
 	cmd.Dir = root
 	var out bytes.Buffer
 	cmd.Stdout = &out
