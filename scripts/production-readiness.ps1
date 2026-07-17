@@ -1,3 +1,7 @@
+param(
+    [switch]$BuildArtifactGuardOnly
+)
+
 $ErrorActionPreference = "Stop"
 
 $Root = Resolve-Path (Join-Path $PSScriptRoot "..")
@@ -21,8 +25,12 @@ function Reject-LocalBuildArtifacts {
         (Join-Path "cmd" (Join-Path "atlas" "atlas.exe"))
     )
     foreach ($Artifact in $Artifacts) {
+        $PreviousErrorActionPreference = $ErrorActionPreference
+        $ErrorActionPreference = "SilentlyContinue"
         git ls-files --error-unmatch $Artifact *> $null
-        if ($LASTEXITCODE -eq 0) {
+        $GitExitCode = $LASTEXITCODE
+        $ErrorActionPreference = $PreviousErrorActionPreference
+        if ($GitExitCode -eq 0) {
             throw "tracked build artifact present: $Artifact"
         }
         if (Test-Path $Artifact) {
@@ -50,6 +58,10 @@ function Assert-JsonSyntax($Path) {
 
 Reject-LocalBuildArtifacts
 Pass "build-artifact-guard"
+
+if ($BuildArtifactGuardOnly) {
+    return
+}
 
 Assert-TrackedPathBudget
 Pass "tracked-path-budget"

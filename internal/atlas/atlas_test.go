@@ -87,6 +87,25 @@ func TestProductionReadinessWorkflowsUseNativeWindowsEntryPoint(t *testing.T) {
 	}
 }
 
+func TestWindowsProductionReadinessBuildArtifactGuardAcceptsUntrackedArtifacts(t *testing.T) {
+	if runtime.GOOS != "windows" {
+		t.Skip("Windows PowerShell regression")
+	}
+	root := repoRoot(t)
+	script := filepath.Join(root, "scripts", "production-readiness.ps1")
+	cmd := exec.Command("powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", script, "-BuildArtifactGuardOnly")
+	cmd.Dir = root
+	var output bytes.Buffer
+	cmd.Stdout = &output
+	cmd.Stderr = &output
+	if err := cmd.Run(); err != nil {
+		t.Fatalf("Windows build-artifact guard rejected an untracked artifact probe: %v\n%s", err, output.String())
+	}
+	if !strings.Contains(output.String(), "ok build-artifact-guard") {
+		t.Fatalf("Windows build-artifact guard did not report success: %s", output.String())
+	}
+}
+
 func TestProductionReadinessExercisesAOMissionRecoveryProvenance(t *testing.T) {
 	root := repoRoot(t)
 	scriptPath := filepath.Join(root, "scripts", "production-readiness.sh")
