@@ -190,7 +190,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/tasks/mission-recommendation-feature-depth-next-wave-01-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-01",
       "filename": "mission-recommendation-feature-depth-next-wave-01-task.json",
       "schema": "ao.atlas.factory-task.v0.1",

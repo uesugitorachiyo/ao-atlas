@@ -117,7 +117,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-01-ranked-recommendations/foundry-import/tasks/mission-recommendation-month3-final-closure-01-ranked-recommendations-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-01-ranked-recommendations/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-01-ranked-recommendations",
       "filename": "mission-recommendation-month3-final-closure-01-ranked-recommendations-task.json",
       "schema": "ao.atlas.factory-task.v0.1",

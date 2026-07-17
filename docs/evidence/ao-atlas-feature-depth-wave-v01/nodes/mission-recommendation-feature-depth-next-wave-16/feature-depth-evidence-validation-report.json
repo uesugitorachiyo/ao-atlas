@@ -233,7 +233,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/tasks/mission-recommendation-feature-depth-next-wave-01-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-01/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-01",
       "filename": "mission-recommendation-feature-depth-next-wave-01-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -409,7 +409,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/tasks/mission-recommendation-feature-depth-next-wave-02-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-02/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-02",
       "filename": "mission-recommendation-feature-depth-next-wave-02-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -585,7 +585,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/tasks/mission-recommendation-feature-depth-next-wave-03-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-03/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-03",
       "filename": "mission-recommendation-feature-depth-next-wave-03-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -761,7 +761,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/tasks/mission-recommendation-feature-depth-next-wave-04-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-04/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-04",
       "filename": "mission-recommendation-feature-depth-next-wave-04-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -929,7 +929,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/tasks/mission-recommendation-feature-depth-next-wave-05-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-05/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-05",
       "filename": "mission-recommendation-feature-depth-next-wave-05-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1105,7 +1105,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-06/tasks/mission-recommendation-feature-depth-next-wave-06-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-06/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-06",
       "filename": "mission-recommendation-feature-depth-next-wave-06-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1273,7 +1273,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-07/tasks/mission-recommendation-feature-depth-next-wave-07-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-07/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-07",
       "filename": "mission-recommendation-feature-depth-next-wave-07-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1449,7 +1449,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-08/tasks/mission-recommendation-feature-depth-next-wave-08-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-08/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-08",
       "filename": "mission-recommendation-feature-depth-next-wave-08-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1633,7 +1633,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-09/tasks/mission-recommendation-feature-depth-next-wave-09-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-09/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-09",
       "filename": "mission-recommendation-feature-depth-next-wave-09-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1809,7 +1809,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-10/tasks/mission-recommendation-feature-depth-next-wave-10-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-10/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-10",
       "filename": "mission-recommendation-feature-depth-next-wave-10-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1993,7 +1993,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-11/tasks/mission-recommendation-feature-depth-next-wave-11-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-11/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-11",
       "filename": "mission-recommendation-feature-depth-next-wave-11-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2177,7 +2177,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-12/tasks/mission-recommendation-feature-depth-next-wave-12-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-12/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-12",
       "filename": "mission-recommendation-feature-depth-next-wave-12-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2353,7 +2353,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-13/tasks/mission-recommendation-feature-depth-next-wave-13-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-13/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-13",
       "filename": "mission-recommendation-feature-depth-next-wave-13-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2537,7 +2537,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-14/tasks/mission-recommendation-feature-depth-next-wave-14-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-14/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-14",
       "filename": "mission-recommendation-feature-depth-next-wave-14-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2721,7 +2721,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-15/tasks/mission-recommendation-feature-depth-next-wave-15-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-15/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-15",
       "filename": "mission-recommendation-feature-depth-next-wave-15-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2889,7 +2889,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-feature-depth-next-wave-16/tasks/mission-recommendation-feature-depth-next-wave-16-task.json",
+      "path": "nodes/mission-recommendation-feature-depth-next-wave-16/t/task.json",
       "node_id": "mission-recommendation-feature-depth-next-wave-16",
       "filename": "mission-recommendation-feature-depth-next-wave-16-task.json",
       "schema": "ao.atlas.factory-task.v0.1",

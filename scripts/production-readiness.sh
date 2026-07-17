@@ -34,6 +34,17 @@ reject_local_build_artifacts() {
   done
 }
 
+assert_tracked_path_budget() {
+  local max_repo_relative=180
+  local over_budget
+  over_budget="$(git ls-files | awk -v max="$max_repo_relative" 'length($0) > max { print length($0) "\t" $0 }' | sort -nr | head -20)"
+  if [[ -n "$over_budget" ]]; then
+    echo "tracked paths exceed Windows-safe repo-relative budget $max_repo_relative:" >&2
+    echo "$over_budget" >&2
+    exit 1
+  fi
+}
+
 reject_local_absolute_paths() {
   local label="$1"
   shift
@@ -162,6 +173,9 @@ assert_40_node_recommendation_workgraph() {
 
 reject_local_build_artifacts
 pass "build-artifact-guard"
+
+assert_tracked_path_budget
+pass "tracked-path-budget"
 
 go test ./...
 pass "go-test"
