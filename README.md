@@ -28,6 +28,14 @@ Tracked examples use relative placeholder paths only. Generated instance state
 should live outside this public repo or under ignored local directories such as
 `.atlas-local/`.
 
+Tracked repo-relative paths must stay at or below 180 characters. This leaves
+space for a native Windows checkout prefix such as `C:\ao\factory\ao-atlas\`
+plus Git lock files, temporary suffixes, and generated evidence suffixes without
+depending on `core.longpaths`, substituted drives, or unusually short clone
+roots. Historical evidence paths compacted for this budget are recorded in
+`docs/evidence-path-map.json`; compact identifiers such as `fi`, `bi`, `cp`, and
+`t` preserve audit meaning while keeping paths portable.
+
 `atlas instance doctor` inspects stack-instance hygiene without scheduling or
 executing work. It validates ignored local state roots, generated registry
 parity, shared-toolchain use, worktree bounds, and `schedules_work=false`,

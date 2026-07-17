@@ -7,6 +7,7 @@ import (
 	"go/parser"
 	"go/token"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -124,6 +125,68 @@ func TestProductionReadinessPublicSafetyScanUsesTrackedFiles(t *testing.T) {
 	}
 	if strings.Contains(script, "find . \\\n  -path './.git' -prune") {
 		t.Fatalf("production readiness public-safety scan still uses an unbounded working-tree find")
+	}
+}
+
+func TestTrackedPathsStayWithinWindowsSafeBudget(t *testing.T) {
+	const maxRepoRelativePathLength = 180
+
+	root := repoRoot(t)
+	cmd := exec.Command("git", "ls-files")
+	cmd.Dir = root
+	output, err := cmd.Output()
+	if err != nil {
+		t.Fatalf("git ls-files: %v", err)
+	}
+
+	var overBudget []string
+	for _, path := range strings.Fields(string(output)) {
+		if len(path) > maxRepoRelativePathLength {
+			overBudget = append(overBudget, path)
+		}
+	}
+	if len(overBudget) > 0 {
+		limit := len(overBudget)
+		if limit > 20 {
+			limit = 20
+		}
+		t.Fatalf("%d tracked paths exceed Windows-safe repo-relative budget %d; longest examples:\n%s", len(overBudget), maxRepoRelativePathLength, strings.Join(overBudget[:limit], "\n"))
+	}
+
+	mappingPath := filepath.Join(root, "docs", "evidence-path-map.json")
+	mappingContent, err := os.ReadFile(mappingPath)
+	if err != nil {
+		t.Fatalf("read evidence path mapping: %v", err)
+	}
+	var mapping struct {
+		SchemaVersion string `json:"schema_version"`
+		Entries       []struct {
+			OldPath string `json:"old_path"`
+			NewPath string `json:"new_path"`
+		} `json:"entries"`
+	}
+	if err := json.Unmarshal(mappingContent, &mapping); err != nil {
+		t.Fatalf("parse evidence path mapping: %v", err)
+	}
+	if mapping.SchemaVersion != "ao.atlas.evidence-path-map.v0.1" {
+		t.Fatalf("unexpected evidence path mapping schema: %q", mapping.SchemaVersion)
+	}
+	if len(mapping.Entries) == 0 {
+		t.Fatalf("evidence path mapping must record at least one compacted path")
+	}
+	for _, entry := range mapping.Entries {
+		if entry.OldPath == "" || entry.NewPath == "" {
+			t.Fatalf("mapping entries must include old_path and new_path: %+v", entry)
+		}
+		if len(entry.NewPath) > maxRepoRelativePathLength {
+			t.Fatalf("mapping target exceeds Windows-safe budget: %d %s", len(entry.NewPath), entry.NewPath)
+		}
+		if _, err := os.Stat(filepath.Join(root, entry.OldPath)); !os.IsNotExist(err) {
+			t.Fatalf("old evidence path still exists or is not statable as absent: %s", entry.OldPath)
+		}
+		if _, err := os.Stat(filepath.Join(root, entry.NewPath)); err != nil {
+			t.Fatalf("mapped evidence path missing: %s: %v", entry.NewPath, err)
+		}
 	}
 }
 

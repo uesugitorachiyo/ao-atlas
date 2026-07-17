@@ -178,7 +178,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-01-ranked-recommendations/foundry-import/tasks/mission-recommendation-month3-final-closure-01-ranked-recommendations-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-01-ranked-recommendations/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-01-ranked-recommendations",
       "filename": "mission-recommendation-month3-final-closure-01-ranked-recommendations-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -322,7 +322,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-02-aggregate-rollup/foundry-import/tasks/mission-recommendation-month3-final-closure-02-aggregate-rollup-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-02-aggregate-rollup/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-02-aggregate-rollup",
       "filename": "mission-recommendation-month3-final-closure-02-aggregate-rollup-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -474,7 +474,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-03-terminal-digest-binding/foundry-import/tasks/mission-recommendation-month3-final-closure-03-terminal-digest-binding-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-03-terminal-digest-binding/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-03-terminal-digest-binding",
       "filename": "mission-recommendation-month3-final-closure-03-terminal-digest-binding-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -626,7 +626,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay/foundry-import/tasks/mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay",
       "filename": "mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -778,7 +778,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-05-real-run-acceptance/foundry-import/tasks/mission-recommendation-month3-final-closure-05-real-run-acceptance-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-05-real-run-acceptance/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-05-real-run-acceptance",
       "filename": "mission-recommendation-month3-final-closure-05-real-run-acceptance-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -930,7 +930,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-06-control-plane-observer/foundry-import/tasks/mission-recommendation-month3-final-closure-06-control-plane-observer-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-06-control-plane-observer/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-06-control-plane-observer",
       "filename": "mission-recommendation-month3-final-closure-06-control-plane-observer-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1082,7 +1082,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-07-schema-owner-registry/foundry-import/tasks/mission-recommendation-month3-final-closure-07-schema-owner-registry-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-07-schema-owner-registry/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-07-schema-owner-registry",
       "filename": "mission-recommendation-month3-final-closure-07-schema-owner-registry-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1234,7 +1234,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-08-evidence-externalization/foundry-import/tasks/mission-recommendation-month3-final-closure-08-evidence-externalization-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-08-evidence-externalization/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-08-evidence-externalization",
       "filename": "mission-recommendation-month3-final-closure-08-evidence-externalization-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1386,7 +1386,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/foundry-import/tasks/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix",
       "filename": "mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1538,7 +1538,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-10-operator-dashboard-readback/foundry-import/tasks/mission-recommendation-month3-final-closure-10-operator-dashboard-readback-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-10-operator-dashboard-readback/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-10-operator-dashboard-readback",
       "filename": "mission-recommendation-month3-final-closure-10-operator-dashboard-readback-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1690,7 +1690,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-11-restart-resume-soak/foundry-import/tasks/mission-recommendation-month3-final-closure-11-restart-resume-soak-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-11-restart-resume-soak/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-11-restart-resume-soak",
       "filename": "mission-recommendation-month3-final-closure-11-restart-resume-soak-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1842,7 +1842,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-12-provider-model-provenance/foundry-import/tasks/mission-recommendation-month3-final-closure-12-provider-model-provenance-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-12-provider-model-provenance/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-12-provider-model-provenance",
       "filename": "mission-recommendation-month3-final-closure-12-provider-model-provenance-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1994,7 +1994,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-13-rollback-replay-negative/foundry-import/tasks/mission-recommendation-month3-final-closure-13-rollback-replay-negative-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-13-rollback-replay-negative/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-13-rollback-replay-negative",
       "filename": "mission-recommendation-month3-final-closure-13-rollback-replay-negative-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2154,7 +2154,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-14-compaction-resume-generator/foundry-import/tasks/mission-recommendation-month3-final-closure-14-compaction-resume-generator-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-14-compaction-resume-generator/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-14-compaction-resume-generator",
       "filename": "mission-recommendation-month3-final-closure-14-compaction-resume-generator-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2306,7 +2306,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-15-architecture-source-truth/foundry-import/tasks/mission-recommendation-month3-final-closure-15-architecture-source-truth-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-15-architecture-source-truth/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-15-architecture-source-truth",
       "filename": "mission-recommendation-month3-final-closure-15-architecture-source-truth-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2450,7 +2450,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix/foundry-import/tasks/mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix",
       "filename": "mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2602,7 +2602,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-17-workspace-root-preflight/foundry-import/tasks/mission-recommendation-month3-final-closure-17-workspace-root-preflight-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-17-workspace-root-preflight/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-17-workspace-root-preflight",
       "filename": "mission-recommendation-month3-final-closure-17-workspace-root-preflight-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2762,7 +2762,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-18-command-thin-client/foundry-import/tasks/mission-recommendation-month3-final-closure-18-command-thin-client-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-18-command-thin-client/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-18-command-thin-client",
       "filename": "mission-recommendation-month3-final-closure-18-command-thin-client-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2906,7 +2906,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/foundry-import/tasks/mission-recommendation-month3-final-closure-19-foundry-safe-next-work-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work",
       "filename": "mission-recommendation-month3-final-closure-19-foundry-safe-next-work-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -3058,7 +3058,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-20-mission-recovery-invariant/foundry-import/tasks/mission-recommendation-month3-final-closure-20-mission-recovery-invariant-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-20-mission-recovery-invariant/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant",
       "filename": "mission-recommendation-month3-final-closure-20-mission-recovery-invariant-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -3218,7 +3218,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/foundry-import/tasks/mission-recommendation-month3-final-closure-21-blueprint-auth-digest-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-21-blueprint-auth-digest",
       "filename": "mission-recommendation-month3-final-closure-21-blueprint-auth-digest-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -3370,7 +3370,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/foundry-import/tasks/mission-recommendation-month3-final-closure-22-ao2-approval-integrity-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-22-ao2-approval-integrity",
       "filename": "mission-recommendation-month3-final-closure-22-ao2-approval-integrity-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -3514,7 +3514,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-23-covenant-policy-replay/foundry-import/tasks/mission-recommendation-month3-final-closure-23-covenant-policy-replay-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-23-covenant-policy-replay/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-23-covenant-policy-replay",
       "filename": "mission-recommendation-month3-final-closure-23-covenant-policy-replay-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -3674,7 +3674,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-24-sentinel-freshness-signal/foundry-import/tasks/mission-recommendation-month3-final-closure-24-sentinel-freshness-signal-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-24-sentinel-freshness-signal/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal",
       "filename": "mission-recommendation-month3-final-closure-24-sentinel-freshness-signal-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -3826,7 +3826,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-25-promoter-no-activation/foundry-import/tasks/mission-recommendation-month3-final-closure-25-promoter-no-activation-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-25-promoter-no-activation/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-25-promoter-no-activation",
       "filename": "mission-recommendation-month3-final-closure-25-promoter-no-activation-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -3986,7 +3986,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle/foundry-import/tasks/mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle",
       "filename": "mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -4130,7 +4130,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-27-control-plane-index/foundry-import/tasks/mission-recommendation-month3-final-closure-27-control-plane-index-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-27-control-plane-index/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-27-control-plane-index",
       "filename": "mission-recommendation-month3-final-closure-27-control-plane-index-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -4282,7 +4282,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-28-rollback-failure-drill/foundry-import/tasks/mission-recommendation-month3-final-closure-28-rollback-failure-drill-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-28-rollback-failure-drill/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-28-rollback-failure-drill",
       "filename": "mission-recommendation-month3-final-closure-28-rollback-failure-drill-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -4442,7 +4442,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-29-public-safety-claims/foundry-import/tasks/mission-recommendation-month3-final-closure-29-public-safety-claims-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-29-public-safety-claims/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-29-public-safety-claims",
       "filename": "mission-recommendation-month3-final-closure-29-public-safety-claims-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -4586,7 +4586,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-month3-final-closure-30-final-report/foundry-import/tasks/mission-recommendation-month3-final-closure-30-final-report-task.json",
+      "path": "nodes/mission-recommendation-month3-final-closure-30-final-report/fi/t/task.json",
       "node_id": "mission-recommendation-month3-final-closure-30-final-report",
       "filename": "mission-recommendation-month3-final-closure-30-final-report-task.json",
       "schema": "ao.atlas.factory-task.v0.1",

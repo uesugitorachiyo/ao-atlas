@@ -167,7 +167,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-01/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-01-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-01/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-01",
       "filename": "mission-recommendation-p0b-contract-convergence-01-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -319,7 +319,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-02/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-02-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-02/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-02",
       "filename": "mission-recommendation-p0b-contract-convergence-02-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -471,7 +471,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-03/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-03-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-03/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-03",
       "filename": "mission-recommendation-p0b-contract-convergence-03-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -639,7 +639,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-04/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-04-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-04/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-04",
       "filename": "mission-recommendation-p0b-contract-convergence-04-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -807,7 +807,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-05/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-05-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-05/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-05",
       "filename": "mission-recommendation-p0b-contract-convergence-05-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -975,7 +975,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-06/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-06-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-06/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-06",
       "filename": "mission-recommendation-p0b-contract-convergence-06-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1127,7 +1127,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-07/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-07-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-07/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-07",
       "filename": "mission-recommendation-p0b-contract-convergence-07-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1295,7 +1295,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-08/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-08-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-08/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-08",
       "filename": "mission-recommendation-p0b-contract-convergence-08-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1463,7 +1463,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-09/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-09-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-09/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-09",
       "filename": "mission-recommendation-p0b-contract-convergence-09-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1647,7 +1647,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-10/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-10-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-10/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-10",
       "filename": "mission-recommendation-p0b-contract-convergence-10-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1815,7 +1815,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-11/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-11-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-11/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-11",
       "filename": "mission-recommendation-p0b-contract-convergence-11-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1983,7 +1983,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-12/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-12-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-12/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-12",
       "filename": "mission-recommendation-p0b-contract-convergence-12-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2151,7 +2151,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-13/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-13-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-13/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-13",
       "filename": "mission-recommendation-p0b-contract-convergence-13-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2303,7 +2303,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-14/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-14-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-14/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-14",
       "filename": "mission-recommendation-p0b-contract-convergence-14-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2487,7 +2487,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-15/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-15-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-15/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-15",
       "filename": "mission-recommendation-p0b-contract-convergence-15-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2655,7 +2655,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-16/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-16-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-16/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-16",
       "filename": "mission-recommendation-p0b-contract-convergence-16-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2807,7 +2807,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-p0b-contract-convergence-17/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-17-task.json",
+      "path": "nodes/mission-recommendation-p0b-contract-convergence-17/fi/t/task.json",
       "node_id": "mission-recommendation-p0b-contract-convergence-17",
       "filename": "mission-recommendation-p0b-contract-convergence-17-task.json",
       "schema": "ao.atlas.factory-task.v0.1",

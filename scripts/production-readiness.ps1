@@ -31,12 +31,28 @@ function Reject-LocalBuildArtifacts {
     }
 }
 
+function Assert-TrackedPathBudget {
+    $MaxRepoRelative = 180
+    $OverBudget = git ls-files | ForEach-Object {
+        if ($_.Length -gt $MaxRepoRelative) {
+            [PSCustomObject]@{ Length = $_.Length; Path = $_ }
+        }
+    } | Sort-Object -Property Length -Descending | Select-Object -First 20
+    if ($OverBudget) {
+        $Summary = ($OverBudget | ForEach-Object { "$($_.Length)`t$($_.Path)" }) -join [Environment]::NewLine
+        throw "tracked paths exceed Windows-safe repo-relative budget $MaxRepoRelative`n$Summary"
+    }
+}
+
 function Assert-JsonSyntax($Path) {
     Get-Content -Raw $Path | ConvertFrom-Json | Out-Null
 }
 
 Reject-LocalBuildArtifacts
 Pass "build-artifact-guard"
+
+Assert-TrackedPathBudget
+Pass "tracked-path-budget"
 
 go test ./...
 Pass "go-test"

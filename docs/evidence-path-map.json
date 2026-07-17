@@ -1,0 +1,1171 @@
+{
+  "compact_identifiers": {
+    "<task-id>-task.json": "task.json when scoped by its node task directory",
+    "blueprint-import": "bi",
+    "context-packs": "cp",
+    "foundry-import": "fi",
+    "low-risk-code-rehearsal-candidate-context-pack.json": "low-risk-code-rehearsal-candidate.json",
+    "tasks": "t"
+  },
+  "entries": [
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-01/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-01/tasks/mission-recommendation-feature-depth-next-wave-01-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-02/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-02/tasks/mission-recommendation-feature-depth-next-wave-02-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-03/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-03/tasks/mission-recommendation-feature-depth-next-wave-03-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-04/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-04/tasks/mission-recommendation-feature-depth-next-wave-04-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-05/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-05/tasks/mission-recommendation-feature-depth-next-wave-05-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-06/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-06/tasks/mission-recommendation-feature-depth-next-wave-06-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-07/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-07/tasks/mission-recommendation-feature-depth-next-wave-07-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-08/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-08/tasks/mission-recommendation-feature-depth-next-wave-08-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-09/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-09/tasks/mission-recommendation-feature-depth-next-wave-09-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-10/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-10/tasks/mission-recommendation-feature-depth-next-wave-10-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-11/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-11/tasks/mission-recommendation-feature-depth-next-wave-11-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-12/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-12/tasks/mission-recommendation-feature-depth-next-wave-12-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-13/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-13/tasks/mission-recommendation-feature-depth-next-wave-13-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-14/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-14/tasks/mission-recommendation-feature-depth-next-wave-14-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-15/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-15/tasks/mission-recommendation-feature-depth-next-wave-15-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-16/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-16/tasks/mission-recommendation-feature-depth-next-wave-16-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-17/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-17/tasks/mission-recommendation-feature-depth-next-wave-17-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-18/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-18/tasks/mission-recommendation-feature-depth-next-wave-18-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-19/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-19/tasks/mission-recommendation-feature-depth-next-wave-19-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-20/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-20/tasks/mission-recommendation-feature-depth-next-wave-20-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-21/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-21/tasks/mission-recommendation-feature-depth-next-wave-21-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-22/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-22/tasks/mission-recommendation-feature-depth-next-wave-22-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-23/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-23/tasks/mission-recommendation-feature-depth-next-wave-23-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-24/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-24/tasks/mission-recommendation-feature-depth-next-wave-24-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-25/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-25/tasks/mission-recommendation-feature-depth-next-wave-25-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-26/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-26/tasks/mission-recommendation-feature-depth-next-wave-26-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-27/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-27/tasks/mission-recommendation-feature-depth-next-wave-27-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-28/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-28/tasks/mission-recommendation-feature-depth-next-wave-28-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-29/tasks/mission-recommendation-feature-depth-next-wave-29-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-30/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-30/tasks/mission-recommendation-feature-depth-next-wave-30-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-31/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-31/tasks/mission-recommendation-feature-depth-next-wave-31-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-32/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-32/tasks/mission-recommendation-feature-depth-next-wave-32-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-33/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-33/tasks/mission-recommendation-feature-depth-next-wave-33-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-34/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-34/tasks/mission-recommendation-feature-depth-next-wave-34-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-35/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-35/tasks/mission-recommendation-feature-depth-next-wave-35-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-36/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-36/tasks/mission-recommendation-feature-depth-next-wave-36-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-37/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-37/tasks/mission-recommendation-feature-depth-next-wave-37-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-38/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-38/tasks/mission-recommendation-feature-depth-next-wave-38-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-39/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-39/tasks/mission-recommendation-feature-depth-next-wave-39-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-40/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v02/nodes/mission-recommendation-feature-depth-next-wave-40/tasks/mission-recommendation-feature-depth-next-wave-40-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-01/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-01/tasks/mission-recommendation-feature-depth-next-wave-01-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-02/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-02/tasks/mission-recommendation-feature-depth-next-wave-02-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-03/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-03/tasks/mission-recommendation-feature-depth-next-wave-03-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-04/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-04/tasks/mission-recommendation-feature-depth-next-wave-04-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-05/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-05/tasks/mission-recommendation-feature-depth-next-wave-05-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-06/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-06/tasks/mission-recommendation-feature-depth-next-wave-06-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-07/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-07/tasks/mission-recommendation-feature-depth-next-wave-07-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-08/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-08/tasks/mission-recommendation-feature-depth-next-wave-08-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-09/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-09/tasks/mission-recommendation-feature-depth-next-wave-09-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-10/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-10/tasks/mission-recommendation-feature-depth-next-wave-10-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-11/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-11/tasks/mission-recommendation-feature-depth-next-wave-11-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-12/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-12/tasks/mission-recommendation-feature-depth-next-wave-12-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-13/tasks/mission-recommendation-feature-depth-next-wave-13-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-14/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-14/tasks/mission-recommendation-feature-depth-next-wave-14-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-15/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-15/tasks/mission-recommendation-feature-depth-next-wave-15-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-16/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-16/tasks/mission-recommendation-feature-depth-next-wave-16-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-17/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-17/tasks/mission-recommendation-feature-depth-next-wave-17-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-18/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-18/tasks/mission-recommendation-feature-depth-next-wave-18-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-19/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-19/tasks/mission-recommendation-feature-depth-next-wave-19-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-20/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-20/tasks/mission-recommendation-feature-depth-next-wave-20-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-21/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-21/tasks/mission-recommendation-feature-depth-next-wave-21-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-22/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-22/tasks/mission-recommendation-feature-depth-next-wave-22-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-23/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-23/tasks/mission-recommendation-feature-depth-next-wave-23-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-24/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-24/tasks/mission-recommendation-feature-depth-next-wave-24-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-25/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-25/tasks/mission-recommendation-feature-depth-next-wave-25-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-26/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-26/tasks/mission-recommendation-feature-depth-next-wave-26-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-27/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-27/tasks/mission-recommendation-feature-depth-next-wave-27-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-28/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-28/tasks/mission-recommendation-feature-depth-next-wave-28-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-29/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-29/tasks/mission-recommendation-feature-depth-next-wave-29-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-30/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-30/tasks/mission-recommendation-feature-depth-next-wave-30-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-31/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-31/tasks/mission-recommendation-feature-depth-next-wave-31-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-32/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-32/tasks/mission-recommendation-feature-depth-next-wave-32-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-33/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-33/tasks/mission-recommendation-feature-depth-next-wave-33-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-34/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-34/tasks/mission-recommendation-feature-depth-next-wave-34-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-35/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-35/tasks/mission-recommendation-feature-depth-next-wave-35-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-36/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-36/tasks/mission-recommendation-feature-depth-next-wave-36-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-37/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-37/tasks/mission-recommendation-feature-depth-next-wave-37-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-38/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-38/tasks/mission-recommendation-feature-depth-next-wave-38-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-39/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-39/tasks/mission-recommendation-feature-depth-next-wave-39-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-40/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v03/nodes/mission-recommendation-feature-depth-next-wave-40/tasks/mission-recommendation-feature-depth-next-wave-40-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-01/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-01/tasks/mission-recommendation-feature-depth-next-wave-01-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-02/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-02/tasks/mission-recommendation-feature-depth-next-wave-02-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-03/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-03/tasks/mission-recommendation-feature-depth-next-wave-03-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-04/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-04/tasks/mission-recommendation-feature-depth-next-wave-04-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-05/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-05/tasks/mission-recommendation-feature-depth-next-wave-05-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-06/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-06/tasks/mission-recommendation-feature-depth-next-wave-06-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-07/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-07/tasks/mission-recommendation-feature-depth-next-wave-07-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-08/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-08/tasks/mission-recommendation-feature-depth-next-wave-08-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-09/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-09/tasks/mission-recommendation-feature-depth-next-wave-09-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-10/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-10/tasks/mission-recommendation-feature-depth-next-wave-10-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-11/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-11/tasks/mission-recommendation-feature-depth-next-wave-11-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-12/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-12/tasks/mission-recommendation-feature-depth-next-wave-12-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-13/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-13/tasks/mission-recommendation-feature-depth-next-wave-13-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-14/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-14/tasks/mission-recommendation-feature-depth-next-wave-14-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-15/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-15/tasks/mission-recommendation-feature-depth-next-wave-15-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-16/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-16/tasks/mission-recommendation-feature-depth-next-wave-16-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-17/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-17/tasks/mission-recommendation-feature-depth-next-wave-17-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-18/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-18/tasks/mission-recommendation-feature-depth-next-wave-18-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-19/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-19/tasks/mission-recommendation-feature-depth-next-wave-19-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-20/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-20/tasks/mission-recommendation-feature-depth-next-wave-20-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-21/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-21/tasks/mission-recommendation-feature-depth-next-wave-21-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-22/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-22/tasks/mission-recommendation-feature-depth-next-wave-22-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-23/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-23/tasks/mission-recommendation-feature-depth-next-wave-23-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-24/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-24/tasks/mission-recommendation-feature-depth-next-wave-24-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-25/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-25/tasks/mission-recommendation-feature-depth-next-wave-25-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-26/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-26/tasks/mission-recommendation-feature-depth-next-wave-26-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-27/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-27/tasks/mission-recommendation-feature-depth-next-wave-27-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-28/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-28/tasks/mission-recommendation-feature-depth-next-wave-28-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-29/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-29/tasks/mission-recommendation-feature-depth-next-wave-29-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-30/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-30/tasks/mission-recommendation-feature-depth-next-wave-30-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-31/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-31/tasks/mission-recommendation-feature-depth-next-wave-31-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-32/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-32/tasks/mission-recommendation-feature-depth-next-wave-32-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-33/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-33/tasks/mission-recommendation-feature-depth-next-wave-33-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-34/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-34/tasks/mission-recommendation-feature-depth-next-wave-34-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-35/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-35/tasks/mission-recommendation-feature-depth-next-wave-35-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-36/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-36/tasks/mission-recommendation-feature-depth-next-wave-36-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-37/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-37/tasks/mission-recommendation-feature-depth-next-wave-37-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-38/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-38/tasks/mission-recommendation-feature-depth-next-wave-38-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-39/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-39/tasks/mission-recommendation-feature-depth-next-wave-39-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-v04/nodes/mission-recommendation-feature-depth-next-wave-40/tasks/mission-recommendation-feature-depth-next-wave-40-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-01/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-01/tasks/mission-recommendation-feature-depth-next-wave-01-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-02/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-02/tasks/mission-recommendation-feature-depth-next-wave-02-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-03/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-03/tasks/mission-recommendation-feature-depth-next-wave-03-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-04/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-04/tasks/mission-recommendation-feature-depth-next-wave-04-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-05/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-05/tasks/mission-recommendation-feature-depth-next-wave-05-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-06/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-06/tasks/mission-recommendation-feature-depth-next-wave-06-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-07/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-07/tasks/mission-recommendation-feature-depth-next-wave-07-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-08/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-08/tasks/mission-recommendation-feature-depth-next-wave-08-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-09/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-09/tasks/mission-recommendation-feature-depth-next-wave-09-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-10/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-10/tasks/mission-recommendation-feature-depth-next-wave-10-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-11/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-11/tasks/mission-recommendation-feature-depth-next-wave-11-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-12/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-12/tasks/mission-recommendation-feature-depth-next-wave-12-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-13/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-13/tasks/mission-recommendation-feature-depth-next-wave-13-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-14/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-14/tasks/mission-recommendation-feature-depth-next-wave-14-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-15/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-15/tasks/mission-recommendation-feature-depth-next-wave-15-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-16/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-16/tasks/mission-recommendation-feature-depth-next-wave-16-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-17/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-17/tasks/mission-recommendation-feature-depth-next-wave-17-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-18/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-18/tasks/mission-recommendation-feature-depth-next-wave-18-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-19/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-19/tasks/mission-recommendation-feature-depth-next-wave-19-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-20/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-20/tasks/mission-recommendation-feature-depth-next-wave-20-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-21/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-21/tasks/mission-recommendation-feature-depth-next-wave-21-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-22/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-22/tasks/mission-recommendation-feature-depth-next-wave-22-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-23/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-23/tasks/mission-recommendation-feature-depth-next-wave-23-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-24/tasks/mission-recommendation-feature-depth-next-wave-24-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-25/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-25/tasks/mission-recommendation-feature-depth-next-wave-25-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-26/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-26/tasks/mission-recommendation-feature-depth-next-wave-26-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-27/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-27/tasks/mission-recommendation-feature-depth-next-wave-27-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-28/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-28/tasks/mission-recommendation-feature-depth-next-wave-28-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-29/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-29/tasks/mission-recommendation-feature-depth-next-wave-29-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-30/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-30/tasks/mission-recommendation-feature-depth-next-wave-30-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-31/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-31/tasks/mission-recommendation-feature-depth-next-wave-31-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-32/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-32/tasks/mission-recommendation-feature-depth-next-wave-32-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-33/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-33/tasks/mission-recommendation-feature-depth-next-wave-33-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-34/tasks/mission-recommendation-feature-depth-next-wave-34-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-35/tasks/mission-recommendation-feature-depth-next-wave-35-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-36/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-36/tasks/mission-recommendation-feature-depth-next-wave-36-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-37/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-37/tasks/mission-recommendation-feature-depth-next-wave-37-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-38/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-38/tasks/mission-recommendation-feature-depth-next-wave-38-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-39/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-39/tasks/mission-recommendation-feature-depth-next-wave-39-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-feature-depth-followup-durability-wave-v01/nodes/mission-recommendation-feature-depth-next-wave-40/tasks/mission-recommendation-feature-depth-next-wave-40-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-01/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-01/tasks/mission-recommendation-final-closure-consolidation-01-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-02/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-02/tasks/mission-recommendation-final-closure-consolidation-02-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-03/tasks/mission-recommendation-final-closure-consolidation-03-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-04/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-04/tasks/mission-recommendation-final-closure-consolidation-04-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-05/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-05/tasks/mission-recommendation-final-closure-consolidation-05-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-06/tasks/mission-recommendation-final-closure-consolidation-06-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-07/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-07/tasks/mission-recommendation-final-closure-consolidation-07-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-08/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-08/tasks/mission-recommendation-final-closure-consolidation-08-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-09/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-09/tasks/mission-recommendation-final-closure-consolidation-09-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-10/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-10/tasks/mission-recommendation-final-closure-consolidation-10-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-11/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-11/tasks/mission-recommendation-final-closure-consolidation-11-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-12/tasks/mission-recommendation-final-closure-consolidation-12-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-13/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-13/tasks/mission-recommendation-final-closure-consolidation-13-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-14/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-14/tasks/mission-recommendation-final-closure-consolidation-14-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-15/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-15/tasks/mission-recommendation-final-closure-consolidation-15-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-16/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-16/tasks/mission-recommendation-final-closure-consolidation-16-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-17/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-17/tasks/mission-recommendation-final-closure-consolidation-17-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-18/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-18/tasks/mission-recommendation-final-closure-consolidation-18-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-19/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-19/tasks/mission-recommendation-final-closure-consolidation-19-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-20/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-20/tasks/mission-recommendation-final-closure-consolidation-20-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-21/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-21/tasks/mission-recommendation-final-closure-consolidation-21-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-22/tasks/mission-recommendation-final-closure-consolidation-22-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-23/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-23/tasks/mission-recommendation-final-closure-consolidation-23-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-24/t/task.json",
+      "old_path": "docs/evidence/ao-atlas-final-closure-consolidation-wave-v01/nodes/mission-recommendation-final-closure-consolidation-24/tasks/mission-recommendation-final-closure-consolidation-24-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-01-ranked-recommendations/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-01-ranked-recommendations/foundry-import/tasks/mission-recommendation-month3-final-closure-01-ranked-recommendations-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-02-aggregate-rollup/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-02-aggregate-rollup/foundry-import/tasks/mission-recommendation-month3-final-closure-02-aggregate-rollup-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-03-terminal-digest-binding/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-03-terminal-digest-binding/foundry-import/tasks/mission-recommendation-month3-final-closure-03-terminal-digest-binding-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay/foundry-import/tasks/mission-recommendation-month3-final-closure-04-non-ao-dry-run-replay-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-05-real-run-acceptance/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-05-real-run-acceptance/foundry-import/tasks/mission-recommendation-month3-final-closure-05-real-run-acceptance-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-06-control-plane-observer/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-06-control-plane-observer/foundry-import/tasks/mission-recommendation-month3-final-closure-06-control-plane-observer-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-07-schema-owner-registry/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-07-schema-owner-registry/foundry-import/tasks/mission-recommendation-month3-final-closure-07-schema-owner-registry-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-08-evidence-externalization/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-08-evidence-externalization/foundry-import/tasks/mission-recommendation-month3-final-closure-08-evidence-externalization-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix/foundry-import/tasks/mission-recommendation-month3-final-closure-09-cross-repo-ci-matrix-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-10-operator-dashboard-readback/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-10-operator-dashboard-readback/foundry-import/tasks/mission-recommendation-month3-final-closure-10-operator-dashboard-readback-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-11-restart-resume-soak/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-11-restart-resume-soak/foundry-import/tasks/mission-recommendation-month3-final-closure-11-restart-resume-soak-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-12-provider-model-provenance/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-12-provider-model-provenance/foundry-import/tasks/mission-recommendation-month3-final-closure-12-provider-model-provenance-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-13-rollback-replay-negative/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-13-rollback-replay-negative/foundry-import/tasks/mission-recommendation-month3-final-closure-13-rollback-replay-negative-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-14-compaction-resume-generator/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-14-compaction-resume-generator/foundry-import/tasks/mission-recommendation-month3-final-closure-14-compaction-resume-generator-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-15-architecture-source-truth/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-15-architecture-source-truth/foundry-import/tasks/mission-recommendation-month3-final-closure-15-architecture-source-truth-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix/foundry-import/tasks/mission-recommendation-month3-final-closure-16-no-promotion-rsi-matrix-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-17-workspace-root-preflight/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-17-workspace-root-preflight/foundry-import/tasks/mission-recommendation-month3-final-closure-17-workspace-root-preflight-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-18-command-thin-client/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-18-command-thin-client/foundry-import/tasks/mission-recommendation-month3-final-closure-18-command-thin-client-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-19-foundry-safe-next-work/foundry-import/tasks/mission-recommendation-month3-final-closure-19-foundry-safe-next-work-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-20-mission-recovery-invariant/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-20-mission-recovery-invariant/foundry-import/tasks/mission-recommendation-month3-final-closure-20-mission-recovery-invariant-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-21-blueprint-auth-digest/foundry-import/tasks/mission-recommendation-month3-final-closure-21-blueprint-auth-digest-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-22-ao2-approval-integrity/foundry-import/tasks/mission-recommendation-month3-final-closure-22-ao2-approval-integrity-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-23-covenant-policy-replay/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-23-covenant-policy-replay/foundry-import/tasks/mission-recommendation-month3-final-closure-23-covenant-policy-replay-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-24-sentinel-freshness-signal/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-24-sentinel-freshness-signal/foundry-import/tasks/mission-recommendation-month3-final-closure-24-sentinel-freshness-signal-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-25-promoter-no-activation/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-25-promoter-no-activation/foundry-import/tasks/mission-recommendation-month3-final-closure-25-promoter-no-activation-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle/foundry-import/tasks/mission-recommendation-month3-final-closure-26-forge-goalrun-lifecycle-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-27-control-plane-index/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-27-control-plane-index/foundry-import/tasks/mission-recommendation-month3-final-closure-27-control-plane-index-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-28-rollback-failure-drill/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-28-rollback-failure-drill/foundry-import/tasks/mission-recommendation-month3-final-closure-28-rollback-failure-drill-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-29-public-safety-claims/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-29-public-safety-claims/foundry-import/tasks/mission-recommendation-month3-final-closure-29-public-safety-claims-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-30-final-report/fi/t/task.json",
+      "old_path": "docs/evidence/ao-m3-final-closure-v01/nodes/mission-recommendation-month3-final-closure-30-final-report/foundry-import/tasks/mission-recommendation-month3-final-closure-30-final-report-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-1/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-1/foundry-import/tasks/mission-recommendation-month2-contract-convergence-1-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-10/foundry-import/tasks/mission-recommendation-month2-contract-convergence-10-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-11/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-11/foundry-import/tasks/mission-recommendation-month2-contract-convergence-11-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-12/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-12/foundry-import/tasks/mission-recommendation-month2-contract-convergence-12-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-13/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-13/foundry-import/tasks/mission-recommendation-month2-contract-convergence-13-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-14/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-14/foundry-import/tasks/mission-recommendation-month2-contract-convergence-14-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-15/foundry-import/tasks/mission-recommendation-month2-contract-convergence-15-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-16/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-16/foundry-import/tasks/mission-recommendation-month2-contract-convergence-16-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-17/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-17/foundry-import/tasks/mission-recommendation-month2-contract-convergence-17-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-18/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-18/foundry-import/tasks/mission-recommendation-month2-contract-convergence-18-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-19/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-19/foundry-import/tasks/mission-recommendation-month2-contract-convergence-19-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-2/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-2/foundry-import/tasks/mission-recommendation-month2-contract-convergence-2-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-20/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-20/foundry-import/tasks/mission-recommendation-month2-contract-convergence-20-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-21/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-21/foundry-import/tasks/mission-recommendation-month2-contract-convergence-21-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-22/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-22/foundry-import/tasks/mission-recommendation-month2-contract-convergence-22-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-23/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-23/foundry-import/tasks/mission-recommendation-month2-contract-convergence-23-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-24/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-24/foundry-import/tasks/mission-recommendation-month2-contract-convergence-24-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-25/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-25/foundry-import/tasks/mission-recommendation-month2-contract-convergence-25-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-26/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-26/foundry-import/tasks/mission-recommendation-month2-contract-convergence-26-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-27/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-27/foundry-import/tasks/mission-recommendation-month2-contract-convergence-27-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-28/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-28/foundry-import/tasks/mission-recommendation-month2-contract-convergence-28-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-29/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-29/foundry-import/tasks/mission-recommendation-month2-contract-convergence-29-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/bi/cp/low-risk-code-rehearsal-candidate.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/blueprint-import/context-packs/low-risk-code-rehearsal-candidate-context-pack.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/bi/fi/foundry-continuation-handoff.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/blueprint-import/foundry-import/foundry-continuation-handoff.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/bi/fi/foundry-continuation-prompt.md",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/blueprint-import/foundry-import/foundry-continuation-prompt.md"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/bi/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/blueprint-import/foundry-import/tasks/low-risk-code-rehearsal-candidate-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-3/foundry-import/tasks/mission-recommendation-month2-contract-convergence-3-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-30/foundry-import/tasks/mission-recommendation-month2-contract-convergence-30-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-31/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-31/foundry-import/tasks/mission-recommendation-month2-contract-convergence-31-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-32/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-32/foundry-import/tasks/mission-recommendation-month2-contract-convergence-32-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-33/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-33/foundry-import/tasks/mission-recommendation-month2-contract-convergence-33-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-34/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-34/foundry-import/tasks/mission-recommendation-month2-contract-convergence-34-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-35/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-35/foundry-import/tasks/mission-recommendation-month2-contract-convergence-35-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-36/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-36/foundry-import/tasks/mission-recommendation-month2-contract-convergence-36-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-37/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-37/foundry-import/tasks/mission-recommendation-month2-contract-convergence-37-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-38/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-38/foundry-import/tasks/mission-recommendation-month2-contract-convergence-38-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-39/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-39/foundry-import/tasks/mission-recommendation-month2-contract-convergence-39-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-4/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-4/foundry-import/tasks/mission-recommendation-month2-contract-convergence-4-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-40/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-40/foundry-import/tasks/mission-recommendation-month2-contract-convergence-40-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-5/foundry-import/tasks/mission-recommendation-month2-contract-convergence-5-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-6/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-6/foundry-import/tasks/mission-recommendation-month2-contract-convergence-6-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-7/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-7/foundry-import/tasks/mission-recommendation-month2-contract-convergence-7-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-8/foundry-import/tasks/mission-recommendation-month2-contract-convergence-8-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-9/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-contract-convergence-month2-wave-v01/nodes/mission-recommendation-month2-contract-convergence-9/foundry-import/tasks/mission-recommendation-month2-contract-convergence-9-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-01/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-01/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-01-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-02/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-02/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-02-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-03/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-03/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-03-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-04/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-04/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-04-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-05/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-05/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-05-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-06/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-06/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-06-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-07/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-07/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-07-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-08/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-08/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-08-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-09/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-09/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-09-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-10/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-10/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-10-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-11/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-11/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-11-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-12/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-12/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-12-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-13/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-13/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-13-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-14/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-14/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-14-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-15/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-15/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-15-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-16/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-16/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-16-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-17/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-17/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-17-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-18/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-18/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-18-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-19/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-19/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-19-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-20/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-20/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-20-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-21/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-21/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-21-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-22/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-22/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-22-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-23/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-23/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-23-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-24/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-24-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-25/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-25-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-26/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-26/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-26-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-27/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-27/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-27-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-28/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-28/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-28-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-29/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-29/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-29-task.json"
+    },
+    {
+      "new_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-30/fi/t/task.json",
+      "old_path": "docs/evidence/ao-stack-p0b-contract-convergence-wave-v01/nodes/mission-recommendation-p0b-contract-convergence-30/foundry-import/tasks/mission-recommendation-p0b-contract-convergence-30-task.json"
+    }
+  ],
+  "path_budget": {
+    "max_repo_relative_characters": 180,
+    "rationale": "Keep tracked repo-relative paths below legacy Windows/tool path ceilings after checkout prefix plus lock, temporary, and generated suffixes.",
+    "reserved_suffix_characters": 40,
+    "windows_checkout_prefix_example": "C:\\ao\\factory\\ao-atlas\\"
+  },
+  "schema_version": "ao.atlas.evidence-path-map.v0.1"
+}

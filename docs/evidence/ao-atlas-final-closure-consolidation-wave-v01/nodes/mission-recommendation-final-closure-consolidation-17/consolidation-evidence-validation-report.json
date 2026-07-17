@@ -198,7 +198,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-01/tasks/mission-recommendation-final-closure-consolidation-01-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-01/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-01",
       "filename": "mission-recommendation-final-closure-consolidation-01-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -358,7 +358,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-02/tasks/mission-recommendation-final-closure-consolidation-02-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-02/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-02",
       "filename": "mission-recommendation-final-closure-consolidation-02-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -518,7 +518,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-03/tasks/mission-recommendation-final-closure-consolidation-03-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-03/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-03",
       "filename": "mission-recommendation-final-closure-consolidation-03-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -678,7 +678,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-04/tasks/mission-recommendation-final-closure-consolidation-04-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-04/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-04",
       "filename": "mission-recommendation-final-closure-consolidation-04-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -838,7 +838,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-05/tasks/mission-recommendation-final-closure-consolidation-05-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-05/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-05",
       "filename": "mission-recommendation-final-closure-consolidation-05-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -998,7 +998,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-06/tasks/mission-recommendation-final-closure-consolidation-06-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-06/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-06",
       "filename": "mission-recommendation-final-closure-consolidation-06-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1158,7 +1158,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-07/tasks/mission-recommendation-final-closure-consolidation-07-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-07/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-07",
       "filename": "mission-recommendation-final-closure-consolidation-07-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1318,7 +1318,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-08/tasks/mission-recommendation-final-closure-consolidation-08-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-08/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-08",
       "filename": "mission-recommendation-final-closure-consolidation-08-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1478,7 +1478,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-09/tasks/mission-recommendation-final-closure-consolidation-09-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-09/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-09",
       "filename": "mission-recommendation-final-closure-consolidation-09-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1638,7 +1638,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-10/tasks/mission-recommendation-final-closure-consolidation-10-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-10/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-10",
       "filename": "mission-recommendation-final-closure-consolidation-10-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1798,7 +1798,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-11/tasks/mission-recommendation-final-closure-consolidation-11-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-11/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-11",
       "filename": "mission-recommendation-final-closure-consolidation-11-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -1966,7 +1966,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-12/tasks/mission-recommendation-final-closure-consolidation-12-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-12/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-12",
       "filename": "mission-recommendation-final-closure-consolidation-12-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2126,7 +2126,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-13/tasks/mission-recommendation-final-closure-consolidation-13-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-13/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-13",
       "filename": "mission-recommendation-final-closure-consolidation-13-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2286,7 +2286,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-14/tasks/mission-recommendation-final-closure-consolidation-14-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-14/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-14",
       "filename": "mission-recommendation-final-closure-consolidation-14-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2454,7 +2454,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-15/tasks/mission-recommendation-final-closure-consolidation-15-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-15/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-15",
       "filename": "mission-recommendation-final-closure-consolidation-15-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2614,7 +2614,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-16/tasks/mission-recommendation-final-closure-consolidation-16-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-16/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-16",
       "filename": "mission-recommendation-final-closure-consolidation-16-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
@@ -2774,7 +2774,7 @@
       "status": "passed"
     },
     {
-      "path": "nodes/mission-recommendation-final-closure-consolidation-17/tasks/mission-recommendation-final-closure-consolidation-17-task.json",
+      "path": "nodes/mission-recommendation-final-closure-consolidation-17/t/task.json",
       "node_id": "mission-recommendation-final-closure-consolidation-17",
       "filename": "mission-recommendation-final-closure-consolidation-17-task.json",
       "schema": "ao.atlas.factory-task.v0.1",
