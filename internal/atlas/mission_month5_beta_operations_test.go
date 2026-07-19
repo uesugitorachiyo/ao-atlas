@@ -67,23 +67,23 @@ type month5SchemaRegistryHandoffFixture struct {
 }
 
 type month5ContractOwnerRow struct {
-	Contract string   `json:"contract"`
-	Owner    string   `json:"owner"`
-	Producer string   `json:"producer"`
+	Contract  string   `json:"contract"`
+	Owner     string   `json:"owner"`
+	Producer  string   `json:"producer"`
 	Consumers []string `json:"consumers"`
-	Status   string   `json:"status"`
+	Status    string   `json:"status"`
 }
 
 type month5CompatibilityLedgerFixture struct {
-	Schema                 string                        `json:"schema"`
-	NodeID                 string                        `json:"node_id"`
-	MissionID              string                        `json:"mission_id"`
-	Status                 string                        `json:"status"`
+	Schema                 string                         `json:"schema"`
+	NodeID                 string                         `json:"node_id"`
+	MissionID              string                         `json:"mission_id"`
+	Status                 string                         `json:"status"`
 	CompatibilityRows      []month5CompatibilityLedgerRow `json:"compatibility_rows"`
-	NoPromotionRequested   bool                          `json:"no_promotion_requested"`
-	ClaimsAuthorityAdvance bool                          `json:"claims_authority_advance"`
-	RSIRemainsDenied       bool                          `json:"rsi_remains_denied"`
-	SafeToExecute          bool                          `json:"safe_to_execute"`
+	NoPromotionRequested   bool                           `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool                           `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                           `json:"rsi_remains_denied"`
+	SafeToExecute          bool                           `json:"safe_to_execute"`
 }
 
 type month5CompatibilityLedgerRow struct {
@@ -112,25 +112,25 @@ type month5BlueprintCanonicalBytesFixture struct {
 }
 
 type month5AtlasCompatibilityMatrixFixture struct {
-	Schema                 string                       `json:"schema"`
-	NodeID                 string                       `json:"node_id"`
-	MissionID              string                       `json:"mission_id"`
-	Status                 string                       `json:"status"`
+	Schema                 string                        `json:"schema"`
+	NodeID                 string                        `json:"node_id"`
+	MissionID              string                        `json:"mission_id"`
+	Status                 string                        `json:"status"`
 	MatrixRows             []month5AtlasCompatibilityRow `json:"matrix_rows"`
-	CompatibilityFloorMet  bool                         `json:"compatibility_floor_met"`
-	NoPromotionRequested   bool                         `json:"no_promotion_requested"`
-	ClaimsAuthorityAdvance bool                         `json:"claims_authority_advance"`
-	RSIRemainsDenied       bool                         `json:"rsi_remains_denied"`
-	SafeToExecute          bool                         `json:"safe_to_execute"`
+	CompatibilityFloorMet  bool                          `json:"compatibility_floor_met"`
+	NoPromotionRequested   bool                          `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool                          `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                          `json:"rsi_remains_denied"`
+	SafeToExecute          bool                          `json:"safe_to_execute"`
 }
 
 type month5AtlasCompatibilityRow struct {
-	Contract       string   `json:"contract"`
-	Owner          string   `json:"owner"`
-	Producer       string   `json:"producer"`
-	Consumers      []string `json:"consumers"`
-	AtlasArtifact  string   `json:"atlas_artifact"`
-	Check          string   `json:"check"`
+	Contract      string   `json:"contract"`
+	Owner         string   `json:"owner"`
+	Producer      string   `json:"producer"`
+	Consumers     []string `json:"consumers"`
+	AtlasArtifact string   `json:"atlas_artifact"`
+	Check         string   `json:"check"`
 }
 
 type month5FoundrySafeNextWorkFixture struct {
@@ -232,8 +232,8 @@ type month5CovenantPolicyHashFixture struct {
 	TicketDigest           string   `json:"ticket_digest"`
 	BoundPolicyFields      []string `json:"bound_policy_fields"`
 	RejectedOmissions      []string `json:"rejected_omissions"`
-	CovenantAuthority       string   `json:"covenant_authority"`
-	CommandCompatibility    string   `json:"command_compatibility"`
+	CovenantAuthority      string   `json:"covenant_authority"`
+	CommandCompatibility   string   `json:"command_compatibility"`
 	NoPromotionRequested   bool     `json:"no_promotion_requested"`
 	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
 	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
@@ -294,20 +294,20 @@ type month5LocalBackupRestoreDrillFixture struct {
 }
 
 type month5MissionRestartReplayFixture struct {
-	Schema                 string   `json:"schema"`
-	NodeID                 string   `json:"node_id"`
-	MissionID              string   `json:"mission_id"`
-	Status                 string   `json:"status"`
-	SourceCheckpoint       string   `json:"source_checkpoint"`
-	ReplayInputs           []string `json:"replay_inputs"`
-	ExpectedReadbacks      []string `json:"expected_readbacks"`
-	ExactlyOnceAccounting  bool     `json:"exactly_once_accounting"`
+	Schema                  string   `json:"schema"`
+	NodeID                  string   `json:"node_id"`
+	MissionID               string   `json:"mission_id"`
+	Status                  string   `json:"status"`
+	SourceCheckpoint        string   `json:"source_checkpoint"`
+	ReplayInputs            []string `json:"replay_inputs"`
+	ExpectedReadbacks       []string `json:"expected_readbacks"`
+	ExactlyOnceAccounting   bool     `json:"exactly_once_accounting"`
 	DuplicateNodeCompletion bool     `json:"duplicate_node_completion"`
-	FinalResponseAllowed   bool     `json:"final_response_allowed"`
-	NoPromotionRequested   bool     `json:"no_promotion_requested"`
-	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
-	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
-	SafeToExecute          bool     `json:"safe_to_execute"`
+	FinalResponseAllowed    bool     `json:"final_response_allowed"`
+	NoPromotionRequested    bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance  bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied        bool     `json:"rsi_remains_denied"`
+	SafeToExecute           bool     `json:"safe_to_execute"`
 }
 
 type month5MissionKillRestartReplayFixture struct {
@@ -328,17 +328,17 @@ type month5MissionKillRestartReplayFixture struct {
 }
 
 type month5GoldenPathDryRunReadinessFixture struct {
-	Schema                 string                       `json:"schema"`
-	NodeID                 string                       `json:"node_id"`
-	MissionID              string                       `json:"mission_id"`
-	Status                 string                       `json:"status"`
+	Schema                 string                         `json:"schema"`
+	NodeID                 string                         `json:"node_id"`
+	MissionID              string                         `json:"mission_id"`
+	Status                 string                         `json:"status"`
 	MatrixRows             []month5GoldenPathReadinessRow `json:"matrix_rows"`
-	DryRunOnly             bool                         `json:"dry_run_only"`
-	NoProviderExecution    bool                         `json:"no_provider_execution"`
-	NoPromotionRequested   bool                         `json:"no_promotion_requested"`
-	ClaimsAuthorityAdvance bool                         `json:"claims_authority_advance"`
-	RSIRemainsDenied       bool                         `json:"rsi_remains_denied"`
-	SafeToExecute          bool                         `json:"safe_to_execute"`
+	DryRunOnly             bool                           `json:"dry_run_only"`
+	NoProviderExecution    bool                           `json:"no_provider_execution"`
+	NoPromotionRequested   bool                           `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool                           `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                           `json:"rsi_remains_denied"`
+	SafeToExecute          bool                           `json:"safe_to_execute"`
 }
 
 type month5GoldenPathReadinessRow struct {
@@ -504,24 +504,24 @@ type month5ModuleExtractionPreflightFixture struct {
 }
 
 type month5EvidenceGrowthDeltaGuardFixture struct {
-	Schema                  string   `json:"schema"`
-	NodeID                  string   `json:"node_id"`
-	MissionID               string   `json:"mission_id"`
-	Status                  string   `json:"status"`
-	MeasuredPaths           []string `json:"measured_paths"`
-	BaselineTrackedJSON     int64    `json:"baseline_tracked_json_bytes"`
-	CurrentTrackedJSON      int64    `json:"current_tracked_json_bytes"`
-	DeltaBytes              int64    `json:"delta_bytes"`
-	WarningThresholdBytes   int64    `json:"warning_threshold_bytes"`
-	ThresholdStatus         string   `json:"threshold_status"`
-	ReadbackMode            string   `json:"readback_mode"`
-	WarnOnly                bool     `json:"warn_only"`
-	NoDeletion              bool     `json:"no_deletion"`
-	NoExternalStorageWrite  bool     `json:"no_external_storage_write"`
-	NoPromotionRequested    bool     `json:"no_promotion_requested"`
-	ClaimsAuthorityAdvance  bool     `json:"claims_authority_advance"`
-	RSIRemainsDenied        bool     `json:"rsi_remains_denied"`
-	SafeToExecute           bool     `json:"safe_to_execute"`
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	MeasuredPaths          []string `json:"measured_paths"`
+	BaselineTrackedJSON    int64    `json:"baseline_tracked_json_bytes"`
+	CurrentTrackedJSON     int64    `json:"current_tracked_json_bytes"`
+	DeltaBytes             int64    `json:"delta_bytes"`
+	WarningThresholdBytes  int64    `json:"warning_threshold_bytes"`
+	ThresholdStatus        string   `json:"threshold_status"`
+	ReadbackMode           string   `json:"readback_mode"`
+	WarnOnly               bool     `json:"warn_only"`
+	NoDeletion             bool     `json:"no_deletion"`
+	NoExternalStorageWrite bool     `json:"no_external_storage_write"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
 type month5PilotRunbookFixture struct {
@@ -588,22 +588,22 @@ type month5BetaReleaseBOMDraftFixture struct {
 }
 
 type month5PublicWordingGuardFixture struct {
-	Schema                   string   `json:"schema"`
-	NodeID                   string   `json:"node_id"`
-	MissionID                string   `json:"mission_id"`
-	Status                   string   `json:"status"`
-	ScanMode                 string   `json:"scan_mode"`
-	ScannedScopes            []string `json:"scanned_scopes"`
-	ForbiddenClaims          []string `json:"forbidden_claims"`
-	RequiredQualifiers       []string `json:"required_qualifiers"`
-	ScanPassed               bool     `json:"scan_passed"`
-	BetaClaimsQualified      bool     `json:"beta_claims_qualified"`
-	PromotionClaimsDenied    bool     `json:"promotion_claims_denied"`
-	RSIDenialPresent         bool     `json:"rsi_denial_present"`
-	NoPromotionRequested     bool     `json:"no_promotion_requested"`
-	ClaimsAuthorityAdvance   bool     `json:"claims_authority_advance"`
-	RSIRemainsDenied         bool     `json:"rsi_remains_denied"`
-	SafeToExecute            bool     `json:"safe_to_execute"`
+	Schema                 string   `json:"schema"`
+	NodeID                 string   `json:"node_id"`
+	MissionID              string   `json:"mission_id"`
+	Status                 string   `json:"status"`
+	ScanMode               string   `json:"scan_mode"`
+	ScannedScopes          []string `json:"scanned_scopes"`
+	ForbiddenClaims        []string `json:"forbidden_claims"`
+	RequiredQualifiers     []string `json:"required_qualifiers"`
+	ScanPassed             bool     `json:"scan_passed"`
+	BetaClaimsQualified    bool     `json:"beta_claims_qualified"`
+	PromotionClaimsDenied  bool     `json:"promotion_claims_denied"`
+	RSIDenialPresent       bool     `json:"rsi_denial_present"`
+	NoPromotionRequested   bool     `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool     `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool     `json:"rsi_remains_denied"`
+	SafeToExecute          bool     `json:"safe_to_execute"`
 }
 
 type month5TerminalRollupFixture struct {
@@ -629,16 +629,16 @@ type month5TerminalRollupFixture struct {
 }
 
 type month6HandoffRecommendationFixture struct {
-	Schema                 string                         `json:"schema"`
-	SourceMissionID        string                         `json:"source_mission_id"`
-	SourceWave             string                         `json:"source_wave"`
-	Status                 string                         `json:"status"`
-	RecommendationCount    int                            `json:"recommendation_count"`
+	Schema                 string                        `json:"schema"`
+	SourceMissionID        string                        `json:"source_mission_id"`
+	SourceWave             string                        `json:"source_wave"`
+	Status                 string                        `json:"status"`
+	RecommendationCount    int                           `json:"recommendation_count"`
 	Recommendations        []month6HandoffRecommendation `json:"recommendations"`
-	NoPromotionRequested   bool                           `json:"no_promotion_requested"`
-	ClaimsAuthorityAdvance bool                           `json:"claims_authority_advance"`
-	RSIRemainsDenied       bool                           `json:"rsi_remains_denied"`
-	SafeToExecute          bool                           `json:"safe_to_execute"`
+	NoPromotionRequested   bool                          `json:"no_promotion_requested"`
+	ClaimsAuthorityAdvance bool                          `json:"claims_authority_advance"`
+	RSIRemainsDenied       bool                          `json:"rsi_remains_denied"`
+	SafeToExecute          bool                          `json:"safe_to_execute"`
 }
 
 type month6HandoffRecommendation struct {

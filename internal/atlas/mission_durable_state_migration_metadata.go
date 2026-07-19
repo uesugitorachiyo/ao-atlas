@@ -12,18 +12,18 @@ func BuildAtlasDurableStateMigrationMetadata() (AtlasDurableStateMigrationMetada
 		},
 	}
 	metadata := AtlasDurableStateMigrationMetadata{
-		Schema:                 AtlasDurableStateMigrationMetadataContract,
-		Status:                 "durable_state_migration_metadata_ready",
-		CurrentVersion:         1,
+		Schema:                  AtlasDurableStateMigrationMetadataContract,
+		Status:                  "durable_state_migration_metadata_ready",
+		CurrentVersion:          1,
 		MinimumSupportedVersion: 1,
-		UnknownVersionHandling: "fail_closed",
-		Migrations:             migrations,
-		MigrationCount:         len(migrations),
-		SchedulesWork:          false,
-		ExecutesWork:           false,
-		ApprovesWork:           false,
-		ClaimsAuthorityAdvance: false,
-		RSIRemainsDenied:       true,
+		UnknownVersionHandling:  "fail_closed",
+		Migrations:              migrations,
+		MigrationCount:          len(migrations),
+		SchedulesWork:           false,
+		ExecutesWork:            false,
+		ApprovesWork:            false,
+		ClaimsAuthorityAdvance:  false,
+		RSIRemainsDenied:        true,
 	}
 	if err := ValidateAtlasDurableStateMigrationMetadata(metadata); err != nil {
 		return AtlasDurableStateMigrationMetadata{}, err

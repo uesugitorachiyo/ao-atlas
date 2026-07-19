@@ -98,7 +98,7 @@ type featureDepthWaveV02SeedSummary struct {
 	SourceReadbackPath        string `json:"source_readback_path"`
 	TargetWaveRoot            string `json:"target_wave_root"`
 	MissionID                 string `json:"mission_id"`
-	TargetInstance           string `json:"target_instance"`
+	TargetInstance            string `json:"target_instance"`
 	RecommendationCount       int    `json:"recommendation_count"`
 	ReadyNodes                int    `json:"ready_nodes"`
 	CompletedNodes            int    `json:"completed_nodes"`
