@@ -1,6 +1,8 @@
 package atlas
 
 import (
+	"bytes"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -45,6 +47,7 @@ func BuildAtlasRunLinkDigestCheck(nodeID, runLinkPath, evidenceRoot string) (Atl
 	entries := make([]AtlasRunLinkDigestCheckEntry, 0, len(keys))
 	missingEvidence := []string{}
 	schemaBoundCount := 0
+	evidenceCount := 0
 	for _, key := range keys {
 		evidencePath := strings.TrimSpace(link.Evidence[key])
 		resolvedPath := resolveRunLinkEvidencePath(evidenceRoot, evidencePath)
@@ -73,6 +76,17 @@ func BuildAtlasRunLinkDigestCheck(nodeID, runLinkPath, evidenceRoot string) (Atl
 			entries = append(entries, entry)
 			continue
 		}
+		if entry.Schema == "ao.foundry.compact-evidence-manifest.v0.1" {
+			compactEntries, err := verifiedCompactFoundryEvidenceEntries(key, resolvedPath, raw)
+			if err != nil {
+				return AtlasRunLinkDigestCheck{}, err
+			}
+			evidenceCount += len(compactEntries)
+			schemaBoundCount += len(compactEntries)
+			entries = append(entries, compactEntries...)
+			continue
+		}
+		evidenceCount++
 		entry.Status = "schema_bound"
 		schemaBoundCount++
 		entries = append(entries, entry)
@@ -90,7 +104,7 @@ func BuildAtlasRunLinkDigestCheck(nodeID, runLinkPath, evidenceRoot string) (Atl
 		RecomputedDigest:         recomputedDigest,
 		DigestMatches:            link.Digest == recomputedDigest,
 		EvidenceRoot:             publicArtifactRef(evidenceRoot),
-		EvidenceCount:            len(link.Evidence),
+		EvidenceCount:            evidenceCount,
 		SchemaBoundEvidenceCount: schemaBoundCount,
 		MissingEvidence:          missingEvidence,
 		EvidenceEntries:          entries,
@@ -117,6 +131,196 @@ func resolveRunLinkEvidencePath(evidenceRoot, evidencePath string) string {
 		return filepath.Clean(evidencePath)
 	}
 	return filepath.Clean(filepath.Join(evidenceRoot, evidencePath))
+}
+
+type compactFoundryManifest struct {
+	Schema        string                `json:"schema"`
+	FormatVersion string                `json:"format_version"`
+	SourceRun     string                `json:"source_run"`
+	ChunkOrder    []string              `json:"chunk_order"`
+	TotalRecords  int                   `json:"total_record_count"`
+	Chunks        []compactFoundryChunk `json:"chunks"`
+	Lookup        struct {
+		Strategy string                     `json:"strategy"`
+		Ranges   []compactFoundryChunkRange `json:"ranges"`
+	} `json:"lookup"`
+	ManifestDigest string `json:"manifest_digest"`
+}
+
+type compactFoundryChunk struct {
+	Path          string `json:"path"`
+	RecordCount   int    `json:"record_count"`
+	FirstRecordID string `json:"first_record_id"`
+	LastRecordID  string `json:"last_record_id"`
+	SHA256        string `json:"sha256"`
+}
+
+type compactFoundryChunkRange struct {
+	Chunk         string `json:"chunk"`
+	FirstRecordID string `json:"first_record_id"`
+	LastRecordID  string `json:"last_record_id"`
+}
+
+type compactFoundryRecord struct {
+	RecordID string          `json:"record_id"`
+	Kind     string          `json:"kind"`
+	Payload  json.RawMessage `json:"payload"`
+}
+
+func verifiedCompactFoundryEvidenceEntries(key, manifestPath string, raw map[string]any) ([]AtlasRunLinkDigestCheckEntry, error) {
+	body, err := json.Marshal(raw)
+	if err != nil {
+		return nil, err
+	}
+	var manifest compactFoundryManifest
+	if err := json.Unmarshal(body, &manifest); err != nil {
+		return nil, err
+	}
+	if manifest.Schema != "ao.foundry.compact-evidence-manifest.v0.1" {
+		return nil, fmt.Errorf("compact manifest schema must be ao.foundry.compact-evidence-manifest.v0.1")
+	}
+	if manifest.FormatVersion != "v0.1" {
+		return nil, fmt.Errorf("compact manifest format_version must be v0.1")
+	}
+	declaredOrder := make([]string, 0, len(manifest.Chunks))
+	for i, chunk := range manifest.Chunks {
+		if !safeCompactFoundryChunkPath(chunk.Path) {
+			return nil, fmt.Errorf("chunks[%d].path must be a safe relative path", i)
+		}
+		declaredOrder = append(declaredOrder, chunk.Path)
+	}
+	if strings.Join(manifest.ChunkOrder, "\x00") != strings.Join(declaredOrder, "\x00") {
+		return nil, fmt.Errorf("chunk_order must match manifest chunk order")
+	}
+	if manifest.Lookup.Strategy != "ordered_chunk_ranges" {
+		return nil, fmt.Errorf("lookup.strategy must be ordered_chunk_ranges")
+	}
+	if len(manifest.Lookup.Ranges) != len(manifest.Chunks) {
+		return nil, fmt.Errorf("lookup.ranges must match chunk count")
+	}
+	if manifest.ManifestDigest == "" {
+		return nil, fmt.Errorf("manifest_digest is required")
+	}
+	if !compactFoundryManifestDigestMatches(manifest, raw) {
+		return nil, fmt.Errorf("manifest_digest mismatch")
+	}
+
+	manifestDir := filepath.Dir(manifestPath)
+	entries := []AtlasRunLinkDigestCheckEntry{}
+	seen := map[string]bool{}
+	previousRecordID := ""
+	totalRecords := 0
+	for i, chunk := range manifest.Chunks {
+		body, err := os.ReadFile(filepath.Join(manifestDir, chunk.Path))
+		if err != nil {
+			return nil, fmt.Errorf("%s is missing", chunk.Path)
+		}
+		chunkSum := sha256.Sum256(body)
+		if fmt.Sprintf("%x", chunkSum[:]) != chunk.SHA256 {
+			return nil, fmt.Errorf("%s sha256 mismatch", chunk.Path)
+		}
+		records, err := parseCompactFoundryChunkRecords(chunk.Path, body)
+		if err != nil {
+			return nil, err
+		}
+		totalRecords += len(records)
+		if chunk.RecordCount != len(records) {
+			return nil, fmt.Errorf("%s record_count mismatch", chunk.Path)
+		}
+		firstRecordID, lastRecordID := "", ""
+		if len(records) > 0 {
+			firstRecordID = records[0].RecordID
+			lastRecordID = records[len(records)-1].RecordID
+		}
+		if chunk.FirstRecordID != firstRecordID {
+			return nil, fmt.Errorf("%s first_record_id mismatch", chunk.Path)
+		}
+		if chunk.LastRecordID != lastRecordID {
+			return nil, fmt.Errorf("%s last_record_id mismatch", chunk.Path)
+		}
+		if manifest.Lookup.Ranges[i].Chunk != chunk.Path {
+			return nil, fmt.Errorf("lookup.ranges[%d].chunk mismatch", i)
+		}
+		if manifest.Lookup.Ranges[i].FirstRecordID != chunk.FirstRecordID {
+			return nil, fmt.Errorf("lookup.ranges[%d].first_record_id mismatch", i)
+		}
+		if manifest.Lookup.Ranges[i].LastRecordID != chunk.LastRecordID {
+			return nil, fmt.Errorf("lookup.ranges[%d].last_record_id mismatch", i)
+		}
+		for _, record := range records {
+			if seen[record.RecordID] {
+				return nil, fmt.Errorf("duplicate record_id %s", record.RecordID)
+			}
+			if previousRecordID != "" && record.RecordID <= previousRecordID {
+				return nil, fmt.Errorf("record_id %s is out of order", record.RecordID)
+			}
+			seen[record.RecordID] = true
+			previousRecordID = record.RecordID
+			entries = append(entries, AtlasRunLinkDigestCheckEntry{
+				Key:    key + ":" + record.RecordID,
+				Path:   publicArtifactRef(manifestPath) + "#" + record.RecordID,
+				Schema: "ao.foundry.compact-evidence-record.v0.1",
+				Status: "schema_bound",
+			})
+		}
+	}
+	if manifest.TotalRecords != totalRecords {
+		return nil, fmt.Errorf("total_record_count mismatch")
+	}
+	return entries, nil
+}
+
+func compactFoundryManifestDigestMatches(manifest compactFoundryManifest, raw map[string]any) bool {
+	manifestCopy := manifest
+	manifestCopy.ManifestDigest = ""
+	if body, err := json.Marshal(manifestCopy); err == nil {
+		sum := sha256.Sum256(body)
+		if fmt.Sprintf("%x", sum[:]) == manifest.ManifestDigest {
+			return true
+		}
+	}
+	rawCopy := map[string]any{}
+	for key, value := range raw {
+		rawCopy[key] = value
+	}
+	rawCopy["manifest_digest"] = ""
+	if body, err := json.Marshal(rawCopy); err == nil {
+		sum := sha256.Sum256(body)
+		if fmt.Sprintf("%x", sum[:]) == manifest.ManifestDigest {
+			return true
+		}
+	}
+	return false
+}
+
+func parseCompactFoundryChunkRecords(path string, body []byte) ([]compactFoundryRecord, error) {
+	records := []compactFoundryRecord{}
+	for i, line := range bytes.Split(body, []byte{'\n'}) {
+		if len(bytes.TrimSpace(line)) == 0 {
+			continue
+		}
+		var record compactFoundryRecord
+		if err := json.Unmarshal(line, &record); err != nil {
+			return nil, fmt.Errorf("%s line %d malformed JSON", path, i+1)
+		}
+		if strings.TrimSpace(record.RecordID) == "" {
+			return nil, fmt.Errorf("%s line %d record_id is required", path, i+1)
+		}
+		records = append(records, record)
+	}
+	return records, nil
+}
+
+func safeCompactFoundryChunkPath(path string) bool {
+	if path == "" || filepath.IsAbs(path) || driveAbsPattern.MatchString(path) || strings.Contains(path, "\\") {
+		return false
+	}
+	for _, part := range strings.Split(path, "/") {
+		if part == ".." {
+			return false
+		}
+	}
+	return true
 }
 
 func ValidateAtlasRunLinkDigestCheck(check AtlasRunLinkDigestCheck) error {
