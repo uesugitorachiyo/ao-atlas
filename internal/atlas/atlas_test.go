@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -2253,6 +2254,62 @@ func TestWorkgraphStateCompletesExactlyOneDependencyReadyNode(t *testing.T) {
 	}
 }
 
+func TestValidateWorkgraphRejectsSelfDuplicateAndCyclicDependencies(t *testing.T) {
+	cases := []struct {
+		name    string
+		mutate  func(Workgraph) Workgraph
+		wantErr string
+	}{
+		{
+			name: "self-dependency",
+			mutate: func(workgraph Workgraph) Workgraph {
+				workgraph.Nodes[1].Dependencies = []string{workgraph.Nodes[1].ID}
+				return workgraph
+			},
+			wantErr: "must not depend on itself",
+		},
+		{
+			name: "duplicate-dependency",
+			mutate: func(workgraph Workgraph) Workgraph {
+				workgraph.Nodes[1].Dependencies = []string{"done", "done"}
+				return workgraph
+			},
+			wantErr: "duplicate dependency",
+		},
+		{
+			name: "cycle",
+			mutate: func(workgraph Workgraph) Workgraph {
+				workgraph.Nodes[0].Dependencies = []string{"task-ready"}
+				workgraph.Nodes[1].Dependencies = []string{"done"}
+				return workgraph
+			},
+			wantErr: "dependency cycle",
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			err := ValidateWorkgraph(tc.mutate(fixtureWorkgraph()))
+			if err == nil || !strings.Contains(err.Error(), tc.wantErr) {
+				t.Fatalf("expected %q rejection, got %v", tc.wantErr, err)
+			}
+		})
+	}
+}
+
+func TestWorkgraphStateUsesIndexedNodeLookupAtScale(t *testing.T) {
+	workgraph := fixtureLargeWorkgraph(2500)
+	state, err := BuildWorkgraphState(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	state.Nodes = nil
+	node, ok := state.NodeState("node-2499")
+	if !ok || node.NodeID != "node-2499" || node.Status != "ready" {
+		t.Fatalf("NodeState should use an internal O(1) index independent of serialized node states, got ok=%t node=%#v", ok, node)
+	}
+}
+
 func TestBlueprintRequestFixtureIsValidAndPublicSafe(t *testing.T) {
 	request, err := LoadJSON[BlueprintRequest](filepath.Join("..", "..", "examples", "valid", "blueprint-request.json"))
 	if err != nil {
@@ -3987,5 +4044,34 @@ func fixtureWorkgraph() Workgraph {
 			{ID: "task-blocked", Status: "blocked", Blockers: []string{"needs Blueprint"}, FactoryTask: baseTask},
 			{ID: "task-ready-2", Status: "ready", FactoryTask: baseTask},
 		},
+	}
+}
+
+func fixtureLargeWorkgraph(count int) Workgraph {
+	base := fixtureWorkgraph()
+	task := base.Nodes[0].FactoryTask
+	nodes := make([]WorkgraphNode, 0, count)
+	for i := 0; i < count; i++ {
+		id := "node-" + strconv.Itoa(i)
+		nodeTask := task
+		nodeTask.ID = "factory-task-" + strconv.Itoa(i)
+		node := WorkgraphNode{
+			ID:          id,
+			Status:      "ready",
+			FactoryTask: nodeTask,
+		}
+		if i > 0 {
+			node.Dependencies = []string{"node-" + strconv.Itoa(i-1)}
+		}
+		if i < count-1 {
+			node.Status = "completed"
+		}
+		nodes = append(nodes, node)
+	}
+	return Workgraph{
+		ContractVersion: WorkgraphContract,
+		ID:              "large-wg",
+		TargetInstance:  "demo",
+		Nodes:           nodes,
 	}
 }

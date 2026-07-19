@@ -562,13 +562,60 @@ func ValidateWorkgraph(workgraph Workgraph) error {
 		}
 	}
 	for _, node := range workgraph.Nodes {
+		seenDeps := map[string]bool{}
 		for _, dep := range node.Dependencies {
+			if dep == node.ID {
+				errs = append(errs, "node "+node.ID+" must not depend on itself")
+			}
+			if seenDeps[dep] {
+				errs = append(errs, "node "+node.ID+" has duplicate dependency "+dep)
+			}
+			seenDeps[dep] = true
 			if _, ok := seen[dep]; !ok {
 				errs = append(errs, "dependency "+dep+" does not reference an existing node")
 			}
 		}
 	}
+	if hasWorkgraphDependencyCycle(workgraph, seen) {
+		errs = append(errs, "dependency cycle detected")
+	}
 	return joinErrors(errs)
+}
+
+func hasWorkgraphDependencyCycle(workgraph Workgraph, nodesByID map[string]WorkgraphNode) bool {
+	const (
+		unvisited = 0
+		visiting  = 1
+		visited   = 2
+	)
+	stateByID := map[string]int{}
+	var visit func(string) bool
+	visit = func(nodeID string) bool {
+		switch stateByID[nodeID] {
+		case visiting:
+			return true
+		case visited:
+			return false
+		}
+		node, ok := nodesByID[nodeID]
+		if !ok {
+			return false
+		}
+		stateByID[nodeID] = visiting
+		for _, dep := range node.Dependencies {
+			if _, ok := nodesByID[dep]; ok && visit(dep) {
+				return true
+			}
+		}
+		stateByID[nodeID] = visited
+		return false
+	}
+	for _, node := range workgraph.Nodes {
+		if visit(node.ID) {
+			return true
+		}
+	}
+	return false
 }
 
 func ValidateWorkgraphRepairPlan(plan WorkgraphRepairPlan) error {

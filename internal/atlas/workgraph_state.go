@@ -17,6 +17,7 @@ type WorkgraphState struct {
 	ReadyTaskIDs           []string
 	ExecutableReadyNodeIDs []string
 	Nodes                  []WorkgraphNodeState
+	nodeStateByID          map[string]WorkgraphNodeState
 }
 
 func BuildWorkgraphState(workgraph Workgraph) (WorkgraphState, error) {
@@ -28,8 +29,9 @@ func BuildWorkgraphState(workgraph Workgraph) (WorkgraphState, error) {
 		statusByID[node.ID] = node.Status
 	}
 	state := WorkgraphState{
-		Workgraph:  workgraph,
-		NodeCounts: map[string]int{"ready": 0, "blocked": 0, "completed": 0, "failed": 0},
+		Workgraph:     workgraph,
+		NodeCounts:    map[string]int{"ready": 0, "blocked": 0, "completed": 0, "failed": 0},
+		nodeStateByID: map[string]WorkgraphNodeState{},
 	}
 	for _, node := range workgraph.Nodes {
 		state.NodeCounts[node.Status]++
@@ -51,6 +53,7 @@ func BuildWorkgraphState(workgraph Workgraph) (WorkgraphState, error) {
 			ExecutableReady:      node.Status == "ready" && dependenciesComplete,
 		}
 		state.Nodes = append(state.Nodes, nodeState)
+		state.nodeStateByID[node.ID] = nodeState
 		if node.Status == "ready" {
 			state.ReadyTaskIDs = append(state.ReadyTaskIDs, node.FactoryTask.ID)
 		}
@@ -62,6 +65,10 @@ func BuildWorkgraphState(workgraph Workgraph) (WorkgraphState, error) {
 }
 
 func (state WorkgraphState) NodeState(nodeID string) (WorkgraphNodeState, bool) {
+	if state.nodeStateByID != nil {
+		node, ok := state.nodeStateByID[nodeID]
+		return node, ok
+	}
 	for _, node := range state.Nodes {
 		if node.NodeID == nodeID {
 			return node, true
