@@ -5,20 +5,20 @@ import "fmt"
 func BuildAtlasForgeGoalRunEvidenceFixture() (AtlasForgeGoalRunEvidenceFixture, error) {
 	required := []string{"goalrun_start", "stop_gate", "rollback_record", "terminal_receipt"}
 	fixture := AtlasForgeGoalRunEvidenceFixture{
-		Schema:                      AtlasForgeGoalRunEvidenceFixtureContract,
-		Status:                      "forge_goalrun_evidence_ready",
-		RequiredEvidence:            required,
-		RequiredEvidenceCount:       len(required),
-		GoalRunStartRequired:        true,
-		StopGateRequired:            true,
-		RollbackRecordRequired:      true,
-		TerminalReceiptRequired:     true,
-		ProviderExecutionAllowed:    false,
-		SchedulesWork:               false,
-		ExecutesWork:                false,
-		ApprovesWork:                false,
-		ClaimsAuthorityAdvance:      false,
-		RSIRemainsDenied:            true,
+		Schema:                   AtlasForgeGoalRunEvidenceFixtureContract,
+		Status:                   "forge_goalrun_evidence_ready",
+		RequiredEvidence:         required,
+		RequiredEvidenceCount:    len(required),
+		GoalRunStartRequired:     true,
+		StopGateRequired:         true,
+		RollbackRecordRequired:   true,
+		TerminalReceiptRequired:  true,
+		ProviderExecutionAllowed: false,
+		SchedulesWork:            false,
+		ExecutesWork:             false,
+		ApprovesWork:             false,
+		ClaimsAuthorityAdvance:   false,
+		RSIRemainsDenied:         true,
 	}
 	if err := ValidateAtlasForgeGoalRunEvidenceFixture(fixture); err != nil {
 		return AtlasForgeGoalRunEvidenceFixture{}, err

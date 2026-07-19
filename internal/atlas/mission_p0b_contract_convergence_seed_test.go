@@ -234,8 +234,8 @@ type p0BContractConvergenceSeedSummary struct {
 	Status                 string `json:"status"`
 	MissionID              string `json:"mission_id"`
 	TargetInstance         string `json:"target_instance"`
-	EventIndexDigest        string `json:"event_index_digest"`
-	FinalRollupDigest       string `json:"final_rollup_digest"`
+	EventIndexDigest       string `json:"event_index_digest"`
+	FinalRollupDigest      string `json:"final_rollup_digest"`
 	RecommendationCount    int    `json:"recommendation_count"`
 	ReadyNodes             int    `json:"ready_nodes"`
 	CompletedNodes         int    `json:"completed_nodes"`
