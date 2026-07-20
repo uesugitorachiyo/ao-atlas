@@ -1,0 +1,333 @@
+name: AO Atlas Specialist Release Rehearsal
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Required Month 2 rehearsal mode.
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+      version:
+        description: Exact candidate version and future tag.
+        required: true
+        type: string
+      tag:
+        description: Exact future tag; must match version.
+        required: true
+        type: string
+      approved_manifest_digest:
+        description: Approved asset-manifest digest in sha256:<hex> form.
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  validate-release-inputs:
+    name: Validate immutable rehearsal inputs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out dispatch head
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Bind version, tag, dispatch head, and approved manifest
+        shell: bash
+        env:
+          APPROVED_MANIFEST_DIGEST: ${{ inputs.approved_manifest_digest }}
+          DRY_RUN: ${{ inputs.dry_run }}
+          SOURCE_SHA: ${{ github.sha }}
+          TAG: ${{ inputs.tag }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          test "$DRY_RUN" = "true"
+          [[ "$VERSION" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]
+          test "$TAG" = "$VERSION"
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$APPROVED_MANIFEST_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          actual_source_sha=$(git rev-parse HEAD)
+          test "$actual_source_sha" = "$SOURCE_SHA"
+          jq -cS -n \
+            --arg approved_manifest_digest "$APPROVED_MANIFEST_DIGEST" \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg tag "$TAG" \
+            --arg version "$VERSION" \
+            --arg workflow_run_id "$GITHUB_RUN_ID" \
+            '{schema_version:"ao.atlas.release-rehearsal-input-binding.v0.2",dry_run:true,immutable:true,approved_manifest_digest:$approved_manifest_digest,source_sha:$source_sha,tag:$tag,version:$version,workflow_run_id:$workflow_run_id}' \
+            > release-input-binding.json
+          sha256sum release-input-binding.json > release-input-binding.sha256
+
+      - name: Upload immutable input binding
+        uses: actions/upload-artifact@v7
+        with:
+          name: ao-atlas-release-input-binding-${{ github.sha }}
+          path: |
+            release-input-binding.json
+            release-input-binding.sha256
+          if-no-files-found: error
+          overwrite: false
+
+  build-native-candidate:
+    name: Build and smoke ${{ matrix.target_label }} candidate
+    needs: validate-release-inputs
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target_label: linux-x86_64
+            goos: linux
+            goarch: amd64
+            binary_suffix: ""
+          - os: macos-15-intel
+            target_label: macos-x86_64
+            goos: darwin
+            goarch: amd64
+            binary_suffix: ""
+          - os: windows-latest
+            target_label: windows-x86_64
+            goos: windows
+            goarch: amd64
+            binary_suffix: ".exe"
+    steps:
+      - name: Check out dispatch head
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Build and verify native candidate
+        shell: bash
+        env:
+          APPROVED_MANIFEST_DIGEST: ${{ inputs.approved_manifest_digest }}
+          EXPECTED_GOARCH: ${{ matrix.goarch }}
+          EXPECTED_GOOS: ${{ matrix.goos }}
+          SOURCE_SHA: ${{ github.sha }}
+          TAG: ${{ inputs.tag }}
+          TARGET_LABEL: ${{ matrix.target_label }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          actual_source_sha=$(git rev-parse HEAD)
+          test "$actual_source_sha" = "$SOURCE_SHA"
+          candidate_dir="target/release-rehearsal/$TARGET_LABEL"
+          binary="ao-atlas${{ matrix.binary_suffix }}"
+          archive="ao-atlas-${VERSION}-${TARGET_LABEL}.tar.gz"
+          hash_command() {
+            if command -v sha256sum >/dev/null 2>&1; then
+              sha256sum "$@"
+            else
+              shasum -a 256 "$@"
+            fi
+          }
+          hash_file() {
+            hash_command "$1" | awk '{print $1}'
+          }
+          mkdir -p "$candidate_dir"
+          test "$(go env GOOS)" = "$EXPECTED_GOOS"
+          test "$(go env GOARCH)" = "$EXPECTED_GOARCH"
+          go build -trimpath \
+            -ldflags "-X github.com/uesugitorachiyo/ao-atlas/internal/atlas.buildVersion=$VERSION -X github.com/uesugitorachiyo/ao-atlas/internal/atlas.buildSourceSHA=$SOURCE_SHA" \
+            -o "$candidate_dir/$binary" \
+            ./cmd/atlas
+
+          expected_help='atlas <instance|intake|blueprint|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link> ...'
+          set +e
+          help_output=$("$candidate_dir/$binary" 2>&1)
+          help_exit=$?
+          set -e
+          test "$help_exit" -eq 2
+          test "$help_output" = "$expected_help"
+          jq -cS -n \
+            --arg command "$binary (no arguments)" \
+            --arg output "$help_output" \
+            --argjson exit_code "$help_exit" \
+            '{schema_version:"ao.atlas.release-rehearsal-help-readback.v0.1",status:"passed",classification:"help_readback_not_functional_smoke",documented_reference:"internal/atlas/cli.go:usage",command:$command,expected_exit_code:2,actual_exit_code:$exit_code,output:$output}' \
+            > "$candidate_dir/help-readback.json"
+
+          module_path=$(go list -m)
+          go_directive=$(awk '$1 == "go" { print $2 }' go.mod)
+          expected_version_identity="ao-atlas version=$VERSION source_sha=$SOURCE_SHA"
+          actual_version_identity=$("$candidate_dir/$binary" --version)
+          test "$module_path" = "github.com/uesugitorachiyo/ao-atlas"
+          test -n "$go_directive"
+          test "$TAG" = "$VERSION"
+          test "$actual_version_identity" = "$expected_version_identity"
+          jq -cS -n \
+            --arg candidate_command "$binary --version" \
+            --arg candidate_identity "$actual_version_identity" \
+            --arg go_directive "$go_directive" \
+            --arg module_path "$module_path" \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg tag "$TAG" \
+            --arg version "$VERSION" \
+            '{schema_version:"ao.atlas.release-rehearsal-version-source-readback.v0.2",status:"passed",source:"workflow_dispatch.inputs.version",repository_version_source:"go.mod",module_path:$module_path,go_directive:$go_directive,version:$version,source_sha:$source_sha,tag:$tag,tag_matches_version:true,candidate_command:$candidate_command,candidate_identity:$candidate_identity}' \
+            > "$candidate_dir/version-source-readback.json"
+
+          cp LICENSE "$candidate_dir/LICENSE"
+          go env -json GOOS GOARCH GOVERSION > "$candidate_dir/go-env.json"
+          jq -cS -n \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg target_label "$TARGET_LABEL" \
+            '{SPDXID:"SPDXRef-DOCUMENT",spdxVersion:"SPDX-2.3",name:"ao-atlas release rehearsal candidate",documentNamespace:("https://github.com/uesugitorachiyo/ao-atlas/rehearsal/" + $source_sha + "/" + $target_label),creationInfo:{creators:["Tool: AO Atlas release rehearsal"],created:"1970-01-01T00:00:00Z"},packages:[{SPDXID:"SPDXRef-Package",name:"ao-atlas",versionInfo:"rehearsal",downloadLocation:"NOASSERTION",filesAnalyzed:false}]}' \
+            > "$candidate_dir/sbom.spdx.json"
+          jq -cS -n \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg target_label "$TARGET_LABEL" \
+            --arg workflow_identity "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            '{schema_version:"ao.atlas.release-rehearsal-provenance.v0.2",builder:"github-actions",source_sha:$source_sha,target_label:$target_label,workflow_identity:$workflow_identity}' \
+            > "$candidate_dir/provenance.json"
+          jq -cS -n \
+            '{schema_version:"ao.atlas.release-rehearsal-signature-verification.v0.1",signature_present:false,verification_status:"not_applicable_rehearsal_no_signing_key"}' \
+            > "$candidate_dir/signature-verification.json"
+
+          tar -czf "$candidate_dir/$archive" -C "$candidate_dir" "$binary" LICENSE
+          tar -tzf "$candidate_dir/$archive" | sort > "$candidate_dir/archive-identity.txt"
+          for required_file in "$binary" LICENSE; do
+            grep -Fx "$required_file" "$candidate_dir/archive-identity.txt"
+          done
+          install_dir=$(mktemp -d)
+          trap 'rm -rf "$install_dir"' EXIT
+          tar -xzf "$candidate_dir/$archive" -C "$install_dir"
+          test -x "$install_dir/$binary"
+          test -f "$install_dir/LICENSE"
+          jq -cS -n \
+            --arg archive "$archive" \
+            --arg binary "$binary" \
+            '{schema_version:"ao.atlas.release-rehearsal-installed-archive-smoke.v0.1",status:"passed",archive:$archive,binary:$binary,license_present:true}' \
+            > "$candidate_dir/installed-archive-smoke.json"
+
+          functional_fixture="examples/valid/workgraph.json"
+          "$install_dir/$binary" workgraph validate --workgraph "$GITHUB_WORKSPACE/$functional_fixture"
+          functional_fixture_sha256=$(hash_file "$functional_fixture")
+          jq -cS -n \
+            --arg command "workgraph validate --workgraph $functional_fixture" \
+            --arg fixture "$functional_fixture" \
+            --arg fixture_sha256 "sha256:$functional_fixture_sha256" \
+            '{schema_version:"ao.atlas.release-rehearsal-provider-free-functional-smoke.v0.1",status:"passed",command:$command,fixture:$fixture,fixture_sha256:$fixture_sha256,installed_archive:true,provider_credentials_used:false}' \
+            > "$candidate_dir/provider-free-functional-smoke.json"
+
+          archive_sha256=$(hash_file "$candidate_dir/$archive")
+          binary_sha256=$(hash_file "$candidate_dir/$binary")
+          printf '%s  %s\n' "$archive_sha256" "$archive" > "$candidate_dir/${archive}.sha256"
+          printf '%s  %s\n' "$binary_sha256" "$binary" > "$candidate_dir/${binary}.sha256"
+          jq -cS -n \
+            --arg approved_manifest_digest "$APPROVED_MANIFEST_DIGEST" \
+            --arg archive "$archive" \
+            --arg archive_sha256 "sha256:$archive_sha256" \
+            --arg binary "$binary" \
+            --arg binary_sha256 "sha256:$binary_sha256" \
+            --arg goarch "$EXPECTED_GOARCH" \
+            --arg goos "$EXPECTED_GOOS" \
+            --arg go_version "$(go version)" \
+            --arg runner_os "$RUNNER_OS" \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg tag "$TAG" \
+            --arg target_label "$TARGET_LABEL" \
+            --arg version "$VERSION" \
+            --arg workflow_identity "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            '{schema_version:"ao.atlas.release-rehearsal-candidate.v0.3",immutable:true,approved_manifest_digest:$approved_manifest_digest,archive:$archive,archive_sha256:$archive_sha256,binary:$binary,binary_sha256:$binary_sha256,entry_point:"ao-atlas",goarch:$goarch,goos:$goos,go_version:$go_version,help_readback:"help-readback.json",installed_archive_smoke:"installed-archive-smoke.json",license_files:["LICENSE"],provider_credentials_used:false,provider_free_functional:"provider-free-functional-smoke.json",repository:"ao-atlas",runner_os:$runner_os,source_sha:$source_sha,tag:$tag,target_label:$target_label,version:$version,version_source_readback:"version-source-readback.json",provenance:"provenance.json",sbom:"sbom.spdx.json",signature_verification:"signature-verification.json",workflow_identity:$workflow_identity}' \
+            > "$candidate_dir/candidate-summary.json"
+
+          (
+            cd "$candidate_dir"
+            hash_command \
+              "$archive" \
+              "${archive}.sha256" \
+              "$binary" \
+              "${binary}.sha256" \
+              LICENSE \
+              archive-identity.txt \
+              candidate-summary.json \
+              go-env.json \
+              help-readback.json \
+              installed-archive-smoke.json \
+              provider-free-functional-smoke.json \
+              provenance.json \
+              sbom.spdx.json \
+              signature-verification.json \
+              version-source-readback.json \
+              > SHA256SUMS
+          )
+
+      - name: Upload immutable native candidate
+        uses: actions/upload-artifact@v7
+        with:
+          name: ao-atlas-release-candidate-${{ matrix.target_label }}-${{ github.sha }}
+          path: target/release-rehearsal/${{ matrix.target_label }}
+          if-no-files-found: error
+          overwrite: false
+
+  assemble-promotion-plan:
+    name: Assemble dry-run promotion plan
+    needs:
+      - validate-release-inputs
+      - build-native-candidate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out dispatch head verifier
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Go for binary identity verification
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Download native candidates
+        uses: actions/download-artifact@v7
+        with:
+          pattern: ao-atlas-release-candidate-*-${{ github.sha }}
+          path: target/rehearsal-candidates
+
+      - name: Verify exact inventory and assemble immutable plan
+        shell: bash
+        env:
+          APPROVED_MANIFEST_DIGEST: ${{ inputs.approved_manifest_digest }}
+          SOURCE_SHA: ${{ github.sha }}
+          TAG: ${{ inputs.tag }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          actual_source_sha=$(git rev-parse HEAD)
+          test "$actual_source_sha" = "$SOURCE_SHA"
+          bash scripts/verify-release-rehearsal-candidates.sh \
+            --candidates-dir target/rehearsal-candidates \
+            --version "$VERSION" \
+            --tag "$TAG" \
+            --source-sha "$SOURCE_SHA" \
+            --approved-manifest-digest "$APPROVED_MANIFEST_DIGEST" \
+            --plan-out promotion-plan.json
+          sha256sum promotion-plan.json > promotion-plan.sha256
+          printf '%s\n' '{"schema_version":"ao.atlas.release-rehearsal-dry-run-boundary.v0.2","dry_run":true,"publication_attempted":false,"tag_creation_attempted":false,"release_creation_attempted":false,"public_upload_attempted":false,"message":"No tag, release, or public upload was executed."}' > dry-run-boundary.json
+
+      - name: Upload immutable promotion plan
+        uses: actions/upload-artifact@v7
+        with:
+          name: ao-atlas-release-rehearsal-plan-${{ github.sha }}
+          path: |
+            promotion-plan.json
+            promotion-plan.sha256
+            dry-run-boundary.json
+          if-no-files-found: error
+          overwrite: false
