@@ -10,10 +10,23 @@ import (
 	"strings"
 )
 
+var (
+	buildVersion   = "dev"
+	buildSourceSHA = "unknown"
+)
+
 func Run(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
 		usage(stderr)
 		return 2
+	}
+	if args[0] == "--version" {
+		if len(args) != 1 {
+			fmt.Fprintln(stderr, "error: --version does not accept arguments")
+			return 2
+		}
+		fmt.Fprintf(stdout, "ao-atlas version=%s source_sha=%s\n", buildVersion, buildSourceSHA)
+		return 0
 	}
 	var err error
 	switch args[0] {
