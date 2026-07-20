@@ -120,7 +120,14 @@ func TestSpecialistReleaseRehearsalWorkflowRejectsUnsafeStructures(t *testing.T)
 		{
 			name: "filename mode checksum",
 			mutate: func(value string) string {
-				return strings.Replace(value, `sha256sum < "$1" | awk '{print $1}'`, `sha256sum "$1" | awk '{print $1}'`, 1)
+				return strings.Replace(value, `sha256sum | awk '{print $1}'`, `sha256sum "$1" | awk '{print $1}'`, 1)
+			},
+			wantErr: "missing smoke evidence field",
+		},
+		{
+			name: "checkout normalized functional fixture digest",
+			mutate: func(value string) string {
+				return strings.Replace(value, `git cat-file blob "${SOURCE_SHA}:${functional_fixture}" | hash_stdin`, `hash_file "$functional_fixture"`, 1)
 			},
 			wantErr: "missing smoke evidence field",
 		},
@@ -793,8 +800,10 @@ func validateReleaseRehearsalWorkflowStructure(workflow string) error {
 		"-X github.com/uesugitorachiyo/ao-atlas/internal/atlas.buildSourceSHA=$SOURCE_SHA",
 		`"$candidate_dir/$binary" --version`,
 		"binary_sha256",
-		`sha256sum < "$1" | awk '{print $1}'`,
-		`shasum -a 256 < "$1" | awk '{print $1}'`,
+		`sha256sum | awk '{print $1}'`,
+		`shasum -a 256 | awk '{print $1}'`,
+		`hash_stdin < "$1"`,
+		`git cat-file blob "${SOURCE_SHA}:${functional_fixture}" | hash_stdin`,
 		`printf '%s  %s\n' "$(hash_file "$checksum_file")" "$checksum_file"`,
 	} {
 		if !strings.Contains(workflow, field) {
