@@ -129,15 +129,12 @@ jobs:
           candidate_dir="target/release-rehearsal/$TARGET_LABEL"
           binary="ao-atlas${{ matrix.binary_suffix }}"
           archive="ao-atlas-${VERSION}-${TARGET_LABEL}.tar.gz"
-          hash_command() {
-            if command -v sha256sum >/dev/null 2>&1; then
-              sha256sum "$@"
-            else
-              shasum -a 256 "$@"
-            fi
-          }
           hash_file() {
-            hash_command "$1" | awk '{print $1}'
+            if command -v sha256sum >/dev/null 2>&1; then
+              sha256sum < "$1" | awk '{print $1}'
+            else
+              shasum -a 256 < "$1" | awk '{print $1}'
+            fi
           }
           mkdir -p "$candidate_dir"
           test "$(go env GOOS)" = "$EXPECTED_GOOS"
@@ -247,7 +244,7 @@ jobs:
 
           (
             cd "$candidate_dir"
-            hash_command \
+            for checksum_file in \
               "$archive" \
               "${archive}.sha256" \
               "$binary" \
@@ -262,8 +259,9 @@ jobs:
               provenance.json \
               sbom.spdx.json \
               signature-verification.json \
-              version-source-readback.json \
-              > SHA256SUMS
+              version-source-readback.json; do
+              printf '%s  %s\n' "$(hash_file "$checksum_file")" "$checksum_file"
+            done > SHA256SUMS
           )
 
       - name: Upload immutable native candidate
