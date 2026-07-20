@@ -117,6 +117,13 @@ func TestSpecialistReleaseRehearsalWorkflowRejectsUnsafeStructures(t *testing.T)
 			},
 			wantErr: "missing smoke evidence field",
 		},
+		{
+			name: "filename mode checksum",
+			mutate: func(value string) string {
+				return strings.Replace(value, `sha256sum < "$1" | awk '{print $1}'`, `sha256sum "$1" | awk '{print $1}'`, 1)
+			},
+			wantErr: "missing smoke evidence field",
+		},
 	}
 
 	for _, tt := range tests {
@@ -786,6 +793,9 @@ func validateReleaseRehearsalWorkflowStructure(workflow string) error {
 		"-X github.com/uesugitorachiyo/ao-atlas/internal/atlas.buildSourceSHA=$SOURCE_SHA",
 		`"$candidate_dir/$binary" --version`,
 		"binary_sha256",
+		`sha256sum < "$1" | awk '{print $1}'`,
+		`shasum -a 256 < "$1" | awk '{print $1}'`,
+		`printf '%s  %s\n' "$(hash_file "$checksum_file")" "$checksum_file"`,
 	} {
 		if !strings.Contains(workflow, field) {
 			return fmt.Errorf("missing smoke evidence field %q", field)
