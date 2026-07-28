@@ -3,6 +3,8 @@ package atlas
 import (
 	"bytes"
 	"encoding/json"
+	"reflect"
+	"runtime"
 	"strings"
 	"testing"
 )
@@ -122,6 +124,174 @@ func TestDecompositionCharacterizationPreservesOrderedCommandCatalogs(t *testing
 	if got := strings.Join(missionRecommendationCommandNames(), ","); got != wantRecommendations {
 		t.Fatalf("recommendation command ordering changed\nwant: %s\n got: %s", wantRecommendations, got)
 	}
+}
+
+func TestDecompositionCharacterizationBindsCommandsToHandlers(t *testing.T) {
+	t.Run("root", func(t *testing.T) {
+		const want = `instance=runInstance
+intake=runIntake
+blueprint=runBlueprint
+mission=runMission
+blueprint-request=runBlueprintRequest
+workgraph=runWorkgraph
+mutation-classes=runMutationClasses
+factory-task=runFactoryTask
+factory=runFactory
+context-pack=runContextPack
+foundry=runFoundry
+run-link=runRunLink`
+		got := make([]string, 0, len(rootCommandRegistry()))
+		for _, command := range rootCommandRegistry() {
+			got = append(got, command.name+"="+decompositionHandlerIdentity(t, command.run))
+		}
+		if joined := strings.Join(got, "\n"); joined != want {
+			t.Fatalf("root command handler bindings changed\nwant:\n%s\n\ngot:\n%s", want, joined)
+		}
+	})
+
+	t.Run("recommendations", func(t *testing.T) {
+		const want = `import=runMissionRecommendationsImport
+export-next-wave=runMissionRecommendationsExportNextWave
+export-refactoring-wave=runMissionRecommendationsExportRefactoringWave
+next-track=runMissionRecommendationsNextTrack
+consumed-ledger=runMissionRecommendationsConsumedLedger
+track-registry=runMissionRecommendationsTrackRegistry
+run-ledger=runMissionRecommendationsRunLedger
+run-ledger-rollup=runMissionRecommendationsRunLedgerRollup
+run-ledger-coverage-check=runMissionRecommendationsRunLedgerCoverageCheck
+final-response-gates=runMissionRecommendationsFinalResponseGates
+schema-registry=runMissionRecommendationsSchemaRegistry
+schema-registry-health=runMissionRecommendationsSchemaRegistryHealth
+schema-registry-coverage=runMissionRecommendationsSchemaRegistryCoverage
+schema-health-repair-prompt=runMissionRecommendationsSchemaHealthRepairPrompt
+readback=runMissionRecommendationsReadback
+readback-delta=runMissionRecommendationsReadbackDelta
+readback-diff-fixture=runMissionRecommendationsReadbackDiffFixture
+stale-checkpoint-rejection=runMissionRecommendationsStaleCheckpointRejection
+operator-summary-check=runMissionRecommendationsOperatorSummaryCheck
+run-link-schema-coverage=runMissionRecommendationsRunLinkSchemaCoverage
+schema-validator-drift=runMissionRecommendationsSchemaValidatorDrift
+pr-ci-timing-summary=runMissionRecommendationsPRCITimingSummary
+pr-ci-windows-threshold=runMissionRecommendationsPRCIWindowsThreshold
+failed-check-replay=runMissionRecommendationsFailedCheckReplay
+command-covenant-rejected-ticket-fixture=runMissionRecommendationsCommandCovenantRejectedTicketFixture
+command-covenant-quarantine-fixture=runMissionRecommendationsCommandCovenantQuarantineFixture
+command-ticket-byte-preservation-fixture=runMissionRecommendationsCommandTicketBytePreservationFixture
+ticket-digest-readback-binding-fixture=runMissionRecommendationsTicketDigestReadbackBindingFixture
+policy-hash-mismatch-rejection-fixture=runMissionRecommendationsPolicyHashMismatchRejectionFixture
+policy-version-replay-rejection-fixture=runMissionRecommendationsPolicyVersionReplayRejectionFixture
+covenant-evidence-digest-readback-fixture=runMissionRecommendationsCovenantEvidenceDigestReadbackFixture
+command-compact-rejection-reason-fixture=runMissionRecommendationsCommandCompactRejectionReasonFixture
+blueprint-ticket-schema-compatibility-ledger=runMissionRecommendationsBlueprintTicketSchemaCompatibilityLedger
+atlas-ticket-schema-compatibility-ledger=runMissionRecommendationsAtlasTicketSchemaCompatibilityLedger
+foundry-ticket-schema-compatibility-ledger=runMissionRecommendationsFoundryTicketSchemaCompatibilityLedger
+command-ticket-schema-compatibility-ledger=runMissionRecommendationsCommandTicketSchemaCompatibilityLedger
+covenant-ticket-schema-authority-ledger=runMissionRecommendationsCovenantTicketSchemaAuthorityLedger
+policy-ticket-public-safety-scan=runMissionRecommendationsPolicyTicketPublicSafetyScan
+merge-check-binding=runMissionRecommendationsMergeCheckBinding
+post-merge-branch-deletion-readback=runMissionRecommendationsPostMergeBranchDeletionReadback
+stale-remote-branch-repair=runMissionRecommendationsStaleRemoteBranchRepair
+local-main-sync-readback=runMissionRecommendationsLocalMainSyncReadback
+branch-cleanup-handoff-summary=runMissionRecommendationsBranchCleanupHandoffSummary
+compaction-resume-prompt=runMissionRecommendationsCompactionResumePrompt
+compaction-resume-regression=runMissionRecommendationsCompactionResumeRegression
+resume-denial-evidence=runMissionRecommendationsResumeDenialEvidence
+public-safety-readback-binding=runMissionRecommendationsPublicSafetyReadbackBinding
+scoped-public-safety-scan=runMissionRecommendationsScopedPublicSafetyScan
+authority-promotion-negative-fixtures=runMissionRecommendationsAuthorityPromotionNegativeFixtures
+public-safety-coverage-rollup=runMissionRecommendationsPublicSafetyCoverageRollup
+promoter-no-promotion-rollup=runMissionRecommendationsPromoterNoPromotionRollup
+command-promoter-agreement-rollup=runMissionRecommendationsCommandPromoterAgreementRollup
+promoter-rollup-count-mismatch-regression=runMissionRecommendationsPromoterRollupCountMismatchRegression
+command-promoter-disagreement-denial=runMissionRecommendationsCommandPromoterDisagreementDenial
+foundry-import-readiness-binding=runMissionRecommendationsFoundryImportReadinessBinding
+run-link-digest-check=runMissionRecommendationsRunLinkDigestCheck
+foundry-handoff-replay-fixture=runMissionRecommendationsFoundryHandoffReplayFixture
+foundry-terminal-status-examples=runMissionRecommendationsFoundryTerminalStatusExamples
+mission-dashboard-closure-binding=runMissionRecommendationsMissionDashboardClosureBinding
+mission-dashboard-provenance-links=runMissionRecommendationsMissionDashboardProvenanceLinks
+mission-dashboard-freshness-checks=runMissionRecommendationsMissionDashboardFreshnessChecks
+mission-dashboard-compact-filters=runMissionRecommendationsMissionDashboardCompactFilters
+bounded-signer-contract-fixture=runMissionRecommendationsBoundedSignerContractFixture
+canonical-contract-registry-manifest=runMissionRecommendationsCanonicalContractRegistryManifest
+contract-compatibility-inventory=runMissionRecommendationsContractCompatibilityInventory
+canonical-json-vectors=runMissionRecommendationsCanonicalJSONVectors
+canonical-json-vector-smoke-checks=runMissionRecommendationsCanonicalJSONVectorSmokeChecks
+sentinel-hosted-ci-workflow-fixture=runMissionRecommendationsSentinelHostedCIWorkflowFixture
+sentinel-signal-state-fixture=runMissionRecommendationsSentinelSignalStateFixture
+signed-assurance-dry-run-fixture=runMissionRecommendationsSignedAssuranceDryRunFixture
+promoter-no-activation-boundary-fixture=runMissionRecommendationsPromoterNoActivationBoundaryFixture
+workspace-root-preflight-fixture=runMissionRecommendationsWorkspaceRootPreflightFixture
+bounded-execution-packet-fixture=runMissionRecommendationsBoundedExecutionPacketFixture
+forge-goalrun-evidence-fixture=runMissionRecommendationsForgeGoalRunEvidenceFixture
+execution-packet-regression-matrix=runMissionRecommendationsExecutionPacketRegressionMatrix
+durable-state-migration-metadata=runMissionRecommendationsDurableStateMigrationMetadata
+exactly-once-resume-accounting-fixture=runMissionRecommendationsExactlyOnceResumeAccountingFixture
+replayable-state-packet-fixture=runMissionRecommendationsReplayableStatePacketFixture
+indexed-event-query-fixture=runMissionRecommendationsIndexedEventQueryFixture
+atomic-evidence-transition-fixture=runMissionRecommendationsAtomicEvidenceTransitionFixture
+local-backup-restore-fixture=runMissionRecommendationsLocalBackupRestoreFixture
+command-readback-adapter-boundary-fixture=runMissionRecommendationsCommandReadbackAdapterBoundaryFixture
+compact-timeline-filter-fixture=runMissionRecommendationsCompactTimelineFilterFixture
+authority-readiness-inventory-fixture=runMissionRecommendationsAuthorityReadinessInventoryFixture
+content-addressed-evidence-manifest-fixture=runMissionRecommendationsContentAddressedEvidenceManifestFixture
+foundry-evidence-size-boundary-fixture=runMissionRecommendationsFoundryEvidenceSizeBoundaryFixture
+evidence-catalog-index-export=runMissionRecommendationsEvidenceCatalogIndexExport
+stack-restart-resume-rehearsal=runMissionRecommendationsStackRestartResumeRehearsal
+repeated-task-result-ledger-fixture=runMissionRecommendationsRepeatedTaskResultLedgerFixture
+failure-injection-fuzzing-fixture=runMissionRecommendationsFailureInjectionFuzzingFixture
+local-platform-fixture=runMissionRecommendationsLocalPlatformFixture
+non-ao-replay-binding-fixture=runMissionRecommendationsNonAOReplayBindingFixture
+kill-restart-replay-fixture=runMissionRecommendationsKillRestartReplayFixture
+rollback-terminal-readback-fixture=runMissionRecommendationsRollbackTerminalReadbackFixture
+golden-path-readiness-matrix=runMissionRecommendationsGoldenPathReadinessMatrix
+month3-final-closure-rollup=runMissionRecommendationsMonth3FinalClosureRollup
+month3-final-readiness-report=runMissionRecommendationsMonth3FinalReadinessReport
+month3-terminal-digest-binding=runMissionRecommendationsMonth3TerminalDigestBinding
+month3-non-ao-dry-run-replay=runMissionRecommendationsMonth3NonAODryRunReplay
+month3-real-run-acceptance=runMissionRecommendationsMonth3RealRunAcceptance
+month3-control-plane-observer=runMissionRecommendationsMonth3ControlPlaneObserver
+month3-schema-owner-registry=runMissionRecommendationsMonth3SchemaOwnerRegistry
+month3-evidence-externalization=runMissionRecommendationsMonth3EvidenceExternalization
+month3-cross-repo-ci-matrix=runMissionRecommendationsMonth3CrossRepoCIMatrix
+month3-operator-dashboard-readback=runMissionRecommendationsMonth3OperatorDashboardReadback
+month3-restart-resume-soak=runMissionRecommendationsMonth3RestartResumeSoak
+month3-provider-model-provenance=runMissionRecommendationsMonth3ProviderModelProvenance
+month3-rollback-replay-negative=runMissionRecommendationsMonth3RollbackReplayNegative
+month3-architecture-source-truth=runMissionRecommendationsMonth3ArchitectureSourceTruth
+month3-no-promotion-rsi-matrix=runMissionRecommendationsMonth3NoPromotionRSIMatrix
+month3-foundry-safe-next-work=runMissionRecommendationsMonth3FoundrySafeNextWork
+blueprint-canonical-preservation-fixture=runMissionRecommendationsBlueprintCanonicalPreservationFixture
+foundry-canonical-import-fixture=runMissionRecommendationsFoundryCanonicalImportFixture
+command-covenant-field-parity-fixture=runMissionRecommendationsCommandCovenantFieldParityFixture
+complete-node=runMissionRecommendationsCompleteNode
+resume=runMissionRecommendationsResume
+validate-evidence=runMissionRecommendationsValidateEvidence`
+		got := make([]string, 0, len(missionRecommendationCommandRegistry()))
+		for _, command := range missionRecommendationCommandRegistry() {
+			got = append(got, command.name+"="+decompositionHandlerIdentity(t, command.run))
+		}
+		if joined := strings.Join(got, "\n"); joined != want {
+			t.Fatalf("recommendation command handler bindings changed\nwant:\n%s\n\ngot:\n%s", want, joined)
+		}
+	})
+}
+
+func decompositionHandlerIdentity(t *testing.T, handler any) string {
+	t.Helper()
+	value := reflect.ValueOf(handler)
+	if value.Kind() != reflect.Func || value.IsNil() {
+		t.Fatalf("registry handler must be a non-nil function, got %T", handler)
+	}
+	function := runtime.FuncForPC(value.Pointer())
+	if function == nil {
+		t.Fatalf("runtime function identity unavailable for %T", handler)
+	}
+	name := function.Name()
+	if separator := strings.LastIndex(name, "."); separator >= 0 {
+		return name[separator+1:]
+	}
+	return name
 }
 
 func TestDecompositionCharacterizationPreservesRepresentativeCLIStreams(t *testing.T) {
