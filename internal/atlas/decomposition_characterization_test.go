@@ -104,6 +104,9 @@ func TestDecompositionCharacterizationPreservesWorkgraphReadinessAndTransitionOr
 
 func TestDecompositionCharacterizationPreservesOrderedCommandCatalogs(t *testing.T) {
 	const wantRoot = "instance,intake,blueprint,mission,blueprint-request,workgraph,mutation-classes,factory-task,factory,context-pack,foundry,run-link"
+	if got := strings.Join(rootCommandNames(), ","); got != wantRoot {
+		t.Fatalf("root command registry ordering changed: got %q want %q", got, wantRoot)
+	}
 	var stdout, stderr bytes.Buffer
 	if code := Run(nil, &stdout, &stderr); code != 2 {
 		t.Fatalf("root usage exit code changed: %d", code)
