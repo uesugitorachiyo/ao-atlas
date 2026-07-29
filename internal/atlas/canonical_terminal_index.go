@@ -524,7 +524,7 @@ func decodeJSONValue(decoder *json.Decoder) (any, error) {
 			_, err := decoder.Token()
 			return object, err
 		case '[':
-			var array []any
+			array := []any{}
 			for decoder.More() {
 				value, err := decodeJSONValue(decoder)
 				if err != nil {
