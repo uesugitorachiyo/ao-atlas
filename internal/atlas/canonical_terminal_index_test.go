@@ -1,6 +1,7 @@
 package atlas
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -100,6 +101,125 @@ func TestCanonicalTerminalIndexIsDeterministic(t *testing.T) {
 	}
 }
 
+func TestTerminalIndexCLISerializedPassingRoundTrip(t *testing.T) {
+	root, manifest := writeTerminalIndexFixture(t, fixtureOptions{})
+	firstPath := filepath.Join(root, "canonical-terminal-index.json")
+	secondPath := filepath.Join(root, "canonical-terminal-index-repeat.json")
+
+	firstBuild := runAtlasCLI(t, "terminal-index", "build", "--root", root, "--manifest", manifest, "--out", firstPath)
+	if firstBuild.code != 0 {
+		t.Fatalf("first build exit = %d, stderr = %q", firstBuild.code, firstBuild.stderr)
+	}
+	firstData, err := os.ReadFile(firstPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var raw map[string]json.RawMessage
+	if err := json.Unmarshal(firstData, &raw); err != nil {
+		t.Fatal(err)
+	}
+	if got := bytes.TrimSpace(raw["conflict_codes"]); !bytes.Equal(got, []byte("[]")) {
+		t.Fatalf("serialized conflict_codes = %s, want []", got)
+	}
+	var firstIndex CanonicalTerminalIndex
+	if err := json.Unmarshal(firstData, &firstIndex); err != nil {
+		t.Fatal(err)
+	}
+
+	secondBuild := runAtlasCLI(t, "terminal-index", "build", "--root", root, "--manifest", manifest, "--out", secondPath)
+	if secondBuild.code != 0 {
+		t.Fatalf("second build exit = %d, stderr = %q", secondBuild.code, secondBuild.stderr)
+	}
+	secondData, err := os.ReadFile(secondPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(firstData, secondData) {
+		t.Fatal("repeated CLI builds with a fixed timestamp produced different bytes")
+	}
+	var secondIndex CanonicalTerminalIndex
+	if err := json.Unmarshal(secondData, &secondIndex); err != nil {
+		t.Fatal(err)
+	}
+	if firstIndex.Digest != secondIndex.Digest {
+		t.Fatalf("repeated CLI build digest changed: %s != %s", firstIndex.Digest, secondIndex.Digest)
+	}
+
+	verify := runAtlasCLI(t, "terminal-index", "verify", "--root", root, "--index", firstPath)
+	if verify.code != 0 {
+		t.Fatalf("serialized verify exit = %d, stderr = %q", verify.code, verify.stderr)
+	}
+	if !strings.Contains(verify.stdout, "digest="+firstIndex.Digest) {
+		t.Fatalf("verify output %q does not contain build digest %s", verify.stdout, firstIndex.Digest)
+	}
+}
+
+func TestTerminalIndexCLISerializedValidation(t *testing.T) {
+	t.Run("digest altered", func(t *testing.T) {
+		root, manifest := writeTerminalIndexFixture(t, fixtureOptions{})
+		indexPath := buildTerminalIndexWithCLI(t, root, manifest)
+		index := readTerminalIndexFile(t, indexPath)
+		index.Digest = "sha256:" + strings.Repeat("0", 64)
+		if err := WriteJSON(indexPath, index); err != nil {
+			t.Fatal(err)
+		}
+		verify := runAtlasCLI(t, "terminal-index", "verify", "--root", root, "--index", indexPath)
+		if verify.code == 0 || !strings.Contains(verify.stderr, "index digest mismatch") {
+			t.Fatalf("verify exit = %d, stderr = %q, want digest mismatch", verify.code, verify.stderr)
+		}
+	})
+
+	t.Run("digest valid semantic contradiction", func(t *testing.T) {
+		root, manifest := writeTerminalIndexFixture(t, fixtureOptions{})
+		indexPath := buildTerminalIndexWithCLI(t, root, manifest)
+		index := readTerminalIndexFile(t, indexPath)
+		index.Lease.Status = "maximum_exceeded"
+		unsigned := index
+		unsigned.Digest = ""
+		data, err := json.Marshal(unsigned)
+		if err != nil {
+			t.Fatal(err)
+		}
+		index.Digest = DigestBytes(data)
+		if err := WriteJSON(indexPath, index); err != nil {
+			t.Fatal(err)
+		}
+		verify := runAtlasCLI(t, "terminal-index", "verify", "--root", root, "--index", indexPath)
+		if verify.code == 0 || !strings.Contains(verify.stderr, "lease status") {
+			t.Fatalf("verify exit = %d, stderr = %q, want semantic lease rejection", verify.code, verify.stderr)
+		}
+	})
+
+	t.Run("nonempty fail closed conflicts", func(t *testing.T) {
+		root, manifest := writeTerminalIndexFixture(t, fixtureOptions{elapsed: 90})
+		indexPath := buildTerminalIndexWithCLI(t, root, manifest)
+		index := readTerminalIndexFile(t, indexPath)
+		if len(index.Conflicts) == 0 {
+			t.Fatal("fail-closed index has no conflict codes")
+		}
+		verify := runAtlasCLI(t, "terminal-index", "verify", "--root", root, "--index", indexPath)
+		if verify.code != 0 {
+			t.Fatalf("fail-closed serialized verify exit = %d, stderr = %q", verify.code, verify.stderr)
+		}
+	})
+}
+
+func TestDecodeStrictJSONPreservesNestedEmptyArrays(t *testing.T) {
+	var decoded any
+	if err := decodeStrictJSON([]byte(`{"outer":[[],{"inner":[]}]}`), &decoded); err != nil {
+		t.Fatal(err)
+	}
+	object := decoded.(map[string]any)
+	outer := object["outer"].([]any)
+	if inner, ok := outer[0].([]any); !ok || inner == nil || len(inner) != 0 {
+		t.Fatalf("first nested value = %#v, want non-nil empty array", outer[0])
+	}
+	nested := outer[1].(map[string]any)
+	if inner, ok := nested["inner"].([]any); !ok || inner == nil || len(inner) != 0 {
+		t.Fatalf("object nested value = %#v, want non-nil empty array", nested["inner"])
+	}
+}
+
 func TestVerifyCanonicalTerminalIndexRejectsDigestValidSemanticContradiction(t *testing.T) {
 	root, manifest := writeTerminalIndexFixture(t, fixtureOptions{})
 	index, err := BuildCanonicalTerminalIndex(root, manifest)
@@ -163,7 +283,9 @@ func writeTerminalIndexFixture(t *testing.T, options fixtureOptions) (string, st
 		`","counts":{"completed":` + itoa(terminalCompleted) + `,"ready":` + itoa(options.ready) +
 		`,"blocked":0,"failed":` + itoa(options.failed) + `},"elapsed_minutes":` + itoa(elapsed) +
 		`,"lease_time_status":"` + leaseStatus + `","final_response_allowed":` + boolString(final) +
-		`,"exact_next_action":"none","safety_boundaries":{"inbound_network":false,"credential_changes":false,"release":false}}`
+		`,"exact_next_action":"none","safety_boundaries":{"executes_work":false,"approves_work":false,` +
+		`"mutates_repositories":false,"calls_providers":false,"publishes":false,"releases":false,` +
+		`"deploys":false,"advances_authority":false}}`
 	durationJSON := `{"contract_version":"fixture.v1","mission_id":"` + mission + `","completed_nodes":` +
 		itoa(durationCompleted) + `,"elapsed_minutes":` + itoa(elapsed) + `}`
 	leaseJSON := `{"contract_version":"fixture.v1","mission_id":"` + mission +
@@ -236,6 +358,43 @@ func writeTerminalIndexFixture(t *testing.T, options fixtureOptions) (string, st
 		t.Fatal(err)
 	}
 	return root, manifest
+}
+
+type cliResult struct {
+	code   int
+	stdout string
+	stderr string
+}
+
+func runAtlasCLI(t *testing.T, args ...string) cliResult {
+	t.Helper()
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+	code := Run(args, &stdout, &stderr)
+	return cliResult{code: code, stdout: stdout.String(), stderr: stderr.String()}
+}
+
+func buildTerminalIndexWithCLI(t *testing.T, root, manifest string) string {
+	t.Helper()
+	indexPath := filepath.Join(root, "canonical-terminal-index.json")
+	result := runAtlasCLI(t, "terminal-index", "build", "--root", root, "--manifest", manifest, "--out", indexPath)
+	if result.code != 0 {
+		t.Fatalf("build exit = %d, stderr = %q", result.code, result.stderr)
+	}
+	return indexPath
+}
+
+func readTerminalIndexFile(t *testing.T, path string) CanonicalTerminalIndex {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var index CanonicalTerminalIndex
+	if err := json.Unmarshal(data, &index); err != nil {
+		t.Fatal(err)
+	}
+	return index
 }
 
 func defaultInt(value, fallback int) int {
