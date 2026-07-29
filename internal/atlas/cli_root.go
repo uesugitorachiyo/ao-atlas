@@ -30,6 +30,7 @@ func rootCommandRegistry() []rootCommand {
 		{name: "context-pack", run: runContextPack},
 		{name: "foundry", run: runFoundry},
 		{name: "run-link", run: runRunLink},
+		{name: "terminal-index", run: runTerminalIndex},
 	}
 }
 

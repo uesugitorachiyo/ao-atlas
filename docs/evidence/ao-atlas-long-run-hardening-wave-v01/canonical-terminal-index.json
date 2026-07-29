@@ -1,0 +1,105 @@
+{
+  "contract_version": "ao.canonical-terminal-index.v1",
+  "schema_digest": "sha256:6b02c52563c756c14dc6075050580d6041d38993fd856115480595de237efb6d",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "evidence_root": ".",
+  "generated_at_utc": "2026-07-06T08:52:03Z",
+  "artifacts": [
+    {
+      "role": "lease",
+      "sequence": 0,
+      "path": "lease-start.json",
+      "schema": "ao.atlas.recommendation-lease-start.v0.1",
+      "sha256": "sha256:bd42cd2e3e4b196e29b2fc4d0c17b10b12f0c5ce372713a150628d637ade6316",
+      "state": "lease_authority"
+    },
+    {
+      "role": "root",
+      "sequence": 1,
+      "path": "recommendation-readback.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "sha256": "sha256:a67619a5ff60de3a73075c3cf80f220499ade137a01e7d95f1438c4a2da918bb",
+      "state": "initial_snapshot"
+    },
+    {
+      "role": "terminal",
+      "sequence": 2,
+      "path": "nodes/mission-recommendation-hardening-40/recommendation-readback-after.json",
+      "schema": "ao.atlas.recommendation-readback.v0.1",
+      "sha256": "sha256:389979f58dc3d5853b765689e5b004590b76ee43b7b48b9d730a5239a711392d",
+      "state": "terminal_candidate"
+    },
+    {
+      "role": "closure",
+      "sequence": 3,
+      "path": "nodes/mission-recommendation-hardening-40/final-closure-artifacts-fixture.json",
+      "schema": "ao.atlas.final-closure-artifacts-fixture.v0.1",
+      "sha256": "sha256:8a1e2d4f6956a5d5477a54f89fa0674afb4b7038cf6c8d1a48c155fd2e51b707",
+      "state": "closure_support"
+    }
+  ],
+  "lineage": [
+    {
+      "from_sequence": 0,
+      "to_sequence": 1,
+      "relation": "precedes"
+    },
+    {
+      "from_sequence": 1,
+      "to_sequence": 2,
+      "relation": "precedes"
+    },
+    {
+      "from_sequence": 2,
+      "to_sequence": 3,
+      "relation": "precedes"
+    }
+  ],
+  "terminal_reference": "nodes/mission-recommendation-hardening-40/recommendation-readback-after.json",
+  "counts": {
+    "total": 40,
+    "minimum": 30,
+    "completed": 40,
+    "ready": 0,
+    "blocked": 0,
+    "failed": 0
+  },
+  "lease": {
+    "minimum_minutes": 120,
+    "target_minutes": 0,
+    "maximum_minutes": 180,
+    "elapsed_minutes": 1191,
+    "status": "maximum_exceeded"
+  },
+  "completion_observed": true,
+  "canonical_evidence_agreement": true,
+  "readiness_passed": false,
+  "return_gate_status": "final_response_denied",
+  "final_response_allowed": false,
+  "conflict_codes": [
+    "lease_maximum_exceeded",
+    "lease_target_missing",
+    "terminal_exact_next_action_requires_execution",
+    "terminal_final_response_allowed_despite_violation",
+    "terminal_lease_status_mismatch"
+  ],
+  "conflict_summaries": [
+    "lease maximum exceeded",
+    "lease target missing",
+    "terminal exact next action requires execution",
+    "terminal final response allowed despite violation",
+    "terminal lease status mismatch"
+  ],
+  "exact_next_action": "Review the canonical conflict codes and produce a fresh governed terminal observation.",
+  "safety_boundaries": {
+    "executes_work": false,
+    "approves_work": false,
+    "mutates_repositories": false,
+    "calls_providers": false,
+    "publishes": false,
+    "releases": false,
+    "deploys": false,
+    "advances_authority": false
+  },
+  "digest": "sha256:2e1433fb65a7dfcbe600c777444f284d94cb99b2964a43dea4f52a4fbf6a2838"
+}
