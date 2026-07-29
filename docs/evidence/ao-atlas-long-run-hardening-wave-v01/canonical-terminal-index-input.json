@@ -1,0 +1,36 @@
+{
+  "contract_version": "ao.canonical-terminal-index-input.v1",
+  "mission_id": "ao-atlas-long-run-hardening-wave-v01",
+  "evidence_root": ".",
+  "generated_at_utc": "2026-07-06T08:52:03Z",
+  "artifacts": [
+    {
+      "role": "lease",
+      "sequence": 0,
+      "state": "lease_authority",
+      "path": "lease-start.json",
+      "sha256": "sha256:bd42cd2e3e4b196e29b2fc4d0c17b10b12f0c5ce372713a150628d637ade6316"
+    },
+    {
+      "role": "root",
+      "sequence": 1,
+      "state": "initial_snapshot",
+      "path": "recommendation-readback.json",
+      "sha256": "sha256:a67619a5ff60de3a73075c3cf80f220499ade137a01e7d95f1438c4a2da918bb"
+    },
+    {
+      "role": "terminal",
+      "sequence": 2,
+      "state": "terminal_candidate",
+      "path": "nodes/mission-recommendation-hardening-40/recommendation-readback-after.json",
+      "sha256": "sha256:389979f58dc3d5853b765689e5b004590b76ee43b7b48b9d730a5239a711392d"
+    },
+    {
+      "role": "closure",
+      "sequence": 3,
+      "state": "closure_support",
+      "path": "nodes/mission-recommendation-hardening-40/final-closure-artifacts-fixture.json",
+      "sha256": "sha256:8a1e2d4f6956a5d5477a54f89fa0674afb4b7038cf6c8d1a48c155fd2e51b707"
+    }
+  ]
+}
