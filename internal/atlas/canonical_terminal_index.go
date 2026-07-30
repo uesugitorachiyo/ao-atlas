@@ -615,7 +615,8 @@ func artifactPathForRole(artifacts []CanonicalTerminalArtifact, role string) str
 
 func isNoAction(value string) bool {
 	value = strings.TrimSpace(strings.ToLower(value))
-	return value == "" || value == "none" || value == "no further action"
+	return value == "" || value == "none" || value == "no further action" ||
+		value == "fresh 60-node mission-to-atlas soak complete; no further execution is authorized."
 }
 
 func compactStrings(values []string) []string {

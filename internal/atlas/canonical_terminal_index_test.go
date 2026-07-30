@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -25,6 +26,38 @@ func TestBuildCanonicalTerminalIndexReconcilesTerminalState(t *testing.T) {
 	}
 	if err := VerifyCanonicalTerminalIndex(root, index); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestBuildCanonicalTerminalIndexAcceptsMissionClosureAsNoAction(t *testing.T) {
+	root, manifest := writeTerminalIndexFixture(t, fixtureOptions{
+		nextAction: "Fresh 60-node Mission-to-Atlas soak complete; no further execution is authorized.",
+	})
+	index, err := BuildCanonicalTerminalIndex(root, manifest)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !index.ReadinessPassed || !index.FinalResponseAllowed {
+		t.Fatalf("Mission terminal closure was not treated as a no-action: %+v", index)
+	}
+	if index.ExactNextAction != "none" {
+		t.Fatalf("canonical exact next action = %q, want none", index.ExactNextAction)
+	}
+}
+
+func TestBuildCanonicalTerminalIndexRejectsExecutableNextAction(t *testing.T) {
+	root, manifest := writeTerminalIndexFixture(t, fixtureOptions{
+		nextAction: "Execute another node.",
+	})
+	index, err := BuildCanonicalTerminalIndex(root, manifest)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if index.ReadinessPassed || index.FinalResponseAllowed {
+		t.Fatalf("executable terminal action unexpectedly passed: %+v", index)
+	}
+	if !containsString(index.Conflicts, "terminal_exact_next_action_requires_execution") {
+		t.Fatalf("missing executable next-action conflict: %v", index.Conflicts)
 	}
 }
 
@@ -249,6 +282,7 @@ type fixtureOptions struct {
 	terminalCompleted int
 	durationCompleted int
 	terminalMission   string
+	nextAction        string
 	alterDigest       bool
 	missingTerminal   bool
 	malformed         bool
@@ -277,13 +311,17 @@ func writeTerminalIndexFixture(t *testing.T, options fixtureOptions) (string, st
 	if leaseStatus == "" {
 		leaseStatus = "within_window"
 	}
+	nextAction := options.nextAction
+	if nextAction == "" {
+		nextAction = "none"
+	}
 	rootJSON := `{"contract_version":"fixture.v1","mission_id":"` + mission + `","counts":{"completed":` +
 		itoa(options.rootCompleted) + `,"ready":40,"blocked":0,"failed":0},"final_response_allowed":false}`
 	terminalJSON := `{"contract_version":"fixture.v1","mission_id":"` + terminalMission +
 		`","counts":{"completed":` + itoa(terminalCompleted) + `,"ready":` + itoa(options.ready) +
 		`,"blocked":0,"failed":` + itoa(options.failed) + `},"elapsed_minutes":` + itoa(elapsed) +
 		`,"lease_time_status":"` + leaseStatus + `","final_response_allowed":` + boolString(final) +
-		`,"exact_next_action":"none","safety_boundaries":{"executes_work":false,"approves_work":false,` +
+		`,"exact_next_action":` + strconv.Quote(nextAction) + `,"safety_boundaries":{"executes_work":false,"approves_work":false,` +
 		`"mutates_repositories":false,"calls_providers":false,"publishes":false,"releases":false,` +
 		`"deploys":false,"advances_authority":false}}`
 	durationJSON := `{"contract_version":"fixture.v1","mission_id":"` + mission + `","completed_nodes":` +
