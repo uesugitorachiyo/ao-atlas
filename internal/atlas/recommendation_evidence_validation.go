@@ -325,7 +325,7 @@ func evidenceSchemaMarker(raw map[string]any) string {
 func validateRecommendationEvidenceTypedFile(path, schema string) (string, error) {
 	switch schema {
 	case WorkgraphContract:
-		value, err := LoadJSON[Workgraph](path)
+		value, err := LoadWorkgraph(path)
 		if err != nil {
 			return "typed:workgraph", err
 		}

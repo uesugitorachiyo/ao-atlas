@@ -29,7 +29,7 @@ func BuildAtlasFoundryImportReadinessBinding(nodeID, sourceReadbackPath, sourceW
 	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
 		return AtlasFoundryImportReadinessBinding{}, err
 	}
-	workgraph, err := LoadJSON[Workgraph](sourceWorkgraphPath)
+	workgraph, err := LoadWorkgraph(sourceWorkgraphPath)
 	if err != nil {
 		return AtlasFoundryImportReadinessBinding{}, err
 	}

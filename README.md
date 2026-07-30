@@ -67,6 +67,8 @@ go run ./cmd/atlas mutation-classes validate --model examples/valid/mutation-cla
 go run ./cmd/atlas factory materialize --task examples/valid/factory-task.json --out .atlas-local/factory-materialization --dry-run
 go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph.json --json
 go run ./cmd/atlas workgraph validate --workgraph examples/valid/workgraph-large-stress.json
+go run ./cmd/atlas workgraph binding-digest --workgraph .atlas-local/operational-workgraph.unbound.json --json
+go run ./cmd/atlas workgraph validate-binding --workgraph .atlas-local/operational-workgraph.json --binding .atlas-local/activation-binding.json --json
 go run ./cmd/atlas workgraph materialize-next --workgraph examples/valid/workgraph.json --out .atlas-local/workgraph-next-materialization --dry-run
 go run ./cmd/atlas run-link attach --task-id atlas-readiness-task --status completed --evidence verification=docs/sdd/AO-ATLAS-WORKGRAPH.md --evidence-root . --evidence-root-id ao-atlas-checkout --out .atlas-local/run-link.json
 go run ./cmd/atlas workgraph complete --workgraph examples/valid/workgraph.json --run-link .atlas-local/run-link.json --evidence-root . --evidence-root-id ao-atlas-checkout --out .atlas-local/workgraph-completed.json

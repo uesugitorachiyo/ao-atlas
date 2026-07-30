@@ -25,7 +25,7 @@ func BuildAtlasMissionDashboardCompactFilters(nodeID, sourceReadbackPath, source
 	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
 		return AtlasMissionDashboardCompactFilters{}, err
 	}
-	workgraph, err := LoadJSON[Workgraph](sourceWorkgraphPath)
+	workgraph, err := LoadWorkgraph(sourceWorkgraphPath)
 	if err != nil {
 		return AtlasMissionDashboardCompactFilters{}, err
 	}

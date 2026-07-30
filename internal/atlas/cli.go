@@ -293,7 +293,7 @@ func runMission(args []string, stdout io.Writer) error {
 	if err != nil {
 		return err
 	}
-	workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+	workgraph, err := LoadWorkgraph(*workgraphPath)
 	if err != nil {
 		return err
 	}
@@ -3459,7 +3459,7 @@ func runMissionRecommendationsCompleteNode(args []string, stdout io.Writer) erro
 	if err != nil {
 		return err
 	}
-	workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+	workgraph, err := LoadWorkgraph(*workgraphPath)
 	if err != nil {
 		return err
 	}
@@ -3610,7 +3610,7 @@ func runMissionRecommendationsResume(args []string, stdout io.Writer) error {
 	if err != nil {
 		return err
 	}
-	workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+	workgraph, err := LoadWorkgraph(*workgraphPath)
 	if err != nil {
 		return err
 	}
@@ -3744,7 +3744,7 @@ func runMissionRecommendationsReadback(args []string, stdout io.Writer) error {
 	if err != nil {
 		return err
 	}
-	workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+	workgraph, err := LoadWorkgraph(*workgraphPath)
 	if err != nil {
 		return err
 	}
@@ -3938,7 +3938,7 @@ func runMissionWorkgraphMetadata(args []string, stdout io.Writer) error {
 		if err != nil {
 			return err
 		}
-		workgraph, err := LoadJSON[Workgraph](*workgraphPath)
+		workgraph, err := LoadWorkgraph(*workgraphPath)
 		if err != nil {
 			return err
 		}
@@ -4130,7 +4130,7 @@ func runFoundry(args []string, stdout io.Writer) error {
 		if err := fs.Parse(args[2:]); err != nil {
 			return err
 		}
-		workgraph, err := LoadJSON[Workgraph](*path)
+		workgraph, err := LoadWorkgraph(*path)
 		if err != nil {
 			return err
 		}
@@ -4170,7 +4170,7 @@ func runFoundry(args []string, stdout io.Writer) error {
 		if *out != "" && (samePath(*path, *out) || samePath(*instancePath, *out) || samePath(*aoMissionMetadataPath, *out)) {
 			return fmt.Errorf("refusing to overwrite input artifact")
 		}
-		workgraph, err := LoadJSON[Workgraph](*path)
+		workgraph, err := LoadWorkgraph(*path)
 		if err != nil {
 			return err
 		}

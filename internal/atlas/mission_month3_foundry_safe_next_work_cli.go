@@ -39,7 +39,7 @@ func runMissionRecommendationsMonth3FoundrySafeNextWork(args []string, stdout io
 	if err != nil {
 		return err
 	}
-	workgraph, err := LoadJSON[Workgraph](*sourceWorkgraph)
+	workgraph, err := LoadWorkgraph(*sourceWorkgraph)
 	if err != nil {
 		return err
 	}
