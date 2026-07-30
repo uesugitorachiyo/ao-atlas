@@ -4286,6 +4286,8 @@ func runRunLink(args []string, stdout io.Writer) error {
 		taskID := fs.String("task-id", "", "task id")
 		status := fs.String("status", "completed", "task completion status")
 		out := fs.String("out", "", "output path")
+		evidenceRoot := fs.String("evidence-root", "", "optional root for digest-binding regular evidence files")
+		evidenceRootID := fs.String("evidence-root-id", "", "stable public-safe identity for the evidence root")
 		evidenceFlags := stringListFlag{}
 		fs.Var(&evidenceFlags, "evidence", "evidence link as key=path")
 		if err := fs.Parse(args[1:]); err != nil {
@@ -4295,7 +4297,12 @@ func runRunLink(args []string, stdout io.Writer) error {
 		if err != nil {
 			return err
 		}
-		link, err := BuildRunLink(*taskID, *status, evidence)
+		var link RunLink
+		if *evidenceRoot == "" {
+			link, err = BuildRunLink(*taskID, *status, evidence)
+		} else {
+			link, err = BuildEvidenceBoundRunLink(*taskID, *status, evidence, *evidenceRoot, *evidenceRootID)
+		}
 		if err != nil {
 			return err
 		}

@@ -547,7 +547,19 @@ test -s "$OUT/factory-materialization/materialization.json"
 "$BIN" workgraph next --workgraph examples/valid/workgraph.json --json >/dev/null
 "$BIN" workgraph materialize-next --workgraph examples/valid/workgraph.json --out "$OUT/workgraph-next-materialization" --dry-run >/dev/null
 test -s "$OUT/workgraph-next-materialization/materialization.json"
-"$BIN" workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link.json --out "$OUT/workgraph-completed.json" >/dev/null
+"$BIN" run-link attach \
+  --task-id atlas-readiness-task \
+  --status completed \
+  --evidence verification=docs/sdd/AO-ATLAS-WORKGRAPH.md \
+  --evidence-root . \
+  --evidence-root-id ao-atlas-source-tree \
+  --out "$OUT/evidence-bound-run-link.json" >/dev/null
+"$BIN" workgraph complete \
+  --workgraph examples/valid/workgraph.json \
+  --run-link "$OUT/evidence-bound-run-link.json" \
+  --evidence-root . \
+  --evidence-root-id ao-atlas-source-tree \
+  --out "$OUT/workgraph-completed.json" >/dev/null
 "$BIN" workgraph validate --workgraph "$OUT/workgraph-completed.json" >/dev/null
 "$BIN" workgraph repair-plan --workgraph examples/valid/workgraph.json --run-link examples/invalid/run-link-blocked.json --out "$OUT/workgraph-repair-plan-blocked.json" >/dev/null
 test -s "$OUT/workgraph-repair-plan-blocked.json"

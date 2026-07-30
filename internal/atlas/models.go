@@ -498,5 +498,7 @@ type RunLink struct {
 	TaskID          string            `json:"task_id"`
 	Status          string            `json:"status"`
 	Evidence        map[string]string `json:"evidence"`
+	EvidenceDigests map[string]string `json:"evidence_digests,omitempty"`
+	EvidenceRootID  string            `json:"evidence_root_id,omitempty"`
 	Digest          string            `json:"digest"`
 }

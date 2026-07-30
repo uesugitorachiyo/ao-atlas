@@ -117,8 +117,16 @@ files, the task digest, and explicit `executes_work=false` /
 
 `ao.atlas.run-link.v0.1` records public-safe evidence paths for a factory task
 after Foundry, Forge, or AO2 work has produced artifacts. `run-link attach`
-computes a digest over the task id, status, and evidence map. A run link is
-readback evidence only; it is not approval, scheduling authority, or execution.
+with `--evidence-root` and `--evidence-root-id` reopens bounded regular
+non-symlink evidence, records one SHA-256 per entry, and computes a digest over
+the task id, status, evidence map, evidence digests, and stable public-safe
+evidence-root identity. State-changing workgraph completion requires this
+evidence-bound form and revalidates the same root identity and bytes. Legacy
+path-only run links remain readable and validatable as historical readback but
+cannot complete a workgraph node. A run link is not approval, scheduling
+authority, or execution. Evidence-bound state transitions require a Go 1.24+
+runtime so Atlas can anchor one descriptor-backed root for the full operation;
+older runtimes fail closed.
 
 `ao.atlas.workgraph-repair-plan.v0.1` records bounded repair tasks when a
 matching run link is blocked or failed. It is advisory readback for Foundry

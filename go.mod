@@ -1,4 +1,3 @@
 module github.com/uesugitorachiyo/ao-atlas
 
-go 1.22
-
+go 1.24

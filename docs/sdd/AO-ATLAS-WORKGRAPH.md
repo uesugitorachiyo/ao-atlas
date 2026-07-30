@@ -10,7 +10,7 @@ CLI:
 atlas workgraph validate --workgraph <path>
 atlas workgraph next --workgraph <path> --json
 atlas workgraph materialize-next --workgraph <path> --out <dir> --dry-run
-atlas workgraph complete --workgraph <path> --run-link <path> --out <path>
+atlas workgraph complete --workgraph <path> --run-link <path> --evidence-root <root> --evidence-root-id <id> --out <path>
 atlas workgraph repair-plan --workgraph <path> --run-link <path> --out <path>
 atlas workgraph status --workgraph <path>
 ```
@@ -25,7 +25,40 @@ does not schedule, execute, approve, publish, upload, or call providers.
 `workgraph complete` is explicit file-to-file completion. It reads an existing
 workgraph and run link, marks only the matching factory-task node completed in a
 new output workgraph, and refuses to overwrite the input. Completion requires a
-completed run link, public-safe evidence, and completed dependencies.
+completed evidence-bound run link, matching evidence-root identity, verified
+evidence bytes, and completed dependencies. Path-only legacy run links remain
+readable but are not eligible for state-changing completion.
+
+For operational evidence gates, attach and complete with the same isolated
+evidence root:
+
+```sh
+atlas run-link attach \
+  --task-id <task> \
+  --status completed \
+  --evidence node=nodes/<node>/node-evidence.json \
+  --evidence-root <campaign-root> \
+  --evidence-root-id <stable-public-id> \
+  --out <run-link>
+
+atlas workgraph complete \
+  --workgraph <path> \
+  --run-link <run-link> \
+  --evidence-root <campaign-root> \
+  --evidence-root-id <stable-public-id> \
+  --out <path>
+```
+
+Evidence-bound run links carry one SHA-256 per evidence entry and bind those
+digests and stable evidence-root identity into the run-link digest. Completion
+reopens every bounded regular non-symlink evidence file beneath the supplied
+root and denies missing, changed, oversized, symlinked, escaping, or
+wrong-root evidence before writing the next workgraph. An evidence-bound run
+link cannot complete without matching `--evidence-root` and
+`--evidence-root-id`. Legacy path-only run links remain readable for existing
+evidence but cannot change workgraph state. Strict evidence attachment and
+completion require Go 1.24+ for descriptor-backed root anchoring; older
+runtimes fail closed.
 
 `workgraph repair-plan` emits a bounded repair task when a matching run link is
 blocked or failed. It writes a repair-plan artifact only; Atlas still does not

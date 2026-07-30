@@ -3600,7 +3600,36 @@ func TestWorkgraphCompleteWritesNewCompletedWorkgraph(t *testing.T) {
 	outPath := filepath.Join(dir, "workgraph-completed.json")
 	var out bytes.Buffer
 	inputPath := filepath.Join("..", "..", "examples", "valid", "workgraph.json")
-	code := Run([]string{"workgraph", "complete", "--workgraph", inputPath, "--run-link", filepath.Join("..", "..", "examples", "valid", "run-link.json"), "--out", outPath}, &out, &out)
+	evidenceRoot := filepath.Join(dir, "evidence")
+	evidencePath := filepath.Join(evidenceRoot, "nodes", "readiness-ready.json")
+	if err := os.MkdirAll(filepath.Dir(evidencePath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(evidencePath, []byte("{\"status\":\"passed\"}\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	runLink, err := BuildEvidenceBoundRunLink(
+		"atlas-readiness-task",
+		"completed",
+		map[string]string{"node": "nodes/readiness-ready.json"},
+		evidenceRoot,
+		"evidence-workgraph-complete-test",
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	runLinkPath := filepath.Join(dir, "run-link.json")
+	if err := WriteJSON(runLinkPath, runLink); err != nil {
+		t.Fatal(err)
+	}
+	code := Run([]string{
+		"workgraph", "complete",
+		"--workgraph", inputPath,
+		"--run-link", runLinkPath,
+		"--evidence-root", evidenceRoot,
+		"--evidence-root-id", "evidence-workgraph-complete-test",
+		"--out", outPath,
+	}, &out, &out)
 	if code != 0 {
 		t.Fatalf("complete failed: %s", out.String())
 	}
@@ -3620,6 +3649,172 @@ func TestWorkgraphCompleteWritesNewCompletedWorkgraph(t *testing.T) {
 	}
 	if !strings.Contains(out.String(), "node=readiness-ready") {
 		t.Fatalf("expected node readback, got %s", out.String())
+	}
+}
+
+func TestWorkgraphCompleteRejectsPathOnlyRunLinkWithNonexistentEvidence(t *testing.T) {
+	dir := t.TempDir()
+	runLinkPath := filepath.Join(dir, "run-link.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"run-link", "attach",
+		"--task-id", "atlas-readiness-task",
+		"--status", "completed",
+		"--evidence", "node=nodes/does-not-exist.json",
+		"--out", runLinkPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("legacy run-link attach failed: %s", out.String())
+	}
+	out.Reset()
+	completedPath := filepath.Join(dir, "completed.json")
+	code = Run([]string{
+		"workgraph", "complete",
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--run-link", runLinkPath,
+		"--out", completedPath,
+	}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected path-only run-link to be ineligible for state-changing completion")
+	}
+	if !strings.Contains(out.String(), "evidence-bound run-link is required") {
+		t.Fatalf("expected evidence-bound completion requirement, got %s", out.String())
+	}
+	if _, err := os.Stat(completedPath); !os.IsNotExist(err) {
+		t.Fatalf("completion output must not exist after path-only denial: %v", err)
+	}
+}
+
+func TestWorkgraphCompleteWithEvidenceRootRejectsChangedEvidence(t *testing.T) {
+	dir := t.TempDir()
+	evidenceRoot := filepath.Join(dir, "evidence")
+	evidencePath := filepath.Join(evidenceRoot, "nodes", "readiness-ready", "node-evidence.json")
+	if err := os.MkdirAll(filepath.Dir(evidencePath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(evidencePath, []byte("{\"status\":\"passed\"}\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	runLinkPath := filepath.Join(dir, "run-link.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"run-link", "attach",
+		"--task-id", "atlas-readiness-task",
+		"--status", "completed",
+		"--evidence", "node=nodes/readiness-ready/node-evidence.json",
+		"--evidence-root", evidenceRoot,
+		"--evidence-root-id", "evidence-fresh-60",
+		"--out", runLinkPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("strict run-link attach failed: %s", out.String())
+	}
+	if err := os.WriteFile(evidencePath, []byte("{\"status\":\"tampered\"}\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	out.Reset()
+	completedPath := filepath.Join(dir, "completed.json")
+	code = Run([]string{
+		"workgraph", "complete",
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--run-link", runLinkPath,
+		"--evidence-root", evidenceRoot,
+		"--evidence-root-id", "evidence-fresh-60",
+		"--out", completedPath,
+	}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected changed evidence to deny workgraph completion")
+	}
+	if !strings.Contains(out.String(), "evidence digest mismatch") {
+		t.Fatalf("expected evidence digest mismatch, got %s", out.String())
+	}
+	if _, err := os.Stat(completedPath); !os.IsNotExist(err) {
+		t.Fatalf("completion output must not exist after evidence mismatch: %v", err)
+	}
+}
+
+func TestWorkgraphCompleteRejectsEvidenceBoundRunLinkWithoutEvidenceRoot(t *testing.T) {
+	dir := t.TempDir()
+	evidenceRoot := filepath.Join(dir, "evidence")
+	evidencePath := filepath.Join(evidenceRoot, "nodes", "readiness-ready", "node-evidence.json")
+	if err := os.MkdirAll(filepath.Dir(evidencePath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(evidencePath, []byte("{\"status\":\"passed\"}\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	runLinkPath := filepath.Join(dir, "run-link.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"run-link", "attach",
+		"--task-id", "atlas-readiness-task",
+		"--status", "completed",
+		"--evidence", "node=nodes/readiness-ready/node-evidence.json",
+		"--evidence-root", evidenceRoot,
+		"--evidence-root-id", "evidence-fresh-60",
+		"--out", runLinkPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("strict run-link attach failed: %s", out.String())
+	}
+	out.Reset()
+	code = Run([]string{
+		"workgraph", "complete",
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--run-link", runLinkPath,
+		"--out", filepath.Join(dir, "completed.json"),
+	}, &out, &out)
+	if code == 0 {
+		t.Fatal("expected evidence-bound completion without evidence root to fail")
+	}
+	if !strings.Contains(out.String(), "--evidence-root is required") {
+		t.Fatalf("expected evidence-root requirement, got %s", out.String())
+	}
+}
+
+func TestWorkgraphCompleteWithEvidenceRootAcceptsUnchangedEvidence(t *testing.T) {
+	dir := t.TempDir()
+	evidenceRoot := filepath.Join(dir, "evidence")
+	evidencePath := filepath.Join(evidenceRoot, "nodes", "readiness-ready", "node-evidence.json")
+	if err := os.MkdirAll(filepath.Dir(evidencePath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(evidencePath, []byte("{\"status\":\"passed\"}\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	runLinkPath := filepath.Join(dir, "run-link.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"run-link", "attach",
+		"--task-id", "atlas-readiness-task",
+		"--status", "completed",
+		"--evidence", "node=nodes/readiness-ready/node-evidence.json",
+		"--evidence-root", evidenceRoot,
+		"--evidence-root-id", "evidence-fresh-60",
+		"--out", runLinkPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("strict run-link attach failed: %s", out.String())
+	}
+	out.Reset()
+	completedPath := filepath.Join(dir, "completed.json")
+	code = Run([]string{
+		"workgraph", "complete",
+		"--workgraph", filepath.Join("..", "..", "examples", "valid", "workgraph.json"),
+		"--run-link", runLinkPath,
+		"--evidence-root", evidenceRoot,
+		"--evidence-root-id", "evidence-fresh-60",
+		"--out", completedPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("evidence-bound completion failed: %s", out.String())
+	}
+	completed, err := LoadJSON[Workgraph](completedPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if completed.Nodes[1].Status != "completed" {
+		t.Fatalf("expected evidence-bound node completion, got %#v", completed.Nodes[1])
 	}
 }
 
@@ -3738,10 +3933,43 @@ func assertWorkgraphRepairPlanFails(t *testing.T, runLinkPath, want string) {
 func assertWorkgraphCompleteFails(t *testing.T, workgraphPath, runLinkPath, want string) {
 	t.Helper()
 	dir := t.TempDir()
+	sourceLink, err := LoadJSON[RunLink](runLinkPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	evidenceRoot := filepath.Join(dir, "evidence")
+	evidencePath := filepath.Join(evidenceRoot, "node.json")
+	if err := os.MkdirAll(evidenceRoot, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(evidencePath, []byte("{\"status\":\"fixture\"}\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	strictLink, err := BuildEvidenceBoundRunLink(
+		sourceLink.TaskID,
+		sourceLink.Status,
+		map[string]string{"node": "node.json"},
+		evidenceRoot,
+		"evidence-workgraph-failure-test",
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+	strictLinkPath := filepath.Join(dir, "strict-run-link.json")
+	if err := WriteJSON(strictLinkPath, strictLink); err != nil {
+		t.Fatal(err)
+	}
 	var out bytes.Buffer
-	code := Run([]string{"workgraph", "complete", "--workgraph", workgraphPath, "--run-link", runLinkPath, "--out", filepath.Join(dir, "completed.json")}, &out, &out)
+	code := Run([]string{
+		"workgraph", "complete",
+		"--workgraph", workgraphPath,
+		"--run-link", strictLinkPath,
+		"--evidence-root", evidenceRoot,
+		"--evidence-root-id", "evidence-workgraph-failure-test",
+		"--out", filepath.Join(dir, "completed.json"),
+	}, &out, &out)
 	if code == 0 {
-		t.Fatalf("expected complete to fail for %s", runLinkPath)
+		t.Fatalf("expected complete to fail for %s", strictLinkPath)
 	}
 	if !strings.Contains(out.String(), want) {
 		t.Fatalf("expected error containing %q, got %s", want, out.String())
@@ -3779,6 +4007,47 @@ func TestRunLinkAttachWritesDigestBoundPublicSafeLink(t *testing.T) {
 	}
 	if !strings.HasPrefix(link.Digest, "sha256:") || link.Digest == "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" {
 		t.Fatalf("expected computed digest, got %s", link.Digest)
+	}
+}
+
+func TestRunLinkAttachWithEvidenceRootBindsRegularFileDigests(t *testing.T) {
+	dir := t.TempDir()
+	evidenceRoot := filepath.Join(dir, "evidence")
+	evidencePath := filepath.Join(evidenceRoot, "nodes", "node-01", "node-evidence.json")
+	if err := os.MkdirAll(filepath.Dir(evidencePath), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	body := []byte("{\"status\":\"passed\"}\n")
+	if err := os.WriteFile(evidencePath, body, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	outPath := filepath.Join(dir, "run-link.json")
+	var out bytes.Buffer
+	code := Run([]string{
+		"run-link", "attach",
+		"--task-id", "fresh-60-task-01",
+		"--status", "completed",
+		"--evidence", "node=nodes/node-01/node-evidence.json",
+		"--evidence-root", evidenceRoot,
+		"--evidence-root-id", "evidence-fresh-60",
+		"--out", outPath,
+	}, &out, &out)
+	if code != 0 {
+		t.Fatalf("strict run-link attach failed: %s", out.String())
+	}
+	link, err := LoadJSON[RunLink](outPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	const wantDigest = "sha256:b215ff190a08ad5dcf98fbe6ee599c5a3a2b5b7034c6b526eeeaa887f67ae648"
+	if got := link.EvidenceDigests["node"]; got != wantDigest {
+		t.Fatalf("evidence digest = %q, want %q", got, wantDigest)
+	}
+	if link.EvidenceRootID != "evidence-fresh-60" {
+		t.Fatalf("evidence root identity = %q, want evidence-fresh-60", link.EvidenceRootID)
+	}
+	if link.Digest != digestRunLink(link) {
+		t.Fatalf("run-link digest does not bind evidence digests: got %s want %s", link.Digest, digestRunLink(link))
 	}
 }
 
