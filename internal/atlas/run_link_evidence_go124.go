@@ -12,17 +12,47 @@ import (
 	"strings"
 )
 
-func digestRunLinkEvidenceFile(root, relativePath string) (string, error) {
+type descriptorRunLinkEvidenceRoot struct {
+	root *os.Root
+}
+
+func openRunLinkEvidenceRoot(rootPath string) (runLinkEvidenceRoot, error) {
+	if strings.TrimSpace(rootPath) == "" {
+		return nil, fmt.Errorf("evidence root is required")
+	}
+	expected, err := os.Lstat(rootPath)
+	if err != nil {
+		return nil, fmt.Errorf("evidence root: %w", err)
+	}
+	if expected.Mode()&os.ModeSymlink != 0 || !expected.IsDir() {
+		return nil, fmt.Errorf("evidence root must be a non-symlink directory")
+	}
+	root, err := os.OpenRoot(rootPath)
+	if err != nil {
+		return nil, fmt.Errorf("evidence root: %w", err)
+	}
+	opened, err := root.Stat(".")
+	if err != nil {
+		_ = root.Close()
+		return nil, fmt.Errorf("evidence root: %w", err)
+	}
+	if !opened.IsDir() || !os.SameFile(expected, opened) {
+		_ = root.Close()
+		return nil, fmt.Errorf("evidence root changed while opening")
+	}
+	return &descriptorRunLinkEvidenceRoot{root: root}, nil
+}
+
+func (root *descriptorRunLinkEvidenceRoot) Close() error {
+	return root.root.Close()
+}
+
+func (root *descriptorRunLinkEvidenceRoot) Digest(relativePath string) (string, error) {
 	clean := filepath.Clean(filepath.FromSlash(relativePath))
 	if filepath.IsAbs(clean) || clean == "." || clean == ".." || strings.HasPrefix(clean, ".."+string(filepath.Separator)) {
 		return "", fmt.Errorf("path must remain beneath evidence root")
 	}
-	rootHandle, err := os.OpenRoot(root)
-	if err != nil {
-		return "", err
-	}
-	defer rootHandle.Close()
-	current := rootHandle
+	current := root.root
 	openedRoots := []*os.Root{}
 	defer func() {
 		for index := len(openedRoots) - 1; index >= 0; index-- {

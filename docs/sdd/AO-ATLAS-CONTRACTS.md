@@ -124,7 +124,9 @@ evidence-root identity. State-changing workgraph completion requires this
 evidence-bound form and revalidates the same root identity and bytes. Legacy
 path-only run links remain readable and validatable as historical readback but
 cannot complete a workgraph node. A run link is not approval, scheduling
-authority, or execution.
+authority, or execution. Evidence-bound state transitions require a Go 1.24+
+runtime so Atlas can anchor one descriptor-backed root for the full operation;
+older runtimes fail closed.
 
 `ao.atlas.workgraph-repair-plan.v0.1` records bounded repair tasks when a
 matching run link is blocked or failed. It is advisory readback for Foundry

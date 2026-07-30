@@ -2,11 +2,14 @@ package atlas
 
 import (
 	"fmt"
-	"os"
-	"strings"
 )
 
 const maxRunLinkEvidenceBytes int64 = 16 << 20
+
+type runLinkEvidenceRoot interface {
+	Digest(relativePath string) (string, error)
+	Close() error
+}
 
 func BuildEvidenceBoundRunLink(taskID, status string, evidence map[string]string, evidenceRoot, evidenceRootID string) (RunLink, error) {
 	link := RunLink{
@@ -17,11 +20,13 @@ func BuildEvidenceBoundRunLink(taskID, status string, evidence map[string]string
 		EvidenceDigests: map[string]string{},
 		EvidenceRootID:  evidenceRootID,
 	}
-	if err := validateEvidenceRoot(evidenceRoot); err != nil {
+	root, err := openRunLinkEvidenceRoot(evidenceRoot)
+	if err != nil {
 		return RunLink{}, err
 	}
+	defer root.Close()
 	for key, relativePath := range evidence {
-		digest, err := digestRunLinkEvidenceFile(evidenceRoot, relativePath)
+		digest, err := root.Digest(relativePath)
 		if err != nil {
 			return RunLink{}, fmt.Errorf("evidence %s: %w", key, err)
 		}
@@ -44,11 +49,13 @@ func VerifyRunLinkEvidence(link RunLink, evidenceRoot, evidenceRootID string) er
 	if evidenceRootID != link.EvidenceRootID {
 		return fmt.Errorf("evidence root identity mismatch: got %q want %q", evidenceRootID, link.EvidenceRootID)
 	}
-	if err := validateEvidenceRoot(evidenceRoot); err != nil {
+	root, err := openRunLinkEvidenceRoot(evidenceRoot)
+	if err != nil {
 		return err
 	}
+	defer root.Close()
 	for key, relativePath := range link.Evidence {
-		actual, err := digestRunLinkEvidenceFile(evidenceRoot, relativePath)
+		actual, err := root.Digest(relativePath)
 		if err != nil {
 			return fmt.Errorf("evidence %s: %w", key, err)
 		}
@@ -56,20 +63,6 @@ func VerifyRunLinkEvidence(link RunLink, evidenceRoot, evidenceRootID string) er
 		if actual != expected {
 			return fmt.Errorf("evidence digest mismatch for %s: got %s want %s", key, actual, expected)
 		}
-	}
-	return nil
-}
-
-func validateEvidenceRoot(root string) error {
-	if strings.TrimSpace(root) == "" {
-		return fmt.Errorf("evidence root is required")
-	}
-	info, err := os.Lstat(root)
-	if err != nil {
-		return fmt.Errorf("evidence root: %w", err)
-	}
-	if info.Mode()&os.ModeSymlink != 0 || !info.IsDir() {
-		return fmt.Errorf("evidence root must be a non-symlink directory")
 	}
 	return nil
 }

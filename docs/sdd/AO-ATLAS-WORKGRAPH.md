@@ -56,7 +56,9 @@ root and denies missing, changed, oversized, symlinked, escaping, or
 wrong-root evidence before writing the next workgraph. An evidence-bound run
 link cannot complete without matching `--evidence-root` and
 `--evidence-root-id`. Legacy path-only run links remain readable for existing
-evidence but cannot change workgraph state.
+evidence but cannot change workgraph state. Strict evidence attachment and
+completion require Go 1.24+ for descriptor-backed root anchoring; older
+runtimes fail closed.
 
 `workgraph repair-plan` emits a bounded repair task when a matching run link is
 blocked or failed. It writes a repair-plan artifact only; Atlas still does not
