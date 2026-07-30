@@ -26,7 +26,7 @@ func ValidateFoundryImportCanonicalEnvelope(raw []byte) error {
 }
 
 func BuildAtlasFoundryCanonicalImportFixture(workgraphPath string, expectedNode string) (AtlasFoundryCanonicalImportFixture, error) {
-	workgraph, err := LoadJSON[Workgraph](workgraphPath)
+	workgraph, err := LoadWorkgraph(workgraphPath)
 	if err != nil {
 		return AtlasFoundryCanonicalImportFixture{}, err
 	}

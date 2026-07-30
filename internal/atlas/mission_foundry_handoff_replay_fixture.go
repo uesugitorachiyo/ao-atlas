@@ -38,7 +38,7 @@ func BuildAtlasFoundryHandoffReplayFixture(options AtlasFoundryHandoffReplayFixt
 	if err := ValidateAtlasRecommendationReadback(readback); err != nil {
 		return AtlasFoundryHandoffReplayFixture{}, err
 	}
-	workgraph, err := LoadJSON[Workgraph](sourceWorkgraphPath)
+	workgraph, err := LoadWorkgraph(sourceWorkgraphPath)
 	if err != nil {
 		return AtlasFoundryHandoffReplayFixture{}, err
 	}

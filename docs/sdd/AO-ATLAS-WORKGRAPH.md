@@ -8,6 +8,8 @@ CLI:
 
 ```sh
 atlas workgraph validate --workgraph <path>
+atlas workgraph binding-digest --workgraph <path> --json
+atlas workgraph validate-binding --workgraph <path> --binding <path> --json
 atlas workgraph next --workgraph <path> --json
 atlas workgraph materialize-next --workgraph <path> --out <dir> --dry-run
 atlas workgraph complete --workgraph <path> --run-link <path> --evidence-root <root> --evidence-root-id <id> --out <path>
@@ -28,6 +30,36 @@ new output workgraph, and refuses to overwrite the input. Completion requires a
 completed evidence-bound run link, matching evidence-root identity, verified
 evidence bytes, and completed dependencies. Path-only legacy run links remain
 readable but are not eligible for state-changing completion.
+
+## Operational binding gate
+
+An operational Workgraph opts into the gate by carrying
+`operational_binding`. Once present, the typed contract is strict: unknown
+fields and missing execution, planner, retry, partition, provenance, or safety
+bindings fail closed. Every node references one approved planner partition and
+repeats the explicit safety boundary for that partition.
+
+Retry arithmetic matches the Mission planner: `maximum_attempts` is between one
+and four, and each partition's `retry_allowance_ms` must equal
+`estimated_duration_ms * maximum_attempts` without overflow and fit both the
+total-node timeout and node budget.
+
+`workgraph validate-binding` compares a separate typed activation-binding
+document to the Workgraph. Its deterministic JSON readback sets
+`activation_allowed` only for an exact contract, always reports
+`child_process_launches: 0`, `executes_work: false`, and
+`safe_to_execute: false`, and never runs a node. A denial exits non-zero after
+emitting the JSON readback. The graph-binding digest excludes mutable node
+status and its own digest field, so an evidence-bound `workgraph complete`
+transition preserves the approved operational contract.
+
+Use `workgraph binding-digest` to derive that non-self-referential digest from
+the actual Atlas binary before sealing the Workgraph and activation-binding
+document. This readback is also inert and reports zero child-process launches.
+
+Legacy AO Mission provenance-node augmentation is denied for an operational
+Workgraph because adding readback nodes would expand the approved planner
+partitions. Use the digest-bound Mission metadata readback instead.
 
 For operational evidence gates, attach and complete with the same isolated
 evidence root:

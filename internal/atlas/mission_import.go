@@ -125,12 +125,15 @@ func BuildAOMissionWorkgraphMetadata(importPath, workgraphPath string) (AOMissio
 	if importRecord.SafeToExecute || importRecord.SchedulesWork || importRecord.ExecutesWork || importRecord.ApprovesWork {
 		return AOMissionWorkgraphMetadata{}, fmt.Errorf("AO Mission import must not claim execution, scheduling, or approval authority")
 	}
-	workgraph, err := LoadJSON[Workgraph](workgraphPath)
+	workgraph, err := LoadWorkgraph(workgraphPath)
 	if err != nil {
 		return AOMissionWorkgraphMetadata{}, err
 	}
 	if err := ValidateWorkgraph(workgraph); err != nil {
 		return AOMissionWorkgraphMetadata{}, err
+	}
+	if workgraphRequiresOperationalBinding(workgraph) && importRecord.MissionID != workgraph.MissionID {
+		return AOMissionWorkgraphMetadata{}, fmt.Errorf("AO Mission import mission_id must match operational workgraph")
 	}
 	importDigest, err := digestFile(importPath)
 	if err != nil {
@@ -170,6 +173,9 @@ func BuildAOMissionProvenanceWorkgraph(importRecord AOMissionImport, workgraph W
 	}
 	if err := ValidateWorkgraph(workgraph); err != nil {
 		return Workgraph{}, err
+	}
+	if workgraphRequiresOperationalBinding(workgraph) {
+		return Workgraph{}, fmt.Errorf("operational workgraph provenance augmentation is denied because it would expand the approved planner partitions")
 	}
 	augmented := workgraph
 	augmented.Nodes = append([]WorkgraphNode(nil), workgraph.Nodes...)
@@ -246,6 +252,9 @@ func ValidateAOMissionWorkgraphMetadata(metadata AOMissionWorkgraphMetadata, wor
 	}
 	if strings.TrimSpace(metadata.MissionID) == "" {
 		return fmt.Errorf("AO Mission workgraph metadata requires mission_id")
+	}
+	if workgraphRequiresOperationalBinding(workgraph) && metadata.MissionID != workgraph.MissionID {
+		return fmt.Errorf("AO Mission workgraph metadata mission_id must match operational workgraph")
 	}
 	if metadata.WorkgraphID != workgraph.ID {
 		return fmt.Errorf("AO Mission workgraph metadata workgraph_id must match workgraph")

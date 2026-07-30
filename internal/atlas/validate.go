@@ -579,6 +579,11 @@ func ValidateWorkgraph(workgraph Workgraph) error {
 	if hasWorkgraphDependencyCycle(workgraph, seen) {
 		errs = append(errs, "dependency cycle detected")
 	}
+	if workgraphRequiresOperationalBinding(workgraph) {
+		for _, conflict := range operationalWorkgraphConflicts(workgraph) {
+			errs = append(errs, "operational_binding: "+conflict)
+		}
+	}
 	return joinErrors(errs)
 }
 

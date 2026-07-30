@@ -211,7 +211,7 @@ func latestCompletedWorkgraph(evidenceRoot string) (string, Workgraph, error) {
 		if entry.IsDir() || entry.Name() != "workgraph-after.json" {
 			return nil
 		}
-		workgraph, err := LoadJSON[Workgraph](path)
+		workgraph, err := LoadWorkgraph(path)
 		if err != nil {
 			return err
 		}

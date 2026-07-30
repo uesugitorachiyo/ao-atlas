@@ -13,6 +13,7 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 	fs := flag.NewFlagSet("workgraph "+args[0], flag.ContinueOnError)
 	fs.SetOutput(io.Discard)
 	path := fs.String("workgraph", "", "workgraph path")
+	bindingPath := fs.String("binding", "", "operational Workgraph binding path")
 	runLinkPath := fs.String("run-link", "", "run link path")
 	aoMissionMetadataPath := fs.String("ao-mission-metadata", "", "optional AO Mission workgraph metadata")
 	jsonOut := fs.Bool("json", false, "json output")
@@ -23,7 +24,52 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 	if err := fs.Parse(args[1:]); err != nil {
 		return err
 	}
-	workgraph, err := LoadJSON[Workgraph](*path)
+	if args[0] == "binding-digest" {
+		if *path == "" {
+			return fmt.Errorf("--workgraph is required")
+		}
+		workgraph, err := LoadWorkgraph(*path)
+		if err != nil {
+			return err
+		}
+		digest, err := ComputeOperationalWorkgraphBindingDigest(workgraph)
+		if err != nil {
+			return err
+		}
+		return printJSON(stdout, OperationalWorkgraphBindingDigestReadback{
+			ContractVersion:      OperationalWorkgraphBindingDigestReadbackContract,
+			WorkgraphID:          workgraph.ID,
+			GraphBindingDigest:   digest,
+			ChildProcessLaunches: 0,
+			ExecutesWork:         false,
+			SafeToExecute:        false,
+		})
+	}
+	if args[0] == "validate-binding" {
+		if *path == "" {
+			return emitOperationalBindingLoadDenial(stdout, "", "WORKGRAPH_PATH_REQUIRED")
+		}
+		if *bindingPath == "" {
+			return emitOperationalBindingLoadDenial(stdout, "", "BINDING_PATH_REQUIRED")
+		}
+		workgraph, err := LoadWorkgraph(*path)
+		if err != nil {
+			return emitOperationalBindingLoadDenial(stdout, "", "WORKGRAPH_PARSE_ERROR")
+		}
+		binding, err := LoadOperationalWorkgraphBindingDocument(*bindingPath)
+		if err != nil {
+			return emitOperationalBindingLoadDenial(stdout, workgraph.ID, "BINDING_PARSE_ERROR")
+		}
+		readback := ValidateOperationalWorkgraphBinding(workgraph, binding)
+		if err := printJSON(stdout, readback); err != nil {
+			return err
+		}
+		if !readback.ActivationAllowed {
+			return fmt.Errorf("operational Workgraph binding denied")
+		}
+		return nil
+	}
+	workgraph, err := LoadWorkgraph(*path)
 	if err != nil {
 		return err
 	}
@@ -135,4 +181,21 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 		return fmt.Errorf("unknown workgraph subcommand %q", args[0])
 	}
 	return nil
+}
+
+func emitOperationalBindingLoadDenial(stdout io.Writer, workgraphID, conflict string) error {
+	readback := OperationalWorkgraphBindingReadback{
+		ContractVersion:      OperationalWorkgraphBindingReadbackContract,
+		WorkgraphID:          workgraphID,
+		ActivationAllowed:    false,
+		ConflictCodes:        []string{conflict},
+		ChildProcessLaunches: 0,
+		ExecutesWork:         false,
+		SafeToExecute:        false,
+		ExactNextAction:      "correct the operational Workgraph and binding conflicts; do not activate nodes",
+	}
+	if err := printJSON(stdout, readback); err != nil {
+		return err
+	}
+	return fmt.Errorf("operational Workgraph binding denied")
 }

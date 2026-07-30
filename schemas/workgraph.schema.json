@@ -7,7 +7,197 @@
     "contract_version": { "const": "ao.atlas.workgraph.v0.1" },
     "id": { "type": "string" },
     "target_instance": { "type": "string" },
-    "nodes": { "type": "array" }
+    "mission_id": { "type": "string" },
+    "objective_id": { "type": "string" },
+    "objective_digest": { "$ref": "#/$defs/digest" },
+    "correlation_id": { "type": "string" },
+    "soak_id": { "type": "string" },
+    "plan_id": { "type": "string" },
+    "policy_digest": { "$ref": "#/$defs/digest" },
+    "activation_id": { "type": "string" },
+    "evidence_root_identity": { "type": "string" },
+    "mission_source_head": { "$ref": "#/$defs/sourceHead" },
+    "atlas_source_head": { "$ref": "#/$defs/sourceHead" },
+    "mission_binary_sha256": { "$ref": "#/$defs/digest" },
+    "atlas_binary_sha256": { "$ref": "#/$defs/digest" },
+    "operational_binding": { "$ref": "#/$defs/operationalBinding" },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "required": ["operational_binding"] },
+      "then": {
+        "required": [
+          "mission_id", "objective_id", "objective_digest", "correlation_id",
+          "soak_id", "plan_id", "policy_digest", "activation_id",
+          "evidence_root_identity", "mission_source_head", "atlas_source_head",
+          "mission_binary_sha256", "atlas_binary_sha256"
+        ],
+        "propertyNames": {
+          "enum": [
+            "contract_version", "id", "target_instance", "mission_id",
+            "objective_id", "objective_digest", "correlation_id", "soak_id",
+            "plan_id", "policy_digest", "activation_id",
+            "evidence_root_identity", "mission_source_head",
+            "atlas_source_head", "mission_binary_sha256",
+            "atlas_binary_sha256", "operational_binding", "nodes"
+          ]
+        },
+        "properties": {
+          "nodes": {
+            "items": {
+              "required": [
+                "id", "status", "factory_task", "dependencies", "blockers",
+                "stitch_task", "operational_binding"
+              ],
+              "propertyNames": {
+                "enum": [
+                  "id", "status", "factory_task", "dependencies", "blockers",
+                  "stitch_task", "operational_binding"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "sourceHead": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "safetyBoundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mutates_repositories", "releases_or_publishes", "calls_providers",
+        "expands_authority", "allows_unplanned_commands",
+        "allows_unbounded_retries", "activates_child_processes",
+        "schedules_work", "executes_work", "approves_work",
+        "activation_requires_validated_binding",
+        "preserves_phase_clock_on_retry"
+      ],
+      "properties": {
+        "mutates_repositories": { "const": false },
+        "releases_or_publishes": { "const": false },
+        "calls_providers": { "const": false },
+        "expands_authority": { "const": false },
+        "allows_unplanned_commands": { "const": false },
+        "allows_unbounded_retries": { "const": false },
+        "activates_child_processes": { "const": false },
+        "schedules_work": { "const": false },
+        "executes_work": { "const": false },
+        "approves_work": { "const": false },
+        "activation_requires_validated_binding": { "const": true },
+        "preserves_phase_clock_on_retry": { "const": true }
+      }
+    },
+    "partition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "partition_id", "node_id", "test_id", "classification",
+        "requested_repeat_count", "effective_repeat_count",
+        "estimated_duration_ms", "retry_allowance_ms",
+        "per_attempt_timeout_ms", "total_node_timeout_ms", "node_budget_ms"
+      ],
+      "properties": {
+        "partition_id": { "type": "string", "minLength": 1 },
+        "node_id": { "type": "string", "minLength": 1 },
+        "test_id": { "type": "string", "minLength": 1 },
+        "classification": { "enum": ["regular", "scale"] },
+        "requested_repeat_count": { "type": "integer", "minimum": 1 },
+        "effective_repeat_count": { "type": "integer", "minimum": 1 },
+        "scale_dimension": { "type": "string", "minLength": 1 },
+        "estimated_duration_ms": { "type": "integer", "minimum": 1 },
+        "retry_allowance_ms": { "type": "integer", "minimum": 0 },
+        "per_attempt_timeout_ms": { "type": "integer", "minimum": 1 },
+        "total_node_timeout_ms": { "type": "integer", "minimum": 1 },
+        "node_budget_ms": { "type": "integer", "minimum": 1 }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "classification": { "const": "scale" } },
+            "required": ["classification"]
+          },
+          "then": {
+            "required": ["scale_dimension"],
+            "properties": { "effective_repeat_count": { "const": 1 } }
+          }
+        },
+        {
+          "if": {
+            "properties": { "classification": { "const": "regular" } },
+            "required": ["classification"]
+          },
+          "then": { "not": { "required": ["scale_dimension"] } }
+        }
+      ]
+    },
+    "operationalBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "execution_profile_digest", "command_catalog_digest",
+        "duration_history_digest", "planner_input_digest",
+        "planner_readback_digest", "graph_binding_digest", "retry_policy",
+        "planner_partitions", "safety_boundaries"
+      ],
+      "properties": {
+        "execution_profile_digest": { "$ref": "#/$defs/digest" },
+        "command_catalog_digest": { "$ref": "#/$defs/digest" },
+        "duration_history_digest": { "$ref": "#/$defs/digest" },
+        "planner_input_digest": { "$ref": "#/$defs/digest" },
+        "planner_readback_digest": { "$ref": "#/$defs/digest" },
+        "graph_binding_digest": { "$ref": "#/$defs/digest" },
+        "retry_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["maximum_attempts", "maximum_total_retries"],
+          "properties": {
+            "maximum_attempts": { "type": "integer", "minimum": 1, "maximum": 4 },
+            "maximum_total_retries": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "planner_partitions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/partition" }
+        },
+        "safety_boundaries": { "$ref": "#/$defs/safetyBoundaries" }
+      }
+    },
+    "nodeOperationalBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planner_partition_id", "test_id", "classification",
+        "safety_boundaries"
+      ],
+      "properties": {
+        "planner_partition_id": { "type": "string", "minLength": 1 },
+        "test_id": { "type": "string", "minLength": 1 },
+        "classification": { "type": "string", "minLength": 1 },
+        "safety_boundaries": { "$ref": "#/$defs/safetyBoundaries" }
+      }
+    },
+    "node": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "status": { "enum": ["ready", "blocked", "completed"] },
+        "factory_task": { "type": "object" },
+        "dependencies": { "type": "array", "items": { "type": "string" } },
+        "blockers": { "type": "array", "items": { "type": "string" } },
+        "stitch_task": { "type": "boolean" },
+        "operational_binding": {
+          "$ref": "#/$defs/nodeOperationalBinding"
+        }
+      }
+    }
   }
 }
-

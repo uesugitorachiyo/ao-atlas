@@ -97,8 +97,58 @@ func writeCampaignLineageWorkgraphFixture(t *testing.T, dir string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	encoded = append(encoded, '\n')
-	if err := os.WriteFile(inputPath, encoded, 0o644); err != nil {
+	var workgraph Workgraph
+	if err := json.Unmarshal(encoded, &workgraph); err != nil {
+		t.Fatal(err)
+	}
+	safety := WorkgraphSafetyBoundaries{
+		ActivationRequiresValidatedBinding: true,
+		PreservesPhaseClockOnRetry:         true,
+	}
+	partitions := make([]WorkgraphPlannerPartition, 0, len(workgraph.Nodes))
+	for i := range workgraph.Nodes {
+		if workgraph.Nodes[i].Dependencies == nil {
+			workgraph.Nodes[i].Dependencies = []string{}
+		}
+		if workgraph.Nodes[i].Blockers == nil {
+			workgraph.Nodes[i].Blockers = []string{}
+		}
+		partition := WorkgraphPlannerPartition{
+			PartitionID:          "lineage-partition-" + workgraph.Nodes[i].ID,
+			NodeID:               workgraph.Nodes[i].ID,
+			TestID:               "lineage-test-" + workgraph.Nodes[i].ID,
+			Classification:       "regular",
+			RequestedRepeatCount: 1,
+			EffectiveRepeatCount: 1,
+			EstimatedDurationMS:  1000,
+			RetryAllowanceMS:     1000,
+			PerAttemptTimeoutMS:  2000,
+			TotalNodeTimeoutMS:   2000,
+			NodeBudgetMS:         2000,
+		}
+		partitions = append(partitions, partition)
+		workgraph.Nodes[i].OperationalBinding = &WorkgraphNodeOperationalBinding{
+			PlannerPartitionID: partition.PartitionID,
+			TestID:             partition.TestID,
+			Classification:     partition.Classification,
+			SafetyBoundaries:   safety,
+		}
+	}
+	workgraph.OperationalBinding = &OperationalWorkgraphBinding{
+		ExecutionProfileDigest: testDigest('7'),
+		CommandCatalogDigest:   testDigest('8'),
+		DurationHistoryDigest:  testDigest('9'),
+		PlannerInputDigest:     testDigest('a'),
+		PlannerReadbackDigest:  testDigest('b'),
+		RetryPolicy:            WorkgraphRetryPolicy{MaximumAttempts: 1, MaximumTotalRetries: 0},
+		PlannerPartitions:      partitions,
+		SafetyBoundaries:       safety,
+	}
+	workgraph.OperationalBinding.GraphBindingDigest, err = ComputeOperationalWorkgraphBindingDigest(workgraph)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(inputPath, workgraph); err != nil {
 		t.Fatal(err)
 	}
 	return inputPath
