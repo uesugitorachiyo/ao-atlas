@@ -17,6 +17,7 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 	aoMissionMetadataPath := fs.String("ao-mission-metadata", "", "optional AO Mission workgraph metadata")
 	jsonOut := fs.Bool("json", false, "json output")
 	out := fs.String("out", "", "output directory")
+	evidenceRoot := fs.String("evidence-root", "", "optional root requiring evidence-bound run-link verification")
 	dryRun := fs.Bool("dry-run", false, "write a dry-run skeleton without scheduling or executing")
 	if err := fs.Parse(args[1:]); err != nil {
 		return err
@@ -92,6 +93,14 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 		link, err := LoadJSON[RunLink](*runLinkPath)
 		if err != nil {
 			return err
+		}
+		if len(link.EvidenceDigests) > 0 && *evidenceRoot == "" {
+			return fmt.Errorf("--evidence-root is required for evidence-bound run-link completion")
+		}
+		if *evidenceRoot != "" {
+			if err := VerifyRunLinkEvidence(link, *evidenceRoot); err != nil {
+				return err
+			}
 		}
 		completed, nodeID, err := CompleteWorkgraph(workgraph, link)
 		if err != nil {

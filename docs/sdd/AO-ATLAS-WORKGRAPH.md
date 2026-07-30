@@ -27,6 +27,32 @@ workgraph and run link, marks only the matching factory-task node completed in a
 new output workgraph, and refuses to overwrite the input. Completion requires a
 completed run link, public-safe evidence, and completed dependencies.
 
+For operational evidence gates, attach and complete with the same isolated
+evidence root:
+
+```sh
+atlas run-link attach \
+  --task-id <task> \
+  --status completed \
+  --evidence node=nodes/<node>/node-evidence.json \
+  --evidence-root <campaign-root> \
+  --out <run-link>
+
+atlas workgraph complete \
+  --workgraph <path> \
+  --run-link <run-link> \
+  --evidence-root <campaign-root> \
+  --out <path>
+```
+
+Evidence-bound run links carry one SHA-256 per evidence entry and bind those
+digests into the run-link digest. Completion reopens every bounded regular
+non-symlink evidence file beneath the supplied root and denies missing,
+changed, oversized, symlinked, or escaping paths before writing the next
+workgraph. An evidence-bound run link cannot complete without
+`--evidence-root`. Legacy path-only run links remain readable for existing
+evidence.
+
 `workgraph repair-plan` emits a bounded repair task when a matching run link is
 blocked or failed. It writes a repair-plan artifact only; Atlas still does not
 schedule, execute, approve, publish, upload, or call providers. The repair task

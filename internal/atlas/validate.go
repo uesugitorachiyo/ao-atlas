@@ -1111,6 +1111,29 @@ func ValidateRunLink(link RunLink) error {
 	if !digestPattern.MatchString(link.Digest) {
 		errs = append(errs, "digest must be sha256:<64 hex>")
 	}
+	if len(link.EvidenceDigests) > 0 {
+		if len(link.EvidenceDigests) != len(link.Evidence) {
+			errs = append(errs, "evidence_digests must cover every evidence entry")
+		}
+		for key := range link.Evidence {
+			digest, ok := link.EvidenceDigests[key]
+			if !ok {
+				errs = append(errs, "evidence_digests missing key "+key)
+				continue
+			}
+			if !digestPattern.MatchString(digest) {
+				errs = append(errs, "evidence_digests."+key+" must be sha256:<64 hex>")
+			}
+		}
+		for key := range link.EvidenceDigests {
+			if _, ok := link.Evidence[key]; !ok {
+				errs = append(errs, "evidence_digests has unknown key "+key)
+			}
+		}
+		if link.Digest != digestRunLink(link) {
+			errs = append(errs, "digest does not match evidence-bound run-link payload")
+		}
+	}
 	return joinErrors(errs)
 }
 
@@ -1280,11 +1303,13 @@ func digestRunLink(link RunLink) string {
 		TaskID          string            `json:"task_id"`
 		Status          string            `json:"status"`
 		Evidence        map[string]string `json:"evidence"`
+		EvidenceDigests map[string]string `json:"evidence_digests,omitempty"`
 	}{
 		ContractVersion: link.ContractVersion,
 		TaskID:          link.TaskID,
 		Status:          link.Status,
 		Evidence:        link.Evidence,
+		EvidenceDigests: link.EvidenceDigests,
 	}
 	data, _ := json.Marshal(payload)
 	return DigestBytes(data)
