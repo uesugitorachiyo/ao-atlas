@@ -1,10 +1,23 @@
 package atlas
 
 type Workgraph struct {
-	ContractVersion string          `json:"contract_version"`
-	ID              string          `json:"id"`
-	TargetInstance  string          `json:"target_instance"`
-	Nodes           []WorkgraphNode `json:"nodes"`
+	ContractVersion      string          `json:"contract_version"`
+	ID                   string          `json:"id"`
+	TargetInstance       string          `json:"target_instance"`
+	MissionID            string          `json:"mission_id,omitempty"`
+	ObjectiveID          string          `json:"objective_id,omitempty"`
+	ObjectiveDigest      string          `json:"objective_digest,omitempty"`
+	CorrelationID        string          `json:"correlation_id,omitempty"`
+	SoakID               string          `json:"soak_id,omitempty"`
+	PlanID               string          `json:"plan_id,omitempty"`
+	PolicyDigest         string          `json:"policy_digest,omitempty"`
+	ActivationID         string          `json:"activation_id,omitempty"`
+	EvidenceRootIdentity string          `json:"evidence_root_identity,omitempty"`
+	MissionSourceHead    string          `json:"mission_source_head,omitempty"`
+	AtlasSourceHead      string          `json:"atlas_source_head,omitempty"`
+	MissionBinarySHA256  string          `json:"mission_binary_sha256,omitempty"`
+	AtlasBinarySHA256    string          `json:"atlas_binary_sha256,omitempty"`
+	Nodes                []WorkgraphNode `json:"nodes"`
 }
 
 type WorkgraphNode struct {
