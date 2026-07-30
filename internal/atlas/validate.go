@@ -1112,6 +1112,8 @@ func ValidateRunLink(link RunLink) error {
 		errs = append(errs, "digest must be sha256:<64 hex>")
 	}
 	if len(link.EvidenceDigests) > 0 {
+		requireField(&errs, "evidence_root_id", link.EvidenceRootID)
+		checkPublicPath(&errs, "evidence_root_id", link.EvidenceRootID, true)
 		if len(link.EvidenceDigests) != len(link.Evidence) {
 			errs = append(errs, "evidence_digests must cover every evidence entry")
 		}
@@ -1304,12 +1306,14 @@ func digestRunLink(link RunLink) string {
 		Status          string            `json:"status"`
 		Evidence        map[string]string `json:"evidence"`
 		EvidenceDigests map[string]string `json:"evidence_digests,omitempty"`
+		EvidenceRootID  string            `json:"evidence_root_id,omitempty"`
 	}{
 		ContractVersion: link.ContractVersion,
 		TaskID:          link.TaskID,
 		Status:          link.Status,
 		Evidence:        link.Evidence,
 		EvidenceDigests: link.EvidenceDigests,
+		EvidenceRootID:  link.EvidenceRootID,
 	}
 	data, _ := json.Marshal(payload)
 	return DigestBytes(data)

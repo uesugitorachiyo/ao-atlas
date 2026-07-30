@@ -18,6 +18,7 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 	jsonOut := fs.Bool("json", false, "json output")
 	out := fs.String("out", "", "output directory")
 	evidenceRoot := fs.String("evidence-root", "", "optional root requiring evidence-bound run-link verification")
+	evidenceRootID := fs.String("evidence-root-id", "", "stable public-safe identity for the evidence root")
 	dryRun := fs.Bool("dry-run", false, "write a dry-run skeleton without scheduling or executing")
 	if err := fs.Parse(args[1:]); err != nil {
 		return err
@@ -94,13 +95,14 @@ func runWorkgraph(args []string, stdout io.Writer) error {
 		if err != nil {
 			return err
 		}
-		if len(link.EvidenceDigests) > 0 && *evidenceRoot == "" {
+		if len(link.EvidenceDigests) == 0 {
+			return fmt.Errorf("evidence-bound run-link is required for workgraph completion")
+		}
+		if *evidenceRoot == "" {
 			return fmt.Errorf("--evidence-root is required for evidence-bound run-link completion")
 		}
-		if *evidenceRoot != "" {
-			if err := VerifyRunLinkEvidence(link, *evidenceRoot); err != nil {
-				return err
-			}
+		if err := VerifyRunLinkEvidence(link, *evidenceRoot, *evidenceRootID); err != nil {
+			return err
 		}
 		completed, nodeID, err := CompleteWorkgraph(workgraph, link)
 		if err != nil {

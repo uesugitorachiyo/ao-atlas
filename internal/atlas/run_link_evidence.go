@@ -1,24 +1,21 @@
 package atlas
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
-	"io"
 	"os"
-	"path/filepath"
 	"strings"
 )
 
 const maxRunLinkEvidenceBytes int64 = 16 << 20
 
-func BuildEvidenceBoundRunLink(taskID, status string, evidence map[string]string, evidenceRoot string) (RunLink, error) {
+func BuildEvidenceBoundRunLink(taskID, status string, evidence map[string]string, evidenceRoot, evidenceRootID string) (RunLink, error) {
 	link := RunLink{
 		ContractVersion: RunLinkContract,
 		TaskID:          taskID,
 		Status:          status,
 		Evidence:        evidence,
 		EvidenceDigests: map[string]string{},
+		EvidenceRootID:  evidenceRootID,
 	}
 	if err := validateEvidenceRoot(evidenceRoot); err != nil {
 		return RunLink{}, err
@@ -37,12 +34,15 @@ func BuildEvidenceBoundRunLink(taskID, status string, evidence map[string]string
 	return link, nil
 }
 
-func VerifyRunLinkEvidence(link RunLink, evidenceRoot string) error {
+func VerifyRunLinkEvidence(link RunLink, evidenceRoot, evidenceRootID string) error {
 	if err := ValidateRunLink(link); err != nil {
 		return err
 	}
 	if len(link.EvidenceDigests) == 0 {
 		return fmt.Errorf("evidence-bound run-link is required")
+	}
+	if evidenceRootID != link.EvidenceRootID {
+		return fmt.Errorf("evidence root identity mismatch: got %q want %q", evidenceRootID, link.EvidenceRootID)
 	}
 	if err := validateEvidenceRoot(evidenceRoot); err != nil {
 		return err
@@ -72,48 +72,4 @@ func validateEvidenceRoot(root string) error {
 		return fmt.Errorf("evidence root must be a non-symlink directory")
 	}
 	return nil
-}
-
-func digestRunLinkEvidenceFile(root, relativePath string) (string, error) {
-	clean := filepath.Clean(filepath.FromSlash(relativePath))
-	if filepath.IsAbs(clean) || clean == "." || clean == ".." || strings.HasPrefix(clean, ".."+string(filepath.Separator)) {
-		return "", fmt.Errorf("path must remain beneath evidence root")
-	}
-	current := root
-	parts := strings.Split(clean, string(filepath.Separator))
-	for index, part := range parts {
-		current = filepath.Join(current, part)
-		info, err := os.Lstat(current)
-		if err != nil {
-			return "", err
-		}
-		if info.Mode()&os.ModeSymlink != 0 {
-			return "", fmt.Errorf("path component %q must not be a symlink", part)
-		}
-		if index < len(parts)-1 && !info.IsDir() {
-			return "", fmt.Errorf("path component %q must be a directory", part)
-		}
-		if index == len(parts)-1 {
-			if !info.Mode().IsRegular() {
-				return "", fmt.Errorf("evidence must be a regular file")
-			}
-			if info.Size() > maxRunLinkEvidenceBytes {
-				return "", fmt.Errorf("evidence exceeds %d-byte limit", maxRunLinkEvidenceBytes)
-			}
-		}
-	}
-	file, err := os.Open(current)
-	if err != nil {
-		return "", err
-	}
-	defer file.Close()
-	hash := sha256.New()
-	written, err := io.Copy(hash, io.LimitReader(file, maxRunLinkEvidenceBytes+1))
-	if err != nil {
-		return "", err
-	}
-	if written > maxRunLinkEvidenceBytes {
-		return "", fmt.Errorf("evidence exceeds %d-byte limit", maxRunLinkEvidenceBytes)
-	}
-	return "sha256:" + hex.EncodeToString(hash.Sum(nil)), nil
 }

@@ -68,13 +68,13 @@ go run ./cmd/atlas factory materialize --task examples/valid/factory-task.json -
 go run ./cmd/atlas workgraph next --workgraph examples/valid/workgraph.json --json
 go run ./cmd/atlas workgraph validate --workgraph examples/valid/workgraph-large-stress.json
 go run ./cmd/atlas workgraph materialize-next --workgraph examples/valid/workgraph.json --out .atlas-local/workgraph-next-materialization --dry-run
-go run ./cmd/atlas workgraph complete --workgraph examples/valid/workgraph.json --run-link examples/valid/run-link.json --out .atlas-local/workgraph-completed.json
+go run ./cmd/atlas run-link attach --task-id atlas-readiness-task --status completed --evidence verification=docs/sdd/AO-ATLAS-WORKGRAPH.md --evidence-root . --evidence-root-id ao-atlas-checkout --out .atlas-local/run-link.json
+go run ./cmd/atlas workgraph complete --workgraph examples/valid/workgraph.json --run-link .atlas-local/run-link.json --evidence-root . --evidence-root-id ao-atlas-checkout --out .atlas-local/workgraph-completed.json
 go run ./cmd/atlas workgraph repair-plan --workgraph examples/valid/workgraph.json --run-link examples/invalid/run-link-blocked.json --out .atlas-local/workgraph-repair-plan.json
 go run ./cmd/atlas context-pack repack --task examples/valid/factory-task.json --run-link examples/valid/run-link-needs-context.json --source-ref docs/sdd/AO-ATLAS-CONTEXT-PACKS.md --source-digest sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa --out .atlas-local/context-pack-repacked.json
 go run ./cmd/atlas context-pack validate --pack examples/valid/context-pack.json
 go run ./cmd/atlas foundry handoff emit --workgraph examples/valid/workgraph.json --out .atlas-local/foundry-handoff.json
 go run ./cmd/atlas foundry import --workgraph examples/valid/workgraph.json --instance examples/valid/stack-instance.json --out .atlas-local/foundry-import
-go run ./cmd/atlas run-link attach --task-id atlas-readiness-task --status completed --evidence ao2=evidence/ao2/atlas-readiness.json --out .atlas-local/run-link.json
 ```
 
 Ready `blueprint import` output and direct `foundry import` output both write
