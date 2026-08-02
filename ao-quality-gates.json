@@ -1,0 +1,84 @@
+{
+  "schema_version": "ao.quality-gates.v1",
+  "repository": "ao-atlas",
+  "lifecycle": "active_hosted",
+  "supported_platforms": ["linux", "macos", "windows"],
+  "required_tools": ["git", "go"],
+  "generated_paths": [
+    ".atlas-local/**",
+    ".atlas-state/**",
+    "bin/**",
+    "dist/**",
+    "target/**",
+    "tmp/**"
+  ],
+  "protected_paths": [
+    ".git/**",
+    "docs/evidence/**"
+  ],
+  "compatibility": {
+    "minimum_consumer_version": "1.0.0",
+    "owner": "ao-atlas"
+  },
+  "evidence": {
+    "public_safe": true,
+    "local_artifact_root": "target/quality-gates",
+    "maximum_result_bytes": 262144
+  },
+  "levels": {
+    "commit": {
+      "snapshot": "staged_tree",
+      "maximum_duration_seconds": 10,
+      "network_allowed": false,
+      "mutates_source": false,
+      "steps": [
+        {
+          "id": "staged-diff-check",
+          "argv": ["git", "diff", "--cached", "--check"],
+          "timeout_seconds": 10,
+          "path_triggers": ["**"]
+        }
+      ]
+    },
+    "push": {
+      "snapshot": "outgoing_commits",
+      "maximum_duration_seconds": 120,
+      "network_allowed": false,
+      "mutates_source": false,
+      "steps": [
+        {
+          "id": "atlas-package-tests",
+          "argv": ["go", "test", "./internal/atlas", "-count=1"],
+          "timeout_seconds": 110,
+          "path_triggers": ["**"]
+        }
+      ]
+    },
+    "full": {
+      "snapshot": "source_head",
+      "maximum_duration_seconds": 1800,
+      "network_allowed": true,
+      "mutates_source": false,
+      "steps": [
+        {
+          "id": "go-tests",
+          "argv": ["go", "test", "./...", "-count=1"],
+          "timeout_seconds": 1200,
+          "path_triggers": ["**"]
+        },
+        {
+          "id": "go-vet",
+          "argv": ["go", "vet", "./..."],
+          "timeout_seconds": 300,
+          "path_triggers": ["**"]
+        },
+        {
+          "id": "go-build",
+          "argv": ["go", "build", "-o", "target/quality-gates/atlas", "./cmd/atlas"],
+          "timeout_seconds": 300,
+          "path_triggers": ["**"]
+        }
+      ]
+    }
+  }
+}

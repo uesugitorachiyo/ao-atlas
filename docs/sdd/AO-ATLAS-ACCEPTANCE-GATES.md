@@ -13,6 +13,25 @@ Production readiness requires:
 
 The readiness script prints `score=100/100` only after every gate passes.
 
+## Developer Quality Gates
+
+The root `ao-quality-gates.json` manifest provides deterministic local
+feedback through the AO2 quality runner:
+
+- `commit` checks the exact staged tree with `git diff --cached --check`;
+- `push` runs the Atlas package tests against exact outgoing commits; and
+- `full` runs all Go tests, vet, and a build against the exact source head.
+
+Atlas owns these argument vectors and their timeouts. Fast gates are
+network-disabled and all levels must remain source-non-mutating. Generated
+build output is confined to `target/quality-gates`.
+
+These local gates do not replace the platform-native production-readiness
+scripts in hosted CI. In particular, the Unix and Windows scripts retain the
+authoritative contract and fixture checks for their respective hosts.
+Cross-repository roundtrip verification remains conditional on an explicitly
+in-scope synchronized AO Foundry checkout.
+
 ## Release Candidate Checkpoint
 
 AO Atlas v0.1 is eligible for a stable tag or release candidate only when:

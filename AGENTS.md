@@ -30,9 +30,16 @@ Atlas consumes Blueprint authorization and Mission objectives and readbacks. It 
 
 ## Verification
 
+- `ao-quality-gates.json` is Atlas-owned executable command truth for optional
+  local commit, push, and full feedback through the AO2 quality runner. Keep
+  its argument vectors, path triggers, timeouts, generated paths, and
+  non-mutation policy aligned with the commands below.
 - Atlas logic or contract changes: `go test ./internal/atlas -count=1`.
 - Format relevant Go source with `gofmt -d cmd internal`; run `go test ./... -count=1`, `go vet ./...`, and `go build ./cmd/atlas`.
 - Run `scripts/production-readiness.sh` as the full local gate. Run `scripts/atlas-foundry-roundtrip-smoke.sh` only when the cross-repository boundary changes and a synchronized sibling Foundry checkout is explicitly in scope.
+- The source-owned quality manifest does not replace hosted
+  `production-readiness.sh` and `production-readiness.ps1` checks or make
+  optional Git hooks authoritative.
 - For instruction changes run `python3 ../ao-architecture/scripts/verify_agent_instruction_layout.py --workspace-root .. --repository ao-atlas`. Always run `git diff --check`.
 
 ## Evidence And Completion
