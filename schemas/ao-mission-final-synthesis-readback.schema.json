@@ -38,6 +38,7 @@
   "properties": {
     "contract_version": { "const": "ao.atlas.ao-mission-final-synthesis-readback.v0.1" },
     "mission_id": { "type": "string", "minLength": 1 },
+    "correlation_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$" },
     "status": { "enum": ["completed", "blocked", "denied"] },
     "source_digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
     "total_nodes": { "type": "integer", "minimum": 0 },

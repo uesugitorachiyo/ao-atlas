@@ -1463,6 +1463,49 @@ func TestMissionFinalSynthesisImportRoundtripsCompletedWave(t *testing.T) {
 	}
 }
 
+func TestMissionFinalSynthesisImportPreservesCorrelationID(t *testing.T) {
+	assertSchemaHasProperty(t, filepath.Join("..", "..", "schemas", "ao-mission-final-synthesis-readback.schema.json"), "correlation_id")
+
+	dir := t.TempDir()
+	synthesisPath := filepath.Join(dir, "final-synthesis.json")
+	body, err := os.ReadFile(filepath.Join("..", "..", "examples", "valid", "ao-mission", "final-synthesis.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var synthesis map[string]any
+	if err := json.Unmarshal(body, &synthesis); err != nil {
+		t.Fatal(err)
+	}
+	synthesis["correlation_id"] = "corr-external-repair-001"
+	if err := WriteJSON(synthesisPath, synthesis); err != nil {
+		t.Fatal(err)
+	}
+
+	readback, err := BuildAOMissionFinalSynthesisReadback(synthesisPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	readbackBody, err := json.Marshal(readback)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var document map[string]any
+	if err := json.Unmarshal(readbackBody, &document); err != nil {
+		t.Fatal(err)
+	}
+	if document["correlation_id"] != "corr-external-repair-001" {
+		t.Fatalf("final synthesis readback lost correlation binding: %#v", document)
+	}
+
+	synthesis["correlation_id"] = "bad correlation"
+	if err := WriteJSON(synthesisPath, synthesis); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := BuildAOMissionFinalSynthesisReadback(synthesisPath); err == nil || !strings.Contains(err.Error(), "correlation_id") {
+		t.Fatalf("invalid correlation_id was accepted: %v", err)
+	}
+}
+
 func TestMissionFinalSynthesisImportRejectsReadyNodeFinalGateDrift(t *testing.T) {
 	dir := t.TempDir()
 	synthesisPath := filepath.Join(dir, "final-synthesis.json")
