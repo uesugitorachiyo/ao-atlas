@@ -128,6 +128,7 @@ type AOMissionProvenanceRender struct {
 type AOMissionFinalSynthesis struct {
 	Schema                                string                                  `json:"schema"`
 	Mission                               string                                  `json:"mission"`
+	CorrelationID                         string                                  `json:"correlation_id,omitempty"`
 	Status                                string                                  `json:"status"`
 	CompletedNodes                        int                                     `json:"completed_nodes"`
 	ReadyNodes                            int                                     `json:"ready_nodes"`
@@ -166,6 +167,7 @@ type AOMissionFinalSynthesisRecommendation struct {
 type AOMissionFinalSynthesisReadback struct {
 	ContractVersion        string   `json:"contract_version"`
 	MissionID              string   `json:"mission_id"`
+	CorrelationID          string   `json:"correlation_id,omitempty"`
 	Status                 string   `json:"status"`
 	SourceDigest           string   `json:"source_digest"`
 	TotalNodes             int      `json:"total_nodes"`

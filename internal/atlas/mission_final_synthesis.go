@@ -2,8 +2,11 @@ package atlas
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 )
+
+var aoMissionCorrelationIDPattern = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$`)
 
 func BuildAOMissionFinalSynthesisReadback(synthesisPath string) (AOMissionFinalSynthesisReadback, error) {
 	var synthesis AOMissionFinalSynthesis
@@ -21,6 +24,7 @@ func BuildAOMissionFinalSynthesisReadback(synthesisPath string) (AOMissionFinalS
 	readback := AOMissionFinalSynthesisReadback{
 		ContractVersion:        AOMissionFinalSynthesisReadbackContract,
 		MissionID:              synthesis.Mission,
+		CorrelationID:          synthesis.CorrelationID,
 		Status:                 synthesis.Status,
 		SourceDigest:           sourceDigest,
 		TotalNodes:             synthesis.CompletedNodes + synthesis.ReadyNodes + synthesis.BlockedNodes,
@@ -63,6 +67,9 @@ func ValidateAOMissionFinalSynthesis(synthesis AOMissionFinalSynthesis) error {
 		errs = append(errs, "schema must be ao.mission.atlas-wave-final-synthesis.v0.1")
 	}
 	requireField(&errs, "mission", synthesis.Mission)
+	if synthesis.CorrelationID != "" && !aoMissionCorrelationIDPattern.MatchString(synthesis.CorrelationID) {
+		errs = append(errs, "correlation_id is invalid")
+	}
 	if !oneOf(synthesis.Status, "completed", "blocked", "denied") {
 		errs = append(errs, "status must be completed, blocked, or denied")
 	}
@@ -159,6 +166,9 @@ func ValidateAOMissionFinalSynthesisReadback(readback AOMissionFinalSynthesisRea
 	var errs []string
 	requireContract(&errs, "ao_mission_final_synthesis_readback", readback.ContractVersion, AOMissionFinalSynthesisReadbackContract)
 	requireField(&errs, "mission_id", readback.MissionID)
+	if readback.CorrelationID != "" && !aoMissionCorrelationIDPattern.MatchString(readback.CorrelationID) {
+		errs = append(errs, "correlation_id is invalid")
+	}
 	if !oneOf(readback.Status, "completed", "blocked", "denied") {
 		errs = append(errs, "status must be completed, blocked, or denied")
 	}
