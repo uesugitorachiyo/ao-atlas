@@ -40,22 +40,26 @@ func TestNativeArtifactWorkflowContract(t *testing.T) {
 		}
 	}
 
-	nativeBuild := strings.Index(workflow, "name: Build native artifact from clean source")
-	policyCheckout := strings.Index(workflow, "name: Checkout pinned supply-chain policy")
+	nativeBuild := strings.Index(workflow, "go build -trimpath")
+	policyCheckout := strings.Index(workflow, "repository: uesugitorachiyo/ao-architecture")
 	if nativeBuild < 0 || policyCheckout < 0 || nativeBuild >= policyCheckout {
 		t.Fatal("native artifact must be built before the policy checkout modifies the source tree")
-	}
-	if !strings.Contains(workflow, `--workspace-root "$supply_chain_dir"`) {
-		t.Fatal("downloadable supply-chain evidence must verify relative to its bundle")
 	}
 	builder := strings.Index(workflow, "scripts/build_go_supply_chain_candidate.py")
 	verifier := strings.Index(workflow, "scripts/verify_supply_chain_policy.py")
 	if builder < 0 || verifier < 0 || builder >= verifier {
 		t.Fatal("supply-chain builder and verifier steps are required in order")
 	}
-	repositoryRoot := strings.Index(workflow[builder:verifier], "--workspace-root .")
-	bundleRoot := strings.Index(workflow[verifier:], `--workspace-root "$supply_chain_dir"`)
-	if repositoryRoot < 0 || bundleRoot < 0 {
+	hasExactLine := func(section, want string) bool {
+		for _, line := range strings.Split(section, "\n") {
+			if strings.TrimSpace(line) == want {
+				return true
+			}
+		}
+		return false
+	}
+	if !hasExactLine(workflow[builder:verifier], `--workspace-root . \`) ||
+		!hasExactLine(workflow[verifier:], `--workspace-root "$supply_chain_dir" \`) {
 		t.Fatal("builder must use the repository root and verifier must use the bundle root")
 	}
 }
