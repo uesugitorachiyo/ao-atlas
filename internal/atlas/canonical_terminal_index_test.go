@@ -29,6 +29,23 @@ func TestBuildCanonicalTerminalIndexReconcilesTerminalState(t *testing.T) {
 	}
 }
 
+func TestBuildCanonicalTerminalIndexAcceptsUsefulWorkZeroMinimum(t *testing.T) {
+	root, manifest := writeTerminalIndexFixture(t, fixtureOptions{usefulWork: true})
+	index, err := BuildCanonicalTerminalIndex(root, manifest)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if index.Lease.MinimumMinutes != 0 || index.Lease.ElapsedMinutes != 0 || index.Lease.Status != "within_window" {
+		t.Fatalf("unexpected useful-work lease: %+v", index.Lease)
+	}
+	if !index.CompletionObserved || !index.ReadinessPassed || !index.FinalResponseAllowed || len(index.Conflicts) != 0 {
+		t.Fatalf("useful-work terminal index did not pass: %+v", index)
+	}
+	if err := VerifyCanonicalTerminalIndex(root, index); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestBuildCanonicalTerminalIndexAcceptsMissionClosureAsNoAction(t *testing.T) {
 	root, manifest := writeTerminalIndexFixture(t, fixtureOptions{
 		nextAction: "Fresh 60-node Mission-to-Atlas soak complete; no further execution is authorized.",
@@ -273,6 +290,7 @@ func TestVerifyCanonicalTerminalIndexRejectsDigestValidSemanticContradiction(t *
 }
 
 type fixtureOptions struct {
+	usefulWork        bool
 	elapsed           int
 	leaseStatus       string
 	ready             int
@@ -297,6 +315,11 @@ func writeTerminalIndexFixture(t *testing.T, options fixtureOptions) (string, st
 	root := t.TempDir()
 	mission := "fixture-wave"
 	elapsed := defaultInt(options.elapsed, 150)
+	minimumMinutes := 120
+	if options.usefulWork {
+		elapsed = options.elapsed
+		minimumMinutes = 0
+	}
 	terminalCompleted := defaultInt(options.terminalCompleted, 40)
 	durationCompleted := defaultInt(options.durationCompleted, terminalCompleted)
 	terminalMission := options.terminalMission
@@ -327,7 +350,7 @@ func writeTerminalIndexFixture(t *testing.T, options fixtureOptions) (string, st
 	durationJSON := `{"contract_version":"fixture.v1","mission_id":"` + mission + `","completed_nodes":` +
 		itoa(durationCompleted) + `,"elapsed_minutes":` + itoa(elapsed) + `}`
 	leaseJSON := `{"contract_version":"fixture.v1","mission_id":"` + mission +
-		`","minimum_nodes":40,"minimum_minutes":120,"target_minutes":150,"maximum_minutes":180}`
+		`","minimum_nodes":40,"minimum_minutes":` + itoa(minimumMinutes) + `,"target_minutes":150,"maximum_minutes":180}`
 
 	paths := []struct {
 		role string

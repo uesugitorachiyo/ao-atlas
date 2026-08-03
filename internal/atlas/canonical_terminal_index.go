@@ -259,7 +259,7 @@ func BuildCanonicalTerminalIndex(root, manifestPath string) (CanonicalTerminalIn
 	index.CompletionObserved = terminal.completed >= index.Counts.Minimum && index.Counts.Minimum > 0
 	index.CanonicalAgreement = true
 	index.Safety = terminal.safety
-	if index.Lease.MinimumMinutes <= 0 || index.Lease.MaximumMinutes <= 0 ||
+	if index.Lease.MinimumMinutes < 0 || index.Lease.MaximumMinutes <= 0 ||
 		index.Lease.MaximumMinutes < index.Lease.MinimumMinutes {
 		index.Conflicts = append(index.Conflicts, "lease_window_invalid")
 	}
