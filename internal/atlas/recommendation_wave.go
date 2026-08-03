@@ -15,6 +15,7 @@ type AtlasRecommendationWaveOptions struct {
 	NodeBudget           int
 	EstimatedMinutes     int
 	MinMinutes           int
+	MinMinutesSet        bool
 	MaxMinutes           int
 	ContinueIfFastTarget int
 	ReturnOnlyWhen       string
@@ -91,7 +92,10 @@ func BuildAtlasRecommendationWave(options AtlasRecommendationWaveOptions) (Atlas
 		continueIfFastTarget = nodeBudget
 	}
 	minMinutes := options.MinMinutes
-	if minMinutes <= 0 {
+	if minMinutes < 0 {
+		return AtlasRecommendationWaveResult{}, fmt.Errorf("min_minutes must be zero or greater")
+	}
+	if !options.MinMinutesSet && minMinutes <= 0 {
 		if minTasks >= 30 || nodeBudget >= 40 || continueIfFastTarget >= 40 {
 			minMinutes = 120
 		} else {
@@ -102,13 +106,21 @@ func BuildAtlasRecommendationWave(options AtlasRecommendationWaveOptions) (Atlas
 	if maxMinutes <= 0 {
 		if minMinutes >= 120 || minTasks >= 30 || nodeBudget >= 40 || continueIfFastTarget >= 40 {
 			maxMinutes = 180
-		} else {
+		} else if minMinutes > 0 {
 			maxMinutes = minMinutes
+		} else {
+			maxMinutes = 90
 		}
 	}
 	estimatedMinutes := options.EstimatedMinutes
 	if estimatedMinutes <= 0 {
-		estimatedMinutes = minMinutes
+		if minTasks >= 30 || nodeBudget >= 40 || continueIfFastTarget >= 40 {
+			estimatedMinutes = 120
+		} else if minMinutes > 0 {
+			estimatedMinutes = minMinutes
+		} else {
+			estimatedMinutes = 90
+		}
 	}
 	returnOnlyWhen := strings.TrimSpace(options.ReturnOnlyWhen)
 	if returnOnlyWhen == "" {
@@ -862,13 +874,13 @@ func ValidateAtlasRecommendationWave(wave AtlasRecommendationWave) error {
 		if wave.Supervisor.MinNodes != wave.MinimumTasks {
 			errs = append(errs, "supervisor.min_nodes must match minimum_tasks")
 		}
-		if wave.Supervisor.MinMinutes < 1 {
-			errs = append(errs, "supervisor.min_minutes must be positive")
+		if wave.Supervisor.MinMinutes < 0 {
+			errs = append(errs, "supervisor.min_minutes must be zero or greater")
 		}
 		if wave.Supervisor.MaxMinutes < wave.Supervisor.MinMinutes {
 			errs = append(errs, "supervisor.max_minutes must be greater than or equal to min_minutes")
 		}
-		if wave.Supervisor.MinNodes >= 30 && wave.Supervisor.MinMinutes < 120 {
+		if wave.Supervisor.MinNodes >= 30 && wave.Supervisor.MinMinutes > 0 && wave.Supervisor.MinMinutes < 120 {
 			errs = append(errs, "supervisor.min_minutes must be at least 120 for a 30-node wave")
 		}
 		if wave.Supervisor.MinNodes >= 30 && wave.Supervisor.MaxMinutes < 180 {
