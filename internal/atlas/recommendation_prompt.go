@@ -81,6 +81,7 @@ func BuildAtlasRecommendationResumePrompt(readback AtlasRecommendationReadback, 
 
 type AtlasRecommendationPromptBudget struct {
 	MinNodes         int
+	TargetMinutes    int
 	MinMinutes       int
 	MaxMinutes       int
 	MaxIterations    int
@@ -92,6 +93,7 @@ type AtlasRecommendationPromptBudget struct {
 func BuildAtlasRecommendationPromptBudget(wave AtlasRecommendationWave) AtlasRecommendationPromptBudget {
 	budget := AtlasRecommendationPromptBudget{
 		MinNodes:         wave.MinimumTasks,
+		TargetMinutes:    wave.EstimatedMinutes,
 		MinMinutes:       wave.EstimatedMinutes,
 		MaxMinutes:       wave.EstimatedMinutes,
 		MaxIterations:    wave.NodeBudget,
@@ -109,12 +111,22 @@ func BuildAtlasRecommendationPromptBudget(wave AtlasRecommendationWave) AtlasRec
 		budget.ReturnOnlyWhen = wave.Supervisor.ReturnOnlyWhen
 		budget.CheckpointPolicy = wave.Supervisor.CheckpointPolicy
 	}
-	budget.StopConditions = []string{
-		fmt.Sprintf("Target duration: %d to %d minutes.", budget.MinMinutes, budget.MaxMinutes),
-		fmt.Sprintf("Node floor stop gate: complete at least %d nodes before final response unless a true hard blocker remains.", budget.MinNodes),
-		fmt.Sprintf("Lease floor stop gate: do not return before min_minutes=%d unless a true hard blocker remains.", budget.MinMinutes),
-		fmt.Sprintf("Continue-if-fast stop gate: if %d nodes finish quickly and no blocker remains, continue through %d nodes.", budget.MinNodes, budget.MaxIterations),
-		"Ready-work stop gate: if ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response.",
+	if budget.MinMinutes == 0 {
+		budget.StopConditions = []string{
+			fmt.Sprintf("Target duration: approximately %d minutes; hard stop at %d minutes.", budget.TargetMinutes, budget.MaxMinutes),
+			fmt.Sprintf("Node floor stop gate: complete at least %d nodes before final response unless a true hard blocker remains.", budget.MinNodes),
+			"Useful-work stop gate: useful work may finish early; never wait or pad elapsed time.",
+			fmt.Sprintf("Continue-if-fast stop gate: if %d nodes finish quickly and no blocker remains, continue through %d nodes.", budget.MinNodes, budget.MaxIterations),
+			"Ready-work stop gate: if ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response.",
+		}
+	} else {
+		budget.StopConditions = []string{
+			fmt.Sprintf("Target duration: %d to %d minutes.", budget.MinMinutes, budget.MaxMinutes),
+			fmt.Sprintf("Node floor stop gate: complete at least %d nodes before final response unless a true hard blocker remains.", budget.MinNodes),
+			fmt.Sprintf("Lease floor stop gate: do not return before min_minutes=%d unless a true hard blocker remains.", budget.MinMinutes),
+			fmt.Sprintf("Continue-if-fast stop gate: if %d nodes finish quickly and no blocker remains, continue through %d nodes.", budget.MinNodes, budget.MaxIterations),
+			"Ready-work stop gate: if ready_nodes > 0 or exact_next_action is non-empty, do not produce a final response.",
+		}
 	}
 	return budget
 }
@@ -128,7 +140,11 @@ func buildAtlasRecommendationPrompt(wave AtlasRecommendationWave) string {
 	b.WriteString(fmt.Sprintf("- Mission: %s.\n", wave.MissionID))
 	b.WriteString(fmt.Sprintf("- Target instance: %s.\n", wave.TargetInstance))
 	b.WriteString(fmt.Sprintf("- Generated Atlas-owned nodes: %d.\n", wave.TotalTasks))
-	b.WriteString(fmt.Sprintf("- Lease minimum: %d nodes, %d to %d minutes.\n", budget.MinNodes, budget.MinMinutes, budget.MaxMinutes))
+	if budget.MinMinutes == 0 {
+		b.WriteString(fmt.Sprintf("- Lease policy: %d nodes, useful-work minimum 0 minutes, target %d minutes, hard maximum %d minutes.\n", budget.MinNodes, budget.TargetMinutes, budget.MaxMinutes))
+	} else {
+		b.WriteString(fmt.Sprintf("- Lease minimum: %d nodes, %d to %d minutes.\n", budget.MinNodes, budget.MinMinutes, budget.MaxMinutes))
+	}
 	b.WriteString(fmt.Sprintf("- Continue-if-fast target: %d nodes.\n", budget.MaxIterations))
 	b.WriteString(fmt.Sprintf("- Final response allowed: %t, because %s.\n", wave.FinalResponseAllowed, wave.FinalResponseReason))
 	b.WriteString(fmt.Sprintf("- Source digest: %s.\n\n", wave.SourceDigest))
@@ -137,7 +153,11 @@ func buildAtlasRecommendationPrompt(wave AtlasRecommendationWave) string {
 	b.WriteString("- Double the previous short batch when explicitly requested, and otherwise use the v0.2 2-3 hour supervisor default.\n")
 	b.WriteString("- This continuation must behave like a long-run supervisor: Atlas owns sequencing, Foundry owns bounded implementation nodes, and Blueprint is used only for genuinely new requirements or authorization.\n\n")
 	b.WriteString("Goal:\n")
-	b.WriteString(fmt.Sprintf("- Target 2-3 hours and complete a durable AO Atlas long-run wave for %s.\n", wave.MissionID))
+	if budget.MinMinutes == 0 {
+		b.WriteString(fmt.Sprintf("- Target approximately %d minutes and complete a durable AO Atlas long-run wave for %s without elapsed-time padding.\n", budget.TargetMinutes, wave.MissionID))
+	} else {
+		b.WriteString(fmt.Sprintf("- Target 2-3 hours and complete a durable AO Atlas long-run wave for %s.\n", wave.MissionID))
+	}
 	b.WriteString(fmt.Sprintf("- Execute at least %d bounded Atlas nodes from the generated workgraph.\n", budget.MinNodes))
 	b.WriteString(fmt.Sprintf("- Complete at least %d bounded implementation/evidence nodes before final response unless a true hard blocker remains.\n", budget.MinNodes))
 	b.WriteString(fmt.Sprintf("- If the first %d nodes finish quickly and no blocker remains, continue through the %d-node continue-if-fast target.\n\n", budget.MinNodes, budget.MaxIterations))

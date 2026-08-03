@@ -31,7 +31,7 @@
     "target_instance": { "type": "string", "minLength": 1 },
     "evidence_root": { "type": "string" },
     "started_at": { "type": "string", "minLength": 1 },
-    "min_minutes": { "type": "integer", "minimum": 1 },
+    "min_minutes": { "type": "integer", "minimum": 0 },
     "max_minutes": { "type": "integer", "minimum": 1 },
     "continue_if_fast_target": { "type": "integer", "minimum": 1 },
     "checkpoint_policy": { "type": "string", "minLength": 1 },

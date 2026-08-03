@@ -52,6 +52,13 @@ For a long-run recommendation wave, use these defaults unless the operator gives
 - `return_only_when`: all generated nodes are done, the minimum is met with no ready work, or a true hard blocker remains
 - `checkpoint_policy`: after each node or timed interval
 
+For current production planning, explicit `min_minutes: 0` selects useful-work
+mode. Atlas preserves zero, keeps `estimated_minutes` as the target, and treats
+`max_minutes` as the hard stop. A completed useful-work wave still requires
+timing evidence so the maximum can be verified, but it may finish at zero
+elapsed minutes and must never wait or pad time. Omitting `--min-minutes`
+retains the historical long-run default and keeps existing evidence readable.
+
 Generated recommendations are not completed work. A node counts as completed only after the workgraph advances through a completed run-link with node gate, candidate, rollback, implementation, tests, verification, public-safety, Promoter, Command, Foundry import, and checkpoint evidence. Completing every generated node is still not enough to close a 2-3 hour lease: the authoritative readback must also record `started_at`, `completed_at`, `elapsed_minutes`, `min_minutes_met=true`, and `lease_time_status=minimum_minutes_met`.
 
 `lease-start.json` is the durable start marker for the wave. Preserve it across
@@ -66,6 +73,8 @@ for compact status checks. `return_gate_status` names the active final-response
 gate, such as `blocked_ready_nodes_remain`,
 `blocked_minimum_minutes_unmet`, or `final_response_allowed`.
 `checkpoint_count` mirrors the completed-node count that has checkpoint evidence.
+Useful-work waves may also report `blocked_maximum_minutes_exceeded`; that state
+requires planning and retry reconciliation before more work is activated.
 
 ## Double-Size Operator Requests
 

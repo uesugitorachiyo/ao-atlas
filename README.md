@@ -79,6 +79,11 @@ go run ./cmd/atlas foundry handoff emit --workgraph examples/valid/workgraph.jso
 go run ./cmd/atlas foundry import --workgraph examples/valid/workgraph.json --instance examples/valid/stack-instance.json --out .atlas-local/foundry-import
 ```
 
+For useful-work planning, pass explicit `--min-minutes 0`. The measured
+estimate remains the target, `--max-minutes` remains a hard stop, and Atlas
+never requires elapsed-time padding. Omitting the flag preserves the historical
+long-run default.
+
 Ready `blueprint import` output and direct `foundry import` output both write
 Foundry import material plus an operator-ready continuation handoff:
 `foundry-continuation-handoff.json` and `foundry-continuation-prompt.md`.

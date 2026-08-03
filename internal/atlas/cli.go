@@ -401,6 +401,12 @@ func runMissionRecommendationsImport(args []string, stdout io.Writer) error {
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
+	minMinutesSet := false
+	fs.Visit(func(current *flag.Flag) {
+		if current.Name == "min-minutes" {
+			minMinutesSet = true
+		}
+	})
 	if strings.TrimSpace(*recommendationsPath) == "" {
 		return fmt.Errorf("--recommendations is required")
 	}
@@ -420,6 +426,7 @@ func runMissionRecommendationsImport(args []string, stdout io.Writer) error {
 		NodeBudget:           *nodeBudget,
 		EstimatedMinutes:     *estimatedMinutes,
 		MinMinutes:           *minMinutes,
+		MinMinutesSet:        minMinutesSet,
 		MaxMinutes:           *maxMinutes,
 		ContinueIfFastTarget: *continueIfFastTarget,
 		ReturnOnlyWhen:       *returnOnlyWhen,

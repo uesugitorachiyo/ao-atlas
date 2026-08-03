@@ -26,6 +26,7 @@ Atlas consumes Blueprint authorization and Mission objectives and readbacks. It 
 
 - Change the smallest owned compilation surface and preserve dependency order, single executable-node selection, context provenance, continuation gates, and non-authority flags.
 - Add negative coverage for malformed, stale, digest-mismatched, traversal, or over-authority inputs. Do not weaken a rejection fixture to obtain a result.
+- Preserve an explicit zero-minute recommendation lease minimum as useful-work mode. Keep target and maximum duration independent, require timing evidence to enforce the maximum, and never pad elapsed time; omitted minima retain the historical default.
 - Update this file in the same pull request when durable commands, architecture, ownership, or authority boundaries change.
 
 ## Verification
