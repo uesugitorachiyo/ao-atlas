@@ -1404,6 +1404,211 @@ func TestMissionImportBindsAOMissionArtifacts(t *testing.T) {
 	}
 }
 
+func TestMissionImportAcceptsV02RetainedContent(t *testing.T) {
+	dir := t.TempDir()
+	record, status := writeAOMissionImportRecordAndStatus(t, dir)
+	manifest, _ := writeAOMissionV02ArtifactManifest(t, dir, "canonical-terminal-index.json", []byte(`{"contract_version":"ao.canonical-terminal-index.v1"}`), nil)
+
+	importRecord, err := BuildAOMissionImport(record, status, manifest)
+	if err != nil {
+		t.Fatalf("v0.2 artifact manifest import failed: %v", err)
+	}
+	if importRecord.MissionID != "mission-demo" || importRecord.ExecutesWork || importRecord.ApprovesWork || importRecord.SafeToExecute {
+		t.Fatalf("v0.2 import widened authority or lost identity: %#v", importRecord)
+	}
+}
+
+func TestMissionImportRejectsUnsafeV02RetainedContent(t *testing.T) {
+	for name, prepare := range map[string]func(t *testing.T, dir, contentPath string, manifestPath string){
+		"missing retained content": func(t *testing.T, _ string, contentPath string, _ string) {
+			t.Helper()
+			if err := os.Remove(contentPath); err != nil {
+				t.Fatal(err)
+			}
+		},
+		"altered retained content": func(t *testing.T, _ string, contentPath string, _ string) {
+			t.Helper()
+			if err := os.WriteFile(contentPath, []byte("altered"), 0o600); err != nil {
+				t.Fatal(err)
+			}
+		},
+		"symlinked retained content": func(t *testing.T, dir, contentPath string, _ string) {
+			t.Helper()
+			external := filepath.Join(dir, "external-content")
+			if err := os.WriteFile(external, []byte("retained content"), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.Remove(contentPath); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.Symlink(external, contentPath); err != nil {
+				t.Fatal(err)
+			}
+		},
+		"oversized retained content": func(t *testing.T, _ string, contentPath string, _ string) {
+			t.Helper()
+			if err := os.WriteFile(contentPath, bytes.Repeat([]byte("x"), canonicalTerminalArtifactMaxBytes+1), 0o600); err != nil {
+				t.Fatal(err)
+			}
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			dir := t.TempDir()
+			record, status := writeAOMissionImportRecordAndStatus(t, dir)
+			manifest, contentPath := writeAOMissionV02ArtifactManifest(t, dir, "source.json", []byte("retained content"), nil)
+			prepare(t, dir, contentPath, manifest)
+			if _, err := BuildAOMissionImport(record, status, manifest); err == nil {
+				t.Fatal("unsafe v0.2 retained content was accepted")
+			}
+		})
+	}
+}
+
+func TestMissionImportRejectsV02MalformedOrUnknownFields(t *testing.T) {
+	for name, mutate := range map[string]func(map[string]any){
+		"unknown root field": func(manifest map[string]any) { manifest["unexpected"] = true },
+		"unknown artifact ref field": func(manifest map[string]any) {
+			manifest["artifact_refs"].([]any)[0].(map[string]any)["unexpected"] = true
+		},
+		"traversal content ref": func(manifest map[string]any) {
+			manifest["artifact_refs"].([]any)[0].(map[string]any)["content_ref"] = "../retained-content"
+		},
+		"numeric content ref": func(manifest map[string]any) {
+			manifest["artifact_refs"].([]any)[0].(map[string]any)["content_ref"] = 42
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			dir := t.TempDir()
+			record, status := writeAOMissionImportRecordAndStatus(t, dir)
+			manifestPath, _ := writeAOMissionV02ArtifactManifest(t, dir, "source.json", []byte("retained content"), nil)
+			body, err := os.ReadFile(manifestPath)
+			if err != nil {
+				t.Fatal(err)
+			}
+			var manifest map[string]any
+			if err := json.Unmarshal(body, &manifest); err != nil {
+				t.Fatal(err)
+			}
+			mutate(manifest)
+			if err := WriteJSON(manifestPath, manifest); err != nil {
+				t.Fatal(err)
+			}
+			if _, err := BuildAOMissionImport(record, status, manifestPath); err == nil {
+				t.Fatalf("malformed v0.2 manifest %q was accepted", name)
+			}
+		})
+	}
+}
+
+func TestMissionImportPreservesV01ArtifactManifestFallback(t *testing.T) {
+	dir := t.TempDir()
+	record, status := writeAOMissionImportRecordAndStatus(t, dir)
+	artifactPath := filepath.Join(dir, "legacy.json")
+	body := []byte(`{"schema":"ao.mission.route-decision.v0.1"}`)
+	if err := os.WriteFile(artifactPath, body, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	manifestPath := filepath.Join(dir, "artifact-manifest.json")
+	if err := WriteJSON(manifestPath, map[string]any{
+		"schema":     "ao.mission.artifact-manifest.v0.1",
+		"mission_id": "mission-demo",
+		"artifact_refs": []any{map[string]any{
+			"schema": "ao.mission.artifact-ref.v0.1",
+			"ref":    "legacy.json",
+			"digest": DigestBytes(body),
+		}},
+		"executes_work": false,
+		"approves_work": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := BuildAOMissionImport(record, status, manifestPath); err != nil {
+		t.Fatalf("legacy v0.1 manifest did not import: %v", err)
+	}
+}
+
+type aoMissionArtifactManifestV02Fixture struct {
+	Schema         string                           `json:"schema"`
+	MissionID      string                           `json:"mission_id"`
+	ArtifactRefs   []aoMissionArtifactRefV02Fixture `json:"artifact_refs"`
+	ManifestDigest string                           `json:"manifest_digest"`
+	Signature      string                           `json:"signature"`
+	SafeToExecute  bool                             `json:"safe_to_execute"`
+	ExecutesWork   bool                             `json:"executes_work"`
+	ApprovesWork   bool                             `json:"approves_work"`
+}
+
+type aoMissionArtifactRefV02Fixture struct {
+	Schema     string `json:"schema"`
+	Ref        string `json:"ref"`
+	ContentRef string `json:"content_ref"`
+	Digest     string `json:"digest"`
+	Kind       string `json:"kind,omitempty"`
+}
+
+func writeAOMissionImportRecordAndStatus(t *testing.T, dir string) (string, string) {
+	t.Helper()
+	record := filepath.Join(dir, "mission-record.json")
+	status := filepath.Join(dir, "command-status.json")
+	if err := WriteJSON(record, map[string]any{
+		"schema":        "ao.mission.record.v0.1",
+		"mission_id":    "mission-demo",
+		"status":        "active",
+		"current_route": "ao-atlas",
+	}); err != nil {
+		t.Fatal(err)
+	}
+	if err := WriteJSON(status, map[string]any{
+		"schema":               "ao.command.mission-status.v0.1",
+		"mission_id":           "mission-demo",
+		"safe_to_execute":      false,
+		"executes_work":        false,
+		"approves_work":        false,
+		"mutates_repositories": false,
+	}); err != nil {
+		t.Fatal(err)
+	}
+	return record, status
+}
+
+func writeAOMissionV02ArtifactManifest(t *testing.T, dir, ref string, content []byte, mutate func(*aoMissionArtifactManifestV02Fixture)) (string, string) {
+	t.Helper()
+	digest := DigestBytes(content)
+	contentRef := filepath.ToSlash(filepath.Join("artifacts", "sha256", strings.TrimPrefix(digest, "sha256:")))
+	contentPath := filepath.Join(dir, filepath.FromSlash(contentRef))
+	if err := os.MkdirAll(filepath.Dir(contentPath), 0o700); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(contentPath, content, 0o600); err != nil {
+		t.Fatal(err)
+	}
+	manifest := aoMissionArtifactManifestV02Fixture{
+		Schema:    "ao.mission.artifact-manifest.v0.2",
+		MissionID: "mission-demo",
+		ArtifactRefs: []aoMissionArtifactRefV02Fixture{{
+			Schema: "ao.mission.artifact-ref.v0.1", Ref: ref, ContentRef: contentRef, Digest: digest,
+		}},
+	}
+	if mutate != nil {
+		mutate(&manifest)
+	}
+	body, err := json.Marshal(struct {
+		Schema       string                           `json:"schema"`
+		MissionID    string                           `json:"mission_id"`
+		ArtifactRefs []aoMissionArtifactRefV02Fixture `json:"artifact_refs"`
+	}{manifest.Schema, manifest.MissionID, manifest.ArtifactRefs})
+	if err != nil {
+		t.Fatal(err)
+	}
+	manifest.ManifestDigest = DigestBytes(body)
+	manifest.Signature = "ao-mission-local-digest:" + manifest.ManifestDigest
+	manifestPath := filepath.Join(dir, "artifact-manifest.json")
+	if err := WriteJSON(manifestPath, manifest); err != nil {
+		t.Fatal(err)
+	}
+	return manifestPath, contentPath
+}
+
 func TestMissionFinalSynthesisImportRoundtripsCompletedWave(t *testing.T) {
 	dir := t.TempDir()
 	outPath := filepath.Join(dir, "mission-final-synthesis-readback.json")

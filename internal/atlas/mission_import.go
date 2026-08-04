@@ -1,12 +1,39 @@
 package atlas
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"sort"
 	"strings"
 )
+
+const aoMissionArtifactManifestV02MaxBytes = 1 << 20
+
+type aoMissionArtifactManifestV02 struct {
+	Schema         string                    `json:"schema"`
+	MissionID      string                    `json:"mission_id"`
+	ArtifactRefs   []aoMissionArtifactRefV02 `json:"artifact_refs"`
+	ManifestDigest string                    `json:"manifest_digest"`
+	Signature      string                    `json:"signature"`
+	SafeToExecute  bool                      `json:"safe_to_execute"`
+	ExecutesWork   bool                      `json:"executes_work"`
+	ApprovesWork   bool                      `json:"approves_work"`
+	GeneratedAtUTC string                    `json:"generated_at_utc,omitempty"`
+}
+
+type aoMissionArtifactRefV02 struct {
+	Schema     string `json:"schema"`
+	Ref        string `json:"ref"`
+	ContentRef string `json:"content_ref"`
+	Digest     string `json:"digest"`
+	Kind       string `json:"kind,omitempty"`
+}
 
 func BuildAOMissionImport(recordPath, commandStatusPath, artifactManifestPath string) (AOMissionImport, error) {
 	return BuildAOMissionImportWithRouteHistory(recordPath, commandStatusPath, artifactManifestPath, "")
@@ -37,8 +64,8 @@ func BuildAOMissionImportWithTimelineCompaction(recordPath, commandStatusPath, a
 	if err := readJSONIfPossible(commandStatusPath, &commandStatus); err != nil {
 		return AOMissionImport{}, err
 	}
-	var manifest map[string]any
-	if err := readJSONIfPossible(artifactManifestPath, &manifest); err != nil {
+	manifest, err := readAOMissionArtifactManifest(artifactManifestPath)
+	if err != nil {
 		return AOMissionImport{}, err
 	}
 	missionID, _ := record["mission_id"].(string)
@@ -60,9 +87,6 @@ func BuildAOMissionImportWithTimelineCompaction(recordPath, commandStatusPath, a
 		if value, ok := manifest[field].(bool); ok && value {
 			return AOMissionImport{}, fmt.Errorf("artifact manifest %s must be false", field)
 		}
-	}
-	if err := validateAOMissionManifestRefs(manifest, artifactManifestPath); err != nil {
-		return AOMissionImport{}, err
 	}
 	if strings.TrimSpace(routeHistoryPath) != "" {
 		if err := validateAOMissionRouteHistory(routeHistoryPath, missionID); err != nil {
@@ -112,6 +136,251 @@ func BuildAOMissionImportWithTimelineCompaction(recordPath, commandStatusPath, a
 		ExecutesWork:    false,
 		ApprovesWork:    false,
 	}, nil
+}
+
+func readAOMissionArtifactManifest(path string) (map[string]any, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	var envelope struct {
+		Schema string `json:"schema"`
+	}
+	if err := json.Unmarshal(data, &envelope); err != nil {
+		return nil, err
+	}
+	switch envelope.Schema {
+	case "ao.mission.artifact-manifest.v0.1":
+		var manifest map[string]any
+		if err := json.Unmarshal(data, &manifest); err != nil {
+			return nil, err
+		}
+		if err := validateAOMissionManifestRefs(manifest, path); err != nil {
+			return nil, err
+		}
+		return manifest, nil
+	case "ao.mission.artifact-manifest.v0.2":
+		return readAOMissionArtifactManifestV02(data, path)
+	default:
+		return nil, fmt.Errorf("artifact manifest schema must be ao.mission.artifact-manifest.v0.1 or ao.mission.artifact-manifest.v0.2")
+	}
+}
+
+func readAOMissionArtifactManifestV02(data []byte, manifestPath string) (map[string]any, error) {
+	if len(data) > aoMissionArtifactManifestV02MaxBytes {
+		return nil, fmt.Errorf("artifact manifest exceeds %d-byte size limit", aoMissionArtifactManifestV02MaxBytes)
+	}
+	var document map[string]any
+	if err := decodeStrictJSON(data, &document); err != nil {
+		return nil, err
+	}
+	if err := validateAOMissionArtifactManifestV02Structure(document); err != nil {
+		return nil, err
+	}
+	normalized, err := json.Marshal(document)
+	if err != nil {
+		return nil, err
+	}
+	var manifest aoMissionArtifactManifestV02
+	if err := json.Unmarshal(normalized, &manifest); err != nil {
+		return nil, err
+	}
+	if err := validateAOMissionArtifactManifestV02(manifest, manifestPath); err != nil {
+		return nil, err
+	}
+	return document, nil
+}
+
+func validateAOMissionArtifactManifestV02Structure(document map[string]any) error {
+	if document == nil {
+		return errors.New("artifact manifest v0.2 must be a JSON object")
+	}
+	if err := requireAOMissionObjectFields(document, "artifact manifest v0.2", map[string]string{
+		"schema": "string", "mission_id": "string", "artifact_refs": "array", "manifest_digest": "string",
+		"signature": "string", "safe_to_execute": "boolean", "executes_work": "boolean",
+		"approves_work": "boolean", "generated_at_utc": "string",
+	}, []string{"schema", "mission_id", "artifact_refs", "manifest_digest", "signature", "safe_to_execute", "executes_work", "approves_work"}); err != nil {
+		return err
+	}
+	refs := document["artifact_refs"].([]any)
+	for i, raw := range refs {
+		ref, ok := raw.(map[string]any)
+		if !ok || ref == nil {
+			return fmt.Errorf("artifact manifest v0.2 artifact_refs[%d] must be an object", i)
+		}
+		if err := requireAOMissionObjectFields(ref, fmt.Sprintf("artifact manifest v0.2 artifact_refs[%d]", i), map[string]string{
+			"schema": "string", "ref": "string", "content_ref": "string", "digest": "string", "kind": "string",
+		}, []string{"schema", "ref", "content_ref", "digest"}); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func requireAOMissionObjectFields(object map[string]any, label string, allowed map[string]string, required []string) error {
+	for key, value := range object {
+		expected, ok := allowed[key]
+		if !ok {
+			return fmt.Errorf("%s has unknown field %q", label, key)
+		}
+		if !aOMissionValueHasType(value, expected) {
+			return fmt.Errorf("%s field %q must be %s", label, key, expected)
+		}
+	}
+	for _, key := range required {
+		if _, ok := object[key]; !ok {
+			return fmt.Errorf("%s requires field %q", label, key)
+		}
+	}
+	return nil
+}
+
+func aOMissionValueHasType(value any, expected string) bool {
+	switch expected {
+	case "string":
+		_, ok := value.(string)
+		return ok
+	case "array":
+		_, ok := value.([]any)
+		return ok
+	case "boolean":
+		_, ok := value.(bool)
+		return ok
+	default:
+		return false
+	}
+}
+
+func validateAOMissionArtifactManifestV02(manifest aoMissionArtifactManifestV02, manifestPath string) error {
+	if manifest.Schema != "ao.mission.artifact-manifest.v0.2" {
+		return fmt.Errorf("artifact manifest schema must be ao.mission.artifact-manifest.v0.2")
+	}
+	if manifest.SafeToExecute || manifest.ExecutesWork || manifest.ApprovesWork {
+		return errors.New("artifact manifest must not claim execution or approval authority")
+	}
+	if !isCanonicalAOMissionSHA256(manifest.ManifestDigest) {
+		return errors.New("artifact manifest digest must be a canonical sha256 digest")
+	}
+	expectedDigest, err := aOMissionArtifactManifestV02Digest(manifest)
+	if err != nil {
+		return err
+	}
+	if manifest.ManifestDigest != expectedDigest {
+		return errors.New("artifact manifest digest mismatch")
+	}
+	if manifest.Signature != "ao-mission-local-digest:"+manifest.ManifestDigest {
+		return errors.New("artifact manifest signature does not bind manifest digest")
+	}
+	for _, ref := range manifest.ArtifactRefs {
+		if strings.TrimSpace(ref.Ref) == "" {
+			return errors.New("artifact manifest refs require ref")
+		}
+		if ref.Schema != "ao.mission.artifact-ref.v0.1" {
+			return errors.New("artifact manifest artifact ref schema must be ao.mission.artifact-ref.v0.1")
+		}
+		if !isCanonicalAOMissionSHA256(ref.Digest) {
+			return fmt.Errorf("artifact manifest ref %q digest must be a canonical sha256 digest", ref.Ref)
+		}
+		expectedRef := "artifacts/sha256/" + strings.TrimPrefix(ref.Digest, "sha256:")
+		if ref.ContentRef != expectedRef {
+			return fmt.Errorf("artifact manifest ref %q content_ref must be contained and digest-addressed", ref.Ref)
+		}
+		data, err := readAOMissionV02RetainedContent(manifestPath, ref.ContentRef)
+		if err != nil {
+			return fmt.Errorf("artifact manifest ref %q: %w", ref.Ref, err)
+		}
+		if DigestBytes(data) != ref.Digest {
+			return fmt.Errorf("artifact manifest ref %q digest mismatch", ref.Ref)
+		}
+	}
+	return nil
+}
+
+func aOMissionArtifactManifestV02Digest(manifest aoMissionArtifactManifestV02) (string, error) {
+	body, err := json.Marshal(struct {
+		Schema       string                    `json:"schema"`
+		MissionID    string                    `json:"mission_id"`
+		ArtifactRefs []aoMissionArtifactRefV02 `json:"artifact_refs"`
+	}{manifest.Schema, manifest.MissionID, manifest.ArtifactRefs})
+	if err != nil {
+		return "", err
+	}
+	return DigestBytes(body), nil
+}
+
+func isCanonicalAOMissionSHA256(digest string) bool {
+	encoded := strings.TrimPrefix(digest, "sha256:")
+	if encoded == digest || len(encoded) != sha256.Size*2 || encoded != strings.ToLower(encoded) {
+		return false
+	}
+	_, err := hex.DecodeString(encoded)
+	return err == nil
+}
+
+func readAOMissionV02RetainedContent(manifestPath, contentRef string) ([]byte, error) {
+	root, err := os.OpenRoot(filepath.Dir(manifestPath))
+	if err != nil {
+		return nil, fmt.Errorf("open manifest root: %w", err)
+	}
+	defer root.Close()
+	if err := validateAOMissionRetainedDirectories(root); err != nil {
+		return nil, err
+	}
+	before, err := root.Lstat(contentRef)
+	if err != nil {
+		return nil, fmt.Errorf("inspect retained artifact: %w", err)
+	}
+	if !before.Mode().IsRegular() || before.Mode()&os.ModeSymlink != 0 || before.Size() > aoMissionArtifactManifestV02MaxBytes {
+		return nil, errors.New("retained artifact must be a bounded regular non-symlink file")
+	}
+	file, err := root.Open(contentRef)
+	if err != nil {
+		return nil, fmt.Errorf("open retained artifact: %w", err)
+	}
+	opened, statErr := file.Stat()
+	if statErr != nil {
+		_ = file.Close()
+		return nil, fmt.Errorf("stat retained artifact: %w", statErr)
+	}
+	if !opened.Mode().IsRegular() || !os.SameFile(before, opened) || opened.Size() > aoMissionArtifactManifestV02MaxBytes {
+		_ = file.Close()
+		return nil, errors.New("retained artifact changed while opening")
+	}
+	body, readErr := io.ReadAll(io.LimitReader(file, aoMissionArtifactManifestV02MaxBytes+1))
+	closeErr := file.Close()
+	if readErr != nil {
+		return nil, fmt.Errorf("read retained artifact: %w", readErr)
+	}
+	if closeErr != nil {
+		return nil, fmt.Errorf("close retained artifact: %w", closeErr)
+	}
+	if len(body) > aoMissionArtifactManifestV02MaxBytes {
+		return nil, errors.New("retained artifact exceeds size limit")
+	}
+	after, err := root.Lstat(contentRef)
+	if err != nil {
+		return nil, fmt.Errorf("reinspect retained artifact: %w", err)
+	}
+	if !after.Mode().IsRegular() || after.Mode()&os.ModeSymlink != 0 || !os.SameFile(opened, after) || after.Size() != int64(len(body)) {
+		return nil, errors.New("retained artifact changed while reading")
+	}
+	if err := validateAOMissionRetainedDirectories(root); err != nil {
+		return nil, err
+	}
+	return body, nil
+}
+
+func validateAOMissionRetainedDirectories(root *os.Root) error {
+	for _, path := range []string{"artifacts", "artifacts/sha256"} {
+		info, err := root.Lstat(path)
+		if err != nil {
+			return fmt.Errorf("inspect retained artifact directory: %w", err)
+		}
+		if !info.IsDir() || info.Mode()&os.ModeSymlink != 0 {
+			return errors.New("retained artifact directory must be a non-symlink directory")
+		}
+	}
+	return nil
 }
 
 func BuildAOMissionWorkgraphMetadata(importPath, workgraphPath string) (AOMissionWorkgraphMetadata, error) {
