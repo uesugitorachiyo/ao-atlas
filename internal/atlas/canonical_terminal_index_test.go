@@ -204,6 +204,25 @@ func TestTerminalIndexCLISerializedPassingRoundTrip(t *testing.T) {
 	}
 }
 
+func TestCanonicalTerminalIndexRoundTripsThroughMissionV02CASManifest(t *testing.T) {
+	root, terminalManifest := writeTerminalIndexFixture(t, fixtureOptions{})
+	index, err := BuildCanonicalTerminalIndex(root, terminalManifest)
+	if err != nil {
+		t.Fatal(err)
+	}
+	indexBody, err := json.Marshal(index)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	importRoot := t.TempDir()
+	record, status := writeAOMissionImportRecordAndStatus(t, importRoot)
+	missionManifest, _ := writeAOMissionV02ArtifactManifest(t, importRoot, "canonical-terminal-index.json", indexBody, nil)
+	if _, err := BuildAOMissionImport(record, status, missionManifest); err != nil {
+		t.Fatalf("CAS-backed canonical terminal index did not round-trip through Mission import: %v", err)
+	}
+}
+
 func TestTerminalIndexCLISerializedValidation(t *testing.T) {
 	t.Run("digest altered", func(t *testing.T) {
 		root, manifest := writeTerminalIndexFixture(t, fixtureOptions{})
