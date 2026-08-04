@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"sort"
@@ -139,41 +138,32 @@ func BuildAOMissionImportWithTimelineCompaction(recordPath, commandStatusPath, a
 }
 
 func readAOMissionArtifactManifest(path string) (map[string]any, error) {
-	data, err := os.ReadFile(path)
+	data, err := readAOMissionBoundedRegularFileNoFollow(path, aoMissionArtifactManifestV02MaxBytes)
 	if err != nil {
 		return nil, err
-	}
-	var envelope struct {
-		Schema string `json:"schema"`
-	}
-	if err := json.Unmarshal(data, &envelope); err != nil {
-		return nil, err
-	}
-	switch envelope.Schema {
-	case "ao.mission.artifact-manifest.v0.1":
-		var manifest map[string]any
-		if err := json.Unmarshal(data, &manifest); err != nil {
-			return nil, err
-		}
-		if err := validateAOMissionManifestRefs(manifest, path); err != nil {
-			return nil, err
-		}
-		return manifest, nil
-	case "ao.mission.artifact-manifest.v0.2":
-		return readAOMissionArtifactManifestV02(data, path)
-	default:
-		return nil, fmt.Errorf("artifact manifest schema must be ao.mission.artifact-manifest.v0.1 or ao.mission.artifact-manifest.v0.2")
-	}
-}
-
-func readAOMissionArtifactManifestV02(data []byte, manifestPath string) (map[string]any, error) {
-	if len(data) > aoMissionArtifactManifestV02MaxBytes {
-		return nil, fmt.Errorf("artifact manifest exceeds %d-byte size limit", aoMissionArtifactManifestV02MaxBytes)
 	}
 	var document map[string]any
 	if err := decodeStrictJSON(data, &document); err != nil {
 		return nil, err
 	}
+	schema, ok := document["schema"].(string)
+	if !ok {
+		return nil, errors.New("artifact manifest schema must be a string")
+	}
+	switch schema {
+	case "ao.mission.artifact-manifest.v0.1":
+		if err := validateAOMissionManifestRefs(document, path); err != nil {
+			return nil, err
+		}
+		return document, nil
+	case "ao.mission.artifact-manifest.v0.2":
+		return readAOMissionArtifactManifestV02(document, path)
+	default:
+		return nil, fmt.Errorf("artifact manifest schema must be ao.mission.artifact-manifest.v0.1 or ao.mission.artifact-manifest.v0.2")
+	}
+}
+
+func readAOMissionArtifactManifestV02(document map[string]any, manifestPath string) (map[string]any, error) {
 	if err := validateAOMissionArtifactManifestV02Structure(document); err != nil {
 		return nil, err
 	}
@@ -318,69 +308,7 @@ func isCanonicalAOMissionSHA256(digest string) bool {
 }
 
 func readAOMissionV02RetainedContent(manifestPath, contentRef string) ([]byte, error) {
-	root, err := os.OpenRoot(filepath.Dir(manifestPath))
-	if err != nil {
-		return nil, fmt.Errorf("open manifest root: %w", err)
-	}
-	defer root.Close()
-	if err := validateAOMissionRetainedDirectories(root); err != nil {
-		return nil, err
-	}
-	before, err := root.Lstat(contentRef)
-	if err != nil {
-		return nil, fmt.Errorf("inspect retained artifact: %w", err)
-	}
-	if !before.Mode().IsRegular() || before.Mode()&os.ModeSymlink != 0 || before.Size() > aoMissionArtifactManifestV02MaxBytes {
-		return nil, errors.New("retained artifact must be a bounded regular non-symlink file")
-	}
-	file, err := root.Open(contentRef)
-	if err != nil {
-		return nil, fmt.Errorf("open retained artifact: %w", err)
-	}
-	opened, statErr := file.Stat()
-	if statErr != nil {
-		_ = file.Close()
-		return nil, fmt.Errorf("stat retained artifact: %w", statErr)
-	}
-	if !opened.Mode().IsRegular() || !os.SameFile(before, opened) || opened.Size() > aoMissionArtifactManifestV02MaxBytes {
-		_ = file.Close()
-		return nil, errors.New("retained artifact changed while opening")
-	}
-	body, readErr := io.ReadAll(io.LimitReader(file, aoMissionArtifactManifestV02MaxBytes+1))
-	closeErr := file.Close()
-	if readErr != nil {
-		return nil, fmt.Errorf("read retained artifact: %w", readErr)
-	}
-	if closeErr != nil {
-		return nil, fmt.Errorf("close retained artifact: %w", closeErr)
-	}
-	if len(body) > aoMissionArtifactManifestV02MaxBytes {
-		return nil, errors.New("retained artifact exceeds size limit")
-	}
-	after, err := root.Lstat(contentRef)
-	if err != nil {
-		return nil, fmt.Errorf("reinspect retained artifact: %w", err)
-	}
-	if !after.Mode().IsRegular() || after.Mode()&os.ModeSymlink != 0 || !os.SameFile(opened, after) || after.Size() != int64(len(body)) {
-		return nil, errors.New("retained artifact changed while reading")
-	}
-	if err := validateAOMissionRetainedDirectories(root); err != nil {
-		return nil, err
-	}
-	return body, nil
-}
-
-func validateAOMissionRetainedDirectories(root *os.Root) error {
-	for _, path := range []string{"artifacts", "artifacts/sha256"} {
-		info, err := root.Lstat(path)
-		if err != nil {
-			return fmt.Errorf("inspect retained artifact directory: %w", err)
-		}
-		if !info.IsDir() || info.Mode()&os.ModeSymlink != 0 {
-			return errors.New("retained artifact directory must be a non-symlink directory")
-		}
-	}
-	return nil
+	return readAOMissionBoundedRegularFileBeneathNoFollow(filepath.Dir(manifestPath), filepath.FromSlash(contentRef), aoMissionArtifactManifestV02MaxBytes)
 }
 
 func BuildAOMissionWorkgraphMetadata(importPath, workgraphPath string) (AOMissionWorkgraphMetadata, error) {
