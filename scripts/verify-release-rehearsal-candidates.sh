@@ -74,7 +74,7 @@ done
 [[ "$approved_manifest_digest" =~ ^sha256:[0-9a-f]{64}$ ]] || fail "approved manifest digest is invalid"
 [[ -n "$plan_out" ]] || fail "plan output path is required"
 
-expected_targets=(linux-x86_64 macos-x86_64 windows-x86_64)
+expected_targets=(linux-x86_64 macos-aarch64 windows-x86_64)
 work_dir=$(mktemp -d)
 trap 'rm -rf "$work_dir"' EXIT
 find "$candidates_dir" -name candidate-summary.json -type f | sort > "$work_dir/summaries.txt"
@@ -105,9 +105,9 @@ while IFS= read -r summary; do
       expected_goarch="amd64"
       expected_binary="ao-atlas"
       ;;
-    macos-x86_64)
+    macos-aarch64)
       expected_goos="darwin"
-      expected_goarch="amd64"
+      expected_goarch="arm64"
       expected_binary="ao-atlas"
       ;;
     windows-x86_64)
