@@ -18,6 +18,13 @@ for the cross-repository flow.
 
 ## Install
 
+The public `v0.1.0` tag is historical and has no downloadable release assets.
+Build that version from source when reproducing the original contract. Current
+source was qualified as a source-only `v0.2.0` candidate at
+`9a0814817ef54a34e99e2c6c1d41812b011e1661` by the publication-disabled
+[release rehearsal](https://github.com/uesugitorachiyo/ao-atlas/actions/runs/31321287357).
+That candidate is not a public release and must not be presented as one.
+
 ```sh
 go build -o bin/atlas ./cmd/atlas
 ```
@@ -42,7 +49,7 @@ parity, shared-toolchain use, worktree bounds, and `schedules_work=false`,
 `executes_work=false`, `approves_work=false`. When `--registry` is omitted, the
 doctor compares against the registry Atlas would emit from the instance.
 
-AO Atlas v0.1 does not call live providers, push, tag, release, upload, or copy
+AO Atlas does not call live providers, push, tag, release, upload, or copy
 source repos.
 
 ## Quick Start
