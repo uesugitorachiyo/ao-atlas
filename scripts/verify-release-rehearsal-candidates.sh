@@ -260,7 +260,7 @@ while IFS= read -r summary; do
     fail "missing installed archive smoke binding: $target"
 
   expected_help_command="$binary (no arguments)"
-  expected_help_output='atlas <instance|intake|blueprint|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link> ...'
+  expected_help_output='atlas <instance|intake|blueprint|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link|terminal-index> ...'
   jq -e \
     --arg command "$expected_help_command" \
     --arg output "$expected_help_output" \

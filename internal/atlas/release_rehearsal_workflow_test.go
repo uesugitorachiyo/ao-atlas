@@ -785,6 +785,7 @@ func validateReleaseRehearsalWorkflowStructure(workflow string) error {
 	}
 
 	for _, field := range []string{
+		"expected_help='atlas <instance|intake|blueprint|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link|terminal-index> ...'",
 		"help_readback",
 		"version_source_readback",
 		"provider_free_functional",
@@ -1026,7 +1027,7 @@ func writeReleaseCandidateFixture(t *testing.T, root, directoryName string, targ
 	workflowIdentity := "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/12345"
 	functionalFixture := "examples/valid/workgraph.json"
 	functionalFixtureDigest := fileSHA256(t, filepath.Join(repoRoot(t), functionalFixture))
-	helpOutput := "atlas <instance|intake|blueprint|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link> ..."
+	helpOutput := "atlas <instance|intake|blueprint|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link|terminal-index> ..."
 	files := map[string][]byte{
 		"LICENSE":              []byte("license\n"),
 		"archive-identity.txt": []byte(binary + "\nLICENSE\n"),
