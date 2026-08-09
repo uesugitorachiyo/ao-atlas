@@ -32,7 +32,7 @@ type rehearsalTarget struct {
 
 var rehearsalTargets = []rehearsalTarget{
 	{Label: "linux-x86_64", GOOS: "linux", GOARCH: "amd64", Binary: "ao-atlas"},
-	{Label: "macos-x86_64", GOOS: "darwin", GOARCH: "amd64", Binary: "ao-atlas"},
+	{Label: "macos-aarch64", GOOS: "darwin", GOARCH: "arm64", Binary: "ao-atlas"},
 	{Label: "windows-x86_64", GOOS: "windows", GOARCH: "amd64", Binary: "ao-atlas.exe"},
 }
 
@@ -218,7 +218,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "stale candidate",
 			mutate: func(t *testing.T, dir string) {
-				path := filepath.Join(dir, "macos-x86_64", "candidate-summary.json")
+				path := filepath.Join(dir, "macos-aarch64", "candidate-summary.json")
 				updateFixtureJSON(t, path, func(value map[string]any) {
 					value["source_sha"] = "cccccccccccccccccccccccccccccccccccccccc"
 				})
@@ -291,12 +291,12 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "target architecture substitution",
 			mutate: func(t *testing.T, dir string) {
-				candidateDir := filepath.Join(dir, "macos-x86_64")
+				candidateDir := filepath.Join(dir, "macos-aarch64")
 				updateFixtureJSON(t, filepath.Join(candidateDir, "candidate-summary.json"), func(value map[string]any) {
-					value["goarch"] = "arm64"
+					value["goarch"] = "amd64"
 				})
 				updateFixtureJSON(t, filepath.Join(candidateDir, "go-env.json"), func(value map[string]any) {
-					value["GOARCH"] = "arm64"
+					value["GOARCH"] = "amd64"
 				})
 				rewriteCandidateChecksums(t, candidateDir)
 			},
@@ -347,7 +347,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 			mutate: func(t *testing.T, dir string) {
 				linuxDir := filepath.Join(dir, "linux-x86_64")
 				linuxArchive := filepath.Join(linuxDir, "ao-atlas-v0.2.0-linux-x86_64.tar.gz")
-				macosArchive := filepath.Join(dir, "macos-x86_64", "ao-atlas-v0.2.0-macos-x86_64.tar.gz")
+				macosArchive := filepath.Join(dir, "macos-aarch64", "ao-atlas-v0.2.0-macos-aarch64.tar.gz")
 				content, err := os.ReadFile(macosArchive)
 				if err != nil {
 					t.Fatal(err)
@@ -376,7 +376,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "archive hard link entry",
 			mutate: func(t *testing.T, dir string) {
-				candidateDir := filepath.Join(dir, "macos-x86_64")
+				candidateDir := filepath.Join(dir, "macos-aarch64")
 				entries := canonicalReleaseArchiveEntries(t, candidateDir, rehearsalTargets[1])
 				entries[1] = rehearsalArchiveEntry{
 					header: tar.Header{Name: "LICENSE", Typeflag: tar.TypeLink, Linkname: "ao-atlas", Mode: 0o644},
@@ -433,7 +433,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "archive absolute entry",
 			mutate: func(t *testing.T, dir string) {
-				candidateDir := filepath.Join(dir, "macos-x86_64")
+				candidateDir := filepath.Join(dir, "macos-aarch64")
 				entries := canonicalReleaseArchiveEntries(t, candidateDir, rehearsalTargets[1])
 				entries = append(entries, rehearsalArchiveEntry{
 					header:  tar.Header{Name: filepath.Join(candidateDir, "absolute.txt"), Typeflag: tar.TypeReg, Mode: 0o644},
@@ -469,9 +469,9 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "mismatched checksum sidecar",
 			mutate: func(t *testing.T, dir string) {
-				candidateDir := filepath.Join(dir, "macos-x86_64")
-				sidecar := filepath.Join(candidateDir, "ao-atlas-v0.2.0-macos-x86_64.tar.gz.sha256")
-				mustWriteFile(t, sidecar, []byte(strings.Repeat("d", 64)+"  ao-atlas-v0.2.0-macos-x86_64.tar.gz\n"))
+				candidateDir := filepath.Join(dir, "macos-aarch64")
+				sidecar := filepath.Join(candidateDir, "ao-atlas-v0.2.0-macos-aarch64.tar.gz.sha256")
+				mustWriteFile(t, sidecar, []byte(strings.Repeat("d", 64)+"  ao-atlas-v0.2.0-macos-aarch64.tar.gz\n"))
 				rewriteCandidateChecksums(t, candidateDir)
 			},
 			wantErr: "checksum sidecar mismatch",
@@ -524,7 +524,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "false version tag match",
 			mutate: func(t *testing.T, dir string) {
-				candidateDir := filepath.Join(dir, "macos-x86_64")
+				candidateDir := filepath.Join(dir, "macos-aarch64")
 				updateFixtureJSON(t, filepath.Join(candidateDir, "version-source-readback.json"), func(value map[string]any) {
 					value["tag_matches_version"] = false
 				})
@@ -575,7 +575,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "version source schema substitution",
 			mutate: func(t *testing.T, dir string) {
-				substituteEvidenceSchema(t, filepath.Join(dir, "macos-x86_64"), "version-source-readback.json")
+				substituteEvidenceSchema(t, filepath.Join(dir, "macos-aarch64"), "version-source-readback.json")
 			},
 			wantErr: "invalid version source readback evidence",
 		},
@@ -598,7 +598,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "installed archive smoke substitution",
 			mutate: func(t *testing.T, dir string) {
-				candidateDir := filepath.Join(dir, "macos-x86_64")
+				candidateDir := filepath.Join(dir, "macos-aarch64")
 				updateFixtureJSON(t, filepath.Join(candidateDir, "installed-archive-smoke.json"), func(value map[string]any) {
 					value["binary"] = "other"
 				})
@@ -634,7 +634,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "malformed provenance",
 			mutate: func(t *testing.T, dir string) {
-				candidateDir := filepath.Join(dir, "macos-x86_64")
+				candidateDir := filepath.Join(dir, "macos-aarch64")
 				mustWriteFile(t, filepath.Join(candidateDir, "provenance.json"), []byte("{not-json\n"))
 				rewriteCandidateChecksums(t, candidateDir)
 			},
@@ -643,7 +643,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "SBOM package substitution",
 			mutate: func(t *testing.T, dir string) {
-				candidateDir := filepath.Join(dir, "macos-x86_64")
+				candidateDir := filepath.Join(dir, "macos-aarch64")
 				updateFixtureJSON(t, filepath.Join(candidateDir, "sbom.spdx.json"), func(value map[string]any) {
 					value["packages"] = []any{map[string]any{"name": "other"}}
 				})
@@ -692,7 +692,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "malformed signature status",
 			mutate: func(t *testing.T, dir string) {
-				candidateDir := filepath.Join(dir, "macos-x86_64")
+				candidateDir := filepath.Join(dir, "macos-aarch64")
 				mustWriteFile(t, filepath.Join(candidateDir, "signature-verification.json"), []byte("null\n"))
 				rewriteCandidateChecksums(t, candidateDir)
 			},
@@ -701,7 +701,7 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 		{
 			name: "candidate summary schema substitution",
 			mutate: func(t *testing.T, dir string) {
-				substituteEvidenceSchema(t, filepath.Join(dir, "macos-x86_64"), "candidate-summary.json")
+				substituteEvidenceSchema(t, filepath.Join(dir, "macos-aarch64"), "candidate-summary.json")
 			},
 			wantErr: "invalid candidate summary",
 		},
@@ -792,10 +792,10 @@ func validateReleaseRehearsalWorkflowStructure(workflow string) error {
 		"help-readback.json",
 		"version-source-readback.json",
 		"provider-free-functional-smoke.json",
-		"macos-15-intel",
-		"target_label: macos-x86_64",
+		"macos-15",
+		"target_label: macos-aarch64",
 		"goos: darwin",
-		"goarch: amd64",
+		"goarch: arm64",
 		"-X github.com/uesugitorachiyo/ao-atlas/internal/atlas.buildVersion=$VERSION",
 		"-X github.com/uesugitorachiyo/ao-atlas/internal/atlas.buildSourceSHA=$SOURCE_SHA",
 		`"$candidate_dir/$binary" --version`,
