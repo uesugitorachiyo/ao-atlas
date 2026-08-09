@@ -147,7 +147,7 @@ jobs:
             -o "$candidate_dir/$binary" \
             ./cmd/atlas
 
-          expected_help='atlas <instance|intake|blueprint|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link> ...'
+          expected_help='atlas <instance|intake|blueprint|mission|blueprint-request|workgraph|mutation-classes|factory-task|factory|context-pack|foundry|run-link|terminal-index> ...'
           set +e
           help_output=$("$candidate_dir/$binary" 2>&1)
           help_exit=$?
