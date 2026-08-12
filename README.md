@@ -24,12 +24,22 @@ Build that version from source when reproducing the original contract.
 Treat `v0.2.0` as published only after its separately authorized exact candidate
 completes the governed release sequence:
 
-1. Dispatch `release-rehearsal.yml` with the exact version, tag, source commit,
-   and approved manifest digest. This workflow validates and packages candidates
-   without publication authority.
-2. After the rehearsal succeeds, dispatch `release-finalize.yml` with its run ID
-   and the matching candidate identities and digests. Live publication is limited
-   to the `protected-release` environment and eligible human review.
+1. Dispatch `release-rehearsal.yml` at the exact source ref. The workflow derives
+   the source SHA from that ref and verifies it against the checkout; source SHA
+   is not an input. Its inputs are `dry_run=true`, `version=v0.2.0`,
+   `tag=v0.2.0`, and `approved_manifest_digest=sha256:<64 lowercase hex>`.
+   This workflow validates and packages candidates without publication authority.
+2. After the rehearsal succeeds, dispatch `release-finalize.yml` with:
+   `producer_run_id=<1-20 digit positive decimal rehearsal run ID>`,
+   `expected_source_sha=<40 lowercase hex>`, `expected_version=v0.2.0`,
+   `expected_tag=v0.2.0`,
+   `expected_manifest_digest=sha256:<64 lowercase hex>`,
+   `expected_plan_digest=<64 lowercase hex>`, and `dry_run=true` for validation.
+   `expected_plan_digest` has no `sha256:` prefix.
+3. A separately authorized live dispatch sets `dry_run=false` and
+   `live_confirmation=publish-imported-ao-atlas-<producer_run_id>-v0.2.0-v0.2.0-<expected_source_sha>-<expected_manifest_digest>-<expected_plan_digest>`.
+   This exact value is constructed and checked by `release-finalize.yml`; live
+   publication remains limited to `protected-release` and eligible human review.
 
 The supported release assets are:
 
