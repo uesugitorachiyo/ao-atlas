@@ -83,6 +83,18 @@ done
 expected_targets=(linux-x86_64 macos-aarch64 windows-x86_64)
 work_dir=$(mktemp -d)
 trap 'rm -rf "$work_dir"' EXIT
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+while IFS= read -r -d '' json_file; do
+  if ! python3 "$script_dir/validate-strict-json.py" "$json_file"; then
+    case "$(basename "$json_file")" in
+      installed-archive-smoke.json) fail "invalid installed archive smoke evidence" ;;
+      provenance.json) fail "invalid provenance evidence" ;;
+      sbom.spdx.json) fail "invalid SBOM evidence" ;;
+      signature-verification.json) fail "invalid signature verification evidence" ;;
+      *) fail "malformed candidate JSON: $json_file" ;;
+    esac
+  fi
+done < <(find "$candidates_dir" -type f -name '*.json' -print0)
 find "$candidates_dir" -name candidate-summary.json -type f | sort > "$work_dir/summaries.txt"
 observed_targets=" "
 

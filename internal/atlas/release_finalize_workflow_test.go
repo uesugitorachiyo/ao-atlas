@@ -4,6 +4,7 @@ import (
 	"archive/zip"
 	"bytes"
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
 	"hash/crc32"
 	"os"
@@ -70,6 +71,20 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 				return strings.Replace(value, `test "$LIVE_CONFIRMATION" = "$expected_confirmation"`, `test -n "$LIVE_CONFIRMATION"`, 1)
 			},
 			wantErr: "publish-release must bind the exact live confirmation",
+		},
+		{
+			name: "missing protected release sentinel secret",
+			mutate: func(value string) string {
+				return strings.Replace(value, `test -n "$PROTECTED_RELEASE_SENTINEL_SECRET"`, `test -n "$PROTECTED_RELEASE_SENTINEL_VARIABLE"`, 1)
+			},
+			wantErr: "publish-release must require protected-release sentinels before mutation",
+		},
+		{
+			name: "weakened protected release sentinel",
+			mutate: func(value string) string {
+				return strings.Replace(value, `test "$PROTECTED_RELEASE_SENTINEL_SECRET" = "$PROTECTED_RELEASE_SENTINEL_VARIABLE"`, `test -n "$PROTECTED_RELEASE_SENTINEL_SECRET"`, 1)
+			},
+			wantErr: "publish-release must require protected-release sentinels before mutation",
 		},
 		{
 			name: "missing verified tag",
@@ -202,6 +217,13 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 			wantErr: "consolidated verification must bind exact identity and results",
 		},
 		{
+			name: "stale consolidated plan digest",
+			mutate: func(value string) string {
+				return strings.Replace(value, `.expected_plan_digest == $plan_digest`, `.expected_plan_digest != $plan_digest`, 1)
+			},
+			wantErr: "consolidated verification must bind exact identity and results",
+		},
+		{
 			name: "wrong producer workflow",
 			mutate: func(value string) string {
 				return strings.ReplaceAll(value, ".github/workflows/release-rehearsal.yml", ".github/workflows/ci.yml")
@@ -223,9 +245,18 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 			wantErr: "finalizer workflow source must equal expected source",
 		},
 		{
+			name: "strict JSON validation after semantics",
+			mutate: func(value string) string {
+				line := `          python3 scripts/validate-strict-json.py "$binding_dir/release-input-binding.json"` + "\n"
+				value = strings.Replace(value, line, "", 1)
+				return strings.Replace(value, `            "$binding_dir/release-input-binding.json" >/dev/null`, `            "$binding_dir/release-input-binding.json" >/dev/null`+"\n"+strings.TrimSuffix(line, "\n"), 1)
+			},
+			wantErr: "strict JSON validation must precede imported semantics",
+		},
+		{
 			name: "suffix-only producer identity",
 			mutate: func(value string) string {
-				return strings.Replace(value, ".workflow_identity == $producer_identity", `.workflow_identity | endswith("/actions/runs/" + $run_id)`, 1)
+				return strings.Replace(value, `            test "$(jq -er '.workflow_identity' "$candidate_dir/candidate-summary.json")" = "$expected_identity"`+"\n", "", 1)
 			},
 			wantErr: "candidate producer identity must be exact",
 		},
@@ -326,6 +357,8 @@ func TestAtlasReleaseFinalizeWorkflowVerifiesEveryPublicTarget(t *testing.T) {
 		`expected_version_identity="ao-atlas version=$VERSION source_sha=$SOURCE_SHA"`,
 		`workgraph validate --workgraph examples/valid/workgraph.json`,
 		`provider_credentials_used:false`,
+		`expected_manifest_digest:$manifest_digest`,
+		`expected_plan_digest:$plan_digest`,
 		`name: ao-atlas-public-release-verification-${{ inputs.expected_tag }}-${{ matrix.target_label }}`,
 	} {
 		if !strings.Contains(verify, required) {
@@ -358,6 +391,10 @@ func TestAtlasReleaseFinalizeWorkflowConsolidatesExactVerifiedResults(t *testing
 		`.authorized_asset_digests_verified == true`,
 		`.release_metadata_verified == true`,
 		`.provider_free_workgraph_validated == true`,
+		`MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}`,
+		`PLAN_DIGEST: ${{ inputs.expected_plan_digest }}`,
+		`.expected_manifest_digest == $manifest`,
+		`.expected_plan_digest == $plan_digest`,
 	} {
 		if !strings.Contains(consolidate, required) {
 			t.Errorf("consolidated public verification missing contract %q", required)
@@ -398,7 +435,6 @@ func TestAtlasReleaseFinalizeWorkflowAuthenticatesExactProducerArtifactInventory
 }
 
 func TestAtlasReleaseFinalizeProducerIdentityRejectsDifferentRepository(t *testing.T) {
-	predicate := `all(.candidates[]; .workflow_identity == $producer_identity)`
 	expected := "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/123"
 	for _, tt := range []struct {
 		name     string
@@ -409,14 +445,87 @@ func TestAtlasReleaseFinalizeProducerIdentityRejectsDifferentRepository(t *testi
 		{name: "different repository", identity: "https://github.com/other/ao-atlas/actions/runs/123"},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
-			fixture := fmt.Sprintf(`{"candidates":[{"workflow_identity":%q}]}`, tt.identity)
-			cmd := exec.Command("jq", "-e", "--arg", "producer_identity", expected, predicate)
+			fixture := fmt.Sprintf(`{"workflow_identity":%q}`, tt.identity)
+			cmd := exec.Command("jq", "-e", "--arg", "producer_identity", expected, `.workflow_identity == $producer_identity`)
 			cmd.Stdin = strings.NewReader(fixture)
 			err := cmd.Run()
 			if (err == nil) != tt.wantOK {
 				t.Fatalf("identity %q acceptance = %v, want %v", tt.identity, err == nil, tt.wantOK)
 			}
 		})
+	}
+}
+
+func TestAtlasReleaseFinalizeSemanticPredicateAcceptsActualVerifierPlan(t *testing.T) {
+	candidatesDir := t.TempDir()
+	binaries := buildReleaseCandidateBinaries(t)
+	for _, target := range rehearsalTargets {
+		writeReleaseCandidateFixture(t, candidatesDir, target.Label, target, rehearsalSourceSHA, binaries[target.Label])
+	}
+	plan := runReleaseCandidateVerifier(t, candidatesDir, true, "")
+	content, err := json.Marshal(plan)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, candidate := range plan["candidates"].([]any) {
+		if _, exists := candidate.(map[string]any)["workflow_identity"]; exists {
+			t.Fatal("actual verifier plan unexpectedly includes workflow_identity")
+		}
+	}
+	cmd := exec.Command("jq", "-e",
+		"--arg", "manifest", rehearsalManifestDigest,
+		"--arg", "notes_digest", "sha256:"+strings.Repeat("d", 64),
+		"--arg", "source_sha", rehearsalSourceSHA,
+		"--arg", "tag", rehearsalVersion,
+		"--arg", "version", rehearsalVersion,
+		`.approved_manifest_digest == $manifest and
+         .release_notes_sha256 == $notes_digest and
+         .source_sha == $source_sha and .tag == $tag and .version == $version`)
+	cmd.Stdin = bytes.NewReader(content)
+	if output, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("actual verifier plan rejected by finalizer predicate: %v\n%s", err, output)
+	}
+}
+
+func TestStrictJSONValidatorRejectsAmbiguousDocuments(t *testing.T) {
+	script := filepath.Join(repoRoot(t), "scripts", "validate-strict-json.py")
+	tests := []struct {
+		name    string
+		content string
+		wantOK  bool
+	}{
+		{name: "object", content: `{"source_sha":"a"}`, wantOK: true},
+		{name: "duplicate key", content: `{"source_sha":"bad","source_sha":"good"}`},
+		{name: "concatenated values", content: `{"source_sha":"bad"}{"source_sha":"good"}`},
+		{name: "non object root", content: `[]`},
+		{name: "nonstandard constant", content: `{"size":NaN}`},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "input.json")
+			if err := os.WriteFile(path, []byte(tt.content), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			output, err := exec.Command("python3", script, path).CombinedOutput()
+			if (err == nil) != tt.wantOK {
+				t.Fatalf("acceptance=%v want=%v: %s", err == nil, tt.wantOK, output)
+			}
+		})
+	}
+}
+
+func TestAtlasReleaseFinalizeStrictJSONValidationPrecedesImportedSemantics(t *testing.T) {
+	workflow := readReleaseFinalizeWorkflow(t)
+	validate := yamlJobSection(yamlTopLevelSection(workflow, "jobs:"), "validate-imported-release")
+	strict := strings.Index(validate, `python3 scripts/validate-strict-json.py "$binding_dir/release-input-binding.json"`)
+	semantic := strings.Index(validate, `.schema_version == "ao.atlas.release-rehearsal-input-binding.v0.2"`)
+	if strict < 0 || semantic < 0 || strict >= semantic {
+		t.Fatal("strict JSON validation must precede imported jq semantics")
+	}
+	if !strings.Contains(validate, `python3 scripts/validate-strict-json.py "$candidate_dir"/*.json`) ||
+		!strings.Contains(validate, `python3 scripts/validate-strict-json.py "$plan_dir"/*.json`) ||
+		!strings.Contains(validate, `python3 scripts/validate-strict-json.py recomputed-promotion-plan.json`) {
+		t.Fatal("strict JSON validation must cover every imported and recomputed JSON document")
 	}
 }
 
@@ -433,7 +542,7 @@ func TestAtlasReleaseFinalizeWorkflowRejectsUntrustedArtifactsBeforeExtraction(t
 		`repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id/zip`,
 		`scripts/inspect-release-artifact-zips.py`,
 		`expected_identity="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID"`,
-		`all(.candidates[]; .workflow_identity == $producer_identity)`,
+		`test "$(jq -er '.workflow_identity' "$candidate_dir/candidate-summary.json")" = "$expected_identity"`,
 		`release-input-binding.sha256`,
 		`test -z "$(find "$plan_dir" -mindepth 2 -print -quit)"`,
 	}
@@ -639,10 +748,13 @@ func writeReleaseArtifactZip(t *testing.T, entries []releaseArtifactZipEntry) st
 }
 
 func validateReleaseFinalizeWorkflowStructure(workflow string) error {
+	if !strings.Contains(yamlTopLevelSection(workflow, "on:"), "      expected_plan_digest:") {
+		return fmt.Errorf("missing required workflow input %q", "expected_plan_digest:")
+	}
 	required := []string{
 		"workflow_dispatch:", "producer_run_id:", "expected_source_sha:",
 		"expected_version:", "expected_tag:", "expected_manifest_digest:",
-		"expected_plan_digest:", "dry_run:", "live_confirmation:",
+		"dry_run:", "live_confirmation:",
 		"actions: read", "contents: read", "validate-imported-release:",
 		"dry-run-boundary:", "publish-release:", "verify-public-release:",
 		"environment: protected-release", "contents: write",
@@ -673,7 +785,7 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 	if !strings.Contains(workflow, `test "$WORKFLOW_SHA" = "$SOURCE_SHA"`) {
 		return fmt.Errorf("finalizer workflow source must equal expected source")
 	}
-	if !strings.Contains(workflow, ".workflow_identity == $producer_identity") {
+	if !strings.Contains(workflow, `test "$(jq -er '.workflow_identity' "$candidate_dir/candidate-summary.json")" = "$expected_identity"`) {
 		return fmt.Errorf("candidate producer identity must be exact")
 	}
 
@@ -687,6 +799,12 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 	}
 
 	jobs := yamlTopLevelSection(workflow, "jobs:")
+	validate := yamlJobSection(jobs, "validate-imported-release")
+	strictJSON := strings.Index(validate, `python3 scripts/validate-strict-json.py "$binding_dir/release-input-binding.json"`)
+	importedSemantics := strings.Index(validate, `.schema_version == "ao.atlas.release-rehearsal-input-binding.v0.2"`)
+	if strictJSON < 0 || importedSemantics < 0 || strictJSON >= importedSemantics {
+		return fmt.Errorf("strict JSON validation must precede imported semantics")
+	}
 	publish := yamlJobSection(jobs, "publish-release")
 	if publish == "" || !strings.Contains(publish, "environment: protected-release") {
 		return fmt.Errorf("publish-release must use protected-release environment")
@@ -699,6 +817,20 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 	}
 	if !strings.Contains(publish, `test "$LIVE_CONFIRMATION" = "$expected_confirmation"`) {
 		return fmt.Errorf("publish-release must bind the exact live confirmation")
+	}
+	for _, sentinel := range []string{
+		`PROTECTED_RELEASE_SENTINEL_SECRET: ${{ secrets.AO_ATLAS_PROTECTED_RELEASE_SENTINEL }}`,
+		`PROTECTED_RELEASE_SENTINEL_VARIABLE: ${{ vars.AO_ATLAS_PROTECTED_RELEASE_SENTINEL }}`,
+		`test -n "$PROTECTED_RELEASE_SENTINEL_SECRET"`,
+		`test "$PROTECTED_RELEASE_SENTINEL_VARIABLE" = "protected-release-required-reviewers-configured"`,
+		`test "$PROTECTED_RELEASE_SENTINEL_SECRET" = "$PROTECTED_RELEASE_SENTINEL_VARIABLE"`,
+	} {
+		if !strings.Contains(publish, sentinel) {
+			return fmt.Errorf("publish-release must require protected-release sentinels before mutation")
+		}
+	}
+	if strings.Index(publish, `test "$PROTECTED_RELEASE_SENTINEL_SECRET" = "$PROTECTED_RELEASE_SENTINEL_VARIABLE"`) > strings.Index(publish, `git/ref/tags/$TAG`) {
+		return fmt.Errorf("publish-release must require protected-release sentinels before mutation")
 	}
 	if !strings.Contains(publish, "--verify-tag") {
 		return fmt.Errorf("release creation must require the pre-created tag")
@@ -765,7 +897,10 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 		`SOURCE_SHA: ${{ inputs.expected_source_sha }}`,
 		`TAG: ${{ inputs.expected_tag }}`,
 		`VERSION: ${{ inputs.expected_version }}`,
+		`MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}`,
+		`PLAN_DIGEST: ${{ inputs.expected_plan_digest }}`,
 		`.tag == $tag`, `.source_sha == $source_sha`, `.version_identity == $expected_version_identity`,
+		`.expected_manifest_digest == $manifest`, `.expected_plan_digest == $plan_digest`,
 		`.aggregate_checksums_verified == true`, `.archive_inventory_verified == true`,
 		`.authorized_plan_verified == true`, `.authorized_asset_digests_verified == true`,
 		`.release_metadata_verified == true`, `.provider_free_workgraph_validated == true`,

@@ -21,6 +21,7 @@ Atlas consumes Blueprint authorization and Mission objectives and readbacks. It 
 - Keep generated state and output under ignored `.atlas-local/`, `.atlas-state/`, `target/`, `dist/`, or `bin/`; do not hand-edit generated readbacks into source evidence.
 - Do not introduce secrets, provider credentials, private paths, account identifiers, or live-provider behavior. Ordinary Atlas operation has no push, tag, release, upload, approval, or sibling-repository mutation authority.
 - Release publication is limited to separately authorized exact candidates through `.github/workflows/release-finalize.yml`, the `protected-release` environment, and eligible human review. All other tag, release, and upload activity remains forbidden.
+- Live finalization additionally requires matching environment-scoped `AO_ATLAS_PROTECTED_RELEASE_SENTINEL` secret and variable values. This source sentinel fails closed but never replaces external verification that `protected-release` has eligible required reviewers.
 - Deployment, other publication, credentialed operation, and direct-main changes require separate explicit authority.
 
 ## Working Method

@@ -53,6 +53,8 @@ Workflow-level permissions remain read-only. Only the live publish job receives 
 
 The publish job references `protected-release`. A repository administrator must create that environment and configure eligible required reviewers. The workflow must not create or modify the environment. The operator's instruction to fix, qualify, validate, and continue releasing authorizes publication of the resulting new head after every source-owned gate passes. Codex may dispatch and monitor that exact qualified head, but an eligible human performs the protected-environment approval.
 
+The administrator must also configure both the environment-scoped secret and variable `AO_ATLAS_PROTECTED_RELEASE_SENTINEL` to `protected-release-required-reviewers-configured`. Missing or mismatched sentinels fail before mutation if GitHub auto-creates or misconfigures the environment. The sentinels do not prove reviewer policy; external verification of eligible required reviewers remains mandatory before merge and live dispatch.
+
 Dry-run finalization emits a retained boundary artifact proving zero tag, release, public upload, deployment, provider, credential, and permission mutations.
 
 ## Failure And Recovery
