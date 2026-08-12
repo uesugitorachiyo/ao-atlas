@@ -481,7 +481,7 @@ jobs:
              ([.assets[].name] | unique | length) == 15 and
              all(.assets[]; .state == "uploaded" and (.size | type) == "number" and .size > 0)' \
             public-release.json >/dev/null
-          jq -j '.body' public-release.json > public-release-body.txt
+          jq --binary -j '.body' public-release.json > public-release-body.txt
           cmp public-release-body.txt "$committed_release_notes"
           jq -r '.assets[].name' public-release.json | LC_ALL=C sort > actual-assets.txt
           printf '%s\n' \

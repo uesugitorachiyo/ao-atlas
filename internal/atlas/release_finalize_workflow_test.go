@@ -338,6 +338,7 @@ func TestAtlasReleaseFinalizeWorkflowVerifiesEveryPublicTarget(t *testing.T) {
 		`.target_commitish == $source_sha`,
 		`.name == $version`,
 		`git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" > "$committed_release_notes"`,
+		`jq --binary -j '.body' public-release.json > public-release-body.txt`,
 		`cmp public-release-body.txt "$committed_release_notes"`,
 		`release_notes_sha256=$(hash_file "$committed_release_notes")`,
 		`cmp actual-assets.txt expected-assets.txt`,
