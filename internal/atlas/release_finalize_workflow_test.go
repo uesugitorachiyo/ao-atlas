@@ -1,8 +1,10 @@
 package atlas
 
 import (
+	"archive/zip"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -39,6 +41,20 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 			wantErr: "workflow permissions must be exactly actions read and contents read",
 		},
 		{
+			name: "validation job contents write",
+			mutate: func(value string) string {
+				return strings.Replace(value, "  validate-imported-release:\n    runs-on: ubuntu-latest\n    permissions:\n      actions: read\n      contents: read", "  validate-imported-release:\n    runs-on: ubuntu-latest\n    permissions:\n      actions: read\n      contents: write", 1)
+			},
+			wantErr: `publication capability "contents: write" must be limited to publish-release`,
+		},
+		{
+			name: "validation job actions write",
+			mutate: func(value string) string {
+				return strings.Replace(value, "  validate-imported-release:\n    runs-on: ubuntu-latest\n    permissions:\n      actions: read\n      contents: read", "  validate-imported-release:\n    runs-on: ubuntu-latest\n    permissions:\n      actions: write\n      contents: read", 1)
+			},
+			wantErr: "write permission must be limited to publish-release",
+		},
+		{
 			name: "missing live gate",
 			mutate: func(value string) string {
 				return strings.Replace(value, "inputs.dry_run == false", "inputs.dry_run", 1)
@@ -58,6 +74,20 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 				return strings.Replace(value, "      expected_plan_digest:\n", "", 1)
 			},
 			wantErr: `missing required workflow input "expected_plan_digest:"`,
+		},
+		{
+			name: "missing workflow source binding",
+			mutate: func(value string) string {
+				return strings.Replace(value, "          test \"$WORKFLOW_SHA\" = \"$SOURCE_SHA\"\n", "", 1)
+			},
+			wantErr: "finalizer workflow source must equal expected source",
+		},
+		{
+			name: "suffix-only producer identity",
+			mutate: func(value string) string {
+				return strings.Replace(value, ".workflow_identity == $producer_identity", `.workflow_identity | endswith("/actions/runs/" + $run_id)`, 1)
+			},
+			wantErr: "candidate producer identity must be exact",
 		},
 	}
 
@@ -80,7 +110,7 @@ func TestAtlasReleaseFinalizeWorkflowAuthenticatesExactProducerArtifactInventory
 	for _, required := range []string{
 		`.total_count == 5`,
 		`[.artifacts[].name] | unique | length) == 5`,
-		`all(.artifacts[]; .expired == false)`,
+		`all(.artifacts[]; .expired == false`,
 		`"ao-atlas-release-input-binding-$SOURCE_SHA"`,
 		`"ao-atlas-release-candidate-linux-x86_64-$SOURCE_SHA"`,
 		`"ao-atlas-release-candidate-macos-aarch64-$SOURCE_SHA"`,
@@ -92,6 +122,130 @@ func TestAtlasReleaseFinalizeWorkflowAuthenticatesExactProducerArtifactInventory
 			t.Fatalf("producer artifact authentication missing %q", required)
 		}
 	}
+}
+
+func TestAtlasReleaseFinalizeProducerIdentityRejectsDifferentRepository(t *testing.T) {
+	predicate := `all(.candidates[]; .workflow_identity == $producer_identity)`
+	expected := "https://github.com/uesugitorachiyo/ao-atlas/actions/runs/123"
+	for _, tt := range []struct {
+		name     string
+		identity string
+		wantOK   bool
+	}{
+		{name: "exact", identity: expected, wantOK: true},
+		{name: "different repository", identity: "https://github.com/other/ao-atlas/actions/runs/123"},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			fixture := fmt.Sprintf(`{"candidates":[{"workflow_identity":%q}]}`, tt.identity)
+			cmd := exec.Command("jq", "-e", "--arg", "producer_identity", expected, predicate)
+			cmd.Stdin = strings.NewReader(fixture)
+			err := cmd.Run()
+			if (err == nil) != tt.wantOK {
+				t.Fatalf("identity %q acceptance = %v, want %v", tt.identity, err == nil, tt.wantOK)
+			}
+		})
+	}
+}
+
+func TestAtlasReleaseFinalizeWorkflowRejectsUntrustedArtifactsBeforeExtraction(t *testing.T) {
+	content, err := os.ReadFile(filepath.Join(repoRoot(t), ".github", "workflows", "release-finalize.yml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	workflow := string(content)
+	required := []string{
+		`WORKFLOW_SHA: ${{ github.workflow_sha }}`,
+		`test "$WORKFLOW_SHA" = "$SOURCE_SHA"`,
+		`map(.size_in_bytes) | add <= 128 * 1024 * 1024`,
+		`repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id/zip`,
+		`scripts/inspect-release-artifact-zips.py`,
+		`expected_identity="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID"`,
+		`all(.candidates[]; .workflow_identity == $producer_identity)`,
+		`release-input-binding.sha256`,
+		`test -z "$(find "$plan_dir" -mindepth 2 -print -quit)"`,
+	}
+	for _, value := range required {
+		if !strings.Contains(workflow, value) {
+			t.Errorf("release import boundary missing %q", value)
+		}
+	}
+	checkout := strings.Index(workflow, "uses: actions/checkout@v7")
+	workflowSHA := strings.Index(workflow, `test "$WORKFLOW_SHA" = "$SOURCE_SHA"`)
+	rawDownload := strings.Index(workflow, `actions/artifacts/$artifact_id/zip`)
+	inspection := strings.Index(workflow, `scripts/inspect-release-artifact-zips.py`)
+	extraction := strings.Index(workflow, "uses: actions/download-artifact@v7")
+	if workflowSHA < 0 || checkout < 0 || workflowSHA >= checkout {
+		t.Error("workflow SHA must be authenticated before checkout")
+	}
+	if rawDownload < 0 || inspection < 0 || extraction < 0 || rawDownload >= inspection || inspection >= extraction {
+		t.Error("raw artifacts must be inspected before actions/download-artifact extracts them")
+	}
+}
+
+func TestReleaseArtifactZipInspectorRejectsUnsafeEntriesAndBounds(t *testing.T) {
+	script := filepath.Join(repoRoot(t), "scripts", "inspect-release-artifact-zips.py")
+	tests := []struct {
+		name       string
+		entries    []releaseArtifactZipEntry
+		maxEntries string
+		maxBytes   string
+		wantErr    string
+	}{
+		{name: "safe", entries: []releaseArtifactZipEntry{{name: "candidate.json", content: "{}\n"}}, maxEntries: "1", maxBytes: "3"},
+		{name: "traversal", entries: []releaseArtifactZipEntry{{name: "../candidate.json", content: "{}\n"}}, maxEntries: "1", maxBytes: "3", wantErr: "unsafe path"},
+		{name: "symlink", entries: []releaseArtifactZipEntry{{name: "candidate.json", mode: os.ModeSymlink | 0o777}}, maxEntries: "1", maxBytes: "3", wantErr: "non-regular entry"},
+		{name: "entry bound", entries: []releaseArtifactZipEntry{{name: "one", content: "1"}, {name: "two", content: "2"}}, maxEntries: "1", maxBytes: "2", wantErr: "entry count exceeds"},
+		{name: "expanded bound", entries: []releaseArtifactZipEntry{{name: "candidate.json", content: "1234"}}, maxEntries: "1", maxBytes: "3", wantErr: "expanded size exceeds"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			archive := writeReleaseArtifactZip(t, tt.entries)
+			cmd := exec.Command("python3", script, "--max-entries", tt.maxEntries, "--max-expanded-bytes", tt.maxBytes, archive)
+			output, err := cmd.CombinedOutput()
+			if tt.wantErr == "" && err != nil {
+				t.Fatalf("safe artifact rejected: %v\n%s", err, output)
+			}
+			if tt.wantErr != "" && (err == nil || !strings.Contains(string(output), tt.wantErr)) {
+				t.Fatalf("expected %q, got %v\n%s", tt.wantErr, err, output)
+			}
+		})
+	}
+}
+
+type releaseArtifactZipEntry struct {
+	name    string
+	content string
+	mode    os.FileMode
+}
+
+func writeReleaseArtifactZip(t *testing.T, entries []releaseArtifactZipEntry) string {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "artifact.zip")
+	file, err := os.Create(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	writer := zip.NewWriter(file)
+	for _, entry := range entries {
+		header := &zip.FileHeader{Name: entry.name, Method: zip.Deflate}
+		if entry.mode != 0 {
+			header.SetMode(entry.mode)
+		}
+		part, err := writer.CreateHeader(header)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if _, err := part.Write([]byte(entry.content)); err != nil {
+			t.Fatal(err)
+		}
+	}
+	if err := writer.Close(); err != nil {
+		t.Fatal(err)
+	}
+	if err := file.Close(); err != nil {
+		t.Fatal(err)
+	}
+	return path
 }
 
 func validateReleaseFinalizeWorkflowStructure(workflow string) error {
@@ -125,6 +279,12 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 			}
 		}
 	}
+	if !strings.Contains(workflow, `test "$WORKFLOW_SHA" = "$SOURCE_SHA"`) {
+		return fmt.Errorf("finalizer workflow source must equal expected source")
+	}
+	if !strings.Contains(workflow, ".workflow_identity == $producer_identity") {
+		return fmt.Errorf("candidate producer identity must be exact")
+	}
 
 	triggers := yamlChildKeys(yamlTopLevelSection(workflow, "on:"), 2)
 	if len(triggers) != 1 || triggers[0] != "workflow_dispatch" {
@@ -148,6 +308,9 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 		if strings.Contains(nonPublish, capability) {
 			return fmt.Errorf("publication capability %q must be limited to publish-release", capability)
 		}
+	}
+	if strings.Contains(nonPublish, ": write") {
+		return fmt.Errorf("write permission must be limited to publish-release")
 	}
 	for _, forbidden := range []string{"write-all", "pull-requests: write", "/environments", "gh release delete", "git push --force"} {
 		if strings.Contains(workflow, forbidden) {

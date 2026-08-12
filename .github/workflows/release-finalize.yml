@@ -49,6 +49,16 @@ jobs:
       actions: read
       contents: read
     steps:
+      - name: Authenticate finalizer source before checkout
+        shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.expected_source_sha }}
+          WORKFLOW_SHA: ${{ github.workflow_sha }}
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$WORKFLOW_SHA" = "$SOURCE_SHA"
+
       - name: Check out the exact candidate source
         uses: actions/checkout@v7
         with:
@@ -102,7 +112,13 @@ jobs:
           (( age_seconds >= 0 && age_seconds <= 14 * 24 * 60 * 60 ))
 
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID/artifacts?per_page=100" > producer-artifacts.json
-          jq -e '.total_count == 5 and ([.artifacts[].name] | unique | length) == 5 and all(.artifacts[]; .expired == false)' producer-artifacts.json >/dev/null
+          jq -e \
+            '.total_count == 5 and
+             ([.artifacts[].name] | unique | length) == 5 and
+             ([.artifacts[].id] | unique | length) == 5 and
+             all(.artifacts[]; .expired == false and (.size_in_bytes | type) == "number" and .size_in_bytes >= 0) and
+             (.artifacts | map(.size_in_bytes) | add <= 128 * 1024 * 1024)' \
+            producer-artifacts.json >/dev/null
           jq -r '.artifacts[].name' producer-artifacts.json | LC_ALL=C sort > actual-artifacts.txt
           printf '%s\n' \
             "ao-atlas-release-input-binding-$SOURCE_SHA" \
@@ -112,6 +128,19 @@ jobs:
             "ao-atlas-release-rehearsal-plan-$SOURCE_SHA" \
             | LC_ALL=C sort > expected-artifacts.txt
           cmp actual-artifacts.txt expected-artifacts.txt
+
+          mkdir artifact-zips
+          jq -r '.artifacts[] | [.id, .name] | @tsv' producer-artifacts.json |
+            while IFS=$'\t' read -r artifact_id artifact_name; do
+              [[ "$artifact_id" =~ ^[1-9][0-9]{0,19}$ ]]
+              gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$artifact_id/zip" > "artifact-zips/$artifact_name.zip"
+            done
+          compressed_bytes=$(find artifact-zips -type f -printf '%s\n' | awk '{total += $1} END {print total + 0}')
+          (( compressed_bytes <= 128 * 1024 * 1024 ))
+          python3 scripts/inspect-release-artifact-zips.py \
+            --max-entries 128 \
+            --max-expanded-bytes 134217728 \
+            artifact-zips/*.zip
 
       - name: Download exact producer artifacts
         uses: actions/download-artifact@v7
@@ -135,6 +164,7 @@ jobs:
         run: |
           set -euo pipefail
 
+          expected_identity="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID"
           test -d imported-release
           test -z "$(find imported-release -type l -print -quit)"
           test -z "$(find imported-release -mindepth 1 ! -type f ! -type d -print -quit)"
@@ -142,6 +172,30 @@ jobs:
           total_bytes=$(find imported-release -type f -printf '%s\n' | awk '{total += $1} END {print total + 0}')
           (( file_count <= 128 ))
           (( total_bytes <= 128 * 1024 * 1024 ))
+
+          release_notes_sha256=$(git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" | sha256sum | awk '{print $1}')
+          binding_dir="imported-release/ao-atlas-release-input-binding-${SOURCE_SHA}"
+          test -d "$binding_dir"
+          test -z "$(find "$binding_dir" -mindepth 2 -print -quit)"
+          test "$(find "$binding_dir" -maxdepth 1 -type f | wc -l)" -eq 2
+          test -f "$binding_dir/release-input-binding.json"
+          test -f "$binding_dir/release-input-binding.sha256"
+          (cd "$binding_dir" && sha256sum --check --strict release-input-binding.sha256)
+          jq -e \
+            --arg manifest "$MANIFEST_DIGEST" \
+            --arg notes_digest "sha256:$release_notes_sha256" \
+            --arg run_id "$PRODUCER_RUN_ID" \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg tag "$TAG" \
+            --arg version "$VERSION" \
+            '.schema_version == "ao.atlas.release-rehearsal-input-binding.v0.2" and
+             .dry_run == true and .immutable == true and
+             .approved_manifest_digest == $manifest and
+             .release_notes_path == ("docs/release/" + $version + ".md") and
+             .release_notes_sha256 == $notes_digest and
+             .source_sha == $source_sha and .tag == $tag and .version == $version and
+             .workflow_run_id == $run_id' \
+            "$binding_dir/release-input-binding.json" >/dev/null
 
           targets=(linux-x86_64 macos-aarch64 windows-x86_64)
           for target in "${targets[@]}"; do
@@ -152,14 +206,19 @@ jobs:
 
           plan_dir="imported-release/ao-atlas-release-rehearsal-plan-${SOURCE_SHA}"
           test -d "$plan_dir"
+          test -z "$(find "$plan_dir" -mindepth 2 -print -quit)"
           test "$(find "$plan_dir" -maxdepth 1 -type f | wc -l)" -eq 3
           test -f "$plan_dir/promotion-plan.json"
           test -f "$plan_dir/promotion-plan.sha256"
           test -f "$plan_dir/dry-run-boundary.json"
           (cd "$plan_dir" && sha256sum --check --strict promotion-plan.sha256)
           test "$(sha256sum "$plan_dir/promotion-plan.json" | awk '{print $1}')" = "$PLAN_DIGEST"
+          jq -e \
+            '.dry_run == true and
+             .publication_attempted == false and .tag_creation_attempted == false and
+             .release_creation_attempted == false and .public_upload_attempted == false' \
+            "$plan_dir/dry-run-boundary.json" >/dev/null
 
-          release_notes_sha256=$(git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" | sha256sum | awk '{print $1}')
           bash scripts/verify-release-rehearsal-candidates.sh \
             --candidates-dir imported-release \
             --version "$VERSION" \
@@ -170,16 +229,16 @@ jobs:
             --plan-out recomputed-promotion-plan.json
           cmp recomputed-promotion-plan.json "$plan_dir/promotion-plan.json"
           jq -e \
-            --arg run_id "$PRODUCER_RUN_ID" \
             --arg manifest "$MANIFEST_DIGEST" \
             --arg notes_digest "sha256:$release_notes_sha256" \
+            --arg producer_identity "$expected_identity" \
             --arg source_sha "$SOURCE_SHA" \
             --arg tag "$TAG" \
             --arg version "$VERSION" \
             '.approved_manifest_digest == $manifest and
              .release_notes_sha256 == $notes_digest and
              .source_sha == $source_sha and .tag == $tag and .version == $version and
-             all(.candidates[]; .workflow_identity | endswith("/actions/runs/" + $run_id))' \
+             all(.candidates[]; .workflow_identity == $producer_identity)' \
             recomputed-promotion-plan.json >/dev/null
 
           mkdir validated-release
