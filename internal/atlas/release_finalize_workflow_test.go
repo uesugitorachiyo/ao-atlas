@@ -107,11 +107,53 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 			wantErr: "public release must bind the exact source target",
 		},
 		{
+			name: "missing authorized plan anchor",
+			mutate: func(value string) string {
+				return strings.Replace(value, `test "$(hash_file release-assets/promotion-plan.json)" = "$PLAN_DIGEST"`, `test -s release-assets/promotion-plan.json`, 1)
+			},
+			wantErr: "public assets must bind to the authorized promotion plan",
+		},
+		{
+			name: "wrong public release title",
+			mutate: func(value string) string {
+				return strings.Replace(value, `.name == $version`, `.name != $version`, 1)
+			},
+			wantErr: "public release must bind exact title and body",
+		},
+		{
+			name: "missing public release body comparison",
+			mutate: func(value string) string {
+				return strings.Replace(value, `cmp public-release-body.txt "docs/release/${VERSION}.md"`, `test -s public-release-body.txt`, 1)
+			},
+			wantErr: "public release must bind exact title and body",
+		},
+		{
 			name: "unsafe archive type accepted",
 			mutate: func(value string) string {
 				return strings.Replace(value, `if not member.isfile():`, `if member.isfile():`, 1)
 			},
 			wantErr: "public archive extraction must reject non-regular entries",
+		},
+		{
+			name: "traversal guard weakened to and",
+			mutate: func(value string) string {
+				return strings.Replace(value, `path.is_absolute() or ".." in path.parts or "\\" in member.name`, `path.is_absolute() and ".." in path.parts and "\\" in member.name`, 1)
+			},
+			wantErr: "public archive extraction must reject traversal paths",
+		},
+		{
+			name: "duplicate archive check removed",
+			mutate: func(value string) string {
+				return strings.Replace(value, `if member.name in seen:`, `if False:`, 1)
+			},
+			wantErr: "public archive extraction must reject duplicate entries",
+		},
+		{
+			name: "exact archive inventory weakened",
+			mutate: func(value string) string {
+				return strings.Replace(value, `if seen != expected:`, `if not expected.issubset(seen):`, 1)
+			},
+			wantErr: "public archive extraction must require exact inventory",
 		},
 		{
 			name: "bare python archive verifier",
@@ -126,6 +168,20 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 				return strings.Replace(value, `if: ${{ needs.publish-release.result == 'success' }}`, `if: ${{ needs.publish-release.result == 'success' && false }}`, 1)
 			},
 			wantErr: "public verification must run after publication",
+		},
+		{
+			name: "stale consolidated identity",
+			mutate: func(value string) string {
+				return strings.Replace(value, `.version_identity == $expected_version_identity`, `.version_identity != $expected_version_identity`, 1)
+			},
+			wantErr: "consolidated verification must bind exact identity and results",
+		},
+		{
+			name: "false consolidated verification accepted",
+			mutate: func(value string) string {
+				return strings.Replace(value, `.authorized_plan_verified == true`, `.authorized_plan_verified != true`, 1)
+			},
+			wantErr: "consolidated verification must bind exact identity and results",
 		},
 		{
 			name: "wrong producer workflow",
@@ -219,7 +275,13 @@ func TestAtlasReleaseFinalizeWorkflowVerifiesEveryPublicTarget(t *testing.T) {
 		`target_label: windows-x86_64`,
 		`gh release download "$TAG"`,
 		`.target_commitish == $source_sha`,
+		`.name == $version`,
+		`cmp public-release-body.txt "docs/release/${VERSION}.md"`,
 		`cmp actual-assets.txt expected-assets.txt`,
+		`PLAN_DIGEST: ${{ inputs.expected_plan_digest }}`,
+		`test "$(hash_file release-assets/promotion-plan.json)" = "$PLAN_DIGEST"`,
+		`.release_notes_sha256 == $notes_digest`,
+		`test "sha256:$actual_digest" = "$expected_digest"`,
 		`sha256sum --check --strict SHA256SUMS`,
 		`shasum -a 256 --check SHA256SUMS`,
 		`PurePosixPath(member.name)`,
@@ -243,6 +305,29 @@ func TestAtlasReleaseFinalizeWorkflowVerifiesEveryPublicTarget(t *testing.T) {
 	}
 	if !strings.Contains(workflow, `name: ao-atlas-public-release-verification-${{ inputs.expected_tag }}`) {
 		t.Fatal("workflow must upload the exact consolidated public verification artifact")
+	}
+}
+
+func TestAtlasReleaseFinalizeWorkflowConsolidatesExactVerifiedResults(t *testing.T) {
+	workflow := readReleaseFinalizeWorkflow(t)
+	consolidate := yamlJobSection(yamlTopLevelSection(workflow, "jobs:"), "consolidate-public-release-verification")
+	for _, required := range []string{
+		`SOURCE_SHA: ${{ inputs.expected_source_sha }}`,
+		`TAG: ${{ inputs.expected_tag }}`,
+		`VERSION: ${{ inputs.expected_version }}`,
+		`.tag == $tag`,
+		`.source_sha == $source_sha`,
+		`.version_identity == $expected_version_identity`,
+		`.aggregate_checksums_verified == true`,
+		`.archive_inventory_verified == true`,
+		`.authorized_plan_verified == true`,
+		`.authorized_asset_digests_verified == true`,
+		`.release_metadata_verified == true`,
+		`.provider_free_workgraph_validated == true`,
+	} {
+		if !strings.Contains(consolidate, required) {
+			t.Errorf("consolidated public verification missing contract %q", required)
+		}
 	}
 }
 
@@ -604,11 +689,47 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 	if !strings.Contains(verify, `.target_commitish == $source_sha`) {
 		return fmt.Errorf("public release must bind the exact source target")
 	}
+	if !strings.Contains(verify, `.name == $version`) || !strings.Contains(verify, `cmp public-release-body.txt "docs/release/${VERSION}.md"`) {
+		return fmt.Errorf("public release must bind exact title and body")
+	}
+	for _, binding := range []string{
+		`PLAN_DIGEST: ${{ inputs.expected_plan_digest }}`,
+		`test "$(hash_file release-assets/promotion-plan.json)" = "$PLAN_DIGEST"`,
+		`.release_notes_sha256 == $notes_digest`,
+		`test "sha256:$actual_digest" = "$expected_digest"`,
+	} {
+		if !strings.Contains(verify, binding) {
+			return fmt.Errorf("public assets must bind to the authorized promotion plan")
+		}
+	}
 	if !strings.Contains(verify, `if not member.isfile():`) {
 		return fmt.Errorf("public archive extraction must reject non-regular entries")
 	}
+	if !strings.Contains(verify, `path.is_absolute() or ".." in path.parts or "\\" in member.name`) {
+		return fmt.Errorf("public archive extraction must reject traversal paths")
+	}
+	if !strings.Contains(verify, `if member.name in seen:`) {
+		return fmt.Errorf("public archive extraction must reject duplicate entries")
+	}
+	if !strings.Contains(verify, `if seen != expected:`) {
+		return fmt.Errorf("public archive extraction must require exact inventory")
+	}
 	if !strings.Contains(verify, `python3 - <<'PY'`) || strings.Contains(verify, `python - <<'PY'`) {
 		return fmt.Errorf("public archive verifier must use python3")
+	}
+	consolidate := yamlJobSection(jobs, "consolidate-public-release-verification")
+	for _, binding := range []string{
+		`SOURCE_SHA: ${{ inputs.expected_source_sha }}`,
+		`TAG: ${{ inputs.expected_tag }}`,
+		`VERSION: ${{ inputs.expected_version }}`,
+		`.tag == $tag`, `.source_sha == $source_sha`, `.version_identity == $expected_version_identity`,
+		`.aggregate_checksums_verified == true`, `.archive_inventory_verified == true`,
+		`.authorized_plan_verified == true`, `.authorized_asset_digests_verified == true`,
+		`.release_metadata_verified == true`, `.provider_free_workgraph_validated == true`,
+	} {
+		if !strings.Contains(consolidate, binding) {
+			return fmt.Errorf("consolidated verification must bind exact identity and results")
+		}
 	}
 	nonPublish := strings.Replace(jobs, publish, "", 1)
 	for _, capability := range []string{"contents: write", "gh release create", "gh release upload", "git tag", "git push"} {
