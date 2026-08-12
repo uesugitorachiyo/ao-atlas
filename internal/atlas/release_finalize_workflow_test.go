@@ -123,9 +123,27 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 		{
 			name: "missing public release body comparison",
 			mutate: func(value string) string {
-				return strings.Replace(value, `cmp public-release-body.txt "docs/release/${VERSION}.md"`, `test -s public-release-body.txt`, 1)
+				return strings.Replace(value, `cmp public-release-body.txt "$committed_release_notes"`, `test -s public-release-body.txt`, 1)
 			},
 			wantErr: "public release must bind exact title and body",
+		},
+		{
+			name: "working tree release notes used",
+			mutate: func(value string) string {
+				return strings.Replace(value, `git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" > "$committed_release_notes"`, `cp "docs/release/${VERSION}.md" "$committed_release_notes"`, 1)
+			},
+			wantErr: "public release must use committed release note bytes",
+		},
+		{
+			name: "approved manifest plan binding weakened",
+			mutate: func(value string) string {
+				start := strings.Index(value, "\n  verify-public-release:")
+				if start < 0 {
+					return value
+				}
+				return value[:start] + strings.Replace(value[start:], `.approved_manifest_digest == $manifest`, `.approved_manifest_digest != $manifest`, 1)
+			},
+			wantErr: "public promotion plan must bind the approved manifest",
 		},
 		{
 			name: "unsafe archive type accepted",
@@ -276,10 +294,14 @@ func TestAtlasReleaseFinalizeWorkflowVerifiesEveryPublicTarget(t *testing.T) {
 		`gh release download "$TAG"`,
 		`.target_commitish == $source_sha`,
 		`.name == $version`,
-		`cmp public-release-body.txt "docs/release/${VERSION}.md"`,
+		`git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" > "$committed_release_notes"`,
+		`cmp public-release-body.txt "$committed_release_notes"`,
+		`release_notes_sha256=$(hash_file "$committed_release_notes")`,
 		`cmp actual-assets.txt expected-assets.txt`,
 		`PLAN_DIGEST: ${{ inputs.expected_plan_digest }}`,
+		`MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}`,
 		`test "$(hash_file release-assets/promotion-plan.json)" = "$PLAN_DIGEST"`,
+		`.approved_manifest_digest == $manifest`,
 		`.release_notes_sha256 == $notes_digest`,
 		`test "sha256:$actual_digest" = "$expected_digest"`,
 		`sha256sum --check --strict SHA256SUMS`,
@@ -689,10 +711,16 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 	if !strings.Contains(verify, `.target_commitish == $source_sha`) {
 		return fmt.Errorf("public release must bind the exact source target")
 	}
-	if !strings.Contains(verify, `.name == $version`) || !strings.Contains(verify, `cmp public-release-body.txt "docs/release/${VERSION}.md"`) {
+	if !strings.Contains(verify, `.name == $version`) || !strings.Contains(verify, `cmp public-release-body.txt "$committed_release_notes"`) {
 		return fmt.Errorf("public release must bind exact title and body")
 	}
+	if !strings.Contains(verify, `git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" > "$committed_release_notes"`) ||
+		!strings.Contains(verify, `release_notes_sha256=$(hash_file "$committed_release_notes")`) ||
+		strings.Contains(verify, `hash_file "docs/release/${VERSION}.md"`) {
+		return fmt.Errorf("public release must use committed release note bytes")
+	}
 	for _, binding := range []string{
+		`MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}`,
 		`PLAN_DIGEST: ${{ inputs.expected_plan_digest }}`,
 		`test "$(hash_file release-assets/promotion-plan.json)" = "$PLAN_DIGEST"`,
 		`.release_notes_sha256 == $notes_digest`,
@@ -701,6 +729,9 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 		if !strings.Contains(verify, binding) {
 			return fmt.Errorf("public assets must bind to the authorized promotion plan")
 		}
+	}
+	if strings.Count(verify, `.approved_manifest_digest == $manifest`) != 2 {
+		return fmt.Errorf("public promotion plan must bind the approved manifest")
 	}
 	if !strings.Contains(verify, `if not member.isfile():`) {
 		return fmt.Errorf("public archive extraction must reject non-regular entries")

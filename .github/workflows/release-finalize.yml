@@ -431,6 +431,7 @@ jobs:
         env:
           BINARY: ${{ matrix.binary }}
           GH_TOKEN: ${{ github.token }}
+          MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}
           PLAN_DIGEST: ${{ inputs.expected_plan_digest }}
           SOURCE_SHA: ${{ inputs.expected_source_sha }}
           TAG: ${{ inputs.expected_tag }}
@@ -450,7 +451,10 @@ jobs:
           test "$VERSION" = "v0.2.0"
           test "$TAG" = "$VERSION"
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          [[ "$MANIFEST_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
           [[ "$PLAN_DIGEST" =~ ^[0-9a-f]{64}$ ]]
+          committed_release_notes="$RUNNER_TEMP/ao-atlas-release-notes-${TARGET_LABEL}.md"
+          git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" > "$committed_release_notes"
           gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > public-tag-ref.json
           jq -e \
             --arg ref "refs/tags/$TAG" \
@@ -470,7 +474,7 @@ jobs:
              all(.assets[]; .state == "uploaded" and (.size | type) == "number" and .size > 0)' \
             public-release.json >/dev/null
           jq -j '.body' public-release.json > public-release-body.txt
-          cmp public-release-body.txt "docs/release/${VERSION}.md"
+          cmp public-release-body.txt "$committed_release_notes"
           jq -r '.assets[].name' public-release.json | LC_ALL=C sort > actual-assets.txt
           printf '%s\n' \
             "ao-atlas-${VERSION}-linux-x86_64.tar.gz" \
@@ -499,20 +503,23 @@ jobs:
           find release-assets -maxdepth 1 -type f -exec basename {} \; | LC_ALL=C sort > downloaded-assets.txt
           cmp downloaded-assets.txt expected-assets.txt
 
-          release_notes_sha256=$(hash_file "docs/release/${VERSION}.md")
+          release_notes_sha256=$(hash_file "$committed_release_notes")
           test "$(hash_file release-assets/promotion-plan.json)" = "$PLAN_DIGEST"
           jq -e \
+            --arg manifest "$MANIFEST_DIGEST" \
             --arg notes_digest "sha256:$release_notes_sha256" \
             --arg source_sha "$SOURCE_SHA" \
             --arg tag "$TAG" \
             --arg version "$VERSION" \
             '.schema_version == "ao.atlas.release-rehearsal-promotion-plan.v0.5" and
              .status == "dry_run_plan_ready" and .immutable == true and
+             .approved_manifest_digest == $manifest and
              .source_sha == $source_sha and .tag == $tag and .version == $version and
              .release_notes_sha256 == $notes_digest and
              (.candidates | length) == 3 and
              ([.candidates[].target_label] | sort) == ["linux-x86_64", "macos-aarch64", "windows-x86_64"] and
              all(.candidates[];
+               .approved_manifest_digest == $manifest and
                .source_sha == $source_sha and .tag == $tag and .version == $version and
                .archive == ("ao-atlas-" + $version + "-" + .target_label + ".tar.gz") and
                .provenance == "provenance.json" and .sbom == "sbom.spdx.json" and
