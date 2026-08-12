@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
+	"hash/crc32"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -248,6 +249,7 @@ func TestReleaseArtifactZipInspectorRejectsUnsafeEntriesAndBounds(t *testing.T) 
 		wantErr    string
 	}{
 		{name: "safe", entries: []releaseArtifactZipEntry{{name: "candidate.json", content: "{}\n"}}, maxEntries: "1", maxBytes: "3"},
+		{name: "safe stored", entries: []releaseArtifactZipEntry{{name: "candidate.json", content: "{}\n", stored: true}}, maxEntries: "1", maxBytes: "3"},
 		{name: "traversal", entries: []releaseArtifactZipEntry{{name: "../candidate.json", content: "{}\n"}}, maxEntries: "1", maxBytes: "3", wantErr: "unsafe path"},
 		{name: "symlink", entries: []releaseArtifactZipEntry{{name: "candidate.json", mode: os.ModeSymlink | 0o777}}, maxEntries: "1", maxBytes: "3", wantErr: "non-regular entry"},
 		{name: "entry bound", entries: []releaseArtifactZipEntry{{name: "one", content: "1"}, {name: "two", content: "2"}}, maxEntries: "1", maxBytes: "2", wantErr: "entry count exceeds"},
@@ -269,7 +271,7 @@ func TestReleaseArtifactZipInspectorRejectsUnsafeEntriesAndBounds(t *testing.T) 
 	}
 }
 
-func TestReleaseArtifactZipInspectorRejectsUnderstatedCentralDirectorySize(t *testing.T) {
+func TestReleaseArtifactZipInspectorRejectsForgedShortPrefixMetadata(t *testing.T) {
 	archive := writeReleaseArtifactZip(t, []releaseArtifactZipEntry{{name: "candidate.json", content: strings.Repeat("x", 1024)}})
 	content, err := os.ReadFile(archive)
 	if err != nil {
@@ -279,7 +281,15 @@ func TestReleaseArtifactZipInspectorRejectsUnderstatedCentralDirectorySize(t *te
 	if centralDirectory < 0 {
 		t.Fatal("ZIP central directory not found")
 	}
+	prefixCRC := crc32.ChecksumIEEE([]byte("x"))
+	binary.LittleEndian.PutUint32(content[centralDirectory+16:centralDirectory+20], prefixCRC)
 	binary.LittleEndian.PutUint32(content[centralDirectory+24:centralDirectory+28], 1)
+	dataDescriptor := bytes.LastIndex(content[:centralDirectory], []byte{'P', 'K', 7, 8})
+	if dataDescriptor < 0 {
+		t.Fatal("ZIP data descriptor not found")
+	}
+	binary.LittleEndian.PutUint32(content[dataDescriptor+4:dataDescriptor+8], prefixCRC)
+	binary.LittleEndian.PutUint32(content[dataDescriptor+12:dataDescriptor+16], 1)
 	if err := os.WriteFile(archive, content, 0o600); err != nil {
 		t.Fatal(err)
 	}
@@ -288,7 +298,32 @@ func TestReleaseArtifactZipInspectorRejectsUnderstatedCentralDirectorySize(t *te
 	cmd := exec.Command("python3", script, "--max-entries", "1", "--max-expanded-bytes", "2048", archive)
 	output, err := cmd.CombinedOutput()
 	if err == nil {
-		t.Fatalf("inspector accepted understated central-directory size\n%s", output)
+		t.Fatalf("inspector accepted forged short-prefix size and CRC\n%s", output)
+	}
+}
+
+func TestReleaseArtifactZipInspectorRejectsUnsupportedCompressionMethod(t *testing.T) {
+	archive := writeReleaseArtifactZip(t, []releaseArtifactZipEntry{{name: "candidate.json", content: "{}\n"}})
+	content, err := os.ReadFile(archive)
+	if err != nil {
+		t.Fatal(err)
+	}
+	centralDirectory := bytes.LastIndex(content, []byte{'P', 'K', 1, 2})
+	localHeader := bytes.Index(content, []byte{'P', 'K', 3, 4})
+	if centralDirectory < 0 || localHeader < 0 {
+		t.Fatal("ZIP headers not found")
+	}
+	binary.LittleEndian.PutUint16(content[centralDirectory+10:centralDirectory+12], 99)
+	binary.LittleEndian.PutUint16(content[localHeader+8:localHeader+10], 99)
+	if err := os.WriteFile(archive, content, 0o600); err != nil {
+		t.Fatal(err)
+	}
+
+	script := filepath.Join(repoRoot(t), "scripts", "inspect-release-artifact-zips.py")
+	cmd := exec.Command("python3", script, "--max-entries", "1", "--max-expanded-bytes", "3", archive)
+	output, err := cmd.CombinedOutput()
+	if err == nil || !strings.Contains(string(output), "unsupported compression method") {
+		t.Fatalf("unsupported compression method accepted: %v\n%s", err, output)
 	}
 }
 
@@ -296,6 +331,7 @@ type releaseArtifactZipEntry struct {
 	name    string
 	content string
 	mode    os.FileMode
+	stored  bool
 }
 
 func writeReleaseArtifactZip(t *testing.T, entries []releaseArtifactZipEntry) string {
@@ -307,7 +343,11 @@ func writeReleaseArtifactZip(t *testing.T, entries []releaseArtifactZipEntry) st
 	}
 	writer := zip.NewWriter(file)
 	for _, entry := range entries {
-		header := &zip.FileHeader{Name: entry.name, Method: zip.Deflate}
+		method := uint16(zip.Deflate)
+		if entry.stored {
+			method = zip.Store
+		}
+		header := &zip.FileHeader{Name: entry.name, Method: method}
 		if entry.mode != 0 {
 			header.SetMode(entry.mode)
 		}
