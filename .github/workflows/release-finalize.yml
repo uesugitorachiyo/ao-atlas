@@ -176,6 +176,7 @@ jobs:
           release_notes_sha256=$(git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" | sha256sum | awk '{print $1}')
           binding_dir="imported-release/ao-atlas-release-input-binding-${SOURCE_SHA}"
           test -d "$binding_dir"
+          test -z "$(find "$binding_dir" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
           test -z "$(find "$binding_dir" -mindepth 2 -print -quit)"
           test "$(find "$binding_dir" -maxdepth 1 -type f | wc -l)" -eq 2
           test -f "$binding_dir/release-input-binding.json"
@@ -206,6 +207,7 @@ jobs:
 
           plan_dir="imported-release/ao-atlas-release-rehearsal-plan-${SOURCE_SHA}"
           test -d "$plan_dir"
+          test -z "$(find "$plan_dir" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
           test -z "$(find "$plan_dir" -mindepth 2 -print -quit)"
           test "$(find "$plan_dir" -maxdepth 1 -type f | wc -l)" -eq 3
           test -f "$plan_dir/promotion-plan.json"

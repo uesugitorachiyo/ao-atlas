@@ -182,6 +182,50 @@ func TestAtlasReleaseFinalizeWorkflowRejectsUntrustedArtifactsBeforeExtraction(t
 	}
 }
 
+func TestAtlasReleaseFinalizeWorkflowRejectsUnexpectedEmptyArtifactDirectories(t *testing.T) {
+	content, err := os.ReadFile(filepath.Join(repoRoot(t), ".github", "workflows", "release-finalize.yml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	workflow := string(content)
+	for _, tt := range []struct {
+		name     string
+		variable string
+		files    []string
+	}{
+		{name: "input binding", variable: "binding_dir", files: []string{"release-input-binding.json", "release-input-binding.sha256"}},
+		{name: "plan", variable: "plan_dir", files: []string{"promotion-plan.json", "promotion-plan.sha256", "dry-run-boundary.json"}},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			guard := fmt.Sprintf(`test -z "$(find "$%s" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"`, tt.variable)
+			if !strings.Contains(workflow, guard) {
+				t.Fatalf("workflow missing exact %s immediate-child type guard", tt.name)
+			}
+			dir := t.TempDir()
+			for _, name := range tt.files {
+				if err := os.WriteFile(filepath.Join(dir, name), nil, 0o600); err != nil {
+					t.Fatal(err)
+				}
+			}
+			if err := runArtifactInventoryGuard(guard, tt.variable, dir); err != nil {
+				t.Fatalf("exact %s inventory rejected: %v", tt.name, err)
+			}
+			if err := os.Mkdir(filepath.Join(dir, "unexpected"), 0o700); err != nil {
+				t.Fatal(err)
+			}
+			if err := runArtifactInventoryGuard(guard, tt.variable, dir); err == nil {
+				t.Fatalf("%s inventory accepted unexpected empty directory", tt.name)
+			}
+		})
+	}
+}
+
+func runArtifactInventoryGuard(guard, variable, dir string) error {
+	cmd := exec.Command("bash", "-c", guard)
+	cmd.Env = append(os.Environ(), variable+"="+dir)
+	return cmd.Run()
+}
+
 func TestReleaseArtifactZipInspectorRejectsUnsafeEntriesAndBounds(t *testing.T) {
 	script := filepath.Join(repoRoot(t), "scripts", "inspect-release-artifact-zips.py")
 	tests := []struct {
