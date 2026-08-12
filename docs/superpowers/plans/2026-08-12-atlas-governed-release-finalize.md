@@ -287,9 +287,22 @@ Review the diff against `docs/superpowers/specs/2026-08-11-atlas-governed-releas
 
 Push `codex/atlas-governed-release-finalize`, open a non-draft PR against `main`, and include the exact local gate results. Wait for all hosted checks; fix failures through the same TDD loop.
 
-- [ ] **Step 3: Merge and synchronize**
+- [ ] **Step 3: Verify the protected-release prerequisite before merge**
 
-Merge only after green PR CI and resolved review. Fetch `main`, verify local `main == origin/main`, and remove the task branch/worktree only after retained evidence identifies the merge head.
+After PR CI is green but before merge, independently verify that `protected-release` already exists and is not an auto-created unprotected environment. A read-only GitHub environments API request returning `404`, any missing eligible required reviewer, or incomplete sentinel evidence blocks merge.
+
+Require retained evidence that:
+
+1. `gh api "repos/$GITHUB_REPOSITORY/environments/protected-release"` succeeds and its protection rules contain at least one eligible required reviewer;
+2. the environment variable `AO_ATLAS_PROTECTED_RELEASE_SENTINEL` exists specifically on `protected-release` and equals `protected-release-required-reviewers-configured`;
+3. the environment secret `AO_ATLAS_PROTECTED_RELEASE_SENTINEL` exists specifically on `protected-release`, and the repository administrator independently verifies its configured value is exactly `protected-release-required-reviewers-configured`; and
+4. the source-owned publish job still requires both nonempty environment-scoped values and exact equality before mutation.
+
+The repository administrator creates or repairs the environment, required reviewers, secret, and variable. Codex performs read-only verification, retains the API/settings evidence, and does not merge, change environment policy, write credentials, or self-approve while any prerequisite is absent or uncertain.
+
+- [ ] **Step 4: Merge and synchronize**
+
+Merge only after green PR CI, resolved review, and the complete Step 3 prerequisite. Fetch `main`, verify local `main == origin/main`, and remove the task branch/worktree only after retained evidence identifies the merge head.
 
 From the canonical `ao-mission` checkout, run:
 
@@ -299,7 +312,7 @@ python3 ../ao-architecture/scripts/verify_agent_instruction_layout.py --workspac
 
 Require exit 0 against the merged canonical Atlas checkout.
 
-- [ ] **Step 4: Dispatch fresh rehearsal**
+- [ ] **Step 5: Dispatch fresh rehearsal**
 
 Dispatch `.github/workflows/release-rehearsal.yml` from the merged exact `main` head with:
 
@@ -312,14 +325,10 @@ dry_run=true
 
 Wait for success, download every artifact, verify all checksums and exact source bindings, and record the raw SHA-256 of `promotion-plan.json`.
 
-- [ ] **Step 5: Dispatch finalizer dry run**
+- [ ] **Step 6: Dispatch finalizer dry run**
 
 Dispatch `.github/workflows/release-finalize.yml` with the successful rehearsal run ID, merged source SHA, `v0.2.0`, approved manifest digest, exact plan digest, `dry_run=true`, and empty live confirmation. Require a successful dry-run boundary and zero tag/release/public-asset mutations.
 
-- [ ] **Step 6: Configure and approve the human gate**
-
-Pause only if `protected-release` does not exist or lacks an eligible required reviewer. The repository administrator creates/configures it; an eligible human approves the exact live deployment. Codex does not change environment policy or self-approve.
-
 - [ ] **Step 7: Dispatch live finalizer and independently verify**
 
-Use the exact confirmation string defined above with `dry_run=false`. After human approval and workflow success, independently resolve tag `v0.2.0`, inspect release flags and exact 15-asset inventory, redownload all assets, recompute SHA-256, run native installed-artifact smokes, and preserve evidence before resuming AO2/Mission/Atlas campaign Gates 6–7.
+Reconfirm the retained Step 3 environment evidence is still current. Use the exact confirmation string defined above with `dry_run=false`; an eligible human approves the exact protected deployment. Codex does not change environment policy or self-approve. After human approval and workflow success, independently resolve tag `v0.2.0`, inspect release flags and exact 15-asset inventory, redownload all assets, recompute SHA-256, run native installed-artifact smokes, and preserve evidence before resuming AO2/Mission/Atlas campaign Gates 6–7.
