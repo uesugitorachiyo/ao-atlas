@@ -50,18 +50,24 @@ jobs:
           set -euo pipefail
           test "$DRY_RUN" = "true"
           [[ "$VERSION" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]
+          test "$VERSION" = "v0.2.0"
           test "$TAG" = "$VERSION"
           [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
           [[ "$APPROVED_MANIFEST_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
           actual_source_sha=$(git rev-parse HEAD)
           test "$actual_source_sha" = "$SOURCE_SHA"
+          release_notes="docs/release/${VERSION}.md"
+          test -f "$release_notes"
+          release_notes_sha256=$(sha256sum "$release_notes" | awk '{print $1}')
           jq -cS -n \
             --arg approved_manifest_digest "$APPROVED_MANIFEST_DIGEST" \
+            --arg release_notes_path "$release_notes" \
+            --arg release_notes_sha256 "sha256:$release_notes_sha256" \
             --arg source_sha "$SOURCE_SHA" \
             --arg tag "$TAG" \
             --arg version "$VERSION" \
             --arg workflow_run_id "$GITHUB_RUN_ID" \
-            '{schema_version:"ao.atlas.release-rehearsal-input-binding.v0.2",dry_run:true,immutable:true,approved_manifest_digest:$approved_manifest_digest,source_sha:$source_sha,tag:$tag,version:$version,workflow_run_id:$workflow_run_id}' \
+            '{schema_version:"ao.atlas.release-rehearsal-input-binding.v0.2",dry_run:true,immutable:true,approved_manifest_digest:$approved_manifest_digest,release_notes_path:$release_notes_path,release_notes_sha256:$release_notes_sha256,source_sha:$source_sha,tag:$tag,version:$version,workflow_run_id:$workflow_run_id}' \
             > release-input-binding.json
           sha256sum release-input-binding.json > release-input-binding.sha256
 
@@ -312,12 +318,14 @@ jobs:
           set -euo pipefail
           actual_source_sha=$(git rev-parse HEAD)
           test "$actual_source_sha" = "$SOURCE_SHA"
+          release_notes_sha256=$(git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" | sha256sum | awk '{print $1}')
           bash scripts/verify-release-rehearsal-candidates.sh \
             --candidates-dir target/rehearsal-candidates \
             --version "$VERSION" \
             --tag "$TAG" \
             --source-sha "$SOURCE_SHA" \
             --approved-manifest-digest "$APPROVED_MANIFEST_DIGEST" \
+            --release-notes-sha256 "sha256:$release_notes_sha256" \
             --plan-out promotion-plan.json
           sha256sum promotion-plan.json > promotion-plan.sha256
           printf '%s\n' '{"schema_version":"ao.atlas.release-rehearsal-dry-run-boundary.v0.2","dry_run":true,"publication_attempted":false,"tag_creation_attempted":false,"release_creation_attempted":false,"public_upload_attempted":false,"message":"No tag, release, or public upload was executed."}' > dry-run-boundary.json
