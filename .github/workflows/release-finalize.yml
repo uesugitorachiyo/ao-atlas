@@ -1,0 +1,261 @@
+name: Governed release finalizer
+
+on:
+  workflow_dispatch:
+    inputs:
+      producer_run_id:
+        description: Successful release-rehearsal workflow run ID
+        required: true
+        type: string
+      expected_source_sha:
+        description: Exact candidate source commit
+        required: true
+        type: string
+      expected_version:
+        description: Exact candidate version
+        required: true
+        type: string
+      expected_tag:
+        description: Exact candidate tag
+        required: true
+        type: string
+      expected_manifest_digest:
+        description: Exact approved manifest digest
+        required: true
+        type: string
+      expected_plan_digest:
+        description: Exact promotion-plan.json SHA-256
+        required: true
+        type: string
+      dry_run:
+        description: Validate without public mutation
+        required: true
+        default: true
+        type: boolean
+      live_confirmation:
+        description: Exact live publication confirmation; unused by dry runs
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  validate-imported-release:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Check out the exact candidate source
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.expected_source_sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Authenticate producer run and artifact inventory
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRODUCER_RUN_ID: ${{ inputs.producer_run_id }}
+          SOURCE_SHA: ${{ inputs.expected_source_sha }}
+          VERSION: ${{ inputs.expected_version }}
+          TAG: ${{ inputs.expected_tag }}
+          MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}
+          PLAN_DIGEST: ${{ inputs.expected_plan_digest }}
+          LIVE_CONFIRMATION: ${{ inputs.live_confirmation }}
+        run: |
+          set -euo pipefail
+
+          [[ "$PRODUCER_RUN_ID" =~ ^[1-9][0-9]{0,19}$ ]]
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]
+          [[ "$MANIFEST_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          [[ "$PLAN_DIGEST" =~ ^[0-9a-f]{64}$ ]]
+          [[ "$LIVE_CONFIRMATION" =~ ^[A-Za-z0-9:._-]{0,512}$ ]]
+          test "$VERSION" = "v0.2.0"
+          test "$TAG" = "$VERSION"
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID" > producer-run.json
+          jq -e \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg run_id "$PRODUCER_RUN_ID" \
+            --arg source_sha "$SOURCE_SHA" \
+            '.id | tostring == $run_id' producer-run.json >/dev/null
+          jq -e \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg source_sha "$SOURCE_SHA" \
+            '.repository.full_name == $repository and
+             .path == ".github/workflows/release-rehearsal.yml" and
+             .event == "workflow_dispatch" and
+             .conclusion == "success" and
+             .head_sha == $source_sha' producer-run.json >/dev/null
+
+          created_epoch=$(date -u -d "$(jq -er '.created_at' producer-run.json)" +%s)
+          now_epoch=$(date -u +%s)
+          age_seconds=$((now_epoch - created_epoch))
+          (( age_seconds >= 0 && age_seconds <= 14 * 24 * 60 * 60 ))
+
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID/artifacts?per_page=100" > producer-artifacts.json
+          jq -e '.total_count == 4 and all(.artifacts[]; .expired == false)' producer-artifacts.json >/dev/null
+          jq -r '.artifacts[].name' producer-artifacts.json | LC_ALL=C sort > actual-artifacts.txt
+          printf '%s\n' \
+            "ao-atlas-release-candidate-linux-x86_64-$SOURCE_SHA" \
+            "ao-atlas-release-candidate-macos-aarch64-$SOURCE_SHA" \
+            "ao-atlas-release-candidate-windows-x86_64-$SOURCE_SHA" \
+            "ao-atlas-release-rehearsal-plan-$SOURCE_SHA" \
+            | LC_ALL=C sort > expected-artifacts.txt
+          cmp actual-artifacts.txt expected-artifacts.txt
+
+      - name: Download exact producer artifacts
+        uses: actions/download-artifact@v7
+        with:
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: ${{ inputs.producer_run_id }}
+          pattern: ao-atlas-release-*-${{ inputs.expected_source_sha }}
+          path: imported-release
+          merge-multiple: false
+
+      - name: Revalidate imported bytes and stage exact public inventory
+        shell: bash
+        env:
+          PRODUCER_RUN_ID: ${{ inputs.producer_run_id }}
+          SOURCE_SHA: ${{ inputs.expected_source_sha }}
+          VERSION: ${{ inputs.expected_version }}
+          TAG: ${{ inputs.expected_tag }}
+          MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}
+          PLAN_DIGEST: ${{ inputs.expected_plan_digest }}
+        run: |
+          set -euo pipefail
+
+          test -d imported-release
+          test -z "$(find imported-release -type l -print -quit)"
+          test -z "$(find imported-release -mindepth 1 ! -type f ! -type d -print -quit)"
+          file_count=$(find imported-release -type f -print | wc -l)
+          total_bytes=$(find imported-release -type f -printf '%s\n' | awk '{total += $1} END {print total + 0}')
+          (( file_count <= 128 ))
+          (( total_bytes <= 128 * 1024 * 1024 ))
+
+          targets=(linux-x86_64 macos-aarch64 windows-x86_64)
+          for target in "${targets[@]}"; do
+            candidate_dir="imported-release/ao-atlas-release-candidate-${target}-${SOURCE_SHA}"
+            test -d "$candidate_dir"
+            (cd "$candidate_dir" && sha256sum --check --strict SHA256SUMS)
+          done
+
+          plan_dir="imported-release/ao-atlas-release-rehearsal-plan-${SOURCE_SHA}"
+          test -d "$plan_dir"
+          test "$(find "$plan_dir" -maxdepth 1 -type f | wc -l)" -eq 3
+          test -f "$plan_dir/promotion-plan.json"
+          test -f "$plan_dir/promotion-plan.sha256"
+          test -f "$plan_dir/dry-run-boundary.json"
+          (cd "$plan_dir" && sha256sum --check --strict promotion-plan.sha256)
+          test "$(sha256sum "$plan_dir/promotion-plan.json" | awk '{print $1}')" = "$PLAN_DIGEST"
+
+          release_notes_sha256=$(git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" | sha256sum | awk '{print $1}')
+          bash scripts/verify-release-rehearsal-candidates.sh \
+            --candidates-dir imported-release \
+            --version "$VERSION" \
+            --tag "$TAG" \
+            --source-sha "$SOURCE_SHA" \
+            --approved-manifest-digest "$MANIFEST_DIGEST" \
+            --release-notes-sha256 "sha256:$release_notes_sha256" \
+            --plan-out recomputed-promotion-plan.json
+          cmp recomputed-promotion-plan.json "$plan_dir/promotion-plan.json"
+          jq -e \
+            --arg run_id "$PRODUCER_RUN_ID" \
+            --arg manifest "$MANIFEST_DIGEST" \
+            --arg notes_digest "sha256:$release_notes_sha256" \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg tag "$TAG" \
+            --arg version "$VERSION" \
+            '.approved_manifest_digest == $manifest and
+             .release_notes_sha256 == $notes_digest and
+             .source_sha == $source_sha and .tag == $tag and .version == $version and
+             all(.candidates[]; .workflow_identity | endswith("/actions/runs/" + $run_id))' \
+            recomputed-promotion-plan.json >/dev/null
+
+          mkdir validated-release
+          cp --no-clobber "$plan_dir/promotion-plan.json" validated-release/promotion-plan.json
+          (cd validated-release && sha256sum promotion-plan.json > promotion-plan.sha256)
+          for target in "${targets[@]}"; do
+            candidate_dir="imported-release/ao-atlas-release-candidate-${target}-${SOURCE_SHA}"
+            archive=$(jq -er --arg target "$target" 'select(.target_label == $target) | .archive' "$candidate_dir/candidate-summary.json")
+            cp --no-clobber "$candidate_dir/$archive" "validated-release/$archive"
+            cp --no-clobber "$candidate_dir/provenance.json" "validated-release/${target}-provenance.json"
+            cp --no-clobber "$candidate_dir/sbom.spdx.json" "validated-release/${target}-sbom.spdx.json"
+            cp --no-clobber "$candidate_dir/signature-verification.json" "validated-release/${target}-signature-verification.json"
+          done
+          (
+            cd validated-release
+            sha256sum ao-atlas-*.tar.gz | LC_ALL=C sort > SHA256SUMS
+            test "$(find . -maxdepth 1 -type f | wc -l)" -eq 15
+          )
+
+      - name: Upload one validated import
+        uses: actions/upload-artifact@v7
+        with:
+          name: ao-atlas-validated-release-import-${{ inputs.producer_run_id }}
+          path: validated-release
+          if-no-files-found: error
+          overwrite: false
+
+  dry-run-boundary:
+    needs: validate-imported-release
+    if: ${{ inputs.dry_run == true }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Record zero-mutation boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          jq -cn '{schema_version:"ao.atlas.release-finalize-dry-run-boundary.v0.1",dry_run:true,publication_attempted:false,tag_creation_attempted:false,release_creation_attempted:false,public_upload_attempted:false,deployment_attempted:false,provider_credentials_used:false,permission_mutation_attempted:false,environment_mutation_attempted:false}' > dry-run-boundary.json
+      - name: Upload dry-run boundary
+        uses: actions/upload-artifact@v7
+        with:
+          name: ao-atlas-release-finalize-dry-run-boundary-${{ inputs.producer_run_id }}
+          path: dry-run-boundary.json
+          if-no-files-found: error
+          overwrite: false
+
+  publish-release:
+    needs: validate-imported-release
+    if: ${{ inputs.dry_run == false }}
+    runs-on: ubuntu-latest
+    environment: protected-release
+    permissions:
+      contents: write
+    steps:
+      - name: Publication remains fail-closed until Task 3
+        shell: bash
+        env:
+          TAG: ${{ inputs.expected_tag }}
+        run: |
+          set -euo pipefail
+          # Task 3 preflight: git/ref/tags/$TAG
+          # Task 3 publication: gh release create
+          echo "publication contract is not implemented" >&2
+          exit 1
+
+  verify-public-release:
+    needs: publish-release
+    if: ${{ needs.publish-release.result == 'success' && false }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Public verification remains disabled until Task 3
+        shell: bash
+        run: |
+          # Task 3 verification: gh release download
+          printf '%s\n' '{"provider_credentials_used":false}'
