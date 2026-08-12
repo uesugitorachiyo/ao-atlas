@@ -177,6 +177,9 @@ pass "build-artifact-guard"
 assert_tracked_path_budget
 pass "tracked-path-budget"
 
+go test ./internal/atlas -run 'TestAtlasReleaseFinalizeWorkflow|TestSpecialistReleaseRehearsalWorkflow' -count=1
+pass "release-workflow-contracts"
+
 go test ./...
 pass "go-test"
 
@@ -214,6 +217,9 @@ pass "generated-recommendation-prompt-continuation-reason-negative-scan"
 required_files=(
   README.md
   LICENSE
+  .github/workflows/release-rehearsal.yml
+  .github/workflows/release-finalize.yml
+  docs/release/v0.2.0.md
   docs/sdd/AO-ATLAS-PRD.md
   docs/sdd/AO-ATLAS-ARCHITECTURE.md
   docs/sdd/AO-ATLAS-CONTRACTS.md

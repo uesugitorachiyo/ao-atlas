@@ -241,6 +241,18 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 	}
 }
 
+func TestAtlasReleaseFinalizeWorkflowOperatorDocumentation(t *testing.T) {
+	content, err := os.ReadFile(filepath.Join(repoRoot(t), "README.md"))
+	if err != nil {
+		t.Fatalf("read README: %v", err)
+	}
+	for _, required := range []string{"release-finalize.yml", "protected-release", "v0.2.0"} {
+		if !bytes.Contains(content, []byte(required)) {
+			t.Errorf("README missing governed release contract %q", required)
+		}
+	}
+}
+
 func TestAtlasReleaseFinalizeWorkflowPublishesExactInventory(t *testing.T) {
 	workflow := readReleaseFinalizeWorkflow(t)
 	publish := yamlJobSection(yamlTopLevelSection(workflow, "jobs:"), "publish-release")

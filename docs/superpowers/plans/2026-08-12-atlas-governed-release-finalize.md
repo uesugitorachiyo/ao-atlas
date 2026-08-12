@@ -273,7 +273,7 @@ git commit -m "docs: document governed Atlas publication"
 
 **Files:**
 - Review: all branch changes from `77ec1577^..HEAD`
-- Evidence only: external campaign root under `/Users/torachiyouesugi/Documents/canary-test/`
+- Evidence only: external campaign root outside the public checkouts
 
 **Interfaces:**
 - Consumes: clean reviewed branch with all local gates green.
@@ -291,7 +291,7 @@ Push `codex/atlas-governed-release-finalize`, open a non-draft PR against `main`
 
 Merge only after green PR CI and resolved review. Fetch `main`, verify local `main == origin/main`, and remove the task branch/worktree only after retained evidence identifies the merge head.
 
-From canonical `/Users/torachiyouesugi/Documents/public/ao-mission`, run:
+From the canonical `ao-mission` checkout, run:
 
 ```bash
 python3 ../ao-architecture/scripts/verify_agent_instruction_layout.py --workspace-root .. --repository ao-atlas

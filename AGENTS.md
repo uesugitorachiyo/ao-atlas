@@ -19,8 +19,9 @@ Atlas consumes Blueprint authorization and Mission objectives and readbacks. It 
 - Preserve historical files under `docs/evidence/` and mappings in `docs/evidence-path-map.json`; never rewrite them to support a current claim or revive and reinterpret an earlier wave.
 - Treat `examples/valid/` and `examples/invalid/` as contract fixtures. Change them with their consuming tests and keep rejection cases invalid.
 - Keep generated state and output under ignored `.atlas-local/`, `.atlas-state/`, `target/`, `dist/`, or `bin/`; do not hand-edit generated readbacks into source evidence.
-- Do not introduce secrets, provider credentials, private paths, account identifiers, or live-provider behavior. Atlas has no push, tag, release, upload, approval, or sibling-repository mutation authority.
-- Release, deployment, publication, credentialed operation, and direct-main changes require separate explicit authority.
+- Do not introduce secrets, provider credentials, private paths, account identifiers, or live-provider behavior. Ordinary Atlas operation has no push, tag, release, upload, approval, or sibling-repository mutation authority.
+- Release publication is limited to separately authorized exact candidates through `.github/workflows/release-finalize.yml`, the `protected-release` environment, and eligible human review. All other tag, release, and upload activity remains forbidden.
+- Deployment, other publication, credentialed operation, and direct-main changes require separate explicit authority.
 
 ## Working Method
 
