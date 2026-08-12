@@ -297,29 +297,309 @@ jobs:
     runs-on: ubuntu-latest
     environment: protected-release
     permissions:
+      actions: read
       contents: write
     steps:
-      - name: Publication remains fail-closed until Task 3
+      - name: Check out the exact release source
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.expected_source_sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Download the validated import
+        uses: actions/download-artifact@v7
+        with:
+          name: ao-atlas-validated-release-import-${{ inputs.producer_run_id }}
+          path: validated-release
+
+      - name: Publish the exact validated inventory
         shell: bash
         env:
+          GH_TOKEN: ${{ github.token }}
+          LIVE_CONFIRMATION: ${{ inputs.live_confirmation }}
+          MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}
+          PLAN_DIGEST: ${{ inputs.expected_plan_digest }}
+          PRODUCER_RUN_ID: ${{ inputs.producer_run_id }}
+          SOURCE_SHA: ${{ inputs.expected_source_sha }}
           TAG: ${{ inputs.expected_tag }}
+          VERSION: ${{ inputs.expected_version }}
         run: |
           set -euo pipefail
-          # Task 3 preflight: git/ref/tags/$TAG
-          # Task 3 publication: gh release create
-          echo "publication contract is not implemented" >&2
-          exit 1
+
+          test "$VERSION" = "v0.2.0"
+          test "$TAG" = "$VERSION"
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          expected_confirmation="publish-imported-ao-atlas-${PRODUCER_RUN_ID}-${VERSION}-${TAG}-${SOURCE_SHA}-${MANIFEST_DIGEST}-${PLAN_DIGEST}"
+          test "$LIVE_CONFIRMATION" = "$expected_confirmation"
+
+          test -d validated-release
+          test -z "$(find validated-release -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
+          test -z "$(find validated-release -mindepth 2 -print -quit)"
+          test "$(find validated-release -maxdepth 1 -type f | wc -l)" -eq 15
+          find validated-release -maxdepth 1 -type f -printf '%f\n' | LC_ALL=C sort > actual-assets.txt
+          printf '%s\n' \
+            "ao-atlas-${VERSION}-linux-x86_64.tar.gz" \
+            "ao-atlas-${VERSION}-macos-aarch64.tar.gz" \
+            "ao-atlas-${VERSION}-windows-x86_64.tar.gz" \
+            "linux-x86_64-provenance.json" \
+            "linux-x86_64-sbom.spdx.json" \
+            "linux-x86_64-signature-verification.json" \
+            "macos-aarch64-provenance.json" \
+            "macos-aarch64-sbom.spdx.json" \
+            "macos-aarch64-signature-verification.json" \
+            "promotion-plan.json" \
+            "promotion-plan.sha256" \
+            "SHA256SUMS" \
+            "windows-x86_64-provenance.json" \
+            "windows-x86_64-sbom.spdx.json" \
+            "windows-x86_64-signature-verification.json" \
+            | LC_ALL=C sort > expected-assets.txt
+          cmp actual-assets.txt expected-assets.txt
+          (
+            cd validated-release
+            printf '%s\n' \
+              "ao-atlas-${VERSION}-linux-x86_64.tar.gz" \
+              "ao-atlas-${VERSION}-macos-aarch64.tar.gz" \
+              "ao-atlas-${VERSION}-windows-x86_64.tar.gz" \
+              | LC_ALL=C sort > ../expected-archive-checks.txt
+            awk '{print $2}' SHA256SUMS | LC_ALL=C sort > ../actual-archive-checks.txt
+            cmp ../actual-archive-checks.txt ../expected-archive-checks.txt
+            sha256sum --check --strict SHA256SUMS
+            sha256sum --check --strict promotion-plan.sha256
+            test "$(sha256sum promotion-plan.json | awk '{print $1}')" = "$PLAN_DIGEST"
+          )
+
+          if gh api --include "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > tag-ref-preflight.txt; then
+            echo "ref refs/tags/$TAG already exists" >&2
+            exit 1
+          fi
+          grep -Eq '^HTTP/[^ ]+ 404 ' tag-ref-preflight.txt
+          if gh api --include "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > release-preflight.txt; then
+            echo "release $TAG already exists" >&2
+            exit 1
+          fi
+          grep -Eq '^HTTP/[^ ]+ 404 ' release-preflight.txt
+
+          gh api \
+            --method POST "repos/$GITHUB_REPOSITORY/git/refs" \
+            -f ref="refs/tags/$TAG" \
+            -f sha="$SOURCE_SHA" \
+            > created-ref.json
+          jq -e \
+            --arg ref "refs/tags/$TAG" \
+            --arg source_sha "$SOURCE_SHA" \
+            '.ref == $ref and .object.type == "commit" and .object.sha == $source_sha' \
+            created-ref.json >/dev/null
+          gh release create "$TAG" \
+            --verify-tag \
+            --target "$SOURCE_SHA" \
+            --title "$VERSION" \
+            --notes-file "docs/release/${VERSION}.md" \
+            validated-release/*
 
   verify-public-release:
     needs: publish-release
-    if: ${{ needs.publish-release.result == 'success' && false }}
+    if: ${{ needs.publish-release.result == 'success' }}
+    runs-on: ${{ matrix.os }}
+    permissions:
+      actions: read
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target_label: linux-x86_64
+            binary: ao-atlas
+          - os: macos-15
+            target_label: macos-aarch64
+            binary: ao-atlas
+          - os: windows-latest
+            target_label: windows-x86_64
+            binary: ao-atlas.exe
+    steps:
+      - name: Check out the exact public fixture source
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.expected_source_sha }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Verify public release and installed archive
+        shell: bash
+        env:
+          BINARY: ${{ matrix.binary }}
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ inputs.expected_source_sha }}
+          TAG: ${{ inputs.expected_tag }}
+          TARGET_LABEL: ${{ matrix.target_label }}
+          VERSION: ${{ inputs.expected_version }}
+        run: |
+          set -euo pipefail
+
+          test "$VERSION" = "v0.2.0"
+          test "$TAG" = "$VERSION"
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > public-tag-ref.json
+          jq -e \
+            --arg ref "refs/tags/$TAG" \
+            --arg source_sha "$SOURCE_SHA" \
+            '.ref == $ref and .object.type == "commit" and .object.sha == $source_sha' \
+            public-tag-ref.json >/dev/null
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > public-release.json
+          jq -e \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg tag "$TAG" \
+            '.tag_name == $tag and .target_commitish == $source_sha and
+             .draft == false and .prerelease == false and
+             (.assets | length) == 15 and
+             ([.assets[].name] | unique | length) == 15 and
+             all(.assets[]; .state == "uploaded" and (.size | type) == "number" and .size > 0)' \
+            public-release.json >/dev/null
+          jq -r '.assets[].name' public-release.json | LC_ALL=C sort > actual-assets.txt
+          printf '%s\n' \
+            "ao-atlas-${VERSION}-linux-x86_64.tar.gz" \
+            "ao-atlas-${VERSION}-macos-aarch64.tar.gz" \
+            "ao-atlas-${VERSION}-windows-x86_64.tar.gz" \
+            "linux-x86_64-provenance.json" \
+            "linux-x86_64-sbom.spdx.json" \
+            "linux-x86_64-signature-verification.json" \
+            "macos-aarch64-provenance.json" \
+            "macos-aarch64-sbom.spdx.json" \
+            "macos-aarch64-signature-verification.json" \
+            "promotion-plan.json" \
+            "promotion-plan.sha256" \
+            "SHA256SUMS" \
+            "windows-x86_64-provenance.json" \
+            "windows-x86_64-sbom.spdx.json" \
+            "windows-x86_64-signature-verification.json" \
+            | LC_ALL=C sort > expected-assets.txt
+          cmp actual-assets.txt expected-assets.txt
+
+          mkdir release-assets
+          gh release download "$TAG" --dir release-assets
+          test -z "$(find release-assets -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
+          test -z "$(find release-assets -mindepth 2 -print -quit)"
+          test "$(find release-assets -maxdepth 1 -type f | wc -l)" -eq 15
+          find release-assets -maxdepth 1 -type f -exec basename {} \; | LC_ALL=C sort > downloaded-assets.txt
+          cmp downloaded-assets.txt expected-assets.txt
+          (
+            cd release-assets
+            printf '%s\n' \
+              "ao-atlas-${VERSION}-linux-x86_64.tar.gz" \
+              "ao-atlas-${VERSION}-macos-aarch64.tar.gz" \
+              "ao-atlas-${VERSION}-windows-x86_64.tar.gz" \
+              | LC_ALL=C sort > ../expected-archive-checks.txt
+            awk '{print $2}' SHA256SUMS | LC_ALL=C sort > ../actual-archive-checks.txt
+            cmp ../actual-archive-checks.txt ../expected-archive-checks.txt
+            if command -v sha256sum >/dev/null 2>&1; then
+              sha256sum --check --strict SHA256SUMS
+              sha256sum --check --strict promotion-plan.sha256
+            else
+              shasum -a 256 --check SHA256SUMS
+              shasum -a 256 --check promotion-plan.sha256
+            fi
+          )
+
+          archive="release-assets/ao-atlas-${VERSION}-${TARGET_LABEL}.tar.gz"
+          install_dir="$RUNNER_TEMP/ao-atlas-public-${TARGET_LABEL}"
+          mkdir "$install_dir"
+          ARCHIVE="$archive" INSTALL_DIR="$install_dir" python - <<'PY'
+          import os
+          import shutil
+          import tarfile
+          from pathlib import Path, PurePosixPath
+
+          archive = os.environ["ARCHIVE"]
+          binary = os.environ["BINARY"]
+          destination = Path(os.environ["INSTALL_DIR"])
+          expected = {binary, "LICENSE"}
+          with tarfile.open(archive, "r:gz") as bundle:
+              members = bundle.getmembers()
+              seen = set()
+              for member in members:
+                  path = PurePosixPath(member.name)
+                  if path.is_absolute() or ".." in path.parts or "\\" in member.name:
+                      raise SystemExit(f"unsafe archive path: {member.name}")
+                  if not member.isfile():
+                      raise SystemExit(f"non-regular archive entry: {member.name}")
+                  if member.name in seen:
+                      raise SystemExit(f"duplicate archive entry: {member.name}")
+                  seen.add(member.name)
+              if seen != expected:
+                  raise SystemExit(f"unexpected archive inventory: {sorted(seen)}")
+              for member in members:
+                  source = bundle.extractfile(member)
+                  if source is None:
+                      raise SystemExit(f"cannot read archive entry: {member.name}")
+                  output = destination / member.name
+                  with source, output.open("xb") as target:
+                      shutil.copyfileobj(source, target)
+                  os.chmod(output, member.mode & 0o777)
+          PY
+
+          expected_version_identity="ao-atlas version=$VERSION source_sha=$SOURCE_SHA"
+          actual_version_identity=$("$install_dir/$BINARY" --version)
+          test "$actual_version_identity" = "$expected_version_identity"
+          "$install_dir/$BINARY" workgraph validate --workgraph examples/valid/workgraph.json
+          jq -cn \
+            --arg release_url "$(jq -er '.html_url' public-release.json)" \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg tag "$TAG" \
+            --arg target_label "$TARGET_LABEL" \
+            --arg version_identity "$actual_version_identity" \
+            '{schema_version:"ao.atlas.public-release-verification.v0.1",status:"passed",tag:$tag,source_sha:$source_sha,target_label:$target_label,release_url:$release_url,aggregate_checksums_verified:true,archive_inventory_verified:true,version_identity:$version_identity,provider_free_workgraph_validated:true,provider_credentials_used:false}' \
+            > "public-release-verification-${TARGET_LABEL}.json"
+
+      - name: Upload target-qualified public verification
+        uses: actions/upload-artifact@v7
+        with:
+          name: ao-atlas-public-release-verification-${{ inputs.expected_tag }}-${{ matrix.target_label }}
+          path: public-release-verification-${{ matrix.target_label }}.json
+          if-no-files-found: error
+          overwrite: false
+
+  consolidate-public-release-verification:
+    needs: verify-public-release
+    if: ${{ needs.verify-public-release.result == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       actions: read
       contents: read
     steps:
-      - name: Public verification remains disabled until Task 3
+      - name: Download target-qualified public verification
+        uses: actions/download-artifact@v7
+        with:
+          pattern: ao-atlas-public-release-verification-${{ inputs.expected_tag }}-*
+          path: public-release-verification
+          merge-multiple: true
+
+      - name: Validate public verification inventory
         shell: bash
         run: |
-          # Task 3 verification: gh release download
-          printf '%s\n' '{"provider_credentials_used":false}'
+          set -euo pipefail
+          test -z "$(find public-release-verification -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
+          test -z "$(find public-release-verification -mindepth 2 -print -quit)"
+          test "$(find public-release-verification -maxdepth 1 -type f | wc -l)" -eq 3
+          find public-release-verification -maxdepth 1 -type f -printf '%f\n' | LC_ALL=C sort > actual-verification-files.txt
+          printf '%s\n' \
+            public-release-verification-linux-x86_64.json \
+            public-release-verification-macos-aarch64.json \
+            public-release-verification-windows-x86_64.json \
+            > expected-verification-files.txt
+          cmp actual-verification-files.txt expected-verification-files.txt
+          jq -e -s \
+            'length == 3 and
+             ([.[].target_label] | unique) == ["linux-x86_64", "macos-aarch64", "windows-x86_64"] and
+             all(.[]; .schema_version == "ao.atlas.public-release-verification.v0.1" and
+                      .status == "passed" and .provider_credentials_used == false)' \
+            public-release-verification/*.json >/dev/null
+
+      - name: Upload public release verification
+        uses: actions/upload-artifact@v7
+        with:
+          name: ao-atlas-public-release-verification-${{ inputs.expected_tag }}
+          path: public-release-verification
+          if-no-files-found: error
+          overwrite: false

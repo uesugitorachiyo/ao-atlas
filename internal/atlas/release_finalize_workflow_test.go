@@ -65,6 +65,62 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 			wantErr: "publish-release must require live mode",
 		},
 		{
+			name: "missing exact live confirmation",
+			mutate: func(value string) string {
+				return strings.Replace(value, `test "$LIVE_CONFIRMATION" = "$expected_confirmation"`, `test -n "$LIVE_CONFIRMATION"`, 1)
+			},
+			wantErr: "publish-release must bind the exact live confirmation",
+		},
+		{
+			name: "missing verified tag",
+			mutate: func(value string) string {
+				return strings.Replace(value, `--verify-tag`, `--target "$SOURCE_SHA"`, 1)
+			},
+			wantErr: "release creation must require the pre-created tag",
+		},
+		{
+			name: "release overwrite flag",
+			mutate: func(value string) string {
+				return strings.Replace(value, `gh release create "$TAG"`, `gh release create "$TAG" --clobber`, 1)
+			},
+			wantErr: `forbidden release finalizer capability "--clobber"`,
+		},
+		{
+			name: "draft release flag",
+			mutate: func(value string) string {
+				return strings.Replace(value, `gh release create "$TAG"`, `gh release create "$TAG" --draft`, 1)
+			},
+			wantErr: `forbidden release finalizer capability "--draft"`,
+		},
+		{
+			name: "missing staged provenance asset",
+			mutate: func(value string) string {
+				return strings.Replace(value, `"linux-x86_64-provenance.json"`, `"unexpected-provenance.json"`, 1)
+			},
+			wantErr: "publish-release must stage the exact public inventory",
+		},
+		{
+			name: "wrong public release target",
+			mutate: func(value string) string {
+				return strings.Replace(value, `.target_commitish == $source_sha`, `.target_commitish != $source_sha`, 1)
+			},
+			wantErr: "public release must bind the exact source target",
+		},
+		{
+			name: "unsafe archive type accepted",
+			mutate: func(value string) string {
+				return strings.Replace(value, `if not member.isfile():`, `if member.isfile():`, 1)
+			},
+			wantErr: "public archive extraction must reject non-regular entries",
+		},
+		{
+			name: "disabled public verification",
+			mutate: func(value string) string {
+				return strings.Replace(value, `if: ${{ needs.publish-release.result == 'success' }}`, `if: ${{ needs.publish-release.result == 'success' && false }}`, 1)
+			},
+			wantErr: "public verification must run after publication",
+		},
+		{
 			name: "wrong producer workflow",
 			mutate: func(value string) string {
 				return strings.ReplaceAll(value, ".github/workflows/release-rehearsal.yml", ".github/workflows/ci.yml")
@@ -102,6 +158,93 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestAtlasReleaseFinalizeWorkflowPublishesExactInventory(t *testing.T) {
+	workflow := readReleaseFinalizeWorkflow(t)
+	publish := yamlJobSection(yamlTopLevelSection(workflow, "jobs:"), "publish-release")
+	for _, required := range []string{
+		`uses: actions/download-artifact@v7`,
+		`name: ao-atlas-validated-release-import-${{ inputs.producer_run_id }}`,
+		`expected_confirmation="publish-imported-ao-atlas-${PRODUCER_RUN_ID}-${VERSION}-${TAG}-${SOURCE_SHA}-${MANIFEST_DIGEST}-${PLAN_DIGEST}"`,
+		`test "$LIVE_CONFIRMATION" = "$expected_confirmation"`,
+		`git/ref/tags/$TAG`,
+		`releases/tags/$TAG`,
+		`--method POST "repos/$GITHUB_REPOSITORY/git/refs"`,
+		`-f ref="refs/tags/$TAG"`,
+		`-f sha="$SOURCE_SHA"`,
+		`gh release create "$TAG"`,
+		`--verify-tag`,
+		`--target "$SOURCE_SHA"`,
+		`--title "$VERSION"`,
+		`--notes-file "docs/release/${VERSION}.md"`,
+		`"ao-atlas-${VERSION}-linux-x86_64.tar.gz"`,
+		`"ao-atlas-${VERSION}-macos-aarch64.tar.gz"`,
+		`"ao-atlas-${VERSION}-windows-x86_64.tar.gz"`,
+		`"linux-x86_64-provenance.json"`,
+		`"macos-aarch64-provenance.json"`,
+		`"windows-x86_64-provenance.json"`,
+		`"linux-x86_64-sbom.spdx.json"`,
+		`"macos-aarch64-sbom.spdx.json"`,
+		`"windows-x86_64-sbom.spdx.json"`,
+		`"linux-x86_64-signature-verification.json"`,
+		`"macos-aarch64-signature-verification.json"`,
+		`"windows-x86_64-signature-verification.json"`,
+		`"SHA256SUMS"`,
+		`"promotion-plan.json"`,
+		`"promotion-plan.sha256"`,
+		`test "$(find validated-release -maxdepth 1 -type f | wc -l)" -eq 15`,
+		`cmp actual-assets.txt expected-assets.txt`,
+	} {
+		if !strings.Contains(publish, required) {
+			t.Errorf("publish-release missing exact inventory contract %q", required)
+		}
+	}
+}
+
+func TestAtlasReleaseFinalizeWorkflowVerifiesEveryPublicTarget(t *testing.T) {
+	workflow := readReleaseFinalizeWorkflow(t)
+	verify := yamlJobSection(yamlTopLevelSection(workflow, "jobs:"), "verify-public-release")
+	for _, required := range []string{
+		`if: ${{ needs.publish-release.result == 'success' }}`,
+		`target_label: linux-x86_64`,
+		`target_label: macos-aarch64`,
+		`target_label: windows-x86_64`,
+		`gh release download "$TAG"`,
+		`.target_commitish == $source_sha`,
+		`cmp actual-assets.txt expected-assets.txt`,
+		`sha256sum --check --strict SHA256SUMS`,
+		`shasum -a 256 --check SHA256SUMS`,
+		`PurePosixPath(member.name)`,
+		`path.is_absolute()`,
+		`".." in path.parts`,
+		`member.isfile()`,
+		`expected_version_identity="ao-atlas version=$VERSION source_sha=$SOURCE_SHA"`,
+		`workgraph validate --workgraph examples/valid/workgraph.json`,
+		`provider_credentials_used:false`,
+		`name: ao-atlas-public-release-verification-${{ inputs.expected_tag }}-${{ matrix.target_label }}`,
+	} {
+		if !strings.Contains(verify, required) {
+			t.Errorf("verify-public-release missing contract %q", required)
+		}
+	}
+	for _, forbidden := range []string{"environment:", "contents: write", "gh release create", "gh release upload"} {
+		if strings.Contains(verify, forbidden) {
+			t.Errorf("verify-public-release has forbidden capability %q", forbidden)
+		}
+	}
+	if !strings.Contains(workflow, `name: ao-atlas-public-release-verification-${{ inputs.expected_tag }}`) {
+		t.Fatal("workflow must upload the exact consolidated public verification artifact")
+	}
+}
+
+func readReleaseFinalizeWorkflow(t *testing.T) string {
+	t.Helper()
+	content, err := os.ReadFile(filepath.Join(repoRoot(t), ".github", "workflows", "release-finalize.yml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return string(content)
 }
 
 func TestAtlasReleaseFinalizeWorkflowAuthenticatesExactProducerArtifactInventory(t *testing.T) {
@@ -380,6 +523,7 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 		".github/workflows/release-rehearsal.yml", `conclusion == "success"`,
 		"scripts/verify-release-rehearsal-candidates.sh", "gh release create",
 		"gh release download", "git/ref/tags/$TAG", "provider_credentials_used:false",
+		"consolidate-public-release-verification:",
 	}
 	for _, value := range required {
 		if !strings.Contains(workflow, value) {
@@ -423,6 +567,38 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 	if !strings.Contains(publish, "inputs.dry_run == false") {
 		return fmt.Errorf("publish-release must require live mode")
 	}
+	if !strings.Contains(publish, "permissions:\n      actions: read\n      contents: write") {
+		return fmt.Errorf("publish-release permissions must be exactly actions read and contents write")
+	}
+	if !strings.Contains(publish, `test "$LIVE_CONFIRMATION" = "$expected_confirmation"`) {
+		return fmt.Errorf("publish-release must bind the exact live confirmation")
+	}
+	if !strings.Contains(publish, "--verify-tag") {
+		return fmt.Errorf("release creation must require the pre-created tag")
+	}
+	for _, asset := range []string{
+		`"ao-atlas-${VERSION}-linux-x86_64.tar.gz"`,
+		`"ao-atlas-${VERSION}-macos-aarch64.tar.gz"`,
+		`"ao-atlas-${VERSION}-windows-x86_64.tar.gz"`,
+		`"linux-x86_64-provenance.json"`, `"linux-x86_64-sbom.spdx.json"`, `"linux-x86_64-signature-verification.json"`,
+		`"macos-aarch64-provenance.json"`, `"macos-aarch64-sbom.spdx.json"`, `"macos-aarch64-signature-verification.json"`,
+		`"windows-x86_64-provenance.json"`, `"windows-x86_64-sbom.spdx.json"`, `"windows-x86_64-signature-verification.json"`,
+		`"SHA256SUMS"`, `"promotion-plan.json"`, `"promotion-plan.sha256"`,
+	} {
+		if !strings.Contains(publish, asset) {
+			return fmt.Errorf("publish-release must stage the exact public inventory")
+		}
+	}
+	verify := yamlJobSection(jobs, "verify-public-release")
+	if verify == "" || !strings.Contains(verify, `if: ${{ needs.publish-release.result == 'success' }}`) || strings.Contains(verify, "&& false") {
+		return fmt.Errorf("public verification must run after publication")
+	}
+	if !strings.Contains(verify, `.target_commitish == $source_sha`) {
+		return fmt.Errorf("public release must bind the exact source target")
+	}
+	if !strings.Contains(verify, `if not member.isfile():`) {
+		return fmt.Errorf("public archive extraction must reject non-regular entries")
+	}
 	nonPublish := strings.Replace(jobs, publish, "", 1)
 	for _, capability := range []string{"contents: write", "gh release create", "gh release upload", "git tag", "git push"} {
 		if strings.Contains(nonPublish, capability) {
@@ -432,7 +608,7 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 	if strings.Contains(nonPublish, ": write") {
 		return fmt.Errorf("write permission must be limited to publish-release")
 	}
-	for _, forbidden := range []string{"write-all", "pull-requests: write", "/environments", "gh release delete", "git push --force"} {
+	for _, forbidden := range []string{"write-all", "pull-requests: write", "/environments", "gh release delete", "gh release upload", "git push --force", "--clobber", "--draft", "--prerelease", "--force"} {
 		if strings.Contains(workflow, forbidden) {
 			return fmt.Errorf("forbidden release finalizer capability %q", forbidden)
 		}
