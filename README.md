@@ -19,11 +19,25 @@ for the cross-repository flow.
 ## Install
 
 The public `v0.1.0` tag is historical and has no downloadable release assets.
-Build that version from source when reproducing the original contract. Current
-source was qualified as a source-only `v0.2.0` candidate at
-`9a0814817ef54a34e99e2c6c1d41812b011e1661` by the publication-disabled
-[release rehearsal](https://github.com/uesugitorachiyo/ao-atlas/actions/runs/31321287357).
-That candidate is not a public release and must not be presented as one.
+Build that version from source when reproducing the original contract.
+
+Treat `v0.2.0` as published only after its separately authorized exact candidate
+completes the governed release sequence:
+
+1. Dispatch `release-rehearsal.yml` with the exact version, tag, source commit,
+   and approved manifest digest. This workflow validates and packages candidates
+   without publication authority.
+2. After the rehearsal succeeds, dispatch `release-finalize.yml` with its run ID
+   and the matching candidate identities and digests. Live publication is limited
+   to the `protected-release` environment and eligible human review.
+
+The supported release assets are:
+
+- `ao-atlas-v0.2.0-linux-x86_64.tar.gz`
+- `ao-atlas-v0.2.0-macos-aarch64.tar.gz`
+- `ao-atlas-v0.2.0-windows-x86_64.tar.gz`
+
+Until the governed finalizer succeeds, build `v0.2.0` from source:
 
 ```sh
 go build -o bin/atlas ./cmd/atlas
@@ -49,8 +63,10 @@ parity, shared-toolchain use, worktree bounds, and `schedules_work=false`,
 `executes_work=false`, `approves_work=false`. When `--registry` is omitted, the
 doctor compares against the registry Atlas would emit from the instance.
 
-AO Atlas does not call live providers, push, tag, release, upload, or copy
-source repos.
+Ordinary AO Atlas operation does not call live providers, push, tag, release,
+upload, or copy source repos. The separately authorized governed finalizer is
+the only publication path; its authority does not extend to Atlas commands or
+other workflows.
 
 ## Quick Start
 
