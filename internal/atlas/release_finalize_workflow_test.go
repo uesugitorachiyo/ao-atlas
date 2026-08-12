@@ -2,6 +2,8 @@ package atlas
 
 import (
 	"archive/zip"
+	"bytes"
+	"encoding/binary"
 	"fmt"
 	"os"
 	"os/exec"
@@ -195,11 +197,15 @@ func TestAtlasReleaseFinalizeWorkflowRejectsUnexpectedEmptyArtifactDirectories(t
 	}{
 		{name: "input binding", variable: "binding_dir", files: []string{"release-input-binding.json", "release-input-binding.sha256"}},
 		{name: "plan", variable: "plan_dir", files: []string{"promotion-plan.json", "promotion-plan.sha256", "dry-run-boundary.json"}},
+		{name: "candidate", variable: "candidate_dir", files: []string{"candidate-summary.json"}},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
-			guard := fmt.Sprintf(`test -z "$(find "$%s" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"`, tt.variable)
-			if !strings.Contains(workflow, guard) {
-				t.Fatalf("workflow missing exact %s immediate-child type guard", tt.name)
+			immediateGuard := fmt.Sprintf(`test -z "$(find "$%s" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"`, tt.variable)
+			nestedGuard := fmt.Sprintf(`test -z "$(find "$%s" -mindepth 2 -print -quit)"`, tt.variable)
+			for _, guard := range []string{immediateGuard, nestedGuard} {
+				if !strings.Contains(workflow, guard) {
+					t.Fatalf("workflow missing exact %s inventory guard %q", tt.name, guard)
+				}
 			}
 			dir := t.TempDir()
 			for _, name := range tt.files {
@@ -207,21 +213,27 @@ func TestAtlasReleaseFinalizeWorkflowRejectsUnexpectedEmptyArtifactDirectories(t
 					t.Fatal(err)
 				}
 			}
-			if err := runArtifactInventoryGuard(guard, tt.variable, dir); err != nil {
+			if err := runArtifactInventoryGuard(immediateGuard+"\n"+nestedGuard, tt.variable, dir); err != nil {
 				t.Fatalf("exact %s inventory rejected: %v", tt.name, err)
 			}
 			if err := os.Mkdir(filepath.Join(dir, "unexpected"), 0o700); err != nil {
 				t.Fatal(err)
 			}
-			if err := runArtifactInventoryGuard(guard, tt.variable, dir); err == nil {
+			if err := runArtifactInventoryGuard(immediateGuard+"\n"+nestedGuard, tt.variable, dir); err == nil {
 				t.Fatalf("%s inventory accepted unexpected empty directory", tt.name)
+			}
+			if err := os.WriteFile(filepath.Join(dir, "unexpected", "nested"), nil, 0o600); err != nil {
+				t.Fatal(err)
+			}
+			if err := runArtifactInventoryGuard(immediateGuard+"\n"+nestedGuard, tt.variable, dir); err == nil {
+				t.Fatalf("%s inventory accepted unexpected nested file", tt.name)
 			}
 		})
 	}
 }
 
 func runArtifactInventoryGuard(guard, variable, dir string) error {
-	cmd := exec.Command("bash", "-c", guard)
+	cmd := exec.Command("bash", "-c", "set -euo pipefail\n"+guard)
 	cmd.Env = append(os.Environ(), variable+"="+dir)
 	return cmd.Run()
 }
@@ -240,6 +252,7 @@ func TestReleaseArtifactZipInspectorRejectsUnsafeEntriesAndBounds(t *testing.T) 
 		{name: "symlink", entries: []releaseArtifactZipEntry{{name: "candidate.json", mode: os.ModeSymlink | 0o777}}, maxEntries: "1", maxBytes: "3", wantErr: "non-regular entry"},
 		{name: "entry bound", entries: []releaseArtifactZipEntry{{name: "one", content: "1"}, {name: "two", content: "2"}}, maxEntries: "1", maxBytes: "2", wantErr: "entry count exceeds"},
 		{name: "expanded bound", entries: []releaseArtifactZipEntry{{name: "candidate.json", content: "1234"}}, maxEntries: "1", maxBytes: "3", wantErr: "expanded size exceeds"},
+		{name: "canonical file directory collision", entries: []releaseArtifactZipEntry{{name: "entry", content: "1"}, {name: "entry/", mode: os.ModeDir | 0o755}}, maxEntries: "2", maxBytes: "1", wantErr: "duplicate path"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -253,6 +266,29 @@ func TestReleaseArtifactZipInspectorRejectsUnsafeEntriesAndBounds(t *testing.T) 
 				t.Fatalf("expected %q, got %v\n%s", tt.wantErr, err, output)
 			}
 		})
+	}
+}
+
+func TestReleaseArtifactZipInspectorRejectsUnderstatedCentralDirectorySize(t *testing.T) {
+	archive := writeReleaseArtifactZip(t, []releaseArtifactZipEntry{{name: "candidate.json", content: strings.Repeat("x", 1024)}})
+	content, err := os.ReadFile(archive)
+	if err != nil {
+		t.Fatal(err)
+	}
+	centralDirectory := bytes.LastIndex(content, []byte{'P', 'K', 1, 2})
+	if centralDirectory < 0 {
+		t.Fatal("ZIP central directory not found")
+	}
+	binary.LittleEndian.PutUint32(content[centralDirectory+24:centralDirectory+28], 1)
+	if err := os.WriteFile(archive, content, 0o600); err != nil {
+		t.Fatal(err)
+	}
+
+	script := filepath.Join(repoRoot(t), "scripts", "inspect-release-artifact-zips.py")
+	cmd := exec.Command("python3", script, "--max-entries", "1", "--max-expanded-bytes", "2048", archive)
+	output, err := cmd.CombinedOutput()
+	if err == nil {
+		t.Fatalf("inspector accepted understated central-directory size\n%s", output)
 	}
 }
 

@@ -202,6 +202,8 @@ jobs:
           for target in "${targets[@]}"; do
             candidate_dir="imported-release/ao-atlas-release-candidate-${target}-${SOURCE_SHA}"
             test -d "$candidate_dir"
+            test -z "$(find "$candidate_dir" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
+            test -z "$(find "$candidate_dir" -mindepth 2 -print -quit)"
             (cd "$candidate_dir" && sha256sum --check --strict SHA256SUMS)
           done
 
