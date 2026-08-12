@@ -71,6 +71,29 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 	}
 }
 
+func TestAtlasReleaseFinalizeWorkflowAuthenticatesExactProducerArtifactInventory(t *testing.T) {
+	content, err := os.ReadFile(filepath.Join(repoRoot(t), ".github", "workflows", "release-finalize.yml"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	workflow := string(content)
+	for _, required := range []string{
+		`.total_count == 5`,
+		`[.artifacts[].name] | unique | length) == 5`,
+		`all(.artifacts[]; .expired == false)`,
+		`"ao-atlas-release-input-binding-$SOURCE_SHA"`,
+		`"ao-atlas-release-candidate-linux-x86_64-$SOURCE_SHA"`,
+		`"ao-atlas-release-candidate-macos-aarch64-$SOURCE_SHA"`,
+		`"ao-atlas-release-candidate-windows-x86_64-$SOURCE_SHA"`,
+		`"ao-atlas-release-rehearsal-plan-$SOURCE_SHA"`,
+		`cmp actual-artifacts.txt expected-artifacts.txt`,
+	} {
+		if !strings.Contains(workflow, required) {
+			t.Fatalf("producer artifact authentication missing %q", required)
+		}
+	}
+}
+
 func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 	required := []string{
 		"workflow_dispatch:", "producer_run_id:", "expected_source_sha:",
