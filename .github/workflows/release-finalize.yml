@@ -102,9 +102,10 @@ jobs:
           (( age_seconds >= 0 && age_seconds <= 14 * 24 * 60 * 60 ))
 
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$PRODUCER_RUN_ID/artifacts?per_page=100" > producer-artifacts.json
-          jq -e '.total_count == 4 and all(.artifacts[]; .expired == false)' producer-artifacts.json >/dev/null
+          jq -e '.total_count == 5 and ([.artifacts[].name] | unique | length) == 5 and all(.artifacts[]; .expired == false)' producer-artifacts.json >/dev/null
           jq -r '.artifacts[].name' producer-artifacts.json | LC_ALL=C sort > actual-artifacts.txt
           printf '%s\n' \
+            "ao-atlas-release-input-binding-$SOURCE_SHA" \
             "ao-atlas-release-candidate-linux-x86_64-$SOURCE_SHA" \
             "ao-atlas-release-candidate-macos-aarch64-$SOURCE_SHA" \
             "ao-atlas-release-candidate-windows-x86_64-$SOURCE_SHA" \
