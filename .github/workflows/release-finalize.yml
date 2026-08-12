@@ -431,6 +431,7 @@ jobs:
         env:
           BINARY: ${{ matrix.binary }}
           GH_TOKEN: ${{ github.token }}
+          PLAN_DIGEST: ${{ inputs.expected_plan_digest }}
           SOURCE_SHA: ${{ inputs.expected_source_sha }}
           TAG: ${{ inputs.expected_tag }}
           TARGET_LABEL: ${{ matrix.target_label }}
@@ -438,9 +439,18 @@ jobs:
         run: |
           set -euo pipefail
 
+          hash_file() {
+            if command -v sha256sum >/dev/null 2>&1; then
+              sha256sum "$1" | awk '{print $1}'
+            else
+              shasum -a 256 "$1" | awk '{print $1}'
+            fi
+          }
+
           test "$VERSION" = "v0.2.0"
           test "$TAG" = "$VERSION"
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          [[ "$PLAN_DIGEST" =~ ^[0-9a-f]{64}$ ]]
           gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > public-tag-ref.json
           jq -e \
             --arg ref "refs/tags/$TAG" \
@@ -451,12 +461,16 @@ jobs:
           jq -e \
             --arg source_sha "$SOURCE_SHA" \
             --arg tag "$TAG" \
+            --arg version "$VERSION" \
             '.tag_name == $tag and .target_commitish == $source_sha and
+             .name == $version and (.body | type) == "string" and
              .draft == false and .prerelease == false and
              (.assets | length) == 15 and
              ([.assets[].name] | unique | length) == 15 and
              all(.assets[]; .state == "uploaded" and (.size | type) == "number" and .size > 0)' \
             public-release.json >/dev/null
+          jq -j '.body' public-release.json > public-release-body.txt
+          cmp public-release-body.txt "docs/release/${VERSION}.md"
           jq -r '.assets[].name' public-release.json | LC_ALL=C sort > actual-assets.txt
           printf '%s\n' \
             "ao-atlas-${VERSION}-linux-x86_64.tar.gz" \
@@ -484,6 +498,46 @@ jobs:
           test "$(find release-assets -maxdepth 1 -type f | wc -l)" -eq 15
           find release-assets -maxdepth 1 -type f -exec basename {} \; | LC_ALL=C sort > downloaded-assets.txt
           cmp downloaded-assets.txt expected-assets.txt
+
+          release_notes_sha256=$(hash_file "docs/release/${VERSION}.md")
+          test "$(hash_file release-assets/promotion-plan.json)" = "$PLAN_DIGEST"
+          jq -e \
+            --arg notes_digest "sha256:$release_notes_sha256" \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg tag "$TAG" \
+            --arg version "$VERSION" \
+            '.schema_version == "ao.atlas.release-rehearsal-promotion-plan.v0.5" and
+             .status == "dry_run_plan_ready" and .immutable == true and
+             .source_sha == $source_sha and .tag == $tag and .version == $version and
+             .release_notes_sha256 == $notes_digest and
+             (.candidates | length) == 3 and
+             ([.candidates[].target_label] | sort) == ["linux-x86_64", "macos-aarch64", "windows-x86_64"] and
+             all(.candidates[];
+               .source_sha == $source_sha and .tag == $tag and .version == $version and
+               .archive == ("ao-atlas-" + $version + "-" + .target_label + ".tar.gz") and
+               .provenance == "provenance.json" and .sbom == "sbom.spdx.json" and
+               .signature_verification == "signature-verification.json" and
+               (.archive_sha256 | test("^sha256:[0-9a-f]{64}$")) and
+               (.provenance_sha256 | test("^sha256:[0-9a-f]{64}$")) and
+               (.sbom_sha256 | test("^sha256:[0-9a-f]{64}$")) and
+               (.signature_verification_sha256 | test("^sha256:[0-9a-f]{64}$")))' \
+            release-assets/promotion-plan.json >/dev/null
+          jq -er '
+            .candidates[] |
+            [
+              [.target_label, .archive, .archive_sha256],
+              [.target_label, (.target_label + "-provenance.json"), .provenance_sha256],
+              [.target_label, (.target_label + "-sbom.spdx.json"), .sbom_sha256],
+              [.target_label, (.target_label + "-signature-verification.json"), .signature_verification_sha256]
+            ][] | @tsv' \
+            release-assets/promotion-plan.json > plan-assets.tsv
+          test "$(wc -l < plan-assets.tsv)" -eq 12
+          while IFS=$'\t' read -r target asset expected_digest; do
+            test -n "$target"
+            actual_digest=$(hash_file "release-assets/$asset")
+            test "sha256:$actual_digest" = "$expected_digest"
+          done < plan-assets.tsv
+
           (
             cd release-assets
             printf '%s\n' \
@@ -549,7 +603,7 @@ jobs:
             --arg tag "$TAG" \
             --arg target_label "$TARGET_LABEL" \
             --arg version_identity "$actual_version_identity" \
-            '{schema_version:"ao.atlas.public-release-verification.v0.1",status:"passed",tag:$tag,source_sha:$source_sha,target_label:$target_label,release_url:$release_url,aggregate_checksums_verified:true,archive_inventory_verified:true,version_identity:$version_identity,provider_free_workgraph_validated:true,provider_credentials_used:false}' \
+            '{schema_version:"ao.atlas.public-release-verification.v0.1",status:"passed",tag:$tag,source_sha:$source_sha,target_label:$target_label,release_url:$release_url,aggregate_checksums_verified:true,archive_inventory_verified:true,authorized_plan_verified:true,authorized_asset_digests_verified:true,release_metadata_verified:true,version_identity:$version_identity,provider_free_workgraph_validated:true,provider_credentials_used:false}' \
             > "public-release-verification-${TARGET_LABEL}.json"
 
       - name: Upload target-qualified public verification
@@ -577,6 +631,10 @@ jobs:
 
       - name: Validate public verification inventory
         shell: bash
+        env:
+          SOURCE_SHA: ${{ inputs.expected_source_sha }}
+          TAG: ${{ inputs.expected_tag }}
+          VERSION: ${{ inputs.expected_version }}
         run: |
           set -euo pipefail
           test -z "$(find public-release-verification -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
@@ -589,11 +647,20 @@ jobs:
             public-release-verification-windows-x86_64.json \
             > expected-verification-files.txt
           cmp actual-verification-files.txt expected-verification-files.txt
+          expected_version_identity="ao-atlas version=$VERSION source_sha=$SOURCE_SHA"
           jq -e -s \
+            --arg expected_version_identity "$expected_version_identity" \
+            --arg source_sha "$SOURCE_SHA" \
+            --arg tag "$TAG" \
             'length == 3 and
              ([.[].target_label] | unique) == ["linux-x86_64", "macos-aarch64", "windows-x86_64"] and
              all(.[]; .schema_version == "ao.atlas.public-release-verification.v0.1" and
-                      .status == "passed" and .provider_credentials_used == false)' \
+                      .status == "passed" and .tag == $tag and .source_sha == $source_sha and
+                      .version_identity == $expected_version_identity and
+                      .aggregate_checksums_verified == true and .archive_inventory_verified == true and
+                      .authorized_plan_verified == true and .authorized_asset_digests_verified == true and
+                      .release_metadata_verified == true and .provider_free_workgraph_validated == true and
+                      .provider_credentials_used == false)' \
             public-release-verification/*.json >/dev/null
 
       - name: Upload public release verification
