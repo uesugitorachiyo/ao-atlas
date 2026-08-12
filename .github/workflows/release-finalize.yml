@@ -505,7 +505,7 @@ jobs:
           archive="release-assets/ao-atlas-${VERSION}-${TARGET_LABEL}.tar.gz"
           install_dir="$RUNNER_TEMP/ao-atlas-public-${TARGET_LABEL}"
           mkdir "$install_dir"
-          ARCHIVE="$archive" INSTALL_DIR="$install_dir" python - <<'PY'
+          ARCHIVE="$archive" INSTALL_DIR="$install_dir" python3 - <<'PY'
           import os
           import shutil
           import tarfile

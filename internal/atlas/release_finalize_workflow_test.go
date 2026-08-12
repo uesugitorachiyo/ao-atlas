@@ -114,6 +114,13 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 			wantErr: "public archive extraction must reject non-regular entries",
 		},
 		{
+			name: "bare python archive verifier",
+			mutate: func(value string) string {
+				return strings.Replace(value, `python3 - <<'PY'`, `python - <<'PY'`, 1)
+			},
+			wantErr: "public archive verifier must use python3",
+		},
+		{
 			name: "disabled public verification",
 			mutate: func(value string) string {
 				return strings.Replace(value, `if: ${{ needs.publish-release.result == 'success' }}`, `if: ${{ needs.publish-release.result == 'success' && false }}`, 1)
@@ -219,6 +226,7 @@ func TestAtlasReleaseFinalizeWorkflowVerifiesEveryPublicTarget(t *testing.T) {
 		`path.is_absolute()`,
 		`".." in path.parts`,
 		`member.isfile()`,
+		`python3 - <<'PY'`,
 		`expected_version_identity="ao-atlas version=$VERSION source_sha=$SOURCE_SHA"`,
 		`workgraph validate --workgraph examples/valid/workgraph.json`,
 		`provider_credentials_used:false`,
@@ -598,6 +606,9 @@ func validateReleaseFinalizeWorkflowStructure(workflow string) error {
 	}
 	if !strings.Contains(verify, `if not member.isfile():`) {
 		return fmt.Errorf("public archive extraction must reject non-regular entries")
+	}
+	if !strings.Contains(verify, `python3 - <<'PY'`) || strings.Contains(verify, `python - <<'PY'`) {
+		return fmt.Errorf("public archive verifier must use python3")
 	}
 	nonPublish := strings.Replace(jobs, publish, "", 1)
 	for _, capability := range []string{"contents: write", "gh release create", "gh release upload", "git tag", "git push"} {
