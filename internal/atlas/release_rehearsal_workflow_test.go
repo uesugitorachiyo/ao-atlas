@@ -824,7 +824,7 @@ func validateReleaseRehearsalWorkflowStructure(workflow string) error {
 		"-X github.com/uesugitorachiyo/ao-atlas/internal/atlas.buildSourceSHA=$SOURCE_SHA",
 		`"$candidate_dir/$binary" --version`,
 		"binary_sha256",
-		`sha256sum | awk '{print $1}'`,
+		"\n              sha256sum | awk '{print $1}'\n",
 		`shasum -a 256 | awk '{print $1}'`,
 		`hash_stdin < "$1"`,
 		`git cat-file blob "${SOURCE_SHA}:${functional_fixture}" | hash_stdin`,
