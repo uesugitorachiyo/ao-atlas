@@ -40,6 +40,13 @@ completes the governed release sequence:
    `live_confirmation=publish-imported-ao-atlas-<producer_run_id>-v0.2.0-v0.2.0-<expected_source_sha>-<expected_manifest_digest>-<expected_plan_digest>`.
    This exact value is constructed and checked by `release-finalize.yml`; live
    publication remains limited to `protected-release` and eligible human review.
+   Before exposing live dispatch, a repository administrator must create that
+   environment, configure eligible required reviewers, and set both the
+   environment secret and environment variable named
+   `AO_ATLAS_PROTECTED_RELEASE_SENTINEL` to
+   `protected-release-required-reviewers-configured`. Missing or mismatched
+   environment-scoped sentinels stop the write job before tag/release mutation;
+   they do not replace the required external reviewer-configuration check.
 
 The supported release assets are:
 

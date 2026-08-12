@@ -182,6 +182,7 @@ jobs:
           test -f "$binding_dir/release-input-binding.json"
           test -f "$binding_dir/release-input-binding.sha256"
           (cd "$binding_dir" && sha256sum --check --strict release-input-binding.sha256)
+          python3 scripts/validate-strict-json.py "$binding_dir/release-input-binding.json"
           jq -e \
             --arg manifest "$MANIFEST_DIGEST" \
             --arg notes_digest "sha256:$release_notes_sha256" \
@@ -205,6 +206,8 @@ jobs:
             test -z "$(find "$candidate_dir" -mindepth 1 -maxdepth 1 ! -type f -print -quit)"
             test -z "$(find "$candidate_dir" -mindepth 2 -print -quit)"
             (cd "$candidate_dir" && sha256sum --check --strict SHA256SUMS)
+            python3 scripts/validate-strict-json.py "$candidate_dir"/*.json
+            test "$(jq -er '.workflow_identity' "$candidate_dir/candidate-summary.json")" = "$expected_identity"
           done
 
           plan_dir="imported-release/ao-atlas-release-rehearsal-plan-${SOURCE_SHA}"
@@ -217,6 +220,7 @@ jobs:
           test -f "$plan_dir/dry-run-boundary.json"
           (cd "$plan_dir" && sha256sum --check --strict promotion-plan.sha256)
           test "$(sha256sum "$plan_dir/promotion-plan.json" | awk '{print $1}')" = "$PLAN_DIGEST"
+          python3 scripts/validate-strict-json.py "$plan_dir"/*.json
           jq -e \
             '.dry_run == true and
              .publication_attempted == false and .tag_creation_attempted == false and
@@ -231,18 +235,17 @@ jobs:
             --approved-manifest-digest "$MANIFEST_DIGEST" \
             --release-notes-sha256 "sha256:$release_notes_sha256" \
             --plan-out recomputed-promotion-plan.json
+          python3 scripts/validate-strict-json.py recomputed-promotion-plan.json
           cmp recomputed-promotion-plan.json "$plan_dir/promotion-plan.json"
           jq -e \
             --arg manifest "$MANIFEST_DIGEST" \
             --arg notes_digest "sha256:$release_notes_sha256" \
-            --arg producer_identity "$expected_identity" \
             --arg source_sha "$SOURCE_SHA" \
             --arg tag "$TAG" \
             --arg version "$VERSION" \
             '.approved_manifest_digest == $manifest and
              .release_notes_sha256 == $notes_digest and
-             .source_sha == $source_sha and .tag == $tag and .version == $version and
-             all(.candidates[]; .workflow_identity == $producer_identity)' \
+             .source_sha == $source_sha and .tag == $tag and .version == $version' \
             recomputed-promotion-plan.json >/dev/null
 
           mkdir validated-release
@@ -320,6 +323,8 @@ jobs:
           LIVE_CONFIRMATION: ${{ inputs.live_confirmation }}
           MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}
           PLAN_DIGEST: ${{ inputs.expected_plan_digest }}
+          PROTECTED_RELEASE_SENTINEL_SECRET: ${{ secrets.AO_ATLAS_PROTECTED_RELEASE_SENTINEL }}
+          PROTECTED_RELEASE_SENTINEL_VARIABLE: ${{ vars.AO_ATLAS_PROTECTED_RELEASE_SENTINEL }}
           PRODUCER_RUN_ID: ${{ inputs.producer_run_id }}
           SOURCE_SHA: ${{ inputs.expected_source_sha }}
           TAG: ${{ inputs.expected_tag }}
@@ -330,6 +335,9 @@ jobs:
           test "$VERSION" = "v0.2.0"
           test "$TAG" = "$VERSION"
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -n "$PROTECTED_RELEASE_SENTINEL_SECRET"
+          test "$PROTECTED_RELEASE_SENTINEL_VARIABLE" = "protected-release-required-reviewers-configured"
+          test "$PROTECTED_RELEASE_SENTINEL_SECRET" = "$PROTECTED_RELEASE_SENTINEL_VARIABLE"
           expected_confirmation="publish-imported-ao-atlas-${PRODUCER_RUN_ID}-${VERSION}-${TAG}-${SOURCE_SHA}-${MANIFEST_DIGEST}-${PLAN_DIGEST}"
           test "$LIVE_CONFIRMATION" = "$expected_confirmation"
 
@@ -605,12 +613,14 @@ jobs:
           test "$actual_version_identity" = "$expected_version_identity"
           "$install_dir/$BINARY" workgraph validate --workgraph examples/valid/workgraph.json
           jq -cn \
+            --arg manifest_digest "$MANIFEST_DIGEST" \
+            --arg plan_digest "$PLAN_DIGEST" \
             --arg release_url "$(jq -er '.html_url' public-release.json)" \
             --arg source_sha "$SOURCE_SHA" \
             --arg tag "$TAG" \
             --arg target_label "$TARGET_LABEL" \
             --arg version_identity "$actual_version_identity" \
-            '{schema_version:"ao.atlas.public-release-verification.v0.1",status:"passed",tag:$tag,source_sha:$source_sha,target_label:$target_label,release_url:$release_url,aggregate_checksums_verified:true,archive_inventory_verified:true,authorized_plan_verified:true,authorized_asset_digests_verified:true,release_metadata_verified:true,version_identity:$version_identity,provider_free_workgraph_validated:true,provider_credentials_used:false}' \
+            '{schema_version:"ao.atlas.public-release-verification.v0.1",status:"passed",tag:$tag,source_sha:$source_sha,target_label:$target_label,expected_manifest_digest:$manifest_digest,expected_plan_digest:$plan_digest,release_url:$release_url,aggregate_checksums_verified:true,archive_inventory_verified:true,authorized_plan_verified:true,authorized_asset_digests_verified:true,release_metadata_verified:true,version_identity:$version_identity,provider_free_workgraph_validated:true,provider_credentials_used:false}' \
             > "public-release-verification-${TARGET_LABEL}.json"
 
       - name: Upload target-qualified public verification
@@ -639,6 +649,8 @@ jobs:
       - name: Validate public verification inventory
         shell: bash
         env:
+          MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}
+          PLAN_DIGEST: ${{ inputs.expected_plan_digest }}
           SOURCE_SHA: ${{ inputs.expected_source_sha }}
           TAG: ${{ inputs.expected_tag }}
           VERSION: ${{ inputs.expected_version }}
@@ -657,12 +669,15 @@ jobs:
           expected_version_identity="ao-atlas version=$VERSION source_sha=$SOURCE_SHA"
           jq -e -s \
             --arg expected_version_identity "$expected_version_identity" \
+            --arg manifest "$MANIFEST_DIGEST" \
+            --arg plan_digest "$PLAN_DIGEST" \
             --arg source_sha "$SOURCE_SHA" \
             --arg tag "$TAG" \
             'length == 3 and
              ([.[].target_label] | unique) == ["linux-x86_64", "macos-aarch64", "windows-x86_64"] and
              all(.[]; .schema_version == "ao.atlas.public-release-verification.v0.1" and
                       .status == "passed" and .tag == $tag and .source_sha == $source_sha and
+                      .expected_manifest_digest == $manifest and .expected_plan_digest == $plan_digest and
                       .version_identity == $expected_version_identity and
                       .aggregate_checksums_verified == true and .archive_inventory_verified == true and
                       .authorized_plan_verified == true and .authorized_asset_digests_verified == true and
