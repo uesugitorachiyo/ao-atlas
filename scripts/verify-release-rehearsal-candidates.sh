@@ -2,7 +2,7 @@
 set -euo pipefail
 
 usage() {
-  echo "usage: verify-release-rehearsal-candidates.sh --candidates-dir <dir> --version <version> --tag <tag> --source-sha <sha> --approved-manifest-digest <digest> --plan-out <path>" >&2
+  echo "usage: verify-release-rehearsal-candidates.sh --candidates-dir <dir> --version <version> --tag <tag> --source-sha <sha> --approved-manifest-digest <digest> --release-notes-sha256 <digest> --plan-out <path>" >&2
 }
 
 fail() {
@@ -31,6 +31,7 @@ version=""
 tag=""
 source_sha=""
 approved_manifest_digest=""
+release_notes_sha256=""
 plan_out=""
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 repo_root=$(cd "$script_dir/.." && pwd)
@@ -56,6 +57,10 @@ while [[ $# -gt 0 ]]; do
       approved_manifest_digest="${2:-}"
       shift 2
       ;;
+    --release-notes-sha256)
+      release_notes_sha256="${2:-}"
+      shift 2
+      ;;
     --plan-out)
       plan_out="${2:-}"
       shift 2
@@ -72,6 +77,7 @@ done
 [[ "$tag" == "$version" ]] || fail "tag must exactly match version"
 [[ "$source_sha" =~ ^[0-9a-f]{40}$ ]] || fail "source SHA is invalid"
 [[ "$approved_manifest_digest" =~ ^sha256:[0-9a-f]{64}$ ]] || fail "approved manifest digest is invalid"
+[[ "$release_notes_sha256" =~ ^sha256:[0-9a-f]{64}$ ]] || fail "invalid release notes SHA-256"
 [[ -n "$plan_out" ]] || fail "plan output path is required"
 
 expected_targets=(linux-x86_64 macos-aarch64 windows-x86_64)
@@ -436,9 +442,10 @@ done
 mkdir -p "$(dirname "$plan_out")"
 jq -cS -s \
   --arg approved_manifest_digest "$approved_manifest_digest" \
+  --arg release_notes_sha256 "$release_notes_sha256" \
   --arg source_sha "$source_sha" \
   --arg tag "$tag" \
   --arg version "$version" \
-  '{schema_version:"ao.atlas.release-rehearsal-promotion-plan.v0.4",status:"dry_run_plan_ready",immutable:true,approved_manifest_digest:$approved_manifest_digest,source_sha:$source_sha,tag:$tag,version:$version,candidates:sort_by(.target_label)}' \
+  '{schema_version:"ao.atlas.release-rehearsal-promotion-plan.v0.5",status:"dry_run_plan_ready",immutable:true,approved_manifest_digest:$approved_manifest_digest,release_notes_sha256:$release_notes_sha256,source_sha:$source_sha,tag:$tag,version:$version,candidates:sort_by(.target_label)}' \
   "$work_dir"/*.json > "$plan_out"
 [[ -s "$plan_out" ]] || fail "promotion plan was not written"

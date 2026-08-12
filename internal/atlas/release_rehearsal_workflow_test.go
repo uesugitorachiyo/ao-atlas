@@ -52,6 +52,10 @@ func TestSpecialistReleaseRehearsalWorkflowStructure(t *testing.T) {
 	if err := validateReleaseRehearsalWorkflowStructure(workflow); err != nil {
 		t.Fatal(err)
 	}
+	if !strings.Contains(workflow, `release_notes="docs/release/${VERSION}.md"`) ||
+		!strings.Contains(workflow, `--release-notes-sha256 "sha256:$release_notes_sha256"`) {
+		t.Fatal("rehearsal must bind committed release notes")
+	}
 }
 
 func TestSpecialistReleaseRehearsalWorkflowRejectsUnsafeStructures(t *testing.T) {
@@ -154,8 +158,9 @@ func TestReleaseRehearsalCandidateVerifierAcceptsExactInventory(t *testing.T) {
 	if !ok || len(candidates) != len(rehearsalTargets) {
 		t.Fatalf("promotion plan candidate inventory drifted: %#v", plan)
 	}
-	if plan["schema_version"] != "ao.atlas.release-rehearsal-promotion-plan.v0.4" {
-		t.Fatalf("promotion plan schema drifted: %#v", plan)
+	if plan["schema_version"] != "ao.atlas.release-rehearsal-promotion-plan.v0.5" ||
+		plan["release_notes_sha256"] != "sha256:"+strings.Repeat("d", 64) {
+		t.Fatalf("promotion plan release-note binding drifted: %#v", plan)
 	}
 	for _, candidateValue := range candidates {
 		candidate, ok := candidateValue.(map[string]any)
@@ -730,6 +735,24 @@ func TestReleaseRehearsalCandidateVerifierRejectsNegativeFixtures(t *testing.T) 
 	}
 }
 
+func TestReleaseRehearsalCandidateVerifierRejectsInvalidReleaseNotesDigest(t *testing.T) {
+	candidatesDir := t.TempDir()
+	planPath := filepath.Join(t.TempDir(), "promotion-plan.json")
+	cmd := exec.Command("bash", filepath.Join(repoRoot(t), "scripts", "verify-release-rehearsal-candidates.sh"),
+		"--candidates-dir", candidatesDir,
+		"--version", rehearsalVersion,
+		"--tag", rehearsalVersion,
+		"--source-sha", rehearsalSourceSHA,
+		"--approved-manifest-digest", rehearsalManifestDigest,
+		"--release-notes-sha256", "sha256:bad",
+		"--plan-out", planPath,
+	)
+	output, err := cmd.CombinedOutput()
+	if err == nil || !strings.Contains(string(output), "invalid release notes SHA-256") {
+		t.Fatalf("candidate verifier accepted invalid release notes digest: %v\n%s", err, output)
+	}
+}
+
 func readReleaseRehearsalWorkflow(t *testing.T) string {
 	t.Helper()
 	content, err := os.ReadFile(filepath.Join(repoRoot(t), ".github", "workflows", "release-rehearsal.yml"))
@@ -875,6 +898,7 @@ func runReleaseCandidateVerifier(t *testing.T, candidatesDir string, wantSuccess
 		"--tag", rehearsalVersion,
 		"--source-sha", rehearsalSourceSHA,
 		"--approved-manifest-digest", rehearsalManifestDigest,
+		"--release-notes-sha256", "sha256:"+strings.Repeat("d", 64),
 		"--plan-out", planPath,
 	)
 	output, err := cmd.CombinedOutput()
