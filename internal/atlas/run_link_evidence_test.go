@@ -48,9 +48,7 @@ func TestBuildEvidenceBoundRunLinkRejectsSymlinkEvidence(t *testing.T) {
 	if err := os.WriteFile(target, []byte("{\"status\":\"passed\"}\n"), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.Symlink("target.json", filepath.Join(root, "link.json")); err != nil {
-		t.Skipf("symlink unavailable: %v", err)
-	}
+	requireTestSymlink(t, "target.json", filepath.Join(root, "link.json"))
 	_, err := BuildEvidenceBoundRunLink(
 		"task-01",
 		"completed",
