@@ -1,1 +1,5 @@
+*.go text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+CLAUDE.md text eol=lf
 examples/valid/blueprint-import-low-risk-code/blueprint-pack/** text eol=lf
