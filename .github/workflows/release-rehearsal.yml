@@ -50,7 +50,6 @@ jobs:
           set -euo pipefail
           test "$DRY_RUN" = "true"
           [[ "$VERSION" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$ ]]
-          test "$VERSION" = "v0.2.0"
           test "$TAG" = "$VERSION"
           [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
           [[ "$APPROVED_MANIFEST_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]

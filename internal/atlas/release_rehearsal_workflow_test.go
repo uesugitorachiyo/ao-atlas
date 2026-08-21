@@ -56,6 +56,9 @@ func TestSpecialistReleaseRehearsalWorkflowStructure(t *testing.T) {
 		!strings.Contains(workflow, `--release-notes-sha256 "sha256:$release_notes_sha256"`) {
 		t.Fatal("rehearsal must bind committed release notes")
 	}
+	if strings.Contains(workflow, `test "$VERSION" = "v0.2.0"`) {
+		t.Fatal("rehearsal must not pin one already-published version")
+	}
 }
 
 func TestSpecialistReleaseRehearsalWorkflowRejectsUnsafeStructures(t *testing.T) {
