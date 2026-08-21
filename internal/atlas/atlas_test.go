@@ -3,6 +3,7 @@ package atlas
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -12,8 +13,19 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
 )
+
+func requireTestSymlink(t *testing.T, oldname, newname string) {
+	t.Helper()
+	if err := os.Symlink(oldname, newname); err != nil {
+		if runtime.GOOS == "windows" && errors.Is(err, syscall.Errno(1314)) {
+			t.Skipf("symlink unavailable without Create Symbolic Link privilege: %v", err)
+		}
+		t.Fatalf("symlink %s %s: %v", oldname, newname, err)
+	}
+}
 
 func TestInstanceInitValidateAndRegistry(t *testing.T) {
 	dir := t.TempDir()
@@ -1441,9 +1453,7 @@ func TestMissionImportRejectsUnsafeV02RetainedContent(t *testing.T) {
 			if err := os.Remove(contentPath); err != nil {
 				t.Fatal(err)
 			}
-			if err := os.Symlink(external, contentPath); err != nil {
-				t.Fatal(err)
-			}
+			requireTestSymlink(t, external, contentPath)
 		},
 		"oversized retained content": func(t *testing.T, _ string, contentPath string, _ string) {
 			t.Helper()
@@ -1479,9 +1489,7 @@ func TestMissionImportRejectsV02SymlinkedRetainedDirectories(t *testing.T) {
 			if err := os.RemoveAll(filepath.Join(dir, "artifacts")); err != nil {
 				t.Fatal(err)
 			}
-			if err := os.Symlink(external, filepath.Join(dir, "artifacts")); err != nil {
-				t.Fatal(err)
-			}
+			requireTestSymlink(t, external, filepath.Join(dir, "artifacts"))
 		},
 		"sha256 directory": func(t *testing.T, dir, contentPath string) {
 			t.Helper()
@@ -1496,9 +1504,7 @@ func TestMissionImportRejectsV02SymlinkedRetainedDirectories(t *testing.T) {
 			if err := os.RemoveAll(filepath.Join(dir, "artifacts", "sha256")); err != nil {
 				t.Fatal(err)
 			}
-			if err := os.Symlink(external, filepath.Join(dir, "artifacts", "sha256")); err != nil {
-				t.Fatal(err)
-			}
+			requireTestSymlink(t, external, filepath.Join(dir, "artifacts", "sha256"))
 		},
 	} {
 		t.Run(name, func(t *testing.T) {
@@ -1529,9 +1535,7 @@ func TestMissionImportRejectsV02FinalEntrySymlinkSwap(t *testing.T) {
 		if err := os.Remove(contentPath); err != nil {
 			t.Fatalf("remove final content before open: %v", err)
 		}
-		if err := os.Symlink(externalPath, contentPath); err != nil {
-			t.Fatalf("swap final content to symlink: %v", err)
-		}
+		requireTestSymlink(t, externalPath, contentPath)
 	}
 	t.Cleanup(func() { beforeAOMissionNoFollowFinalOpen = previous })
 
@@ -1575,9 +1579,7 @@ func TestMissionImportRejectsSymlinkedOrOversizedManifestBeforeDispatch(t *testi
 		if err := os.Rename(manifestPath, actualPath); err != nil {
 			t.Fatal(err)
 		}
-		if err := os.Symlink(actualPath, manifestPath); err != nil {
-			t.Fatal(err)
-		}
+		requireTestSymlink(t, actualPath, manifestPath)
 		if _, err := BuildAOMissionImport(record, status, manifestPath); err == nil {
 			t.Fatalf("symlinked manifest was accepted: %v", err)
 		}

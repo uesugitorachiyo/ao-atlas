@@ -409,9 +409,7 @@ func writeTerminalIndexFixture(t *testing.T, options fixtureOptions) (string, st
 			if err := os.Rename(path, target); err != nil {
 				t.Fatal(err)
 			}
-			if err := os.Symlink(target, path); err != nil {
-				t.Fatal(err)
-			}
+			requireTestSymlink(t, target, path)
 		}
 		if options.traversal && item.role == "root" {
 			relative = "../root.json"
