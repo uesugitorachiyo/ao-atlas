@@ -341,10 +341,11 @@ func TestAtlasReleaseFinalizeWorkflowVerifiesEveryPublicTarget(t *testing.T) {
 		`.target_commitish == $source_sha`,
 		`.name == $version`,
 		`git cat-file blob "${SOURCE_SHA}:docs/release/${VERSION}.md" > "$committed_release_notes"`,
-		`jq --binary -j '.body' public-release.json > public-release-body.txt`,
+		`Path(sys.argv[2]).write_bytes(body.encode("utf-8"))`,
 		`cmp public-release-body.txt "$committed_release_notes"`,
 		`release_notes_sha256=$(hash_file "$committed_release_notes")`,
-		`cmp actual-assets.txt expected-assets.txt`,
+		`tr -d '\r' < actual-assets.txt > normalized-assets.txt`,
+		`cmp normalized-assets.txt expected-assets.txt`,
 		`PLAN_DIGEST: ${{ inputs.expected_plan_digest }}`,
 		`MANIFEST_DIGEST: ${{ inputs.expected_manifest_digest }}`,
 		`test "$(hash_file release-assets/promotion-plan.json)" = "$PLAN_DIGEST"`,
@@ -373,6 +374,9 @@ func TestAtlasReleaseFinalizeWorkflowVerifiesEveryPublicTarget(t *testing.T) {
 		if strings.Contains(verify, forbidden) {
 			t.Errorf("verify-public-release has forbidden capability %q", forbidden)
 		}
+	}
+	if strings.Contains(verify, "jq --binary") {
+		t.Error("verify-public-release must not require a non-portable jq option")
 	}
 	if !strings.Contains(workflow, `name: ao-atlas-public-release-verification-${{ inputs.expected_tag }}`) {
 		t.Fatal("workflow must upload the exact consolidated public verification artifact")

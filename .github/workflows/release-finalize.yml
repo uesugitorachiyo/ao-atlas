@@ -478,7 +478,17 @@ jobs:
              ([.assets[].name] | unique | length) == 15 and
              all(.assets[]; .state == "uploaded" and (.size | type) == "number" and .size > 0)' \
             public-release.json >/dev/null
-          jq --binary -j '.body' public-release.json > public-release-body.txt
+          python3 - public-release.json public-release-body.txt <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          document = json.loads(Path(sys.argv[1]).read_bytes())
+          body = document.get("body")
+          if not isinstance(body, str):
+              raise SystemExit("public release body is not a string")
+          Path(sys.argv[2]).write_bytes(body.encode("utf-8"))
+          PY
           cmp public-release-body.txt "$committed_release_notes"
           jq -r '.assets[].name' public-release.json | LC_ALL=C sort > actual-assets.txt
           printf '%s\n' \
@@ -498,7 +508,8 @@ jobs:
             "windows-x86_64-sbom.spdx.json" \
             "windows-x86_64-signature-verification.json" \
             | LC_ALL=C sort > expected-assets.txt
-          cmp actual-assets.txt expected-assets.txt
+          tr -d '\r' < actual-assets.txt > normalized-assets.txt
+          cmp normalized-assets.txt expected-assets.txt
 
           mkdir release-assets
           gh release download "$TAG" --dir release-assets
