@@ -24,6 +24,9 @@ func TestAtlasReleaseFinalizeWorkflowStructure(t *testing.T) {
 	if err := validateReleaseFinalizeWorkflowStructure(workflow); err != nil {
 		t.Fatal(err)
 	}
+	if strings.Contains(workflow, `test "$VERSION" = "v0.2.0"`) {
+		t.Fatal("finalizer must not pin one already-published version")
+	}
 
 	tests := []struct {
 		name    string
