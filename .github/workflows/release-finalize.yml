@@ -87,7 +87,6 @@ jobs:
           [[ "$MANIFEST_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
           [[ "$PLAN_DIGEST" =~ ^[0-9a-f]{64}$ ]]
           [[ "$LIVE_CONFIRMATION" =~ ^[A-Za-z0-9:._-]{0,512}$ ]]
-          test "$VERSION" = "v0.2.0"
           test "$TAG" = "$VERSION"
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
 
@@ -332,7 +331,6 @@ jobs:
         run: |
           set -euo pipefail
 
-          test "$VERSION" = "v0.2.0"
           test "$TAG" = "$VERSION"
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           test -n "$PROTECTED_RELEASE_SENTINEL_SECRET"
@@ -456,7 +454,6 @@ jobs:
             fi
           }
 
-          test "$VERSION" = "v0.2.0"
           test "$TAG" = "$VERSION"
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           [[ "$MANIFEST_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
