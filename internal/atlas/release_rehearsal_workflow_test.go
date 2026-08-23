@@ -931,6 +931,22 @@ func runReleaseCandidateVerifier(t *testing.T, candidatesDir string, wantSuccess
 	return nil
 }
 
+func TestReleaseCandidateVerifierHashesBytesWithoutFilenameEscaping(t *testing.T) {
+	content, err := os.ReadFile(filepath.Join(repoRoot(t), "scripts", "verify-release-rehearsal-candidates.sh"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	script := string(content)
+	for _, want := range []string{`sha256sum < "$1"`, `shasum -a 256 < "$1"`} {
+		if !strings.Contains(script, want) {
+			t.Fatalf("candidate verifier must hash bytes through stdin: missing %q", want)
+		}
+	}
+	if strings.Contains(script, `sha256sum "$1"`) || strings.Contains(script, `shasum -a 256 "$1"`) {
+		t.Fatal("candidate verifier must not expose Windows path escaping to digest output")
+	}
+}
+
 func buildReleaseCandidateBinaries(t *testing.T) map[string][]byte {
 	t.Helper()
 	root := repoRoot(t)
