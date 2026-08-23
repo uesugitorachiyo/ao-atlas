@@ -945,6 +945,15 @@ func TestReleaseCandidateVerifierHashesBytesWithoutFilenameEscaping(t *testing.T
 	if strings.Contains(script, `sha256sum "$1"`) || strings.Contains(script, `shasum -a 256 "$1"`) {
 		t.Fatal("candidate verifier must not expose Windows path escaping to digest output")
 	}
+	for _, want := range []string{
+		`tar -tzf - < "$candidate_dir/$archive"`,
+		`tar -tvzf - < "$candidate_dir/$archive"`,
+		`tar -xzf - -C "$archive_extract_dir" < "$candidate_dir/$archive"`,
+	} {
+		if !strings.Contains(script, want) {
+			t.Fatalf("candidate verifier must stream archives to tar: missing %q", want)
+		}
+	}
 }
 
 func buildReleaseCandidateBinaries(t *testing.T) map[string][]byte {

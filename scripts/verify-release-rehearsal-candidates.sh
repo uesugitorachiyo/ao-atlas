@@ -213,12 +213,12 @@ while IFS= read -r summary; do
   expected_archive_inventory=$(printf '%s\n' LICENSE "$binary" | sort)
   archive_member_file="$work_dir/$target.archive-members"
   archive_type_file="$work_dir/$target.archive-types"
-  tar -tzf "$candidate_dir/$archive" > "$archive_member_file" 2>/dev/null ||
+  tar -tzf - < "$candidate_dir/$archive" > "$archive_member_file" 2>/dev/null ||
     fail "noncanonical archive entry: $target"
   archive_members=$(sort "$archive_member_file")
   [[ "$archive_members" == "$expected_archive_inventory" ]] ||
     fail "noncanonical archive entry: $target"
-  tar -tvzf "$candidate_dir/$archive" > "$archive_type_file" 2>/dev/null ||
+  tar -tvzf - < "$candidate_dir/$archive" > "$archive_type_file" 2>/dev/null ||
     fail "noncanonical archive entry: $target"
   [[ "$(wc -l < "$archive_type_file" | tr -d ' ')" == "2" ]] ||
     fail "noncanonical archive entry: $target"
@@ -227,7 +227,7 @@ while IFS= read -r summary; do
 
   archive_extract_dir="$work_dir/archive-$target"
   mkdir -p "$archive_extract_dir"
-  tar -xzf "$candidate_dir/$archive" -C "$archive_extract_dir" ||
+  tar -xzf - -C "$archive_extract_dir" < "$candidate_dir/$archive" ||
     fail "archive target substitution: $target"
   archive_inventory=$(
     cd "$archive_extract_dir"
