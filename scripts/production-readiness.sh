@@ -229,7 +229,6 @@ required_files=(
   docs/sdd/AO-ATLAS-FOUNDRY-HANDOFF.md
   docs/sdd/AO-ATLAS-IMPLEMENTATION-SLICES.md
   docs/sdd/AO-ATLAS-ACCEPTANCE-GATES.md
-  docs/sdd/AO-ATLAS-SDD-HANDOFF.md
   docs/sdd/AO-ATLAS-LONG-RUN-RECOMMENDATIONS.md
   schemas/stack-instance.schema.json
   schemas/atlas-registry.schema.json

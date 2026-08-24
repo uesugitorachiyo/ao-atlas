@@ -1,5 +1,17 @@
 .atlas-local/
 .atlas-state/
+/docs/evidence/ao-atlas-feature-depth-durability-wave-v01/
+/docs/evidence/ao-atlas-lease-time-gate-v01/
+/docs/evidence/ao-atlas-long-recommendation-wave-v01/
+/docs/evidence/ao-atlas-long-recommendation-wave-v02/
+/docs/evidence/ao-atlas-long-recommendation-wave-v04/
+/docs/evidence/ao-atlas-short-run-diagnostic-v01/
+/docs/evidence/ao-stack-month4-continuation-soak-v01/
+/docs/evidence/broad-rsi-campaign-final-readback-handoff/
+/docs/evidence/broad-rsi-campaign-segment-05-readback-handoff/
+/docs/evidence/broad-rsi-campaign-segment-07-readback-handoff/
+/docs/sdd/AO-ATLAS-SDD-HANDOFF.md
+/docs/superpowers/
 target/
 dist/
 bin/
