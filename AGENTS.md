@@ -16,7 +16,7 @@ Atlas consumes Blueprint authorization and Mission objectives and readbacks. It 
 ## Ownership And Boundaries
 
 - Require exact source heads, repository-relative evidence roots, and declared SHA-256 digests where contracts bind inputs. A mismatch, absent authorization, unknown state, or authority claim must fail closed.
-- Preserve historical files under `docs/evidence/` and mappings in `docs/evidence-path-map.json`; never rewrite them to support a current claim or revive and reinterpret an earlier wave.
+- Preserve only the historical `docs/evidence/` files required by public tests, contracts, operator gates, exact consumer closure, and `docs/evidence-path-map.json`; never rewrite them to support a current claim or revive and reinterpret an earlier wave.
 - Treat `examples/valid/` and `examples/invalid/` as contract fixtures. Change them with their consuming tests and keep rejection cases invalid.
 - Keep generated state and output under ignored `.atlas-local/`, `.atlas-state/`, `target/`, `dist/`, or `bin/`; do not hand-edit generated readbacks into source evidence.
 - Do not introduce secrets, provider credentials, private paths, account identifiers, or live-provider behavior. Ordinary Atlas operation has no push, tag, release, upload, approval, or sibling-repository mutation authority.
