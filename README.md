@@ -21,23 +21,16 @@ for the cross-repository flow.
 The public `v0.1.0` tag is historical and has no downloadable release assets.
 Build that version from source when reproducing the original contract.
 
-[`v0.2.0`](https://github.com/uesugitorachiyo/ao-atlas/releases/tag/v0.2.0)
+[`v0.2.1`](https://github.com/uesugitorachiyo/ao-atlas/releases/tag/v0.2.1)
 is the current public release. It targets source
-`2bf243ce8d8c71d845754398238b14d1ab77d0e6` and was published by the governed
-`release-finalize.yml` path through the `protected-release` environment in run
-[`31641906614`](https://github.com/uesugitorachiyo/ao-atlas/actions/runs/31641906614)
-(release ID `369536120`). The `publish-release` job succeeded. The workflow's
-overall conclusion is failure because the Windows post-public verifier converted
-release-note LF bytes to CRLF; Linux and macOS verification passed, while final
-consolidation was skipped. [PR #765](https://github.com/uesugitorachiyo/ao-atlas/pull/765)
-repaired that verifier by enabling binary output. The published tag, release,
-notes, and assets were not rewritten.
+`3603a2bb8af5adafcd9ff17b807ab89f32283d18` and was published through the
+governed `release-finalize.yml` path in the `protected-release` environment.
 
-The supported release assets are:
+Its 15 published assets are:
 
-- `ao-atlas-v0.2.0-linux-x86_64.tar.gz`
-- `ao-atlas-v0.2.0-macos-aarch64.tar.gz`
-- `ao-atlas-v0.2.0-windows-x86_64.tar.gz`
+- `ao-atlas-v0.2.1-linux-x86_64.tar.gz`
+- `ao-atlas-v0.2.1-macos-aarch64.tar.gz`
+- `ao-atlas-v0.2.1-windows-x86_64.tar.gz`
 - `linux-x86_64-provenance.json`
 - `linux-x86_64-sbom.spdx.json`
 - `linux-x86_64-signature-verification.json`
@@ -51,7 +44,7 @@ The supported release assets are:
 - `windows-x86_64-sbom.spdx.json`
 - `windows-x86_64-signature-verification.json`
 
-As a tagged-source alternative, build `v0.2.0` from source:
+As a tagged-source alternative, build `v0.2.1` from source:
 
 ```sh
 go build -o bin/atlas ./cmd/atlas
