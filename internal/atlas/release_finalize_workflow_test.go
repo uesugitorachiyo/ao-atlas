@@ -280,10 +280,38 @@ func TestAtlasReleaseFinalizeWorkflowOperatorDocumentation(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read README: %v", err)
 	}
-	for _, required := range []string{"release-finalize.yml", "protected-release", "v0.2.0"} {
+	for _, required := range []string{
+		"release-finalize.yml",
+		"protected-release",
+		"https://github.com/uesugitorachiyo/ao-atlas/releases/tag/v0.2.1",
+		"3603a2bb8af5adafcd9ff17b807ab89f32283d18",
+		"15 published assets",
+	} {
 		if !bytes.Contains(content, []byte(required)) {
 			t.Errorf("README missing governed release contract %q", required)
 		}
+	}
+	readme := string(content)
+	expectedAssetBlock := `- ` + "`ao-atlas-v0.2.1-linux-x86_64.tar.gz`" + `
+- ` + "`ao-atlas-v0.2.1-macos-aarch64.tar.gz`" + `
+- ` + "`ao-atlas-v0.2.1-windows-x86_64.tar.gz`" + `
+- ` + "`linux-x86_64-provenance.json`" + `
+- ` + "`linux-x86_64-sbom.spdx.json`" + `
+- ` + "`linux-x86_64-signature-verification.json`" + `
+- ` + "`macos-aarch64-provenance.json`" + `
+- ` + "`macos-aarch64-sbom.spdx.json`" + `
+- ` + "`macos-aarch64-signature-verification.json`" + `
+- ` + "`promotion-plan.json`" + `
+- ` + "`promotion-plan.sha256`" + `
+- ` + "`SHA256SUMS`" + `
+- ` + "`windows-x86_64-provenance.json`" + `
+- ` + "`windows-x86_64-sbom.spdx.json`" + `
+- ` + "`windows-x86_64-signature-verification.json`"
+	if !strings.Contains(readme, "Its 15 published assets are:\n\n"+expectedAssetBlock+"\n\nAs a tagged-source alternative") {
+		t.Fatal("README current release asset inventory must match the exact 15 published assets")
+	}
+	if strings.Contains(readme, "v0.2.0") {
+		t.Fatal("README must not present v0.2.0 in current release guidance")
 	}
 }
 
