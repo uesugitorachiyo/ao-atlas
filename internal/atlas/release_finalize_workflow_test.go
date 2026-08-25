@@ -286,6 +286,12 @@ func TestAtlasReleaseFinalizeWorkflowOperatorDocumentation(t *testing.T) {
 		"https://github.com/uesugitorachiyo/ao-atlas/releases/tag/v0.2.1",
 		"3603a2bb8af5adafcd9ff17b807ab89f32283d18",
 		"15 published assets",
+		"curl -fLO",
+		"SHA256SUMS",
+		"tar -xzf",
+		"Go 1.24 or later",
+		"./ao-atlas instance init",
+		"./ao-atlas instance validate",
 	} {
 		if !bytes.Contains(content, []byte(required)) {
 			t.Errorf("README missing governed release contract %q", required)
