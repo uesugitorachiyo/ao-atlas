@@ -50,6 +50,45 @@ As a tagged-source alternative, build `v0.2.1` from source:
 go build -o bin/atlas ./cmd/atlas
 ```
 
+Go 1.24 or later is required to build from source.
+
+### Install the v0.2.1 binary
+
+On macOS (Apple silicon), download, verify, extract, and run the published
+archive with only relative instance paths:
+
+```sh
+base=https://github.com/uesugitorachiyo/ao-atlas/releases/download/v0.2.1
+archive=ao-atlas-v0.2.1-macos-aarch64.tar.gz
+curl -fLO "$base/$archive"
+curl -fLO "$base/SHA256SUMS"
+expected="$(awk -v archive="$archive" '$2 == archive {print $1}' SHA256SUMS)"
+actual="$(shasum -a 256 "$archive" | awk '{print $1}')"
+test "$actual" = "$expected"
+tar -xzf "$archive"
+mkdir -p .atlas-local/toolchain
+./ao-atlas instance init --id demo-stack --state-root .atlas-local/state --toolchain-root .atlas-local/toolchain --out .atlas-local/demo-stack.instance.json
+./ao-atlas instance validate --instance .atlas-local/demo-stack.instance.json
+```
+
+On Linux x86_64, set
+`archive=ao-atlas-v0.2.1-linux-x86_64.tar.gz` and replace `shasum -a 256` with
+`sha256sum`. On PowerShell, use the Windows x86_64 archive:
+
+```powershell
+$base = 'https://github.com/uesugitorachiyo/ao-atlas/releases/download/v0.2.1'
+$archive = 'ao-atlas-v0.2.1-windows-x86_64.tar.gz'
+Invoke-WebRequest "$base/$archive" -OutFile $archive
+Invoke-WebRequest "$base/SHA256SUMS" -OutFile SHA256SUMS
+$expected = ((Select-String -Path SHA256SUMS -Pattern " $archive$").Line -split '\s+')[0]
+$actual = (Get-FileHash $archive -Algorithm SHA256).Hash.ToLower()
+if ($actual -ne $expected) { throw 'release digest mismatch' }
+tar -xzf $archive
+New-Item -ItemType Directory -Force .atlas-local\toolchain | Out-Null
+.\ao-atlas.exe instance init --id demo-stack --state-root .atlas-local\state --toolchain-root .atlas-local\toolchain --out .atlas-local\demo-stack.instance.json
+.\ao-atlas.exe instance validate --instance .atlas-local\demo-stack.instance.json
+```
+
 ## Public-Safe Defaults
 
 Tracked examples use relative placeholder paths only. Generated instance state
